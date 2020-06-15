@@ -42,7 +42,7 @@ background-color: #f2f3f5;
 
     <!-- Side ends -->
 
-    <div class="app-content container center-layout mt-2">
+    <div class="app-content container center-layout mt-2" style="min-height: 500px;">
         <div class="content-overlay"></div>
         <div class="content-wrapper">
             <div class="content-header row">
