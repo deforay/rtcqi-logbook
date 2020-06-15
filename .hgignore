@@ -1,0 +1,17 @@
+syntax: regexp
+texchange.komodoproject
+^.idea
+^public/uploads/(?!index.php)
+^config/autoload/local.php
+^public/temporary/cache(?!index.php)
+^public/temporary/(?!index.php)
+^public/acl.config.json
+^bootstrap/
+^storage/
+error_log
+Thumbs.db
+Thumbs.db.orig
+.DS_Store
+.phpunit.result.cache
+.DS_Store.orig
+
