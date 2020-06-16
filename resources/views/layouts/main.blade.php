@@ -42,19 +42,12 @@ background-color: #f2f3f5;
 
     <!-- Side ends -->
 
-    <div class="app-content container center-layout mt-2" style="min-height: 500px;">
+    <div class="app-content container center-layout mt-2" style="min-height: 600px;">
         <div class="content-overlay"></div>
-        <div class="content-wrapper">
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
         
                 @section('content')
 
                 @show
-                
-            </div>
-        </div>
     </div>
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>

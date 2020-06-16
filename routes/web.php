@@ -18,3 +18,17 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index');
+
+//Role module
+Route::get('/roles', 'Roles\RolesController@index')->name('roles.index');
+Route::post('/roles/add', 'Roles\RolesController@add');
+Route::get('/roles/add', 'Roles\RolesController@add');
+Route::post('/getRole', 'Roles\RolesController@getRole');
+Route::get('/roles/edit/{id}', 'Roles\RolesController@edit');
+Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');
+
+
+//Common module
+Route::post('/duplicateValidation', 'Common\CommonController@duplicateValidation');
+Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation');
+Route::post('/changeStatus', 'Common\CommonController@changeStatus');
