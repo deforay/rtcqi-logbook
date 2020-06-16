@@ -419,3 +419,33 @@ ALTER TABLE `purchase_order_details` ADD FOREIGN KEY (uom) REFERENCES `units_of_
 -- ('','','','','','','');
 -- INSERT INTO `email_queue` (`queue_id`,`from`,`to`,`cc`,`bcc`,`subject`,`content`,`attachments`,`status`) VALUES
 -- ('','','','','','','','','');
+
+
+--Sudarmathi 16 june 2020
+
+CREATE TABLE `resources` ( `resource_id` varchar(255) NOT NULL, `display_name` varchar(255) DEFAULT NULL, `status` varchar(255) DEFAULT NULL, PRIMARY KEY (`resource_id`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+	
+CREATE TABLE `privileges` (
+ `resource_id` varchar(255) NOT NULL,
+ `privilege_name` varchar(255) NOT NULL,
+ `display_name` varchar(255) DEFAULT NULL,
+ PRIMARY KEY (`resource_id`,`privilege_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'Role', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'add', 'Add'), ('App\\Http\\Controllers\\Roles\\RolesController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'index', 'Access');
+
+CREATE TABLE `event_log` (
+ `event_id` int(11) NOT NULL AUTO_INCREMENT,
+ `actor` int(11) NOT NULL,
+ `subject` varchar(255) DEFAULT NULL,
+ `event_type` varchar(255) DEFAULT NULL,
+ `action` varchar(255) DEFAULT NULL,
+ `resource_name` varchar(255) DEFAULT NULL,
+ `added_on` datetime DEFAULT NULL,
+ PRIMARY KEY (`event_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=821 DEFAULT CHARSET=latin1
+
+ALTER TABLE `roles` ADD `role_description` VARCHAR(1000) NULL AFTER `role_code`;
+ALTER TABLE `roles` ADD `role_status` VARCHAR(255) NOT NULL AFTER `role_description`;

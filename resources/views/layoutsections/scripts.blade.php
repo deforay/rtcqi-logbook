@@ -1,6 +1,4 @@
- <!-- BEGIN: Vendor JS-->
-<script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
-<!-- BEGIN Vendor JS-->
+
 
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{ asset('app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
@@ -16,3 +14,16 @@
 <script src="{{ asset('app-assets/js/core/app.js')}}"></script>
 <!-- END: Theme JS-->
 
+<!-- START PAGE LEVEL JS -->
+<script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
+<script src=".{{ asset('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
+<script src="{{ asset('app-assets/vendors/js/forms/toggle/switchery.min.js')}}"></script>
+<script src="{{ asset('app-assets/vendors/js/forms/toggle/bootstrap-switch.min.js')}}" ></script>
+<script src="{{ asset('app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js')}}"></script>
+<script src="{{ asset('app-assets/js/scripts/forms/switch.min.js')}}"></script>
+<!-- END PAGE LEVEL JS -->
+
+<!-- BEGIN DEFORAY VALIDATOR JS-->
+<script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.blockUI.js') }}"></script>
+<!-- END DEFORAY VALIDATOR JS-->
