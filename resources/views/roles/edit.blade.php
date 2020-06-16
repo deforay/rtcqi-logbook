@@ -1,7 +1,7 @@
 <!-- 
     Author             : Sudarmathi M
     Date               : 16 june 2020
-    Description        : Roles add screen
+    Description        : Roles edit screen
     Last Modified Date : 16 june 2020
     Last Modified Name : Sudarmathi M
 -->
@@ -19,7 +19,7 @@
 			</li>
 			<li class="breadcrumb-item"><a href="/roles/">Roles</a>
 			</li>
-			<li class="breadcrumb-item active">Add</li>
+			<li class="breadcrumb-item active">Edit</li>
 			</ol>
 		</div>
 		</div>
@@ -32,7 +32,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Add Roles</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> Edit Roles</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -46,18 +46,19 @@
 					</div>
 					<div class="card-content collapse show">
 						<div class="card-body">
-                       
 						    <div id="show_alert"  class="mt-1" style=""></div>
-                        
-                            <form class="form form-horizontal" role="form" name="addroles" id="addroles" method="post" action="/roles/add" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editroles" id="editroles" method="post" action="/roles/edit/{{base64_encode($role[0]->role_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
+                            @php
+                                $fnct = "role_id##".($role[0]->role_id);
+                            @endphp
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
                                             <h5>Role Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="roleName" onblur="duplicateValidation('roles','role_name', this.id,'', 'Entered role name is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter a role name" name="roleName" title="Please enter role name">
+                                                <input type="text" id="eroleName" onblur="checkNameValidation('roles', 'role_name', this.id,'{{$fnct}}', 'The role name that you entered already exist . Please enter another name.');" class="form-control isRequired" autocomplete="off" placeholder="Enter a role name" name="eroleName" title="Please enter role name" value="{{$role[0]->role_name}}">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -66,7 +67,7 @@
                                             <h5>Role Code <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="roleCode" onblur="duplicateValidation('roles','role_code', this.id,'', 'Entered role code is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter a role code" name="roleCode" title="Please enter role code">
+                                                <input type="text" id="roleCode" class="form-control isRequired" autocomplete="off" placeholder="Enter a role code" onblur="checkNameValidation('roles', 'role_code', this.id,'{{$fnct}}', 'The role code that you entered already exist . Please enter another code.');" name="roleCode" title="Please enter role code" value="{{$role[0]->role_code}}">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -78,7 +79,7 @@
                                             <h5>Description <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <textarea id="Description" class="form-control isRequired" autocomplete="off" placeholder="Enter the description" name="Description" title="Please enter the description"></textarea>
+                                                <textarea id="eDescription" class="form-control isRequired" autocomplete="off" placeholder="Enter the description" name="eDescription" title="Please enter the description">{{$role[0]->role_description}}</textarea>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -87,9 +88,9 @@
                                             <h5>Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                            <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="rolesStatus" name="rolesStatus" title="Please select status">
-                                                <option value="active" selected>Active</option>
-                                                <option value="inactive">Inactive</option>
+                                            <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="erolesStatus" name="erolesStatus" title="Please select status">
+                                                <option value="active" {{ $role[0]->role_status == 'active' ?  'selected':''}}>Active</option>
+                                                <option value="inactive" {{ $role[0]->role_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                             </select>
                                             </div>
                                         </fieldset>
@@ -100,8 +101,7 @@
                                 </div>
                                 <div class="form-group row">
                                     
-                                    <div class="custom-control custom-switch  custom-control-lg col-sm-12">
-                                        
+                                        <div class="custom-control custom-switch  custom-control-lg col-sm-12">
                                             <label class="label-control" for="markAllOption">Check all Allowed/Denied
                                             <input type="checkbox" id="markAllOption" class="switchBootstrap" name="checkUnCekAll"
                                                 data-on-text="allowed"
@@ -111,37 +111,48 @@
                                                 data-indeterminate="true"
                                                 onchange="checkAll(this);" />
                                             </label>
-                                        
-                                        
+                                        </div>
                                     </div>
-                                </div>
-                                <div class ="row">
+
+
+                                <div class="row">
                                         <?php $counter = 0; ?>
                                         <?php foreach ($resourceResult as $value) { ?>
                                         
                                         <div class="col-md-4 col-xs-12 col-sm-12">
                                                 <div class="card box-shadow-0 border-blue-grey">
-                                                  <div class="card-header card-head-inverse bg-blue-grey " style="padding: 1rem 1.5rem;">
+                                                  <div class="card-header card-head-inverse bg-blue-grey" style="padding: 1rem 1.5rem;">
                                                     <h4 class="card-title text-white"><?php echo ucwords($value->display_name);?></h4>
                                                   </div>
                                                   <div class="card-content collapse show">
                                                     
                                                     <ul class="list-group list-group-flush">
-                                                        <?php foreach ($value->privilege as $privileges) { ?>
-                                                            <?php ++$counter; ?>
+                                                        <?php  foreach ($value->privilege as $privileges) { ?>
+                                                        
+                                                            <?php
+                                                                ++$counter;
+                                                                if(isset($resourcePrivilegeMap[$role[0]->role_code][$value->resource_id][$privileges->privilege_name]) && $resourcePrivilegeMap[$role[0]->role_code][$value->resource_id][$privileges->privilege_name] == 'allow'){
+                                                                    $allowActive = 'allow';
+                                                                    $allowChecked = "checked";
+                                                                }else{
+                                                                    $check = 0;
+                                                                    $allowActive = 'deny';
+                                                                    $allowChecked = "";
+                                                                }
+                                                                ?>
                                                             <li class="list-group-item">
                                                                 <label for="cekAllPrivileges<?php echo $counter;?>"><?php echo ucwords($privileges->display_name);?></label>
                                                               <span class="float-right">
                                                                     <input type='checkbox' 
-                                                                    class='switchBootstrap cekAllPrivileges <?php echo $value->display_name; ?>' 
+                                                                    class='switchBootstrap cekAllPrivileges' 
                                                                     id="cekAllPrivileges<?php echo $counter;?>"
-                                                                    value='deny'
+                                                                    value="<?php echo $allowActive;?>" 
                                                                     name="resource[<?php echo $value->resource_id;?>][<?php echo $privileges->privilege_name;?>]"
                                                                     data-on-text='allowed'
                                                                     data-off-text='denied'
                                                                     data-off-color='warning'
-                                                                    onchange='checkManual(this);'/>
-                                                                
+                                                                onchange='checkManual(this);'
+                                                                <?php echo $allowChecked;?>/>
                                                               </span>
                                                               
                                                             </li>
@@ -152,8 +163,7 @@
                                               </div>
 
                                               <?php } ?>
-                                              
-                                    
+                                
                                 </div>
                                 <div class="form-actions right">
                                     <a href="/roles" >
@@ -162,7 +172,7 @@
                                     </button>
                                     </a>
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Save
+                                    <i class="la la-check-square-o"></i> Update
                                     </button>
                                 </div>
 							</form>
@@ -179,53 +189,13 @@
 </div>
 
 <script>
-function checkAll(obj){
-    if ( $(obj).prop('checked') == true ) {
-        $('input:checkbox').attr('checked','checked');
-        $( '.cekAllPrivileges' ).val('allow');
-        $( '.bootstrap-switch' ).removeClass('bootstrap-switch-off');
-        $( '.bootstrap-switch' ).addClass('bootstrap-switch-on');
-        $( '.bootstrap-switch-container' ).css('margin-left','0px');
-    } else {
-        $( '.bootstrap-switch' ).addClass('bootstrap-switch-off');
-        $( '.bootstrap-switch' ).removeClass('bootstrap-switch-on');
-        $( '.bootstrap-switch-container' ).css('margin-left','-75px');
-        $('input:checkbox').removeAttr('checked');
-        $( '.cekAllPrivileges' ).val('deny');
-    }
-}
-function checkCard(obj)
-{
-    let id = obj.id;
-    alert(id);
-    if ( $(obj).prop('checked') == true ) {
-        $('input:checkbox').attr('checked','checked');
-        $( "."+id ).val('allow');
-        // $( '.bootstrap-switch' ).removeClass('bootstrap-switch-off');
-        // $( '.bootstrap-switch' ).addClass('bootstrap-switch-on');
-        // $( '.bootstrap-switch-container' ).css('margin-left','0px');
-    } else {
-        // $( '.bootstrap-switch' ).addClass('bootstrap-switch-off');
-        // $( '.bootstrap-switch' ).removeClass('bootstrap-switch-on');
-        // $( '.bootstrap-switch-container' ).css('margin-left','-75px');
-        $('input:checkbox').removeAttr('checked');
-        $( "."+id  ).val('deny');
-    }
-}
-function checkManual(obj){
-    if ( $(obj).prop('checked') == true ) {
-        $( obj ).val('allow');
-    } else {
-        $( obj ).val('deny');
-    }
-}
  duplicateName = true;
     function validateNow() {
         let role = 0;
         flag = deforayValidator.init({
-            formId: 'addroles'
+            formId: 'editroles'
         });
-        var n = $("input:checked").length;
+        var n = $("input:checked").length;    
         if(flag==true)
         {
             if(n == 0) {
@@ -238,7 +208,7 @@ function checkManual(obj){
         }
         if (flag == true) {
             if (duplicateName) {
-                document.getElementById('addroles').submit();
+                document.getElementById('editroles').submit();
             }
         }
         else{
@@ -247,17 +217,13 @@ function checkManual(obj){
             else
     			$(".infocus").focus();
             $('#show_alert').html(flag).delay(3000).fadeOut();
-			$('#show_alert').css("display","block");
+            $('#show_alert').css("display","block");
         }
     }
 
-    function duplicateValidation(tableName, fieldName, obj,fnct, msg)
-    {
-        // alert(fnct)
+    function checkNameValidation(tableName, fieldName, obj, fnct, msg){
         checkValue = document.getElementById(obj).value;
-        // alert(checkValue)
-        if(checkValue!='')
-        {
+    	if($.trim(checkValue)!= ''){
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -267,7 +233,7 @@ function checkManual(obj){
                 url: "{{ url('/checkNameValidation') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                    tableName: tableName, fieldName: fieldName, value: checkValue,fnct: fnct,
                 },
                 success: function(result){
                     console.log(result)
@@ -286,7 +252,29 @@ function checkManual(obj){
                     }
                 }
             });
-        }
+    	}
     }
+    function checkAll(obj){
+    if ( $(obj).prop('checked') == true ) {
+        $('input:checkbox').attr('checked','checked');
+        $( '.cekAllPrivileges' ).val('allow');
+        $( '.bootstrap-switch' ).removeClass('bootstrap-switch-off');
+        $( '.bootstrap-switch' ).addClass('bootstrap-switch-on');
+        $( '.bootstrap-switch-container' ).css('margin-left','0px');
+    } else {
+        $( '.bootstrap-switch' ).addClass('bootstrap-switch-off');
+        $( '.bootstrap-switch' ).removeClass('bootstrap-switch-on');
+        $( '.bootstrap-switch-container' ).css('margin-left','-75px');
+        $('input:checkbox').removeAttr('checked');
+        $( '.cekAllPrivileges' ).val('deny');
+    }
+}
+function checkManual(obj){
+    if ( $(obj).prop('checked') == true ) {
+        $( obj ).val('allow');
+    } else {
+        $( obj ).val('deny');
+    }
+}
 </script>
 @endsection
