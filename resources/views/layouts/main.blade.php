@@ -12,7 +12,14 @@
 
     </head>
     <style>
+    .white {
+        color:white;
+    }
     .mandatory{color: #f30f00;}
+
+    .single:hover{
+      background-color: rgba(255, 255, 255, 0.05);
+    }
   
   /* .select2-selection__clear{display:none;}
   .firstcaps{text-transform:capitalize;}
@@ -70,51 +77,14 @@ background-color: #f2f3f5;
   </body>
 </html>
 <script>
-//   $(document).ready(function() {
-//     var path = '<?php echo Request::path();?>';
-//     var splitUrl = path.split('/');
-//     if(splitUrl[0]=="dashboard")
-//     {
-//       $("#dashboard").addClass('active');  
-//     }
-//     else if(splitUrl[0]=="roles" || splitUrl[0]=="customermoudetails" || splitUrl[0]=="agents" ||splitUrl[0]=="agentkeyperson" ||splitUrl[0]=="agentsuppliermap" ||splitUrl[0]=="suppliers" ||splitUrl[0]=="locations" ||splitUrl[0]=="plants" ||splitUrl[0]=="customergroup" ||splitUrl[0]=="customers" ||splitUrl[0]=="rsc" ||splitUrl[0]=="dopw" ||splitUrl[0]=="globalconfig" ||splitUrl[0]=="holidaymaster" ||splitUrl[0]=="endproduct" ||splitUrl[0]=="mailtemplate")
-//     {
-//       $("#manage").addClass('open');
-//       $("#"+splitUrl[0]).addClass('active');
-//     }
-//     else if(splitUrl[0]=="orders" ||splitUrl[0]=="sales" ||splitUrl[0]=="sto_orders"||splitUrl[0]=="sto_sales"||splitUrl[0]=="customerindentorder")
-//     {
-//       $("#transactions").addClass('open');
-//       $("#"+splitUrl[0]).addClass('active');
-//     }
-//     else if(splitUrl[0]=="sectors" ||splitUrl[0]=="products" ||splitUrl[0]=="grade_category" ||splitUrl[0]=="grades" ||splitUrl[0]=="grade_price")
-//     {
-//       $("#product").addClass('open');
-//       $("#"+splitUrl[0]).addClass('active');
-//     }
-//     else if(splitUrl[0]=="mou")
-//     {
-//       $("#moudash").addClass('open');
-//       $("#"+splitUrl[0]).addClass('active');
-//     }
-//     else if(splitUrl[0]=="qtydiscount")
-//     {
-//       $("#discount").addClass('open');
-//       $("#"+splitUrl[0]).addClass('active');
-//     }
-//     else if(splitUrl[0]=="reports")
-//     {
-//       $("#report").addClass('open');
-//       $("#"+splitUrl[1]).addClass('active');
-//     }
-//     else if(splitUrl[0]=="ioclpayment")
-//     {
-//       $("#ioclpaymentmanagement").addClass('open');
-//       $("#"+splitUrl[0]).addClass('active');
-//     }
-    
-
-//   });
+  $(document).ready(function() {
+    var path = '<?php echo Request::path();?>';
+    var splitUrl = path.split('/');
+    if(splitUrl[0]=="dashboard")
+    {
+      $("#dashboard").addClass('active');  
+    }
+  });
 
   // $(function(){
   //   $(".isRequired").on("blur", function(){ 
