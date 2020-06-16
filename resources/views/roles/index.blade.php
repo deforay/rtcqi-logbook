@@ -1,7 +1,7 @@
 <!-- 
     Author             : Sudarmathi M
     Date               : 15 June 2020
-    Description        : Rsc view screen
+    Description        : Roles view screen
     Last Modified Date : 15 June 2020
     Last Modified Name : Sudarmathi M
 -->
@@ -54,37 +54,18 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="roleTable">
+                                    <table class="table table-striped table-bordered zero-configuration" id="rolesList">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                <th>Role Name</th>
+                                                <th>Role Code</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
+
                                         </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Salary</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -101,7 +82,7 @@
       $('#roleTable').DataTable({
         });
     $.blockUI();
-    // getRole();
+    getRole();
     $.unblockUI();
     });
     function getRole()

@@ -29,6 +29,7 @@ class RolesTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        $commonservice = new CommonService();
         // dd($data);
         if ($request->input('roleName')!=null && trim($request->input('roleName')) != '') {
             $id = DB::table('roles')->insertGetId(
@@ -36,6 +37,7 @@ class RolesTable extends Model
                 'role_code' => $data['roleCode'],
                 'role_description' => $data['Description'],
                 'role_status' => $data['rolesStatus'],
+                'created_on' => $commonservice->getDateTime(),
                 ]
             );
 
@@ -70,5 +72,53 @@ class RolesTable extends Model
             error_log($exc->getMessage());
             error_log($exc->getTraceAsString());
         }
+    }
+
+    // Fetch All Roles List
+    public function fetchAllRole()
+    {
+        $data = DB::table('roles')
+                ->get();
+        return $data;
+    }
+
+    // Fetch All Active Roles List
+    public function fetchAllActiveRole()
+    {
+        $data = DB::table('roles')
+                ->where('role_status','=','active')
+                ->get();
+        return $data;
+    }
+
+     // fetch particular roles details
+     public function fetchRolesById($id)
+     {
+         $id = base64_decode($id);
+         $data = DB::table('roles')
+                 ->where('role_id', '=',$id )->get();
+         return $data;
+     }
+ 
+     // Update particular roles details
+    public function updateRoles($params,$id)
+    {
+        $commonservice = new CommonService();
+        $data = $params->all();
+        if ($params->input('eroleName')!=null && trim($params->input('eroleName')) != '') {
+            $response = DB::table('roles')
+                ->where('role_id', '=',base64_decode($id))
+                ->update(
+                ['role_name' => $data['eroleName'],
+                'role_code' => $data['roleCode'],
+                'role_description' => $data['eDescription'],
+                'role_status' => $data['erolesStatus'],
+                'updated_on' => $commonservice->getDateTime(),
+                ]);
+
+        $commonservice = new CommonService();
+        $commonservice->eventLog(session('userId'), base64_decode($id), 'Role-update', 'Update Role '.$data['eroleName'], 'Role');
+        }
+        return 1;
     }
 }

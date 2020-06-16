@@ -236,6 +236,12 @@ class CommonService
         return $eventResult;
     }
 
+    public function getDateTime($timezone = 'Asia/Calcutta')
+    {
+        $date = new \DateTime(date('Y-m-d H:i:s'), new \DateTimeZone($timezone));
+        return $date->format('Y-m-d H:i:s');
+    }
+
 }
 
 ?>
