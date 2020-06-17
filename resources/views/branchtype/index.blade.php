@@ -1,8 +1,8 @@
 <!-- 
     Author             : Sudarmathi M
-    Date               : 15 June 2020
-    Description        : Roles view screen
-    Last Modified Date : 15 June 2020
+    Date               : 17 June 2020
+    Description        : Branch Type view screen
+    Last Modified Date : 17 June 2020
     Last Modified Name : Sudarmathi M
 -->
 
@@ -17,19 +17,19 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/roles/">Role</a>
+                        <li class="breadcrumb-item"><a href="/branchtype/">Branch Type</a>
                         </li>
                         <li class="breadcrumb-item active">Manage
                         </li>
                     </ol>
                 </div>
             </div>
-            <h3 class="content-header-title mb-0">Role Details</h3>
+            <h3 class="content-header-title mb-0">Branch Type Details</h3>
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-                <a href="/roles/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add Role</b></a>
+                <a href="/branchtype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-user-plus icon-left"></i> Add Branch Type</b></a>
             </div>
         </div>
     </div>
@@ -67,11 +67,10 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="rolesList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="branchTypeList">
                                         <thead>
                                             <tr>
-                                                <th>Role Name</th>
-                                                <th>Role Code</th>
+                                                <th>Branch Type Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -93,31 +92,30 @@
   <script>
     $(document).ready(function() {
     $.blockUI();
-    getRole();
+    getAllBranchType();
     $.unblockUI();
     });
-    function getRole()
+    function getAllBranchType()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#rolesList').DataTable({
+      $('#branchTypeList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getRole") }}',
+                url:'{{ url("getAllBranchType") }}',
                 type: 'POST',
             },
             columns: [
                     
-                    { data: 'role_name', name: 'role_name',className:'firstcaps' },
-                    { data: 'role_code', name: 'role_code' },
-                    { data: 'role_status', name: 'role_status',className:'firstcaps' },
+                    { data: 'branch_type', name: 'branch_type',className:'firstcaps' },
+                    { data: 'status', name: 'status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]
@@ -162,10 +160,11 @@
                           tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
                       },
                       success: function(result){
+                        // getAllBranchType();
                         $("#showAlertIndex").text('Status has been changed to '+fieldVal);
                         $('#showAlertdiv').show();
                         $('#showAlertdiv').delay(3000).fadeOut();
-                        $('#rolesList').DataTable().ajax.reload();
+                        $('#branchTypeList').DataTable().ajax.reload();
                       }
                   });
               }

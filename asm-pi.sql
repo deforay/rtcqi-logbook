@@ -451,3 +451,5 @@ ALTER TABLE `roles` ADD `role_description` VARCHAR(1000) NULL AFTER `role_code`;
 ALTER TABLE `roles` ADD `role_status` VARCHAR(255) NOT NULL AFTER `role_description`;
 
 ALTER TABLE `roles` ADD `created_on` DATETIME NULL AFTER `role_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+ALTER TABLE `branch_types` ADD `created_on` DATETIME NULL AFTER `status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
