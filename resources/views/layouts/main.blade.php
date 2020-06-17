@@ -21,8 +21,8 @@
       background-color: rgba(255, 255, 255, 0.05);
     }
   
+    .firstcaps{text-transform:capitalize;}
   /* .select2-selection__clear{display:none;}
-  .firstcaps{text-transform:capitalize;}
   #show_alert{display:none;}
   .spanFont{font-size:16px;}
   .select2-container--default{width:100% !important;}
