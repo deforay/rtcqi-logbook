@@ -1,8 +1,8 @@
 <!-- 
     Author             : Sudarmathi M
-    Date               : 17 June 2020
-    Description        : Branch Type view screen
-    Last Modified Date : 17 June 2020
+    Date               : 18 June 2020
+    Description        : User view screen
+    Last Modified Date : 18 June 2020
     Last Modified Name : Sudarmathi M
 -->
 
@@ -13,23 +13,23 @@
 
 <div class="content-wrapper">
     <div class="content-header row">
-        <div class="content-header-left col-md-8 col-12 mb-2">
+        <div class="content-header-left col-md-6 col-12 mb-2">
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item"><a href="/user/">User</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="/branchtype/">Branch Type</a>
+                        <li class="breadcrumb-item active">Manage
                         </li>
                     </ol>
                 </div>
             </div>
-            
+            <h3 class="content-header-title mb-0">User Details</h3>
         </div>
-        <div class="content-header-right col-md-4 col-12 ">
+        <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-                <a href="/branchtype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add Branch Type</b></a>
+                <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
             </div>
         </div>
     </div>
@@ -54,7 +54,6 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Branch Type Details</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -68,10 +67,14 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="branchTypeList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="userList">
                                         <thead>
                                             <tr>
-                                                <th>Branch Type Name</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Mobile No</th>
+                                                <th>Email</th>
+                                                <th>User Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -92,35 +95,89 @@
 </div>
   <script>
     $(document).ready(function() {
-    $.blockUI();
-    getAllBranchType();
-    $.unblockUI();
+        $.blockUI();
+        getAllUser();
+        $.unblockUI();
     });
-    function getAllBranchType()
+    function getAllUser()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#branchTypeList').DataTable({
+      $('#userList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllBranchType") }}',
+                url:'{{ url("getAllUser") }}',
                 type: 'POST',
             },
             columns: [
                     
-                    { data: 'branch_type', name: 'branch_type',className:'firstcaps' },
-                    { data: 'branch_type_status', name: 'branch_type_status',className:'firstcaps' },
+                    { data: 'first_name', name: 'first_name',className:'firstcaps' },
+                    { data: 'last_name', name: 'last_name',className:'firstcaps' },
+                    { data: 'phone', name: 'phone'},
+                    { data: 'email', name: 'email'},
+                    { data: 'login_id', name: 'login_id',className:'firstcaps' },
+                    { data: 'user_status', name: 'user_status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]
         });
+    }
+
+    function changeStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal,functionName)
+    {
+       
+        if(fieldIdValue!='')
+        {
+
+          swal("Are you sure you want to make "+fieldVal+" this?", {
+          buttons: {
+            cancel: {
+                text: "No, Don't change pls!",
+                value: null,
+                visible: true,
+                className: "btn-warning",
+                closeModal: true,
+            },
+            confirm: {
+                text: "Yes, Change it!",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+            }
+          }
+        })
+        .then(isConfirm => {
+          if (isConfirm) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                $.ajax({
+                      url: "{{ url('/changeStatus') }}",
+                      method: 'post',
+                      data: {
+                          tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
+                      },
+                      success: function(result){
+                        // getAllUser();
+                        $("#showAlertIndex").text('Status has been changed to '+fieldVal);
+                        $('#showAlertdiv').show();
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                        $('#userList').DataTable().ajax.reload();
+                      }
+                  });
+              }
+          });
+        }
     }
   </script>
 @endsection
