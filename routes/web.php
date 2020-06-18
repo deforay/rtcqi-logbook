@@ -32,3 +32,25 @@ Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');
 Route::post('/duplicateValidation', 'Common\CommonController@duplicateValidation');
 Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation');
 Route::post('/changeStatus', 'Common\CommonController@changeStatus');
+
+//Vendorstype
+Route::get('/vendorstype', 'VendorsType\VendorsTypeController@index')->name('vendorstype.index');
+Route::post('/getAllVendorType', 'VendorsType\VendorsTypeController@getAllVendorType');
+
+Route::post('/vendorstype/add', 'VendorsType\VendorsTypeController@add');
+Route::get('/vendorstype/add', 'VendorsType\VendorsTypeController@add');
+
+Route::get('/vendorstype/edit/{id}', 'VendorsType\VendorsTypeController@edit');
+Route::post('/vendorstype/edit/{id}', 'VendorsType\VendorsTypeController@edit');
+
+
+
+//Vendors
+Route::get('/vendors', 'Vendors\VendorsController@index')->name('vendors.index');
+Route::post('/getVendors', 'Vendors\VendorsController@getVendors');
+
+Route::post('/vendors/add', 'Vendors\VendorsController@add');
+Route::get('/vendors/add', 'Vendors\VendorsController@add');
+
+Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
+Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');

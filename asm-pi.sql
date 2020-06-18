@@ -451,3 +451,7 @@ ALTER TABLE `roles` ADD `role_description` VARCHAR(1000) NULL AFTER `role_code`;
 ALTER TABLE `roles` ADD `role_status` VARCHAR(255) NOT NULL AFTER `role_description`;
 
 ALTER TABLE `roles` ADD `created_on` DATETIME NULL AFTER `role_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'Vendors', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
