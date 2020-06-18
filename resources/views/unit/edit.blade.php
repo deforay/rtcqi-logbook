@@ -133,7 +133,7 @@
                 url: "{{ url('/checkNameValidation') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                    tableName: tableName, fieldName: fieldName, value: checkValue,fnct :fnct
                 },
                 success: function(result){
                     console.log(result)
