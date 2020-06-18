@@ -66,6 +66,22 @@ Route::post('/getAllItemType', 'ItemType\ItemTypeController@getAllItemType');
 Route::get('/itemType/edit/{id}', 'ItemType\ItemTypeController@edit');
 Route::post('/itemType/edit/{id}', 'ItemType\ItemTypeController@edit');
 
+//Vendorstype
+Route::get('/vendorstype', 'VendorsType\VendorsTypeController@index')->name('vendorstype.index');
+Route::post('/getAllVendorType', 'VendorsType\VendorsTypeController@getAllVendorType');
+Route::post('/vendorstype/add', 'VendorsType\VendorsTypeController@add');
+Route::get('/vendorstype/add', 'VendorsType\VendorsTypeController@add');
+Route::get('/vendorstype/edit/{id}', 'VendorsType\VendorsTypeController@edit');
+Route::post('/vendorstype/edit/{id}', 'VendorsType\VendorsTypeController@edit');
+
+//Vendors
+Route::get('/vendors', 'Vendors\VendorsController@index')->name('vendors.index');
+Route::post('/getVendors', 'Vendors\VendorsController@getVendors');
+Route::post('/vendors/add', 'Vendors\VendorsController@add');
+Route::get('/vendors/add', 'Vendors\VendorsController@add');
+Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
+Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
+
 //brand module
 Route::get('/brand', 'Brand\BrandController@index')->name('brand.index');
 Route::post('/brand/add', 'Brand\BrandController@add');
