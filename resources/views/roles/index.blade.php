@@ -17,14 +17,14 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/roles/">Role</a>
-                        </li>
                         <li class="breadcrumb-item active">Manage
+                        </li>
+                        <li class="breadcrumb-item"><a href="/roles/">Role</a>
                         </li>
                     </ol>
                 </div>
             </div>
-            <h3 class="content-header-title mb-0">Role Details</h3>
+            
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
@@ -54,6 +54,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
+                            <h3 class="content-header-title mb-0">Role Details</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -122,55 +123,6 @@
                 ],
             order: [[0, 'desc']]
         });
-    }
-
-    function changeStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal,functionName)
-    {
-       
-        if(fieldIdValue!='')
-        {
-
-          swal("Are you sure you want to make "+fieldVal+" this?", {
-          buttons: {
-            cancel: {
-                text: "No, Don't change pls!",
-                value: null,
-                visible: true,
-                className: "btn-warning",
-                closeModal: true,
-            },
-            confirm: {
-                text: "Yes, Change it!",
-                value: true,
-                visible: true,
-                className: "",
-                closeModal: true
-            }
-          }
-        })
-        .then(isConfirm => {
-          if (isConfirm) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-                $.ajax({
-                      url: "{{ url('/changeStatus') }}",
-                      method: 'post',
-                      data: {
-                          tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
-                      },
-                      success: function(result){
-                        $("#showAlertIndex").text('Status has been changed to '+fieldVal);
-                        $('#showAlertdiv').show();
-                        $('#showAlertdiv').delay(3000).fadeOut();
-                        $('#rolesList').DataTable().ajax.reload();
-                      }
-                  });
-              }
-          });
-        }
     }
   </script>
 @endsection

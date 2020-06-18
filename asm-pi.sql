@@ -453,3 +453,7 @@ ALTER TABLE `roles` ADD `role_status` VARCHAR(255) NOT NULL AFTER `role_descript
 ALTER TABLE `roles` ADD `created_on` DATETIME NULL AFTER `role_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
 
 ALTER TABLE `branch_types` ADD `created_on` DATETIME NULL AFTER `status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+-- Prasath M 18 Jun 2020
+alter table item_categories change status item_category_status varchar(255) ;
+ALTER TABLE `item_categories` ADD `created_on` DATETIME NULL AFTER `item_category_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 

@@ -41,3 +41,11 @@ Route::get('/branchtype/add', 'BranchType\BranchTypeController@add');
 Route::post('/getAllBranchType', 'BranchType\BranchTypeController@getAllBranchType');
 Route::get('/branchtype/edit/{id}', 'BranchType\BranchTypeController@edit');
 Route::post('/branchtype/edit/{id}', 'BranchType\BranchTypeController@edit');
+
+//Item Category module
+Route::get('/itemCategory', 'ItemCategory\ItemCategoryController@index')->name('itemCategory.index');
+Route::post('/itemCategory/add', 'ItemCategory\ItemCategoryController@add');
+Route::get('/itemCategory/add', 'ItemCategory\ItemCategoryController@add');
+Route::post('/getAllItemCategory', 'ItemCategory\ItemCategoryController@getAllItemCategory');
+Route::get('/itemCategory/edit/{id}', 'ItemCategory\ItemCategoryController@edit');
+Route::post('/itemCategory/edit/{id}', 'ItemCategory\ItemCategoryController@edit');
