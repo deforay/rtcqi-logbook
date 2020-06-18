@@ -452,6 +452,17 @@ ALTER TABLE `roles` ADD `role_status` VARCHAR(255) NOT NULL AFTER `role_descript
 
 ALTER TABLE `roles` ADD `created_on` DATETIME NULL AFTER `role_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
 
+
+-- Prasath M 18 Jun 2020
+alter table item_categories change status item_category_status varchar(255) ;
+ALTER TABLE `item_categories` ADD `created_on` DATETIME NULL AFTER `item_category_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL;
+
+alter table units_of_measure change status unit_status varchar(255) ;
+ALTER TABLE `units_of_measure` ADD `created_on` DATETIME NULL AFTER `unit_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL;
+
+--sriram 18 jun 2020
+
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'Vendors', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
+
