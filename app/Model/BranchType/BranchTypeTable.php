@@ -21,7 +21,7 @@ class BranchTypeTable extends Model
         if ($request->input('branchTypeName')!=null && trim($request->input('branchTypeName')) != '') {
             $id = DB::table('branch_types')->insertGetId(
                 ['branch_type' => $data['branchTypeName'],
-                'status' => $data['branchTypeStatus'],
+                'branch_type_status' => $data['branchTypeStatus'],
                 'created_on' => $commonservice->getDateTime(),
                 ]
             );
@@ -44,7 +44,7 @@ class BranchTypeTable extends Model
     public function fetchAllActiveBranchType()
     {
         $data = DB::table('branch_types')
-                ->where('status','=','active')
+                ->where('branch_type_status','=','active')
                 ->get();
         return $data;
     }
@@ -68,7 +68,7 @@ class BranchTypeTable extends Model
                 ->where('branch_type_id', '=',base64_decode($id))
                 ->update(
                     ['branch_type' => $data['branchTypeName'],
-                    'status' => $data['branchTypeStatus'],
+                    'branch_type_status' => $data['branchTypeStatus'],
                     'updated_on' => $commonservice->getDateTime(),
                     ]);
 

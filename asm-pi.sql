@@ -466,3 +466,10 @@ INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
 
+--Sudarmathi 18 june 2020
+
+ALTER TABLE `users` CHANGE `status` `user_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'inactive';
+ALTER TABLE `users` ADD `created_on` DATETIME NULL AFTER `new field`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+ALTER TABLE `branch_types` CHANGE `status` `branch_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'active';
+

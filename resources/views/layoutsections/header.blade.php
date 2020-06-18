@@ -38,6 +38,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/timeline.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-ecommerce.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/sweetalert/sweetalert.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
 <!-- END: Page CSS-->
 
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
