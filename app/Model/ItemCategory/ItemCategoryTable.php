@@ -45,6 +45,7 @@ class ItemCategoryTable extends Model
     {
         $data = DB::table('item_categories')
                 ->where('item_category_status','=','active')
+                ->orderBy('item_category', 'asc')
                 ->get();
         return $data;
     }
