@@ -465,9 +465,13 @@ alter table brands change manufaturer_name manufacturer_name varchar(255) ;
 alter table brands change status brand_status varchar(255) ;
 ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL
 
+ALTER TABLE `items` ADD `created_on` DATETIME NULL, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL
+
 --sriram 18 jun 2020
 alter table item_types change status item_type_status varchar(255) ;
 ALTER TABLE `item_types` ADD `created_on` DATETIME NULL AFTER `item_type_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'Vendors', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
+
+

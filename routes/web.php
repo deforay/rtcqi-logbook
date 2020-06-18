@@ -89,3 +89,11 @@ Route::get('/brand/add', 'Brand\BrandController@add');
 Route::post('/getAllBrand', 'Brand\BrandController@getAllBrand');
 Route::get('/brand/edit/{id}', 'Brand\BrandController@edit');
 Route::post('/brand/edit/{id}', 'Brand\BrandController@edit');
+
+//item module
+Route::get('/item', 'Item\ItemController@index')->name('item.index');
+Route::post('/item/add', 'Item\ItemController@add');
+Route::get('/item/add', 'Item\ItemController@add');
+Route::post('/getAllItem', 'Item\ItemController@getAllItem');
+Route::get('/item/edit/{id}', 'Item\ItemController@edit');
+Route::post('/item/edit/{id}', 'Item\ItemController@edit');

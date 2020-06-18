@@ -47,6 +47,7 @@ class ItemTypeTable extends Model
     {
         $data = DB::table('item_types')
                 ->where('item_type_status','=','active')
+                ->orderBy('item_type', 'asc')
                 ->get();
         return $data;
     }
