@@ -87,7 +87,7 @@
                                             <h5>User Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="loginId" class="form-control isRequired" autocomplete="off" placeholder="Enter a user name" name="loginId" title="Please enter user name" >
+                                                <input type="text" id="loginId" class="form-control isRequired" autocomplete="off" placeholder="Enter a user name" name="loginId" title="Please enter user name" onblur="checkNameValidation('users','login_id', this.id,'','Entered user name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>

@@ -90,7 +90,7 @@
                                             <h5>User Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="loginId" value="{{$result[0]->login_id}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a user name" name="loginId" title="Please enter user name" >
+                                                <input type="text" id="loginId" value="{{$result[0]->login_id}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a user name" name="loginId" title="Please enter user name" onblur="checkNameValidation('users','login_id', this.id,'{{$fnct}}','Entered user name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -122,7 +122,7 @@
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('users','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('users','phone', this.id,'{{$fnct}}','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -131,7 +131,7 @@
 											<h5>Email <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter a Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'','Entered mail id is already exist.')">
+                                                <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter a Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'{{$fnct}}','Entered mail id is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -307,7 +307,7 @@ function isNumberKey(evt){
                 url: "{{ url('/checkNameValidation') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                    tableName: tableName, fieldName: fieldName, value: checkValue, fnct:fnct
                 },
                 success: function(result){
                     console.log(result)
