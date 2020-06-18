@@ -22,6 +22,8 @@
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/brand/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Brand</span></span></a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/item/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item</span></span></a>
+                </li>
             </ul>
         </li>
         </ul>

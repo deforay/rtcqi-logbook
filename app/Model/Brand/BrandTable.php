@@ -45,7 +45,8 @@ class BrandTable extends Model
     public function fetchAllActiveBrand()
     {
         $data = DB::table('brands')
-                ->where('Brandy_status','=','active')
+                ->where('Brand_status','=','active')
+                ->orderBy('brand_name', 'asc')
                 ->get();
         return $data;
     }
