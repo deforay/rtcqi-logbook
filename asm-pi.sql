@@ -457,3 +457,6 @@ ALTER TABLE `branch_types` ADD `created_on` DATETIME NULL AFTER `status`, ADD `u
 -- Prasath M 18 Jun 2020
 alter table item_categories change status item_category_status varchar(255) ;
 ALTER TABLE `item_categories` ADD `created_on` DATETIME NULL AFTER `item_category_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
+
+alter table units_of_measure change status unit_status varchar(255) ;
+ALTER TABLE `units_of_measure` ADD `created_on` DATETIME NULL AFTER `unit_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
