@@ -8,6 +8,8 @@
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/roles/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Role</span></span></a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/user/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>User</span></span></a>
+                </li>
                 <li data-menu=""><a class="dropdown-item" href="/branchtype/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Branch Type</span></span></a>
                 </li>
             </ul>

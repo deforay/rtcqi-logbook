@@ -51,11 +51,11 @@ class BranchTypeController extends Controller
                         // }else{
                         //     $button .= '';
                         // }
-                        if($data->status == 'active'){
-                            $buttonStatus="changeStatus('branch_types','branch_type_id',$data->branch_type_id,'status', 'inactive', 'branchTypeList')";
+                        if($data->branch_type_status == 'active'){
+                            $buttonStatus="changeStatus('branch_types','branch_type_id',$data->branch_type_id,'branch_type_status', 'inactive', 'branchTypeList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->branch_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
                         }else{
-                            $buttonStatus="changeStatus('branch_types','branch_type_id',$data->branch_type_id,'status', 'active', 'branchTypeList')";
+                            $buttonStatus="changeStatus('branch_types','branch_type_id',$data->branch_type_id,'branch_type_status', 'active', 'branchTypeList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->branch_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
                         }
                         $button .= '</div>';

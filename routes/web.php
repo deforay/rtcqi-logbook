@@ -90,6 +90,7 @@ Route::post('/getAllBrand', 'Brand\BrandController@getAllBrand');
 Route::get('/brand/edit/{id}', 'Brand\BrandController@edit');
 Route::post('/brand/edit/{id}', 'Brand\BrandController@edit');
 
+
 //item module
 Route::get('/item', 'Item\ItemController@index')->name('item.index');
 Route::post('/item/add', 'Item\ItemController@add');
@@ -97,3 +98,10 @@ Route::get('/item/add', 'Item\ItemController@add');
 Route::post('/getAllItem', 'Item\ItemController@getAllItem');
 Route::get('/item/edit/{id}', 'Item\ItemController@edit');
 Route::post('/item/edit/{id}', 'Item\ItemController@edit');
+//user module
+Route::get('/user', 'User\UserController@index')->name('user.index');
+Route::post('/user/add', 'User\UserController@add');
+Route::get('/user/add', 'User\UserController@add');
+Route::post('/getAllUser', 'User\UserController@getAllUser');
+Route::get('/user/edit/{id}', 'User\UserController@edit');
+Route::post('/user/edit/{id}', 'User\UserController@edit');
