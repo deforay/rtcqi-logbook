@@ -12,7 +12,7 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown nav-item" data-menu="dropdown" id="item"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="la la-cogs"></i><span data-i18n="Templates">Item</span></a>
+        <li class="dropdown nav-item" data-menu="dropdown" id="item"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="ft-life-buoy"></i><span data-i18n="Templates">Item</span></a>
             <ul class="dropdown-menu">
                 <li data-menu=""><a class="dropdown-item" href="/itemCategory/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item Category</span></span></a>
                 </li>

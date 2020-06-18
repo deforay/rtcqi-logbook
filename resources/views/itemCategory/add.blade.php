@@ -1,7 +1,7 @@
 <!-- 
     Author             : Prasath M
     Date               : 18 June 2020
-    Description        : Branch Type add screen
+    Description        : Item Category add screen
     Last Modified Date : 18 June 2020
     Last Modified Name : Prasath M
 -->
@@ -17,7 +17,7 @@
 			<ol class="breadcrumb">
 			<li class="breadcrumb-item">Manage
 			</li>
-			<li class="breadcrumb-item"><a href="/itemCategory/">Branch Type</a>
+			<li class="breadcrumb-item"><a href="/itemCategory/">Item Category</a>
 			</li>
 			<li class="breadcrumb-item active">Add</li>
 			</ol>
