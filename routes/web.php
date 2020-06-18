@@ -81,3 +81,11 @@ Route::post('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
+
+//user module
+Route::get('/user', 'User\UserController@index')->name('user.index');
+Route::post('/user/add', 'User\UserController@add');
+Route::get('/user/add', 'User\UserController@add');
+Route::post('/getAllUser', 'User\UserController@getAllUser');
+Route::get('/user/edit/{id}', 'User\UserController@edit');
+Route::post('/user/edit/{id}', 'User\UserController@edit');
