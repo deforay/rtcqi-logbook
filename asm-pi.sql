@@ -463,3 +463,7 @@ ALTER TABLE `units_of_measure` ADD `created_on` DATETIME NULL AFTER `unit_status
 
 alter table item_types change status item_type_status varchar(255) ;
 ALTER TABLE `item_types` ADD `created_on` DATETIME NULL AFTER `item_type_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
+
+alter table brands change manufaturer_name manufacturer_name varchar(255) ;
+alter table brands change status brand_status varchar(255) ;
+ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 

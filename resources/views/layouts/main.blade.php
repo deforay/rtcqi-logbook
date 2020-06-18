@@ -87,7 +87,7 @@ background-color: #f2f3f5;
     {
       $("#manage").addClass('active');  
     }
-    else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType" || splitUrl[0]=="unit")
+    else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType" || splitUrl[0]=="unit" || splitUrl[0]=="brand")
     {
       $("#item").addClass('active');  
     }

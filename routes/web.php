@@ -65,3 +65,11 @@ Route::get('/itemType/add', 'ItemType\ItemTypeController@add');
 Route::post('/getAllItemType', 'ItemType\ItemTypeController@getAllItemType');
 Route::get('/itemType/edit/{id}', 'ItemType\ItemTypeController@edit');
 Route::post('/itemType/edit/{id}', 'ItemType\ItemTypeController@edit');
+
+//brand module
+Route::get('/brand', 'Brand\BrandController@index')->name('brand.index');
+Route::post('/brand/add', 'Brand\BrandController@add');
+Route::get('/brand/add', 'Brand\BrandController@add');
+Route::post('/getAllBrand', 'Brand\BrandController@getAllBrand');
+Route::get('/brand/edit/{id}', 'Brand\BrandController@edit');
+Route::post('/brand/edit/{id}', 'Brand\BrandController@edit');
