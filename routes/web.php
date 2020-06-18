@@ -57,3 +57,11 @@ Route::get('/unit/add', 'Unit\UnitController@add');
 Route::post('/getAllUnit', 'Unit\UnitController@getAllUnit');
 Route::get('/unit/edit/{id}', 'Unit\UnitController@edit');
 Route::post('/unit/edit/{id}', 'Unit\UnitController@edit');
+
+//itemType module
+Route::get('/itemType', 'ItemType\ItemTypeController@index')->name('itemType.index');
+Route::post('/itemType/add', 'ItemType\ItemTypeController@add');
+Route::get('/itemType/add', 'ItemType\ItemTypeController@add');
+Route::post('/getAllItemType', 'ItemType\ItemTypeController@getAllItemType');
+Route::get('/itemType/edit/{id}', 'ItemType\ItemTypeController@edit');
+Route::post('/itemType/edit/{id}', 'ItemType\ItemTypeController@edit');

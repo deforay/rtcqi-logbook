@@ -460,3 +460,6 @@ ALTER TABLE `item_categories` ADD `created_on` DATETIME NULL AFTER `item_categor
 
 alter table units_of_measure change status unit_status varchar(255) ;
 ALTER TABLE `units_of_measure` ADD `created_on` DATETIME NULL AFTER `unit_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
+
+alter table item_types change status item_type_status varchar(255) ;
+ALTER TABLE `item_types` ADD `created_on` DATETIME NULL AFTER `item_type_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
