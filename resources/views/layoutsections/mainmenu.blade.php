@@ -18,6 +18,8 @@
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/itemType/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item Type</span></span></a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/unit/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Unit</span></span></a>
+                </li>
             </ul>
         </li>
         </ul>

@@ -49,3 +49,11 @@ Route::get('/itemCategory/add', 'ItemCategory\ItemCategoryController@add');
 Route::post('/getAllItemCategory', 'ItemCategory\ItemCategoryController@getAllItemCategory');
 Route::get('/itemCategory/edit/{id}', 'ItemCategory\ItemCategoryController@edit');
 Route::post('/itemCategory/edit/{id}', 'ItemCategory\ItemCategoryController@edit');
+
+//unit module
+Route::get('/unit', 'Unit\UnitController@index')->name('unit.index');
+Route::post('/unit/add', 'Unit\UnitController@add');
+Route::get('/unit/add', 'Unit\UnitController@add');
+Route::post('/getAllUnit', 'Unit\UnitController@getAllUnit');
+Route::get('/unit/edit/{id}', 'Unit\UnitController@edit');
+Route::post('/unit/edit/{id}', 'Unit\UnitController@edit');
