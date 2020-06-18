@@ -83,6 +83,13 @@ background-color: #f2f3f5;
     if(splitUrl[0]=="dashboard")
     {
       $("#dashboard").addClass('active');  
+    }else if(splitUrl[0]=="roles" || splitUrl[0]=="branchtype")
+    {
+      $("#manage").addClass('active');  
+    }
+    else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType")
+    {
+      $("#item").addClass('active');  
     }
   });
 
@@ -126,6 +133,55 @@ background-color: #f2f3f5;
     return false;
 
   }
+
+  function changeStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal, dataTableName)
+    {
+        if(fieldIdValue!='')
+        {
+
+          swal("Are you sure you want to make "+fieldVal+" this?", {
+          buttons: {
+            cancel: {
+                text: "No, Don't change pls!",
+                value: null,
+                visible: true,
+                className: "btn-warning",
+                closeModal: true,
+            },
+            confirm: {
+                text: "Yes, Change it!",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+            }
+          }
+        })
+        .then(isConfirm => {
+          if (isConfirm) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                $.ajax({
+                      url: "{{ url('/changeStatus') }}",
+                      method: 'post',
+                      data: {
+                          tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
+                      },
+                      success: function(result){
+                        // getAllItemCategory();
+                        $("#showAlertIndex").text('Status has been changed to '+fieldVal);
+                        $('#showAlertdiv').show();
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                        $('#'+dataTableName).DataTable().ajax.reload();
+                      }
+                  });
+              }
+          });
+        }
+    }
   
  
   </script>
