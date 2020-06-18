@@ -82,6 +82,14 @@ Route::get('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 
+//brand module
+Route::get('/brand', 'Brand\BrandController@index')->name('brand.index');
+Route::post('/brand/add', 'Brand\BrandController@add');
+Route::get('/brand/add', 'Brand\BrandController@add');
+Route::post('/getAllBrand', 'Brand\BrandController@getAllBrand');
+Route::get('/brand/edit/{id}', 'Brand\BrandController@edit');
+Route::post('/brand/edit/{id}', 'Brand\BrandController@edit');
+
 //user module
 Route::get('/user', 'User\UserController@index')->name('user.index');
 Route::post('/user/add', 'User\UserController@add');
