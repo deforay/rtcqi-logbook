@@ -1,7 +1,7 @@
 <!-- 
     Author             : Sriram V
     Date               : 18 Jun 2020
-    Description        : locations Edit screen
+    Description        : Vendor Type Edit screen
     Last Modified Date : 
     Last Modified Name : 
 -->

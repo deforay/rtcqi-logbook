@@ -55,10 +55,12 @@ class CountriesController extends Controller
                 // }
 
                 if ($data->status == 'active') {
-                    $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'status', 'inactive')";
+                    // $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'status', 'inactive')";
+                    $buttonStatus="changeStatus('countries','country_id',$data->country_id,'country_status', 'inactive', 'countryList')";
                     $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->country_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
                 } else {
-                    $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'status', 'active')";
+                    // $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'status', 'active')";
+                    $buttonStatus="changeStatus('countries','country_id',$data->country_id,'country_status', 'active', 'countryList')";
                     $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->country_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-success btn-sm">Change to Active</button>';
                 }
                 $button .= '</div>';
