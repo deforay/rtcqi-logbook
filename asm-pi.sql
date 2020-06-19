@@ -495,3 +495,5 @@ ALTER TABLE `branches` CHANGE `branch_type` `branch_type_id` INT(11) NOT NULL;
 --sriram 19 june 2020
 ALTER TABLE `vendor_types` CHANGE `status` `vendor_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE `vendors` CHANGE `status` `vendor_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `vendor_types` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `vendor_type_status`;
+ALTER TABLE `vendor_types` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
