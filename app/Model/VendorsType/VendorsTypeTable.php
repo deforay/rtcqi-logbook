@@ -47,6 +47,19 @@ class VendorsTypeTable extends Model
         return $data;
     }
 
+    // Fetch All Vendor List
+    public function fetchAllActiveVendorsType()
+    {
+        $data = DB::table('vendor_types')
+            ->where('vendor_types.vendor_type_status', '=', 'active')
+            ->orderBy('vendor_type', 'asc')
+            ->get();    
+        return $data;
+    }
+
+
+
+
     // fetch particular Customer details(edit)
     public function fetchVendorsTypeById($id)
     {

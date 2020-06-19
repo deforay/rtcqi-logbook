@@ -483,3 +483,6 @@ ALTER TABLE `countries` ADD `status` VARCHAR(255) NULL DEFAULT NULL AFTER `count
 ALTER TABLE `countries` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `status`;
 ALTER TABLE `countries` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
 
+ALTER TABLE `countries` CHANGE `status` `country_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `vendor_types` CHANGE `status` `vendor_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+

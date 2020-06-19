@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Model\Countries;
+
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CountriesService;
@@ -40,6 +42,16 @@ class CountriesTable extends Model
     public function fetchAllCountries()
     {
         $data = DB::table('countries')
+            ->orderBy('country_name', 'asc')
+            ->get();
+        return $data;
+    }
+
+    // Fetch All Active Countries List
+    public function fetchAllActiveCountries()
+    {
+        $data = DB::table('countries')
+            ->where('countries.country_status', '=', 'active')
             ->orderBy('country_name', 'asc')
             ->get();
         return $data;
