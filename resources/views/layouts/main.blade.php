@@ -191,4 +191,41 @@ ismob = true;
             return false;
         return true;
     }
+
+    function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,fnct:fnct
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
+
   </script>
