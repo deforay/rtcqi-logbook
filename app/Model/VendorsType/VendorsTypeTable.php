@@ -23,8 +23,9 @@ class VendorsTypeTable extends Model
         if ($request->input('vendorType') != null && trim($request->input('vendorType')) != '') {
             $id = DB::table('vendor_types')->insertGetId(
                 [
-                    'vendor_type' => $data['vendorType'],
-                    'status' => $data['status'],
+                    'vendor_type'    => $data['vendorType'],
+                    'status'         => $data['status'],
+                    'created_on'     => $common->getDateTime(),
                 ]
             );
             if ($id) {
@@ -57,10 +58,7 @@ class VendorsTypeTable extends Model
         return $data;
     }
 
-
-
-
-    // fetch particular Customer details(edit)
+    // fetch particular Vendor details(edit)
     public function fetchVendorsTypeById($id)
     {
         $id = base64_decode($id);
@@ -69,7 +67,7 @@ class VendorsTypeTable extends Model
         return $data;
     }
 
-    // Update particular customer details
+    // Update particular Vendor details
     public function updateVendorsType($params, $id)
     {
 
@@ -77,10 +75,12 @@ class VendorsTypeTable extends Model
         $data = $params->all();
         $vendorUp = '';
         //Vendor details
+        $commonservice = new CommonService();
         if ($params->input('vendorType') != null && trim($params->input('vendorType')) != '') {
             $params = array(
-                'vendor_type' => $data['vendorType'],
-                'status'      => $data['status'],
+                'vendor_type'    => $data['vendorType'],
+                'status'         => $data['status'],
+                'updated_on'     => $commonservice->getDateTime(),
             );
             $vendorUp = DB::table('vendor_types')
                 ->where('vendor_type_id', '=', base64_decode($id))
