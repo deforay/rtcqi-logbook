@@ -466,3 +466,6 @@ INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
 
+ALTER TABLE `countries` ADD `status` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`;
+ALTER TABLE `countries` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `status`;
+ALTER TABLE `countries` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
