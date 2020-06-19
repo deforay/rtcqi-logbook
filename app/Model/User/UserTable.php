@@ -38,6 +38,19 @@ class UserTable extends Model
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $id, 'User-add', 'Add User '.$data['loginId'], 'User');
         }
+
+        if ($request->input('branches')!=null) {
+            for($k=0;$k<count($data['branches']);$k++){
+                $map = DB::table('user_branch_map')->insertGetId(
+                        [
+                        'user_id' => $id,
+                        'branch_id' => $data['branches'][$k],
+                        ]
+                    );
+            }
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), $id, 'UserBranch-Map', 'Map  '.$data['loginId'], 'User Branch Map');
+        }
         return $id;
     }
 
@@ -63,7 +76,9 @@ class UserTable extends Model
      {
          $id = base64_decode($id);
          $data = DB::table('users')
-                 ->where('user_id', '=',$id )->get();
+                ->join('user_branch_map', 'users.user_id', '=', 'user_branch_map.user_id')
+                ->where('users.user_id', '=',$id )
+                ->get();
          return $data;
      }
  
@@ -94,6 +109,30 @@ class UserTable extends Model
 
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'User-update', 'Update User '.$data['loginId'], 'User');
+        }
+        if ($params->input('branches')!=null) {
+            $branches = $data['branches'];
+            $users = DB::table('user_branch_map')
+                    ->where('user_id','=', base64_decode($id))
+                    ->get();
+            $users = $users->toArray();
+            if(count($users)>0){
+                $userBranch = DB::table('user_branch_map')->where('user_id','=',base64_decode($id))->delete();
+                if(count($branches)>0){
+                    for($i=0;$i<count($branches);$i++){
+                        $map = DB::table('user_branch_map')->insert(['user_id'=>base64_decode($id),'branch_id'=>$branches[$i]]);
+                    }
+                }
+            }
+            else{
+                if(count($branches)>0){
+                    for($i=0;$i<count($branches);$i++){
+                        $map = DB::table('user_branch_map')->insert(['user_id'=>base64_decode($id),'branch_id'=>$branches[$i]]);
+                    }
+                }
+            }
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), $id, 'UserBranch-Map', 'Map  '.$data['loginId'], 'User Branch Map');
         }
         return $response;
     }

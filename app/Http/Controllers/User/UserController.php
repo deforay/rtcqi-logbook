@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\UserService;
 use App\Service\RolesService;
+use App\Service\BranchesService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -34,9 +35,11 @@ class UserController extends Controller
         }
         else
         {
-            $RoleService = new RolesService();
-            $role = $RoleService->getAllActiveRole();
-            return view('user.add',array('role'=>$role));
+            $roleService = new RolesService();
+            $role = $roleService->getAllActiveRole();
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            return view('user.add',array('role'=>$role,'branch'=>$branch));
         }
     }
 
@@ -83,7 +86,9 @@ class UserController extends Controller
             $result = $UserService->getUserById($id);
             $RoleService = new RolesService();
             $role = $RoleService->getAllActiveRole();
-            return view('user.edit',array('result'=>$result,'role'=>$role));
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            return view('user.edit',array('result'=>$result,'role'=>$role,'branch'=>$branch));
         }
     }
 }
