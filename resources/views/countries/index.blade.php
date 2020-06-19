@@ -1,7 +1,7 @@
 <!-- 
     Author             : Sriran V
     Date               : 18 June 2020
-    Description        : Vendors view screen
+    Description        : Countries view screen
     Last Modified Date : 
     Last Modified Name : 
 -->
@@ -12,20 +12,20 @@
 <div class="content-wrapper">
   <div class="content-header row">
     <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-      <h3 class="content-header-title mb-0 d-inline-block">Vendors Details</h3>
+      <h3 class="content-header-title mb-0 d-inline-block">Countries Details</h3>
       <div class="row breadcrumbs-top d-inline-block">
         <div class="breadcrumb-wrapper col-12">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">Manage
             </li>
-            <li class="breadcrumb-item"><a href="/vendors/">Vendors</a></li>
+            <li class="breadcrumb-item"><a href="/countries/">Countries</a></li>
           </ol>
         </div>
       </div>
     </div>
     <div class="content-header-right col-md-2 col-12">
               <div class="dropdown float-md-right">
-                     <a href="/vendors/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
+                     <a href="/countries/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
                       <b><i class="ft-user-plus icon-left"></i> ADD</b></a>
                     </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="col-md-12"> -->
       <div class="card">
         <div class="card-header">
-          <!-- <h4 class="form-section"><i class="la la-plus-square"></i>Vendor Details</h4> -->
+          <!-- <h4 class="form-section"><i class="la la-plus-square"></i>Countries  Details</h4> -->
           <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
           <div class="heading-elements">
             <ul class="list-inline mb-0">
@@ -62,16 +62,10 @@
         <div class="card-content collapse show">
           <div class="card-body">
             <div class="table-responsive p-t-10">
-              <table class="table table-striped table-bordered custom-toolbar-elements" id="vendorsList">
+              <table class="table table-striped table-bordered custom-toolbar-elements" id="countryList">
                 <thead>
                   <tr>
-                    <th>Vendor Name</th>
-                    <th>Vendor Code</th>
-                    <th>Vendor Type</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Pincode</th>
-                    <th>Country</th>
+                    <th>Country Name</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -101,56 +95,31 @@
       "dom": '<"toolbar">frtip'
     });
     $.blockUI();
-    getVendor();
+    getAllCountry();
     $.unblockUI();
   });
 
-  function getVendor() {
+  function getAllCountry() {
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
     });
-    $('#vendorsList').DataTable({
+    $('#countryList').DataTable({
       processing: true,
       destroy: true,
       serverSide: true,
       scrollX: true,
       autoWidth: false,
       ajax: {
-        url: '{{ url("getVendors") }}',
+        url: '{{ url("getAllCountries") }}',
         type: 'POST',
       },
       columns: [
 
         {
-          data: 'vendor_name',
-          name: 'vendor_name',
-          className: 'firstcaps'
-        },
-        {
-          data: 'vendor_code',
-          name: 'vendor_code'
-        },
-        {
-          data: 'vendor_type',
-          name: 'vendor_type'
-        },
-        {
-          data: 'city',
-          name: 'city'
-        },
-        {
-          data: 'state',
-          name: 'state'
-        },
-        {
-          data: 'pincode',
-          name: 'pincode'
-        },
-        {
-          data: 'country',
-          name: 'country',
+          data: 'country_name',
+          name: 'country_name',
           className: 'firstcaps'
         },
         {
@@ -169,10 +138,10 @@
     });
   }
 
-  function changeStatus(tableName, fieldIdName, fieldIdValue, fieldName, fieldVal) {
+  function changeStatus(tableName, fieldIdName, fieldIdValue, fieldName, fieldVal, functionName) {
 
     if (fieldIdValue != '') {
-      swal("Are you sure you want to make " + fieldVal + " this Vendor?", {
+      swal("Are you sure you want to make " + fieldVal + " this Country Details?", {
           buttons: {
             cancel: {
               text: "No, Don't change pls!",
@@ -208,8 +177,8 @@
                 fieldValue: fieldVal
               },
               success: function(result) {
-                getVendor();
-                $("#showAlertIndex").text('Vendor status has been changed to ' + fieldVal);
+                getAllCountry();
+                $("#showAlertIndex").text('Countries status has been changed to ' + fieldVal);
                 $('#showAlertdiv').show();
                 $('#showAlertdiv').delay(3000).fadeOut();
               }

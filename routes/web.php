@@ -81,3 +81,12 @@ Route::post('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
+
+
+//Countries
+Route::get('/countries', 'Countries\CountriesController@index')->name('countries.index');
+Route::post('/getAllCountries', 'Countries\CountriesController@getAllCountries');
+Route::post('/countries/add', 'Countries\CountriesController@add');
+Route::get('/countries/add', 'Countries\CountriesController@add');
+Route::get('/countries/edit/{id}', 'Countries\CountriesController@edit');
+Route::post('/countries/edit/{id}', 'Countries\CountriesController@edit');
