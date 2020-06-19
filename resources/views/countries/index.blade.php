@@ -138,56 +138,7 @@
       ]
     });
   }
-
-  function changeStatus(tableName, fieldIdName, fieldIdValue, fieldName, fieldVal, functionName) {
-
-    if (fieldIdValue != '') {
-      swal("Are you sure you want to make " + fieldVal + " this Country Details?", {
-          buttons: {
-            cancel: {
-              text: "No, Don't change pls!",
-              value: null,
-              visible: true,
-              className: "btn-warning",
-              closeModal: true,
-            },
-            confirm: {
-              text: "Yes, Change it!",
-              value: true,
-              visible: true,
-              className: "",
-              closeModal: true
-            }
-          }
-        })
-        .then(isConfirm => {
-          if (isConfirm) {
-            $.ajaxSetup({
-              headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-            });
-            $.ajax({
-              url: "{{ url('/changeStatus') }}",
-              method: 'post',
-              data: {
-                tableName: tableName,
-                fieldIdName: fieldIdName,
-                fieldIdValue: fieldIdValue,
-                fieldName: fieldName,
-                fieldValue: fieldVal
-              },
-              success: function(result) {
-                // getAllCountry();
-                $("#showAlertIndex").text('Countries status has been changed to ' + fieldVal);
-                $('#showAlertdiv').show();
-                $('#showAlertdiv').delay(3000).fadeOut();
+                getAllCountry();
                 $('#countryList').DataTable().ajax.reload();
-              }
-            });
-          }
-        });
-    }
-  }
 </script>
 @endsection

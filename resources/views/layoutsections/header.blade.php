@@ -51,3 +51,4 @@
 <!-- BEGIN: Vendor JS-->
 <script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
 <!-- BEGIN Vendor JS-->
+<link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/js/datepicker/datepicker3.css')}}">

@@ -37,10 +37,10 @@ class VendorsService
 	}
 
 	//Get Particular Vendors Details
-	public function getVendorsById()
+	public function getVendorsById($id)
 	{
 		$vendorsmodel = new VendorsTable();
-        $result = $vendorsmodel->fetchVendorsById();
+        $result = $vendorsmodel->fetchVendorsById($id);
         return $result;
 	}
 	//Update Particular Vendors Details
@@ -49,7 +49,7 @@ class VendorsService
     	DB::beginTransaction();
     	try {
 			$vendorsmodel = new VendorsTable();
-        	$updateVendors = $vendorsmodel->updateCustomers($params,$id);
+        	$updateVendors = $vendorsmodel->updateVendorsDetails($params,$id);
 			if($updateVendors>0){
 				DB::commit();
 				$msg = 'Vendors Updated Successfully';

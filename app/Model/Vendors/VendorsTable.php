@@ -14,24 +14,40 @@ class VendorsTable extends Model
 {
     protected $table = 'vendors';
 
-    public function saveVendorsType($request)
+    public function saveVendors($request)
     {
         $data = $request->all();
         $common = new CommonService();
-
-        if ($request->input('customerName') != null && trim($request->input('customerName')) != '') {
-            $customerId = DB::table('customers')->insertGetId(
+        $vendorsId = '';
+        if ($request->input('vendorName') != null && trim($request->input('vendorName')) != '') {
+            $vendorRegisterOn = $common->dateFormat($data['vendorRegisterOn']);
+            $vendorsId = DB::table('vendors')->insertGetId(
                 [
-                    'vendor_type' => $data['customerName'],
+                    'vendor_name'    => $data['vendorName'],
+                    'vendor_code'    => $data['vendorCode'],
+                    'vendor_type'    => $data['vendorType'],
+                    'registered_on'  => $vendorRegisterOn,
+                    'address_line_1' => $data['addressline1'],
+                    'address_line_2' => $data['addressline2'],
+                    'city'           => $data['vendorCity'],
+                    'state'          => $data['vendorState'],
+                    'pincode'        => $data['vendorPincode'],
+                    'country'        => $data['vendorCountry'],
+                    'email'          => $data['vendorEmail'],
+                    'alt_email'      => $data['vendorAltEmail'],
+                    'phone'          => $data['vendorPhone'],
+                    'alt_phone'      => $data['vendorAltPhone'],
+                    'vendor_status'  => $data['vendorStatus'],
+
                 ]
             );
         }
-        if ($customerId) {
+        if ($vendorsId) {
             //Event Log
             $commonservice = new CommonService();
-            $commonservice->eventLog(session('userId'), $customerId, 'Customer-add', 'Add Customer ' . $data['customerName'], 'Customer');
+            $commonservice->eventLog(session('userId'), $vendorsId, 'Vendors-add', 'Add Vendors ' . $data['vendorName'], 'Vendors');
         }
-        return $customerId;
+        return $vendorsId;
     }
 
     // Fetch All Vendor List
@@ -44,7 +60,7 @@ class VendorsTable extends Model
     }
 
     // fetch particular Vendor details(edit)
-    public function getVendorsById($id)
+    public function fetchVendorsById($id)
     {
         $id = base64_decode($id);
         $data = DB::table('vendors')
@@ -52,48 +68,48 @@ class VendorsTable extends Model
         return $data;
     }
     // Update particular Vendor details
-    public function updateVendors($params, $id)
+    public function updateVendorsDetails($params, $id)
     {
 
         $response = 0;
         $data = $params->all();
-        $customerUp = ''; 
+        $vendorUp = '';
         //Vendor details
-        if ($params->input('ecustomerName') != null && trim($params->input('ecustomerName')) != '') {
-            $endProductList = implode(', ', $data['endProductId']);
+        $common = new CommonService();
+        if ($params->input('vendorName') != null && trim($params->input('vendorName')) != '') {
+            if ($data['vendorRegisterOn'] != '') {
+                $vendorRegisterOn = $common->dateFormat($data['vendorRegisterOn']);
+            } else {
+                $vendorRegisterOn = '';
+            }
             $params = array(
-                'customer_name' => $data['ecustomerName'],
-                'customer_SAP_code' => $data['ecustomerSapcode'],
-                'customer_gstinno' => $data['ecustomerGstno'],
-                'customer_email' => $data['ecustomerEmail'],
-                'customer_phno' => $data['ecutomerPhoneNo'],
-                'customer_city' => $data['ecustomerCity'],
-                'customer_location' => $data['ecustomerLocation'],
-                'customer_state' => $data['ecustomerState'],
-                'customer_pincode' => $data['ecustomerPincode'],
-                'customer_status' => $data['ecustomerStatus'],
-                'customer_address_one' => $data['eaddrline1'],
-                'customer_address_two' => $data['eaddrline2'],
-                'customer_address_three' => $data['eaddrline3'],
-                'customer_address_four' => $data['eaddrline4'],
-                'customer_pan' => $data['ecustomerPan'],
-                'agent_id' => $data['eagentId'],
-                'customer_group_id' => $data['ecustomerGroupId'],
-                'end_product_id' => $endProductList
+                'vendor_name'    => $data['vendorName'],
+                'vendor_code'    => $data['vendorCode'],
+                'vendor_type'    => $data['vendorType'],
+                'registered_on'  => $vendorRegisterOn,
+                'address_line_1' => $data['addressline1'],
+                'address_line_2' => $data['addressline2'],
+                'city'           => $data['vendorCity'],
+                'state'          => $data['vendorState'],
+                'pincode'        => $data['vendorPincode'],
+                'country'        => $data['vendorCountry'],
+                'email'          => $data['vendorEmail'],
+                'alt_email'      => $data['vendorAltEmail'],
+                'phone'          => $data['vendorPhone'],
+                'alt_phone'      => $data['vendorAltPhone'],
+                'vendor_status'  => $data['vendorStatus'],
             );
 
-            if (trim($data['password']))
-                $params['customer_password'] = Hash::make($data['password']); // Hashing passwords,
-            $customerUp = DB::table('vendors')
-                ->where('customer_id', '=', base64_decode($id))
+            $vendorUp = DB::table('vendors')
+                ->where('vendor_id', '=', base64_decode($id))
                 ->update(
                     $params
                 );
 
             $commonservice = new CommonService();
-            $commonservice->eventLog(session('userId'), base64_decode($id), 'Customer-update', 'Update Customer ' . $data['ecustomerName'], 'Customer');
+            $commonservice->eventLog(session('userId'), base64_decode($id), 'Vendor-update', 'Update Vendors ' . $data['vendorName'], 'Vendor');
         }
-        if ($customerUp) {
+        if ($vendorUp) {
             $response = 1;
         }
         return $response;
