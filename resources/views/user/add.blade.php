@@ -134,6 +134,20 @@
 									</div>
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
+											<h5>Branches<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select branches">
+                                                <option value="">Select Branches</option>
+                                                @foreach($branch as $type)
+													<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+												@endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-6 col-lg-12">
+										<fieldset>
 											<h5>User Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
@@ -170,6 +184,10 @@
 <script>
 $(document).ready(function() {
     $(".select2").select2();
+    $("#branches").select2({
+        placeholder: "Select Branches",
+		allowClear: true
+    });
     $('#confirmPassword').keyup(function() {			
         var nPws=$('#password').val();
         var cPws=$('#confirmPassword').val();

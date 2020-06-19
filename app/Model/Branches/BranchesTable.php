@@ -69,7 +69,7 @@ class BranchesTable extends Model
          $data = DB::table('branches')
                 ->join('branch_types', 'branch_types.branch_type_id', '=', 'branches.branch_type_id')
                 ->join('countries', 'countries.country_id', '=', 'branches.country')
-                 ->where('branch_id', '=',$id )->get();
+                 ->where('branches.branch_id', '=',$id )->get();
          return $data;
      }
  
