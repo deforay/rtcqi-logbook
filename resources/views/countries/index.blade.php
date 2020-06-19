@@ -123,8 +123,9 @@
           className: 'firstcaps'
         },
         {
-          data: 'status',
-          name: 'status'
+          data: 'country_status',
+          name: 'country_status',
+          className: 'firstcaps'
         },
         {
           data: 'action',
@@ -177,10 +178,11 @@
                 fieldValue: fieldVal
               },
               success: function(result) {
-                getAllCountry();
+                // getAllCountry();
                 $("#showAlertIndex").text('Countries status has been changed to ' + fieldVal);
                 $('#showAlertdiv').show();
                 $('#showAlertdiv').delay(3000).fadeOut();
+                $('#countryList').DataTable().ajax.reload();
               }
             });
           }

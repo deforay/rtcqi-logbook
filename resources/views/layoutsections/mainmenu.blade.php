@@ -12,6 +12,8 @@
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/branchtype/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Branch Type</span></span></a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/branches/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Branches</span></span></a>
+                </li>
             </ul>
         </li>
         <li class="dropdown nav-item" data-menu="dropdown" id="item"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="ft-life-buoy"></i><span data-i18n="Templates">Item</span></a>

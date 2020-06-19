@@ -77,6 +77,8 @@ background-color: #f2f3f5;
   </body>
 </html>
 <script>
+ispin = true;
+ismob = true;
   $(document).ready(function() {
     var path = '<?php echo Request::path();?>';
     var splitUrl = path.split('/');
@@ -183,5 +185,10 @@ background-color: #f2f3f5;
         }
     }
   
- 
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
   </script>

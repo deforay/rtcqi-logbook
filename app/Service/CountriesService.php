@@ -36,6 +36,14 @@ class CountriesService
         return $result;
 	}
 
+	//Get All Active Countries List
+	public function getAllActiveCountries()
+    {
+		$countriesmodel = new CountriesTable();
+        $result = $countriesmodel->fetchAllActiveCountries();
+        return $result;
+	}
+
 	//Get Particular Countries Details
 	public function getCountriesById($id)
 	{
