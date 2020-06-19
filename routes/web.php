@@ -105,3 +105,11 @@ Route::post('/countries/add', 'Countries\CountriesController@add');
 Route::get('/countries/add', 'Countries\CountriesController@add');
 Route::get('/countries/edit/{id}', 'Countries\CountriesController@edit');
 Route::post('/countries/edit/{id}', 'Countries\CountriesController@edit');
+
+//branches module
+Route::get('/branches', 'Branches\BranchesController@index')->name('branches.index');
+Route::post('/branches/add', 'Branches\BranchesController@add');
+Route::get('/branches/add', 'Branches\BranchesController@add');
+Route::post('/getAllBranches', 'Branches\BranchesController@getAllBranches');
+Route::get('/branches/edit/{id}', 'Branches\BranchesController@edit');
+Route::post('/branches/edit/{id}', 'Branches\BranchesController@edit');

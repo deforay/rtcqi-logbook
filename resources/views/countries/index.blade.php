@@ -123,8 +123,9 @@
           className: 'firstcaps'
         },
         {
-          data: 'status',
-          name: 'status'
+          data: 'country_status',
+          name: 'country_status',
+          className: 'firstcaps'
         },
         {
           data: 'action',
@@ -137,5 +138,7 @@
       ]
     });
   }
+                getAllCountry();
+                $('#countryList').DataTable().ajax.reload();
 </script>
 @endsection
