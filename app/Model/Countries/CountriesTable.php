@@ -51,16 +51,6 @@ class CountriesTable extends Model
     public function fetchAllActiveCountries()
     {
         $data = DB::table('countries')
-            ->orderBy('country_name', 'asc')
-            ->where('country_status','=','active')
-            ->get();
-        return $data;
-    }
-
-    // Fetch All Active Countries List
-    public function fetchAllActiveCountries()
-    {
-        $data = DB::table('countries')
             ->where('countries.country_status', '=', 'active')
             ->orderBy('country_name', 'asc')
             ->get();
