@@ -474,15 +474,24 @@ INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
 
+--- Sudar 18 june 2020
 ALTER TABLE `users` CHANGE `status` `user_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'inactive';
 ALTER TABLE `users` ADD `created_on` DATETIME NULL AFTER `new field`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
 
 ALTER TABLE `branch_types` CHANGE `status` `branch_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'active';
+
+ALTER TABLE `branches` CHANGE `status` `branch_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'active';
+ALTER TABLE `branches` ADD `created_on` DATETIME NULL AFTER `branch_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+
 --sriram 19 june 2020
 ALTER TABLE `countries` ADD `status` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`;
 ALTER TABLE `countries` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `status`;
 ALTER TABLE `countries` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
 
+--Sudar 20 june 2020
 ALTER TABLE `countries` CHANGE `status` `country_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `branches` CHANGE `branch_type` `branch_type_id` INT(11) NOT NULL;
+--sriram 19 june 2020
 ALTER TABLE `vendor_types` CHANGE `status` `vendor_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
-
+ALTER TABLE `vendors` CHANGE `status` `vendor_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;

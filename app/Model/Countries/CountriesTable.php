@@ -24,7 +24,7 @@ class CountriesTable extends Model
             $id = DB::table('countries')->insertGetId(
                 [
                     'country_name' => $data['countryName'],
-                    'status'       => $data['status'],
+                    'country_status'=> $data['status'],
                 ]
             );
             if ($id) {
@@ -43,6 +43,16 @@ class CountriesTable extends Model
     {
         $data = DB::table('countries')
             ->orderBy('country_name', 'asc')
+            ->get();
+        return $data;
+    }
+
+    // Fetch All Active Countries List
+    public function fetchAllActiveCountries()
+    {
+        $data = DB::table('countries')
+            ->orderBy('country_name', 'asc')
+            ->where('country_status','=','active')
             ->get();
         return $data;
     }
@@ -77,7 +87,7 @@ class CountriesTable extends Model
         if ($params->input('countryName') != null && trim($params->input('countryName')) != '') {
             $params = array(
                 'country_name' => $data['countryName'],
-                'status'      => $data['status'],
+                'country_status'=> $data['status'],
             );
             $countryUp = DB::table('countries')
                 ->where('country_id', '=', base64_decode($id))
