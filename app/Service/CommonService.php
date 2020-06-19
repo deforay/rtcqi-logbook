@@ -126,59 +126,28 @@ class CommonService
         $fnct = $request['fnct'];
         $user = array();
         try {
-               if(isset($fnct) && trim($fnct)!==''){
-                    $fields = explode("##", $fnct);
-                    $primaryName = $fields[0];
-                    $primaryValue = trim($fields[1]);
-                    if ($value != "") {
-                        $user = DB::table($tableName)
-                            ->where($primaryName, '!=', $primaryValue)
-                            ->where($fieldName, '=', $value)
-                            ->get();
-                    }
-                }else{
-                    if ($value != "") {
-                        $user = DB::table($tableName)
-                            ->where($fieldName, '=', $value)
-                            ->get();
-                    }
+            if(isset($fnct) && trim($fnct)!==''){
+                $fields = explode("##", $fnct);
+                $primaryName = $fields[0];
+                $primaryValue = trim($fields[1]);
+                if ($value != "") {
+                    $user = DB::table($tableName)
+                        ->where($primaryName, '!=', $primaryValue)
+                        ->where($fieldName, '=', $value)
+                        ->get();
                 }
+            }else{
+                if ($value != "") {
+                    $user = DB::table($tableName)
+                        ->where($fieldName, '=', $value)
+                        ->get();
+                }
+            }
             $countVal=count($user);
-      
-        if(($fieldName=='customer_phno' || $fieldName=='mobile_no') && ($countVal=='0' || $countVal=='')){
-            if($fieldName=='customer_phno'){
-                $employeeResult = DB::table('agent_keyperson')
-                ->where('mobile_no','=', $value)
-                ->get();
-                $countVal=count($employeeResult);
-            }
-            if($fieldName=='mobile_no'){
-                $customerResult = DB::table('customers')
-                ->where('customer_phno','=', $value)
-                ->get();
-                $countVal=count($customerResult);
-            }
-        }
-
-        if(($fieldName=='customer_email' || $fieldName=='email') && ($countVal=='0' || $countVal=='')){
-            if($fieldName=='customer_email'){
-                $employeeResult = DB::table('agent_keyperson')
-                ->where('email','=', $value)
-                ->get();
-                $countVal=count($employeeResult);
-            }
-            if($fieldName=='email'){
-                $customerResult = DB::table('customers')
-                ->where('customer_email','=', $value)
-                ->get();
-                $countVal=count($customerResult);
-            }
-        }
-    
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
-        return $countVal;
+        return count($user);
     }
 
     public function monthYear($start_date,$end_date){

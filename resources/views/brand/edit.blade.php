@@ -1,9 +1,9 @@
 <!-- 
-    Author             : Sudarmathi M
-    Date               : 17 June 2020
-    Description        : Branch Type add screen
-    Last Modified Date : 17 June 2020
-    Last Modified Name : Sudarmathi M
+    Author             : Prasath M
+    Date               : 18 June 2020
+    Description        : Brand Edit screen
+    Last Modified Date : 18 June 2020
+    Last Modified Name : Prasath M
 -->
 @extends('layouts.main')
 
@@ -11,15 +11,15 @@
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-		<h3 class="content-header-title mb-0 d-inline-block">Branch Type</h3>
+		<h3 class="content-header-title mb-0 d-inline-block">Brand</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
 			<li class="breadcrumb-item">Manage
 			</li>
-			<li class="breadcrumb-item"><a href="/branchtype/">Branch Type</a>
+			<li class="breadcrumb-item"><a href="/brand/">Brand</a>
 			</li>
-			<li class="breadcrumb-item active">Add</li>
+			<li class="breadcrumb-item active">Edit</li>
 			</ol>
 		</div>
 		</div>
@@ -32,7 +32,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Add Branch Type</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> Edit Brand</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -47,39 +47,53 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="addBranchType" id="addBranchType" method="post" action="/branchtype/add" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editBrand" id="editBrand" method="post" action="/brand/edit/{{base64_encode($result[0]->brand_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
+                            @php
+                                $fnct = "brand_id##".($result[0]->brand_id);
+                            @endphp
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
-                                            <h5>Branch Type Name <span class="mandatory">*</span>
+                                            <h5>Brand Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="branchTypeName" class="form-control isRequired" autocomplete="off" placeholder="Enter a branch type name" name="branchTypeName" title="Please enter branch type name" onblur="checkNameValidation('branch_types','branch_type', this.id,'', 'Entered branch type name is already exist.')">
+                                                <input type="text" id="brandName" value="{{$result[0]->brand_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Brand name" name="brandName" title="Please enter brand name" onblur="checkNameValidation('brands','brand_name', this.id,'{{$fnct}}', 'Entered brand name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-6 col-lg-12">
+                                        <fieldset>
+                                            <h5>Manufacturer Name <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="manufacturerName" value="{{$result[0]->manufacturer_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Manufacturer name" name="manufacturerName" title="Please enter Manufacturer name" >
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-12">
 										<fieldset>
-											<h5>Branch Type Status<span class="mandatory">*</span>
+											<h5>Brand Status<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="branchTypeStatus" name="branchTypeStatus" title="Please select branch type status">
-													<option value="active" selected>Active</option>
-													<option value="inactive">Inactive</option>
-												</select>
+											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="brandStatus" name="brandStatus" title="Please select Brand status">
+                                                <option value="active" {{ $result[0]->brand_status == 'active' ?  'selected':''}}>Active</option>
+                                                <option value="inactive" {{ $result[0]->brand_status == 'inactive' ?  'selected':''}}>Inactive</option>
+                                            </select>
 											</div>
 										</fieldset>
 									</div>
                                 </div>
 								<div class="form-actions right">
-                                    <a href="/branchtype" >
+                                    <a href="/brand" >
                                     <button type="button" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
                                     </button>
                                     </a>
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Save
+                                    <i class="la la-check-square-o"></i> Update
                                     </button>
 								</div>
 							</form>
@@ -98,12 +112,12 @@
  duplicateName = true;
     function validateNow() {
         flag = deforayValidator.init({
-            formId: 'addBranchType'
+            formId: 'editBrand'
         });
         
         if (flag == true) {
             if (duplicateName) {
-                document.getElementById('addBranchType').submit();
+                document.getElementById('editBrand').submit();
             }
         }
         else{
@@ -130,7 +144,7 @@
                 url: "{{ url('/checkNameValidation') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                    tableName: tableName, fieldName: fieldName, value: checkValue,fnct :fnct
                 },
                 success: function(result){
                     console.log(result)

@@ -44,7 +44,8 @@ class UnitTable extends Model
     public function fetchAllActiveUnit()
     {
         $data = DB::table('units_of_measure')
-                ->where('unity_status','=','active')
+                ->where('unit_status','=','active')
+                ->orderBy('unit_name', 'asc')
                 ->get();
         return $data;
     }

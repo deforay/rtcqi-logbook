@@ -68,8 +68,8 @@
 										</h5>
 										<div class="form-group">
 											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="branchTypeStatus" name="branchTypeStatus" title="Please select branch type status">
-                                                <option value="active" {{ $result[0]->status == 'active' ?  'selected':''}}>Active</option>
-                                                <option value="inactive" {{ $result[0]->status == 'inactive' ?  'selected':''}}>Inactive</option>
+                                                <option value="active" {{ $result[0]->branch_type_status == 'active' ?  'selected':''}}>Active</option>
+                                                <option value="inactive" {{ $result[0]->branch_type_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                             </select>
 											</div>
 										</fieldset>
@@ -133,7 +133,7 @@
                 url: "{{ url('/checkNameValidation') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                    tableName: tableName, fieldName: fieldName, value: checkValue,fnct:fnct
                 },
                 success: function(result){
                     console.log(result)

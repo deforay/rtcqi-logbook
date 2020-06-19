@@ -1,9 +1,9 @@
 <!-- 
-    Author             : Sudarmathi M
-    Date               : 17 June 2020
-    Description        : Branch Type view screen
-    Last Modified Date : 17 June 2020
-    Last Modified Name : Sudarmathi M
+    Author             : Prasath M
+    Date               : 18 June 2020
+    Description        : Item  view screen
+    Last Modified Date : 18 June 2020
+    Last Modified Name : Prasath M
 -->
 
 @extends('layouts.main')
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/branchtype/">Branch Type</a>
+                        <li class="breadcrumb-item"><a href="/item/">Item</a>
                         </li>
                     </ol>
                 </div>
@@ -28,8 +28,8 @@
         </div>
         <div class="content-header-right col-md-4 col-12 ">
             <div class="dropdown float-md-right">
-                <a href="/branchtype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add Branch Type</b></a>
+                <a href="/item/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-user-plus icon-left"></i> Add Item</b></a>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Branch Type Details</h3>
+                            <h3 class="content-header-title mb-0">Item Details</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -68,11 +68,14 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="branchTypeList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="itemList">
                                         <thead>
                                             <tr>
-                                                <th>Branch Type Name</th>
-                                                <th>Status</th>
+                                                <th>Item Name</th>
+                                                <th>Item Code</th>
+                                                <th>Item Type</th>
+                                                <th>Brand Name</th>
+                                                <th>Unit</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -93,34 +96,39 @@
   <script>
     $(document).ready(function() {
     $.blockUI();
-    getAllBranchType();
+    getAllItem();
     $.unblockUI();
     });
-    function getAllBranchType()
+    function getAllItem()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#branchTypeList').DataTable({
+      $('#itemList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllBranchType") }}',
+                url:'{{ url("getAllItem") }}',
                 type: 'POST',
             },
             columns: [
                     
-                    { data: 'branch_type', name: 'branch_type',className:'firstcaps' },
-                    { data: 'branch_type_status', name: 'branch_type_status',className:'firstcaps' },
+                    { data: 'item_name', name: 'item_name',className:'firstcaps' },
+                    { data: 'item_code', name: 'item_code' },
+                    { data: 'item_type', name: 'item_type',className:'firstcaps' },
+                    { data: 'brand_name', name: 'brand_name',className:'firstcaps' },
+                    { data: 'unit_name', name: 'unit_name', },
                     {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]
         });
     }
+
+    
   </script>
 @endsection
