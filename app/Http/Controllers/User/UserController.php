@@ -68,7 +68,7 @@ class UserController extends Controller
                     ->make(true);
     }
 
-    //edit roles
+    //edit user
     public function edit(Request $request,$id)
     {
         if ($request->isMethod('post')) 
