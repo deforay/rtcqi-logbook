@@ -56,8 +56,8 @@ class BranchesTable extends Model
     // Fetch All Active Branch es List
     public function fetchAllActiveBranches()
     {
-        $data = DB::table('branch_ess')
-                ->where('branch_es_status','=','active')
+        $data = DB::table('branches')
+                ->where('branch_status','=','active')
                 ->get();
         return $data;
     }
@@ -66,8 +66,10 @@ class BranchesTable extends Model
      public function fetchBranchesById($id)
      {
          $id = base64_decode($id);
-         $data = DB::table('branch_ess')
-                 ->where('branch_es_id', '=',$id )->get();
+         $data = DB::table('branches')
+                ->join('branch_types', 'branch_types.branch_type_id', '=', 'branches.branch_type_id')
+                ->join('countries', 'countries.country_id', '=', 'branches.country')
+                 ->where('branch_id', '=',$id )->get();
          return $data;
      }
  
@@ -76,17 +78,27 @@ class BranchesTable extends Model
     {
         $commonservice = new CommonService();
         $data = $params->all();
-        if ($params->input('branchesName')!=null && trim($params->input('branchesName')) != '') {
-            $response = DB::table('branch_ess')
-                ->where('branch_es_id', '=',base64_decode($id))
+        if ($params->input('branchName')!=null && trim($params->input('branchName')) != '') {
+            $response = DB::table('branches')
+                ->where('branch_id', '=',base64_decode($id))
                 ->update(
-                    ['branch_es' => $data['branchesName'],
-                    'branch_es_status' => $data['branchesStatus'],
-                    'updated_on' => $commonservice->getDateTime(),
+                    [
+                        'branch_name' => $data['branchName'],
+                        'branch_type_id' => $data['branchType'],
+                        'phone' => $data['mobileNo'],
+                        'email' => $data['email'],
+                        'address_line_1' => $data['addressLine1'],
+                        'address_line_2' => $data['addressLine2'],
+                        'country' => $data['country'],
+                        'state' => $data['state'],
+                        'city' => $data['city'],
+                        'pincode' => $data['pincode'],
+                        'branch_status' => $data['branchStatus'],
+                        'updated_on' => $commonservice->getDateTime(),
                     ]);
 
         $commonservice = new CommonService();
-        $commonservice->eventLog(session('userId'), base64_decode($id), 'Branch es-update', 'Update Branch es '.$data['branchesName'], 'Branch es');
+        $commonservice->eventLog(session('userId'), base64_decode($id), 'Branch-update', 'Update Branch'.$data['branchName'], 'Branch');
         }
         return $response;
     }

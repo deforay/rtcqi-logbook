@@ -83,8 +83,12 @@ class BranchesController extends Controller
         else
         {
             $branch = new BranchesService();
-            $result = $branch->geBranchById($id);
-            return view('branches.edit',array('result'=>$result));
+            $result = $branch->getBranchesById($id);
+            $branchTypeService = new BranchTypeService();
+            $branchType = $branchTypeService->getAllActiveBranchType();
+            $countryService = new CountriesService();
+            $country = $countryService->getAllActiveCountries();
+            return view('branches.edit',array('result'=>$result,'country'=>$country,'branchType'=>$branchType));
         }
     }
 }
