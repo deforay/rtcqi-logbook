@@ -83,6 +83,21 @@ Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 
 
+//item module
+Route::get('/item', 'Item\ItemController@index')->name('item.index');
+Route::post('/item/add', 'Item\ItemController@add');
+Route::get('/item/add', 'Item\ItemController@add');
+Route::post('/getAllItem', 'Item\ItemController@getAllItem');
+Route::get('/item/edit/{id}', 'Item\ItemController@edit');
+Route::post('/item/edit/{id}', 'Item\ItemController@edit');
+//user module
+Route::get('/user', 'User\UserController@index')->name('user.index');
+Route::post('/user/add', 'User\UserController@add');
+Route::get('/user/add', 'User\UserController@add');
+Route::post('/getAllUser', 'User\UserController@getAllUser');
+Route::get('/user/edit/{id}', 'User\UserController@edit');
+Route::post('/user/edit/{id}', 'User\UserController@edit');
+
 //Countries
 Route::get('/countries', 'Countries\CountriesController@index')->name('countries.index');
 Route::post('/getAllCountries', 'Countries\CountriesController@getAllCountries');

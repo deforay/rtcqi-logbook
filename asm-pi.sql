@@ -460,12 +460,26 @@ ALTER TABLE `item_categories` ADD `created_on` DATETIME NULL AFTER `item_categor
 alter table units_of_measure change status unit_status varchar(255) ;
 ALTER TABLE `units_of_measure` ADD `created_on` DATETIME NULL AFTER `unit_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL;
 
---sriram 18 jun 2020
 
+alter table brands change manufaturer_name manufacturer_name varchar(255) ;
+alter table brands change status brand_status varchar(255) ;
+ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL
+
+ALTER TABLE `items` ADD `created_on` DATETIME NULL, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL
+
+--sriram 18 jun 2020
+alter table item_types change status item_type_status varchar(255) ;
+ALTER TABLE `item_types` ADD `created_on` DATETIME NULL AFTER `item_type_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'Vendors', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'add', 'Add'), ('App\\Http\\Controllers\\Vendors\\VendorsController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Vendors\\VendorsController', 'index', 'Access');
 
+ALTER TABLE `users` CHANGE `status` `user_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'inactive';
+ALTER TABLE `users` ADD `created_on` DATETIME NULL AFTER `new field`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+ALTER TABLE `branch_types` CHANGE `status` `branch_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT 'active';
+--sriram 19 june 2020
 ALTER TABLE `countries` ADD `status` VARCHAR(255) NULL DEFAULT NULL AFTER `country_name`;
 ALTER TABLE `countries` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `status`;
 ALTER TABLE `countries` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
+
