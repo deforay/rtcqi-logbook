@@ -118,3 +118,19 @@ Route::post('/branches/edit/{id}', 'Branches\BranchesController@edit');
 Route::get('/login', 'Login\LoginController@index')->name('login.index');
 Route::post('/login/validate', 'Login\LoginController@validateEmployee');
 Route::match(['get','post'],'/logout', 'Login\LoginController@logout');
+
+// Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
+Route::get('/unauthorized', function()
+{
+    return view('error.not-authorized');
+});
+
+Route::get('/pagenotfound', function()
+{
+    return view('error.page-not-found');
+});
+
+Route::get('/incorrectrequest', function()
+{
+    return view('error.incorrect-request');
+});
