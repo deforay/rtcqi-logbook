@@ -19,12 +19,13 @@ class CountriesTable extends Model
     {
         $data = $request->all();
         $id = ' ';
-        $common = new CommonService();
+        $commonservice = new CommonService();
         if ($request->input('countryName') != null && trim($request->input('countryName')) != '') {
             $id = DB::table('countries')->insertGetId(
                 [
-                    'country_name' => $data['countryName'],
-                    'country_status'=> $data['status'],
+                    'country_name'   => $data['countryName'],
+                    'country_status' => $data['status'],
+                    'created_on'     => $commonservice->getDateTime(),
                 ]
             );
             if ($id) {
@@ -74,10 +75,12 @@ class CountriesTable extends Model
         $data = $params->all();
         $countryUp = '';
         //Country details
+        $commonservice = new CommonService();   
         if ($params->input('countryName') != null && trim($params->input('countryName')) != '') {
             $params = array(
                 'country_name' => $data['countryName'],
                 'country_status'=> $data['status'],
+                'updated_on' => $commonservice->getDateTime(),
             );
             $countryUp = DB::table('countries')
                 ->where('country_id', '=', base64_decode($id))
