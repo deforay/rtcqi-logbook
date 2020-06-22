@@ -30,6 +30,8 @@
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/unit/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Unit</span></span></a>
                 </li>
+                <li data-menu=""><a class="dropdown-item" href="/unitconversion/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Unit Conversion</span></span></a>
+                </li>
                 <li data-menu=""><a class="dropdown-item" href="/brand/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Brand</span></span></a>
                 </li>
                 <li data-menu=""><a class="dropdown-item" href="/item/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item</span></span></a>
