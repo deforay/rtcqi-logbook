@@ -119,6 +119,14 @@ Route::get('/login', 'Login\LoginController@index')->name('login.index');
 Route::post('/login/validate', 'Login\LoginController@validateEmployee');
 Route::match(['get','post'],'/logout', 'Login\LoginController@logout');
 
+//unit Conversion module
+Route::get('/unitconversion', 'UnitConversion\UnitConversionController@index')->name('unitconversion.index');
+Route::post('/unitconversion/add', 'UnitConversion\UnitConversionController@add');
+Route::get('/unitconversion/add', 'UnitConversion\UnitConversionController@add');
+Route::post('/getAllUnitConversion', 'UnitConversion\UnitConversionController@getAllUnitConversion');
+Route::get('/unitconversion/edit/{id}', 'UnitConversion\UnitConversionController@edit');
+Route::post('/unitconversion/edit/{id}', 'UnitConversion\UnitConversionController@edit');
+
 // Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
 Route::get('/unauthorized', function()
 {
