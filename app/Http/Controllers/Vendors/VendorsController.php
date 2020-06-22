@@ -21,12 +21,12 @@ class VendorsController extends Controller
     //View Customers main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('vendors.index');
-        // }
-        // else
-            // return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add customers (display add screen )

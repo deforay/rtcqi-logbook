@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckRoleAuthorization
+class Access
 {
     /**
      * Handle an incoming request.
@@ -19,13 +19,13 @@ class CheckRoleAuthorization
         if(($role == null)){
             return redirect('/login');
         }
-        
+        // print_r($role);
         $routeInfo = $request->route()->getAction();
-        // print_r($routeInfo);die;
+        // print_r($routeInfo);
         list($resource,$view) = explode("@",$routeInfo['controller']);
         //    print_r($role[$resource]);die;
         if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){
-        //    return redirect('/accessdenied');
+           return redirect('/unauthorized');
         }
         return $next($request);
     }
