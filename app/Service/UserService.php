@@ -74,6 +74,14 @@ class UserService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//Validate User Login
+	public function validateLogin($params)
+	{
+		$model = new UserTable();
+        $result = $model->validateLogin($params);
+        return $result;
+	}
 }
 
 ?>
