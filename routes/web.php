@@ -113,3 +113,11 @@ Route::get('/branches/add', 'Branches\BranchesController@add');
 Route::post('/getAllBranches', 'Branches\BranchesController@getAllBranches');
 Route::get('/branches/edit/{id}', 'Branches\BranchesController@edit');
 Route::post('/branches/edit/{id}', 'Branches\BranchesController@edit');
+
+//unit Conversion module
+Route::get('/unitconversion', 'UnitConversion\UnitConversionController@index')->name('unitconversion.index');
+Route::post('/unitconversion/add', 'UnitConversion\UnitConversionController@add');
+Route::get('/unitconversion/add', 'UnitConversion\UnitConversionController@add');
+Route::post('/getAllUnitConversion', 'UnitConversion\UnitConversionController@getAllUnitConversion');
+Route::get('/unitconversion/edit/{id}', 'UnitConversion\UnitConversionController@edit');
+Route::post('/unitconversion/edit/{id}', 'UnitConversion\UnitConversionController@edit');
