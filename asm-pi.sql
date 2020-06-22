@@ -463,9 +463,9 @@ ALTER TABLE `units_of_measure` ADD `created_on` DATETIME NULL AFTER `unit_status
 
 alter table brands change manufaturer_name manufacturer_name varchar(255) ;
 alter table brands change status brand_status varchar(255) ;
-ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL
+ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL;
 
-ALTER TABLE `items` ADD `created_on` DATETIME NULL, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL
+ALTER TABLE `items` ADD `created_on` DATETIME NULL, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL;
 
 --sriram 18 jun 2020
 alter table item_types change status item_type_status varchar(255) ;
@@ -497,3 +497,7 @@ ALTER TABLE `vendor_types` CHANGE `status` `vendor_type_status` VARCHAR(255) CHA
 ALTER TABLE `vendors` CHANGE `status` `vendor_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE `vendor_types` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `vendor_type_status`;
 ALTER TABLE `vendor_types` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
+--sriram 22 june 2020
+ALTER TABLE `uom_conversion` ADD `unit_conversion_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `to_unit`;
+ALTER TABLE `uom_conversion` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `unit_conversion_status`;
+ALTER TABLE `uom_conversion` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
