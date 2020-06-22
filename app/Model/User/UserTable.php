@@ -8,6 +8,9 @@ use App\Service\UserService;
 use App\Service\CommonService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Mail;
 
 class UserTable extends Model
 {
@@ -135,5 +138,49 @@ class UserTable extends Model
             $commonservice->eventLog(session('userId'), $id, 'UserBranch-Map', 'Map  '.$data['loginId'], 'User Branch Map');
         }
         return $response;
+    }
+
+    // Validate Employee login
+    public function validateLogin($params)
+    {
+        $data = $params->all();
+        $result = json_decode(DB::table('users')
+        ->join('roles', 'roles.role_id', '=', 'users.role')
+        ->where('users.login_id', '=',$data['username'] )
+        ->where('user_status','=','active')->get(),true);
+        $config = array();
+        if(count($result)>0)
+        {
+            $hashedPassword = $result[0]['password'];
+            if (Hash::check($data['password'], $hashedPassword)) {
+                $configFile =  "acl.config.json";
+                if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
+                    $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
+                    session(['username' => $result[0]['login_id']]);
+                    session(['firstName' => $result[0]['first_name']]);
+                    session(['lastName' => $result[0]['last_name']]);
+                    session(['email' => $result[0]['email']]);
+                    session(['phone' => $result[0]['phone']]);
+                    session(['userId' => $result[0]['user_id']]);
+                    session(['roleId' => $result[0]['role']]);
+                    session(['role' => $config[$result[0]['role_code']]]);
+                    session(['login' => true]);
+
+                    $commonservice = new CommonService();
+                    $commonservice->eventLog($result[0]['user_id'], $result[0]['user_id'], 'Login', 'User Login '.$result[0]['login_id'], 'Login');
+                
+                    return 1;
+                }
+                else{
+                    return 2;
+                }
+            }
+
+
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

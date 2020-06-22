@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.main');
+    return view('login.index');
 });
 
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index');
@@ -113,6 +113,11 @@ Route::get('/branches/add', 'Branches\BranchesController@add');
 Route::post('/getAllBranches', 'Branches\BranchesController@getAllBranches');
 Route::get('/branches/edit/{id}', 'Branches\BranchesController@edit');
 Route::post('/branches/edit/{id}', 'Branches\BranchesController@edit');
+
+//login module
+Route::get('/login', 'Login\LoginController@index')->name('login.index');
+Route::post('/login/validate', 'Login\LoginController@validateEmployee');
+Route::match(['get','post'],'/logout', 'Login\LoginController@logout');
 
 //unit Conversion module
 Route::get('/unitconversion', 'UnitConversion\UnitConversionController@index')->name('unitconversion.index');
