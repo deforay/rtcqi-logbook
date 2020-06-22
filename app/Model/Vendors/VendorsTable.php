@@ -17,10 +17,10 @@ class VendorsTable extends Model
     public function saveVendors($request)
     {
         $data = $request->all();
-        $common = new CommonService();
+        $commonservice = new CommonService();
         $vendorsId = '';
         if ($request->input('vendorName') != null && trim($request->input('vendorName')) != '') {
-            $vendorRegisterOn = $common->dateFormat($data['vendorRegisterOn']);
+            $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
             $vendorsId = DB::table('vendors')->insertGetId(
                 [
                     'vendor_name'    => $data['vendorName'],
@@ -38,6 +38,7 @@ class VendorsTable extends Model
                     'phone'          => $data['vendorPhone'],
                     'alt_phone'      => $data['vendorAltPhone'],
                     'vendor_status'  => $data['vendorStatus'],
+                    'created_on'     => $commonservice->getDateTime(),
 
                 ]
             );
@@ -75,10 +76,10 @@ class VendorsTable extends Model
         $data = $params->all();
         $vendorUp = '';
         //Vendor details
-        $common = new CommonService();
+        $commonservice = new CommonService();
         if ($params->input('vendorName') != null && trim($params->input('vendorName')) != '') {
             if ($data['vendorRegisterOn'] != '') {
-                $vendorRegisterOn = $common->dateFormat($data['vendorRegisterOn']);
+                $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
             } else {
                 $vendorRegisterOn = '';
             }
@@ -98,6 +99,7 @@ class VendorsTable extends Model
                 'phone'          => $data['vendorPhone'],
                 'alt_phone'      => $data['vendorAltPhone'],
                 'vendor_status'  => $data['vendorStatus'],
+                'updated_on'     => $commonservice->getDateTime(),
             );
 
             $vendorUp = DB::table('vendors')

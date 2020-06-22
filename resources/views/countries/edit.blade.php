@@ -67,8 +67,8 @@
 												<h5>Status<span class="mandatory">*</span> </h5>
 												<div class="form-group">
 													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="status" name="status" title="Please select status">
-														<option value="active" {{ $countries[0]->status == 'active' ?  'selected':''}}>Active</option>
-														<option value="inactive" {{ $countries[0]->status == 'inactive' ?  'selected':''}}>Inactive</option>
+														<option value="active" {{ $countries[0]->country_status == 'active' ?  'selected':''}}>Active</option>
+														<option value="inactive" {{ $countries[0]->country_status == 'inactive' ?  'selected':''}}>Inactive</option>
 													</select>
 												</div>
 											</fieldset>

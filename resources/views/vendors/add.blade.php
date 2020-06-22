@@ -254,22 +254,6 @@
         });
     });
 
-    // function validateNow() {
-    //     flag = deforayValidator.init({
-    //         formId: 'addvendors'
-    //     });
-
-    //     if (flag == true) {
-    //         if (duplicateName) {
-    //             document.getElementById('addvendors').submit();
-    //         }
-    //     } else {
-    //         // Swal.fire('Any fool can use a computer');
-    //         $('#show_alert').html(flag).delay(3000).fadeOut();
-    //         $('#show_alert').css("display", "block");
-    //         $(".infocus").focus();
-    //     }
-    // }
 
     function duplicateValidation(tableName, fieldName, obj, msg) {
 
