@@ -14,12 +14,12 @@ class ItemCategoryController extends Controller
     //View ItemCategory main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('itemCategory.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add ItemCategory (display add screen and add the ItemCategory values)
