@@ -19,12 +19,12 @@ class VendorsTypeController extends Controller
     //View Customers main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
-        return view('vendorstype.index');
-        // }
-        // else
-        // return Redirect::to('login')->with('status', 'Please Login');
+        if(session('login')==true)
+        {
+            return view('vendorstype.index');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add customers (display add screen )

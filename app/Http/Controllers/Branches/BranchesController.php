@@ -16,12 +16,12 @@ class BranchesController extends Controller
     //View branches main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('branches.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add branches (display add screen and add the branches values)

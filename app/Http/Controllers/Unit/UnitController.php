@@ -14,12 +14,12 @@ class UnitController extends Controller
     //View Unit main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('unit.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add Unit (display add screen and add the Unit values)

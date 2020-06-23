@@ -146,8 +146,12 @@ class UserTable extends Model
         $data = $params->all();
         $result = json_decode(DB::table('users')
         ->join('roles', 'roles.role_id', '=', 'users.role')
-        ->where('users.login_id', '=',$data['username'] )
+        ->where('users.phone', '=',$data['username'] )
         ->where('user_status','=','active')->get(),true);
+        $vendor = json_decode(DB::table('vendors')
+        ->join('roles', 'roles.role_id', '=', 'vendors.role')
+        ->where('vendors.phone', '=',$data['username'] )
+        ->where('vendor_status','=','active')->get(),true);
         $config = array();
         if(count($result)>0)
         {
@@ -157,7 +161,7 @@ class UserTable extends Model
                 if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
                     $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
                     session(['username' => $result[0]['login_id']]);
-                    session(['firstName' => $result[0]['first_name']]);
+                    session(['name' => $result[0]['first_name']]);
                     session(['lastName' => $result[0]['last_name']]);
                     session(['email' => $result[0]['email']]);
                     session(['phone' => $result[0]['phone']]);
@@ -175,8 +179,32 @@ class UserTable extends Model
                     return 2;
                 }
             }
+        }
+        elseif(count($vendor)>0)
+        {
+            $hashedPassword = $vendor[0]['password'];
+            if (Hash::check($data['password'], $hashedPassword)) {
+                $configFile =  "acl.config.json";
+                if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
+                    $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
+                    session(['username' => $vendor[0]['login_id']]);
+                    session(['name' => $vendor[0]['vendor_name']]);
+                    session(['email' => $vendor[0]['email']]);
+                    session(['phone' => $vendor[0]['phone']]);
+                    session(['userId' => $vendor[0]['vendor_id']]);
+                    session(['roleId' => $vendor[0]['role']]);
+                    session(['role' => $config[$vendor[0]['role_code']]]);
+                    session(['login' => true]);
 
-
+                    $commonservice = new CommonService();
+                    $commonservice->eventLog($vendor[0]['vendor_id'], $vendor[0]['vendor_id'], 'Login', 'Vendor Login '.$vendor[0]['vendor_name'], 'Login');
+                
+                    return 1;
+                }
+                else{
+                    return 2;
+                }
+            }
         }
         else
         {

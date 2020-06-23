@@ -17,12 +17,12 @@ class ItemController extends Controller
     //View Item main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('item.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add Item (display add screen and add the Item values)

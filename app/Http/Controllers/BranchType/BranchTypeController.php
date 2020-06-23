@@ -14,12 +14,12 @@ class BranchTypeController extends Controller
     //View BranchType main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('branchtype.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add BranchType (display add screen and add the BranchType values)

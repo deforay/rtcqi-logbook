@@ -15,13 +15,12 @@ class RolesController extends Controller
     //View Roles main screen
     public function index()
     {
-        // return view('roles.index');
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('roles.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add roles (display add screen and add the roles values)
