@@ -46,11 +46,11 @@ class BrandController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\Brand\\BrandController']['edit']) && ($role['App\\Http\\Controllers\\Brand\\BrandController']['edit'] == "allow")){
                            $button .= '<a href="/brand/edit/'. base64_encode($data->brand_id).'" name="edit" id="'.$data->brand_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->brand_status == 'active'){
                             $buttonStatus="changeStatus('brands','brand_id',$data->brand_id,'brand_status', 'inactive', 'brandList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->brand_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
@@ -65,7 +65,7 @@ class BrandController extends Controller
                     ->make(true);
     }
 
-    //edit roles
+    //edit brand
     public function edit(Request $request,$id)
     {
         if ($request->isMethod('post')) 
