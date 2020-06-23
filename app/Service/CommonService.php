@@ -194,7 +194,7 @@ class CommonService
 
     public function eventLog($userId,$subjectId,$event_type,$action,$resource_name){
         $eventData = array(
-            'actor'=>1,
+            'actor'=>$userId,
             'subject'=> $subjectId,
             'event_type'=>$event_type,
             'action'=>$action,

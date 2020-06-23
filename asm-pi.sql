@@ -536,3 +536,9 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Unit\\UnitController', 'Unit', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Unit\\UnitController', 'add', 'Add'), ('App\\Http\\Controllers\\Unit\\UnitController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Unit\\UnitController', 'index', 'Access');
+
+--Sudarmathi 23 June 2020
+
+ALTER TABLE `vendors` ADD `role` INT NULL AFTER `vendor_status`;
+ALTER TABLE `vendors` ADD `password` VARCHAR(255) NULL AFTER `role`;
+ALTER TABLE `vendors` ADD `created_on` DATETIME NULL AFTER `password`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
