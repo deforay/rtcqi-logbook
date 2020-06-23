@@ -60,6 +60,31 @@ class CommonService
         
         return $countVal;
     }
+    public function mobileDuplicateValidation($request){
+
+        $tableName1= $request['tableName1'];
+        $tableName2 = $request['tableName2'];
+        $fieldName = $request['fieldName'];
+        $value = trim($request['value']);
+        $user = array();
+        try{
+            if($value != ""){
+                $user = DB::table($tableName1)
+                        ->where($fieldName,'=', $value)
+                        ->get();
+                if(count($user)==0){
+                    $user = DB::table($tableName2)
+                        ->where($fieldName,'=', $value)
+                        ->get();
+                }        
+            }
+        }
+        catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        $countVal=count($user);
+              return $countVal;
+    }
    
     public function dateFormat($date) {
         if (!isset($date) || $date == null || $date == "" || $date == "0000-00-00") {
@@ -212,5 +237,3 @@ class CommonService
     }
 
 }
-
-?>
