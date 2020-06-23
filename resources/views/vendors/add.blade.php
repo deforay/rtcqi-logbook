@@ -80,7 +80,7 @@
                                                         @foreach($vendors_type as $type)
                                                         <option value="{{ $type->vendor_type_id }}">{{ $type->vendor_type }}</option>
                                                         @endforeach
-                                                    </select>onblur="duplicateValidation('vendors','vendor_name', this.id, 'Entered Vendor is already exist.')"
+                                                    </select>
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -207,7 +207,7 @@
                                                 <h5>Phone<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isRequired isMobNo" onblur="duplicateValidation('vendors','phone', this.id, 'Entered Phone Number is already exist.')" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
+                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isRequired isMobNo" onblur="mobileDuplicateValidation('vendors','users','phone', this.id, 'Entered Phone Number is already exist.')" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -265,19 +265,20 @@
             placeholder: "Select",
             allowClear: true
         });
-        $('#confirmPassword').keyup(function() {			
-            var nPws=$('#password').val();
-            var cPws=$('#confirmPassword').val();
-            if(nPws!=cPws){
+        $('#confirmPassword').keyup(function() {
+            var nPws = $('#password').val();
+            var cPws = $('#confirmPassword').val();
+            if (nPws != cPws) {
                 $('#confirmresult').html('Passwords do not match.')
                 $('#passwordCheck').val('');
-            }else{
+            } else {
 
                 $('#passwordCheck').val('passwordCheck');
-            $('#confirmresult').html('')}
+                $('#confirmresult').html('')
+            }
         })
         $('#password').change(function() {
-            
+
             $('#result').html(checkStrength($('#password').val()))
         })
         $('#vendorRegisterOn').datepicker({
@@ -297,12 +298,12 @@
     function checkStrength(password) {
         var strength = 0
         if (password.length < 7) {
-        $('#result').removeClass()
-        $('#result').addClass('short')
-        $('#passwordCheck').val('')
-        $("#password").val("");
-        $(".invalid-feedback").show();
-        return 'Too short'
+            $('#result').removeClass()
+            $('#result').addClass('short')
+            $('#passwordCheck').val('')
+            $("#password").val("");
+            $(".invalid-feedback").show();
+            return 'Too short'
         }
         if (password.length > 7) strength += 1
         // If password contains both lower and uppercase characters, increase strength value.
@@ -316,41 +317,36 @@
         // Calculated strength value, we can return messages
         // If value is less than 2
         if (strength < 2) {
-        $('#result').removeClass()
-        $('#result').addClass('weak')
-        $('#passwordCheck').val('')
-        $("#password").val("");
-        $(".invalid-feedback").show();
-        return 'Weak'
+            $('#result').removeClass()
+            $('#result').addClass('weak')
+            $('#passwordCheck').val('')
+            $("#password").val("");
+            $(".invalid-feedback").show();
+            return 'Weak'
         } else if (strength == 2) {
-        $('#result').removeClass()
-        $('#result').addClass('good')
-        $('#passwordCheck').val('good')
-        $(".invalid-feedback").hide();
-        return 'Good'
+            $('#result').removeClass()
+            $('#result').addClass('good')
+            $('#passwordCheck').val('good')
+            $(".invalid-feedback").hide();
+            return 'Good'
         } else {
-        $('#result').removeClass()
-        $('#result').addClass('strong')
-        $('#passwordCheck').val('strong')
-        $(".invalid-feedback").hide();
-        return 'Strong'
+            $('#result').removeClass()
+            $('#result').addClass('strong')
+            $('#passwordCheck').val('strong')
+            $(".invalid-feedback").hide();
+            return 'Strong'
         }
     }
 
-    function checkPasswordMatch()
-    {
+    function checkPasswordMatch() {
         var password = $("#password").val();
         var confirmPassword = $("#confirmPassword").val();
-        if(password.trim() && confirmPassword.trim())
-        {
-            if(password.trim() != confirmPassword.trim())
-            {
-                $("#confirmPassword").onfocus = function () {
+        if (password.trim() && confirmPassword.trim()) {
+            if (password.trim() != confirmPassword.trim()) {
+                $("#confirmPassword").onfocus = function() {
                     // $("#confirmPassword").style.background = "#FFFFFF";
                 }
-            }
-            else
-            {
+            } else {
                 $("#password").focusout();
                 $("#confirmPassword").focusout();
             }
@@ -394,22 +390,57 @@
             });
         }
     }
-    function validateNow() {
-            flag = deforayValidator.init({
-                formId: 'addvendors'
-            });
 
-            if (flag == true) {
-                if (duplicateName) {
-                    document.getElementById('addvendors').submit();
+    function mobileDuplicateValidation(tableName1, tableName2, fieldName, obj, msg) {
+        checkValue = document.getElementById(obj).value;
+        if (checkValue != '') {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            } else {
-                // Swal.fire('Any fool can use a computer');
-                $('#show_alert').html(flag).delay(3000).fadeOut();
-                $('#show_alert').css("display", "block");
-                $(".infocus").focus();
-            }
+            });
+            $.ajax({
+                url: "{{ url('/mobileDuplicateValidation') }}",
+                method: 'post',
+                data: {
+                    tableName1: tableName1,
+                    tableName2: tableName2,
+                    fieldName: fieldName,
+                    value: checkValue,
+                },
+                success: function(result) {
+                    if (result > 0) {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#' + obj).focus();
+                        $('#' + obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    } else {
+                        duplicateName = true;
+                    }
+                }
+            });
         }
+    }
+
+    function validateNow() {
+        flag = deforayValidator.init({
+            formId: 'addvendors'
+        });
+
+        if (flag == true) {
+            if (duplicateName) {
+                document.getElementById('addvendors').submit();
+            }
+        } else {
+            // Swal.fire('Any fool can use a computer');
+            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $('#show_alert').css("display", "block");
+            $(".infocus").focus();
+        }
+    }
 
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode
