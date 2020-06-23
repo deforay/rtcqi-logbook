@@ -149,8 +149,8 @@
           name: 'pincode'
         },
         {
-          data: 'country',
-          name: 'country',
+          data: 'country_name',
+          name: 'country_name',
           className: 'firstcaps'
         },
         {

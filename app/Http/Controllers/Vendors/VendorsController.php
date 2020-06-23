@@ -49,7 +49,7 @@ class VendorsController extends Controller
         }
     }
 
-    // Get all the Customer list
+    // Get all the Vendor list
     public function getVendors(Request $request)
     {
         $vendorsService = new VendorsService();

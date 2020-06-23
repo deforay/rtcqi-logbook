@@ -165,7 +165,7 @@
                                                 <h5>Pincode
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="vendorPincode" class="form-control" autocomplete="off" placeholder="Enter Pincode" name="vendorPincode" title="Please enter Pincode">
+                                                    <input type="text" id="vendorPincode" maxlength='6' onkeypress="return isNumberKey(event);" class="form-control isPincode" autocomplete="off" placeholder="Enter Pincode" name="vendorPincode" title="Please enter Pincode">
                                                 </div>
                                             </fieldset>
                                         </div>
