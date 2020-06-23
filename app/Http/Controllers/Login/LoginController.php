@@ -48,10 +48,10 @@ class LoginController extends Controller
         // Auth::logout(); // log the user out of our application
         // Session::flush();
         // return Redirect::to('/'); // redirect the user to the login screen
-        $commonservice = new CommonService();
-        $commonservice->eventLog(session('userId'), session('userId'), 'user-logout', 'User has been logout by', 'logout');
-
+        
         if($request->isMethod('post') && session('login')==true){
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), session('userId'), 'user-logout', 'User has been logout by', 'logout');
             $request->session()->flush();
             $request->session()->regenerate();
             

@@ -187,7 +187,7 @@ class UserTable extends Model
                 $configFile =  "acl.config.json";
                 if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
                     $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
-                    session(['username' => $vendor[0]['login_id']]);
+                    session(['username' => $vendor[0]['vendor_name']]);
                     session(['name' => $vendor[0]['vendor_name']]);
                     session(['email' => $vendor[0]['email']]);
                     session(['phone' => $vendor[0]['phone']]);
