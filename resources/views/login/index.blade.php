@@ -76,12 +76,15 @@
                                     </div>
                                     <script>$('#show_alert_index').delay(3000).fadeOut();</script>
                                 @endif
+                                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
                                 <div class="card-content">
                                     <div class="card-body">
                                         <form class="form-horizontal form-simple" method="post" name="userLogin" id="userLogin" action="login/validate" autocomplete="off" onsubmit="validateNow();return false;">
                                         @csrf
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
-                                                <input type="text" class="form-control isRequired" name="username" id="username" placeholder="Your Username" title="Please enter the login id">
+                                                <input type="tel" class="form-control isRequired" maxlength='10' onkeypress="return isNumberKey(event);" name="username" id="username" placeholder="Your Mobile Number" title="Please enter the mobile number">
                                                 <div class="form-control-position">
                                                     <i class="la la-user"></i>
                                                 </div>
@@ -134,21 +137,42 @@
 <script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
 <script>
  duplicateName = true;
+ ismob = true;
     function validateNow() {
-        flag = deforayValidator.init({
-            formId: 'userLogin'
-        });
-        
-        if (flag == true) {
-            if (duplicateName) {
-                document.getElementById('userLogin').submit();
+        mobNum = $('#username').val();
+		if(mobNum.length!=10){
+			$("html, body").animate({ scrollTop: 0 }, "slow");
+			$("#showAlertIndex").text('Please give 10  digit mobile number');
+			$('#showAlertdiv').show();
+			ismob = false;
+			$('#username').css('background-color', 'rgb(255, 255, 153)')
+            $('#username').css('border', ' 1px solid rgb(207, 51, 57)')
+			$('#showAlertdiv').delay(3000).fadeOut();
+		}
+		else{
+			ismob = true;
+		}
+        if(ismob==true){
+            flag = deforayValidator.init({
+                formId: 'userLogin'
+            });
+            
+            if (flag == true) {
+                if (duplicateName) {
+                    document.getElementById('userLogin').submit();
+                }
+            }
+            else{
+                $('#show_alert').html(flag).delay(3000).fadeOut();
+                $('#show_alert').css("display","block");
+                $(".infocus").focus();
             }
         }
-        else{
-            $('#show_alert').html(flag).delay(3000).fadeOut();
-            $('#show_alert').css("display","block");
-            $(".infocus").focus();
-        }
     }
-
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
 </script>
