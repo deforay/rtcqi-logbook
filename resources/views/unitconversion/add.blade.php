@@ -55,7 +55,7 @@
                                                 <h5>Base Unit<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired select2" onchange="checkToUnit(this.id)" autocomplete="off" style="width:100%;" id="baseUnit" name="baseUnit" title="Please select baseUnit">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="baseUnit" name="baseUnit" title="Please select Base Unit">
                                                         <option value="">Select Base Unit</option>
                                                         @foreach($unit_type as $type)
                                                         <option value="{{ $type->uom_id }}">{{ $type->unit_name }}</option>
@@ -80,8 +80,8 @@
                                                 <h5>To Unit<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="toUnit" name="toUnit" title="Please select toUnit">
-                                                        <option value="">Select Base Unit</option>
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="toUnit" name="toUnit" title="Please select To Unit">
+                                                        <option value="">Select To Unit</option>
                                                         @foreach($unit_type as $type)
                                                         <option value="{{ $type->uom_id }}">{{ $type->unit_name }}</option>
                                                         @endforeach
@@ -126,63 +126,58 @@
 
 <script>
     duplicateName = true;
+    isbase = true;
 
     function validateNow() {
-        flag = deforayValidator.init({
-            formId: 'addunitconversion'
-        });
-
-        if (flag == true) {
-            if (duplicateName) {
-                document.getElementById('addunitconversion').submit();
-            }
+        var baseUnit = $("#baseUnit option:selected").text();
+        var toUnit = $("#toUnit option:selected").text();
+        if (baseUnit == toUnit) {
+            $("html, body").animate({
+                scrollTop: 0
+            }, "slow");
+            $("#showAlertIndex").text('Base Unit and To Unit Cannot be same');
+            $('#showAlertdiv').show();
+            isbase = false;
+            $('#toUnit').css('background-color', 'rgb(255, 255, 153)')
+            $('#toUnit').focus()
+            $('#showAlertdiv').delay(3000).fadeOut();
         } else {
-            // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();
-            $('#show_alert').css("display", "block");
-            $(".infocus").focus();
+            isbase = true;
+        }
+        if (isbase == true) {
+            flag = deforayValidator.init({
+                formId: 'addunitconversion'
+            });
+            if (flag == true) {
+                if (duplicateName) {
+                    document.getElementById('addunitconversion').submit();
+                }
+            } else {
+                $('#show_alert').html(flag).delay(3000).fadeOut();
+                $('#show_alert').css("display", "block");
+                $(".infocus").focus();
+            }
         }
     }
+    $('#baseUnit').on('change', function() {
+        $('option').prop('disabled', false); //reset all the disabled options on every change event
+        $('#baseUnit').each(function() { //loop through all the select elements
+            var val = this.value;
+            $('#toUnit').not(this).find('option').filter(function() { //filter option elements having value as selected option
+                return this.value === val;
+            }).prop('disabled', true); //disable those option elements
+        });
+    }).change();
+    $('#toUnit').on('change', function() {
+        $('option').prop('disabled', false); //reset all the disabled options on every change event
+        $('#toUnit').each(function() { //loop through all the select elements
+            var val = this.value;
+            $('#baseUnit').not(this).find('option').filter(function() { //filter option elements having value as selected option
+                return this.value === val;
+            }).prop('disabled', true); //disable those option elements
+        });
+    }).change();
 
-    function checkToUnit(obj){
-        checkValue = document.getElementById(obj).value;
-        alert(checkValue);
-    }
-    // function checkNameValidation(tableName, fieldName, obj, fnct, msg) {
-    //     // alert(fnct)
-    //     checkValue = document.getElementById(obj).value;
-    //     // alert(checkValue)
-    //     if (checkValue != '') {
-    //         $.ajaxSetup({
-    //             headers: {
-    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //             }
-    //         });
-    //         $.ajax({
-    //             url: "{{ url('/checkNameValidation') }}",
-    //             method: 'post',
-    //             data: {
-    //                 tableName: tableName,
-    //                 fieldName: fieldName,
-    //                 value: checkValue,
-    //             },
-    //             success: function(result) {
-    //                 // console.log(result)
-    //                 if (result > 0) {
-    //                     $("#showAlertIndex").text(msg);
-    //                     $('#showAlertdiv').show();
-    //                     duplicateName = false;
-    //                     document.getElementById(obj).value = "";
-    //                     $('#' + obj).focus();
-    //                     $('#' + obj).css('background-color', 'rgb(255, 255, 153)')
-    //                     $('#showAlertdiv').delay(3000).fadeOut();
-    //                 } else {
-    //                     duplicateName = true;
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode
         if (charCode > 31 && (charCode < 48 || charCode > 57))

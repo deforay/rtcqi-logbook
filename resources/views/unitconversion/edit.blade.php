@@ -72,7 +72,7 @@
                                                 <h5>Multiplier <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="multiplier" value="{{$result[0]->multiplier}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Multiplier" name="multiplier" title="Please enter multiplier">
+                                                    <input type="text" id="multiplier" value="{{$result[0]->multiplier}}" onkeypress="return isNumberKey(event);" class="form-control isRequired" autocomplete="off" placeholder="Enter Multiplier" name="multiplier" title="Please enter multiplier">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -83,7 +83,7 @@
                                                 <h5>To Type<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="toUnit" name="toUnit" title="Please select To Unit">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="toUnit" name="toUnit" title="Please select To Unit">
                                                         <option value="">Select To Unit</option>
                                                         @foreach($unit_type as $type)
                                                         <option value="{{ $type->uom_id }}" {{ $result[0]->to_unit == $type->uom_id ?  'selected':''}}>{{ $type->unit_name }}</option>
@@ -131,26 +131,59 @@
     duplicateName = true;
 
     function validateNow() {
-        flag = deforayValidator.init({
-            formId: 'editUnit'
-        });
-
-        if (flag == true) {
-            if (duplicateName) {
-                document.getElementById('editUnit').submit();
-            }
+        var baseUnit = $("#baseUnit option:selected").text();
+        var toUnit = $("#toUnit option:selected").text();
+        if (baseUnit == toUnit) {
+            $("html, body").animate({
+                scrollTop: 0
+            }, "slow");
+            $("#showAlertIndex").text('Base Unit and To Unit Cannot be same');
+            $('#showAlertdiv').show();
+            isbase = false;
+            $('#toUnit').css('background-color', 'rgb(255, 255, 153)')
+            $('#toUnit').focus()
+            $('#showAlertdiv').delay(3000).fadeOut();
         } else {
-            // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();
-            $('#show_alert').css("display", "block");
-            $(".infocus").focus();
+            isbase = true;
+        }
+        if (isbase == true) {
+            flag = deforayValidator.init({
+                formId: 'editUnitCoversion'
+            });
+
+            if (flag == true) {
+                if (duplicateName) {
+                    document.getElementById('editUnitCoversion').submit();
+                }
+            } else {
+                $('#show_alert').html(flag).delay(3000).fadeOut();
+                $('#show_alert').css("display", "block");
+                $(".infocus").focus();
+            }
         }
     }
 
+    $('#baseUnit').on('change', function() {
+        $('option').prop('disabled', false); //reset all the disabled options on every change event
+        $('#baseUnit').each(function() { //loop through all the select elements
+            var val = this.value;
+            $('#toUnit').not(this).find('option').filter(function() { //filter option elements having value as selected option
+                return this.value === val;
+            }).prop('disabled', true); //disable those option elements
+        });
+    }).change();
+    $('#toUnit').on('change', function() {
+        $('option').prop('disabled', false); //reset all the disabled options on every change event
+        $('#toUnit').each(function() { //loop through all the select elements
+            var val = this.value;
+            $('#baseUnit').not(this).find('option').filter(function() { //filter option elements having value as selected option
+                return this.value === val;
+            }).prop('disabled', true); //disable those option elements
+        });
+    }).change();
+
     function checkNameValidation(tableName, fieldName, obj, fnct, msg) {
-        // alert(fnct)
         checkValue = document.getElementById(obj).value;
-        // alert(checkValue)
         if (checkValue != '') {
             $.ajaxSetup({
                 headers: {
@@ -167,7 +200,6 @@
                     fnct: fnct
                 },
                 success: function(result) {
-                    console.log(result)
                     if (result > 0) {
                         $("#showAlertIndex").text(msg);
                         $('#showAlertdiv').show();
@@ -182,6 +214,13 @@
                 }
             });
         }
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
     }
 </script>
 @endsection
