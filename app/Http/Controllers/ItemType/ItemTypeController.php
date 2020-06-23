@@ -15,12 +15,12 @@ class ItemTypeController extends Controller
     //View ItemType main screen
     public function index()
     {
-        // if(session('login')==true)
-        // {
+        if(session('login')==true)
+        {
             return view('itemType.index');
-        // }
-        // else
-        //     return Redirect::to('login')->with('status', 'Please Login');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add ItemType (display add screen and add the ItemType values)

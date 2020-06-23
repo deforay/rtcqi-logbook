@@ -501,4 +501,44 @@ ALTER TABLE `vendor_types` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `cr
 ALTER TABLE `uom_conversion` ADD `unit_conversion_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `to_unit`;
 ALTER TABLE `uom_conversion` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `unit_conversion_status`;
 ALTER TABLE `uom_conversion` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
-ALTER TABLE `vendors` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `vendor_status`;
+
+--Sudar 22 june 2020
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'User', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'add', 'Add'), ('App\\Http\\Controllers\\User\\UserController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Branches\\BranchesController', 'Branches', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Branches\\BranchesController', 'add', 'Add'), ('App\\Http\\Controllers\\Branches\\BranchesController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Branches\\BranchesController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\BranchType\\BranchTypeController', 'Branch Type', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\BranchType\\BranchTypeController', 'add', 'Add'), ('App\\Http\\Controllers\\BranchType\\BranchTypeController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\BranchType\\BranchTypeController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Brand\\BrandController', 'Brand', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Brand\\BrandController', 'add', 'Add'), ('App\\Http\\Controllers\\Brand\\BrandController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Brand\\BrandController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Countries\\CountriesController', 'Countries', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Countries\\CountriesController', 'add', 'Add'), ('App\\Http\\Controllers\\Countries\\CountriesController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Countries\\CountriesController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Dashboard\\DashboardController', 'Dashboard', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Dashboard\\DashboardController', 'add', 'Add'), ('App\\Http\\Controllers\\Dashboard\\DashboardController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Dashboard\\DashboardController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Item\\ItemController', 'Item', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Item\\ItemController', 'add', 'Add'), ('App\\Http\\Controllers\\Item\\ItemController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Item\\ItemController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\ItemCategory\\ItemCategoryController', 'Item Category', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ItemCategory\\ItemCategoryController', 'add', 'Add'), ('App\\Http\\Controllers\\ItemCategory\\ItemCategoryController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ItemCategory\\ItemCategoryController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\ItemType\\ItemTypeController', 'Item Type', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ItemType\\ItemTypeController', 'add', 'Add'), ('App\\Http\\Controllers\\ItemType\\ItemTypeController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ItemType\\ItemTypeController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\VendorsType\\VendorsTypeController', 'Vendors Type', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\VendorsType\\VendorsTypeController', 'add', 'Add'), ('App\\Http\\Controllers\\VendorsType\\VendorsTypeController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\VendorsType\\VendorsTypeController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Unit\\UnitController', 'Unit', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Unit\\UnitController', 'add', 'Add'), ('App\\Http\\Controllers\\Unit\\UnitController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Unit\\UnitController', 'index', 'Access');
+
+--Sudarmathi 23 June 2020
+
+ALTER TABLE `vendors` ADD `role` INT NULL AFTER `vendor_status`;
+ALTER TABLE `vendors` ADD `password` VARCHAR(255) NULL AFTER `role`;
+ALTER TABLE `vendors` ADD `created_on` DATETIME NULL AFTER `password`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
