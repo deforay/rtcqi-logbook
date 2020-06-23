@@ -30,6 +30,7 @@ Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');
 
 //Common module
 Route::post('/duplicateValidation', 'Common\CommonController@duplicateValidation');
+Route::post('/mobileDuplicateValidation', 'Common\CommonController@mobileDuplicateValidation');
 Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation');
 Route::post('/changeStatus', 'Common\CommonController@changeStatus');
 
