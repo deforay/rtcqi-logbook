@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Request;
 
 $role = session('role');
-//dd($role);
 $dashboard = '';
 $manage = '';
 $item = '';

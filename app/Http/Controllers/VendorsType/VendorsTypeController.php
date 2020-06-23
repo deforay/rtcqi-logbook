@@ -16,7 +16,7 @@ class VendorsTypeController extends Controller
         // $this->middleware(['role-authorization'])->except('getVendors');        
 
     }
-    //View Customers main screen
+    //View Vendor type main screen
     public function index()
     {
         if(session('login')==true)
@@ -27,7 +27,7 @@ class VendorsTypeController extends Controller
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
-    //Add customers (display add screen )
+    //Add Vendor type (display add screen )
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
@@ -48,11 +48,11 @@ class VendorsTypeController extends Controller
             ->addColumn('action', function ($data) {
                 $button = '<div style="width: 180px;">';
                 $role = session('role');
-                // if (isset($role['App\\Http\\Controllers\\VendorsType\\VendorsTypeController']['edit']) && ($role['App\\Http\\Controllers\\VendorsType\\VendorsTypeController']['edit'] == "allow")) {
+                if (isset($role['App\\Http\\Controllers\\VendorsType\\VendorsTypeController']['edit']) && ($role['App\\Http\\Controllers\\VendorsType\\VendorsTypeController']['edit'] == "allow")) {
                     $button .= '<a href="/vendorstype/edit/' . base64_encode($data->vendor_type_id) . '" name="edit" id="' . $data->vendor_type_id . '" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                // } else {
-                //     $button .= '';
-                // }
+                } else {
+                    $button .= '';
+                }
 
                 if ($data->vendor_type_status == 'active') {
                     $buttonStatus="changeStatus('vendor_types','vendor_type_id',$data->vendor_type_id,'vendor_type_status', 'inactive', 'vendorsTypeList')";
@@ -69,7 +69,7 @@ class VendorsTypeController extends Controller
             ->make(true);
     }
 
-    // Edit Customer Screen
+    // Edit vendor type Screen
     public function edit($id, Request $request)
     {
         if ($request->isMethod('post')) {

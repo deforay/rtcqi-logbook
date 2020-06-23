@@ -52,11 +52,11 @@ class UserController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")){
                            $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->user_status == 'active'){
                             $buttonStatus="changeStatus('users','user_id',$data->user_id,'user_status', 'inactive', 'userList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->user_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';

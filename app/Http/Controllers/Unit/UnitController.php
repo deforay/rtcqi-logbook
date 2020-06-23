@@ -46,11 +46,11 @@ class UnitController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\Unit\\UnitController']['edit']) && ($role['App\\Http\\Controllers\\Unit\\UnitController']['edit'] == "allow")){
                            $button .= '<a href="/unit/edit/'. base64_encode($data->uom_id).'" name="edit" id="'.$data->uom_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->unit_status == 'active'){
                             $buttonStatus="changeStatus('units_of_measure','uom_id',$data->uom_id,'unit_status', 'inactive', 'unitList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
@@ -65,7 +65,7 @@ class UnitController extends Controller
                     ->make(true);
     }
 
-    //edit roles
+    //edit unit
     public function edit(Request $request,$id)
     {
         if ($request->isMethod('post')) 

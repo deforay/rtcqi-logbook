@@ -547,3 +547,5 @@ DELETE FROM `privileges` WHERE `privileges`.`resource_id` = 'App\\Http\\Controll
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'UnitConversion', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'add', 'Add'), ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'index', 'Access');
+ALTER TABLE `item_types` CHANGE `status` `item_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `item_types` ADD `created_on` DATETIME NULL AFTER `item_type_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
