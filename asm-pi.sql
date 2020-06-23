@@ -501,3 +501,4 @@ ALTER TABLE `vendor_types` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `cr
 ALTER TABLE `uom_conversion` ADD `unit_conversion_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `to_unit`;
 ALTER TABLE `uom_conversion` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `unit_conversion_status`;
 ALTER TABLE `uom_conversion` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `created_on`;
+ALTER TABLE `vendors` ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `vendor_status`;
