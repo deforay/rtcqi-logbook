@@ -80,7 +80,7 @@
                                                         @foreach($vendors_type as $type)
                                                         <option value="{{ $type->vendor_type_id }}">{{ $type->vendor_type }}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select>onblur="duplicateValidation('vendors','vendor_name', this.id, 'Entered Vendor is already exist.')"
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -204,10 +204,10 @@
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Phone
+                                                <h5>Phone<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isMobNo" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
+                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isRequired isMobNo" onblur="duplicateValidation('vendors','phone', this.id, 'Entered Phone Number is already exist.')" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
                                                 </div>
                                             </fieldset>
                                         </div>

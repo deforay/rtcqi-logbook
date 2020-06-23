@@ -208,7 +208,7 @@
                                                 <h5>Pincode
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="vendorPincode" class="form-control" value="{{ $vendors[0]->pincode }}" autocomplete="off" placeholder="Enter Pincode" name="vendorPincode" title="Please enter Pincode">
+                                                    <input type="text" id="vendorPincode" class="form-control " value="{{ $vendors[0]->pincode }}" autocomplete="off" placeholder="Enter Pincode" name="vendorPincode" title="Please enter Pincode">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -247,10 +247,10 @@
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Phone
+                                                <h5>Phone<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isMobNo" value="{{ $vendors[0]->phone }}" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
+                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isMobNo isRequired" onblur="checkNameValidation('vendors', 'phone', this.id,'{{$fnct}}', 'Entered Phone Number is already exist. . Please enter another Phone Number.');" value="{{ $vendors[0]->phone }}" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
                                                 </div>
                                             </fieldset>
                                         </div>
