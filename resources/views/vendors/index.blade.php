@@ -24,11 +24,15 @@
       </div>
     </div>
     <div class="content-header-right col-md-2 col-12">
-              <div class="dropdown float-md-right">
-                     <a href="/vendors/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
-                      <b><i class="ft-user-plus icon-left"></i> ADD</b></a>
-                    </div>
-            </div>
+        <div class="dropdown float-md-right">
+        <?php
+          $role = session('role');
+          if (isset($role['App\\Http\\Controllers\\Vendors\\VendorsController']['add']) && ($role['App\\Http\\Controllers\\Vendors\\VendorsController']['add'] == "allow")){ ?>
+            <a href="/vendors/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
+            <b><i class="ft-user-plus icon-left"></i> Add Vendors</b></a>
+        <?php } ?>
+        </div>
+      </div>
   </div>
   <div class="content-body">
     <!-- Basic form layout section start -->
