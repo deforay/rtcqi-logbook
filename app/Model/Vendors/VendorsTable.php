@@ -19,6 +19,25 @@ class VendorsTable extends Model
         $data = $request->all();
         $commonservice = new CommonService();
         $vendorsId = '';
+        $role = DB::table('roles')
+                ->where('role_name' ,'=' ,'vendor')
+                ->get();
+        if (count($role)==0) {
+            $roleId = DB::table('roles')->insertGetId(
+                ['role_name' => 'vendor',
+                'role_code' => 'VDR',
+                'role_description' => 'vendor role',
+                'role_status' => 'active',
+                'created_on' => $commonservice->getDateTime(),
+                ]
+            );
+
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), $roleId, 'Role-add', 'Add Role vendor', 'Role');
+        }
+        else{
+            $roleId = $role[0]->role_id;
+        }
         if ($request->input('vendorName') != null && trim($request->input('vendorName')) != '') {
             $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
             $vendorsId = DB::table('vendors')->insertGetId(
@@ -39,6 +58,8 @@ class VendorsTable extends Model
                     'alt_phone'      => $data['vendorAltPhone'],
                     'vendor_status'  => $data['vendorStatus'],
                     'created_on'     => $commonservice->getDateTime(),
+                    'role'           => $roleId,
+                    'password'       => Hash::make($data['password']), // Hashing passwords
 
                 ]
             );
@@ -101,6 +122,8 @@ class VendorsTable extends Model
                 'vendor_status'  => $data['vendorStatus'],
                 'updated_on'     => $commonservice->getDateTime(),
             );
+            if(trim($data['password']))
+                $params['password'] = Hash::make($data['password']); // Hashing passwords
 
             $vendorUp = DB::table('vendors')
                 ->where('vendor_id', '=', base64_decode($id))

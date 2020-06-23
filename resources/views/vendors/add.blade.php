@@ -97,6 +97,31 @@
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
+                                                <h5>Password <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="password" id="password" class="form-control isRequired" autocomplete="off" placeholder="Enter a Password" name="password" title="Please Enter Password">
+                                                    <div class="invalid-feedback">
+                                                        must contain atleast 6 characters, 1 number , 1 alphabet and 1 special character
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Confirm Password <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="password" id="confirmPassword" onkeyup="checkPasswordMatch()" class="form-control isRequired" autocomplete="off" placeholder="Enter a Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
+                                                    <span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
+                                                    <input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" title="Passwords do not match.">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
                                                 <h5>Address Line 1
                                                 </h5>
                                                 <div class="form-group">
@@ -240,6 +265,21 @@
             placeholder: "Select",
             allowClear: true
         });
+        $('#confirmPassword').keyup(function() {			
+            var nPws=$('#password').val();
+            var cPws=$('#confirmPassword').val();
+            if(nPws!=cPws){
+                $('#confirmresult').html('Passwords do not match.')
+                $('#passwordCheck').val('');
+            }else{
+
+                $('#passwordCheck').val('passwordCheck');
+            $('#confirmresult').html('')}
+        })
+        $('#password').change(function() {
+            
+            $('#result').html(checkStrength($('#password').val()))
+        })
         $('#vendorRegisterOn').datepicker({
             autoclose: true,
             format: 'dd-M-yyyy',
@@ -254,6 +294,68 @@
         });
     });
 
+    function checkStrength(password) {
+        var strength = 0
+        if (password.length < 7) {
+        $('#result').removeClass()
+        $('#result').addClass('short')
+        $('#passwordCheck').val('')
+        $("#password").val("");
+        $(".invalid-feedback").show();
+        return 'Too short'
+        }
+        if (password.length > 7) strength += 1
+        // If password contains both lower and uppercase characters, increase strength value.
+        if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+        // If it has numbers and characters, increase strength value.
+        if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+        // If it has one special character, increase strength value.
+        if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+        // If it has two special characters, increase strength value.
+        if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+        // Calculated strength value, we can return messages
+        // If value is less than 2
+        if (strength < 2) {
+        $('#result').removeClass()
+        $('#result').addClass('weak')
+        $('#passwordCheck').val('')
+        $("#password").val("");
+        $(".invalid-feedback").show();
+        return 'Weak'
+        } else if (strength == 2) {
+        $('#result').removeClass()
+        $('#result').addClass('good')
+        $('#passwordCheck').val('good')
+        $(".invalid-feedback").hide();
+        return 'Good'
+        } else {
+        $('#result').removeClass()
+        $('#result').addClass('strong')
+        $('#passwordCheck').val('strong')
+        $(".invalid-feedback").hide();
+        return 'Strong'
+        }
+    }
+
+    function checkPasswordMatch()
+    {
+        var password = $("#password").val();
+        var confirmPassword = $("#confirmPassword").val();
+        if(password.trim() && confirmPassword.trim())
+        {
+            if(password.trim() != confirmPassword.trim())
+            {
+                $("#confirmPassword").onfocus = function () {
+                    // $("#confirmPassword").style.background = "#FFFFFF";
+                }
+            }
+            else
+            {
+                $("#password").focusout();
+                $("#confirmPassword").focusout();
+            }
+        }
+    }
 
     function duplicateValidation(tableName, fieldName, obj, msg) {
 

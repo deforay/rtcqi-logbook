@@ -24,7 +24,7 @@ class VendorsTypeTable extends Model
             $id = DB::table('vendor_types')->insertGetId(
                 [
                     'vendor_type'    => $data['vendorType'],
-                    'status'         => $data['status'],
+                    'vendor_type_status'         => $data['status'],
                     'created_on'     => $common->getDateTime(),
                 ]
             );
@@ -79,7 +79,7 @@ class VendorsTypeTable extends Model
         if ($params->input('vendorType') != null && trim($params->input('vendorType')) != '') {
             $params = array(
                 'vendor_type'    => $data['vendorType'],
-                'status'         => $data['status'],
+                'vendor_type_status'         => $data['status'],
                 'updated_on'     => $commonservice->getDateTime(),
             );
             $vendorUp = DB::table('vendor_types')
