@@ -119,7 +119,7 @@
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('users','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -325,7 +325,7 @@ function isNumberKey(evt){
                     tableName: tableName, fieldName: fieldName, value: checkValue,
                 },
                 success: function(result){
-                    console.log(result)
+                    // console.log(result)
                     if (result > 0)
                     {
                         $("#showAlertIndex").text(msg);
@@ -343,6 +343,38 @@ function isNumberKey(evt){
             });
         }
     }
-
+    function mobileDuplicateValidation(tableName1, tableName2, fieldName, obj, msg) {
+        checkValue = document.getElementById(obj).value;
+        if (checkValue != '') {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/mobileDuplicateValidation') }}",
+                method: 'post',
+                data: {
+                    tableName1: tableName1,
+                    tableName2: tableName2,
+                    fieldName: fieldName,
+                    value: checkValue,
+                },
+                success: function(result) {
+                    if (result > 0) {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#' + obj).focus();
+                        $('#' + obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    } else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+
 use DB;
 use Redirect;
 use Illuminate\Support\Carbon;
@@ -12,81 +13,123 @@ use Illuminate\Support\Facades\Hash;
 
 class CommonService
 {
-    public function duplicateValidation($request){
+    public function duplicateValidation($request)
+    {
 
         $tableName = $request['tableName'];
         $fieldName = $request['fieldName'];
         $value = trim($request['value']);
         $user = array();
-        try{
-            if($value != ""){
+        try {
+            if ($value != "") {
                 $user = DB::table($tableName)
-                        ->where($fieldName,'=', $value)
-                        ->get();
+                    ->where($fieldName, '=', $value)
+                    ->get();
             }
-        }
-        catch (Exception $exc) {
+        } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
-        $countVal=count($user);
-      
-        if(($fieldName=='customer_phno' || $fieldName=='mobile_no') && ($countVal=='0' || $countVal=='')){
-            if($fieldName=='customer_phno'){
+        $countVal = count($user);
+
+        if (($fieldName == 'customer_phno' || $fieldName == 'mobile_no') && ($countVal == '0' || $countVal == '')) {
+            if ($fieldName == 'customer_phno') {
                 $employeeResult = DB::table('agent_keyperson')
-                ->where('mobile_no','=', $value)
-                ->get();
-                $countVal=count($employeeResult);
-            }else{
+                    ->where('mobile_no', '=', $value)
+                    ->get();
+                $countVal = count($employeeResult);
+            } else {
                 $customerResult = DB::table('customers')
-                ->where('customer_phno','=', $value)
-                ->get();
-                $countVal=count($customerResult);
+                    ->where('customer_phno', '=', $value)
+                    ->get();
+                $countVal = count($customerResult);
             }
         }
 
-        if(($fieldName=='customer_email' || $fieldName=='email') && ($countVal=='0' || $countVal=='')){
-            if($fieldName=='customer_email'){
+        if (($fieldName == 'customer_email' || $fieldName == 'email') && ($countVal == '0' || $countVal == '')) {
+            if ($fieldName == 'customer_email') {
                 $employeeResult = DB::table('agent_keyperson')
-                ->where('email','=', $value)
-                ->get();
-                $countVal=count($employeeResult);
-            }else{
+                    ->where('email', '=', $value)
+                    ->get();
+                $countVal = count($employeeResult);
+            } else {
                 $customerResult = DB::table('customers')
-                ->where('customer_email','=', $value)
-                ->get();
-                $countVal=count($customerResult);
+                    ->where('customer_email', '=', $value)
+                    ->get();
+                $countVal = count($customerResult);
             }
         }
-        
+
         return $countVal;
     }
-    public function mobileDuplicateValidation($request){
-
-        $tableName1= $request['tableName1'];
+    public function mobileDuplicateValidation($request)
+    {
+        $tableName1 = $request['tableName1'];
         $tableName2 = $request['tableName2'];
         $fieldName = $request['fieldName'];
         $value = trim($request['value']);
         $user = array();
-        try{
-            if($value != ""){
+        try {
+            if ($value != "") {
                 $user = DB::table($tableName1)
-                        ->where($fieldName,'=', $value)
-                        ->get();
-                if(count($user)==0){
+                    ->where($fieldName, '=', $value)
+                    ->get();
+                if (count($user) == 0) {
                     $user = DB::table($tableName2)
-                        ->where($fieldName,'=', $value)
+                        ->where($fieldName, '=', $value)
                         ->get();
-                }        
+                }
             }
-        }
-        catch (Exception $exc) {
+        } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
-        $countVal=count($user);
-              return $countVal;
+        $countVal = count($user);
+        return $countVal;
     }
-   
-    public function dateFormat($date) {
+    public function checkMobileValidation($request)
+    {
+        $tableName1 = $request['tableName1'];
+        $tableName2 = $request['tableName2'];
+        $fieldName = $request['fieldName'];
+        $value = trim($request['value']);
+        $fnct = $request['fnct'];
+        $user = array();
+        try {
+            if (isset($fnct) && trim($fnct) !== '') {
+                $fields = explode("##", $fnct);
+                $primaryName = $fields[0];
+                $primaryValue = trim($fields[1]);
+                if ($value != "") {
+                    $user = DB::table($tableName1)
+                        ->where($primaryName, '!=', $primaryValue)
+                        ->where($fieldName, '=', $value)
+                        ->get();
+                    if (count($user) == 0) {
+                        $user = DB::table($tableName2)
+                            ->where($fieldName, '=', $value)
+                            ->get();
+                    }
+                }
+            } else {
+                if ($value != "") {
+                    $user = DB::table($tableName1)
+                        ->where($fieldName, '=', $value)
+                        ->get();
+                    if (count($user) == 0) {
+                        $user = DB::table($tableName2)
+                            ->where($fieldName, '=', $value)
+                            ->get();
+                    }
+                }
+            }
+            $countVal = count($user);
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return count($user);
+    }
+
+    public function dateFormat($date)
+    {
         if (!isset($date) || $date == null || $date == "" || $date == "0000-00-00") {
             return "0000-00-00";
         } else {
@@ -107,7 +150,8 @@ class CommonService
         }
     }
 
-    public function humanDateFormat($date) {
+    public function humanDateFormat($date)
+    {
         if ($date == null || $date == "" || $date == "0000-00-00" || $date == "0000-00-00 00:00:00") {
             return "";
         } else {
@@ -121,22 +165,23 @@ class CommonService
         }
     }
 
-    public function moneyFormatIndia($num) {
-        $explrestunits = "" ;
-        if(strlen($num)>3) {
-            $lastthree = substr($num, strlen($num)-3, strlen($num));
-            $restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
-            $restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
+    public function moneyFormatIndia($num)
+    {
+        $explrestunits = "";
+        if (strlen($num) > 3) {
+            $lastthree = substr($num, strlen($num) - 3, strlen($num));
+            $restunits = substr($num, 0, strlen($num) - 3); // extracts the last three digits
+            $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
             $expunit = str_split($restunits, 2);
-            for($i=0; $i<sizeof($expunit); $i++) {
+            for ($i = 0; $i < sizeof($expunit); $i++) {
                 // creates each of the 2's group and adds a comma to the end
-                if($i==0) {
-                    $explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
+                if ($i == 0) {
+                    $explrestunits .= (int) $expunit[$i] . ","; // if is first value , convert into integer
                 } else {
-                    $explrestunits .= $expunit[$i].",";
+                    $explrestunits .= $expunit[$i] . ",";
                 }
             }
-            $thecash = $explrestunits.$lastthree;
+            $thecash = $explrestunits . $lastthree;
         } else {
             $thecash = $num;
         }
@@ -151,7 +196,7 @@ class CommonService
         $fnct = $request['fnct'];
         $user = array();
         try {
-            if(isset($fnct) && trim($fnct)!==''){
+            if (isset($fnct) && trim($fnct) !== '') {
                 $fields = explode("##", $fnct);
                 $primaryName = $fields[0];
                 $primaryValue = trim($fields[1]);
@@ -161,72 +206,73 @@ class CommonService
                         ->where($fieldName, '=', $value)
                         ->get();
                 }
-            }else{
+            } else {
                 if ($value != "") {
                     $user = DB::table($tableName)
                         ->where($fieldName, '=', $value)
                         ->get();
                 }
             }
-            $countVal=count($user);
+            $countVal = count($user);
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
         return count($user);
     }
 
-    public function monthYear($start_date,$end_date){
+    public function monthYear($start_date, $end_date)
+    {
         $start    = new DateTime($start_date);
         $start->modify('first day of this month');
         $end      = new DateTime($end_date);
         $end->modify('first day of next month');
         $interval = DateInterval::createFromDateString('1 month');
         $period   = new DatePeriod($start, $interval, $end);
-        $monthYear=array();
+        $monthYear = array();
         foreach ($period as $dt) {
-            $monthYear[]= $dt->format("M-Y");
+            $monthYear[] = $dt->format("M-Y");
         }
         return $monthYear;
     }
-    
-    public function changeStatus($request){
-        
+
+    public function changeStatus($request)
+    {
+
         $tableName = $request['tableName'];
         $fieldIdName = $request['fieldIdName'];
         $fieldIdValue = $request['fieldIdValue'];
         $fieldName = $request['fieldName'];
         $fieldValue = $request['fieldValue'];
-        
-        try{
-            if($fieldValue != ""){
-                $updateData = array($fieldName=>$fieldValue);
+
+        try {
+            if ($fieldValue != "") {
+                $updateData = array($fieldName => $fieldValue);
                 DB::table($tableName)
-                ->where($fieldIdName,'=', $fieldIdValue)
-                ->update($updateData);
+                    ->where($fieldIdName, '=', $fieldIdValue)
+                    ->update($updateData);
 
                 //Event Log
                 $commonservice = new CommonService();
-                $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName.'-'.$fieldValue,$tableName.' changed to '.$fieldValue, $tableName);
-                
+                $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName . '-' . $fieldValue, $tableName . ' changed to ' . $fieldValue, $tableName);
             }
-        }
-        catch (Exception $exc) {
+        } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
         return $fieldIdValue;
     }
 
 
-    public function eventLog($userId,$subjectId,$event_type,$action,$resource_name){
+    public function eventLog($userId, $subjectId, $event_type, $action, $resource_name)
+    {
         $eventData = array(
-            'actor'=>$userId,
-            'subject'=> $subjectId,
-            'event_type'=>$event_type,
-            'action'=>$action,
-            'resource_name'=>$resource_name,
-            'added_on'=>date('Y-m-d H:i:s')
-            );
-        $eventResult= DB::table('event_log')->insert($eventData);
+            'actor' => $userId,
+            'subject' => $subjectId,
+            'event_type' => $event_type,
+            'action' => $action,
+            'resource_name' => $resource_name,
+            'added_on' => date('Y-m-d H:i:s')
+        );
+        $eventResult = DB::table('event_log')->insert($eventData);
         return $eventResult;
     }
 
@@ -235,5 +281,4 @@ class CommonService
         $date = new \DateTime(date('Y-m-d H:i:s'), new \DateTimeZone($timezone));
         return $date->format('Y-m-d H:i:s');
     }
-
 }
