@@ -22,6 +22,11 @@ class CommonController extends Controller
         return $data;
     }
 
+    public function checkMobileValidation(Request $request){
+        $commonService = new CommonService();
+        $data = $commonService->checkMobileValidation($request);
+        return $data; 
+    }
     public function checkNameValidation(Request $request)
     {
         $commonService = new CommonService();
