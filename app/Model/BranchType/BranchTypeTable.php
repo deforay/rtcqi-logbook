@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\BranchTypeService;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class BranchTypeTable extends Model
 {
@@ -23,6 +24,7 @@ class BranchTypeTable extends Model
                 ['branch_type' => $data['branchTypeName'],
                 'branch_type_status' => $data['branchTypeStatus'],
                 'created_on' => $commonservice->getDateTime(),
+                'created_by' => session('userId'),
                 ]
             );
 
@@ -70,6 +72,7 @@ class BranchTypeTable extends Model
                     ['branch_type' => $data['branchTypeName'],
                     'branch_type_status' => $data['branchTypeStatus'],
                     'updated_on' => $commonservice->getDateTime(),
+                    'updated_by' => session('userId'),
                     ]);
 
         $commonservice = new CommonService();

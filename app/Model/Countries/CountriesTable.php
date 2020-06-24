@@ -9,6 +9,7 @@ use App\Service\CommonService;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use Illuminate\Support\Facades\Session;
 
 class CountriesTable extends Model
 {
@@ -26,6 +27,7 @@ class CountriesTable extends Model
                     'country_name'   => $data['countryName'],
                     'country_status' => $data['status'],
                     'created_on'     => $commonservice->getDateTime(),
+                    'created_by' => session('userId'),
                 ]
             );
             if ($id) {
@@ -81,6 +83,7 @@ class CountriesTable extends Model
                 'country_name' => $data['countryName'],
                 'country_status'=> $data['status'],
                 'updated_on' => $commonservice->getDateTime(),
+                'updated_by' => session('userId'),
             );
             $countryUp = DB::table('countries')
                 ->where('country_id', '=', base64_decode($id))

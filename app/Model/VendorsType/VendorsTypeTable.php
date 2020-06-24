@@ -8,6 +8,7 @@ use App\Service\VendorsTypeService;
 use App\Service\CommonService;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Mail;
 
 class VendorsTypeTable extends Model
@@ -26,6 +27,7 @@ class VendorsTypeTable extends Model
                     'vendor_type'    => $data['vendorType'],
                     'vendor_type_status'         => $data['status'],
                     'created_on'     => $common->getDateTime(),
+                    'created_by' => session('userId'),
                 ]
             );
             if ($id) {
@@ -81,6 +83,7 @@ class VendorsTypeTable extends Model
                 'vendor_type'    => $data['vendorType'],
                 'vendor_type_status'         => $data['status'],
                 'updated_on'     => $commonservice->getDateTime(),
+                'updated_by' => session('userId'),
             );
             $vendorUp = DB::table('vendor_types')
                 ->where('vendor_type_id', '=', base64_decode($id))
