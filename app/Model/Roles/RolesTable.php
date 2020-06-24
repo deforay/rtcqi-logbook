@@ -7,6 +7,7 @@ use DB;
 use App\Service\RolesService;
 use Illuminate\Support\Facades\File;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class RolesTable extends Model
 {
@@ -38,6 +39,7 @@ class RolesTable extends Model
                 'role_description' => $data['Description'],
                 'role_status' => $data['rolesStatus'],
                 'created_on' => $commonservice->getDateTime(),
+                'created_by' => session('userId'),
                 ]
             );
 
@@ -114,6 +116,7 @@ class RolesTable extends Model
                 'role_description' => $data['eDescription'],
                 'role_status' => $data['erolesStatus'],
                 'updated_on' => $commonservice->getDateTime(),
+                'updated_by' => session('userId'),
                 ]);
 
         $commonservice = new CommonService();

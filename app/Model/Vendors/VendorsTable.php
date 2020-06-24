@@ -8,6 +8,7 @@ use App\Service\VendorsService;
 use App\Service\CommonService;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Mail;
 
 class VendorsTable extends Model
@@ -30,6 +31,7 @@ class VendorsTable extends Model
                     'role_description' => 'vendor role',
                     'role_status' => 'active',
                     'created_on' => $commonservice->getDateTime(),
+                    'created_by' => session('userId'),
                 ]
             );
 
@@ -123,6 +125,7 @@ class VendorsTable extends Model
                 'alt_phone'      => $data['vendorAltPhone'],
                 'vendor_status'  => $data['vendorStatus'],
                 'updated_on'     => $commonservice->getDateTime(),
+                'updated_by'     => session('userId'),
             );
             if (trim($data['password']))
                 $params['password'] = Hash::make($data['password']); // Hashing passwords
