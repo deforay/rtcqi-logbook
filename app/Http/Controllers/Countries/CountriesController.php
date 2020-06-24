@@ -48,11 +48,11 @@ class CountriesController extends Controller
             ->addColumn('action', function ($data) {
                 $button = '<div style="width: 180px;">';
                 $role = session('role');
-                // if (isset($role['App\\Http\\Controllers\\Countries\\CountriesController']['edit']) && ($role['App\\Http\\Controllers\\Countries\\CountriesController']['edit'] == "allow")) {
+                if (isset($role['App\\Http\\Controllers\\Countries\\CountriesController']['edit']) && ($role['App\\Http\\Controllers\\Countries\\CountriesController']['edit'] == "allow")) {
                     $button .= '<a href="/countries/edit/' . base64_encode($data->country_id) . '" name="edit" id="' . $data->country_id . '" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                // } else {
-                //     $button .= '';
-                // }
+                } else {
+                    $button .= '';
+                }
 
                 if ($data->country_status == 'active') {
                     $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'country_status', 'inactive','countryList')";

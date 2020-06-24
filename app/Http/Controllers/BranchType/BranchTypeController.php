@@ -46,11 +46,11 @@ class BranchTypeController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\BranchType\\BranchTypeController']['edit']) && ($role['App\\Http\\Controllers\\BranchType\\BranchTypeController']['edit'] == "allow")){
                            $button .= '<a href="/branchtype/edit/'. base64_encode($data->branch_type_id).'" name="edit" id="'.$data->branch_type_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->branch_type_status == 'active'){
                             $buttonStatus="changeStatus('branch_types','branch_type_id',$data->branch_type_id,'branch_type_status', 'inactive', 'branchTypeList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->branch_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
@@ -65,7 +65,7 @@ class BranchTypeController extends Controller
                     ->make(true);
     }
 
-    //edit roles
+    //edit branch type
     public function edit(Request $request,$id)
     {
         if ($request->isMethod('post')) 

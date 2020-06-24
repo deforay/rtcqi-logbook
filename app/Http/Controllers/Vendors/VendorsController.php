@@ -58,12 +58,12 @@ class VendorsController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Vendors\\VendorsController']['edit']) && ($role['App\\Http\\Controllers\\Vendors\\VendorsController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\Vendors\\VendorsController']['edit']) && ($role['App\\Http\\Controllers\\Vendors\\VendorsController']['edit'] == "allow")){
                             $button .= '<a href="/vendors/edit/'. base64_encode($data->vendor_id).'" name="edit" id="'.$data->vendor_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                             
-                        // }else{
-                            // $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
 
                         if($data->vendor_status == 'active'){
                             $buttonStatus="changeStatus('vendors','vendor_id',$data->vendor_id,'vendor_status', 'inactive', 'vendorsList')";

@@ -46,11 +46,11 @@ class ItemCategoryController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['edit']) && ($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['edit'] == "allow")){
                            $button .= '<a href="/itemCategory/edit/'. base64_encode($data->item_category_id).'" name="edit" id="'.$data->item_category_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->item_category_status == 'active'){
                             $buttonStatus="changeStatus('item_categories','item_category_id',$data->item_category_id,'item_category_status', 'inactive', 'itemCategoryList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->item_category_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
@@ -65,7 +65,7 @@ class ItemCategoryController extends Controller
                     ->make(true);
     }
 
-    //edit roles
+    //edit item category
     public function edit(Request $request,$id)
     {
         if ($request->isMethod('post')) 
