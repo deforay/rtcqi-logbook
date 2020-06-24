@@ -28,8 +28,12 @@
         </div>
         <div class="content-header-right col-md-4 col-12 ">
             <div class="dropdown float-md-right">
-                <a href="/branchtype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add Branch Type</b></a>
+            <?php
+                $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\BranchType\\BranchTypeController']['add']) && ($role['App\\Http\\Controllers\\BranchType\\BranchTypeController']['add'] == "allow")){ ?>
+                    <a href="/branchtype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                    <b><i class="ft-user-plus icon-left"></i> Add Branch Type</b></a>
+            <?php } ?>
             </div>
         </div>
     </div>

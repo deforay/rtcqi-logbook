@@ -28,8 +28,12 @@
         </div>
         <div class="content-header-right col-md-4 col-12 ">
             <div class="dropdown float-md-right">
-                <a href="/brand/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add Brand</b></a>
+            <?php
+                $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\Brand\\BrandController']['add']) && ($role['App\\Http\\Controllers\\Brand\\BrandController']['add'] == "allow")){ ?>
+                    <a href="/brand/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                    <b><i class="ft-user-plus icon-left"></i> Add Brand</b></a>
+            <?php } ?>
             </div>
         </div>
     </div>

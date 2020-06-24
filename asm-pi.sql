@@ -542,3 +542,14 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 ALTER TABLE `vendors` ADD `role` INT NULL AFTER `vendor_status`;
 ALTER TABLE `vendors` ADD `password` VARCHAR(255) NULL AFTER `role`;
 ALTER TABLE `vendors` ADD `created_on` DATETIME NULL AFTER `password`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+DELETE FROM `privileges` WHERE `privileges`.`resource_id` = 'App\\Http\\Controllers\\Dashboard\\DashboardController' AND `privileges`.`privilege_name` = 'add';
+DELETE FROM `privileges` WHERE `privileges`.`resource_id` = 'App\\Http\\Controllers\\Dashboard\\DashboardController' AND `privileges`.`privilege_name` = 'edit';
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'UnitConversion', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'add', 'Add'), ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\UnitConversion\\UnitConversionController', 'index', 'Access');
+ALTER TABLE `item_types` CHANGE `status` `item_type_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `item_types` ADD `created_on` DATETIME NULL AFTER `item_type_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+ALTER TABLE `brands` CHANGE `manufaturer_name` `manufacturer_name` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `brands` CHANGE `status` `brand_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+ALTER TABLE `items` ADD `created_on` DATETIME NULL AFTER `base_unit`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`

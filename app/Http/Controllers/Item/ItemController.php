@@ -55,18 +55,18 @@ class ItemController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div >';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\Item\\ItemController']['edit']) && ($role['App\\Http\\Controllers\\Item\\ItemController']['edit'] == "allow")){
                            $button .= '<a href="/item/edit/'. base64_encode($data->item_id).'" name="edit" id="'.$data->item_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         return $button;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
     }
 
-    //edit roles
+    //edit item
     public function edit(Request $request,$id)
     {
         if ($request->isMethod('post')) 

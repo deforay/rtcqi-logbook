@@ -52,11 +52,11 @@ class BranchesController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\\Http\\Controllers\\Branches\\BranchesController']['edit']) && ($role['App\\Http\\Controllers\\Branches\\BranchesController']['edit'] == "allow")){
                            $button .= '<a href="/branches/edit/'. base64_encode($data->branch_id).'" name="edit" id="'.$data->branch_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->branch_status == 'active'){
                             $buttonStatus="changeStatus('branches','branch_id',$data->branch_id,'branch_status', 'inactive', 'branchList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->branch_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';

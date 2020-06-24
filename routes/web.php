@@ -144,3 +144,11 @@ Route::get('/incorrectrequest', function()
 {
     return view('error.incorrect-request');
 });
+
+//brand module
+Route::get('/brand', 'Brand\BrandController@index')->name('brand.index')->middleware('access');
+Route::post('/brand/add', 'Brand\BrandController@add');
+Route::get('/brand/add', 'Brand\BrandController@add');
+Route::post('/getAllBrand', 'Brand\BrandController@getAllBrand');
+Route::get('/brand/edit/{id}', 'Brand\BrandController@edit');
+Route::post('/brand/edit/{id}', 'Brand\BrandController@edit');
