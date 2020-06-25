@@ -38,7 +38,7 @@ class RfqController extends Controller
             $service = new VendorsService();
             $vendor = $service->getAllActiveVendors();
             $itemservice = new ItemService();
-            $item = $itemservice->getAllItem();
+            $item = $itemservice->getAllActiveItem();
             $uomservice = new UnitService();
             $uom = $uomservice->getAllActiveUnit();
             return view('rfq.add',array('vendor'=>$vendor,'item'=>$item,'uom'=>$uom));
