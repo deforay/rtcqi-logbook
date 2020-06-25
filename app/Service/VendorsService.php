@@ -36,6 +36,14 @@ class VendorsService
         return $result;
 	}
 
+	//Get All Active Vendors List
+	public function getAllActiveVendors()
+    {
+		$vendorsmodel = new VendorsTable();
+        $result = $vendorsmodel->fetchAllActiveVendors();
+        return $result;
+	}
+
 	//Get Particular Vendors Details
 	public function getVendorsById($id)
 	{

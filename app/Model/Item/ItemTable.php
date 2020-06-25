@@ -49,6 +49,16 @@ class ItemTable extends Model
         return $data;
     }
 
+    // Fetch All Active Item List
+    public function fetchAllActiveItem()
+    {
+        $data = DB::table('items')
+                ->where('item_status','=','active')
+                ->orderBy('item_name', 'asc')  
+                ->get();
+        return $data;
+    }
+
      // fetch particular Item  details
      public function fetchItemById($id)
      {
@@ -81,5 +91,15 @@ class ItemTable extends Model
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Item-update', 'Update Item '.$data['itemName'], 'Item');
         }
         return $response;
+    }
+
+    // fetch particular Item unit details
+    public function fetchItemUnit($request)
+    {
+        $id = $request->val;
+        $data = DB::table('items')
+                ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
+                ->where('item_id', '=',$id )->get();
+        return $data;
     }
 }
