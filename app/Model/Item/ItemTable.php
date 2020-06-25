@@ -39,15 +39,15 @@ class ItemTable extends Model
     }
 
     // Fetch All Item  List
-    public function fetchAllItem()
-    {
-        $data = DB::table('items')
-                ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
-                ->join('brands', 'brands.brand_id', '=', 'items.brand')
-                ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
-                ->get();
-        return $data;
-    }
+        public function fetchAllItem()
+        {
+            $data = DB::table('items')
+                    ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
+                    ->join('brands', 'brands.brand_id', '=', 'items.brand')
+                    ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
+                    ->get();
+            return $data;
+        }
 
     // Fetch All Active Item List
     public function fetchAllActiveItem()
@@ -100,15 +100,6 @@ class ItemTable extends Model
         $data = DB::table('items')
                 ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
                 ->where('item_id', '=',$id )->get();
-        return $data;
-    }
-       public function fetchAllItem()
-    {
-        $data = DB::table('items')
-            ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
-            ->join('brands', 'brands.brand_id', '=', 'items.brand')
-            ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
-                ->get();
         return $data;
     }
 }
