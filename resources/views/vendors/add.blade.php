@@ -355,8 +355,6 @@
     }
 
     function duplicateValidation(tableName, fieldName, obj, msg) {
-
-
         // alert(fnct)
         checkValue = document.getElementById(obj).value;
         // alert(checkValue)
