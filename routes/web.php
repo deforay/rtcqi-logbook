@@ -92,6 +92,8 @@ Route::get('/item/add', 'Item\ItemController@add');
 Route::post('/getAllItem', 'Item\ItemController@getAllItem');
 Route::get('/item/edit/{id}', 'Item\ItemController@edit');
 Route::post('/item/edit/{id}', 'Item\ItemController@edit');
+Route::post('/getItemUnit', 'Item\ItemController@getItemUnit');
+
 //user module
 Route::get('/user', 'User\UserController@index')->name('user.index')->middleware('access');
 Route::post('/user/add', 'User\UserController@add');
@@ -159,3 +161,11 @@ Route::get('/brand/add', 'Brand\BrandController@add');
 Route::post('/getAllBrand', 'Brand\BrandController@getAllBrand');
 Route::get('/brand/edit/{id}', 'Brand\BrandController@edit');
 Route::post('/brand/edit/{id}', 'Brand\BrandController@edit');
+
+//rfq module
+Route::get('/rfq', 'Rfq\RfqController@index')->name('rfq.index')->middleware('access');
+Route::post('/rfq/add', 'Rfq\RfqController@add');
+Route::get('/rfq/add', 'Rfq\RfqController@add');
+Route::post('/getAllRfq', 'Rfq\RfqController@getAllRfq');
+Route::get('/rfq/edit/{id}', 'Rfq\RfqController@edit');
+Route::post('/rfq/edit/{id}', 'Rfq\RfqController@edit');

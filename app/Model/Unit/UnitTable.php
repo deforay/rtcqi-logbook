@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\UnitService;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class UnitTable extends Model
 {
@@ -23,6 +24,7 @@ class UnitTable extends Model
                 ['unit_name' => $data['unitName'],
                 'unit_status' => $data['unitStatus'],
                 'created_on' => $commonservice->getDateTime(),
+                'created_by' => session('userId'),
                 ]
             );
 
@@ -71,6 +73,7 @@ class UnitTable extends Model
                     ['unit_name' => $data['unitName'],
                     'unit_status' => $data['unitStatus'],
                     'updated_on' => $commonservice->getDateTime(),
+                    'updated_by' => session('userId'),
                     ]);
 
         $commonservice = new CommonService();

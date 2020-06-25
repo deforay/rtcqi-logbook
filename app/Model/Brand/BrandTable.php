@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\BrandService;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class BrandTable extends Model
 {
@@ -24,6 +25,7 @@ class BrandTable extends Model
                 'manufacturer_name' => $data['manufacturerName'],
                 'brand_status' => $data['brandStatus'],
                 'created_on' => $commonservice->getDateTime(),
+                'created_by' => session('userId'),
                 ]
             );
 
@@ -73,6 +75,7 @@ class BrandTable extends Model
                     'manufacturer_name' => $data['manufacturerName'],
                     'brand_status' => $data['brandStatus'],
                     'updated_on' => $commonservice->getDateTime(),
+                    'updated_by' => session('userId'),
                     ]);
 
         $commonservice = new CommonService();
