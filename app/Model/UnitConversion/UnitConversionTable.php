@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\UnitConversionService;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class UnitConversionTable extends Model
 {
@@ -25,7 +26,7 @@ class UnitConversionTable extends Model
                     'to_unit'                => $data['toUnit'],
                     'unit_conversion_status' => $data['unitConversionStatus'],
                     'created_on'             => $commonservice->getDateTime(),
-
+                    'created_by' => session('userId'),
                 ]
             );
 
@@ -77,6 +78,7 @@ class UnitConversionTable extends Model
                         'to_unit'                   => $data['toUnit'],
                         'unit_conversion_status'    => $data['unitConversionStatus'],
                         'updated_on'                => $commonservice->getDateTime(),
+                        'updated_by' => session('userId'),
                     ]
                 );
 

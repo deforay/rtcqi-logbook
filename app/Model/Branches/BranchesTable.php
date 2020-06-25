@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\BranchesService;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class BranchesTable extends Model
 {
@@ -32,7 +33,7 @@ class BranchesTable extends Model
                 'city' => $data['city'],
                 'pincode' => $data['pincode'],
                 'branch_status' => $data['branchStatus'],
-                // 'created_by' => $data['firstName'],
+                'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
                 ]
             );
@@ -95,6 +96,7 @@ class BranchesTable extends Model
                         'pincode' => $data['pincode'],
                         'branch_status' => $data['branchStatus'],
                         'updated_on' => $commonservice->getDateTime(),
+                        'updated_by' => session('userId'),
                     ]);
 
         $commonservice = new CommonService();

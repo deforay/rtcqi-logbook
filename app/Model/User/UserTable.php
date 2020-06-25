@@ -33,7 +33,7 @@ class UserTable extends Model
                 'email' => $data['email'],
                 'phone' => $data['mobileNo'],
                 'user_status' => $data['userStatus'],
-                // 'created_by' => $data['firstName'],
+                'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
                 ]
             );
@@ -99,7 +99,7 @@ class UserTable extends Model
                 'email' => $data['email'],
                 'phone' => $data['mobileNo'],
                 'user_status' => $data['userStatus'],
-                // 'updated_by' => $data['firstName'],
+                'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );
             if(trim($data['password']))

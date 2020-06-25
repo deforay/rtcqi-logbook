@@ -179,6 +179,7 @@
                                                     <option value="{{ $countrylist->country_id }}">{{ $countrylist->country_name }}</option>
                                                     @endforeach
                                                 </select>
+                                            </fieldset>
                                         </div>
                                     </div>
                                     <div class="row">

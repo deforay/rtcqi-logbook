@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\ItemTypeService;
 use App\Service\CommonService;
+use Illuminate\Support\Facades\Session;
 
 class ItemTypeTable extends Model
 {
@@ -24,6 +25,7 @@ class ItemTypeTable extends Model
                 'item_category' => $data['itemCategoryId'],
                 'item_type_status' => $data['itemTypeStatus'],
                 'created_on' => $commonservice->getDateTime(),
+                'created_by' => session('userId'),
                 ]
             );
 
@@ -74,6 +76,7 @@ class ItemTypeTable extends Model
                     'item_category' => $data['itemCategoryId'],
                     'item_type_status' => $data['itemTypeStatus'],
                     'updated_on' => $commonservice->getDateTime(),
+                    'updated_by' => session('userId'),
                     ]);
 
         $commonservice = new CommonService();

@@ -88,4 +88,10 @@ class ItemController extends Controller
             return view('item.edit',array('result'=>$result, 'itemType'=>$itemType, 'brand'=>$brand, 'unit'=>$unit));
         }
     }
+
+    public function getItemUnit(Request $request){
+        $service = new ItemService();
+        $result = $service->getItemUnit($request);
+        return $result;
+    }
 }
