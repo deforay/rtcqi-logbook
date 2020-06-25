@@ -67,6 +67,13 @@ class ItemService
 	    	$exc->getMessage();
 	    }
 	}
+		//Get All Item List
+		public function getAllActiveItem()
+		{
+			$model = new ItemTable();
+			$result = $model->fetchAllActiveItem();
+			return $result;
+		}
 }
 
 ?>
