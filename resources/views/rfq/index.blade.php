@@ -72,10 +72,12 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="unitList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="RfqList">
                                         <thead>
                                             <tr>
-                                                <th>Unit Name</th>
+                                                <th>RFQ Number</th>
+                                                <th>Issued On</th>
+                                                <th>Last Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -97,30 +99,32 @@
   <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllUnit();
+        getAllRfq();
         $.unblockUI();
     });
-    function getAllUnit()
+    function getAllRfq()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#unitList').DataTable({
+      $('#RfqList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllUnit") }}',
+                url:'{{ url("getAllRfq") }}',
                 type: 'POST',
             },
             columns: [
                     
-                    { data: 'unit_name', name: 'unit_name',className:'firstcaps' },
-                    { data: 'unit_status', name: 'unit_status',className:'firstcaps' },
+                    { data: 'rfq_number', name: 'rfq_number'},
+                    { data: 'rfq_issued_on', name: 'rfq_issued_on'},
+                    { data: 'last_date', name: 'last_date'},
+                    { data: 'rfq_status', name: 'rfq_status',className:'firstcaps'},
                     {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]

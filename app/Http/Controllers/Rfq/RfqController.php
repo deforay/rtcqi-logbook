@@ -38,7 +38,7 @@ class RfqController extends Controller
             $service = new VendorsService();
             $vendor = $service->getAllActiveVendors();
             $itemservice = new ItemService();
-            $item = $itemservice->getAllItem();
+            $item = $itemservice->getAllActiveItem();
             $uomservice = new UnitService();
             $uom = $uomservice->getAllActiveUnit();
             return view('rfq.add',array('vendor'=>$vendor,'item'=>$item,'uom'=>$uom));
@@ -50,21 +50,37 @@ class RfqController extends Controller
     {
         $service = new RfqService();
         $data = $service->getAllRfq();
+        // dd($data);
         return DataTables::of($data)
+                    ->editColumn('rfq_issued_on', function($data){
+                            $issuedOn = $data->rfq_issued_on;
+                            if($issuedOn){
+                                $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                                return $issuedOn;
+                            }
+                    })
+                    ->editColumn('last_date', function($data){
+                            $lastDate = $data->last_date;
+                            if($lastDate){
+                                $lastDate = date("d-M-Y", strtotime($lastDate));
+                                return $lastDate;
+                            }
+                    })
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
-                           $button .= '<a href="/rfq/edit/'. base64_encode($data->uom_id).'" name="edit" id="'.$data->uom_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        
+                        if($data->rfq_status == 'draft'){
+                            $buttonStatus="changeStatus('rfq','rfq_id',$data->rfq_id,'rfq_status', 'active', 'RfqList')";
+                            $button .= '<button type="button" name="changeStatus" id="changeStatus'.$data->rfq_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Active</button>';
+                            if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
+                                $button .= '&nbsp;&nbsp;&nbsp;<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                             }else{
+                                 $button .= '';
+                             }
                         }else{
-                            $button .= '';
-                        }
-                        if($data->Rfq_status == 'active'){
-                            $buttonStatus="changeStatus('Rfqs_of_measure','uom_id',$data->uom_id,'Rfq_status', 'inactive', 'RfqList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
-                        }else{
-                            $buttonStatus="changeStatus('Rfqs_of_measure','uom_id',$data->uom_id,'Rfq_status', 'active', 'RfqList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                            // $buttonStatus="changeStatus('Rfqs_of_measure','uom_id',$data->uom_id,'Rfq_status', 'active', 'RfqList')";
+                            // $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
                         }
                         $button .= '</div>';
                         return $button;
