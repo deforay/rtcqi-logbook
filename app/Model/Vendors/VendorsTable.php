@@ -85,6 +85,16 @@ class VendorsTable extends Model
         return $data;
     }
 
+    // Fetch All Vendor List
+    public function fetchAllActiveVendors()
+    {
+        $data = DB::table('vendors')
+            ->where('vendor_status','=','active')
+            ->orderBy('vendor_name', 'asc')
+            ->get();
+        return $data;
+    }
+
     // fetch particular Vendor details(edit)
     public function fetchVendorsById($id)
     {

@@ -32,10 +32,13 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
     $manage .= '</ul></li>';
 }
 
-if ((isset($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['index']) && ($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\ItemType\\ItemTypeController']['index']) && ($role['App\\Http\\Controllers\\ItemType\\ItemTypeController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Unit\\UnitController']['index']) && ($role['App\\Http\\Controllers\\Unit\\UnitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\UnitConversion\\UnitConversionController']['index']) && ($role['App\\Http\\Controllers\\UnitConversion\\UnitConversionController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Brand\\BrandController']['index']) && ($role['App\\Http\\Controllers\\Brand\\BrandController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Item\\ItemController']['index']) && ($role['App\\Http\\Controllers\\Item\\ItemController']['index'] == "allow"))) 
+if ((isset($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['index']) && ($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\ItemType\\ItemTypeController']['index']) && ($role['App\\Http\\Controllers\\ItemType\\ItemTypeController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Unit\\UnitController']['index']) && ($role['App\\Http\\Controllers\\Unit\\UnitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\UnitConversion\\UnitConversionController']['index']) && ($role['App\\Http\\Controllers\\UnitConversion\\UnitConversionController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Brand\\BrandController']['index']) && ($role['App\\Http\\Controllers\\Brand\\BrandController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Item\\ItemController']['index']) && ($role['App\\Http\\Controllers\\Item\\ItemController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['index'] == "allow"))) 
 {
     $item .= ' <li class="dropdown nav-item" data-menu="dropdown" id="item"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="ft-life-buoy"></i><span data-i18n="Templates">Item</span></a>
                 <ul class="dropdown-menu">';
+    if (isset($role['App\Http\Controllers\Item\ItemController']['index']) && ($role['App\Http\Controllers\Item\ItemController']['index'] == "allow"))
+        $item .= '<li data-menu=""><a class="dropdown-item" href="/item/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item</span></span></a>
+        </li>';
     if (isset($role['App\Http\Controllers\ItemCategory\ItemCategoryController']['index']) && ($role['App\Http\Controllers\ItemCategory\ItemCategoryController']['index'] == "allow"))
         $item .= '<li data-menu=""><a class="dropdown-item" href="/itemCategory/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item Category</span></span></a>
         </li>';
@@ -51,8 +54,8 @@ if ((isset($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']
     if (isset($role['App\Http\Controllers\Brand\BrandController']['index']) && ($role['App\Http\Controllers\Brand\BrandController']['index'] == "allow"))
         $item .= '<li data-menu=""><a class="dropdown-item" href="/brand/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Brand</span></span></a>
         </li>';
-    if (isset($role['App\Http\Controllers\Item\ItemController']['index']) && ($role['App\Http\Controllers\Item\ItemController']['index'] == "allow"))
-        $item .= '<li data-menu=""><a class="dropdown-item" href="/item/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Item</span></span></a>
+    if (isset($role['App\Http\Controllers\Rfq\RfqController']['index']) && ($role['App\Http\Controllers\Rfq\RfqController']['index'] == "allow"))
+        $item .= '<li data-menu=""><a class="dropdown-item" href="/rfq/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>RFQ</span></span></a>
         </li>';
 
     $item .= '</ul></li>';

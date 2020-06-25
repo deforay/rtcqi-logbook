@@ -42,6 +42,14 @@ class ItemService
         return $result;
 	}
 
+	//Get All Active Item List
+	public function getAllActiveItem()
+    {
+		$model = new ItemTable();
+        $result = $model->fetchAllActiveItem();
+        return $result;
+	}
+
 	//Get Particular Item Details
 	public function getItemById($id)
 	{
@@ -67,6 +75,15 @@ class ItemService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//Get Particular Item Unit Details
+	public function getItemUnit($request)
+	{
+		$model = new ItemTable();
+        $result = $model->fetchItemUnit($request);
+        return $result;
+	}
+	
 }
 
 ?>
