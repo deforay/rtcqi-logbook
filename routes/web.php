@@ -131,6 +131,13 @@ Route::post('/getAllUnitConversion', 'UnitConversion\UnitConversionController@ge
 Route::get('/unitconversion/edit/{id}', 'UnitConversion\UnitConversionController@edit');
 Route::post('/unitconversion/edit/{id}', 'UnitConversion\UnitConversionController@edit');
 
+
+//Quotes module
+Route::get('/quotes', 'Quotes\QuotesController@index')->name('quotes.index')->middleware('access');
+Route::post('/getAllQuotes', 'Quotes\QuotesController@getAllQuotes');
+Route::get('/quotes/edit/{id}', 'Quotes\QuotesController@edit');
+Route::post('/quotes/edit/{id}', 'Quotes\QuotesController@edit');
+
 // Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
 Route::get('/unauthorized', function()
 {

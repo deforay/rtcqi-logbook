@@ -28,7 +28,8 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
         $manage .= '<li data-menu=""><a class="dropdown-item" href="/vendors/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Vendors</span></span></a></li>';
     if (isset($role['App\Http\Controllers\VendorsType\VendorsTypeController']['index']) && ($role['App\Http\Controllers\VendorsType\VendorsTypeController']['index'] == "allow"))
         $manage .= '<li data-menu=""><a class="dropdown-item" href="/vendorstype/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Vendors Type</span></span></a></li>';
-
+    if (isset($role['App\Http\Controllers\Quotes\QuotesController']['index']) && ($role['App\Http\Controllers\Quotes\QuotesController']['index'] == "allow"))
+        $manage .= '<li data-menu=""><a class="dropdown-item" href="/quotes/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Quotes</span></span></a></li>';
     $manage .= '</ul></li>';
 }
 
