@@ -55,7 +55,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/vendor/">Vendor</a>
+                        <li class="breadcrumb-item"><a href="/vendors/">Vendor</a>
                         </li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
@@ -250,7 +250,7 @@
                                                 <h5>Phone<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isMobNo isRequired" onblur="checkNameValidation('vendors', 'phone', this.id,'{{$fnct}}', 'Entered Phone Number is already exist. . Please enter another Phone Number.');" value="{{ $vendors[0]->phone }}" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
+                                                    <input maxlength="10" type="tel" id="vendorPhone" class="form-control isMobNo isRequired" onblur="checkMobileValidation('vendors','users', 'phone', this.id,'{{$fnct}}', 'Entered Phone Number is already exist. . Please enter another Phone Number.');" value="{{ $vendors[0]->phone }}" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Phone Number" name="vendorPhone" title="Please enter Number">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -426,7 +426,7 @@
 
     }
 
-    function checkNameValidation(tableName, fieldName, obj, fnct, msg) {
+    function checkMobileValidation(tableName1,tableName2,fieldName, obj, fnct, msg) {
         checkValue = document.getElementById(obj).value;
         if ($.trim(checkValue) != '') {
             $.ajaxSetup({
@@ -435,10 +435,11 @@
                 }
             });
             $.ajax({
-                url: "{{ url('/checkNameValidation') }}",
+                url: "{{ url('/checkMobileValidation') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName,
+                    tableName1: tableName1,
+                    tableName2: tableName2,
                     fieldName: fieldName,
                     value: checkValue,
                     fnct: fnct,
