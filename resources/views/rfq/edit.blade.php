@@ -1,13 +1,25 @@
 <!-- 
     Author             : Sudarmathi M
     Date               : 25 June 2020
-    Description        : RFQ add screen
+    Description        : RFQ edit screen
     Last Modified Date : 25 June 2020
     Last Modified Name : Sudarmathi M
 -->
 @extends('layouts.main')
 
 @section('content')
+<?php
+    use App\Service\CommonService;
+    $common = new CommonService();
+    $issuedOn = $common->humanDateFormat($result[0]->rfq_issued_on);
+    $lastDate = $common->humanDateFormat($result[0]->last_date);
+
+    $vendors = array();
+    foreach($result as $list)
+    {
+        array_push($vendors, $list->branch_id);
+    }
+?>
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -19,7 +31,7 @@
 			</li>
 			<li class="breadcrumb-item"><a href="/rfq/">RFQ</a>
 			</li>
-			<li class="breadcrumb-item active">Add</li>
+			<li class="breadcrumb-item active">Edit</li>
 			</ol>
 		</div>
 		</div>
@@ -32,7 +44,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Add RFQ</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> Edit RFQ</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -47,7 +59,7 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="addRfq" id="addRfq" method="post" action="/rfq/add" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editRfq" id="editRfq" method="post" action="/rfq/edit/{{base64_encode($result[0]->rfq_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
@@ -55,7 +67,7 @@
                                             <h5>RFQ Number <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="rfqNumber" class="form-control isRequired" autocomplete="off" placeholder="Enter a RFQ Number" name="rfqNumber" title="Please enter RFQ Number" >
+                                                <input type="text" id="rfqNumber" value="{{$result[0]->unit_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a RFQ Number" name="rfqNumber" title="Please enter RFQ Number" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -67,7 +79,7 @@
                                                 <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="vendors" name="vendors[]" title="Please select vendors">
                                                 <option value="">Select Vendors</option>
                                                 @foreach($vendor as $type)
-													<option value="{{ $type->vendor_id }}">{{ $type->vendor_name }}</option>
+													<option value="{{ $type->vendor_id }}" >{{ $type->vendor_name }}</option>
 												@endforeach
                                                 </select>
                                             </div>
@@ -80,7 +92,7 @@
                                             <h5>Issued On <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="issuedOn" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a Issued On" name="issuedOn" title="Please enter Issued On">
+                                                <input type="text" id="issuedOn" value="{{$issuedOn}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a Issued On" name="issuedOn" title="Please enter Issued On">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -89,7 +101,7 @@
                                             <h5>Last Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastdate" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a last date" name="lastdate" title="Please enter last date">
+                                                <input type="text" id="lastdate" value="{{$lastDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a last date" name="lastdate" title="Please enter last date">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -197,12 +209,12 @@ $(document).ready(function() {
  duplicateName = true;
     function validateNow() {
         flag = deforayValidator.init({
-            formId: 'addRfq'
+            formId: 'editRfq'
         });
         
         if (flag == true) {
             if (duplicateName) {
-                document.getElementById('addRfq').submit();
+                document.getElementById('editRfq').submit();
             }
         }
         else{
@@ -290,7 +302,7 @@ $(document).ready(function() {
 
         
         rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem('+rowCount+',this.value)">\
+        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" >\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';

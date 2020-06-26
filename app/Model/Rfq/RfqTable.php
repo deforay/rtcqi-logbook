@@ -42,6 +42,18 @@ class RfqTable extends Model
                         'vendor_id' => $data['vendors'][$k],
                         ]
                     );
+                if ($request->input('item')!=null) {
+                    for($j=0;$j<count($data['item']);$j++){
+                        $quotesDetails = DB::table('quote_details')->insertGetId(
+                            [
+                            'quote_id' => $quotes,
+                            'item_id' => $data['item'][$j],
+                            'uom' => $data['unitId'][$j],
+                            'quantity' => $data['qty'][$j],
+                            ]
+                        );
+                    }
+                }
             }
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $id, 'quotes-add', 'add quotes '.$data['rfqNumber'], 'quotes');
@@ -57,15 +69,6 @@ class RfqTable extends Model
                                 'quantity' => $data['qty'][$j],
                                 ]
                             );
-
-                $quotesDetails = DB::table('quote_details')->insertGetId(
-                                    [
-                                    'quote_id' => $quotes,
-                                    'item_id' => $data['item'][$j],
-                                    'uom' => $data['unitId'][$j],
-                                    'quantity' => $data['qty'][$j],
-                                    ]
-                                );
             }
         }
         return $id;
@@ -76,6 +79,29 @@ class RfqTable extends Model
     {
         $data = DB::table('rfq')
                 ->get();
+        return $data;
+    }
+
+    // Fetch All rfq List
+    public function fetchAllActiveRfq()
+    {
+        $data = DB::table('rfq')
+            ->where('rfq_status','=','active')
+            ->orderBy('rfq_number', 'asc')
+            ->get();
+        return $data;
+    }
+
+    // fetch particular rfq details(edit)
+    public function fetchRfqById($id)
+    {
+        $id = base64_decode($id);
+        // dd($id);
+        $data = DB::table('rfq')
+                ->join('rfq_details', 'rfq_details.rfq_id', '=', 'rfq.rfq_id')
+                // ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+                // ->join('quote_details', 'quote_details.quote_id', '=', 'quotes.quote_id')
+                ->where('rfq.rfq_id', '=', $id)->get();
         return $data;
     }
 }
