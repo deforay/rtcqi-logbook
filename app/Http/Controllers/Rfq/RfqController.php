@@ -100,8 +100,15 @@ class RfqController extends Controller
         }
         else
         {
+            $vendorservice = new VendorsService();
+            $vendor = $vendorservice->getAllActiveVendors();
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            $uomservice = new UnitService();
+            $uom = $uomservice->getAllActiveUnit();
             $service = new RfqService();
             $result = $service->getRfqById($id);
+            // dd($result);
             return view('rfq.edit',array('result'=>$result));
         }
     }
