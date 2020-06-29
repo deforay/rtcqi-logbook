@@ -24,7 +24,7 @@ class QuotesTable extends Model
         $data = DB::table('quotes')
             ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
             ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-            // ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
+            ->where('quotes.approve_status', '=', 'no')
             ->get();
         return $data;
     }
