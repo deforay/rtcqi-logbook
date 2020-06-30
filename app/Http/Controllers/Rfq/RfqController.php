@@ -109,7 +109,7 @@ class RfqController extends Controller
             $service = new RfqService();
             $result = $service->getRfqById($id);
             // dd($result);
-            return view('rfq.edit',array('result'=>$result));
+            return view('rfq.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'uom'=>$uom));
         }
     }
 }

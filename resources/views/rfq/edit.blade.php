@@ -11,14 +11,27 @@
 <?php
     use App\Service\CommonService;
     $common = new CommonService();
-    $issuedOn = $common->humanDateFormat($result[0]->rfq_issued_on);
-    $lastDate = $common->humanDateFormat($result[0]->last_date);
+    $issuedOn = $common->humanDateFormat($result['rfq'][0]->rfq_issued_on);
+    $lastDate = $common->humanDateFormat($result['rfq'][0]->last_date);
 
     $vendors = array();
-    foreach($result as $list)
+    $vendorDetail = '';
+    foreach($result['quotes'] as $list)
     {
-        array_push($vendors, $list->branch_id);
+        // print_r(count($vendors));
+        if(count($vendors)==0){
+            array_push($vendors, $list->vendor_id);
+            $vendorDetail = $list->vendor_id;
+        }
+        else{
+            // print_r(!(in_array($list->vendor_id,$vendors)));
+            if(!(in_array($list->vendor_id,$vendors))){
+                array_push($vendors, $list->vendor_id);
+                $vendorDetail = $vendorDetail.','.$list->vendor_id;
+            }
+        }
     }
+    // print_r($vendors);die;
 ?>
 <div class="content-wrapper">
 <div class="content-header row">
@@ -59,7 +72,7 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="editRfq" id="editRfq" method="post" action="/rfq/edit/{{base64_encode($result[0]->rfq_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editRfq" id="editRfq" method="post" action="/rfq/edit/{{base64_encode($result['rfq'][0]->rfq_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
@@ -67,7 +80,7 @@
                                             <h5>RFQ Number <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="rfqNumber" value="{{$result[0]->unit_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a RFQ Number" name="rfqNumber" title="Please enter RFQ Number" >
+                                                <input type="text" id="rfqNumber" value="{{$result['rfq'][0]->rfq_number}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a RFQ Number" name="rfqNumber" title="Please enter RFQ Number" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -79,7 +92,7 @@
                                                 <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="vendors" name="vendors[]" title="Please select vendors">
                                                 <option value="">Select Vendors</option>
                                                 @foreach($vendor as $type)
-													<option value="{{ $type->vendor_id }}" >{{ $type->vendor_name }}</option>
+													<option value="{{ $type->vendor_id }}" {{ in_array($type->vendor_id, $vendors) ?  'selected':''}} >{{ $type->vendor_name }}</option>
 												@endforeach
                                                 </select>
                                             </div>
@@ -120,33 +133,35 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="itemDetails">
+                                            <?php $z=0; ?>
+                                            @foreach($result['rfq'] as $rfq)
                                                 <tr>
+                                                <input type="hidden" name="rdId[]" id="rdId{{$z}}" value="{{ $rfq->rfqd_id }}"/>
                                                 <td>
-                                                <select id="item0" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem(0,this.value)">
+                                                <select id="item{{$z}}" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem({{$z}},this.value)">
                                                     <option value="">Select Item </option>
                                                     @foreach ($item as $items)
-                                                        <option value="{{ $items->item_id }}">{{ $items->item_name }}</option>
+                                                        <option value="{{ $items->item_id }}" {{ $rfq->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="unitName0" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
-                                                    <input type="hidden" id="unitId0" name="unitId[]" class="isRequired form-control"  title="Please enter unit">
+                                                    <input type="text" id="unitName{{$z}}" readonly name="unitName[]" value="{{ $rfq->unit_name }}" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
+                                                    <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $rfq->uom }}" class="isRequired form-control"  title="Please enter unit">
                                                 </td>
                                                 <td>
-                                                <input type="number" id="qty0" name="qty[]" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                <input type="number" id="qty{{$z}}" name="qty[]" value="{{ $rfq->quantity }}" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                 </td>
                                                 <td>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-6" >
-                                                            <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
-                                                        </div>
-                                                        <!-- <div class="col-md-6 col-6">
-                                                            <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
-                                                        </div> -->
-                                                    </div>
+                                                    <!-- <div class="row"> -->
+                                                        <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
+                                                        &nbsp;&nbsp;
+                                                        <a class="btn btn-sm btn-warning" href="javascript:void(0);" id="{{$rfq->rfqd_id}}" onclick="removeRow(this.parentNode);deleteItemDet(this.id,{{$z}})"><i class="ft-minus"></i></a>
+                                                    <!-- </div> -->
                                                 </td>
                                                 </tr>
+                                            <?php $z++; ?>
+                                            @endforeach
                                             </tbody>
                                             <!-- <tfoot>
                                                 <tr>
@@ -171,6 +186,8 @@
                                     <i class="la la-check-square-o"></i> Save
                                     </button>
 								</div>
+                                <input type="hidden" name="deleteRfqDetail" id="deleteItemDetail" value="" />
+                                <input type="hidden" name="vendorDetail" id="vendorDetail" value="{{$vendorDetail}}" />
 							</form>
 						</div>
 					</div>
@@ -184,6 +201,7 @@
 </div>
 
 <script>
+deleteItemDetail = [];
 $(document).ready(function() {
     $(".select2").select2();
     $("#vendors").select2({
@@ -288,7 +306,7 @@ $(document).ready(function() {
 		});
     }
 
-    rowCount = 0;
+    rowCount = {{$z}};
     function insRow() {
         rowCount++;
         rl = document.getElementById("itemDetails").rows.length;
@@ -302,7 +320,7 @@ $(document).ready(function() {
 
         
         rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" >\
+        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem('+rowCount+',this.value)">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
@@ -325,6 +343,12 @@ $(document).ready(function() {
                 insRow();
             }
         });
+    }
+
+    function deleteItemDet(rfqdId,rowId) {
+        deleteItemDetail.push(rfqdId);
+        document.getElementById("deleteItemDetail").value=deleteItemDetail;
+        console.log(document.getElementById("deleteItemDetail").value)
     }
 
 </script>
