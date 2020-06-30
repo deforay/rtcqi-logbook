@@ -56,7 +56,7 @@ class RfqTable extends Model
                 }
             }
             $commonservice = new CommonService();
-            $commonservice->eventLog(session('userId'), $id, 'quotes-add', 'add quotes '.$data['rfqNumber'], 'quotes');
+            $commonservice->eventLog(session('userId'), $id, 'quotes-add', 'add quotes '.$id, 'quotes');
         }
 
         if ($request->input('item')!=null) {
@@ -114,9 +114,10 @@ class RfqTable extends Model
         $id = base64_decode($id);
         $response = 0;
         $data = $params->all();
-        dd($data);
+        // dd($data);
         $commonservice = new CommonService();
         if(isset($data['vendorDetail']) && ($data['vendorDetail']!=null) && trim($data['vendorDetail'])!=''){
+
             $delVen = explode(",",$data['vendorDetail']);
             if(isset($data['vendors']) && ($data['vendors']!=null)){
                 $diffVendor = array_diff($delVen, $data['vendors']);
@@ -124,30 +125,44 @@ class RfqTable extends Model
             else{
                 $diffVendor = $delVen;
             }
-            // dd($diffVendor);
-            // $quotesVen = DB::table('quotes')
-            //             ->where('rfq_id', '=', $id)
-            //             ->get();
-            for($d = 0;$d<count($diffVendor);$d++){
-                $delUp = DB::table('quotes','quote_details')
-                            ->join('quote_details', 'quote_details.quote_id', '=', 'quotes.quote_id')
-                            ->where('quotes.vendor_id', '=', $diffVendor[$d])
-                            ->where('quotes.rfq_id', '=', $id)->delete();
+           
+            foreach($diffVendor as $key=>$value){
+                $quoteDeleteId = DB::table('quotes')
+                                ->where('quotes.vendor_id', '=', $value)
+                                ->where('quotes.rfq_id', '=', $id)->select('quote_id')->get();
+
+                if($quoteDeleteId){
+                    $delQuoteByVendor = DB::table('quotes')
+                                        ->where('quotes.vendor_id', '=', $value)
+                                        ->where('quotes.rfq_id', '=', $id)->delete();
+                    $delQuoteDetailByVendor = DB::table('quote_details')
+                                ->where('quote_id', '=', $quoteDeleteId[0]->quote_id)->delete();
+                }
             }
 
         }
+        $quoteId = DB::table('quotes')
+                    ->where('quotes.rfq_id', '=', $id)->select('quote_id')->get();
         if(isset($data['deleteRfqDetail']) && ($data['deleteRfqDetail']!=null) && trim($data['deleteRfqDetail'])!=''){
+                        // dd($quoteId);
             $delRfq = explode(",",$data['deleteRfqDetail']);
             // dd($delRfq);
             for($s = 0;$s<count($delRfq);$s++){
+                $itemDetails = DB::table('rfq_details')
+                                ->where('rfq_details.rfqd_id', '=', $delRfq[$s])
+                                ->where('rfq_details.rfq_id', '=', $id)->get();
+                                // dd($itemDetails);
                 $delRfqItem = DB::table('rfq_details')
-                                // ->join('rfq', 'rfq.rfq_id', '=', 'rfq_details.rfq_id')
-                                // ->join('quotes', 'quotes.rfq_id', '=', 'rfq_details.rfq_id')
-                                // ->join('quote_details', 'quote_details.quote_id', '=', 'quotes.quote_id')
                                 ->where('rfq_details.rfqd_id', '=', $delRfq[$s])
                                 ->where('rfq_details.rfq_id', '=', $id)->delete();
-
                 
+                for($q=0;$q<count($quoteId);$q++){
+                    if($itemDetails && $quoteId){
+                        $delQuoteItem = DB::table('quote_details')
+                                            ->where('quote_details.quote_id', '=', $quoteId[$q]->quote_id)
+                                            ->where('quote_details.item_id', '=', $itemDetails[0]->item_id)->delete();
+                    }
+                }
             }
         }
         if ($params->input('rfqNumber') != null && trim($params->input('rfqNumber')) != '') {
@@ -185,7 +200,7 @@ class RfqTable extends Model
                 $rfqItemUp = DB::table('rfq_details') ->where('rfqd_id','=', $data['rdId'][$i])
                         ->update($rfqItemDetails);
             }else{
-                $rfqItemUp = DB::table('rfq_details')->insert($rfqItemDetails);
+                $rfqItemIns = DB::table('rfq_details')->insert($rfqItemDetails);
             }
         }
 
@@ -195,19 +210,33 @@ class RfqTable extends Model
                 $result = DB::table('quotes')
                             ->where('quotes.vendor_id', '=', $data['vendors'][$f])
                             ->where('quotes.rfq_id', '=', $id)->get();
-                // print_r($result);
                 $quotes = array(
                     'rfq_id' => $id,
                     'vendor_id' => $data['vendors'][$f],
                 );
                 if(count($result)>0){
-                    print_r($result[0]->vendor_id);
-                    $quotesUp = DB::table('quotes')
-                                ->where('rfq_id', '=', $id)
-                                ->where('vendor_id', '=', $data['vendors'][$f])
-                                ->update(
-                                    $quotes
-                                );
+                    for($i=0;$i<count($data['item']);$i++){
+                        $quoteItemDetails = array(
+                            'quote_id' => $result[0]->quote_id,
+                            'item_id' => $data['item'][$i],
+                            'uom' => $data['unitId'][$i],
+                            'quantity' => $data['qty'][$i]
+                        );
+                        if(isset($data['rdId'][$i]) && $data['rdId'][$i]!=''){
+                            $itemDetails = DB::table('rfq_details')
+                                            ->where('rfq_details.rfqd_id', '=', $data['rdId'][$i])
+                                            ->where('rfq_details.rfq_id', '=', $id)->get();
+            
+                            if($itemDetails && $result[0]->quote_id){
+                                $quoteItemUp = DB::table('quote_details')
+                                                ->where('quote_details.quote_id', '=', $result[0]->quote_id)
+                                                ->where('quote_details.item_id', '=', $itemDetails[0]->item_id)
+                                                ->update($quoteItemDetails);
+                            }
+                        }else{
+                            $quotesItemIns = DB::table('quote_details')->insert($quoteItemDetails);
+                        }
+                    }
                 }
                 else{
                     $quotesIns = DB::table('quotes')->insertGetId(
@@ -216,7 +245,7 @@ class RfqTable extends Model
                                     'vendor_id' => $data['vendors'][$f],
                                     ]
                                 );
-                    if ($request->input('item')!=null) {
+                    if ($params->input('item')!=null) {
                         for($j=0;$j<count($data['item']);$j++){
                             $quotesDetails = DB::table('quote_details')->insertGetId(
                                 [
@@ -228,11 +257,13 @@ class RfqTable extends Model
                             );
                         }
                     }
+                    $commonservice = new CommonService();
+                    $commonservice->eventLog(session('userId'), $id, 'Quotes-update', 'Update Quotes ' . $id, 'Quotes');
                 }
                 
             }
         }
-        if ($rfqUp) {
+        if ($rfqUp || $delQuoteItem || $delRfqItem || $quotesDetails || $quotesIns || $quoteItemUp || $quotesItemIns || $rfqItemUp || $rfqItemIns) {
             $response = 1;
         }
         return $response;
