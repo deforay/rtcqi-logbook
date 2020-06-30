@@ -43,6 +43,7 @@ class QuotesController extends Controller
                         }else{
                             $button .= '';
                         }
+                        $button .= '&nbsp;&nbsp;&nbsp;<a href="/purchaseorder/add/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit">Approve</a>';
                         return $button;
                     })
                     ->rawColumns(['action'])

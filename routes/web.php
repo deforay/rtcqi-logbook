@@ -169,3 +169,11 @@ Route::get('/rfq/add', 'Rfq\RfqController@add');
 Route::post('/getAllRfq', 'Rfq\RfqController@getAllRfq');
 Route::get('/rfq/edit/{id}', 'Rfq\RfqController@edit');
 Route::post('/rfq/edit/{id}', 'Rfq\RfqController@edit');
+
+//Purchase Order module
+Route::get('/purchaseorder', 'PurchaseOrder\PurchaseOrderController@index')->name('purchaseorder.index')->middleware('access');
+Route::post('/purchaseorder/add/{id}', 'PurchaseOrder\PurchaseOrderController@add');
+Route::get('/purchaseorder/add/{id}', 'PurchaseOrder\PurchaseOrderController@add');
+Route::post('/getAllPurchaseOrder', 'PurchaseOrder\PurchaseOrderController@getAllPurchaseOrder');
+Route::get('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit');
+Route::post('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit');
