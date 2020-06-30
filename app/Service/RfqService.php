@@ -57,7 +57,7 @@ class RfqService
     	DB::beginTransaction();
     	try {
 			$rfqmodel = new RfqTable();
-        	$updateRfq = $rfqmodel->updateRfqDetails($params,$id);
+        	$updateRfq = $rfqmodel->updateRfq($params,$id);
 			if($updateRfq>0){
 				DB::commit();
 				$msg = 'RFQ Updated Successfully';
