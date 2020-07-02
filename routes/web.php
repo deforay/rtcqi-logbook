@@ -20,7 +20,8 @@ Route::get('/', function () {
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index')->middleware('access');
 
 //Role module
-Route::get('/roles', 'Roles\RolesController@index')->name('roles.index')->middleware('access');
+Route::get('/roles', 'Roles\RolesController@index')->name('roles.index');
+// ->middleware('access');
 Route::post('/roles/add', 'Roles\RolesController@add');
 Route::get('/roles/add', 'Roles\RolesController@add');
 Route::post('/getRole', 'Roles\RolesController@getRole');
