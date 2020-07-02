@@ -47,7 +47,7 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="addRfq" id="addRfq" method="post" action="/rfq/add" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" enctype="multipart/form-data" name="addRfq" id="addRfq" method="post" action="/rfq/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
@@ -93,6 +93,15 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    <div class="col-xl-6 col-lg-12">
+                                    <fieldset class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile" >
+                                            <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                            <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                        </div>
+                                    </fieldset>
+                                </div>
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -149,17 +158,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- <button type="submit" id="submitBtn" class="btn gradient-3 float-right ml-3" style="display:none;">Submit</button> -->
+                            <!-- </form> -->
+                            <!-- <form action=""  id="fileUpload" method="POST" enctype="multipart/form-data">
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile" onchange="readURL(this);">
+                                            <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                            <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </form> -->
 								<div class="form-actions right">
                                     <a href="/rfq" >
                                     <button type="button" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
                                     </button>
                                     </a>
-                                    <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
+                                    <button type="submit" onclick="triggerSubmit();" class="btn btn-primary">
                                     <i class="la la-check-square-o"></i> Save
                                     </button>
 								</div>
-							</form>
+                            </form>
 						</div>
 					</div>
 				</div>
@@ -172,6 +194,47 @@
 </div>
 
 <script>
+
+function triggerSubmit(){
+    $('#submitBtn').click();
+}
+
+function readURL(input) {
+    $('#upload').click();
+}
+
+$( "#fileUpload" ).on( "submit", function( event ) {
+            alert()
+    event.preventDefault();
+    let formData = new FormData($(this)[0]);
+    console.log(formData);
+    $.ajax({
+        url: "{{ url('/imageupload') }}",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        type: "POST",
+        data: formData,
+        // beforeSend: function(){$("#body-overlay").show();},
+        cache: false,
+        contentType: false,
+        processData:false,
+        success: function(data)
+        {
+            console.log(data)
+            // if(data==1){
+            //     swal("It is not a Valid Image");
+            // }
+            // else{
+            //     swal("Image Added Successfully");
+            //     $("#personimgdata").val(data);
+            // }
+
+        },
+        
+        error: function() 
+        {
+        }
+    });
+});
 $(document).ready(function() {
     $(".select2").select2();
     $("#vendors").select2({
@@ -313,6 +376,41 @@ $(document).ready(function() {
                 insRow();
             }
         });
+    }
+
+
+    function uploadFile(){
+        alert()
+        // var fd = new FormData();
+        // var files = $('#uploadFile')[0].files[0];
+        // fd.append('file',files);
+        // console.log(fd)
+        // $.ajax({
+        //     url: "{{ url('/imageupload') }}",
+        //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        //     type: "POST",
+        //     data: formData,
+        //     // beforeSend: function(){$("#body-overlay").show();},
+        //     cache: false,
+        //     contentType: false,
+        //     processData:false,
+        //     success: function(data)
+        //     {
+        //         console.log(data)
+        //         if(data==1){
+        //             swal("It is not a Valid Image");
+        //         }
+        //         else{
+        //             swal("Image Added Successfully");
+        //             $("#personimgdata").val(data);
+        //         }
+
+        //     },
+            
+        //     error: function() 
+        //     {
+        //     }
+        // });
     }
 
 </script>

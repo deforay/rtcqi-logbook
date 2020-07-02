@@ -16,7 +16,10 @@ class RfqTable extends Model
         //to get all request values
         $data = $request->all();
         $commonservice = new CommonService();
+        // dd($_FILES['uploadFile']['name']);
         // dd($data);
+        $filePath = '';
+        $fileName = '';
         if ($request->input('rfqNumber')!=null && trim($request->input('rfqNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDate = $commonservice->dateFormat($data['lastdate']);
@@ -33,7 +36,35 @@ class RfqTable extends Model
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $id, 'RFQ-add', 'Add Rfq '.$data['rfqNumber'], 'Rfq');
         }
+        if (isset($_FILES['uploadFile']['name']) && $_FILES['uploadFile']['name'] != '') {
+            if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                mkdir(public_path('uploads'),0755,true);
+                // chmod (getcwd() .public_path('uploads'), 0755 );
+            }
+            
+            if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq")) {
+                mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq", 0755);
+            }
 
+            $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+            
+            if (!file_exists($pathname) && !is_dir($pathname)) {
+                mkdir($pathname);
+            }
+
+            $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'], PATHINFO_EXTENSION));
+            $fileName = time(). "." . $extension;
+
+            $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+            if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $pathname . DIRECTORY_SEPARATOR .$fileName)) {
+                $uploadData = array('rfq_upload_file' => $filePath);
+                $rfqUp = DB::table('rfq')
+                        ->where('rfq_id', '=', $id)
+                        ->update(
+                            $uploadData
+                        );
+            }
+        }
         if ($request->input('vendors')!=null) {
             for($k=0;$k<count($data['vendors']);$k++){
                 $quotes = DB::table('quotes')->insertGetId(
@@ -52,6 +83,27 @@ class RfqTable extends Model
                             'quantity' => $data['qty'][$j],
                             ]
                         );
+                    }
+                }
+                if (file_exists($filePath)) {
+                    if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes")) {
+                        mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes", 0755);
+                    }
+        
+                    $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $quotes;
+                    
+                    if (!file_exists($pathname) && !is_dir($pathname)) {
+                        mkdir($pathname);
+                    }
+                    
+                    $quotesFilePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                    if (copy($filePath, $quotesFilePath)) {
+                        $uploadData = array('quotes_upload_file' => $quotesFilePath);
+                        $quotesUp = DB::table('quotes')
+                                ->where('quote_id', '=', $quotes)
+                                ->update(
+                                    $uploadData
+                                );
                     }
                 }
             }

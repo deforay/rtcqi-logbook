@@ -29,6 +29,7 @@
 <script src="{{ asset('app-assets/js/scripts/sweetalert/sweetalert.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js')}}"></script>
+<script src="{{ asset('app-assets/js/scripts/forms/custom-file-input.js')}}"></script>
 <!-- END PAGE LEVEL JS -->
 
 <!-- BEGIN DEFORAY VALIDATOR JS-->
