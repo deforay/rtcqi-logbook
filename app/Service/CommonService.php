@@ -243,7 +243,7 @@ class CommonService
         $fieldIdValue = $request['fieldIdValue'];
         $fieldName = $request['fieldName'];
         $fieldValue = $request['fieldValue'];
-
+        dd($tableName);
         try {
             if ($fieldValue != "") {
                 $updateData = array($fieldName => $fieldValue);

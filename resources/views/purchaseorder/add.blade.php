@@ -139,8 +139,9 @@ $currentDate=date('d-M-Y');
                                                         </tr>
                                                     </thead>
                                                     <tbody id="itemDetails">
-                                                    <?php $j = 0; ?>
+                                                    <?php $j = 0; $qty=0; ?>
                                                         @foreach($quoteDetails as $quoteDetail)
+                                                        @php $qty += $quoteDetail->quantity; @endphp
                                                         <tr>
                                                             <td>
                                                                 <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item">
@@ -158,7 +159,7 @@ $currentDate=date('d-M-Y');
                                                                 <input type="number" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                                <input type="number" id="qty{{$j}}" name="qty[]" class="form-control linetot isRequired" oninput="calLineTotal();" value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -202,6 +203,8 @@ $currentDate=date('d-M-Y');
 
 <script>
     $(document).ready(function() {
+        qty = '<?php echo $qty; ?>'
+        $('#totalAmount').val(qty)
         $(".select2").select2();
         $("#vendors").select2({
             placeholder: "Select Vendors",
@@ -312,8 +315,8 @@ $currentDate=date('d-M-Y');
         // a.setAttribute("class", "data");
         var b = a.insertCell(0);
         var d = a.insertCell(1);
-        var c = a.insertCell(2);
-        var e = a.insertCell(3);
+        var e = a.insertCell(2);
+        var c = a.insertCell(3);
         var f = a.insertCell(4);
 
 
@@ -322,8 +325,8 @@ $currentDate=date('d-M-Y');
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
-        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         e.innerHTML = '<input type="number" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
+        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".select2").select2();
@@ -348,6 +351,21 @@ $currentDate=date('d-M-Y');
         if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
         return true;
+    }
+
+    function calLineTotal(){
+        var sum = 0;
+        $('.linetot').each(function() {
+            sum += Number($(this).val());
+        });
+        if(!isNaN(sum)){
+            $("#totalAmount").val(sum);
+        }
+        $('.linetot').blur(function(){
+            var num = parseFloat($(this).val());
+            var cleanNum = num.toFixed(2);
+            $(this).val(cleanNum);
+        });
     }
 </script>
 @endsection

@@ -320,4 +320,35 @@ class RfqTable extends Model
         }
         return $response;
     }
+
+    public function changeQuotesStatus($request)
+    {
+
+        $tableName = $request['tableName'];
+        $fieldIdName = $request['fieldIdName'];
+        $fieldIdValue = $request['fieldIdValue'];
+        $fieldName = $request['fieldName'];
+        $fieldValue = $request['fieldValue'];
+
+        try {
+            if ($fieldValue != "") {
+                $updateData = array($fieldName => $fieldValue);
+                $updateQuotesData = array('quotes_status' => $fieldValue);
+                DB::table($tableName)
+                    ->where($fieldIdName, '=', $fieldIdValue)
+                    // ->where('approve_status', '=', 'no')
+                    ->update($updateData);
+                DB::table('quotes')
+                    ->where('rfq_id', '=', $fieldIdValue)
+                    ->where('approve_status', '=', 'no')
+                    ->update($updateQuotesData);
+                //Event Log
+                $commonservice = new CommonService();
+                $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName . '-' . $fieldValue, $tableName . ' changed to ' . $fieldValue, $tableName);
+            }
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return $fieldIdValue;
+    }
 }
