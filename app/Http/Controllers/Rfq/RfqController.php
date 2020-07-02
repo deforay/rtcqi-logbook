@@ -67,22 +67,25 @@ class RfqController extends Controller
                             }
                     })
                     ->addColumn('action', function($data){
-                        $button = '<div style="width: 180px;">';
+                        // $button = '<div style="width: 180px;">';
+                        $button = '';
                         $role = session('role');
-                        
+                        // $closeStatus="changeStatus('rfq','rfq_id',$data->rfq_id,'rfq_status', 'closed', 'RfqList');";
+                        $closeStatus = "changeQuotesStatus('rfq','rfq_id',$data->rfq_id,'rfq_status', 'closed', 'RfqList')";
                         if($data->rfq_status == 'draft'){
-                            $buttonStatus="changeStatus('rfq','rfq_id',$data->rfq_id,'rfq_status', 'active', 'RfqList')";
-                            $button .= '<button type="button" name="changeStatus" id="changeStatus'.$data->rfq_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Active</button>';
+                            // $buttonStatus="changeStatus('rfq','rfq_id',$data->rfq_id,'rfq_status', 'active', 'RfqList');";
+                            $buttonStatus ="changeQuotesStatus('rfq','rfq_id',$data->rfq_id,'rfq_status', 'active', 'RfqList')";
+                            $button .= '<button type="button" name="changeStatus" id="changeStatus'.$data->rfq_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Active</button>&nbsp;&nbsp;';
+                            $button .= '<button type="button" name="closeStatus" id="closeStatus'.$data->rfq_id.'" onclick="'.$closeStatus.'" class="btn btn-outline-warning btn-sm">Change to Close</button>&nbsp;&nbsp;';
                             if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
-                                $button .= '&nbsp;&nbsp;&nbsp;<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                             }else{
-                                 $button .= '';
-                             }
-                        }else{
-                            // $buttonStatus="changeStatus('Rfqs_of_measure','uom_id',$data->uom_id,'Rfq_status', 'active', 'RfqList')";
-                            // $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                            $button .= '<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                            }else{
+                                $button .= '';
+                            }
+                        }else if($data->rfq_status == 'active'){
+                            $button .= '<button type="button" name="closeStatus" id="closeStatus'.$data->rfq_id.'" onclick="'.$closeStatus.'" class="btn btn-outline-warning btn-sm">Change to Close</button>&nbsp;&nbsp;';
                         }
-                        $button .= '</div>';
+                        // $button .= '</div>';
                         return $button;
                     })
                     ->rawColumns(['action'])
@@ -111,5 +114,12 @@ class RfqController extends Controller
             // dd($result);
             return view('rfq.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'uom'=>$uom));
         }
+    }
+
+    public function changeQuotesStatus(Request $request)
+    {
+        $rfqService = new RfqService();
+        $data = $rfqService->changeQuotesStatus($request);
+        return $data;
     }
 }

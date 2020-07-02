@@ -72,14 +72,14 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="RfqList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="RfqList" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>RFQ Number</th>
-                                                <th>Issued On</th>
-                                                <th>Last Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                <th style="width:20%">RFQ Number</th>
+                                                <th style="width:15%">Issued On</th>
+                                                <th style="width:15%">Last Date</th>
+                                                <th style="width:10%">Status</th>
+                                                <th style="width:40%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -131,6 +131,54 @@
         });
     }
 
+    function changeQuotesStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal, dataTableName)
+    {
+        if(fieldIdValue!='')
+        {
+
+          swal("Are you sure you want to make "+fieldVal+" this?", {
+          buttons: {
+            cancel: {
+                text: "No, Don't change pls!",
+                value: null,
+                visible: true,
+                className: "btn-warning",
+                closeModal: true,
+            },
+            confirm: {
+                text: "Yes, Change it!",
+                value: true,
+                visible: true,
+                className: "",
+                closeModal: true
+            }
+          }
+        })
+        .then(isConfirm => {
+          if (isConfirm) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                $.ajax({
+                      url: "{{ url('/changeQuotesStatus') }}",
+                      method: 'post',
+                      data: {
+                          tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
+                      },
+                      success: function(result){
+                        // getAllItemCategory();
+                        $("#showAlertIndex").text('Status has been changed to '+fieldVal);
+                        $('#showAlertdiv').show();
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                        $('#'+dataTableName).DataTable().ajax.reload();
+                      }
+                  });
+              }
+          });
+        }
+    }
     
   </script>
 @endsection

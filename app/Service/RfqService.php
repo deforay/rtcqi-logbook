@@ -69,5 +69,13 @@ class RfqService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//change Particular quotes status
+	public function changeQuotesStatus($id)
+	{
+		$rfqmodel = new RfqTable();
+        $result = $rfqmodel->changeQuotesStatus($id);
+        return $result;
+	}
 	
 }
