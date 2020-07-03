@@ -72,10 +72,23 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
-											<h5>item Type<span class="mandatory">*</span>
+											<h5>Item Category<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="itemTypeId" name="itemTypeId" title="Please select Item Type Name">
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemCatId" name="itemCatId" title="Please select Item Category Name" >
+                                            @foreach($itemCat as $itemCats)
+                                                <option value="{{ $itemCats->item_category_id}}" >{{$itemCats->item_category}}</option>
+                                            @endforeach
+                                            </select>
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-6 col-lg-12">
+										<fieldset>
+											<h5>Item Type<span class="mandatory">*</span>
+										</h5>
+										<div class="form-group">
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemTypeId" name="itemTypeId" title="Please select Item Type Name" >
                                             @foreach($itemType as $itemTypes)
                                                 <option value="{{ $itemTypes->item_type_id}}" >{{$itemTypes->item_type}}</option>
                                             @endforeach
@@ -88,7 +101,7 @@
 											<h5>Brand Name<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="brandId" name="brandId" title="Please select Brand Name">
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="brandId" name="brandId" title="Please select Brand Name">
                                             @foreach($brand as $brands)
                                                 <option value="{{ $brands->brand_id}}" >{{$brands->brand_name}}</option>
                                             @endforeach
@@ -103,7 +116,7 @@
 											<h5>Unit Name<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="unitId" name="unitId" title="Please select unit Name">
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="unitId" name="unitId" title="Please select unit Name">
                                             @foreach($unit as $units)
                                                 <option value="{{ $units->uom_id}}" >{{$units->unit_name}}</option>
                                             @endforeach
@@ -147,7 +160,12 @@
 </div>
 
 <script>
- duplicateName = true;
+duplicateName = true;
+$(document).ready(function() {
+    $(".select2").select2({
+    tags: true
+    });
+});
     function validateNow() {
         flag = deforayValidator.init({
             formId: 'addItem'
@@ -198,6 +216,34 @@
                     }
                     else {
                         duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
+
+    function addNewField(tableName, fieldName,obj)
+    {
+        checkValue = document.getElementById(obj).value;
+        alert(checkValue)
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewField') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result['id'] > 0)
+                    {
+                       
                     }
                 }
             });

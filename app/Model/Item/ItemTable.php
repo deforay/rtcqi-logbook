@@ -102,4 +102,61 @@ class ItemTable extends Model
                 ->where('item_id', '=',$id )->get();
         return $data;
     }
+
+    public function addNewItemField($request)
+    {
+        $tableName = $request['tableName'];
+        $fieldName = $request['fieldName'];
+        $value = trim($request['value']);
+        $commonservice = new CommonService();
+        // dd($request->all());
+        $user = array();
+        $data = array();
+        try {
+            if ($value != "") {
+                $user = DB::table('items')
+                    ->where('item_name', '=', $value)
+                    ->orWhere('item_id', '=', $value)
+                    ->get();
+                $data['id'] = 0;
+            }
+            $countVal = count($user);
+            // dd($countVal);
+            if($countVal == 0){
+                // $ins = DB::table($tableName)
+                $id = DB::table('items')->insertGetId(
+                    ['item_name' => $value,
+                    'item_type' => 1,
+                    'brand' => 1,
+                    'base_unit' => 1,
+                    'created_on' => $commonservice->getDateTime(),
+                    'created_by' => session('userId'),
+                    ]
+                );
+                $data['id'] = $id;
+                $data['item'] = $value;
+
+                $item = DB::table('items')
+                        ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
+                        ->join('brands', 'brands.brand_id', '=', 'items.brand')
+                        ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
+                        ->get();
+
+                
+                $opt = '';
+                foreach ($item as $items){
+                    if($items->item_id == $id){
+                        $opt .= '<option value="'.$items->item_id.'" selected>'.$items->item_name.'</option>';
+                    }
+                    else{
+                        $opt .= '<option value="'.$items->item_id.'">'.$items->item_name.'</option>';
+                    }
+                }
+                $data['option'] = $opt;
+            }
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return $data;
+    }
 }
