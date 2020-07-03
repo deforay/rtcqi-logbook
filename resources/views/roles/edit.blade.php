@@ -58,7 +58,7 @@
                                             <h5>Role Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="eroleName" onblur="checkNameValidation('roles', 'role_name', this.id,'{{$fnct}}', 'The role name that you entered already exist . Please enter another name.');" class="form-control isRequired" autocomplete="off" placeholder="Enter a role name" name="eroleName" title="Please enter role name" value="{{$role[0]->role_name}}">
+                                                <input type="text" id="eroleName" onblur="checkNameValidation('roles', 'role_name', this.id,'{{$fnct}}', 'The role name that you entered already exist . Please enter another name.');" class="form-control isRequired" autocomplete="off" placeholder="Enter role name" name="eroleName" title="Please enter role name" value="{{$role[0]->role_name}}">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -67,7 +67,7 @@
                                             <h5>Role Code <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="roleCode" class="form-control isRequired" autocomplete="off" placeholder="Enter a role code" onblur="checkNameValidation('roles', 'role_code', this.id,'{{$fnct}}', 'The role code that you entered already exist . Please enter another code.');" name="roleCode" title="Please enter role code" value="{{$role[0]->role_code}}">
+                                                <input type="text" id="roleCode" class="form-control isRequired" autocomplete="off" placeholder="Enter role code" onblur="checkNameValidation('roles', 'role_code', this.id,'{{$fnct}}', 'The role code that you entered already exist . Please enter another code.');" name="roleCode" title="Please enter role code" value="{{$role[0]->role_code}}">
                                             </div>
                                         </fieldset>
                                     </div>

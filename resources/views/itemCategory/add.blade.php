@@ -55,7 +55,7 @@
                                             <h5>Item Category Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemCategoryName" class="form-control isRequired" autocomplete="off" placeholder="Enter a item category name" name="itemCategoryName" title="Please enter item category name" onblur="checkNameValidation('item_categories','item_category', this.id,'', 'Entered item category name is already exist.')">
+                                                <input type="text" id="itemCategoryName" class="form-control isRequired" autocomplete="off" placeholder="Enter item category name" name="itemCategoryName" title="Please enter item category name" onblur="checkNameValidation('item_categories','item_category', this.id,'', 'Entered item category name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>

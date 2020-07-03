@@ -58,7 +58,7 @@
                                             <h5>Item Type Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemTypeName" value="{{$result[0]->item_type}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a item type name" name="itemTypeName" title="Please enter item type name" onblur="checkNameValidation('item_types','item_type', this.id,'{{$fnct}}', 'Entered Item Type name is already exist.')">
+                                                <input type="text" id="itemTypeName" value="{{$result[0]->item_type}}" class="form-control isRequired" autocomplete="off" placeholder="Enter item type name" name="itemTypeName" title="Please enter item type name" onblur="checkNameValidation('item_types','item_type', this.id,'{{$fnct}}', 'Entered Item Type name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>

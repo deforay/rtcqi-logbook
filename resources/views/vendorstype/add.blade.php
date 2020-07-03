@@ -55,7 +55,7 @@
                         <h5>Vendor Type<span class="mandatory">*</span>
                         </h5>
                         <div class="form-group">
-                          <input type="text" id="vendorType" class="form-control isRequired" onblur="duplicateValidation('vendor_types','vendor_type', this.id, 'Entered Vendor Type is already exist.')" autocomplete="off" placeholder="Enter a Vendor Type" name="vendorType" title="Please enter Vendor Type">
+                          <input type="text" id="vendorType" class="form-control isRequired" onblur="duplicateValidation('vendor_types','vendor_type', this.id, 'Entered Vendor Type is already exist.')" autocomplete="off" placeholder="Enter Vendor Type" name="vendorType" title="Please enter Vendor Type">
                         </div>
                       </fieldset>
                     </div>

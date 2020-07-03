@@ -58,7 +58,7 @@
 												<h5>Country Name <span class="mandatory">*</span>
 												</h5>
 												<div class="form-group">
-													<input type="text" id="countryName" value="{{$countries[0]->country_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Country Name" onblur="checkNameValidation('countries', 'country_name', this.id,'{{$fnct}}', 'The Countries that you entered already exist . Please enter another name.');" name="countryName" title="Please enter Country Name">
+													<input type="text" id="countryName" value="{{$countries[0]->country_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Country Name" onblur="checkNameValidation('countries', 'country_name', this.id,'{{$fnct}}', 'The Countries that you entered already exist . Please Enter another name.');" name="countryName" title="Please enter Country Name">
 												</div>
 											</fieldset>
 										</div>									
@@ -75,7 +75,7 @@
 										</div>
 									</div>
 									<div class="form-actions right">
-										<a href="/vendorstype">
+										<a href="/countries">
 											<button type="button" class="btn btn-warning mr-1">
 												<i class="ft-x"></i> Cancel
 											</button>

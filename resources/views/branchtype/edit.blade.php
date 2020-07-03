@@ -58,7 +58,7 @@
                                             <h5>Branch Type Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="branchTypeName" value="{{$result[0]->branch_type}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a branch type name" name="branchTypeName" title="Please enter branch type name" onblur="checkNameValidation('branch_types','branch_type', this.id,'{{$fnct}}', 'Entered branch type name is already exist.')">
+                                                <input type="text" id="branchTypeName" value="{{$result[0]->branch_type}}" class="form-control isRequired" autocomplete="off" placeholder="Enter branch type name" name="branchTypeName" title="Please enter branch type name" onblur="checkNameValidation('branch_types','branch_type', this.id,'{{$fnct}}', 'Entered branch type name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>

@@ -55,7 +55,7 @@
                                             <h5>Brand Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="brandName" class="form-control isRequired" autocomplete="off" placeholder="Enter a Brand name" name="brandName" title="Please enter Brand name" onblur="checkNameValidation('brands','brand_name', this.id,'', 'Entered Brand name is already exist.')">
+                                                <input type="text" id="brandName" class="form-control isRequired" autocomplete="off" placeholder="Enter Brand name" name="brandName" title="Please enter Brand name" onblur="checkNameValidation('brands','brand_name', this.id,'', 'Entered Brand name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -64,7 +64,7 @@
                                             <h5>Manufacturer Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="manufacturerName" class="form-control isRequired" autocomplete="off" placeholder="Enter a Manufacturer name" name="manufacturerName" title="Please enter Manufacturer name" >
+                                                <input type="text" id="manufacturerName" class="form-control isRequired" autocomplete="off" placeholder="Enter Manufacturer name" name="manufacturerName" title="Please enter Manufacturer name" >
                                             </div>
                                         </fieldset>
                                     </div>

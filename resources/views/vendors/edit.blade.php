@@ -96,7 +96,7 @@
                                                 <h5>Vendor Name <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" value="{{ $vendors[0]->vendor_name }}" id="vendorName" class="form-control isRequired" autocomplete="off" placeholder="Enter a Vendor name" name="vendorName" title="Please enter Vendor name">
+                                                    <input type="text" value="{{ $vendors[0]->vendor_name }}" id="vendorName" class="form-control isRequired" autocomplete="off" placeholder="Enter Vendor name" name="vendorName" title="Please enter Vendor name">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -105,7 +105,7 @@
                                                 <h5>Vendor Code<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="vendorCode" value="{{ $vendors[0]->vendor_code }}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Vendor Code" name="vendorCode" title="Please enter Vendor Code">
+                                                    <input type="text" id="vendorCode" value="{{ $vendors[0]->vendor_code }}" class="form-control isRequired" autocomplete="off" placeholder="Enter Vendor Code" name="vendorCode" title="Please enter Vendor Code">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -132,7 +132,7 @@
                                                 <h5>Register On<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="vendorRegisterOn" readonly value="{{ $registeredOn }}" class="form-control isRequired" autocomplete="off" placeholder="Enter a registered On" name="vendorRegisterOn" title="Please enter register On">
+                                                    <input type="text" id="vendorRegisterOn" readonly value="{{ $registeredOn }}" class="form-control isRequired" autocomplete="off" placeholder="Enter registered On" name="vendorRegisterOn" title="Please enter register On">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -143,7 +143,7 @@
                                                 <h5>Password
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="password" id="password" class="form-control" autocomplete="off" placeholder="Enter a Password" name="password" title="Please Enter Password">
+                                                    <input type="password" id="password" class="form-control" autocomplete="off" placeholder="Enter Password" name="password" title="Please Enter Password">
                                                     <div class="invalid-feedback">
                                                         must contain atleast 6 characters, 1 number , 1 alphabet and 1 special character
                                                     </div>
@@ -155,7 +155,7 @@
                                                 <h5>Confirm Password
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="password" id="confirmPassword" class="form-control" autocomplete="off" placeholder="Enter a Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
+                                                    <input type="password" id="confirmPassword" class="form-control" autocomplete="off" placeholder="Enter Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
                                                     <span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
                                                     <input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" value="1" title="Passwords do not match.">
                                                 </div>
@@ -230,7 +230,7 @@
                                                 <h5>Email
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="email" id="vendorEmail" class="form-control isEmail" value="{{ $vendors[0]->email }}" autocomplete="off" placeholder="Enter Vendor Email" name="vendorEmail" title="Please enter a Valid Email">
+                                                    <input type="email" id="vendorEmail" class="form-control isEmail" value="{{ $vendors[0]->email }}" autocomplete="off" placeholder="Enter Vendor Email" name="vendorEmail" title="Please Enter Valid Email">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -239,7 +239,7 @@
                                                 <h5>Alternate Email
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="email" id="vendorAltEmail" class="form-control isEmail" value="{{ $vendors[0]->alt_email }}" autocomplete="off" placeholder="Enter Vendor Alternate Email" name="vendorAltEmail" title="Please enter a Valid Alternate Email">
+                                                    <input type="email" id="vendorAltEmail" class="form-control isEmail" value="{{ $vendors[0]->alt_email }}" autocomplete="off" placeholder="Enter Vendor Alternate Email" name="vendorAltEmail" title="Please Enter Valid Alternate Email">
                                                 </div>
                                             </fieldset>
                                         </div>

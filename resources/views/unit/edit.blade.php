@@ -58,7 +58,7 @@
                                             <h5>Unit Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="unitName" value="{{$result[0]->unit_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Unit name" name="unitName" title="Please enter Unit name" onblur="checkNameValidation('units_of_measure','unit_name', this.id,'{{$fnct}}', 'Entered Unit name is already exist.')">
+                                                <input type="text" id="unitName" value="{{$result[0]->unit_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Unit name" name="unitName" title="Please enter Unit name" onblur="checkNameValidation('units_of_measure','unit_name', this.id,'{{$fnct}}', 'Entered Unit name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>

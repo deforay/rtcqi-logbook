@@ -58,7 +58,7 @@
                                             <h5>Branch Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="branchName" value="{{$result[0]->branch_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a branch name" name="branchName" title="Please enter branch name" >
+                                                <input type="text" id="branchName" value="{{$result[0]->branch_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter branch name" name="branchName" title="Please enter branch name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -81,7 +81,7 @@
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('branches','phone', this.id,'{{$fnct}}','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('branches','phone', this.id,'{{$fnct}}','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -90,7 +90,7 @@
 											<h5>Email <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter a Email" name="email" title="Please Enter Email" onblur="checkNameValidation('branches','email', this.id,'{{$fnct}}','Entered mail id is already exist.')">
+                                                <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="EnterEmail" name="email" title="Please Enter Email" onblur="checkNameValidation('branches','email', this.id,'{{$fnct}}','Entered mail id is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -99,7 +99,7 @@
                                             <h5>Address Line 1 <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="addressLine1" value="{{$result[0]->address_line_1}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a address line1" name="addressLine1" title="Please enter address line1" >
+                                                <input type="text" id="addressLine1" value="{{$result[0]->address_line_1}}" class="form-control isRequired" autocomplete="off" placeholder="Enter address line1" name="addressLine1" title="Please enter address line1" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -108,7 +108,7 @@
                                             <h5>Address Line 2
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="addressLine2" value="{{$result[0]->address_line_2}}" class="form-control" autocomplete="off" placeholder="Enter a address line2" name="addressLine2" title="Please enter address line2" >
+                                                <input type="text" id="addressLine2" value="{{$result[0]->address_line_2}}" class="form-control" autocomplete="off" placeholder="Enter address line2" name="addressLine2" title="Please enter address line2" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -139,7 +139,7 @@
 											<h5>City <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="city" value="{{$result[0]->city}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a city" name="city" title="Please enter city">
+                                                <input type="text" id="city" value="{{$result[0]->city}}" class="form-control isRequired" autocomplete="off" placeholder="Enter city" name="city" title="Please enter city">
 											</div>
 										</fieldset>
 									</div>
@@ -148,7 +148,7 @@
 											<h5>Pincode 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="pincode" value="{{$result[0]->pincode}}" maxlength='6' onkeypress="return isNumberKey(event);" class="form-control isPincode" autocomplete="off" placeholder="Enter a pincode" name="pincode" title="Please enter pincode">
+                                                <input type="text" id="pincode" value="{{$result[0]->pincode}}" maxlength='6' onkeypress="return isNumberKey(event);" class="form-control isPincode" autocomplete="off" placeholder="Enter pincode" name="pincode" title="Please enter pincode">
 											</div>
 										</fieldset>
 									</div>

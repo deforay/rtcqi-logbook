@@ -55,7 +55,7 @@
                                             <h5>Branch Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="branchName" class="form-control isRequired" autocomplete="off" placeholder="Enter a branch name" name="branchName" title="Please enter branch name" >
+                                                <input type="text" id="branchName" class="form-control isRequired" autocomplete="off" placeholder="Enter branch name" name="branchName" title="Please enter branch name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -78,7 +78,7 @@
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('branches','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('branches','phone', this.id,'','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -87,7 +87,7 @@
 											<h5>Email <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter a Email" name="email" title="Please Enter Email" onblur="checkNameValidation('branches','email', this.id,'','Entered mail id is already exist.')">
+                                                <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkNameValidation('branches','email', this.id,'','Entered mail id is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -96,7 +96,7 @@
                                             <h5>Address Line 1 <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="addressLine1" class="form-control isRequired" autocomplete="off" placeholder="Enter a address line1" name="addressLine1" title="Please enter address line1" >
+                                                <input type="text" id="addressLine1" class="form-control isRequired" autocomplete="off" placeholder="Enter address line1" name="addressLine1" title="Please Enter address line1" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -105,7 +105,7 @@
                                             <h5>Address Line 2
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="addressLine2" class="form-control" autocomplete="off" placeholder="Enter a address line2" name="addressLine2" title="Please enter address line2" >
+                                                <input type="text" id="addressLine2" class="form-control" autocomplete="off" placeholder="Enter address line2" name="addressLine2" title="Please Enter address line2" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -136,7 +136,7 @@
 											<h5>City <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="city" class="form-control isRequired" autocomplete="off" placeholder="Enter a city" name="city" title="Please enter city">
+                                                <input type="text" id="city" class="form-control isRequired" autocomplete="off" placeholder="Enter city" name="city" title="Please enter city">
 											</div>
 										</fieldset>
 									</div>
@@ -145,7 +145,7 @@
 											<h5>Pincode 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="pincode" maxlength='6' onkeypress="return isNumberKey(event);" class="form-control isPincode" autocomplete="off" placeholder="Enter a pincode" name="pincode" title="Please enter pincode">
+                                                <input type="text" id="pincode" maxlength='6' onkeypress="return isNumberKey(event);" class="form-control isPincode" autocomplete="off" placeholder="Enter pincode" name="pincode" title="Please enter pincode">
 											</div>
 										</fieldset>
 									</div>

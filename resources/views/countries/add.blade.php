@@ -73,7 +73,7 @@
 
                   </div>
                   <div class="form-actions right">
-                    <a href="/vendorstype">
+                    <a href="/countries">
                       <button type="button" class="btn btn-warning mr-1">
                         <i class="ft-x"></i> Cancel
                       </button>

@@ -55,7 +55,7 @@
                                             <h5>Item  Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemName" class="form-control isRequired" autocomplete="off" placeholder="Enter a Item  name" name="itemName" title="Please enter Item  name" onblur="checkNameValidation('items','item_name', this.id,'', 'Entered Item  Name is already exist.')">
+                                                <input type="text" id="itemName" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  name" name="itemName" title="Please enter Item  name" onblur="checkNameValidation('items','item_name', this.id,'', 'Entered Item  Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -64,7 +64,7 @@
                                             <h5>Item  Code <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemCode" class="form-control isRequired" autocomplete="off" placeholder="Enter a Item  code" name="itemCode" title="Please enter Item  name" onblur="checkNameValidation('items','item_code', this.id,'', 'Entered Item  Code is already exist.')">
+                                                <input type="text" id="itemCode" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  code" name="itemCode" title="Please enter Item  name" onblur="checkNameValidation('items','item_code', this.id,'', 'Entered Item  Code is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
