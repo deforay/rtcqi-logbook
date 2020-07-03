@@ -119,7 +119,7 @@
                                             <tbody id="itemDetails">
                                                 <tr>
                                                 <td>
-                                                <select id="item0" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField('item_types','item_type',this.id,0);">
+                                                <select id="item0" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,0);">
                                                     <option value="">Select Item </option>
                                                     @foreach ($item as $items)
                                                         <option value="{{ $items->item_id }}">{{ $items->item_name }}</option>
@@ -316,7 +316,7 @@ $(document).ready(function() {
 
         
         rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem('+rowCount+',this.value)">\
+        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
@@ -342,10 +342,9 @@ $(document).ready(function() {
     }
 
 
-    function addNewItemField(tableName, fieldName,obj,id)
+    function addNewItemField(obj,id)
     {
         checkValue = document.getElementById(obj).value;
-        alert(checkValue)
         if(checkValue!='')
         {
             $.ajaxSetup({
@@ -357,7 +356,7 @@ $(document).ready(function() {
                 url: "{{ url('/addNewItemField') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                   value: checkValue,
                 },
                 success: function(result){
                     if (result['id'] > 0)
