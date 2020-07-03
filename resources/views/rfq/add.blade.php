@@ -326,7 +326,8 @@ $(document).ready(function() {
         $(".select2").select2();
         $(".item").select2({
             placeholder: "Select Item",
-            allowClear: true
+            allowClear: true,
+            tags: true
         });
     }
 

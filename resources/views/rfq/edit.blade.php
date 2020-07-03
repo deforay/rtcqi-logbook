@@ -147,7 +147,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" id="unitName{{$z}}" readonly name="unitName[]" value="{{ $rfq->unit_name }}" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
-                                                    <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $rfq->uom }}" class="isRequired form-control"  title="Please enter unit">
+                                                    <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $rfq->uom }}" class="isRequired form-control"  title="Please zenter unit">
                                                 </td>
                                                 <td>
                                                 <input type="number" id="qty{{$z}}" name="qty[]" value="{{ $rfq->quantity }}" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
@@ -212,9 +212,10 @@ $(document).ready(function() {
         allowClear: true
     });
     
-    $("#itemName").select2({
+    $(".itemName").select2({
         placeholder: "Select Item",
-        allowClear: true
+        allowClear: true,
+        tags: true
     });
     $('.datepicker').datepicker({
         autoclose: true,
@@ -333,7 +334,8 @@ $(document).ready(function() {
         $(".select2").select2();
         $(".item").select2({
             placeholder: "Select Item",
-            allowClear: true
+            allowClear: true,
+            tags: true
         });
     }
 
@@ -355,6 +357,7 @@ $(document).ready(function() {
     }
     function addNewItemField(obj,id)
     {
+        // alert(id);
         checkValue = document.getElementById(obj).value;
         if(checkValue!='')
         {
