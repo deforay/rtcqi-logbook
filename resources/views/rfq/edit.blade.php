@@ -138,7 +138,7 @@
                                                 <tr>
                                                 <input type="hidden" name="rdId[]" id="rdId{{$z}}" value="{{ $rfq->rfqd_id }}"/>
                                                 <td>
-                                                <select id="item{{$z}}" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem({{$z}},this.value)">
+                                                <select id="item{{$z}}" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,{{$z}})">
                                                     <option value="">Select Item </option>
                                                     @foreach ($item as $items)
                                                         <option value="{{ $items->item_id }}" {{ $rfq->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
@@ -204,6 +204,9 @@
 deleteItemDetail = [];
 $(document).ready(function() {
     $(".select2").select2();
+    $(".select2").select2({
+        tags: true
+    });
     $("#vendors").select2({
         placeholder: "Select Vendors",
         allowClear: true
@@ -320,7 +323,7 @@ $(document).ready(function() {
 
         
         rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem('+rowCount+',this.value)">\
+        b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+')">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
@@ -350,6 +353,32 @@ $(document).ready(function() {
         document.getElementById("deleteItemDetail").value=deleteItemDetail;
         console.log(document.getElementById("deleteItemDetail").value)
     }
-
+    function addNewItemField(obj,id)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewItemField') }}",
+                method: 'post',
+                data: {
+                   value: checkValue,
+                },
+                success: function(result){
+                    if (result['id'] > 0)
+                    {
+                        $('#item'+id).html(result['option'])
+                    }
+                    value = $('#item'+id).val();
+                    unitByItem(id,value);
+                }
+            });
+        }
+    }
 </script>
 @endsection
