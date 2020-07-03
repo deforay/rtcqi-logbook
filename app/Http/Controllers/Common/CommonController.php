@@ -40,4 +40,11 @@ class CommonController extends Controller
         $data = $commonService->changeStatus($request);
         return $data;
     }
+
+    public function addNewField(Request $request)
+    {
+        $commonService = new CommonService();
+        $data = $commonService->addNewField($request);
+        return $data;
+    }
 }

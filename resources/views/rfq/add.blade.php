@@ -119,7 +119,7 @@
                                             <tbody id="itemDetails">
                                                 <tr>
                                                 <td>
-                                                <select id="item0" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="unitByItem(0,this.value)">
+                                                <select id="item0" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField('item_types','item_type',this.id,0);">
                                                     <option value="">Select Item </option>
                                                     @foreach ($item as $items)
                                                         <option value="{{ $items->item_id }}">{{ $items->item_name }}</option>
@@ -195,48 +195,11 @@
 
 <script>
 
-function triggerSubmit(){
-    $('#submitBtn').click();
-}
-
-function readURL(input) {
-    $('#upload').click();
-}
-
-$( "#fileUpload" ).on( "submit", function( event ) {
-            alert()
-    event.preventDefault();
-    let formData = new FormData($(this)[0]);
-    console.log(formData);
-    $.ajax({
-        url: "{{ url('/imageupload') }}",
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        type: "POST",
-        data: formData,
-        // beforeSend: function(){$("#body-overlay").show();},
-        cache: false,
-        contentType: false,
-        processData:false,
-        success: function(data)
-        {
-            console.log(data)
-            // if(data==1){
-            //     swal("It is not a Valid Image");
-            // }
-            // else{
-            //     swal("Image Added Successfully");
-            //     $("#personimgdata").val(data);
-            // }
-
-        },
-        
-        error: function() 
-        {
-        }
-    });
-});
 $(document).ready(function() {
     $(".select2").select2();
+    $(".select2").select2({
+        tags: true
+    });
     $("#vendors").select2({
         placeholder: "Select Vendors",
         allowClear: true
@@ -379,38 +342,33 @@ $(document).ready(function() {
     }
 
 
-    function uploadFile(){
-        alert()
-        // var fd = new FormData();
-        // var files = $('#uploadFile')[0].files[0];
-        // fd.append('file',files);
-        // console.log(fd)
-        // $.ajax({
-        //     url: "{{ url('/imageupload') }}",
-        //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        //     type: "POST",
-        //     data: formData,
-        //     // beforeSend: function(){$("#body-overlay").show();},
-        //     cache: false,
-        //     contentType: false,
-        //     processData:false,
-        //     success: function(data)
-        //     {
-        //         console.log(data)
-        //         if(data==1){
-        //             swal("It is not a Valid Image");
-        //         }
-        //         else{
-        //             swal("Image Added Successfully");
-        //             $("#personimgdata").val(data);
-        //         }
-
-        //     },
-            
-        //     error: function() 
-        //     {
-        //     }
-        // });
+    function addNewItemField(tableName, fieldName,obj,id)
+    {
+        checkValue = document.getElementById(obj).value;
+        alert(checkValue)
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewItemField') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                },
+                success: function(result){
+                    if (result['id'] > 0)
+                    {
+                        $('#item'+id).html(result['option'])
+                    }
+                    value = $('#item'+id).val();
+                    unitByItem(id,value);
+                }
+            });
+        }
     }
 
 </script>

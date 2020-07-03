@@ -83,6 +83,24 @@ class ItemService
         $result = $model->fetchItemUnit($request);
         return $result;
 	}
+
+	//add new Item Details
+	public function addNewItemField($params)
+    {
+    	DB::beginTransaction();
+    	try {
+			$model = new ItemTable();
+			$add = $model->addNewItemField($params);
+			if($add['id']>0){
+				DB::commit();
+			}
+			return $add;
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
 	
 }
 

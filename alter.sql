@@ -99,3 +99,24 @@ ALTER TABLE `quotes` ADD `updated_on` DATETIME NULL DEFAULT NULL AFTER `approve_
 --Sudarmathi 01 July 2020
 ALTER TABLE `rfq` ADD `rfq_upload_file` VARCHAR(500) NULL AFTER `updated_by`;
 ALTER TABLE `quotes` ADD `quotes_upload_file` VARCHAR(500) NULL AFTER `updated_by`;
+
+--Sudarmathi 03 July 2020
+ALTER TABLE items DROP FOREIGN KEY items_ibfk_1;
+ALTER TABLE items DROP FOREIGN KEY items_ibfk_2;
+ALTER TABLE items DROP FOREIGN KEY items_ibfk_3;
+TRUNCATE item_categories;
+TRUNCATE item_types;
+TRUNCATE brands;
+ALTER TABLE uom_conversion DROP FOREIGN KEY uom_conversion_ibfk_1;
+ALTER TABLE uom_conversion DROP FOREIGN KEY uom_conversion_ibfk_2;
+TRUNCATE uom_conversion;
+TRUNCATE units_of_measure;
+
+INSERT INTO `item_categories` (`item_category_id`, `item_category`, `item_category_status`, `created_on`, `updated_on`, `created_by`) VALUES (NULL, 'default', 'active', NULL, NULL, NULL);
+INSERT INTO `item_types` (`item_type_id`, `item_type`, `item_category`, `item_type_status`, `created_on`, `updated_on`, `created_by`, `updated_by`) VALUES (NULL, 'default', '1', 'active', NULL, NULL, NULL, NULL);
+INSERT INTO `brands` (`brand_id`, `brand_name`, `manufacturer_name`, `brand_status`, `created_on`, `updated_on`, `created_by`, `updated_by`) VALUES (NULL, 'default', NULL, 'active', NULL, NULL, NULL, NULL);
+INSERT INTO `units_of_measure` (`uom_id`, `unit_name`, `unit_status`, `created_on`, `updated_on`, `created_by`) VALUES (NULL, 'Nos', 'active', NULL, NULL, NULL);
+INSERT INTO `uom_conversion` (`conversion_id`, `base_unit`, `multiplier`, `to_unit`, `unit_conversion_status`, `created_on`, `updated_on`) VALUES (NULL, '1', '1.00', '', 'active', NULL, NULL);
+
+ALTER TABLE `items` CHANGE `item_code` `item_code` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+ALTER TABLE `items` CHANGE `base_unit` `base_unit` INT(11) NULL;

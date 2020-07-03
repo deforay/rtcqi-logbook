@@ -243,7 +243,6 @@ class CommonService
         $fieldIdValue = $request['fieldIdValue'];
         $fieldName = $request['fieldName'];
         $fieldValue = $request['fieldValue'];
-        dd($tableName);
         try {
             if ($fieldValue != "") {
                 $updateData = array($fieldName => $fieldValue);
@@ -280,5 +279,29 @@ class CommonService
     {
         $date = new \DateTime(date('Y-m-d H:i:s'), new \DateTimeZone($timezone));
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function addNewField($request)
+    {
+        $tableName = $request['tableName'];
+        $fieldName = $request['fieldName'];
+        $value = trim($request['value']);
+        // dd($request->all());
+        $user = array();
+        try {
+            if ($value != "") {
+                $user = DB::table($tableName)
+                    ->where($fieldName, '=', $value)
+                    ->get();
+            }
+            $countVal = count($user);
+            if($countVal == 0){
+                // $ins = DB::table($tableName)
+            }
+            dd($countVal);
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return count($user);
     }
 }

@@ -34,7 +34,7 @@ Route::post('/mobileDuplicateValidation', 'Common\CommonController@mobileDuplica
 Route::post('/checkMobileValidation', 'Common\CommonController@checkMobileValidation');
 Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation');
 Route::post('/changeStatus', 'Common\CommonController@changeStatus');
-
+Route::post('/addNewField', 'Common\CommonController@addNewField');
 
 //branch type module
 Route::get('/branchtype', 'BranchType\BranchTypeController@index')->name('branchtype.index')->middleware('access');
@@ -93,6 +93,7 @@ Route::post('/getAllItem', 'Item\ItemController@getAllItem');
 Route::get('/item/edit/{id}', 'Item\ItemController@edit');
 Route::post('/item/edit/{id}', 'Item\ItemController@edit');
 Route::post('/getItemUnit', 'Item\ItemController@getItemUnit');
+Route::post('/addNewItemField', 'Item\ItemController@addNewItemField');
 
 //user module
 Route::get('/user', 'User\UserController@index')->name('user.index')->middleware('access');

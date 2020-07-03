@@ -8,6 +8,7 @@ use App\Service\ItemService;
 use App\Service\UnitService;
 use App\Service\BrandService;
 use App\Service\ItemTypeService;
+use App\Service\ItemCategoryService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -42,7 +43,9 @@ class ItemController extends Controller
             $unit = $unitService->getAllActiveUnit();
             $service = new ItemTypeService();
             $itemType = $service->getAllActiveItemType($request);
-            return view('item.add',array('itemType'=>$itemType, 'brand'=>$brand, 'unit'=>$unit));
+            $itemcatservice = new ItemCategoryService();
+            $itemCat = $itemcatservice->getAllActiveItemCategory();
+            return view('item.add',array('itemType'=>$itemType, 'brand'=>$brand, 'unit'=>$unit,'itemCat'=>$itemCat));
         }
     }
 
@@ -93,5 +96,12 @@ class ItemController extends Controller
         $service = new ItemService();
         $result = $service->getItemUnit($request);
         return $result;
+    }
+
+    public function addNewItemField(Request $request)
+    {
+        $service = new ItemService();
+        $data = $service->addNewItemField($request);
+        return $data;
     }
 }
