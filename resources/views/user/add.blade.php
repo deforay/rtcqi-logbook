@@ -55,7 +55,7 @@
                                             <h5>First Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="firstName" class="form-control isRequired" autocomplete="off" placeholder="Enter a first name" name="firstName" title="Please enter first name" >
+                                                <input type="text" id="firstName" class="form-control isRequired" autocomplete="off" placeholder="Enter first name" name="firstName" title="Please enter first name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -64,7 +64,7 @@
                                             <h5>Last Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastName" class="form-control isRequired" autocomplete="off" placeholder="Enter a last name" name="lastName" title="Please enter last name" >
+                                                <input type="text" id="lastName" class="form-control isRequired" autocomplete="off" placeholder="Enter last name" name="lastName" title="Please enter last name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -87,7 +87,7 @@
                                             <h5>User Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="loginId" class="form-control isRequired" autocomplete="off" placeholder="Enter a user name" name="loginId" title="Please enter user name" onblur="checkNameValidation('users','login_id', this.id,'','Entered user name is already exist.')">
+                                                <input type="text" id="loginId" class="form-control isRequired" autocomplete="off" placeholder="Enter user name" name="loginId" title="Please enter user name" onblur="checkNameValidation('users','login_id', this.id,'','Entered user name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -96,7 +96,7 @@
 											<h5>Password <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="password" id="password" class="form-control isRequired" autocomplete="off" placeholder="Enter a Password" name="password" title="Please Enter Password">
+                                                <input type="password" id="password" class="form-control isRequired" autocomplete="off" placeholder="Enter Password" name="password" title="Please Enter Password">
                                                 <div class="invalid-feedback">
 													must contain atleast 6 characters, 1 number , 1 alphabet and 1 special character
 												</div>
@@ -108,7 +108,7 @@
 											<h5>Confirm Password <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="password" id="confirmPassword" onkeyup="checkPasswordMatch()" class="form-control isRequired" autocomplete="off" placeholder="Enter a Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
+                                                <input type="password" id="confirmPassword" onkeyup="checkPasswordMatch()" class="form-control isRequired" autocomplete="off" placeholder="Enter Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
                                                 <span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
                                                 <input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" title="Passwords do not match.">
 											</div>
@@ -119,7 +119,7 @@
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter a Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -128,7 +128,7 @@
 											<h5>Email <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter a Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'','Entered mail id is already exist.')">
+                                                <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'','Entered mail id is already exist.')">
 											</div>
 										</fieldset>
 									</div>

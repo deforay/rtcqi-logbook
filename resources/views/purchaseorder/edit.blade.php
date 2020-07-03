@@ -59,7 +59,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                 <h5>PO Number <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="poNumber" class="form-control isRequired" value="{{ $result[0]->po_number }}" autocomplete="off" placeholder="Enter a Po Number" name="poNumber" title="Please enter PO Number">
+                                                    <input type="text" id="poNumber" class="form-control isRequired" value="{{ $result[0]->po_number }}" autocomplete="off" placeholder="Enter Po Number" name="poNumber" title="Please enter PO Number">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -68,7 +68,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                 <h5>PO Issued On <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="issuedOn" readonly value="{{ $issuedOn }}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a Issued On" name="issuedOn" title="Please enter Issued On">
+                                                    <input type="text" id="issuedOn" readonly value="{{ $issuedOn }}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
                                                 </div>
                                             </fieldset>
                                         </div>

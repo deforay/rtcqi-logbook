@@ -58,7 +58,7 @@
                                             <h5>Item Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemName" value="{{$result[0]->item_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a item name" name="itemName" title="Please enter item  name" onblur="checkNameValidation('items','item_name', this.id,'{{$fnct}}', 'Entered Item name is already exist.')">
+                                                <input type="text" id="itemName" value="{{$result[0]->item_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter item name" name="itemName" title="Please enter item  name" onblur="checkNameValidation('items','item_name', this.id,'{{$fnct}}', 'Entered Item name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -67,7 +67,7 @@
                                             <h5>Item  Code <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemCode" value="{{$result[0]->item_code}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Item  code" name="itemCode" title="Please enter Item  name" onblur="checkNameValidation('items','item_code', this.id,'{{$fnct}}', 'Entered Item  Code is already exist.')">
+                                                <input type="text" id="itemCode" value="{{$result[0]->item_code}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  code" name="itemCode" title="Please enter Item  name" onblur="checkNameValidation('items','item_code', this.id,'{{$fnct}}', 'Entered Item  Code is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>

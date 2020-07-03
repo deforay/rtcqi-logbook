@@ -80,7 +80,7 @@
                                             <h5>RFQ Number <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="rfqNumber" value="{{$result['rfq'][0]->rfq_number}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a RFQ Number" name="rfqNumber" title="Please enter RFQ Number" >
+                                                <input type="text" id="rfqNumber" value="{{$result['rfq'][0]->rfq_number}}" class="form-control isRequired" autocomplete="off" placeholder="Enter RFQ Number" name="rfqNumber" title="Please enter RFQ Number" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -105,7 +105,7 @@
                                             <h5>Issued On <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="issuedOn" value="{{$issuedOn}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a Issued On" name="issuedOn" title="Please enter Issued On">
+                                                <input type="text" id="issuedOn" value="{{$issuedOn}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -114,7 +114,7 @@
                                             <h5>Last Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastdate" value="{{$lastDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter a last date" name="lastdate" title="Please enter last date">
+                                                <input type="text" id="lastdate" value="{{$lastDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter last date" name="lastdate" title="Please enter last date">
                                             </div>
                                         </fieldset>
                                     </div>

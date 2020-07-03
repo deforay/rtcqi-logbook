@@ -57,7 +57,7 @@
                                             <h5>Role Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="roleName" onblur="duplicateValidation('roles','role_name', this.id,'', 'Entered role name is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter a role name" name="roleName" title="Please enter role name">
+                                                <input type="text" id="roleName" onblur="duplicateValidation('roles','role_name', this.id,'', 'Entered role name is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter role name" name="roleName" title="Please enter role name">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -66,7 +66,7 @@
                                             <h5>Role Code <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="roleCode" onblur="duplicateValidation('roles','role_code', this.id,'', 'Entered role code is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter a role code" name="roleCode" title="Please enter role code">
+                                                <input type="text" id="roleCode" onblur="duplicateValidation('roles','role_code', this.id,'', 'Entered role code is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter role code" name="roleCode" title="Please enter role code">
                                             </div>
                                         </fieldset>
                                     </div>

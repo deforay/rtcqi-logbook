@@ -94,7 +94,7 @@ $invitedOn = $common->humanDateFormat($result[0]->invited_on);
                                                 <h5>Invited On
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="invitedOn" value="{{ $invitedOn }}" disabled class="form-control" autocomplete="off" placeholder="Enter a Invited On" name="invitedOn" title="Please enter Invited On">
+                                                    <input type="text" id="invitedOn" value="{{ $invitedOn }}" disabled class="form-control" autocomplete="off" placeholder="Enter Invited On" name="invitedOn" title="Please enter Invited On">
                                                 </div>
                                             </fieldset>
                                         </div>

@@ -58,7 +58,7 @@
 												<h5>Vendor Type <span class="mandatory">*</span>
 												</h5>
 												<div class="form-group">
-													<input type="text" id="vendorType" value="{{$vendorsType[0]->vendor_type}}" class="form-control isRequired" autocomplete="off" placeholder="Enter a Vendor Type" onblur="checkNameValidation('vendor_types', 'vendor_type', this.id,'{{$fnct}}', 'The Vendor Type that you entered already exist . Please enter another name.');" name="vendorType" title="Please enter Vendor Type">
+													<input type="text" id="vendorType" value="{{$vendorsType[0]->vendor_type}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Vendor Type" onblur="checkNameValidation('vendor_types', 'vendor_type', this.id,'{{$fnct}}', 'The Vendor Type that you entered already exist . Please enter another name.');" name="vendorType" title="Please enter Vendor Type">
 												</div>
 											</fieldset>
 										</div>									
