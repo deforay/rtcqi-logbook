@@ -84,6 +84,11 @@ class RfqController extends Controller
                             }
                         }else if($data->rfq_status == 'active'){
                             $button .= '<button type="button" name="closeStatus" id="closeStatus'.$data->rfq_id.'" onclick="'.$closeStatus.'" class="btn btn-outline-warning btn-sm">Change to Close</button>&nbsp;&nbsp;';
+                            if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
+                                $button .= '<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                            }else{
+                                $button .= '';
+                            }
                         }
                         // $button .= '</div>';
                         return $button;
