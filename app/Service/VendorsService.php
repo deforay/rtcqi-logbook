@@ -69,5 +69,13 @@ class VendorsService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//Get Add Vendors 
+	public function addVendor($params)
+    {
+		$vendorsmodel = new VendorsTable();
+		$result = $vendorsmodel->addVendor($params);
+        return $result;
+	}
 	
 }

@@ -93,6 +93,10 @@ ismob = true;
     {
       $("#item").addClass('active');  
     }
+    else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq")
+    {
+      $("#procurement").addClass('active');  
+    }
   });
 
   // $(function(){

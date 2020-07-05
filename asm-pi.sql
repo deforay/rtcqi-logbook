@@ -553,3 +553,10 @@ ALTER TABLE `brands` CHANGE `manufaturer_name` `manufacturer_name` VARCHAR(255) 
 ALTER TABLE `brands` CHANGE `status` `brand_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE `brands` ADD `created_on` DATETIME NULL AFTER `brand_status`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
 ALTER TABLE `items` ADD `created_on` DATETIME NULL AFTER `base_unit`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+
+-- Prasath M 5 JUL 
+ALTER TABLE vendors DROP FOREIGN KEY vendors_ibfk_1;
+ALTER TABLE vendors DROP FOREIGN KEY vendors_ibfk_2;
+ALTER TABLE `vendors` CHANGE `vendor_type` `vendor_type` INT(11) NULL;
+ALTER TABLE `vendors` CHANGE `country` `country` INT(11) NULL;

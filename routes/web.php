@@ -83,7 +83,7 @@ Route::post('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/add', 'Vendors\VendorsController@add');
 Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
-
+Route::post('/addVendor', 'Vendors\VendorsController@addVendor');
 
 //item module
 Route::get('/item', 'Item\ItemController@index')->name('item.index')->middleware('access');

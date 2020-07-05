@@ -59,7 +59,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-5 col-lg-12">
 										<fieldset>
 											<h5>Vendors
                                             </h5>
@@ -73,6 +73,13 @@
                                             </div>
 										</fieldset>
 									</div>
+                                    <div class="col-xl-1 col-lg-12 mt-2">
+										<fieldset>
+                                        <button type="button" class="btn btn-primary" title="Add Vendor" data-placement="left" data-toggle="modal" data-target="#vendorAdd">
+                                                        <i class="ft-user-plus"></i>
+                                                        </button>
+										</fieldset>
+									</div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
@@ -80,7 +87,7 @@
                                             <h5>Issued On <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="issuedOn" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
+                                                <input type="text" id="issuedOn" onchange="checkDate('issue');return false;" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -89,7 +96,7 @@
                                             <h5>Last Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastdate" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter last date" name="lastdate" title="Please enter last date">
+                                                <input type="text" onchange="checkDate('last');return false;" id="lastdate" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter last date" name="lastdate" title="Please enter last date">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -189,7 +196,51 @@
 		</div>
 	
 	<!-- horizontal grid end -->
-</section>
+                                <!--Start vendor Modal -->
+            <div class="modal fade" id="vendorAdd" tabindex="-1" role="dialog" aria-labelledby="vendorAddLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="vendorAddLabel">Add New Vendor</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showModalAlertdiv" role="alert" style="display:none"><span id="showModalAlertIndex"></span>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+					</div>
+                    <div id="show_modal_alert" class="mt-1" style=""></div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Vendor Name<span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <input type="text" id="vendorName" class="form-control isRequired"  autocomplete="off" placeholder="Enter Vendor Name" name="vendorName" title="Please enter Vendor Name">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Email<span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <input type="email" id="vendorEmail" class="form-control isEmail" autocomplete="off" placeholder="Enter Vendor Email" name="vendorEmail" title="Please Enter Valid Email" onblur="duplicateValidation('vendors','email', this.id, 'Entered Vendor is already exist.')">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addNewVendor();">Save</button>
+                </div>
+                </div>
+            </div>
+            </div>
+                                <!-- End Vendor Modal   -->  
+    </section>
 </div>
 </div>
 
@@ -366,6 +417,129 @@ $(document).ready(function() {
                     }
                     value = $('#item'+id).val();
                     unitByItem(id,value);
+                }
+            });
+        }
+    }
+
+    function checkDate(field)
+    {
+        let lastDate  = $("#lastdate").val()
+        let issuedOn  = $("#issuedOn").val()
+
+        if(lastDate  && issuedOn)
+        {
+            if(issuedOn > lastDate)
+            {
+                if(field == 'issue')
+                {
+                    swal("Issued on date should be lesser than last date")
+                    $("#issuedOn").val('')
+                }
+                else
+                {
+                    swal("Last date should be Greater than issued on date")
+                    $("#lastdate").val('')
+                }
+                return false
+            }
+            else
+            {
+                return true
+            }
+        }
+    }
+
+    function addNewVendor()
+    {
+        let vendorName  = $("#vendorName").val()
+        let vendorEmail  = $("#vendorEmail").val()
+
+        if(!(vendorName.trim()))
+        {
+            flag='<div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" role="alert" ><div class="text-center" style="font-size: 18px;"><b>Please enter vendor name</b></div>';
+            flag+='<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
+            $('#show_modal_alert').html(flag).delay(3000).fadeOut();
+			$('#show_modal_alert').css("display","block");
+        }
+        else if(!(vendorEmail.trim()))
+        {
+            flag='<div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" role="alert" ><div class="text-center" style="font-size: 18px;"><b>Please enter vendor email</b></div>';
+            flag+='<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
+            $('#show_modal_alert').html(flag).delay(3000).fadeOut();
+			$('#show_modal_alert').css("display","block");
+        }
+        else
+        {
+            let vendorList = [];
+            vendorList = $("#vendors").val();
+            console.log(vendorList)
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addVendor') }}",
+                method: 'post',
+                data: {
+                    vendorEmail: vendorEmail,
+                    vendorName: vendorName,
+                },
+                success: function(result){
+                    console.log(result);
+                    if(result['id'])
+                    {
+                        let option = '';
+                        for(i=0;i<result['list'].length;i++)
+                        {
+                            option+= '<option value='+result["list"][i]["vendor_id"]+'>'+result["list"][i]["vendor_name"]+'</option>'
+                        }
+                        $("#vendors").html(option);
+                        vendorList.push(result['id'])
+                        console.log(vendorList);
+                        $("#vendors").val(vendorList);
+                        $('#vendorAdd').modal('hide');
+                        $("#vendorName").val('')
+                        $("#vendorEmail").val('')
+                    }
+                    
+                }
+            });
+        }
+    }
+
+    function duplicateValidation(tableName, fieldName, obj, msg) {
+        // alert(fnct)
+        checkValue = document.getElementById(obj).value;
+        // alert(checkValue)
+        if (checkValue != '') {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/duplicateValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName,
+                    fieldName: fieldName,
+                    value: checkValue,
+                },
+                success: function(result) {
+                    //   console.log(result)
+                    if (result > 0) {
+                        $("#showModalAlertIndex").text(msg);
+                        $('#showModalAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#' + obj).focus();
+                        $('#' + obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showModalAlertdiv').delay(3000).fadeOut();
+                    } else {
+                        duplicateName = true;
+                    }
                 }
             });
         }

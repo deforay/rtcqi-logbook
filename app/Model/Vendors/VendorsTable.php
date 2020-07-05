@@ -154,4 +154,34 @@ class VendorsTable extends Model
         }
         return $response;
     }
+
+
+     // Add Vendor from rfq
+     public function addVendor($params)
+     {
+        $data = $params->all();
+        $commonservice = new CommonService();
+        $vendorsId = '';
+        DB::beginTransaction();
+        $vendorsId = DB::table('vendors')->insertGetId(
+            [
+                'vendor_name'    => $data['vendorName'],
+                'email'          => $data['vendorEmail'],
+                'created_on'     => $commonservice->getDateTime(),
+                'vendor_status'  => 'active'
+            ]
+        );
+        DB::commit();
+    if ($vendorsId) {
+        //Event Log
+        $commonservice = new CommonService();
+        $commonservice->eventLog(session('userId'), $vendorsId, 'Vendors-add', 'Add Vendors from rfq' . $data['vendorName'], 'Vendors');
+    }
+        $vendor['list'] = DB::table('vendors')
+            ->where('vendor_status','=','active')
+            ->orderBy('vendor_name', 'asc')
+            ->get();
+        $vendor['id'] = $vendorsId;
+         return $vendor;
+     }
 }
