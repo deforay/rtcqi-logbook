@@ -99,5 +99,12 @@ class VendorsController extends Controller
             return view('vendors.edit',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult));
         }
     }
+
+    public function addVendor(Request $request)
+    {
+        $AddVendor = new VendorsService();
+        $addvenodrs = $AddVendor->addVendor($request);
+        return $addvenodrs;
+    }
   
 }
