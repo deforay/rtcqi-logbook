@@ -56,10 +56,10 @@ class CountriesController extends Controller
 
                 if ($data->country_status == 'active') {
                     $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'country_status', 'inactive','countryList')";
-                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->country_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->country_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-warning btn-sm">Inactivate</button>';
                 } else {
                     $buttonStatus = "changeStatus('countries','country_id',$data->country_id,'country_status', 'active','countryList')";
-                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->country_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->country_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-success btn-sm">Activate</button>';
                 }
                 $button .= '</div>';
                 return $button;
