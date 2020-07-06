@@ -84,7 +84,7 @@
                                         <form class="form-horizontal form-simple" method="post" name="userLogin" id="userLogin" action="login/validate" autocomplete="off" onsubmit="validateNow();return false;">
                                         @csrf
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
-                                                <input type="tel" class="form-control isRequired" maxlength='10' onkeypress="return isNumberKey(event);" name="username" id="username" placeholder="Your Mobile Number" title="Please enter the mobile number">
+                                                <input type="email" class="form-control isRequired" name="username" id="username" placeholder="Your Email Id" title="Please enter the Email Id">
                                                 <div class="form-control-position">
                                                     <i class="la la-user"></i>
                                                 </div>
@@ -139,19 +139,18 @@
  duplicateName = true;
  ismob = true;
     function validateNow() {
-        mobNum = $('#username').val();
-		if(mobNum.length!=10){
-			$("html, body").animate({ scrollTop: 0 }, "slow");
-			$("#showAlertIndex").text('Please give 10  digit mobile number');
+        userNameVal = $('#username').val();
+        var EmailValidation = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+        if (EmailValidation.test(userNameVal)){
+            ismob = true;
+        }
+        else{
+	        $("html, body").animate({ scrollTop: 0 }, "slow");
+			$("#showAlertIndex").text('Please give valid email address');
 			$('#showAlertdiv').show();
 			ismob = false;
-			$('#username').css('background-color', 'rgb(255, 255, 153)')
-            $('#username').css('border', ' 1px solid rgb(207, 51, 57)')
-			$('#showAlertdiv').delay(3000).fadeOut();
-		}
-		else{
-			ismob = true;
-		}
+        }
+            
         if(ismob==true){
             flag = deforayValidator.init({
                 formId: 'userLogin'

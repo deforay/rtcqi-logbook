@@ -146,11 +146,11 @@ class UserTable extends Model
         $data = $params->all();
         $result = json_decode(DB::table('users')
         ->join('roles', 'roles.role_id', '=', 'users.role')
-        ->where('users.phone', '=',$data['username'] )
+        ->where('users.email', '=',$data['username'] )
         ->where('user_status','=','active')->get(),true);
         $vendor = json_decode(DB::table('vendors')
         ->join('roles', 'roles.role_id', '=', 'vendors.role')
-        ->where('vendors.phone', '=',$data['username'] )
+        ->where('vendors.email', '=',$data['username'] )
         ->where('vendor_status','=','active')->get(),true);
         $config = array();
         if(count($result)>0)
