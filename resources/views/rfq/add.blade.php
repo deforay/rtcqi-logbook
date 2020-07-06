@@ -8,6 +8,8 @@
 @extends('layouts.main')
 
 @section('content')
+
+<script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -178,6 +180,15 @@
                                     </fieldset>
                                 </div>
                             </form> -->
+
+                            <div class="col-md-12">
+											<div class="form-group row" >
+												<label class="col-md-2 label-control" for="mainContent" style="margin-left: 64px !important;">Description</label>
+												<div class="col-md-8">
+												<textarea id="description" name="description" class="form-control richtextarea isRequired ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
+												</div>
+											</div>
+										</div>
 								<div class="form-actions right">
                                     <a href="/rfq" >
                                     <button type="button" class="btn btn-warning mr-1">
@@ -289,6 +300,19 @@ $(document).ready(function() {
             $(".infocus").focus();
         }
 	}
+
+    $(function () {
+    //bootstrap WYSIHTML5 - text editor
+    //$(".richtextarea").wysihtml5();
+
+		CKEDITOR.editorConfig = function( config )
+		{
+			config.toolbar_Full = [
+				{ name: 'document',    groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Save', 'NewPage', 'DocProps', 'Preview', 'Print', 'Templates', 'document' ] },
+			];
+		};
+    });
+
 	
 	function checkNameValidation(tableName, fieldName, obj,fnct, msg)
     {
