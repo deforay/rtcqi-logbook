@@ -38,6 +38,7 @@ class PurchaseOrderTable extends Model
                     'total_amount'    => $data['totalAmount'],
                     'order_status'    => $data['orderStatus'],
                     'payment_status'  => $data['paymentStatus'],
+                    'description' => $data['description'],
                     'created_by'      => session('userId'),
                     'created_on'      => $commonservice->getDateTime(),
                 ]
@@ -175,6 +176,7 @@ class PurchaseOrderTable extends Model
                 'total_amount'    => $data['totalAmount'],
                 'order_status'    => $data['orderStatus'],
                 'payment_status'  => $data['paymentStatus'],
+                'description' => $data['description'],
                 'updated_by'      => session('userId'),
                 'updated_on'      => $commonservice->getDateTime(),
             );
