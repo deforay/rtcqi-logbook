@@ -143,14 +143,14 @@
           swal("Are you sure you want to make "+fieldVal+" this?", {
           buttons: {
             cancel: {
-                text: "No, Don't change pls!",
+                text: "No",
                 value: null,
                 visible: true,
                 className: "btn-warning",
                 closeModal: true,
             },
             confirm: {
-                text: "Yes, Change it!",
+                text: "Yes",
                 value: true,
                 visible: true,
                 className: "",

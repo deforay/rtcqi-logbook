@@ -56,10 +56,10 @@ class ItemTypeController extends Controller
                         }
                         if($data->item_type_status == 'active'){
                             $buttonStatus="changeStatus('item_types','item_type_id',$data->item_type_id,'item_type_status', 'inactive', 'itemTypeList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->item_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->item_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Inactivate</button>';
                         }else{
                             $buttonStatus="changeStatus('item_types','item_type_id',$data->item_type_id,'item_type_status', 'active', 'itemTypeList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->item_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->item_type_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Activate</button>';
                         }
                         $button .= '</div>';
                         return $button;
