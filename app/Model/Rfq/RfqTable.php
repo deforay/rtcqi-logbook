@@ -27,6 +27,7 @@ class RfqTable extends Model
                 ['rfq_number' => $data['rfqNumber'],
                 'rfq_issued_on' => $issuedOn,
                 'last_date' => $lastDate,
+                'description' => $data['description'],
                 'rfq_status' => 'draft',
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
@@ -222,6 +223,7 @@ class RfqTable extends Model
             $lastDate = $commonservice->dateFormat($data['lastdate']);
             $rfq = array(
                 'rfq_number' => $data['rfqNumber'],
+                'description' => $data['description'],
                 'rfq_issued_on' => $issuedOn,
                 'last_date' => $lastDate,
                 'rfq_status' => 'draft',

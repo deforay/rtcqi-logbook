@@ -120,3 +120,7 @@ INSERT INTO `uom_conversion` (`conversion_id`, `base_unit`, `multiplier`, `to_un
 
 ALTER TABLE `items` CHANGE `item_code` `item_code` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
 ALTER TABLE `items` CHANGE `base_unit` `base_unit` INT(11) NULL;
+
+
+--Sivakumar 06 July 2020
+ALTER TABLE `rfq` ADD `description` TEXT NULL AFTER `rfq_status`
