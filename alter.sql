@@ -124,3 +124,5 @@ ALTER TABLE `items` CHANGE `base_unit` `base_unit` INT(11) NULL;
 
 --Sivakumar 06 July 2020
 ALTER TABLE `rfq` ADD `description` TEXT NULL AFTER `rfq_status`
+ALTER TABLE `quotes` ADD `description` TEXT NULL AFTER `quotes_status`
+ALTER TABLE `purchase_orders` ADD `description` TEXT NULL AFTER `payment_status`

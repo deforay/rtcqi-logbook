@@ -67,6 +67,7 @@ class QuotesTable extends Model
                 ->update(
                     [
                         'quote_number' => $data['quoteNumber'],
+                        'description' => $data['description'],
                         'quotes_status' => 'responded',
                         'responded_on' => $commonservice->getDateTime(),
                     ]

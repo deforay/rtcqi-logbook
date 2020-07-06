@@ -12,6 +12,7 @@ use App\Service\CommonService;
 $common = new CommonService();
 $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
 ?>
+<script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -178,6 +179,16 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+											<div class="form-group row" >
+												<label class="col-md-2 label-control" for="description" style="margin-left: 64px !important;">Description</label>
+												<div class="col-md-8">
+												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
+												</div>
+											</div>
+                                        </div>
+                                        
+                                        
                                         <div class="form-actions right">
                                             <a href="/purchaseorder">
                                                 <button type="button" class="btn btn-warning mr-1">
