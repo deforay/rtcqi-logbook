@@ -53,10 +53,10 @@ class BrandController extends Controller
                         }
                         if($data->brand_status == 'active'){
                             $buttonStatus="changeStatus('brands','brand_id',$data->brand_id,'brand_status', 'inactive', 'brandList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->brand_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->brand_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Inactivate</button>';
                         }else{
                             $buttonStatus="changeStatus('brands','brand_id',$data->brand_id,'brand_status', 'active', 'brandList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->brand_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->brand_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Activate</button>';
                         }
                         $button .= '</div>';
                         return $button;

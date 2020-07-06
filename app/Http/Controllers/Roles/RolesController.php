@@ -56,10 +56,10 @@ class RolesController extends Controller
                         }
                         if($data->role_status == 'active'){
                             $buttonStatus="changeStatus('roles','role_id',$data->role_id,'role_status', 'inactive','rolesList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->role_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->role_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Inactivate</button>';
                         }else{
                             $buttonStatus="changeStatus('roles','role_id',$data->role_id,'role_status', 'active', 'rolesList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->role_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->role_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Activate</button>';
                         }
                         $button .= '</div>';
                         return $button;
