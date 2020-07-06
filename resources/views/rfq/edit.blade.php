@@ -122,6 +122,27 @@
                                 </div>
                                 <hr>
                                 <div class="row">
+                                <fieldset>
+                                            <h5>Attachment Files <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                            <?php 
+                                                $fileVaL= explode(",", $result['rfq'][0]->rfq_upload_file);
+                                                $filecount=count($fileVaL);
+                                                $forcount=$filecount-1;
+                                                for($i=0;$i<$forcount;$i++)
+                                                {
+                                                $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                   
+                                                echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
+                                                 }
+                                                ?>
+                                            </div>
+                                        </fieldset>
+                             
+                                </div>
+                                    <hr>
+                                <div class="row">
                                     <div class="table-responsive">
                                         <div class="bd-example">
                                             <table class="table table-striped table-bordered table-condensed table-responsive-lg">
