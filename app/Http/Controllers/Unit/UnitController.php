@@ -53,10 +53,10 @@ class UnitController extends Controller
                         }
                         if($data->unit_status == 'active'){
                             $buttonStatus="changeStatus('units_of_measure','uom_id',$data->uom_id,'unit_status', 'inactive', 'unitList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Change to Inactive</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Inactivate</button>';
                         }else{
                             $buttonStatus="changeStatus('units_of_measure','uom_id',$data->uom_id,'unit_status', 'active', 'unitList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
+                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->uom_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Activate</button>';
                         }
                         $button .= '</div>';
                         return $button;
