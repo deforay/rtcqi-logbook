@@ -14,6 +14,9 @@ use Redirect;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Service\CommonService;
+use App\Service\VendorsService;
+use App\Service\VendorsTypeService;
+use App\Service\CountriesService;
 
 class LoginController extends Controller
 {
@@ -22,7 +25,6 @@ class LoginController extends Controller
      {
          return view('login.index');
      }
-
      //validate login
      public function validateEmployee(Request $request)
     {
@@ -35,6 +37,19 @@ class LoginController extends Controller
             elseif(trim($login)==2)
             { 
                 return Redirect::route('login.index')->with('status', 'No Role Available, Please Contact Admin!');
+            }
+            
+            elseif(trim($login)==3)
+            { 
+                $vendorsService = new VendorsTypeService();
+                $vendorTypeResult = $vendorsService->getActiveVendorsType();
+                $countryService = new CountriesService();
+                $countriesResult = $countryService->getAllActiveCountries();
+                $vendorsId=base64_encode(session('userId'));
+                $vendorsService = new VendorsService();
+                $result = $vendorsService->getVendorsById($vendorsId);
+                return view('login.profile',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult));
+                
             }
             else
             { 
@@ -99,5 +114,10 @@ class LoginController extends Controller
            return view('login.resetPassword');
            
         }
+    }
+
+    public function profile()
+    {
+        return view('login.profile');
     }
 }
