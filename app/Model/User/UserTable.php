@@ -169,6 +169,7 @@ class UserTable extends Model
                     session(['roleId' => $result[0]['role']]);
                     session(['role' => $config[$result[0]['role_code']]]);
                     session(['login' => true]);
+                    session(['loginType' => 'users']);
 
                     $commonservice = new CommonService();
                     $commonservice->eventLog($result[0]['user_id'], $result[0]['user_id'], 'Login', 'User Login '.$result[0]['login_id'], 'Login');
@@ -195,6 +196,7 @@ class UserTable extends Model
                     session(['roleId' => $vendor[0]['role']]);
                     session(['role' => $config[$vendor[0]['role_code']]]);
                     session(['login' => true]);
+                    session(['loginType' => 'vendor']);
 
                     $commonservice = new CommonService();
                     $commonservice->eventLog($vendor[0]['vendor_id'], $vendor[0]['vendor_id'], 'Login', 'Vendor Login '.$vendor[0]['vendor_name'], 'Login');

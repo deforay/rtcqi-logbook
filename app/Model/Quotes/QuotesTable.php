@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\QuotesService;
 use App\Service\CommonService;
+use Session;
 
 class QuotesTable extends Model
 {
@@ -21,11 +22,21 @@ class QuotesTable extends Model
     // Fetch All Quotes List
     public function fetchAllQuotes()
     {
-        $data = DB::table('quotes')
-            ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
-            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-            ->where('quotes.approve_status', '=', 'no')
-            ->get();
+        if(session('loginType')=='users'){
+            $data = DB::table('quotes')
+                ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
+                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                ->where('quotes.approve_status', '=', 'no')
+                ->get();
+            }else{
+               $userId=session('userId');
+                $data = DB::table('quotes')
+                    ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
+                    ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                    ->where('quotes.vendor_id', '=', $userId)
+                    ->where('quotes.approve_status', '=', 'yes')
+                    ->get();
+            }
         return $data;
     }
 
