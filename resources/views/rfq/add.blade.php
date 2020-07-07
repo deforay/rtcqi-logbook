@@ -448,8 +448,8 @@ $(document).ready(function() {
 
     function checkDate(field)
     {
-        let lastDate  = $("#lastdate").val()
-        let issuedOn  = $("#issuedOn").val()
+        let lastDate  = new Date($("#lastdate").val())
+        let issuedOn  = new Date($("#issuedOn").val())
 
         if(lastDate  && issuedOn)
         {
