@@ -118,27 +118,53 @@ class VendorsTable extends Model
             } else {
                 $vendorRegisterOn = '';
             }
-            $params = array(
-                'vendor_name'    => $data['vendorName'],
-                'vendor_code'    => $data['vendorCode'],
-                'vendor_type'    => $data['vendorType'],
-                'registered_on'  => $vendorRegisterOn,
-                'address_line_1' => $data['addressline1'],
-                'address_line_2' => $data['addressline2'],
-                'city'           => $data['vendorCity'],
-                'state'          => $data['vendorState'],
-                'pincode'        => $data['vendorPincode'],
-                'country'        => $data['vendorCountry'],
-                'email'          => $data['vendorEmail'],
-                'alt_email'      => $data['vendorAltEmail'],
-                'phone'          => $data['vendorPhone'],
-                'alt_phone'      => $data['vendorAltPhone'],
-                'vendor_status'  => $data['vendorStatus'],
-                'updated_on'     => $commonservice->getDateTime(),
-                'updated_by'     => session('userId'),
-            );
-            if (trim($data['password']))
-                $params['password'] = Hash::make($data['password']); // Hashing passwords
+            if(isset($data['vendorType'])){
+                $params = array(
+                    'vendor_name'    => $data['vendorName'],
+                    'vendor_code'    => $data['vendorCode'],
+                    'registered_on'  => $commonservice->getDateTime(),
+                    'address_line_1' => $data['addressline1'],
+                    'address_line_2' => $data['addressline2'],
+                    'city'           => $data['vendorCity'],
+                    'state'          => $data['vendorState'],
+                    'pincode'        => $data['vendorPincode'],
+                    'country'        => $data['vendorCountry'],
+                    'email'          => $data['vendorEmail'],
+                    'alt_email'      => $data['vendorAltEmail'],
+                    'phone'          => $data['vendorPhone'],
+                    'alt_phone'      => $data['vendorAltPhone'],
+                    'vendor_status'  => $data['vendorStatus'],
+                    'updated_on'     => $commonservice->getDateTime(),
+                    'updated_by'     => session('userId'),
+                );
+            
+
+            }else{
+
+                $params = array(
+                    'vendor_name'    => $data['vendorName'],
+                    'vendor_code'    => $data['vendorCode'],
+                    'vendor_type'    => $data['vendorType'],
+                    'registered_on'  => $vendorRegisterOn,
+                    'address_line_1' => $data['addressline1'],
+                    'address_line_2' => $data['addressline2'],
+                    'city'           => $data['vendorCity'],
+                    'state'          => $data['vendorState'],
+                    'pincode'        => $data['vendorPincode'],
+                    'country'        => $data['vendorCountry'],
+                    'email'          => $data['vendorEmail'],
+                    'alt_email'      => $data['vendorAltEmail'],
+                    'phone'          => $data['vendorPhone'],
+                    'alt_phone'      => $data['vendorAltPhone'],
+                    'vendor_status'  => $data['vendorStatus'],
+                    'updated_on'     => $commonservice->getDateTime(),
+                    'updated_by'     => session('userId'),
+                );
+                if (trim($data['password'])){
+
+                    $params['password'] = Hash::make($data['password']); // Hashing passwords
+                }
+            }
 
             $vendorUp = DB::table('vendors')
                 ->where('vendor_id', '=', base64_decode($id))
@@ -151,6 +177,9 @@ class VendorsTable extends Model
         }
         if ($vendorUp) {
             $response = 1;
+        }
+        if (isset($data['vendorStatus'])) {
+            $response = 2;
         }
         return $response;
     }

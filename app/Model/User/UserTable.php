@@ -200,8 +200,14 @@ class UserTable extends Model
 
                     $commonservice = new CommonService();
                     $commonservice->eventLog($vendor[0]['vendor_id'], $vendor[0]['vendor_id'], 'Login', 'Vendor Login '.$vendor[0]['vendor_name'], 'Login');
-                
-                    return 1;
+                                    
+                    $registeredOn = $vendor[0]['registered_on'];
+                    if($registeredOn==''){
+                        return 3;
+                    }else{
+                        return 1;
+                    }
+
                 }
                 else{
                     return 2;
