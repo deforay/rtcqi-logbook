@@ -75,7 +75,7 @@
 											<h5>Item Category<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemCatId" name="itemCatId" title="Please select Item Category Name" >
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemCatId" name="itemCatId" title="Please select Item Category Name" onchange="addNewField('item_categories','item_category',this.id,'item_category_status');" >
                                             @foreach($itemCat as $itemCats)
                                                 <option value="{{ $itemCats->item_category_id}}" >{{$itemCats->item_category}}</option>
                                             @endforeach
@@ -88,22 +88,9 @@
 											<h5>Item Type<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemTypeId" name="itemTypeId" title="Please select Item Type Name" >
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemTypeId" name="itemTypeId" title="Please select Item Type Name" onchange="addNewField('item_types','item_type',this.id,'item_type_status');" >
                                             @foreach($itemType as $itemTypes)
                                                 <option value="{{ $itemTypes->item_type_id}}" >{{$itemTypes->item_type}}</option>
-                                            @endforeach
-                                            </select>
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-6 col-lg-12">
-										<fieldset>
-											<h5>Brand Name<span class="mandatory">*</span>
-										</h5>
-										<div class="form-group">
-											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="brandId" name="brandId" title="Please select Brand Name">
-                                            @foreach($brand as $brands)
-                                                <option value="{{ $brands->brand_id}}" >{{$brands->brand_name}}</option>
                                             @endforeach
                                             </select>
 											</div>
@@ -113,10 +100,23 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
+											<h5>Brand Name<span class="mandatory">*</span>
+										</h5>
+										<div class="form-group">
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="brandId" name="brandId" title="Please select Brand Name" onchange="addNewField('brands','brand_name',this.id,'brand_status');">
+                                            @foreach($brand as $brands)
+                                                <option value="{{ $brands->brand_id}}" >{{$brands->brand_name}}</option>
+                                            @endforeach
+                                            </select>
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-6 col-lg-12">
+										<fieldset>
 											<h5>Unit Name<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
-											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="unitId" name="unitId" title="Please select unit Name">
+											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="unitId" name="unitId" title="Please select unit Name" onchange="addNewField('units_of_measure','unit_name',this.id,'unit_status');">
                                             @foreach($unit as $units)
                                                 <option value="{{ $units->uom_id}}" >{{$units->unit_name}}</option>
                                             @endforeach
@@ -222,10 +222,10 @@ $(document).ready(function() {
         }
     }
 
-    function addNewField(tableName, fieldName,obj)
+    function addNewField(tableName,fieldName,obj,sts)
     {
         checkValue = document.getElementById(obj).value;
-        alert(checkValue)
+        itemCat = $('#itemCatId').val();
         if(checkValue!='')
         {
             $.ajaxSetup({
@@ -237,13 +237,13 @@ $(document).ready(function() {
                 url: "{{ url('/addNewField') }}",
                 method: 'post',
                 data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                    tableName: tableName, fieldName: fieldName, value: checkValue,itemCat:itemCat,sts:sts
                 },
                 success: function(result){
                     console.log(result)
-                    if (result['id'] > 0)
+                    if (result['option'])
                     {
-                       
+                        $('#'+obj).html(result['option'])
                     }
                 }
             });

@@ -286,8 +286,14 @@ class CommonService
         $tableName = $request['tableName'];
         $fieldName = $request['fieldName'];
         $value = trim($request['value']);
+        $itemCat = $request['itemCat'];
+        $sts = $request['sts'];
+        $commonservice = new CommonService();
         // dd($request->all());
         $user = array();
+        $opt = '';
+        $data = array();
+        $id = '';
         try {
             if ($value != "") {
                 $user = DB::table($tableName)
@@ -295,13 +301,107 @@ class CommonService
                     ->get();
             }
             $countVal = count($user);
-            if($countVal == 0){
-                // $ins = DB::table($tableName)
-            }
-            dd($countVal);
+            // if($countVal == 0){
+
+                if($tableName == 'item_categories'){
+                    if($countVal == 0){
+                        $id = DB::table($tableName)->insertGetId(
+                            [$fieldName => $value,
+                            $sts => 'active',
+                            'created_on' => $commonservice->getDateTime(),
+                            'created_by' => session('userId'),
+                            ]
+                        );
+                        $data['id'] = $id;
+                        $data['item'] = $value;
+                    }
+                    $item = DB::table($tableName)
+                            ->where($sts,'=','active')
+                            ->get();
+
+                    $opt = '';
+                    foreach ($item as $items){
+                        if($items->item_category_id == $id){
+                            $opt .= '<option value="'.$items->item_category_id.'" selected>'.$items->item_category.'</option>';
+                        }
+                        else{
+                            $opt .= '<option value="'.$items->item_category_id.'">'.$items->item_category.'</option>';
+                        }
+                    }
+                }
+                else if($tableName == 'item_types'){
+                    if($countVal == 0){
+                        $id = DB::table($tableName)->insertGetId(
+                            [$fieldName => $value,
+                            'item_category' => $itemCat,
+                            $sts => 'active',
+                            'created_on' => $commonservice->getDateTime(),
+                            'created_by' => session('userId'),
+                            ]
+                        );
+                        $data['id'] = $id;
+                        $data['item'] = $value;
+                    }
+                    $item = DB::table($tableName)
+                            ->where($sts,'=','active')
+                            ->get();
+
+                    $opt = '';
+                    foreach ($item as $items){
+                        if($items->item_type_id == $id){
+                            $opt .= '<option value="'.$items->item_type_id.'" selected>'.$items->item_type.'</option>';
+                        }
+                        else{
+                            $opt .= '<option value="'.$items->item_type_id.'">'.$items->item_type.'</option>';
+                        }
+                    }
+                }
+                else{
+                    if($countVal == 0){
+                        $id = DB::table($tableName)->insertGetId(
+                            [$fieldName => $value,
+                            $sts => 'active',
+                            'created_on' => $commonservice->getDateTime(),
+                            'created_by' => session('userId'),
+                            ]
+                        );
+                        $data['id'] = $id;
+                        $data['item'] = $value;
+                    }
+                    $item = DB::table($tableName)
+                            ->where($sts,'=','active')
+                            ->get();
+
+                    $opt = '';
+
+                    if($tableName == 'units_of_measure'){
+                        foreach ($item as $items){
+                            if($items->uom_id == $id){
+                                $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
+                            }
+                            else{
+                                $opt .= '<option value="'.$items->uom_id.'">'.$items->unit_name.'</option>';
+                            }
+                        }
+                    }
+                    else if($tableName == 'brands'){
+                        foreach ($item as $items){
+                            if($items->brand_id == $id){
+                                $opt .= '<option value="'.$items->brand_id.'" selected>'.$items->brand_name.'</option>';
+                            }
+                            else{
+                                $opt .= '<option value="'.$items->brand_id.'">'.$items->brand_name.'</option>';
+                            }
+                        }
+                    }
+                }
+                $data['option'] = $opt;
+
+            // }
+            // dd($countVal);
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
-        return count($user);
+        return $data;
     }
 }
