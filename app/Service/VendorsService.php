@@ -58,9 +58,13 @@ class VendorsService
     	try {
 			$vendorsmodel = new VendorsTable();
         	$updateVendors = $vendorsmodel->updateVendorsDetails($params,$id);
-			if($updateVendors>0){
+			if($updateVendors==1){
 				DB::commit();
 				$msg = 'Vendors Updated Successfully';
+				return $msg;
+			}else{
+				DB::commit();
+				$msg = '2';
 				return $msg;
 			}
 	    }

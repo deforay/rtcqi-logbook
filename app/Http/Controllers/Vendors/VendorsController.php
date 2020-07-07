@@ -37,6 +37,7 @@ class VendorsController extends Controller
             $AddVendor = new VendorsService();
             $addvenodrs = $AddVendor->saveVendors($request);
             return Redirect::route('vendors.index')->with('status', $addvenodrs);
+           
         }
         else
         {
@@ -86,10 +87,16 @@ class VendorsController extends Controller
         {
             $vendorsService = new VendorsService();
             $editVendors = $vendorsService->updateVendors($request,$id);
-            return Redirect::route('vendors.index')->with('status', $editVendors);
+             if($editVendors==2){
+                return Redirect::to('/dashboard');
+               }else{
+                return Redirect::route('vendors.index')->with('status', $editVendors);
+               }
+           
         }
         else
         {
+            
             $vendorsService = new VendorsTypeService();
             $vendorTypeResult = $vendorsService->getActiveVendorsType();
             $countryService = new CountriesService();
@@ -106,5 +113,5 @@ class VendorsController extends Controller
         $addvenodrs = $AddVendor->addVendor($request);
         return $addvenodrs;
     }
-  
+
 }
