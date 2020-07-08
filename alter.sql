@@ -166,3 +166,10 @@ ALTER TABLE `mail_template`
   ADD PRIMARY KEY (`mail_temp_id`);
 ALTER TABLE `mail_template`
   MODIFY `mail_temp_id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+--Sivakumar 08 July 2020
+INSERT INTO `mail_template` (`mail_temp_id`, `template_name`, `mail_purpose`, `from_name`, `mail_from`, `mail_cc`, `mail_bcc`, `mail_subject`, `mail_content`, `mail_footer`) VALUES
+(1, 'RFQ Activation', 'test_mail', 'American Society for Microbiology', 'test@deforay.com', NULL, NULL, 'RFQ activation mail', '<p>Dear&nbsp; ##VENDOR-NAME##,</p>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;RFQ ##RFG-NUMBER## number is activated.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Thanks &amp; Regards,</p>\r\n\r\n<p>&nbsp;American Society for Microbiology&nbsp;</p>', NULL),
+(2, 'Quotes Update', 'test', ' American Society for Microbiology Vendor', 'sivakumar@deforay.com', NULL, NULL, 'Quotes Update', '<p>Dear&nbsp; Admin,</p>\r\n\r\n<p>&nbsp; &nbsp; Vender&nbsp; ##VENDOR-NAME## added new&nbsp;Quotes (##QUOTES-NAME##).</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Thanks &amp; Regards,</p>\r\n\r\n<p>&nbsp;&nbsp;##VENDOR-NAME##</p>', NULL),
+(3, 'Quotes Approval', 'Quotes Approval', ' American Society for Microbiology ', 'sivakumar@deforay.com', NULL, NULL, 'Quotes Approval', '<p>Dear&nbsp; ##VENDOR-NAME##,</p>\r\n\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; Your&nbsp;Quotes&nbsp;(##QUOTES-NAME##) is approved.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Thanks &amp; Regards,</p>\r\n\r\n<p>&nbsp;American Society for Microbiology&nbsp;</p>', NULL);

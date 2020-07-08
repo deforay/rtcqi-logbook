@@ -69,7 +69,7 @@
 												<label class="col-md-4 label-control" for="fromMail">From Email<span class="mandatory">*</span></label>
 												<div class="col-md-8">
 													<div class="input-group">
-													<input type="text" id="fromMail" name="fromMail" class="form-control isEmail col-md-7 col-xs-12 isRequired" placeholder="Enter From Mail" title="Please enter the from mail">
+													<input type="text" id="fromMail" name="fromMail" class="form-control isEmail col-md-7 col-xs-12" placeholder="Enter From Mail" title="Please enter the from mail">
 													</div>
 												</div>
 											</div>
