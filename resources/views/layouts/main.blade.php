@@ -69,11 +69,11 @@ background-color: #f2f3f5;
     @include('layoutsections.scripts')
 
 <!-- JavaScript files-->
-<!-- <div class="modal fade" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal_ajax" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" style="max-width:1000px">
       <div class="modal-content" id="modal-content"></div>
   </div>
-</div> -->
+</div>
   </body>
 </html>
 <script>
@@ -126,7 +126,6 @@ ismob = true;
           method: 'post',
           success: function (response)
           {
-            
             jQuery('#modal_ajax .modal-content').html(response);
             
           }

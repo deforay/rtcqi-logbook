@@ -35,6 +35,7 @@ Route::post('/checkMobileValidation', 'Common\CommonController@checkMobileValida
 Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation');
 Route::post('/changeStatus', 'Common\CommonController@changeStatus');
 Route::post('/addNewField', 'Common\CommonController@addNewField');
+Route::post('/addNewUnitField', 'Common\CommonController@addNewUnitField');
 
 //branch type module
 Route::get('/branchtype', 'BranchType\BranchTypeController@index')->name('branchtype.index')->middleware('access');
@@ -138,6 +139,7 @@ Route::get('/quotes', 'Quotes\QuotesController@index')->name('quotes.index')->mi
 Route::post('/getAllQuotes', 'Quotes\QuotesController@getAllQuotes');
 Route::get('/quotes/edit/{id}', 'Quotes\QuotesController@edit')->middleware('access');
 Route::post('/quotes/edit/{id}', 'Quotes\QuotesController@edit');
+Route::post('/quoteDetailsView/{id}', 'Quotes\QuotesController@quoteDetailsView');
 
 
 //Mail template module
@@ -145,8 +147,8 @@ Route::get('/mailtemplate', 'MailTemplate\MailTemplateController@index')->name('
 Route::post('/previewMailTemplate/{id}/{saleType}', 'MailTemplate\MailTemplateController@previewMailTemplate');
 Route::post('/getTemplates', 'MailTemplate\MailTemplateController@getTemplates');
 Route::post('/mailtemplate/add', 'MailTemplate\MailTemplateController@add');
-Route::get('/mailtemplate/add', 'MailTemplate\MailTemplateController@add')->middleware('access');
-Route::get('/mailtemplate/edit/{id}', 'MailTemplate\MailTemplateController@edit')->middleware('access');
+Route::get('/mailtemplate/add', 'MailTemplate\MailTemplateController@add');
+Route::get('/mailtemplate/edit/{id}', 'MailTemplate\MailTemplateController@edit');
 Route::post('/mailtemplate/edit/{id}', 'MailTemplate\MailTemplateController@edit');
 Route::post('/addTemplate', 'MailTemplate\MailTemplateController@addTemplate');
 
