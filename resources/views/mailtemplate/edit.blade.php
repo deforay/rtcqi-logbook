@@ -121,7 +121,7 @@
 														echo '<div><b>##RFQ-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp RFQ Number</div>';
 														}
 														if($mail[0]->template_name=='Quotes Update' || $mail[0]->template_name=='Quotes Approval'){
-														echo '<div><b>##QUOTES-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Name</div>';
+														echo '<div><b>##QUOTES-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Number</div>';
 														echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
 														}
 														?>
