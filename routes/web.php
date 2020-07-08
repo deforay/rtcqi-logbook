@@ -35,6 +35,7 @@ Route::post('/checkMobileValidation', 'Common\CommonController@checkMobileValida
 Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation');
 Route::post('/changeStatus', 'Common\CommonController@changeStatus');
 Route::post('/addNewField', 'Common\CommonController@addNewField');
+Route::post('/addNewUnitField', 'Common\CommonController@addNewUnitField');
 
 //branch type module
 Route::get('/branchtype', 'BranchType\BranchTypeController@index')->name('branchtype.index')->middleware('access');

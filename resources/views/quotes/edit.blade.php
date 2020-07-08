@@ -14,6 +14,12 @@ use App\Service\CommonService;
 
 $common = new CommonService();
 $invitedOn = $common->humanDateFormat($result[0]->invited_on);
+if($result[0]->estimated_date_of_delivery){
+    $estimatedDate = $common->humanDateFormat($result[0]->estimated_date_of_delivery);
+}
+else{
+    $estimatedDate = '';
+}
 ?>
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
@@ -100,6 +106,63 @@ $invitedOn = $common->humanDateFormat($result[0]->invited_on);
                                             </fieldset>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Currently in Stock?<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="stockable" name="stockable" title="Please select Stockable" onchange="isStockable(this.value)">
+                                                    <option value="yes" {{ $result[0]->stock_available == 'yes' ?  'selected':''}}>Yes</option>
+                                                    <option value="no" {{ $result[0]->stock_available == 'no' ?  'selected':''}}>No</option>
+                                                </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        @php
+                                            if($result[0]->stock_available == "yes"){
+                                                $style = 'display:none;';
+                                            }
+                                            else{
+                                                $style = '';
+                                            }
+                                        @endphp
+                                        <div class="col-xl-6 col-lg-12" id="ifNotInStockDiv" style="{{$style}}">
+                                            <fieldset>
+                                                <h5>If not in Stock</h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="notInStock" value="{{ $result[0]->eta_if_no_stock }}" class="form-control" autocomplete="off" placeholder="estimated number of days to deliver after date of order" name="notInStock" title="estimated number of days to deliver after date of order">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Vendor Notes<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="vendorNotes" value="{{$result[0]->vendor_notes}}" class="form-control" autocomplete="off" name="vendorNotes">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Mode of Delivery<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                <input type="text" id="deliveryMode" value="{{$result[0]->mode_of_delivery}}" class="form-control" autocomplete="off" name="deliveryMode">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Estimated Date of Delivery<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="estimatedDate" value="{{$estimatedDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Estimated Date of Delivery" name="estimatedDate" title="Please enter Estimated Date of Delivery">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <br /><br />
                                     <div class="row">
                                         <h4>Orders Details</h4>
@@ -176,6 +239,27 @@ $invitedOn = $common->humanDateFormat($result[0]->invited_on);
 </div>
 
 <script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+        autoclose: true,
+        format: 'dd-M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+        // startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
+    });
+});
+
+function isStockable(val) {
+    if(val=="no"){
+        $('#ifNotInStockDiv').show();
+    }
+    else{
+        $('#ifNotInStockDiv').hide();
+    }
+}
     duplicateName = true;
 
     function validateNow() {

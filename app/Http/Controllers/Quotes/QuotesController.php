@@ -36,6 +36,13 @@ class QuotesController extends Controller
         $service = new QuotesService();
         $data = $service->getAllQuotes();
         return DataTables::of($data)
+                    ->editColumn('responded_on', function($data){
+                        $respOn = $data->responded_on;
+                        if($respOn){
+                            $respOn = date("d-M-Y", strtotime($respOn));
+                            return $respOn;
+                        }
+                    })
                     ->addColumn('action', function($data){
                         $button = '';
                         $role = session('role');

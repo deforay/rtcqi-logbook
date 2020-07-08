@@ -42,7 +42,7 @@
 						</div>
 					</div>
 					<div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
-						<button ="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
 					</div>
 					<div class="card-content collapse show">
 						<div class="card-body">
@@ -243,6 +243,7 @@ $(document).ready(function() {
                     console.log(result)
                     if (result['option'])
                     {
+                        // opt = '<option value="'+data['id']+'">'+data['item']+'</option>'
                         $('#'+obj).html(result['option'])
                     }
                 }
