@@ -28,6 +28,9 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
         $manage .= '<li data-menu=""><a class="dropdown-item" href="/vendors/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Vendors</span></span></a></li>';
     if (isset($role['App\Http\Controllers\VendorsType\VendorsTypeController']['index']) && ($role['App\Http\Controllers\VendorsType\VendorsTypeController']['index'] == "allow"))
         $manage .= '<li data-menu=""><a class="dropdown-item" href="/vendorstype/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Vendors Type</span></span></a></li>';
+    
+        if (isset($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['index']) && ($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['index'] == "allow"))
+        $manage .= ' <li data-menu=""><a class="dropdown-item" href="/mailtemplate/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Mail Template</span></span></a></li>';
     $manage .= '</ul></li>';
 }
 

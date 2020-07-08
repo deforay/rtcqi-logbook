@@ -139,6 +139,18 @@ Route::post('/getAllQuotes', 'Quotes\QuotesController@getAllQuotes');
 Route::get('/quotes/edit/{id}', 'Quotes\QuotesController@edit')->middleware('access');
 Route::post('/quotes/edit/{id}', 'Quotes\QuotesController@edit');
 
+
+//Mail template module
+Route::get('/mailtemplate', 'MailTemplate\MailTemplateController@index')->name('mailtemplate.index');
+Route::post('/previewMailTemplate/{id}/{saleType}', 'MailTemplate\MailTemplateController@previewMailTemplate');
+Route::post('/getTemplates', 'MailTemplate\MailTemplateController@getTemplates');
+Route::post('/mailtemplate/add', 'MailTemplate\MailTemplateController@add');
+Route::get('/mailtemplate/add', 'MailTemplate\MailTemplateController@add')->middleware('access');
+Route::get('/mailtemplate/edit/{id}', 'MailTemplate\MailTemplateController@edit')->middleware('access');
+Route::post('/mailtemplate/edit/{id}', 'MailTemplate\MailTemplateController@edit');
+Route::post('/addTemplate', 'MailTemplate\MailTemplateController@addTemplate');
+
+
 // Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
 Route::get('/unauthorized', function()
 {
