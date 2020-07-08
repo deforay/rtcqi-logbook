@@ -88,7 +88,9 @@ class ItemController extends Controller
             $unit = $unitService->getAllActiveUnit();
             $itemTypeService = new ItemTypeService();
             $itemType = $itemTypeService->getAllActiveItemType($request);
-            return view('item.edit',array('result'=>$result, 'itemType'=>$itemType, 'brand'=>$brand, 'unit'=>$unit));
+            $itemcatservice = new ItemCategoryService();
+            $itemCat = $itemcatservice->getAllActiveItemCategory();
+            return view('item.edit',array('result'=>$result, 'itemType'=>$itemType, 'brand'=>$brand, 'unit'=>$unit,'itemCat'=>$itemCat));
         }
     }
 

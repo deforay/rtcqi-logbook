@@ -64,6 +64,7 @@ class ItemTable extends Model
      {
          $id = base64_decode($id);
          $data = DB::table('items')
+                ->join('item_categories', 'item_categories.item_category_id', '=', 'items.item_id')
                  ->where('item_id', '=',$id )->get();
          return $data;
      }
@@ -129,6 +130,7 @@ class ItemTable extends Model
                     'item_type' => 1,
                     'brand' => 1,
                     'base_unit' => 1,
+                    'item_category_id' => 1,
                     'created_on' => $commonservice->getDateTime(),
                     'created_by' => session('userId'),
                     ]

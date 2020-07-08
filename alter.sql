@@ -122,11 +122,8 @@ ALTER TABLE `items` CHANGE `item_code` `item_code` VARCHAR(255) CHARACTER SET la
 ALTER TABLE `items` CHANGE `base_unit` `base_unit` INT(11) NULL;
 
 
---Sivakumar 06 July 2020
-ALTER TABLE `rfq` ADD `description` TEXT NULL AFTER `rfq_status`
-ALTER TABLE `quotes` ADD `description` TEXT NULL AFTER `quotes_status`
-ALTER TABLE `purchase_orders` ADD `description` TEXT NULL AFTER `payment_status`
-
+--SUdar 07 July 2020
+ALTER TABLE `items` ADD `item_category_id` INT NULL AFTER `updated_by`;
 --Sivakumar 07 July 2020
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'add', 'Add'), ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'edit', 'Edit'), ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'index', 'Access');
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'Mail Template', 'active');
