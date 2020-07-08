@@ -55,6 +55,7 @@ class VendorsController extends Controller
     {
         $vendorsService = new VendorsService();
         $data = $vendorsService->getAllVendors();
+        
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
