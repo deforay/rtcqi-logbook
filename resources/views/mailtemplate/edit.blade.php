@@ -70,7 +70,7 @@
 												<label class="col-md-4 label-control" for="fromMail">From Email<span class="mandatory">*</span></label>
 												<div class="col-md-8">
 													<div class="input-group">
-													<input type="text" id="fromMail" name="fromMail" class="form-control isEmail col-md-7 col-xs-12 isRequired" placeholder="Enter From Mail" title="Please enter the from mail" value="{{$mail[0]->mail_from}}">
+													<input type="text" id="fromMail" name="fromMail" class="form-control isEmail col-md-7 col-xs-12" placeholder="Enter From Mail" title="Please enter the from mail" value="{{$mail[0]->mail_from}}">
 													</div>
 												</div>
 											</div>
@@ -115,8 +115,17 @@
 										<div class="col-md-12">
 											<div class="form-group row">
 												<div class="alert" style="margin-left:22%;">
-														
-														<!-- <div><b>##INDENT-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Indent Number</div>
+														<?php 
+														if($mail[0]->template_name=='RFQ Activation'){
+														echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+														echo '<div><b>##RFQ-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp RFQ Number</div>';
+														}
+														if($mail[0]->template_name=='Quotes Update' || $mail[0]->template_name=='Quotes Approval'){
+														echo '<div><b>##QUOTES-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Name</div>';
+														echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+														}
+														?>
+														<!-- 
 														<div><b>##SAP-ORDER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Sap Order Number</div>
 														<div><b>##SALES-TYPE##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Sales Type Name</div>
 														<div><b>##CUSTOMER-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Customer Name</div>
@@ -133,7 +142,9 @@
 										</div>
                                     </div>
 									<div class="form-actions right">
-										<a href="" class="btn btn-warning mr-1"><i class="ft-x"></i> Cancel</a>
+
+									
+										<a href="/mailtemplate" class="btn btn-warning mr-1"><i class="ft-x"></i> Cancel</a>
 										<button type="submit" class="btn btn-info" onclick="validateNow();return false;">
 											<i class="la la-check-square-o"></i> Save
 										</button>
