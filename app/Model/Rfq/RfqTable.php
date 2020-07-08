@@ -40,42 +40,45 @@ class RfqTable extends Model
         $filePathName='';
         $fileName='';
         $extension='';
-        for($i=0;$i<count($data['uploadFile']);$i++)
-        {
-   
-            if (isset($_FILES['uploadFile']['name'][$i]) && $_FILES['uploadFile']['name'][$i] != '') {
-                if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
-                    mkdir(public_path('uploads'),0755,true);
-                    // chmod (getcwd() .public_path('uploads'), 0755 );
-                }
-                
-                if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq")) {
-                    mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq", 0755);
-                }
-    
-                $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
-                
-                if (!file_exists($pathname) && !is_dir($pathname)) {
-                    mkdir($pathname);
-                }
-    
-                $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
-                $fileName = $i.time(). "." . $extension;
-    
-                $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
-                
-                move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
-                $filePathName .=$filePath.','; 
-            }
-        }
-        if($filePathName!=''){
+        if(isset($data['uploadFile'])){
 
-            $uploadData = array('rfq_upload_file' => $filePathName);
-            $rfqUp = DB::table('rfq')
-                    ->where('rfq_id', '=', $id)
-                    ->update(
-                        $uploadData
-                    );
+            for($i=0;$i<count($data['uploadFile']);$i++)
+            {
+       
+                if (isset($_FILES['uploadFile']['name'][$i]) && $_FILES['uploadFile']['name'][$i] != '') {
+                    if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                        mkdir(public_path('uploads'),0755,true);
+                        // chmod (getcwd() .public_path('uploads'), 0755 );
+                    }
+                    
+                    if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq")) {
+                        mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq", 0755);
+                    }
+        
+                    $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+                    
+                    if (!file_exists($pathname) && !is_dir($pathname)) {
+                        mkdir($pathname);
+                    }
+        
+                    $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
+                    $fileName = $i.time(). "." . $extension;
+        
+                    $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                    
+                    move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
+                    $filePathName .=$filePath.','; 
+                }
+            }
+            if($filePathName!=''){
+    
+                $uploadData = array('rfq_upload_file' => $filePathName);
+                $rfqUp = DB::table('rfq')
+                        ->where('rfq_id', '=', $id)
+                        ->update(
+                            $uploadData
+                        );
+            }
         }
 
         if ($request->input('vendors')!=null) {
@@ -343,7 +346,7 @@ class RfqTable extends Model
         $fieldIdValue = $request['fieldIdValue'];
         $fieldName = $request['fieldName'];
         $fieldValue = $request['fieldValue'];
-
+        
         try {
             if ($fieldValue != "") {
                 $updateData = array($fieldName => $fieldValue);
@@ -359,6 +362,49 @@ class RfqTable extends Model
                 //Event Log
                 $commonservice = new CommonService();
                 $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName . '-' . $fieldValue, $tableName . ' changed to ' . $fieldValue, $tableName);
+
+              //added in mail queue
+
+                $data = DB::table('rfq')
+                ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                ->where('rfq.rfq_id', '=', $fieldIdValue)
+                ->get();
+                $rfqNumber=$data[0]->rfq_number;
+                $vendorName=$data[0]->vendor_name;
+                $email=$data[0]->email;
+      
+                $mailData = DB::table('mail_template')
+                ->where('mail_temp_id', '=', 1)
+                ->get();
+   
+                $mailSubject = trim($mailData[0]->mail_subject);
+                $subject = $mailSubject;
+                $subject = str_replace("&nbsp;", "", strval($subject));
+                $subject = str_replace("&amp;nbsp;", "", strval($subject));
+                $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+                $mainContent = array('##VENDOR-NAME##', '##RFG-NUMBER##');
+                $mainReplace = array($vendorName, $rfqNumber);
+                $mailContent = trim($mailData[0]->mail_content);
+                $message = str_replace($mainContent, $mainReplace, $mailContent);
+                $message = str_replace("&nbsp;", "", strval($message));
+                $message = str_replace("&amp;nbsp;", "", strval($message));
+                $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+                $createdon = date('Y-m-d H:i:s');
+                $response = DB::table('temp_mail')
+                ->insertGetId(
+                    [
+                        'from_mail' => $mailData[0]->mail_from,
+                        'to_email' => $email,
+                        'subject' => $mailData[0]->mail_subject,
+                        'cc' => $mailData[0]->mail_cc,
+                        'bcc' => $mailData[0]->mail_bcc,
+                        'from_full_name' => $mailData[0]->from_name,
+                        'status' => 'pending',
+                        'datetime' => $createdon,
+                        'message' => $message,
+                        'customer_name' => $vendorName
+                    ]);
             }
         } catch (Exception $exc) {
             error_log($exc->getMessage());

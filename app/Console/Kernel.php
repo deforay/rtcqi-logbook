@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\ItemPriceCron::class,
+        Commands\SendMailCron::class,
     ];
 
     /**
@@ -29,6 +30,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('itemprice:cron')
                 ->timezone('Asia/Kolkata')
                     ->dailyAt('00:01');
+
+        $schedule->command('sendmail:cron')
+        ->timezone('Asia/Kolkata')
+            ->everyTenMinutes();
     }
 
     /**
