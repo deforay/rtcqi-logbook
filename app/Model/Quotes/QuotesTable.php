@@ -60,6 +60,7 @@ class QuotesTable extends Model
     {
         $commonservice = new CommonService();
         $data = $params->all();
+        // dd($data);
         if ($params->input('quoteNumber') != null && trim($params->input('quoteNumber')) != '') {
 
             for($i=0;$i<count($data['quoteQty']);$i++){
@@ -81,6 +82,11 @@ class QuotesTable extends Model
                         'description' => $data['description'],
                         'quotes_status' => 'responded',
                         'responded_on' => $commonservice->getDateTime(),
+                        'stock_available' => $data['stockable'],
+                        'eta_if_no_stock' => $data['notInStock'],
+                        'vendor_notes' => $data['vendorNotes'],
+                        'mode_of_delivery' => $data['deliveryMode'],
+                        'estimated_date_of_delivery' => $commonservice->dateFormat($data['estimatedDate']),
                     ]
                 );
 
