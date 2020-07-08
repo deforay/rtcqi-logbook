@@ -136,8 +136,10 @@
                                                 </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="unitName0" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
-                                                    <input type="hidden" id="unitId0" name="unitId[]" class="isRequired form-control"  title="Please enter unit">
+                                                    <select id="unitName0" name="unitName[]" class="unitName select2 isRequired form-control"  title="Please select unit" onchange="addNewUnitField(this.id,0);">
+                                                    </select>
+                                                    <!-- <input type="text" id="unitName0" name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit"> -->
+                                                    <input type="hidden" id="unitId0" name="unitId[]" class="isRequired form-control"  title="Please enter unit" >
                                                 </td>
                                                 <td>
                                                 <input type="number" id="qty0" name="qty[]" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
@@ -207,7 +209,7 @@
 		</div>
 	
 	<!-- horizontal grid end -->
-                                <!--Start vendor Modal -->
+    <!--Start vendor Modal -->
             <div class="modal fade" id="vendorAdd" tabindex="-1" role="dialog" aria-labelledby="vendorAddLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -269,8 +271,16 @@ $(document).ready(function() {
     
     $("#itemName").select2({
         placeholder: "Select Item",
-        allowClear: true
+        allowClear: true,
+        // tags: true
     });
+
+    $("#unitName").select2({
+        placeholder: "Select Unit",
+        allowClear: true,
+        // tags: true
+    });
+
     $('.datepicker').datepicker({
         autoclose: true,
         format: 'dd-M-yyyy',
@@ -369,7 +379,9 @@ $(document).ready(function() {
                 console.log(result)
                 if(result.length>0)
                 {
-                    $("#unitName"+id).val(result[0]['unit_name']);
+                    // $("#unitName"+id).val(result[0]['unit_name']);
+                    unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
+                    $("#unitName"+id).html(unit);
                     $("#unitId"+id).val(result[0]['uom_id']);
 				}
 			}
@@ -393,12 +405,15 @@ $(document).ready(function() {
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
-        d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
+        d.innerHTML = '<select id="unitName' + rowCount + '" name="unitName[]" class="unitName select2 isRequired form-control datas"  title="Please select unit" onchange="addNewUnitField(this.id,'+rowCount+');">\
+                        </select>\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
         c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
-        $(".select2").select2();
+        $(".select2").select2({
+            tags: true
+        });
         $(".item").select2({
             placeholder: "Select Item",
             allowClear: true,
@@ -563,6 +578,37 @@ $(document).ready(function() {
                         $('#showModalAlertdiv').delay(3000).fadeOut();
                     } else {
                         duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
+
+    function addNewUnitField(obj,id)
+    {
+        tableName = 'units_of_measure';
+        fieldName = 'unit_name';
+        sts = 'unit_status';
+        item = $('#item'+id).val()
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewField') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,sts:sts,item:item
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result['option'])
+                    {
+                        $('#'+obj).html(result['option'])
                     }
                 }
             });

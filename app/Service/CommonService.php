@@ -404,4 +404,62 @@ class CommonService
         }
         return $data;
     }
+
+    public function addNewUnitField($request)
+    {
+        $tableName = $request['tableName'];
+        $fieldName = $request['fieldName'];
+        $value = trim($request['value']);
+        $item = $request['item'];
+        $sts = $request['sts'];
+        $commonservice = new CommonService();
+        // dd($request->all());
+        $user = array();
+        $opt = '';
+        $data = array();
+        $id = '';
+        try {
+            if ($value != "") {
+                $user = DB::table($tableName)
+                    ->where($fieldName, '=', $value)
+                    ->get();
+            }
+            $countVal = count($user);
+                if($countVal == 0){
+                    $id = DB::table($tableName)->insertGetId(
+                        [$fieldName => $value,
+                        $sts => 'active',
+                        'item' => $item,
+                        'created_on' => $commonservice->getDateTime(),
+                        'created_by' => session('userId'),
+                        ]
+                    );
+                    $data['id'] = $id;
+                    $data['item'] = $value;
+                }
+                $item = DB::table($tableName)
+                        ->where($sts,'=','active')
+                        ->get();
+
+                $opt = '';
+
+                if($tableName == 'units_of_measure'){
+                    foreach ($item as $items){
+                        if($items->uom_id == $id){
+                            $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
+                        }
+                        else{
+                            $opt .= '<option value="'.$items->uom_id.'">'.$items->unit_name.'</option>';
+                        }
+                    }
+                }
+
+            $data['option'] = $opt;
+
+            // dd($countVal);
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return $data;
+    }
 }

@@ -189,3 +189,8 @@ CREATE TABLE `temp_mail` (
  PRIMARY KEY (`temp_id`),
  UNIQUE KEY `temp_id` (`temp_id`)
 );
+
+
+--Sudarmathi 08 July 2020
+ALTER TABLE `quotes` ADD `stock_available` VARCHAR(50) NULL DEFAULT 'no' AFTER `quotes_upload_file`, ADD `eta_if_no_stock` INT NULL AFTER `stock_available`, ADD `vendor_notes` TEXT NULL AFTER `eta_if_no_stock`, ADD `mode_of_delivery` VARCHAR(255) NULL AFTER `vendor_notes`, ADD `estimated_date_of_delivery` DATE NULL AFTER `mode_of_delivery`;
+ALTER TABLE `quotes` ADD `description` TEXT NULL AFTER `estimated_date_of_delivery`;
