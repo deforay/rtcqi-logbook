@@ -122,10 +122,47 @@ ALTER TABLE `items` CHANGE `item_code` `item_code` VARCHAR(255) CHARACTER SET la
 ALTER TABLE `items` CHANGE `base_unit` `base_unit` INT(11) NULL;
 
 
---Sivakumar 06 July 2020
-ALTER TABLE `rfq` ADD `description` TEXT NULL AFTER `rfq_status`
-ALTER TABLE `quotes` ADD `description` TEXT NULL AFTER `quotes_status`
-ALTER TABLE `purchase_orders` ADD `description` TEXT NULL AFTER `payment_status`
-
 --SUdar 07 July 2020
 ALTER TABLE `items` ADD `item_category_id` INT NULL AFTER `updated_by`;
+--Sivakumar 07 July 2020
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'add', 'Add'), ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'edit', 'Edit'), ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'index', 'Access');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MailTemplate\\MailTemplateController', 'Mail Template', 'active');
+-- phpMyAdmin SQL Dump
+-- version 4.6.6deb5
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Jul 07, 2020 at 05:01 PM
+-- Server version: 5.7.29-0ubuntu0.18.04.1
+-- PHP Version: 7.2.24-0ubuntu0.18.04.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `jumbobags`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mail_template`
+--
+
+CREATE TABLE `mail_template` (
+  `mail_temp_id` int(11) NOT NULL,
+  `template_name` varchar(255) NOT NULL,
+  `mail_purpose` varchar(255) NOT NULL,
+  `from_name` varchar(255) DEFAULT NULL,
+  `mail_from` varchar(255) DEFAULT NULL,
+  `mail_cc` varchar(255) DEFAULT NULL,
+  `mail_bcc` varchar(255) DEFAULT NULL,
+  `mail_subject` text,
+  `mail_content` text,
+  `mail_footer` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `mail_template`
+  ADD PRIMARY KEY (`mail_temp_id`);
+ALTER TABLE `mail_template`
+  MODIFY `mail_temp_id` int(11) NOT NULL AUTO_INCREMENT;
