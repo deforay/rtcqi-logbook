@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Quotes;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\QuotesService;
+use App\Service\RfqService;
 use App\Service\ItemService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -24,7 +25,9 @@ class QuotesController extends Controller
     {
         if(session('login')==true)
         {
-            return view('quotes.index');
+            $service = new RfqService();
+            $rfq = $service->getAllRfq();
+            return view('quotes.index',array('rfqList' => $rfq));
         }
         else
             return Redirect::to('login')->with('status', 'Please Login');
@@ -34,7 +37,7 @@ class QuotesController extends Controller
     public function getAllQuotes(Request $request)
     {
         $service = new QuotesService();
-        $data = $service->getAllQuotes();
+        $data = $service->getAllQuotes($request);
         return DataTables::of($data)
                     ->editColumn('responded_on', function($data){
                         $respOn = $data->responded_on;
