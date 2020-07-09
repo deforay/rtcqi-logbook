@@ -136,8 +136,8 @@ class PurchaseOrderTable extends Model
     {
         $id = base64_decode($id);
         $data = DB::table('quotes')
-            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-            ->where('quotes.vendor_id', '=', $id)->get();
+        ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+        ->where('quotes.quote_id', '=', $id)->get();
         return $data;
     }
     public function fetchSumOfQuoteById($id)
