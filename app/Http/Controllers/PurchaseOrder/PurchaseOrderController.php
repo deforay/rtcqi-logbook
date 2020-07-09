@@ -10,6 +10,8 @@ use App\Service\ItemService;
 // use App\Service\UnitService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
+use View;
+
 
 class PurchaseOrderController extends Controller
 {
@@ -82,6 +84,10 @@ class PurchaseOrderController extends Controller
                         // }else{
                             // $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->po_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Change to Active</button>';
                         // }
+
+                        $button .= '<div class = "row">';
+                        $button .= '<div class = "col-md-6 mt-1">
+                        <button type="button" name="purchaseDetails" id="purchaseDetails" class="btn btn-success btn-sm" onclick="showAjaxModal(\'/purchaseDetailsView/'.base64_encode($data->po_id).'\' );" title="purchase Details"><b><i class="la la-eye"></i></b></button></div></div>';
                         $button .= '</div>';
                         return $button;
                     })
@@ -110,5 +116,20 @@ class PurchaseOrderController extends Controller
 
             return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails));
         }
+    }
+    public function purchaseDetailsView(Request $request,$id)
+    {
+      
+            $service = new PurchaseOrderService();
+            $result = $service->getPurchaseorderById($id);
+            $purchaseOrderDetails = $service->getPurchaseOrderDetailsId($id);
+            $vendorService = new VendorsService();
+            $vendor = $vendorService->getAllActiveVendors();
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            $view = View::make('purchaseorder.purchaseOrderDetailsViewModal', ['purchaseId'=>$id,'result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails]);
+            $contents = (string) $view;
+            return $contents;
+         
     }
 }

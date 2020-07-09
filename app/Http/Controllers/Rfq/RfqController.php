@@ -10,6 +10,7 @@ use App\Service\ItemService;
 use App\Service\UnitService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
+use View;
 
 class RfqController extends Controller
 {
@@ -90,6 +91,11 @@ class RfqController extends Controller
                                 $button .= '';
                             }
                         }
+
+                        $button .= '<div class = "row">';
+                        $button .= '<div class = "col-md-6 mt-1">
+                        <button type="button" name="rfqDetails" id="rfqDetails" class="btn btn-success btn-sm" onclick="showAjaxModal(\'/rfqDetailsView/'.base64_encode($data->rfq_id).'\' );" title="RFQ Details"><b><i class="la la-eye"></i></b></button></div></div>';
+
                         // $button .= '</div>';
                         return $button;
                     })
@@ -126,5 +132,19 @@ class RfqController extends Controller
         $rfqService = new RfqService();
         $data = $rfqService->changeQuotesStatus($request);
         return $data;
+    }
+
+    public function rfqDetailsView($id,Request $request){
+        $vendorservice = new VendorsService();
+        $vendor = $vendorservice->getAllActiveVendors();
+        $itemservice = new ItemService();
+        $item = $itemservice->getAllActiveItem();
+        $uomservice = new UnitService();
+        $uom = $uomservice->getAllActiveUnit();
+        $service = new RfqService();
+        $result = $service->getRfqById($id);
+        $view = View::make('rfq.rfqDetailsViewModal', ['rfqId'=>$id,'result'=>$result,'vendor'=>$vendor,'item'=>$item,'uom'=>$uom]);
+        $contents = (string) $view;
+        return $contents;
     }
 }
