@@ -9,16 +9,41 @@ Last Modified Name :
 
 @section('content')
 <?php
-// dd($result);
-use App\Service\CommonService;
 
+use App\Service\CommonService;
+// dd($result[0]->quotes_upload_file);
 $common = new CommonService();
 $invitedOn = $common->humanDateFormat($result[0]->invited_on);
-if($result[0]->estimated_date_of_delivery){
+if(isset($result[0]->estimated_date_of_delivery)){
     $estimatedDate = $common->humanDateFormat($result[0]->estimated_date_of_delivery);
 }
 else{
     $estimatedDate = '';
+}
+$optionSelect='';
+$optionSelect1='';
+$eta_if_no_stock='';
+$style = '';
+$vendor_notes = '';
+$mode_of_delivery = '';
+if(isset($result[0]->stock_available)){
+    $style = 'display:none;';
+    if($result[0]->stock_available=='yes'){
+        $optionSelect='selected';
+    }
+    if($result[0]->stock_available=='no'){
+        $optionSelect1='selected';
+    }
+}
+
+if(isset($result[0]->eta_if_no_stock)){
+  $eta_if_no_stock=$result[0]->eta_if_no_stock;
+}
+if(isset($result[0]->vendor_notes)){
+    $vendor_notes=$result[0]->vendor_notes;
+}
+if(isset($result[0]->mode_of_delivery)){
+    $mode_of_delivery=$result[0]->mode_of_delivery;
 }
 ?>
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
@@ -113,25 +138,17 @@ else{
                                                 </h5>
                                                 <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="stockable" name="stockable" title="Please select Stockable" onchange="isStockable(this.value)">
-                                                    <option value="yes" {{ $result[0]->stock_available == 'yes' ?  'selected':''}}>Yes</option>
-                                                    <option value="no" {{ $result[0]->stock_available == 'no' ?  'selected':''}}>No</option>
+                                                    <option value="yes" {{ $optionSelect }}>Yes</option>
+                                                    <option value="no" {{ $optionSelect1 }}>No</option>
                                                 </select>
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        @php
-                                            if($result[0]->stock_available == "yes"){
-                                                $style = 'display:none;';
-                                            }
-                                            else{
-                                                $style = '';
-                                            }
-                                        @endphp
                                         <div class="col-xl-6 col-lg-12" id="ifNotInStockDiv" style="{{$style}}">
                                             <fieldset>
                                                 <h5>If not in Stock</h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="notInStock" value="{{ $result[0]->eta_if_no_stock }}" class="form-control" autocomplete="off" placeholder="estimated number of days to deliver after date of order" name="notInStock" title="estimated number of days to deliver after date of order">
+                                                    <input type="text" id="notInStock" value="{{ $eta_if_no_stock }}" class="form-control" autocomplete="off" placeholder="estimated number of days to deliver after date of order" name="notInStock" title="estimated number of days to deliver after date of order">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -140,7 +157,7 @@ else{
                                                 <h5>Vendor Notes<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="vendorNotes" value="{{$result[0]->vendor_notes}}" class="form-control" autocomplete="off" name="vendorNotes">
+                                                    <input type="text" id="vendorNotes" value="{{$vendor_notes}}" class="form-control" autocomplete="off" name="vendorNotes">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -149,7 +166,7 @@ else{
                                                 <h5>Mode of Delivery<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                <input type="text" id="deliveryMode" value="{{$result[0]->mode_of_delivery}}" class="form-control" autocomplete="off" name="deliveryMode">
+                                                <input type="text" id="deliveryMode" value="{{$mode_of_delivery}}" class="form-control" autocomplete="off" name="deliveryMode">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -167,6 +184,34 @@ else{
                                     <div class="row">
                                         <h4>Orders Details</h4>
                                     </div>
+                                    <hr>
+                                    <div class="row">
+                                <fieldset>
+                                            <h5>Attachment Files <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                            <?php 
+                                            if(isset($result[0]->quotes_upload_file)){
+
+                                                $fileVaL= explode(",", $result[0]->quotes_upload_file);
+                                                $filecount=count($fileVaL);
+                                                if($filecount<1){
+                                                    $forcount=$filecount-1;
+                                                }else{
+                                                    $forcount=$filecount;
+                                                }
+                                                for($i=0;$i<$forcount;$i++)
+                                                {
+                                                $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                   
+                                                echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
+                                                 }
+                                            }
+                                                ?>
+                                            </div>
+                                        </fieldset>
+                             
+                                </div>
                                     <hr>
                                     <div class="row">
                                         <div class="table-responsive">

@@ -29,6 +29,23 @@ class PurchaseOrderTable extends Model
                 $params
             );
 
+            $rfqdata = DB::table('rfq')
+            ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+            ->where('quotes.quote_id', '=', base64_decode($id))
+            ->get();
+            // dd($rfqdata[0]);
+            $rfqNumber=$rfqdata[0]->rfq_number;
+            $quoteNumber=$rfqdata[0]->quote_number;
+            $vendorName=$rfqdata[0]->vendor_name;
+            $email=$rfqdata[0]->email;
+            $rfqdescription=$rfqdata[0]->description;
+            $uploadfile=$rfqdata[0]->rfq_upload_file;
+
+            if($data['description']!=''){
+                $rfqdescription=$data['description'];
+            }
+
         if ($request->input('poNumber') != null && trim($request->input('poNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $poId = DB::table('purchase_orders')->insertGetId(
@@ -39,9 +56,10 @@ class PurchaseOrderTable extends Model
                     'total_amount'    => $data['totalAmount'],
                     'order_status'    => $data['orderStatus'],
                     'payment_status'  => $data['paymentStatus'],
-                    'description' => $data['description'],
+                    'description' => $rfqdescription,
                     'created_by'      => session('userId'),
                     'created_on'      => $commonservice->getDateTime(),
+                    'upload_path'      => $uploadfile,
                 ]
             );
 
@@ -69,15 +87,7 @@ class PurchaseOrderTable extends Model
 
 
 
-        $data = DB::table('rfq')
-        ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
-        ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-        ->where('quotes.quote_id', '=', base64_decode($id))
-        ->get();
-        $rfqNumber=$data[0]->rfq_number;
-        $quoteNumber=$data[0]->quote_number;
-        $vendorName=$data[0]->vendor_name;
-        $email=$data[0]->email;
+   
 
         $paramsRfq = array(
             'rfq_status' => 'closed'

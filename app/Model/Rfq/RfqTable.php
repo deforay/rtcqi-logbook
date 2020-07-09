@@ -80,13 +80,13 @@ class RfqTable extends Model
                         );
             }
         }
-
+        
         if ($request->input('vendors')!=null) {
             for($k=0;$k<count($data['vendors']);$k++){
-                $quotes = DB::table('quotes')->insertGetId(
+                 $quotes = DB::table('quotes')->insertGetId(
                         [
                         'rfq_id' => $id,
-                        'vendor_id' => $data['vendors'][$k],
+                        'vendor_id' => $data['vendors'][$k],                    
                         ]
                     );
                 if ($request->input('item')!=null) {
@@ -347,10 +347,27 @@ class RfqTable extends Model
         $fieldName = $request['fieldName'];
         $fieldValue = $request['fieldValue'];
         
+        $data = DB::table('rfq')
+        ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+        ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+        ->where('rfq.rfq_id', '=', $fieldIdValue)
+        ->get();
+        
+        $rfqdata = DB::table('rfq')
+        ->where('rfq_id', '=', $fieldIdValue)
+        ->get();
+      
+        $rfqNumber=$data[0]->rfq_number;
+        $vendorName=$data[0]->vendor_name;
+        $email=$data[0]->email;
+        $rfqdescription=$rfqdata[0]->description;
+        $uploadfile=$data[0]->rfq_upload_file;
+
+
         try {
             if ($fieldValue != "") {
                 $updateData = array($fieldName => $fieldValue);
-                $updateQuotesData = array('quotes_status' => $fieldValue);
+                $updateQuotesData = array('quotes_status' => $fieldValue,'description'=>$rfqdescription,'quotes_upload_file'=>$uploadfile);
                 DB::table($tableName)
                     ->where($fieldIdName, '=', $fieldIdValue)
                     // ->where('approve_status', '=', 'no')
@@ -365,14 +382,6 @@ class RfqTable extends Model
 
               //added in mail queue
 
-                $data = DB::table('rfq')
-                ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
-                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-                ->where('rfq.rfq_id', '=', $fieldIdValue)
-                ->get();
-                $rfqNumber=$data[0]->rfq_number;
-                $vendorName=$data[0]->vendor_name;
-                $email=$data[0]->email;
       
                 $mailData = DB::table('mail_template')
                 ->where('mail_temp_id', '=', 1)
