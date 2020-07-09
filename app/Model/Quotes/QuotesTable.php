@@ -20,25 +20,30 @@ class QuotesTable extends Model
     protected $table = 'quotes';
 
     // Fetch All Quotes List
-    public function fetchAllQuotes()
+    public function fetchAllQuotes($params)
     {
+        $req = $params->all();
+        // print_r($req);die;
         if(session('loginType')=='users'){
-            $data = DB::table('quotes')
+            $query = DB::table('quotes')
                 ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
                 ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
                 ->where('quotes.approve_status', '=', 'no')
                 ->where('quotes.quotes_status', '!=', 'pending')
-                ->get();
+                ;
+                if(isset($req['rfqId']) && $req['rfqId'])
+                    $query->where('quotes.rfq_id', '=', $req['rfqId']);
             }else{
                $userId=session('userId');
-                $data = DB::table('quotes')
+                $query = DB::table('quotes')
                     ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
                     ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
                     ->where('quotes.vendor_id', '=', $userId)
-                    ->where('quotes.quotes_status', '!=', 'pending')
+                    ->where('quotes.quotes_status', '!=', 'pending');
                     // ->where('quotes.approve_status', '=', 'yes')
-                    ->get();
+                    
             }
+            $data = $query->get();
         return $data;
     }
 
