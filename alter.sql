@@ -194,3 +194,6 @@ CREATE TABLE `temp_mail` (
 --Sudarmathi 08 July 2020
 ALTER TABLE `quotes` ADD `stock_available` VARCHAR(50) NULL DEFAULT 'no' AFTER `quotes_upload_file`, ADD `eta_if_no_stock` INT NULL AFTER `stock_available`, ADD `vendor_notes` TEXT NULL AFTER `eta_if_no_stock`, ADD `mode_of_delivery` VARCHAR(255) NULL AFTER `vendor_notes`, ADD `estimated_date_of_delivery` DATE NULL AFTER `mode_of_delivery`;
 ALTER TABLE `quotes` ADD `description` TEXT NULL AFTER `estimated_date_of_delivery`;
+
+--Sivakumar 09 July 2020
+ALTER TABLE `purchase_orders` ADD `upload_path` VARCHAR(500) NOT NULL AFTER `updated_on`;

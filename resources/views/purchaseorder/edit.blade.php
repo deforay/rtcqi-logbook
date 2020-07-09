@@ -127,6 +127,33 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                     </div>
                                         <hr>
                                         <div class="row">
+                                <fieldset>
+                                            <h5>Attachment Files <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                            <?php 
+                                            if(isset($result[0]->upload_path)){
+
+                                                $fileVaL= explode(",", $result[0]->upload_path);
+                                                $filecount=count($fileVaL);
+                                                if($filecount<1){
+                                                    $forcount=$filecount-1;
+                                                }else{
+                                                    $forcount=$filecount;
+                                                }
+                                                for($i=0;$i<$forcount;$i++)
+                                                {
+                                                $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                   
+                                                echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
+                                                 }
+                                            }
+                                                ?>
+                                            </div>
+                                        </fieldset>
+                             
+                                </div>
+                                        <div class="row">
                                             <div class="table-responsive">
                                                 <div class="bd-example">
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
