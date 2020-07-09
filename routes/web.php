@@ -142,6 +142,7 @@ Route::post('/quotes/edit/{id}', 'Quotes\QuotesController@edit');
 Route::post('/quoteDetailsView/{id}', 'Quotes\QuotesController@quoteDetailsView');
 
 
+
 //Mail template module
 Route::get('/mailtemplate', 'MailTemplate\MailTemplateController@index')->name('mailtemplate.index');
 Route::post('/previewMailTemplate/{id}/{saleType}', 'MailTemplate\MailTemplateController@previewMailTemplate');
@@ -185,6 +186,8 @@ Route::post('/getAllRfq', 'Rfq\RfqController@getAllRfq');
 Route::get('/rfq/edit/{id}', 'Rfq\RfqController@edit')->middleware('access');
 Route::post('/rfq/edit/{id}', 'Rfq\RfqController@edit');
 Route::post('/changeQuotesStatus', 'Rfq\RfqController@changeQuotesStatus');
+Route::post('/rfqDetailsView/{id}', 'Rfq\RfqController@rfqDetailsView');
+
 
 //Purchase Order module
 Route::get('/purchaseorder', 'PurchaseOrder\PurchaseOrderController@index')->name('purchaseorder.index')->middleware('access');
@@ -193,3 +196,4 @@ Route::get('/purchaseorder/add/{id}', 'PurchaseOrder\PurchaseOrderController@add
 Route::post('/getAllPurchaseOrder', 'PurchaseOrder\PurchaseOrderController@getAllPurchaseOrder');
 Route::get('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit')->middleware('access');
 Route::post('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit');
+Route::post('/purchaseDetailsView/{id}', 'PurchaseOrder\PurchaseOrderController@purchaseDetailsView');
