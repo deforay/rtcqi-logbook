@@ -56,6 +56,24 @@ Last Modified Name :
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
+                                <?php if(session('loginType')=='users'){ ?>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>RFQ
+                                            </h5>
+                                            <div class="form-group">
+                                            <select class="form-control" autocomplete="off" style="width:100%;" id="rfqId" name="rfqId"  onchange="getAllQuotes(this.value)">
+                                            <option value=''>Select RFQ</option>
+                                                @foreach ($rfqList as $rfq)
+                                                <option value="{{$rfq->rfq_id}}" >{{$rfq->rfq_number}}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <?php }?>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" id="quotesList">
                                         <thead>
@@ -89,7 +107,7 @@ Last Modified Name :
     getAllQuotes();
     $.unblockUI();
     });
-    function getAllQuotes()
+    function getAllQuotes(val = '')
     {
       $.ajaxSetup({
           headers: {
@@ -105,6 +123,9 @@ Last Modified Name :
             ajax: {
                 url:'{{ url("getAllQuotes") }}',
                 type: 'POST',
+                data : {
+                    rfqId : val,
+                }
             },
             columns: [
                     

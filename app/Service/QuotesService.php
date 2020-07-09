@@ -14,10 +14,10 @@ use Redirect;
 class QuotesService
 {
    	//Get All Quotes List
-	public function getAllQuotes()
+	public function getAllQuotes($request)
     {
 		$model = new QuotesTable();
-        $result = $model->fetchAllQuotes();
+        $result = $model->fetchAllQuotes($request);
         return $result;
 	}
 
