@@ -71,11 +71,9 @@
                   <tr>
                     <th>Vendor Name</th>
                     <th>Vendor Code</th>
-                    <th>Vendor Type</th>
                     <th>City</th>
                     <th>State</th>
                     <th>Pincode</th>
-                    <th>Country</th>
                     <th>Vendor Status</th>
                     <th>Action</th>
                   </tr>
@@ -137,10 +135,6 @@
           name: 'vendor_code'
         },
         {
-          data: 'vendor_type',
-          name: 'vendor_type'
-        },
-        {
           data: 'city',
           name: 'city'
         },
@@ -151,11 +145,6 @@
         {
           data: 'pincode',
           name: 'pincode'
-        },
-        {
-          data: 'country_name',
-          name: 'country_name',
-          className: 'firstcaps'
         },
         {
           data: 'vendor_status',

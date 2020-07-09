@@ -78,8 +78,8 @@ class VendorsTable extends Model
     public function fetchAllVendors()
     {
         $data = DB::table('vendors')
-            ->join('countries', 'countries.country_id', '=', 'vendors.country')
-            ->join('vendor_types', 'vendor_types.vendor_type_id', '=', 'vendors.vendor_type')
+            // ->join('countries', 'countries.country_id', '=', 'vendors.country')
+            // ->join('vendor_types', 'vendor_types.vendor_type_id', '=', 'vendors.vendor_type')
             ->orderBy('vendor_name', 'asc')
             ->get();
         return $data;
@@ -192,12 +192,33 @@ class VendorsTable extends Model
         $commonservice = new CommonService();
         $vendorsId = '';
         DB::beginTransaction();
+        $role = DB::table('roles')
+            ->where('role_name', '=', 'vendor')
+            ->get();
+        if (count($role) == 0) {
+            $roleId = DB::table('roles')->insertGetId(
+                [
+                    'role_name' => 'vendor',
+                    'role_code' => 'VDR',
+                    'role_description' => 'vendor role',
+                    'role_status' => 'active',
+                    'created_on' => $commonservice->getDateTime(),
+                    'created_by' => session('userId'),
+                ]
+            );
+
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), $roleId, 'Role-add', 'Add Role vendor', 'Role');
+        } else {
+            $roleId = $role[0]->role_id;
+        }
         $vendorsId = DB::table('vendors')->insertGetId(
             [
                 'vendor_name'    => $data['vendorName'],
                 'email'          => $data['vendorEmail'],
                 'created_on'     => $commonservice->getDateTime(),
-                'vendor_status'  => 'active'
+                'vendor_status'  => 'active',
+                'role'           => $roleId,
             ]
         );
         DB::commit();
