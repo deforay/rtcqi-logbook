@@ -173,7 +173,7 @@ class UserTable extends Model
 
                     $commonservice = new CommonService();
                     $commonservice->eventLog($result[0]['user_id'], $result[0]['user_id'], 'Login', 'User Login '.$result[0]['login_id'], 'Login');
-                
+                    
                     return 1;
                 }
                 else{
@@ -181,7 +181,7 @@ class UserTable extends Model
                 }
             }
         }
-        elseif(count($vendor)>0)
+        else if(count($vendor)>0)
         {
             $hashedPassword = $vendor[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {

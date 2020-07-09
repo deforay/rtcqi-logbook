@@ -213,8 +213,6 @@ $currentDate=date('d-M-Y');
 
 <script>
     $(document).ready(function() {
-        qty = '<?php echo $qty; ?>'
-        $('#totalAmount').val(qty)
         $(".select2").select2();
         $("#vendors").select2({
             placeholder: "Select Vendors",
