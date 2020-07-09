@@ -386,34 +386,36 @@ class RfqTable extends Model
                 $mailData = DB::table('mail_template')
                 ->where('mail_temp_id', '=', 1)
                 ->get();
-   
-                $mailSubject = trim($mailData[0]->mail_subject);
-                $subject = $mailSubject;
-                $subject = str_replace("&nbsp;", "", strval($subject));
-                $subject = str_replace("&amp;nbsp;", "", strval($subject));
-                $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-                $mainContent = array('##VENDOR-NAME##', '##RFG-NUMBER##');
-                $mainReplace = array($vendorName, $rfqNumber);
-                $mailContent = trim($mailData[0]->mail_content);
-                $message = str_replace($mainContent, $mainReplace, $mailContent);
-                $message = str_replace("&nbsp;", "", strval($message));
-                $message = str_replace("&amp;nbsp;", "", strval($message));
-                $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
-                $createdon = date('Y-m-d H:i:s');
-                $response = DB::table('temp_mail')
-                ->insertGetId(
-                    [
-                        'from_mail' => $mailData[0]->mail_from,
-                        'to_email' => $email,
-                        'subject' => $mailData[0]->mail_subject,
-                        'cc' => $mailData[0]->mail_cc,
-                        'bcc' => $mailData[0]->mail_bcc,
-                        'from_full_name' => $mailData[0]->from_name,
-                        'status' => 'pending',
-                        'datetime' => $createdon,
-                        'message' => $message,
-                        'customer_name' => $vendorName
-                    ]);
+                if(count($mailData)>0)
+                {
+                    $mailSubject = trim($mailData[0]->mail_subject);
+                    $subject = $mailSubject;
+                    $subject = str_replace("&nbsp;", "", strval($subject));
+                    $subject = str_replace("&amp;nbsp;", "", strval($subject));
+                    $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+                    $mainContent = array('##VENDOR-NAME##', '##RFG-NUMBER##');
+                    $mainReplace = array($vendorName, $rfqNumber);
+                    $mailContent = trim($mailData[0]->mail_content);
+                    $message = str_replace($mainContent, $mainReplace, $mailContent);
+                    $message = str_replace("&nbsp;", "", strval($message));
+                    $message = str_replace("&amp;nbsp;", "", strval($message));
+                    $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+                    $createdon = date('Y-m-d H:i:s');
+                    $response = DB::table('temp_mail')
+                    ->insertGetId(
+                        [
+                            'from_mail' => $mailData[0]->mail_from,
+                            'to_email' => $email,
+                            'subject' => $mailData[0]->mail_subject,
+                            'cc' => $mailData[0]->mail_cc,
+                            'bcc' => $mailData[0]->mail_bcc,
+                            'from_full_name' => $mailData[0]->from_name,
+                            'status' => 'pending',
+                            'datetime' => $createdon,
+                            'message' => $message,
+                            'customer_name' => $vendorName
+                        ]);
+                }
             }
         } catch (Exception $exc) {
             error_log($exc->getMessage());
