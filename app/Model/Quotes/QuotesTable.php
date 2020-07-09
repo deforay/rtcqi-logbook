@@ -34,7 +34,7 @@ class QuotesTable extends Model
                     ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
                     ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
                     ->where('quotes.vendor_id', '=', $userId)
-                    ->where('quotes.approve_status', '=', 'yes')
+                    // ->where('quotes.approve_status', '=', 'yes')
                     ->get();
             }
         return $data;
