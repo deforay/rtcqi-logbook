@@ -89,9 +89,13 @@
                         <button type="button" class="btn btn-warning mr-1 float-right ml-2" data-dismiss = "modal">
                         <i class="ft-x"></i> Close
                         </button>
-                        <!-- <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
-                        <i class="la la-check-square-o"></i> Save
-                        </button> -->
+                        <?php if(session('loginType')=='users' && $quotes->quotes_status=='responded' && $quotes->approve_status=='no' ){ ?>
+                        <a href="/purchaseorder/add/<?php echo $quoteId ?>" name="edit" id="'.$quoteId.'" class="btn btn-primary  float-right" title="Edit">
+                        <!-- <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">  -->
+                        <i class="la la-check-square-o"></i> Approve
+                        <!-- </button> -->
+                        </a>
+                        <?php }?> 
                         </div>
                     </div>
                 </div>
