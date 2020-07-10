@@ -37,6 +37,7 @@ class PurchaseOrderTable extends Model
             // dd($rfqdata[0]);
             $rfqNumber=$rfqdata[0]->rfq_number;
             $quoteNumber=$rfqdata[0]->quote_number;
+            $rfqid=$rfqdata[0]->rfq_id;
             $vendorName=$rfqdata[0]->vendor_name;
             $email=$rfqdata[0]->email;
             $rfqdescription=$rfqdata[0]->description;
@@ -85,15 +86,11 @@ class PurchaseOrderTable extends Model
             $commonservice->eventLog(session('userId'), $purchaseOrderDetailsId, 'Purchaseorderdetails-add', 'add Purchase Order Details ' . $purchaseOrderDetailsId, 'Purchase Order Details');
         }
 
-
-
-   
-
         $paramsRfq = array(
             'rfq_status' => 'closed'
         );
         $responseRfq = DB::table('rfq')
-            ->where('rfq_id', '=', $data[0]->rfq_id)
+            ->where('rfq_id', '=', $rfqid)
             ->update(
                 $paramsRfq
             );
