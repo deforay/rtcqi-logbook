@@ -212,7 +212,6 @@ if(isset($result[0]->mode_of_delivery)){
                                         <h4>Orders Details</h4>
                                     </div>
                                     <hr>
-                                    <hr>
                                     <div class="row">
                                         <div class="table-responsive">
                                             <div class="bd-example">
@@ -220,6 +219,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                     <thead>
                                                         <tr>
                                                             <th style="width:50%;">Item Name<span class="mandatory">*</span></th>
+                                                            <th style="width:25%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Qty<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
                                                         </tr>
@@ -236,6 +236,10 @@ if(isset($result[0]->mode_of_delivery)){
                                                                     <option value="{{ $itemDetails->item_id }}" {{ $quotesDetail->item_id == $itemDetails->item_id ?  'selected':''}}>{{ $itemDetails->item_name }}</option>
                                                                     @endforeach
                                                                 </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="unitName{{$z}}" readonly name="unitName[]" value="{{ $quotesDetail->unit_name }}" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
+                                                                <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $quotesDetail->uom }}" class="isRequired form-control"  title="Please enter unit">
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" value="{{$quotesDetail->quantity}}" id="quoteQty{{$z}}" name="quoteQty[]" class="form-control isRequired" placeholder="Order Qty" title="Please enter the order qty" />

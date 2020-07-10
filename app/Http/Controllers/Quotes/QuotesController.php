@@ -90,6 +90,7 @@ class QuotesController extends Controller
         {
             $service = new QuotesService();
             $result = $service->getQuotesById($id);
+            // dd($result);
             $service = new ItemService();
             $itemResult = $service->getAllActiveItem();
             // dd($itemResult);

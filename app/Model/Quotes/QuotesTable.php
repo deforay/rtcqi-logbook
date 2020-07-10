@@ -57,6 +57,7 @@ class QuotesTable extends Model
             ->where('quote_id', '=', $id)->get();
         $data['quotesdetails'] =  DB::table('quote_details')
             ->join('quotes', 'quotes.quote_id', '=', 'quote_details.quote_id')
+            ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'quote_details.uom')
             ->join('items', 'items.item_id', '=', 'quote_details.item_id')
             ->where('quote_details.quote_id', '=', $id)->get();
         return $data;
