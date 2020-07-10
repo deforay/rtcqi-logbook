@@ -133,9 +133,9 @@ $currentDate=date('d-M-Y');
                                                     <thead>
                                                         <tr>
                                                             <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Uom<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:25%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Action</th>
                                                         </tr>
                                                     </thead>
@@ -157,10 +157,10 @@ $currentDate=date('d-M-Y');
                                                                 <input type="hidden" id="qdId{{$j}}" name="qdId[]" value="{{$quoteDetail->qd_id}}" class="form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                                <input type="number" id="qty{{$j}}" name="qty[]" class="form-control  isRequired"  value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="qty{{$j}}" name="qty[]" class="form-control linetot isRequired" oninput="calLineTotal();" value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                                <input type="number" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -184,7 +184,7 @@ $currentDate=date('d-M-Y');
 											<div class="form-group row" >
 												<label class="col-md-2 label-control" for="description" style="margin-left: 64px !important;">Description</label>
 												<div class="col-md-8">
-												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
+												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$quotes['quotes'][0]->description}}</textarea>
 												</div>
 											</div>
                                         </div>

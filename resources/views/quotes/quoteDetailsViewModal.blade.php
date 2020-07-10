@@ -1,3 +1,11 @@
+<?php 
+
+use App\Service\CommonService;
+$common = new CommonService();
+$invitedOn = $common->humanDateFormat($quote[0]->invited_on);
+$estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
+
+?>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
         <div class="col-12">
@@ -29,7 +37,7 @@
                         <br/>
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$quote[0]->invited_on}} </span></h4>
+                                <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$invitedOn}} </span></h4>
                             </div>
                             <div class="col-xl-6 col-lg-12">
                                 <h4><b>Quote Status : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$quote[0]->quotes_status}} </span></h4>
@@ -41,7 +49,7 @@
                                 <h4><b>Delivery Mode : </b><span id="deliveryMode" class="spanFont">{{$quote[0]->mode_of_delivery}} </span></h4>
                             </div>
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>Estimated Delivery Date : </b><span id="deliveryDate" class="spanFont">{{$quote[0]->estimated_date_of_delivery}} </span></h4>
+                                <h4><b>Estimated Delivery Date : </b><span id="deliveryDate" class="spanFont">{{$estDelDate}} </span></h4>
                             </div>
                         </div>
                         <br/>

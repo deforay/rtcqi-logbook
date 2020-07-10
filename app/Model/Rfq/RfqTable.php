@@ -20,6 +20,7 @@ class RfqTable extends Model
         // dd($data);
         $filePath = '';
         $fileName = '';
+        $issuedOn = '';
         if ($request->input('rfqNumber')!=null && trim($request->input('rfqNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDate = $commonservice->dateFormat($data['lastdate']);
@@ -86,7 +87,9 @@ class RfqTable extends Model
                  $quotes = DB::table('quotes')->insertGetId(
                         [
                         'rfq_id' => $id,
-                        'vendor_id' => $data['vendors'][$k],                    
+                        'vendor_id' => $data['vendors'][$k],
+                        'stock_available' => 'yes',
+                        'invited_on' =>  $issuedOn          
                         ]
                     );
                 if ($request->input('item')!=null) {
