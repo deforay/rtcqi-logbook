@@ -238,10 +238,10 @@ if(isset($result[0]->mode_of_delivery)){
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <input type="text" value="{{$quotesDetail->quantity}}" id="quoteQty{{$z}}" name="quoteQty[]" class="form-control isRequired" placeholder="Order Qty" title="Please enter the order qty" />
+                                                                <input type="number" min="0" value="{{$quotesDetail->quantity}}" id="quoteQty{{$z}}" name="quoteQty[]" class="form-control isRequired" placeholder="Order Qty" title="Please enter the order qty" />
                                                             </td>
                                                             <td>
-                                                                <input type="text" value="{{$quotesDetail->unit_price}}" id="unitPrice{{$z}}" name="unitPrice[]" class="form-control isRequired" placeholder="Unit Price" title="Please enter the Unit Price" />
+                                                                <input type="number" min="0" value="{{$quotesDetail->unit_price}}" id="unitPrice{{$z}}" name="unitPrice[]" class="form-control isRequired" placeholder="Unit Price" title="Please enter the Unit Price" />
                                                             </td>
                                                         </tr>
                                                         <?php $z++; ?>
