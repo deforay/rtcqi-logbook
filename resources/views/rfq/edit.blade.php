@@ -176,7 +176,7 @@
                                                     <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $rfq->uom }}" class="isRequired form-control"  title="Please zenter unit">
                                                 </td>
                                                 <td>
-                                                <input type="number" id="qty{{$z}}" name="qty[]" value="{{ $rfq->quantity }}" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                <input type="number" min="0" id="qty{{$z}}" name="qty[]" value="{{ $rfq->quantity }}" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                 </td>
                                                 <td>
                                                     <!-- <div class="row"> -->
@@ -362,7 +362,7 @@ $(document).ready(function() {
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
-        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
+        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" min="0" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".select2").select2();

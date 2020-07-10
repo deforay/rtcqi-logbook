@@ -124,8 +124,8 @@ foreach($vendor as $type){
                                                 ?>
                                                {{$item_name}}
                                                 </td>
-                                                <td style="text-align:right;">{{$rfq->unit_name}}</td>
-                                                <td>{{$rfq->quantity}}</td>
+                                                <td>{{$rfq->unit_name}}</td>
+                                                <td style="text-align:right;">{{$rfq->quantity}}</td>
                                             </tr>
                                             @php $z++; @endphp
                                         @endforeach
