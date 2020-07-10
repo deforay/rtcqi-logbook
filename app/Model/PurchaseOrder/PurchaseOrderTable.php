@@ -74,7 +74,7 @@ class PurchaseOrderTable extends Model
                     [
                         'po_id'         =>  $poId,
                         'item_id'       => $data['item'][$k],
-                        'uom'           => $data['unitName'][$k],
+                        'uom'           => $data['unitId'][$k],
                         'unit_price'    => $data['unitPrice'][$k],
                         'quantity'      => $data['qty'][$k],
                         'delivery_status'      => 'pending',
@@ -175,6 +175,7 @@ class PurchaseOrderTable extends Model
     {
         $id = base64_decode($id);
         $data = DB::table('quote_details')
+            ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'quote_details.uom')
             ->where('quote_details.quote_id', '=', $id)->get();
         return $data;
     }
@@ -217,7 +218,7 @@ class PurchaseOrderTable extends Model
             $purchaseOrderDetailsData = array(
                 'po_id'             => base64_decode($id),
                 'item_id'           => $data['item'][$j],
-                'uom'               => $data['unitName'][$j],
+                'uom'               => $data['unitId'][$j],
                 'unit_price'        => $data['unitPrice'][$j],
                 'quantity'          => $data['qty'][$j],
                 'delivery_status'   => 'pending',

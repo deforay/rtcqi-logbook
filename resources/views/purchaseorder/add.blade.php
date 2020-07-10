@@ -129,7 +129,7 @@ $currentDate=date('d-M-Y');
                                     <div class="row">
                                         <div class="table-responsive">
                                             <div class="bd-example">
-                                                <table class="table table-striped table-bordered table-condensed table-responsive-lg">
+                                                <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th style="width:30%;">Item<span class="mandatory">*</span></th>
@@ -145,7 +145,7 @@ $currentDate=date('d-M-Y');
                                                         @php $qty += $quoteDetail->quantity; @endphp
                                                         <tr>
                                                             <td>
-                                                                <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item">
+                                                                <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item" onchange="addNewItemField(this.id,{{$j}});">
                                                                     <option value="">Select Item </option>
                                                                     @foreach ($item as $items)
                                                                     <option value="{{ $items->item_id }}" {{ $quoteDetail->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
@@ -153,7 +153,8 @@ $currentDate=date('d-M-Y');
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <input type="text" id="unitName{{$j}}" name="unitName[]" value="{{$quoteDetail->uom}}" class="isRequired form-control" title="Please enter uom" placeholder="Uom">
+                                                                <input type="text" id="unitName{{$j}}" readonly name="unitName[]" value="{{$quoteDetail->unit_name}}" class="isRequired form-control" title="Please enter unit" placeholder="Unit">
+                                                                <input type="hidden" id="unitId{{$j}}" name="unitId[]" value="{{$quoteDetail->uom}}" class="isRequired form-control"  title="Please enter unit" >
                                                                 <input type="hidden" id="qdId{{$j}}" name="qdId[]" value="{{$quoteDetail->qd_id}}" class="form-control">
                                                             </td>
                                                             <td>
@@ -214,6 +215,9 @@ $currentDate=date('d-M-Y');
 <script>
     $(document).ready(function() {
         $(".select2").select2();
+        $(".select2").select2({
+            tags: true
+        });
         $("#vendors").select2({
             placeholder: "Select Vendors",
             allowClear: true
@@ -313,7 +317,7 @@ $currentDate=date('d-M-Y');
     //     });
     // }
 
-    rowCount = 0;
+    rowCount = "{{$j}}";
 
     function insRow() {
         rowCount++;
@@ -329,19 +333,23 @@ $currentDate=date('d-M-Y');
 
 
         rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item">\
+        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
-        d.innerHTML = '<input type="text" id="unitName' + rowCount + '" name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
+        d.innerHTML = '<input type="text" readonly id="unitName' + rowCount + '" name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="unit">\
+                        <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
-        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
-        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
+        c.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
+        e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
-        $(".select2").select2();
         $(".item").select2({
             placeholder: "Select Item",
             allowClear: true
         });
+        $(".select2").select2({
+            tags: true
+        });
+        
     }
 
     function removeRow(el) {
@@ -374,6 +382,61 @@ $currentDate=date('d-M-Y');
             var cleanNum = num.toFixed(2);
             $(this).val(cleanNum);
         });
+    }
+
+    function addNewItemField(obj,id)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewItemField') }}",
+                method: 'post',
+                data: {
+                   value: checkValue,
+                },
+                success: function(result){
+                    if (result['id'] > 0)
+                    {
+                        $('#item'+id).html(result['option'])
+                    }
+                    value = $('#item'+id).val();
+                    unitByItem(id,value);
+                }
+            });
+        }
+    }
+
+    function unitByItem(id,val){
+        unit = '';
+		$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getItemUnit') }}",
+            method: 'post',
+            data: {
+                val:val,
+            },
+            success: function(result){
+                console.log(result)
+                if(result.length>0)
+                {
+                    $("#unitName"+id).val(result[0]['unit_name']);
+                    // unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
+                    // $("#unitName"+id).html(unit);
+                    $("#unitId"+id).val(result[0]['uom_id']);
+				}
+			}
+
+		});
     }
 </script>
 @endsection
