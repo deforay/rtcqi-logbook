@@ -206,7 +206,7 @@
 											<div class="form-group row" >
 												<label class="col-md-2 label-control" for="mainContent" style="margin-left: 64px !important;">Description</label>
 												<div class="col-md-8">
-												<textarea id="description" name="description" class="form-control richtextarea isRequired ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result['rfq'][0]->description}}</textarea>
+												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result['rfq'][0]->description}}</textarea>
 												</div>
 											</div>
 										</div>
