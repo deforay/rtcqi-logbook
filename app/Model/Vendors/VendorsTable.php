@@ -219,6 +219,7 @@ class VendorsTable extends Model
                 'created_on'     => $commonservice->getDateTime(),
                 'vendor_status'  => 'active',
                 'role'           => $roleId,
+                'password'       => Hash::make('vendor@123'), 
             ]
         );
         DB::commit();

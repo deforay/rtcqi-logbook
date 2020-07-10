@@ -69,7 +69,7 @@ $commonservice = new CommonService();
                                     <div class="card-title text-center">
                                         <!-- <div class="p-1"><img src="{{ asset('app-assets/images/logo/asm_logo.png')}}" alt="branding logo" style="width: 100px;"></div> -->
                                     </div>
-                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Profile </span>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Vendor profile </span>
                                     </h6>
                                 </div>
                                 <div id="show_alert"  class="mt-1" style="font"></div>
@@ -115,30 +115,14 @@ $commonservice = new CommonService();
 
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Vendor Type<span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired select2" disabled autocomplete="off" style="width:100%;" id="vendorType" name="vendorType" title="Please select Vendor Type">
-                                                        <option value="">Select Vendor Type</option>
-                                                        @foreach($vendors_type as $type)
-                                                        <option value="{{ $type->vendor_type_id }}" {{ $vendors[0]->vendor_type == $type->vendor_type_id ?  'selected':''}}>{{ $type->vendor_type }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
                                                 <h5>Register On<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="vendorRegisterOn" readonly value="{{$commonservice->getDateTime()}}" class="form-control isRequired" autocomplete="off" placeholder="Enter registered On" name="vendorRegisterOn" title="Please enter register On">
                                                 </div>
                                             </fieldset>
+                               
                                         </div>
-                                    </div>
-                                
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Address Line 1
@@ -148,6 +132,9 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Address Line 2
@@ -157,8 +144,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>City
@@ -168,6 +153,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>State
@@ -177,8 +164,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Pincode
@@ -188,6 +173,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Country<span class="mandatory">*</span>
@@ -198,9 +185,8 @@ $commonservice = new CommonService();
                                                     <option value="{{ $countrylist->country_id }}" {{ $vendors[0]->country == $countrylist->country_id ?  'selected':''}}>{{ $countrylist->country_name }}</option>
                                                     @endforeach
                                                 </select>
+                                                </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Email
@@ -210,6 +196,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Alternate Email
@@ -219,8 +207,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Phone<span class="mandatory">*</span>
@@ -230,6 +216,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Alternate Phone Number
@@ -239,6 +227,8 @@ $commonservice = new CommonService();
                                                   
                                                 </div>
                                             </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
                                         </div>
                                     </div>
                       
@@ -448,13 +438,14 @@ $commonservice = new CommonService();
     }
 
     function validateNow() {
+    
         flag = deforayValidator.init({
-            formId: 'addvendors'
+            formId: 'editvendor'
         });
 
         if (flag == true) {
             if (duplicateName) {
-                document.getElementById('addvendors').submit();
+                document.getElementById('editvendor').submit();
             }
         } else {
             // Swal.fire('Any fool can use a computer');

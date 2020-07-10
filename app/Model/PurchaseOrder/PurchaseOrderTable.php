@@ -86,10 +86,6 @@ class PurchaseOrderTable extends Model
             $commonservice->eventLog(session('userId'), $purchaseOrderDetailsId, 'Purchaseorderdetails-add', 'add Purchase Order Details ' . $purchaseOrderDetailsId, 'Purchase Order Details');
         }
 
-
-
-   
-
         $paramsRfq = array(
             'rfq_status' => 'closed'
         );
