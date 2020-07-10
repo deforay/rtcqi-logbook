@@ -50,7 +50,9 @@ class QuotesController extends Controller
                         $button = '';
                         $role = session('role');
                         if (isset($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit']) && ($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit'] == "allow")){
+                            if($data->quotes_status!='closed' ){
                            $button .= '<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                            }
                         }else{
                             $button .= '';
                         }
