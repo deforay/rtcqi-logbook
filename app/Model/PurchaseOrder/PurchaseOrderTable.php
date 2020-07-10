@@ -36,6 +36,7 @@ class PurchaseOrderTable extends Model
             ->get();
             // dd($rfqdata[0]);
             $rfqNumber=$rfqdata[0]->rfq_number;
+            $rfqId=$rfqdata[0]->rfq_id;
             $quoteNumber=$rfqdata[0]->quote_number;
             $vendorName=$rfqdata[0]->vendor_name;
             $email=$rfqdata[0]->email;
@@ -93,7 +94,7 @@ class PurchaseOrderTable extends Model
             'rfq_status' => 'closed'
         );
         $responseRfq = DB::table('rfq')
-            ->where('rfq_id', '=', $data[0]->rfq_id)
+            ->where('rfq_id', '=', $rfqId)
             ->update(
                 $paramsRfq
             );
@@ -109,7 +110,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBAER##');
+            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
             $mainReplace = array($vendorName, $quoteNumber);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
@@ -169,6 +170,9 @@ class PurchaseOrderTable extends Model
         $data = DB::table('quote_details')
             ->select(DB::raw('SUM(quote_details.unit_price) as tot'))
             ->where('quote_details.quote_id', '=', $id)->get();
+        $data['quotes'] =  DB::table('quotes')
+                    ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                    ->where('quotes.quote_id', '=', $id)->get();
         return $data;
     }
     public function fetchAllQuoteDetailsId($id)

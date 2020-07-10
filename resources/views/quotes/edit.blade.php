@@ -28,11 +28,11 @@ $vendor_notes = '';
 $mode_of_delivery = '';
 if(isset($result[0]->stock_available)){
     $style = 'display:none;';
-    if($result[0]->stock_available=='yes'){
-        $optionSelect='selected';
-    }
     if($result[0]->stock_available=='no'){
         $optionSelect1='selected';
+    }
+    else{
+        $optionSelect='selected';
     }
 }
 
@@ -175,7 +175,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 <h5>Estimated Date of Delivery<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="estimatedDate" value="{{$estimatedDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Estimated Date of Delivery" name="estimatedDate" title="Please enter Estimated Date of Delivery">
+                                                    <input type="text" id="estimatedDate" value="{{$estimatedDate}}" onchange="checkDate();return false;" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Estimated Date of Delivery" name="estimatedDate" title="Please enter Estimated Date of Delivery">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -358,6 +358,26 @@ function isStockable(val) {
                     }
                 }
             });
+        }
+    }
+
+    function checkDate()
+    {
+        let estimatedDate  = new Date($("#estimatedDate").val())
+        let invitedOn  = new Date($("#invitedOn").val())
+
+        if(estimatedDate  && invitedOn)
+        {
+            if(invitedOn > estimatedDate)
+            {
+                    swal("Estimated date should be Greater than invited on date")
+                    $("#estimatedDate").val('')
+                return false
+            }
+            else
+            {
+                return true
+            }
         }
     }
 </script>
