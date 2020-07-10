@@ -79,22 +79,20 @@ class RfqController extends Controller
                             $button .= '<button type="button" name="changeStatus" id="changeStatus'.$data->rfq_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Activate</button>&nbsp;&nbsp;';
                             $button .= '<button type="button" name="closeStatus" id="closeStatus'.$data->rfq_id.'" onclick="'.$closeStatus.'" class="btn btn-outline-warning btn-sm">Change to Close</button>&nbsp;&nbsp;';
                             if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
-                            $button .= '<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                            $button .= '<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>&nbsp;&nbsp;';
                             }else{
                                 $button .= '';
                             }
                         }else if($data->rfq_status == 'active'){
                             $button .= '<button type="button" name="closeStatus" id="closeStatus'.$data->rfq_id.'" onclick="'.$closeStatus.'" class="btn btn-outline-warning btn-sm">Change to Close</button>&nbsp;&nbsp;';
                             if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
-                                $button .= '<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                                $button .= '<a href="/rfq/edit/'. base64_encode($data->rfq_id).'" name="edit" id="'.$data->rfq_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>&nbsp;&nbsp;';
                             }else{
                                 $button .= '';
                             }
                         }
 
-                        $button .= '<div class = "row">';
-                        $button .= '<div class = "col-md-6 mt-1">
-                        <button type="button" name="rfqDetails" id="rfqDetails" class="btn btn-success btn-sm" onclick="showAjaxModal(\'/rfqDetailsView/'.base64_encode($data->rfq_id).'\' );" title="RFQ Details"><b><i class="la la-eye"></i></b></button></div></div>';
+                        $button .= '<button type="button" name="rfqDetails" id="rfqDetails" class="btn btn-success btn-sm" onclick="showAjaxModal(\'/rfqDetailsView/'.base64_encode($data->rfq_id).'\' );" title="RFQ Details"><b><i class="la la-eye"></i></b></button>';
 
                         // $button .= '</div>';
                         return $button;
