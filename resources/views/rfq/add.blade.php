@@ -136,9 +136,9 @@
                                                 </select>
                                                 </td>
                                                 <td>
-                                                    <select id="unitName0" name="unitName[]" class="unitName select2 isRequired form-control"  title="Please select unit" onchange="addNewUnitField(this.id,0);">
-                                                    </select>
-                                                    <!-- <input type="text" id="unitName0" name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit"> -->
+                                                    <!-- <select id="unitName0" name="unitName[]" class="unitName select2 isRequired form-control"  title="Please select unit" onchange="addNewUnitField(this.id,0);">
+                                                    </select> -->
+                                                    <input type="text" id="unitName0" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
                                                     <input type="hidden" id="unitId0" name="unitId[]" class="isRequired form-control"  title="Please enter unit" >
                                                 </td>
                                                 <td>
@@ -379,9 +379,9 @@ $(document).ready(function() {
                 console.log(result)
                 if(result.length>0)
                 {
-                    // $("#unitName"+id).val(result[0]['unit_name']);
-                    unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
-                    $("#unitName"+id).html(unit);
+                    $("#unitName"+id).val(result[0]['unit_name']);
+                    // unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
+                    // $("#unitName"+id).html(unit);
                     $("#unitId"+id).val(result[0]['uom_id']);
 				}
 			}
@@ -405,8 +405,9 @@ $(document).ready(function() {
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
-        d.innerHTML = '<select id="unitName' + rowCount + '" name="unitName[]" class="unitName select2 isRequired form-control datas"  title="Please select unit" onchange="addNewUnitField(this.id,'+rowCount+');">\
-                        </select>\
+        // d.innerHTML = '<select id="unitName' + rowCount + '" name="unitName[]" class="unitName select2 isRequired form-control datas"  title="Please select unit" onchange="addNewUnitField(this.id,'+rowCount+');">\
+        //                 </select>\
+        d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
         c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
