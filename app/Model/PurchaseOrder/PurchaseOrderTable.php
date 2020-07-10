@@ -184,6 +184,7 @@ class PurchaseOrderTable extends Model
     {
         $id = base64_decode($id);
         $data = DB::table('purchase_order_details')
+            ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'purchase_order_details.uom')
             ->where('purchase_order_details.po_id', '=', $id)->get();
         return $data;
     }

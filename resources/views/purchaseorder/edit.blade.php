@@ -159,10 +159,10 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
                                                         <thead>
                                                             <tr>
-                                                            <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Uom<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:25%;">Item<span class="mandatory">*</span></th>
+                                                            <th style="width:18%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:17%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Action</th>
                                                             </tr>
                                                         </thead>
@@ -171,7 +171,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                         @foreach($purchaseOrderDetails as $orderDetail)
                                                         <tr>
                                                             <td>
-                                                                <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item">
+                                                                <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item" onchange="addNewItemField(this.id,{{$j}});">
                                                                     <option value="">Select Item </option>
                                                                     @foreach ($item as $items)
                                                                     <option value="{{ $items->item_id }}" {{ $orderDetail->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
@@ -179,14 +179,15 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <input type="text" id="unitName{{$j}}"  name="unitName[]" value="{{$orderDetail->uom}}" class="isRequired form-control" title="Please enter Uom" placeholder="Uom">
+                                                                <input type="text" readonly id="unitName{{$j}}"  name="unitName[]" value="{{$orderDetail->unit_name}}" class="isRequired form-control" title="Please enter unit" placeholder="Unit">
+                                                                <input type="hidden" id="unitId{{$j}}" name="unitId[]" value="{{$orderDetail->uom}}" class="isRequired form-control"  title="Please enter unit" >
                                                                 <input type="hidden" id="podId{{$j}}" name="podId[]" value="{{$orderDetail->pod_id}}" class="isRequired form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                                <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -241,6 +242,9 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
 <script>
     $(document).ready(function() {
         $(".select2").select2();
+        $(".select2").select2({
+            tags: true
+        });
         $("#vendors").select2({
             placeholder: "Select Vendors",
             allowClear: true
@@ -316,31 +320,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
         }
     }
 
-    function unitByItem(id, val) {
-        unit = '';
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "{{ url('/getItemUnit') }}",
-            method: 'post',
-            data: {
-                val: val,
-            },
-            success: function(result) {
-                console.log(result)
-                if (result.length > 0) {
-                    $("#unitName" + id).val(result[0]['unit_name']);
-                    $("#unitId" + id).val(result[0]['uom_id']);
-                }
-            }
-
-        });
-    }
-
-    rowCount = 0;
+    rowCount = "{{$j}}";
 
     function insRow() {
         rowCount++;
@@ -356,18 +336,21 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
 
 
         rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" >\
+        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
-        d.innerHTML = '<input type="text" id="unitName' + rowCount + '"  name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
+        d.innerHTML = '<input type="text" readonly id="unitName' + rowCount + '"  name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="unit">\
+                        <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
                         <input type="hidden" id="podId' + rowCount + '" name="podId[]" class="isRequired form-control"  title="Please enter Uom">';
-        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
-        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
+        c.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
+        e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
-        $(".select2").select2();
         $(".item").select2({
             placeholder: "Select Item",
             allowClear: true
+        });
+        $(".select2").select2({
+            tags: true
         });
     }
 
@@ -380,6 +363,61 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                 insRow();
             }
         });
+    }
+
+    function addNewItemField(obj,id)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewItemField') }}",
+                method: 'post',
+                data: {
+                   value: checkValue,
+                },
+                success: function(result){
+                    if (result['id'] > 0)
+                    {
+                        $('#item'+id).html(result['option'])
+                    }
+                    value = $('#item'+id).val();
+                    unitByItem(id,value);
+                }
+            });
+        }
+    }
+
+    function unitByItem(id,val){
+        unit = '';
+		$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getItemUnit') }}",
+            method: 'post',
+            data: {
+                val:val,
+            },
+            success: function(result){
+                console.log(result)
+                if(result.length>0)
+                {
+                    $("#unitName"+id).val(result[0]['unit_name']);
+                    // unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
+                    // $("#unitName"+id).html(unit);
+                    $("#unitId"+id).val(result[0]['uom_id']);
+				}
+			}
+
+		});
     }
 </script>
 @endsection
