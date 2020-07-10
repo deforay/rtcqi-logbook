@@ -157,10 +157,10 @@ $currentDate=date('d-M-Y');
                                                                 <input type="hidden" id="qdId{{$j}}" name="qdId[]" value="{{$quoteDetail->qd_id}}" class="form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="qty{{$j}}" name="qty[]" class="form-control  isRequired"  value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                                <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control  isRequired"  value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -333,8 +333,8 @@ $currentDate=date('d-M-Y');
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
-        e.innerHTML = '<input type="number" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
-        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
+        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
+        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".select2").select2();

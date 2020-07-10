@@ -183,10 +183,10 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                                 <input type="hidden" id="podId{{$j}}" name="podId[]" value="{{$orderDetail->pod_id}}" class="isRequired form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                                <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -360,8 +360,8 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '"  name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
                         <input type="hidden" id="podId' + rowCount + '" name="podId[]" class="isRequired form-control"  title="Please enter Uom">';
-        e.innerHTML = '<input type="number" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
-        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
+        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
+        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".select2").select2();
