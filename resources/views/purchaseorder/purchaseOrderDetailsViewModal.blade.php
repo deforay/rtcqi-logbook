@@ -86,8 +86,8 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                         <tr>
                                             <th style="width:20%;">Item</th>
                                             <th style="width:20%;">Uom</th>
-                                            <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
                                             <th style="width:20%;">Qty</th>
+                                            <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
                                         </tr>
                                     </thead>
                                     <tbody id="stoSaleDetails">
@@ -98,9 +98,9 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                 <td> @foreach ($item as $items)
                                                      {{ $orderDetail->item_id == $items->item_id ?  $items->item_name:''}}
                                                                     @endforeach</td>
-                                                <td style="text-align:right;">{{$orderDetail->uom}}</td>
-                                                <td>{{$orderDetail->unit_price}}</td>
+                                                <td style="text-align:right;">{{$orderDetail->unit_name}}</td>
                                                 <td>{{$orderDetail->quantity}}</td>
+                                                <td>{{$orderDetail->unit_price}}</td>
                                             </tr>
                                             @php $z++; @endphp
                                         @endforeach
