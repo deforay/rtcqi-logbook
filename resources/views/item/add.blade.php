@@ -224,7 +224,8 @@ $(document).ready(function() {
 
     function addNewField(tableName,fieldName,obj,sts)
     {
-        checkValue = document.getElementById(obj).value;
+        // checkValue = document.getElementById(obj).value;
+        checkValue = $("#"+obj+" option:selected").html();
         itemCat = $('#itemCatId').val();
         if(checkValue!='')
         {

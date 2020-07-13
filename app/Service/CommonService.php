@@ -321,7 +321,7 @@ class CommonService
 
                     $opt = '';
                     foreach ($item as $items){
-                        if($items->item_category_id == $id){
+                        if($items->item_category_id == $id || $items->item_category==$value ){
                             $opt .= '<option value="'.$items->item_category_id.'" selected>'.$items->item_category.'</option>';
                         }
                         else{
@@ -348,7 +348,7 @@ class CommonService
 
                     $opt = '';
                     foreach ($item as $items){
-                        if($items->item_type_id == $id){
+                        if($items->item_type_id == $id || $items->item_type==$value ){
                             $opt .= '<option value="'.$items->item_type_id.'" selected>'.$items->item_type.'</option>';
                         }
                         else{
@@ -376,7 +376,7 @@ class CommonService
 
                     if($tableName == 'units_of_measure'){
                         foreach ($item as $items){
-                            if($items->uom_id == $id){
+                            if($items->uom_id == $id || $items->unit_name==$value ){
                                 $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
                             }
                             else{
@@ -386,7 +386,7 @@ class CommonService
                     }
                     else if($tableName == 'brands'){
                         foreach ($item as $items){
-                            if($items->brand_id == $id){
+                            if($items->brand_id == $id || $items->brand_name==$value ){
                                 $opt .= '<option value="'.$items->brand_id.'" selected>'.$items->brand_name.'</option>';
                             }
                             else{
