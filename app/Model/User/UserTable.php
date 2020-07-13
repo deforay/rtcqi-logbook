@@ -77,6 +77,7 @@ class UserTable extends Model
      // fetch particular User details
      public function fetchUserById($id)
      {
+         
          $id = base64_decode($id);
          $data = DB::table('users')
                 ->join('user_branch_map', 'users.user_id', '=', 'user_branch_map.user_id')
@@ -220,7 +221,60 @@ class UserTable extends Model
         }
     }
 
-    //Update Password
+
+
+     // Update particular User details
+     public function updateProfile($params,$id)
+     {
+         $commonservice = new CommonService();
+         $data = $params->all();
+         if ($params->input('firstName')!=null && trim($params->input('firstName')) != '') {
+             $user = array(
+                 'first_name' => $data['firstName'],
+                 'last_name' => $data['lastName'],
+                 'email' => $data['email'],
+                 'phone' => $data['mobileNo'],
+                 'updated_by' => session('userId'),
+                 'updated_on' => $commonservice->getDateTime()
+             );
+            
+             $response = DB::table('users')
+                 ->where('user_id', '=',base64_decode($id))
+                 ->update(
+                         $user
+                     );
+ 
+         $commonservice = new CommonService();
+         $commonservice->eventLog(session('userId'), base64_decode($id), 'User-update', 'Update User '.$data['firstName'], 'User');
+         }
+         if ($params->input('branches')!=null) {
+             $branches = $data['branches'];
+             $users = DB::table('user_branch_map')
+                     ->where('user_id','=', base64_decode($id))
+                     ->get();
+             $users = $users->toArray();
+             if(count($users)>0){
+                 $userBranch = DB::table('user_branch_map')->where('user_id','=',base64_decode($id))->delete();
+                 if(count($branches)>0){
+                     for($i=0;$i<count($branches);$i++){
+                         $map = DB::table('user_branch_map')->insert(['user_id'=>base64_decode($id),'branch_id'=>$branches[$i]]);
+                     }
+                 }
+             }
+             else{
+                 if(count($branches)>0){
+                     for($i=0;$i<count($branches);$i++){
+                         $map = DB::table('user_branch_map')->insert(['user_id'=>base64_decode($id),'branch_id'=>$branches[$i]]);
+                     }
+                 }
+             }
+             $commonservice = new CommonService();
+             $commonservice->eventLog(session('userId'), $id, 'UserBranch-Map', 'Map  '.$data['firstName'], 'User Branch Map');
+         }
+         return $response;
+     }
+     
+     //Update Password
     public function updatePassword($params,$id)
     {
         $data = $params->all();
@@ -247,4 +301,5 @@ class UserTable extends Model
             return 0;
         }
     }
+ 
 }

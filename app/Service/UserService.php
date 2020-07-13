@@ -52,6 +52,7 @@ class UserService
 	//Get Particular User Details
 	public function getUserById($id)
 	{
+		
 		$model = new UserTable();
         $result = $model->fetchUserById($id);
         return $result;
@@ -74,13 +75,32 @@ class UserService
 	    	$exc->getMessage();
 	    }
 	}
-
+	
 	//Validate User Login
 	public function validateLogin($params)
 	{
 		$model = new UserTable();
         $result = $model->validateLogin($params);
         return $result;
+	}
+	
+	//Update Particular User Profile Details
+	public function updateProfile($params,$id)
+	{
+		DB::beginTransaction();
+		try {
+			$model = new UserTable();
+			$add = $model->updateProfile($params,$id);
+			if($add>0){
+				DB::commit();
+				$msg = 'User Updated Successfully';
+				return $msg;
+			}
+		}
+		catch (Exception $exc) {
+			DB::rollBack();
+			$exc->getMessage();
+		}
 	}
 }
 

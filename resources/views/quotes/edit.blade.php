@@ -181,17 +181,17 @@ if(isset($result[0]->mode_of_delivery)){
                                         </div>
                                     </div>
                                     <br /><br />
+                                    <?php if(isset($result[0]->quotes_upload_file)){ ?>
+    
                                         <div class="row">
                                     <fieldset>
                                                 <h5>Attachment Files <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                 <?php 
-                                                if(isset($result[0]->quotes_upload_file)){
-    
                                                     $fileVaL= explode(",", $result[0]->quotes_upload_file);
                                                     $filecount=count($fileVaL);
-                                                    if($filecount<1){
+                                                    if($filecount>1){
                                                         $forcount=$filecount-1;
                                                     }else{
                                                         $forcount=$filecount;
@@ -202,12 +202,13 @@ if(isset($result[0]->mode_of_delivery)){
                        
                                                     echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                                      }
-                                                }
+                                                
                                                     ?>
                                                 </div>
                                             </fieldset>
                                  
                                     </div>
+                                    <?php  } ?>
                                     <div class="row">
                                         <h4>Orders Details</h4>
                                     </div>

@@ -115,4 +115,27 @@ class VendorsController extends Controller
         return $addvenodrs;
     }
 
+
+    public function profile($id,Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $vendorsService = new VendorsService();
+            $editVendors = $vendorsService->updateProfile($request,$id);
+             if($editVendors){
+                return Redirect::to('/dashboard');
+               }
+        }
+        else
+        {   
+            $vendorsService = new VendorsTypeService();
+            $vendorTypeResult = $vendorsService->getActiveVendorsType();
+            $countryService = new CountriesService();
+            $countriesResult = $countryService->getAllActiveCountries();
+            $vendorsService = new VendorsService();
+            $result = $vendorsService->getVendorsById($id);
+            return view('vendors.profile',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult));
+        }
+    }
+
 }

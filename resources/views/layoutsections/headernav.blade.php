@@ -1,3 +1,12 @@
+<?php 
+
+if(session('loginType')=='users'){
+
+    $profileURl="/user/profile/".base64_encode(session('userId'));
+}else{
+    $profileURl="/vendors/profile/".base64_encode(session('userId'));
+}
+?>
 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow navbar-static-top navbar-light navbar-brand-center">
         <div class="navbar-wrapper">
             <div class="navbar-header">

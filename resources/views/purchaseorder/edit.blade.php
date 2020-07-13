@@ -126,17 +126,17 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                         </div>
                                     </div>
                                         <hr>
+                                        <?php if(isset($result[0]->upload_path)){ ?>
                                         <div class="row">
                                 <fieldset>
                                             <h5>Attachment Files <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                            <?php 
-                                            if(isset($result[0]->upload_path)){
+                                             <?php
 
                                                 $fileVaL= explode(",", $result[0]->upload_path);
                                                 $filecount=count($fileVaL);
-                                                if($filecount<1){
+                                                if($filecount>1){
                                                     $forcount=$filecount-1;
                                                 }else{
                                                     $forcount=$filecount;
@@ -147,12 +147,13 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                    
                                                 echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                                  }
-                                            }
+                                            
                                                 ?>
                                             </div>
                                         </fieldset>
                              
                                 </div>
+                                <?php  } ?>
                                         <div class="row">
                                             <div class="table-responsive">
                                                 <div class="bd-example">
@@ -404,20 +405,59 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
             url: "{{ url('/getItemUnit') }}",
             method: 'post',
             data: {
-                val:val,
+                val: val,
             },
-            success: function(result){
+            success: function(result) {
                 console.log(result)
-                if(result.length>0)
-                {
-                    $("#unitName"+id).val(result[0]['unit_name']);
-                    // unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
-                    // $("#unitName"+id).html(unit);
-                    $("#unitId"+id).val(result[0]['uom_id']);
-				}
-			}
+                if (result.length > 0) {
+                    $("#unitName" + id).val(result[0]['unit_name']);
+                    $("#unitId" + id).val(result[0]['uom_id']);
+                }
+            }
 
-		});
+        });
+    }
+
+    rowCount = 0;
+
+    function insRow() {
+        rowCount++;
+        rl = document.getElementById("itemDetails").rows.length;
+        var a = document.getElementById("itemDetails").insertRow(rl);
+        a.setAttribute("style", "display:none;");
+        // a.setAttribute("class", "data");
+        var b = a.insertCell(0);
+        var d = a.insertCell(1);
+        var e = a.insertCell(2);
+        var c = a.insertCell(3);
+        var f = a.insertCell(4);
+
+
+        rl = document.getElementById("itemDetails").rows.length - 1;
+        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" >\
+                            <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
+        d.innerHTML = '<input type="text" id="unitName' + rowCount + '"  name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
+                        <input type="hidden" id="podId' + rowCount + '" name="podId[]" class="isRequired form-control"  title="Please enter Uom">';
+        e.innerHTML = '<input type="number" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
+        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
+        f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        $(a).fadeIn(800);
+        $(".select2").select2();
+        $(".item").select2({
+            placeholder: "Select Item",
+            allowClear: true
+        });
+    }
+
+    function removeRow(el) {
+        $(el).parent().fadeOut("slow", function() {
+            $(el).parent().remove();
+            rowCount = rowCount - 1;
+            rl = document.getElementById("itemDetails").rows.length;
+            if (rl == 0) {
+                insRow();
+            }
+        });
     }
 </script>
 @endsection
