@@ -126,17 +126,17 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                         </div>
                                     </div>
                                         <hr>
+                                        <?php if(isset($result[0]->upload_path)){ ?>
                                         <div class="row">
                                 <fieldset>
                                             <h5>Attachment Files <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                            <?php 
-                                            if(isset($result[0]->upload_path)){
+                                             <?php
 
                                                 $fileVaL= explode(",", $result[0]->upload_path);
                                                 $filecount=count($fileVaL);
-                                                if($filecount<1){
+                                                if($filecount>1){
                                                     $forcount=$filecount-1;
                                                 }else{
                                                     $forcount=$filecount;
@@ -147,12 +147,13 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                    
                                                 echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                                  }
-                                            }
+                                            
                                                 ?>
                                             </div>
                                         </fieldset>
                              
                                 </div>
+                                <?php  } ?>
                                         <div class="row">
                                             <div class="table-responsive">
                                                 <div class="bd-example">
