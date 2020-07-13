@@ -121,6 +121,7 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <?php if(isset($result['rfq'][0]->rfq_upload_file)){ ?>
                                 <div class="row">
                                 <fieldset>
                                             <h5>Attachment Files <span class="mandatory">*</span>
@@ -129,7 +130,7 @@
                                             <?php 
                                                 $fileVaL= explode(",", $result['rfq'][0]->rfq_upload_file);
                                                 $filecount=count($fileVaL);
-                                                if($filecount<1){
+                                                if($filecount>1){
                                                     $forcount=$filecount-1;
                                                 }else{
                                                     $forcount=$filecount;
@@ -145,6 +146,7 @@
                                         </fieldset>
                              
                                 </div>
+                                <?php  } ?>
                                     <hr>
                                 <div class="row">
                                     <div class="table-responsive">
