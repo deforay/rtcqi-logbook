@@ -196,7 +196,7 @@ ALTER TABLE `quotes` ADD `stock_available` VARCHAR(50) NULL DEFAULT 'no' AFTER `
 ALTER TABLE `quotes` ADD `description` TEXT NULL AFTER `estimated_date_of_delivery`;
 
 --Sivakumar 09 July 2020
-ALTER TABLE `purchase_orders` ADD `upload_path` VARCHAR(500) NOT NULL AFTER `updated_on`;
+ALTER TABLE `purchase_orders` ADD `upload_path` VARCHAR(500) NULL AFTER `updated_on`;
 
 ---Sudarmathi 10 July 2020
 ALTER TABLE `purchase_orders` CHANGE `upload_path` `upload_path` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;

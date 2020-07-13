@@ -82,4 +82,24 @@ class VendorsService
         return $result;
 	}
 	
+
+	//Update profile Vendors Details
+	public function updateProfile($params,$id)
+    {
+    	DB::beginTransaction();
+    	try {
+			$vendorsmodel = new VendorsTable();
+        	$updateVendors = $vendorsmodel->updateProfileDetails($params,$id);
+			if($updateVendors==1){
+				DB::commit();
+				$msg = 'Profile Updated Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
+
 }
