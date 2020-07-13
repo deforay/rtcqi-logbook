@@ -1,3 +1,12 @@
+<?php 
+
+if(session('loginType')=='users'){
+
+    $profileURl="/user/profile/".base64_encode(session('userId'));
+}else{
+    $profileURl="/vendors/profile/".base64_encode(session('userId'));
+}
+?>
 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow navbar-static-top navbar-light navbar-brand-center">
         <div class="navbar-wrapper">
             <div class="navbar-header">
@@ -18,7 +27,7 @@
                     </ul>
                     <ul class="nav navbar-nav float-right">
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">@if (session('username')) {{ ucfirst(session('username')) }} @endif</span><span class="avatar avatar-online"><img src="{{ asset('app-assets/images/portrait/small/avatar-s-19.png')}}" alt="avatar"><i></i></span></a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href=""><i class="ft-user"></i> Edit Profile</a>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="{{$profileURl}}"><i class="ft-user"></i> Edit Profile</a>
                                 <!-- <a class="dropdown-item" href="app-kanban.html"><i class="ft-clipboard"></i> Todo</a>
                                 <a class="dropdown-item" href="user-cards.html"><i class="ft-check-square"></i> Task</a> -->
                                 <div class="dropdown-divider"></div>

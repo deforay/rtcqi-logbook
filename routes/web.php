@@ -85,6 +85,9 @@ Route::get('/vendors/add', 'Vendors\VendorsController@add')->middleware('access'
 Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit')->middleware('access');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/addVendor', 'Vendors\VendorsController@addVendor');
+Route::post('/vendors/profile/{id}', 'Vendors\VendorsController@profile');
+Route::get('/vendors/profile/{id}', 'Vendors\VendorsController@profile');
+Route::post('/vendors/profile/{id}', 'Vendors\VendorsController@profile');
 
 //item module
 Route::get('/item', 'Item\ItemController@index')->name('item.index')->middleware('access');
@@ -103,6 +106,8 @@ Route::get('/user/add', 'User\UserController@add')->middleware('access');
 Route::post('/getAllUser', 'User\UserController@getAllUser');
 Route::get('/user/edit/{id}', 'User\UserController@edit')->middleware('access');
 Route::post('/user/edit/{id}', 'User\UserController@edit');
+Route::get('/user/profile/{id}', 'User\UserController@profile');
+Route::post('/user/profile/{id}', 'User\UserController@profile');
 
 //Countries
 Route::get('/countries', 'Countries\CountriesController@index')->name('countries.index')->middleware('access');

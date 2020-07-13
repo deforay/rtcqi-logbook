@@ -91,5 +91,29 @@ class UserController extends Controller
             return view('user.edit',array('result'=>$result,'role'=>$role,'branch'=>$branch));
         }
     }
+
+    //edit profile
+    public function profile(Request $request,$id)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $UserService = new UserService();
+            $edit = $UserService->updateProfile($request,$id);
+            // return Redirect::to('/dashboard');
+            return Redirect::to('/dashboard')->with('status', $edit);
+        }
+        else
+        {
+            
+            $UserService = new UserService();
+            $result = $UserService->getUserById($id);
+            $RoleService = new RolesService();
+            $role = $RoleService->getAllActiveRole();
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+         
+            return view('user.profile',array('result'=>$result,'role'=>$role,'branch'=>$branch));
+        }
+    }
 }
 

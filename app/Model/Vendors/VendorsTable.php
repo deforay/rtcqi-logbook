@@ -235,4 +235,47 @@ class VendorsTable extends Model
         $vendor['id'] = $vendorsId;
          return $vendor;
      }
+
+
+
+     // Update particular Vendor details
+    public function updateProfileDetails($params, $id)
+    {
+
+        $response = 0;
+        $data = $params->all();
+        $vendorUp = '';
+        //Vendor details
+        $commonservice = new CommonService();
+        if ($params->input('vendorName') != null && trim($params->input('vendorName')) != '') {
+                $params = array(
+                    'vendor_name'    => $data['vendorName'],
+                    'vendor_code'    => $data['vendorCode'],
+                    'address_line_1' => $data['addressline1'],
+                    'address_line_2' => $data['addressline2'],
+                    'city'           => $data['vendorCity'],
+                    'state'          => $data['vendorState'],
+                    'pincode'        => $data['vendorPincode'],
+                    'country'        => $data['vendorCountry'],
+                    'email'          => $data['vendorEmail'],
+                    'alt_email'      => $data['vendorAltEmail'],
+                    'phone'          => $data['vendorPhone'],
+                    'alt_phone'      => $data['vendorAltPhone'],
+                    'updated_on'     => $commonservice->getDateTime(),
+                    'updated_by'     => session('userId'),
+                );
+            $vendorUp = DB::table('vendors')
+                ->where('vendor_id', '=', base64_decode($id))
+                ->update(
+                    $params
+                );
+
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), base64_decode($id), 'Vendor-update', 'Update Vendors ' . $data['vendorName'], 'Vendor');
+        }
+       
+            $response = 1;
+       
+        return $response;
+    }
 }
