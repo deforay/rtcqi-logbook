@@ -219,4 +219,32 @@ class UserTable extends Model
             return 0;
         }
     }
+
+    //Update Password
+    public function updatePassword($params,$id)
+    {
+        $data = $params->all();
+        $newPassword= Hash::make($data['newPassword']);
+        $result = json_decode(DB::table('users')->where('user_id', '=',base64_decode($id) )->get(),true);
+        if(count($result)>0)
+        {
+            $hashedPassword = $result[0]['password'];
+            if (Hash::check($data['currentPassword'], $hashedPassword)) {
+                $response = DB::table('users')
+                ->where('user_id', '=',base64_decode($id))
+                ->update([
+                    'password'=> $newPassword   
+                    ]
+                );
+                return $response;
+            }
+            $commonservice = new CommonService();
+            $commonservice->eventLog(base64_decode($id),base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
+
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

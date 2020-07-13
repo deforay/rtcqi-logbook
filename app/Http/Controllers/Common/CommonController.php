@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\CommonService;
+use Redirect;
 
 class CommonController extends Controller
 {
@@ -53,5 +54,25 @@ class CommonController extends Controller
         $commonService = new CommonService();
         $data = $commonService->addNewUnitField($request);
         return $data;
+    }
+
+    public function changePassword($id,Request $request)
+    {
+        // dd(session('loginType'));
+        if ($request->isMethod('post')) 
+        {
+            $service = new CommonService();
+            $pswd = $service->updatePassword($request,$id);
+            // dd($pswd);
+            if($pswd!=1){
+                return Redirect::to('/dashboard')->with('status', 'Password Changed Succesfully');
+            }else{
+                return view('login.changepassword',array('id'=>$id,'status'=>'Currently you entered incorrect password'));
+            }
+        }
+        else
+        {
+            return view('login.changepassword',array('id'=>$id));
+        }
     }
 }

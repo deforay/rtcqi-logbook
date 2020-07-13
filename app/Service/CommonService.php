@@ -10,6 +10,7 @@ use DateInterval;
 use DatePeriod;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Hash;
+use App\Model\User\UserTable;
 
 class CommonService
 {
@@ -461,5 +462,42 @@ class CommonService
             error_log($exc->getMessage());
         }
         return $data;
+    }
+
+    public function updatePassword($params,$id){
+        DB::beginTransaction();
+    	try {
+            if(session('loginType')=='users'){
+                $model = new UserTable();
+                $addUser = $model->updatePassword($params,$id);
+                // dd($addUser);
+                if($addUser>0){
+                    DB::commit();
+                    $msg = 'Password Updated Successfully';
+                    return $msg;
+                }else{
+                    // dd('addUser');
+                    $msg = '1';
+                    return $msg;
+                }
+            }
+            else if(session('loginType')=='vendor'){
+                $model = new VendorsTable();
+                $addVendors = $model->updatePassword($params,$id);
+                if($addVendors>0){
+                    DB::commit();
+                    $msg = 'Password Updated Successfully';
+                    return $msg;
+                }else{
+                    // dd('addVendors');
+                    $msg = '1';
+                    return $msg;
+                }
+            }
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
     }
 }
