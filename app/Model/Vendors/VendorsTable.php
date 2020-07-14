@@ -118,7 +118,7 @@ class VendorsTable extends Model
             } else {
                 $vendorRegisterOn = NULL;
             }
-            if(isset($data['vendorType'])){
+            if(isset($data['vendorProfile'])){
                 $params = array(
                     'vendor_name'    => $data['vendorName'],
                     'vendor_code'    => $data['vendorCode'],
@@ -178,7 +178,7 @@ class VendorsTable extends Model
         if ($vendorUp) {
             $response = 1;
         }
-        if (isset($data['vendorStatus'])) {
+        if (isset($data['vendorProfile'])) {
             $response = 2;
         }
         return $response;

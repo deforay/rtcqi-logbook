@@ -48,14 +48,14 @@ class CommonController extends Controller
         $data = $commonService->addNewField($request);
         return $data;
     }
-
+    
     public function addNewUnitField(Request $request)
     {
         $commonService = new CommonService();
         $data = $commonService->addNewUnitField($request);
         return $data;
     }
-
+    
     public function changePassword($id,Request $request)
     {
         // dd(session('loginType'));
@@ -74,5 +74,12 @@ class CommonController extends Controller
         {
             return view('login.changepassword',array('id'=>$id));
         }
+    }
+    
+    public function addNewBranchType(Request $request)
+    {
+        $commonService = new CommonService();
+        $data = $commonService->addNewBranchType($request);
+        return $data;
     }
 }

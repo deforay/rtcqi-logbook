@@ -38,6 +38,7 @@ Route::post('/addNewField', 'Common\CommonController@addNewField');
 Route::post('/addNewUnitField', 'Common\CommonController@addNewUnitField');
 Route::get('/changePassword/{id}', 'Common\CommonController@changePassword');
 Route::post('/changePassword/{id}', 'Common\CommonController@changePassword');
+Route::post('/addNewBranchType', 'Common\CommonController@addNewBranchType');
 
 //branch type module
 Route::get('/branchtype', 'BranchType\BranchTypeController@index')->name('branchtype.index')->middleware('access');
