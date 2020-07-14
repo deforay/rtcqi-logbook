@@ -368,7 +368,8 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
 
     function addNewItemField(obj,id)
     {
-        checkValue = document.getElementById(obj).value;
+        // checkValue = document.getElementById(obj).value;
+        checkValue = $("#"+obj+" option:selected").html();
         if(checkValue!='')
         {
             $.ajaxSetup({

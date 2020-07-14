@@ -394,7 +394,8 @@ $(document).ready(function() {
     function addNewItemField(obj,id)
     {
         // alert(id);
-        checkValue = document.getElementById(obj).value;
+       // checkValue = document.getElementById(obj).value;
+       checkValue = $("#"+obj+" option:selected").html();
         if(checkValue!='')
         {
             $.ajaxSetup({

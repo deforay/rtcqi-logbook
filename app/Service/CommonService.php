@@ -447,7 +447,7 @@ class CommonService
 
                 if($tableName == 'units_of_measure'){
                     foreach ($item as $items){
-                        if($items->uom_id == $id){
+                        if($items->uom_id == $id ||$items->unit_name==$value ){
                             $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
                         }
                         else{
