@@ -200,3 +200,5 @@ ALTER TABLE `purchase_orders` ADD `upload_path` VARCHAR(500) NULL AFTER `updated
 
 ---Sudarmathi 10 July 2020
 ALTER TABLE `purchase_orders` CHANGE `upload_path` `upload_path` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+ALTER TABLE `vendors` CHANGE `registered_on` `registered_on` DATE NULL DEFAULT NULL;
