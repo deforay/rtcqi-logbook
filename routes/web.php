@@ -88,7 +88,6 @@ Route::get('/vendors/add', 'Vendors\VendorsController@add')->middleware('access'
 Route::get('/vendors/edit/{id}', 'Vendors\VendorsController@edit')->middleware('access');
 Route::post('/vendors/edit/{id}', 'Vendors\VendorsController@edit');
 Route::post('/addVendor', 'Vendors\VendorsController@addVendor');
-Route::post('/vendors/profile/{id}', 'Vendors\VendorsController@profile');
 Route::get('/vendors/profile/{id}', 'Vendors\VendorsController@profile');
 Route::post('/vendors/profile/{id}', 'Vendors\VendorsController@profile');
 
