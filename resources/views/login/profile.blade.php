@@ -239,7 +239,7 @@ $commonservice = new CommonService();
                                             </button>
                                         </a>
                                         <input type="hidden" id="vendorStatus" value="active" name="vendorStatus">
-                                        <input type="hidden" id="vendorType" value="vendorProfile" name="vendorType">
+                                        <input type="hidden" id="vendorProfile" value="vendorProfile" name="vendorProfile">
                                         <input type="hidden" id="password" value="{{$vendors[0]->password}}" name="password">
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
                                             <i class="la la-check-square-o"></i> Update
