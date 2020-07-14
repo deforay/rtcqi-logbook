@@ -17,7 +17,7 @@ class DashboardService
 	public function getAllDashboardDetails()
     {
 		$model = new QuotesTable();
-        $result = $model->fetchAlDashboardDetails();
+        $result = $model->fetchAllDashboardDetails();
         return $result;
 	}
 

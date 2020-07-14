@@ -176,7 +176,7 @@ class QuotesTable extends Model
         return $response;
     }
 
-    public function fetchAlDashboardDetails(){
+    public function fetchAllDashboardDetails(){
         $count = array();
         if(session('loginType')=='users'){
             $vendorsCount = DB::table('quotes')
