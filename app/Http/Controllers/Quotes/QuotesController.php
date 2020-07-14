@@ -46,6 +46,13 @@ class QuotesController extends Controller
                             return $respOn;
                         }
                     })
+                    ->editColumn('invited_on', function($data){
+                        $invitedon = $data->invited_on;
+                        if($invitedon){
+                            $lastDate = date("d-M-Y", strtotime($invitedon));
+                            return $lastDate;
+                        }
+                })
                     ->addColumn('action', function($data){
                         $button = '';
                         $role = session('role');
