@@ -48,7 +48,7 @@ class BrandTable extends Model
     {
         $data = DB::table('brands')
                 ->where('Brand_status','=','active')
-                ->orderBy('brand_name', 'asc')
+                ->orderBy('brand_id', 'asc')
                 ->get();
         return $data;
     }
