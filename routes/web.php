@@ -36,6 +36,8 @@ Route::post('/checkNameValidation', 'Common\CommonController@checkNameValidation
 Route::post('/changeStatus', 'Common\CommonController@changeStatus');
 Route::post('/addNewField', 'Common\CommonController@addNewField');
 Route::post('/addNewUnitField', 'Common\CommonController@addNewUnitField');
+Route::get('/changePassword/{id}', 'Common\CommonController@changePassword');
+Route::post('/changePassword/{id}', 'Common\CommonController@changePassword');
 
 //branch type module
 Route::get('/branchtype', 'BranchType\BranchTypeController@index')->name('branchtype.index')->middleware('access');
