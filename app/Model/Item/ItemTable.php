@@ -64,7 +64,7 @@ class ItemTable extends Model
      {
          $id = base64_decode($id);
          $data = DB::table('items')
-                ->join('item_categories', 'item_categories.item_category_id', '=', 'items.item_id')
+                ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
                  ->where('item_id', '=',$id )->get();
          return $data;
      }
