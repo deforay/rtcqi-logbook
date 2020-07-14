@@ -21,6 +21,14 @@ class QuotesService
         return $result;
 	}
 
+	//Get All active Quotes List
+	public function getAllActiveQuotes()
+    {
+		$model = new QuotesTable();
+        $result = $model->fetchAllActiveQuotes();
+        return $result;
+	}
+
 	//Get Particular Quotes Details
 	public function getQuotesById($id)
 	{

@@ -47,6 +47,33 @@ class QuotesTable extends Model
         return $data;
     }
 
+        // Fetch Active All Quotes List
+        public function fetchAllActiveQuotes()
+        {
+            // $req = $params->all();
+            // print_r($req);die;
+            if(session('loginType')=='users'){
+                $query = DB::table('quotes')
+                ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
+                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                ->where('quotes.approve_status', '=', 'no')
+                ->where('quotes.quotes_status', '=', 'active');
+                // if(isset($req['rfqId']) && $req['rfqId'])
+                //     $query->where('quotes.rfq_id', '=', $req['rfqId']);
+            }else{
+                $userId=session('userId');
+                $query = DB::table('quotes')
+                    ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
+                    ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                    ->where('quotes.vendor_id', '=', $userId)
+                    ->where('quotes.quotes_status', '=', 'active');
+                    // ->where('quotes.approve_status', '=', 'yes')
+                    
+            }
+                $data = $query->get();
+            return $data;
+        }
+
     // fetch particular Quotes  details
     public function fetchQuotesById($id)
     {
@@ -147,5 +174,68 @@ class QuotesTable extends Model
                 ]);
         }
         return $response;
+    }
+
+    public function fetchAlDashboardDetails(){
+        $count = array();
+        if(session('loginType')=='users'){
+            $vendorsCount = DB::table('quotes')
+            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+            ->distinct('quotes.vendor_id')
+            ->count('quotes.vendor_id');
+            $count['vendorsCount'] = $vendorsCount;
+
+            $quotesCount = DB::table('quotes')
+            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+            ->where('quotes.approve_status', '=', 'no')
+            ->where('quotes.quotes_status', '=', 'active')
+            ->distinct('quotes.quote_id')
+            ->count('quotes.quote_id');
+            $count['quotesCount'] = $quotesCount;
+
+            $rfqCount = DB::table('rfq')
+            ->where('rfq.rfq_status', '=', 'active')
+            ->distinct('rfq.rfq_id')
+            ->count('rfq.rfq_id');
+            $count['rfqCount'] = $rfqCount;
+
+            $poCount = DB::table('purchase_orders')
+            ->where('purchase_orders.order_status', '=', 'active')
+            ->distinct('purchase_orders.po_id')
+            ->count('purchase_orders.po_id');
+            $count['poCount'] = $poCount;
+
+        }else{
+            $userId=session('userId');
+          
+            $quotesCount = DB::table('quotes')
+            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+            ->where('quotes.approve_status', '=', 'no')
+            ->where('quotes.quotes_status', '=', 'active')
+            ->where('quotes.vendor_id', '=', $userId)
+            ->distinct('quotes.quote_id')
+            ->count('quotes.quote_id');
+            $count['quotesCount'] = $quotesCount;
+
+            $rfqCount = DB::table('rfq')
+            ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+            ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+            ->where('rfq.rfq_status', '=', 'active')
+            ->where('quotes.vendor_id', '=', $userId)
+            ->distinct('rfq.rfq_id')
+            ->count('rfq.rfq_id');
+            $count['rfqCount'] = $rfqCount;
+
+            $poCount = DB::table('purchase_orders')
+            ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
+            ->where('purchase_orders.order_status', '=', 'active')
+            ->where('purchase_orders.vendor', '=', $userId)
+            ->distinct('purchase_orders.po_id')
+            ->count('purchase_orders.po_id');
+            $count['poCount'] = $poCount;
+        }
+        
+        // dd($count);
+        return $count;
     }
 }

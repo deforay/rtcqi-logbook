@@ -46,6 +46,26 @@ class QuotesController extends Controller
                             return $respOn;
                         }
                     })
+                    ->editColumn('invited_on', function($data){
+                        $invOn = $data->invited_on;
+                        if($invOn){
+                            $invOn = date("d-M-Y", strtotime($invOn));
+                            return $invOn;
+                        }
+                    })
+                    ->addColumn('quotes_status', function($data){
+                        $rfqSts = $data->quotes_status;
+                        if($rfqSts == 'pending'){
+                           $sts = '<span class="badge badge-warning">'.ucfirst($rfqSts).'</span>';
+                        }
+                        else if($rfqSts == 'active'){
+                            $sts = '<span class="badge badge-success">'.ucfirst($rfqSts).'</span>';
+                        }
+                        else if($rfqSts == 'responded'){
+                            $sts = '<span class="badge badge-danger">'.ucfirst($rfqSts).'</span>';
+                        }
+                        return $sts;
+                    })
                     ->addColumn('action', function($data){
                         $button = '';
                         $role = session('role');
@@ -64,7 +84,7 @@ class QuotesController extends Controller
                         <button type="button" name="quoteDetails" id="quoteDetails" class="btn btn-success btn-sm" onclick="showAjaxModal(\'/quoteDetailsView/'.base64_encode($data->quote_id).'\' );" title="Quote Details"><b><i class="la la-eye"></i></b></button></div></div>';
                         return $button;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['quotes_status','action'])
                     ->make(true);
     }
 

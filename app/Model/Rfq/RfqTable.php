@@ -148,8 +148,19 @@ class RfqTable extends Model
     // Fetch All Rfq List
     public function fetchAllRfq()
     {
-        $data = DB::table('rfq')
+        $userId=session('userId');
+        if(session('loginType')=='users'){
+            $data = DB::table('rfq')
+                    ->get();
+        }
+        else{
+            $data = DB::table('rfq')
+                ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                ->where('quotes.vendor_id', '=', $userId)
                 ->get();
+        }
+        
         return $data;
     }
 
