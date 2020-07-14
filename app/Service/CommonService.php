@@ -353,7 +353,7 @@ class CommonService
                         }
                         else{
                             $opt .= '<option value="'.$items->item_type_id.'">'.$items->item_type.'</option>';
-                        }
+                        } 
                     }
                 }
                 else{
