@@ -41,13 +41,18 @@ class VendorsTable extends Model
             $roleId = $role[0]->role_id;
         }
         if ($request->input('vendorName') != null && trim($request->input('vendorName')) != '') {
-            $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
+            // $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
+            //   if ($data['vendorRegisterOn'] != '') {
+            //     $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
+            // } else {
+            //     $vendorRegisterOn = '';
+            // }
+            // 'registered_on'  => $vendorRegisterOn,
             $vendorsId = DB::table('vendors')->insertGetId(
                 [
                     'vendor_name'    => $data['vendorName'],
                     'vendor_code'    => $data['vendorCode'],
                     'vendor_type'    => $data['vendorType'],
-                    'registered_on'  => $vendorRegisterOn,
                     'address_line_1' => $data['addressline1'],
                     'address_line_2' => $data['addressline2'],
                     'city'           => $data['vendorCity'],
@@ -112,19 +117,19 @@ class VendorsTable extends Model
         $vendorUp = '';
         //Vendor details
         $commonservice = new CommonService();
-        if ($params->input('vendorName') != null && trim($params->input('vendorName')) != '') {
+         if ($params->input('vendorName') != null && trim($params->input('vendorName')) != '') {
             if ($data['vendorRegisterOn'] != '') {
                 $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
             } else {
                 $vendorRegisterOn = NULL;
             }
-            if(isset($data['vendorProfile'])){
-                $params = array(
+        if(isset($data['vendorProfile'])){
+            $params = array(
                     'vendor_name'    => $data['vendorName'],
                     'vendor_code'    => $data['vendorCode'],
-                    'registered_on'  => $commonservice->getDateTime(),
                     'address_line_1' => $data['addressline1'],
                     'address_line_2' => $data['addressline2'],
+                    'registered_on'  => $vendorRegisterOn,
                     'city'           => $data['vendorCity'],
                     'state'          => $data['vendorState'],
                     'pincode'        => $data['vendorPincode'],
@@ -145,7 +150,6 @@ class VendorsTable extends Model
                     'vendor_name'    => $data['vendorName'],
                     'vendor_code'    => $data['vendorCode'],
                     'vendor_type'    => $data['vendorType'],
-                    'registered_on'  => $vendorRegisterOn,
                     'address_line_1' => $data['addressline1'],
                     'address_line_2' => $data['addressline2'],
                     'city'           => $data['vendorCity'],
