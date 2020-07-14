@@ -105,11 +105,11 @@ else{
                         <ul class="nav nav-tabs nav-top-border no-hover-bg nav-justified mt-3" id="myTab">
                             <li class="nav-item">
                             <a class="nav-link active" id="rfq-tab1" data-toggle="tab"  href="#rfq" aria-controls="rfq" aria-expanded="true">
-                                <i class="ft-edit"></i>RFQ Details</a>
+                                <i class="ft-edit"></i>RFQ</a>
                             </li>
                             <li class="nav-item">
                             <a class="nav-link" id="quotes-tab2" data-toggle="tab"  href="#quotes" aria-controls="quotes" aria-expanded="true">
-                                <i class="ft-edit"></i> Quotes Details</a>
+                                <i class="ft-edit"></i> Quotes</a>
                             </li>
                         </ul>
                         <div class="tab-content px-1 pt-1 " id="tabcontent" >
