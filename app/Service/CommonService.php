@@ -464,7 +464,7 @@ class CommonService
         }
         return $data;
     }
-
+    
     public function updatePassword($params,$id){
         DB::beginTransaction();
     	try {
@@ -497,8 +497,57 @@ class CommonService
             }
 	    }
 	    catch (Exception $exc) {
-	    	DB::rollBack();
+            DB::rollBack();
 	    	$exc->getMessage();
 	    }
+    }
+
+
+    public function addNewBranchType($request)
+    {
+        $tableName = $request['tableName'];
+        $fieldName = $request['fieldName'];
+        $value = trim($request['value']);
+        $sts = $request['sts'];
+        $commonservice = new CommonService();
+        // dd($request->all());
+        $user = array();
+        $opt = '';
+        $data = array();
+        $id = '';
+        try {
+            if ($value != "") {
+                $user = DB::table($tableName)
+                    ->where($fieldName, '=', $value)
+                    ->get();
+            }
+            $countVal = count($user);
+                if($countVal == 0){
+                    $id = DB::table($tableName)->insertGetId(
+                        [$fieldName => $value,
+                        $sts => 'active',
+                        ]
+                    );
+                    $data['id'] = $id;
+                    $data['item'] = $value;
+                }
+                $item = DB::table($tableName)
+                        ->where($sts,'=','active')
+                        ->get();
+    
+                $opt = '';
+                foreach ($item as $items){
+                        if($items->branch_type_id == $id ||$items->branch_type==$value ){
+                            $opt .= '<option value="'.$items->branch_type_id.'" selected>'.$items->branch_type.'</option>';
+                        }
+                        else{
+                            $opt .= '<option value="'.$items->branch_type_id.'">'.$items->branch_type.'</option>';
+                        }
+                    }
+            $data['option'] = $opt;
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return $data;
     }
 }

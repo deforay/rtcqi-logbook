@@ -64,7 +64,7 @@
 											<h5>Branch Type<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branchType" name="branchType" title="Please select branch type">
+                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branchType" name="branchType" title="Please select branch type" onchange="addNewField('branch_types','branch_type',this.id,'branch_type_status');">
                                                 <option value="">Select Branch Type</option>
                                                 @foreach($branchType as $type)
 													<option value="{{ $type->branch_type_id }}">{{ $type->branch_type }}</option>
@@ -186,7 +186,9 @@
 
 <script>
 $(document).ready(function() {
-    $(".select2").select2();
+     $(".select2").select2({
+    tags: true
+    });
 });
 
 
@@ -267,6 +269,36 @@ $(document).ready(function() {
                     }
                     else {
                         duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
+
+    function addNewField(tableName,fieldName,obj,sts)
+    {
+        // checkValue = document.getElementById(obj).value;
+        checkValue = $("#"+obj+" option:selected").html();
+        itemCat = $('#itemCatId').val();
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/addNewBranchType') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,itemCat:itemCat,sts:sts
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result['option'])
+                    {
+                        // opt = '<option value="'+data['id']+'">'+data['item']+'</option>'
+                        $('#'+obj).html(result['option'])
                     }
                 }
             });
