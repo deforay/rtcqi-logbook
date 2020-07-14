@@ -11,6 +11,7 @@ use DatePeriod;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User\UserTable;
+use App\Model\Vendors\VendorsTable;
 
 class CommonService
 {
