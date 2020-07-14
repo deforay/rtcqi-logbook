@@ -64,6 +64,9 @@ class QuotesController extends Controller
                         else if($rfqSts == 'responded'){
                             $sts = '<span class="badge badge-danger">'.ucfirst($rfqSts).'</span>';
                         }
+                        else{
+                            $sts='';
+                        }
                         return $sts;
                     })
                     ->addColumn('action', function($data){
