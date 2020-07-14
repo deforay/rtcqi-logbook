@@ -116,7 +116,7 @@ class VendorsTable extends Model
             if ($data['vendorRegisterOn'] != '') {
                 $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
             } else {
-                $vendorRegisterOn = '';
+                $vendorRegisterOn = NULL;
             }
             if(isset($data['vendorType'])){
                 $params = array(

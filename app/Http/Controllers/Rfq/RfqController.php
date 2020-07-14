@@ -67,6 +67,19 @@ class RfqController extends Controller
                                 return $lastDate;
                             }
                     })
+                    ->addColumn('rfq_status', function($data){
+                        $rfqSts = $data->rfq_status;
+                        if($rfqSts == 'draft'){
+                           $sts = '<span class="badge badge-warning">'.ucfirst($rfqSts).'</span>';
+                        }
+                        else if($rfqSts == 'active'){
+                            $sts = '<span class="badge badge-success">'.ucfirst($rfqSts).'</span>';
+                        }
+                        else if($rfqSts == 'closed'){
+                            $sts = '<span class="badge badge-danger">'.ucfirst($rfqSts).'</span>';
+                        }
+                        return $sts;
+                    })
                     ->addColumn('action', function($data){
                         // $button = '<div style="width: 180px;">';
                         $button = '';
@@ -97,7 +110,7 @@ class RfqController extends Controller
                         // $button .= '</div>';
                         return $button;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['rfq_status','action'])
                     ->make(true);
     }
 
