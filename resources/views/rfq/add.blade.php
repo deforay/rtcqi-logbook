@@ -436,7 +436,8 @@ $(document).ready(function() {
 
     function addNewItemField(obj,id)
     {
-        checkValue = document.getElementById(obj).value;
+        // checkValue = document.getElementById(obj).value;
+        checkValue = $("#"+obj+" option:selected").html();
         if(checkValue!='')
         {
             $.ajaxSetup({
@@ -591,7 +592,9 @@ $(document).ready(function() {
         fieldName = 'unit_name';
         sts = 'unit_status';
         item = $('#item'+id).val()
-        checkValue = document.getElementById(obj).value;
+        
+        // checkValue = document.getElementById(obj).value;
+        checkValue = $("#"+obj+" option:selected").html();
         if(checkValue!='')
         {
             $.ajaxSetup({

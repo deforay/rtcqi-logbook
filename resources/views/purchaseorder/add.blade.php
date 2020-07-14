@@ -386,7 +386,9 @@ $currentDate=date('d-M-Y');
 
     function addNewItemField(obj,id)
     {
-        checkValue = document.getElementById(obj).value;
+        
+        // checkValue = document.getElementById(obj).value;
+        checkValue = $("#"+obj+" option:selected").html();
         if(checkValue!='')
         {
             $.ajaxSetup({
