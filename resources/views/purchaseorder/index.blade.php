@@ -113,7 +113,7 @@
                     
                     { data: 'po_number', name: 'po_number'},
                     { data: 'po_issued_on', name: 'po_issued_on'},
-                    { data: 'vendor', name: 'vendor'},
+                    { data: 'vendor_name', name: 'vendor_name'},
                     { data: 'total_amount', name: 'total_amount'},
                     { data: 'order_status', name: 'order_status',className:'firstcaps'},
                     {data: 'action', name: 'action', orderable: false},
