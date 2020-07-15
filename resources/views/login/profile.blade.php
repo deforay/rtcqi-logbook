@@ -12,6 +12,7 @@
 
 use App\Service\CommonService;
 $commonservice = new CommonService();
+
 ?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -49,6 +50,10 @@ $commonservice = new CommonService();
     <!-- END: Custom CSS-->
 
 </head>
+<style>.mandatory{
+    color:red;
+}
+</style>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
@@ -113,16 +118,7 @@ $commonservice = new CommonService();
 
                                     <div class="row">
 
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Register On<span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="vendorRegisterOn" readonly value="{{$commonservice->getDateTime()}}" class="form-control isRequired" autocomplete="off" placeholder="Enter registered On" name="vendorRegisterOn" title="Please enter register On">
-                                                </div>
-                                            </fieldset>
-                               
-                                        </div>
+                                      
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Address Line 1
@@ -132,9 +128,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Address Line 2
@@ -144,6 +137,9 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>City
@@ -153,8 +149,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>State
@@ -164,6 +158,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Pincode
@@ -173,8 +169,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Country<span class="mandatory">*</span>
@@ -187,6 +181,8 @@ $commonservice = new CommonService();
                                                 </select>
                                                 </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Email
@@ -196,8 +192,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Alternate Email
@@ -207,6 +201,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Phone<span class="mandatory">*</span>
@@ -216,8 +212,6 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Alternate Phone Number
@@ -228,9 +222,8 @@ $commonservice = new CommonService();
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                        </div>
                                     </div>
+                                   
                       
                                     <div class="form-actions right">
                                         <a href="/vendors">

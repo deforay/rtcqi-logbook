@@ -28,8 +28,8 @@
         <?php
           $role = session('role');
           if (isset($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['add']) && ($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['add'] == "allow")){ ?>
-            <a href="/mailtemplate/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
-            <b><i class="ft-user-plus icon-left"></i> Add Mail Template</b></a>
+            <!-- <a href="/mailtemplate/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
+            <b><i class="ft-user-plus icon-left"></i> Add Mail Template</b></a> -->
         <?php } ?>
         </div>
       </div>
