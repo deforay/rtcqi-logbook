@@ -137,7 +137,8 @@ class PurchaseOrderTable extends Model
     public function fetchAllPurchaseOrder()
     {
         $data = DB::table('purchase_orders')
-            ->get();
+                ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
+                ->get();
         return $data;
     }
 

@@ -83,8 +83,8 @@ Last Modified Name :
                                                 <th style="width:15%">Quote Number</th>
                                                 <th style="width:15%">Invited On</th>
                                                 <th style="width:15%">Responded On</th>
-                                                <th style="width:13%">Status</th>
-                                                <th style="width:15%">Action</th>
+                                                <th style="width:10%">Status</th>
+                                                <th style="width:18%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
