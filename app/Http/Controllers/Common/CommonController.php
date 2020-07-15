@@ -34,14 +34,14 @@ class CommonController extends Controller
         $data = $commonService->checkNameValidation($request);
         return $data;
     }
-
+    
     public function changeStatus(Request $request)
     {
         $commonService = new CommonService();
         $data = $commonService->changeStatus($request);
         return $data;
     }
-
+    
     public function addNewField(Request $request)
     {
         $commonService = new CommonService();
@@ -80,6 +80,13 @@ class CommonController extends Controller
     {
         $commonService = new CommonService();
         $data = $commonService->addNewBranchType($request);
+        return $data;
+    }
+    
+    public function checkItemNameValidation(Request $request)
+    {
+        $commonService = new CommonService();
+        $data = $commonService->checkItemNameValidation($request);
         return $data;
     }
 }

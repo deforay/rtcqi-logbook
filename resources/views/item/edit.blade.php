@@ -170,21 +170,60 @@ $(document).ready(function() {
     });
 });
     function validateNow() {
+        
         flag = deforayValidator.init({
             formId: 'editItem'
         });
         
-        if (flag == true) {
-            if (duplicateName) {
-                document.getElementById('editItem').submit();
-            }
+        var msg='Entered Item  Name is already exist.';
+        var fnct = '{{$result[0]->item_id}}';
+        var itemName = $("#itemName").val();
+        var itemTypeId = $("#itemTypeId").val();
+        var brandId = $("#brandId").val();
+        var unitId = $("#unitId").val();
+        var unitId = $("#unitId").val();
+        
+        if(itemName!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkItemNameValidation') }}",
+                method: 'post',
+                data: {
+                    itemName: itemName, itemTypeId: itemTypeId, brandId: brandId, unitId: unitId,fnct:fnct
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        $('#itemName').val('');
+                        $('#itemName').focus();
+                        $('#itemName').css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        if (flag == true) {
+                            if (duplicateName) {
+                                document.getElementById('editItem').submit();
+                            }
+                        }
+                        else{
+                            // Swal.fire('Any fool can use a computer');
+                            $('#show_alert').html(flag).delay(3000).fadeOut();
+                            $('#show_alert').css("display","block");
+                            $(".infocus").focus();
+                        }
+                    }
+                }
+            });
         }
-        else{
-            // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();
-            $('#show_alert').css("display","block");
-            $(".infocus").focus();
-        }
+
 	}
 	
 	function checkNameValidation(tableName, fieldName, obj,fnct, msg)

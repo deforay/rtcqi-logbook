@@ -55,7 +55,8 @@
                                             <h5>Item  Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="itemName" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  name" name="itemName" title="Please enter Item  name" onblur="checkNameValidation('items','item_name', this.id,'', 'Entered Item  Name is already exist.')">
+                                                <!-- <input type="text" id="itemName" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  name" name="itemName" title="Please enter Item  name" onblur="checkNameValidation('items','item_name', this.id,'', 'Entered Item  Name is already exist.')"> -->
+                                                <input type="text" id="itemName" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  name" name="itemName" title="Please enter Item  name">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -171,17 +172,55 @@ $(document).ready(function() {
             formId: 'addItem'
         });
         
-        if (flag == true) {
-            if (duplicateName) {
-                document.getElementById('addItem').submit();
-            }
+
+
+        var msg='Entered Item  Name is already exist.';
+        var itemName = $("#itemName").val();
+        var itemTypeId = $("#itemTypeId").val();
+        var brandId = $("#brandId").val();
+        var unitId = $("#unitId").val();
+        if(itemName!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkItemNameValidation') }}",
+                method: 'post',
+                data: {
+                    itemName: itemName, itemTypeId: itemTypeId, brandId: brandId, unitId: unitId
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        $('#itemName').val('');
+                        $('#itemName').focus();
+                        $('#itemName').css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }else{
+
+                        if (flag == true) {
+                            if (duplicateName) {
+                                document.getElementById('addItem').submit();
+                            }
+                        }
+                        else{
+                            // Swal.fire('Any fool can use a computer');
+                            $('#show_alert').html(flag).delay(3000).fadeOut();
+                            $('#show_alert').css("display","block");
+                            $(".infocus").focus();
+                        }
+                    }
+                
+                }
+            });
         }
-        else{
-            // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();
-            $('#show_alert').css("display","block");
-            $(".infocus").focus();
-        }
+      
 	}
 	
 	function checkNameValidation(tableName, fieldName, obj,fnct, msg)
