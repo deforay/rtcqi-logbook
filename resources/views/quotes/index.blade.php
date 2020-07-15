@@ -75,16 +75,16 @@ Last Modified Name :
                                 </div>
                                 <?php }?>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="quotesList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="quotesList" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>RFQ Number</th>
-                                                <th>Vendor Name</th>
-                                                <th>Quote Number</th>
-                                                <th>Invited On</th>
-                                                <th>Responded On</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                                <th style="width:15%">RFQ Number</th>
+                                                <th style="width:12%">Vendor Name</th>
+                                                <th style="width:15%">Quote Number</th>
+                                                <th style="width:15%">Invited On</th>
+                                                <th style="width:15%">Responded On</th>
+                                                <th style="width:13%">Status</th>
+                                                <th style="width:15%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

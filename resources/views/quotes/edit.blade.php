@@ -216,12 +216,12 @@ if(isset($result[0]->mode_of_delivery)){
                                     <div class="row">
                                         <div class="table-responsive">
                                             <div class="bd-example">
-                                                <table class="table table-striped table-bordered table-condensed table-responsive-lg">
+                                                <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:50%;">Item Name<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Unit<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Qty<span class="mandatory">*</span></th>
+                                                            <th style="width:35%;">Item Name<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Qty<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
                                                         </tr>
                                                     </thead>
