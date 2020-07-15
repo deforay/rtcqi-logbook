@@ -14,6 +14,12 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+.nav.nav-tabs.nav-top-border .nav-item a.nav-link.active {
+  border-top: 3px solid #1e9ff2;
+}
+.nav.nav-tabs.nav-top-border .nav-item a {
+  color: #1e9ff2;
+}
 </style>
 @extends('layouts.main')
 @section('content')
@@ -89,7 +95,69 @@ else{
     @endif
 </div>
 
-<div class="row" id="rfqTable">
+ <!-- Procurement Details display start -->
+ <div class="row" id="rfqTable">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div id="procurement">
+                        <ul class="nav nav-tabs nav-top-border no-hover-bg nav-justified mt-3" id="myTab">
+                            <li class="nav-item">
+                            <a class="nav-link active" id="rfq-tab1" data-toggle="tab"  href="#rfq" aria-controls="rfq" aria-expanded="true">
+                                <i class="ft-edit"></i>RFQ</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" id="quotes-tab2" data-toggle="tab"  href="#quotes" aria-controls="quotes" aria-expanded="true">
+                                <i class="ft-edit"></i> Quotes</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content px-1 pt-1 " id="tabcontent" >
+                            <div role="tabpanel" class="tab-pane active" id="rfq" aria-labelledby="rfq-tab1" aria-expanded="true">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration" id="RfqList" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:20%">RFQ Number</th>
+                                                <th style="width:15%">Issued On</th>
+                                                <th style="width:15%">Last Date</th>
+                                                <th style="width:10%">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="quotes" aria-labelledby="quotes-tab1" aria-expanded="true">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration" id="quotesList" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:20%">RFQ Number</th>
+                                                <th style="width:15%">Vendor Name</th>
+                                                <th style="width:20%">Quote Number</th>
+                                                <th style="width:15%">Invited On</th>
+                                                <th style="width:15%">Responded On</th>
+                                                <th style="width:15%">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- Procurement Details display End -->
+
+
+<!-- <div class="row" id="rfqTable">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -115,7 +183,6 @@ else{
                                   <th style="width:15%">Issued On</th>
                                   <th style="width:15%">Last Date</th>
                                   <th style="width:10%">Status</th>
-                                  <!-- <th style="width:25%">Action</th> -->
                               </tr>
                           </thead>
                           <tbody>
@@ -157,7 +224,6 @@ else{
                                     <th style="width:15%">Invited On</th>
                                     <th style="width:15%">Responded On</th>
                                     <th style="width:15%">Status</th>
-                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -170,7 +236,7 @@ else{
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <script>
 loginType = '{{$loginType}}';
 $(document).ready(function() {

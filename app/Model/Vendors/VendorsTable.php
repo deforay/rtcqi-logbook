@@ -118,12 +118,14 @@ class VendorsTable extends Model
         //Vendor details
         $commonservice = new CommonService();
          if ($params->input('vendorName') != null && trim($params->input('vendorName')) != '') {
-            if ($data['vendorRegisterOn'] != '') {
-                $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
-            } else {
-                $vendorRegisterOn = NULL;
-            }
+            // if ($data['vendorRegisterOn'] != '') {
+            //     $vendorRegisterOn = $commonservice->dateFormat($data['vendorRegisterOn']);
+            // } else {
+            //     $vendorRegisterOn = NULL;
+            // }
         if(isset($data['vendorProfile'])){
+
+            $vendorRegisterOn=date("Y-m-d");
             $params = array(
                     'vendor_name'    => $data['vendorName'],
                     'vendor_code'    => $data['vendorCode'],
