@@ -69,6 +69,7 @@
                                                 <th>Vendor</th>
                                                 <th>Total Amount</th>
                                                 <th>Purchase Order Status</th>
+                                                <th>Quote Number</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -116,6 +117,7 @@
                     { data: 'vendor_name', name: 'vendor_name'},
                     { data: 'total_amount', name: 'total_amount'},
                     { data: 'order_status', name: 'order_status',className:'firstcaps'},
+                    { data: 'quote_number', name: 'quote_number' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]

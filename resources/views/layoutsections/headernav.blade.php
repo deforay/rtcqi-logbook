@@ -12,7 +12,7 @@ if(session('loginType')=='users'){
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
                     <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-                    <li class="nav-item"><a class="navbar-brand" href="/dashboard">
+                    <li class="nav-item"><a class="navbar-brand" href="/dashboard"><h3 class="text-center ml-2"><b>PIM</b></h3>
                         <!-- <img class="brand-logo" alt="modern admin logo" src="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
                             <h3 class="brand-text"></h3>
                         </a></li>

@@ -206,3 +206,18 @@ ALTER TABLE `vendors` CHANGE `registered_on` `registered_on` DATE NULL DEFAULT N
 
 --Sivakumar 15 July 2020
 ALTER TABLE `items` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `updated_on`;
+
+
+---Sudarmathi 17 July 2020
+ALTER TABLE `purchase_orders` ADD `quote_id` INT NOT NULL AFTER `description`;
+-- ALTER TABLE `purchase_orders` ADD FOREIGN KEY (quote_id) REFERENCES `quotes` (`quotes_id`);
+
+CREATE TABLE `delivery_schedule` (
+ `delivery_id` int(11) NOT NULL AUTO_INCREMENT,
+ `item_id` int(11) NOT NULL,
+ `qty` int(11) NOT NULL,
+ `expected_date_of_delivery` date NOT NULL,
+ `delivery_mode` varchar(255) NOT NULL,
+ `comments` text NOT NULL,
+ PRIMARY KEY (`delivery_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
