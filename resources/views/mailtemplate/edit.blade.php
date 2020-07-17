@@ -124,6 +124,10 @@
 														echo '<div><b>##QUOTES-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Number</div>';
 														echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
 														}
+														if($mail[0]->template_name=='Purchase Order Approval'){
+															echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+															echo '<div><b>##PO-NUMBER##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Number</div>';
+														}
 														?>
 														<!-- 
 														<div><b>##SAP-ORDER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Sap Order Number</div>

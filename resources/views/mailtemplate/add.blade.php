@@ -137,7 +137,7 @@
 										</div>
                                     </div>
 									<div class="form-actions right">
-										<a href="" class="btn btn-warning mr-1"><i class="ft-x"></i> Cancel</a>
+										<a href="/mailtemplate" class="btn btn-warning mr-1"><i class="ft-x"></i> Cancel</a>
 										<button type="submit" class="btn btn-info" onclick="validateNow();return false;">
 											<i class="la la-check-square-o"></i> Save
 										</button>
