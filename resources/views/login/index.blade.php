@@ -62,7 +62,7 @@
                         <div class="col-lg-5 col-md-8 col-10 box-shadow-2 p-0">
                             <div class="card border-grey border-lighten-3 m-0">
                                 <div class="card-header border-0">
-                                    <div class="card-title text-center">
+                                    <div class="card-title text-center"><b>PIM</b>
                                         <!-- <div class="p-1"><img src="{{ asset('app-assets/images/logo/asm_logo.png')}}" alt="branding logo" style="width: 100px;"></div> -->
                                     </div>
                                     <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login</span>

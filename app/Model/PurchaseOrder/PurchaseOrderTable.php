@@ -136,9 +136,20 @@ class PurchaseOrderTable extends Model
     // Fetch All Purchase Order List
     public function fetchAllPurchaseOrder()
     {
-        $data = DB::table('purchase_orders')
-                ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
-                ->get();
+        if(session('loginType')=='users'){
+            $data = DB::table('purchase_orders')
+                    ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
+                    ->join('quotes', 'quotes.quote_id', '=', 'purchase_orders.quote_id')
+                    ->get();
+        }
+        else{
+            $userId=session('userId');
+            $data = DB::table('purchase_orders')
+                    ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
+                    ->join('quotes', 'quotes.quote_id', '=', 'purchase_orders.quote_id')
+                    ->where('vendors.vendor_id', '=', $userId)
+                    ->get();
+        }
         return $data;
     }
 
