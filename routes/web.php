@@ -212,3 +212,4 @@ Route::post('/getPurchaseOrderById', 'PurchaseOrder\PurchaseOrderController@getP
 Route::get('/deliveryschedule', 'DeliverySchedule\DeliveryScheduleController@index')->name('deliveryschedule.index')->middleware('access');
 Route::post('/deliveryschedule/add', 'DeliverySchedule\DeliveryScheduleController@add');
 Route::get('/deliveryschedule/add', 'DeliverySchedule\DeliveryScheduleController@add')->middleware('access');
+Route::post('/saveDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@saveDeliverySchedule');

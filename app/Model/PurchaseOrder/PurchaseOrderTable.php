@@ -242,6 +242,7 @@ class PurchaseOrderTable extends Model
         $data = DB::table('purchase_orders')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
                 ->join('purchase_order_details', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                ->join('items', 'items.item_id', '=', 'purchase_order_details.item_id')
                 ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'purchase_order_details.uom')
                 ->where('purchase_orders.po_id', '=', $id)
                 ->get();

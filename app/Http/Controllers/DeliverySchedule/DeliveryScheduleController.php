@@ -28,9 +28,9 @@ class DeliveryScheduleController extends Controller
     {
         if ($request->isMethod('post')) 
         {
-            $service = new DeliveryScheduleService();
-            $add = $service->saveDeliverySchedule($request);
-            return Redirect::route('deliveryschedule.index')->with('status', $add);
+        //     $service = new DeliveryScheduleService();
+        //     $add = $service->saveDeliverySchedule($request);
+        //     return Redirect::route('deliveryschedule.index')->with('status', $add);
         }
         else
         {
@@ -40,5 +40,13 @@ class DeliveryScheduleController extends Controller
             $item = $itemservice->getAllActiveItem();
             return view('deliveryschedule.add',array('purchase'=>$purchase,'item' => $item));
         }
+    }
+    public function saveDeliverySchedule(Request $request)
+    {
+    
+        $service = new DeliveryScheduleService();
+        $add = $service->saveDeliverySchedule($request);
+        return $add;
+        // return Redirect::route('deliveryschedule.index')->with('status', $add);
     }
 }
