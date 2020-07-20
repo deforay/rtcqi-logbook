@@ -228,3 +228,5 @@ CREATE TABLE `delivery_schedule` (
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'Delivery Schedule', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'index', 'Access');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'add', 'Add');
+ALTER TABLE `delivery_schedule` ADD `created_on` DATETIME NULL AFTER `comments`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`, ADD `po_id` INT NOT NULL AFTER `updated_by`;
+ALTER TABLE `delivery_schedule` CHANGE `po_id` `pod_id` INT(11) NOT NULL;
