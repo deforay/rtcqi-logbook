@@ -69,6 +69,8 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
         $procurement .= '<li data-menu=""><a class="dropdown-item" href="/quotes/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Quotes</span></span></a></li>';
     if (isset($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['index']) && ($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['index'] == "allow"))
         $procurement .= '<li data-menu=""><a class="dropdown-item" href="/purchaseorder/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Purchase Order</span></span></a></li>';
+    if (isset($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['index']) && ($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['index'] == "allow"))
+        $procurement .= '<li data-menu=""><a class="dropdown-item" href="/deliveryschedule/" data-toggle=""><span data-i18n="Collapsed Menu"><i class="ft-chevrons-right"></i><span>Delivery Schedule</span></span></a></li>';
     $procurement .= '</ul></li>';
 
 }

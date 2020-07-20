@@ -221,3 +221,10 @@ CREATE TABLE `delivery_schedule` (
  `comments` text NOT NULL,
  PRIMARY KEY (`delivery_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+
+--Sudarmathi 20 july 2020
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'Delivery Schedule', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'index', 'Access');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'add', 'Add');
