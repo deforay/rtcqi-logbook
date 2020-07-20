@@ -144,6 +144,83 @@ $currentDate=date('d-M-Y');
             </div>
 
             <!-- horizontal grid end -->
+
+            <!--Start Delievery schedule Modal -->
+            <div class="modal fade" id="deliveryScheduleAdd" tabindex="-1" role="dialog" aria-labelledby="deliveryScheduleAddLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="deliveryScheduleAddLabel">Add Delivery Schedule</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showModalAlertdiv" role="alert" style="display:none"><span id="showModalAlertIndex"></span>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+					</div>
+                    <div id="show_modal_alert" class="mt-1" style=""></div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Item Name<span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                <select class="form-control select2" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
+                                </select>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Deliver Quantity<span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <input type="text" id="deliverQty" class="form-control" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
+                                </div>
+                                <input type="hidden" id="hiddenPo_id">
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Expected Delivery <span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <input type="text" id="expectedDelivery"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Deliver Mode<span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <input type="text" id="deliveryMode" class="form-control " autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Comments <span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <input type="text" id="comments" class="form-control name="comments" placeholder="Enter Comments"  title="Please Enter Comments">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addDeliverySchedule();">Save</button>
+                </div>
+                </div>
+            </div>
+            </div>
         </section>
     </div>
 </div>
@@ -202,13 +279,15 @@ $currentDate=date('d-M-Y');
                         var details = '';
                         for(i=0;i<data.length;i++)
                         {
+                            let itemName = "'"+data[i]['item_name']+"'";
                             details+='<tr><td><input type="hidden" id="podId" name="podId[]" value="'+data[i]['pod_id']+'">\
                                         <select id="item'+i+'" name="item[]" class="isRequired itemName form-control datas"  title="Please select item"><option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select></td>';
                             details+='<td><input type="hidden" id="unitId" name="unitId[]" value="'+data[i]['uom']+'">\
                                         <input type="text" id="unit'+i+'" name="unit[]" class="form-control" placeholder="unit" title="Please enter the unit" value="'+data[i]['unit_name']+'"/></td>';
                             details+='<td><input type="number" id="qty'+i+'" name="qty[]" class="form-control isRequired" placeholder="Qty" title="Please enter the qty" value="'+data[i]['quantity']+'" /></td>';
                             details+='<td><input type="number" class="form-control isRequired linetot" id="unitPrice'+i+'" name="unitPrice[]" placeholder="Unit Price" title="Please enter Unit Price" value="'+data[i]['unit_price']+'"/></td>';
-                            details+='<td></td>'
+                            // details+='<td></td>'
+                            details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-user-plus"></i></button></td>'
                             details+='</tr>';
                             $("#poOrderDetails").append(details);
                             $('#item'+i).val(data[i]['item_id'])
@@ -391,6 +470,52 @@ $currentDate=date('d-M-Y');
                     // $("#unitName"+id).html(unit);
                     $("#unitId"+id).val(result[0]['uom_id']);
 				}
+			}
+
+		});
+    }
+
+    function getDeliverySchedule(po_id, item_id, item_name)
+    {
+        let option='<option value="'+item_id+'">'+item_name+'</option>';
+        console.log(option);
+        $("#ItemId").html(option);
+        $("#hiddenPo_id").val(po_id);
+    }
+
+    function addDeliverySchedule()
+    {
+        let item = $("#ItemId").val();
+        let po_id = $("#hiddenPo_id").val();
+        let deliverQty = $("#deliverQty").val();
+        let expectedDelivery = $("#expectedDelivery").val();
+        let deliveryMode = $("#deliveryMode").val();
+        let comments = $("#comments").val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/saveDeliverySchedule') }}",
+            method: 'post',
+            data: {
+                item:item,
+                po_id:po_id,
+                deliverQty:deliverQty,
+                expectedDelivery:expectedDelivery,
+                deliveryMode:deliveryMode,
+                comments:comments
+            },
+            success: function(result){
+                console.log(result)
+                if(result>0)
+                {
+                    swal("Delivery Schedule Added Successfully")
+                    $("#deliveryScheduleAdd").modal('hide');
+                }
+                
 			}
 
 		});
