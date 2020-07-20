@@ -20,7 +20,7 @@ use View;
 
 class QuotesController extends Controller
 {
-    //View Item main screen
+    //View Quotes main screen
     public function index()
     {
         if(session('login')==true)

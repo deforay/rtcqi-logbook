@@ -205,3 +205,10 @@ Route::post('/getAllPurchaseOrder', 'PurchaseOrder\PurchaseOrderController@getAl
 Route::get('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit')->middleware('access');
 Route::post('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit');
 Route::post('/purchaseDetailsView/{id}', 'PurchaseOrder\PurchaseOrderController@purchaseDetailsView');
+Route::post('/getPurchaseOrderById', 'PurchaseOrder\PurchaseOrderController@getPurchaseOrderById');
+
+//Delivery Schedule module
+
+Route::get('/deliveryschedule', 'DeliverySchedule\DeliveryScheduleController@index')->name('deliveryschedule.index')->middleware('access');
+Route::post('/deliveryschedule/add', 'DeliverySchedule\DeliveryScheduleController@add');
+Route::get('/deliveryschedule/add', 'DeliverySchedule\DeliveryScheduleController@add')->middleware('access');

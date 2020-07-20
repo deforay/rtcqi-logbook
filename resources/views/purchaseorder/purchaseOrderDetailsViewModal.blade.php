@@ -21,7 +21,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                         
                         @csrf
                         <div>
-                            <center><h4><b>Purchase DETAILS</b></h4><center>
+                            <center><h4><b>PURCHASE ORDER DETAILS</b></h4><center>
                         </div>
                         <br/>
                         <div class="row">
@@ -85,7 +85,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                     <thead>
                                         <tr>
                                             <th style="width:20%;">Item</th>
-                                            <th style="width:20%;">Uom</th>
+                                            <th style="width:20%;">Unit</th>
                                             <th style="width:20%;">Qty</th>
                                             <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
                                         </tr>

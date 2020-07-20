@@ -240,7 +240,14 @@ class PurchaseOrderTable extends Model
     {
         $id = base64_decode($id);
         $data = DB::table('purchase_orders')
-            ->where('purchase_orders.po_id', '=', $id)->get();
+                ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
+                ->join('purchase_order_details', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'purchase_order_details.uom')
+                ->where('purchase_orders.po_id', '=', $id)
+                ->get();
+        $issueDate = $data[0]->po_issued_on;
+        $issuedOn = date("d-M-Y", strtotime($issueDate));
+        $data[0]->po_issued_on = $issuedOn;
         return $data;
     }
     public function updatePurchaseOrderDetails($params, $id)
