@@ -188,7 +188,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Expected Delivery <span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="expectedDelivery isRequired"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
+                                    <input type="text" id="expectedDelivery"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
                                 </div>
                             </fieldset>
                         </div>
