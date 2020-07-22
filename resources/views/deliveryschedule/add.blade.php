@@ -173,7 +173,7 @@ $currentDate=date('d-M-Y');
                         </div>
                         <div class="col-xl-6 col-lg-12">
                             <fieldset>
-                                <h5>Deliver Quantity<span class="mandatory">*</span>
+                                <h5>Delivery Quantity<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
                                     <input type="text" id="deliverQty" class="form-control" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
@@ -194,7 +194,7 @@ $currentDate=date('d-M-Y');
                         </div>
                         <div class="col-xl-6 col-lg-12">
                             <fieldset>
-                                <h5>Deliver Mode<span class="mandatory">*</span>
+                                <h5>Delivery Mode<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
                                     <input type="text" id="deliveryMode" class="form-control " autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
@@ -287,7 +287,7 @@ $currentDate=date('d-M-Y');
                             details+='<td><input type="number" id="qty'+i+'" name="qty[]" class="form-control isRequired" placeholder="Qty" title="Please enter the qty" value="'+data[i]['quantity']+'" /></td>';
                             details+='<td><input type="number" class="form-control isRequired linetot" id="unitPrice'+i+'" name="unitPrice[]" placeholder="Unit Price" title="Please enter Unit Price" value="'+data[i]['unit_price']+'"/></td>';
                             // details+='<td></td>'
-                            details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-user-plus"></i></button></td>'
+                            details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-calendar"></i></button></td>'
                             details+='</tr>';
                             $("#poOrderDetails").append(details);
                             $('#item'+i).val(data[i]['item_id'])
