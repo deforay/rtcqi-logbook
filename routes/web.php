@@ -213,3 +213,6 @@ Route::get('/deliveryschedule', 'DeliverySchedule\DeliveryScheduleController@ind
 Route::post('/deliveryschedule/add', 'DeliverySchedule\DeliveryScheduleController@add');
 Route::get('/deliveryschedule/add', 'DeliverySchedule\DeliveryScheduleController@add')->middleware('access');
 Route::post('/saveDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@saveDeliverySchedule');
+Route::post('/getAllDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@getAllDeliverySchedule');
+Route::post('/deliveryDetailsEdit/{id}', 'DeliverySchedule\DeliveryScheduleController@deliveryDetailsEdit');
+Route::post('/deliveryschedule/updateDeliverySchedule/{id}', 'DeliverySchedule\DeliveryScheduleController@updateDeliverySchedule');

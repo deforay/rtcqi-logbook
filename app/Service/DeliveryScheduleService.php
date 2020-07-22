@@ -8,31 +8,12 @@ use Redirect;
 
 class DeliveryScheduleService
 {
-   
-    // public function savePurchaseOrder($id,$request)
-    // {
-    // 	$data =  $request->all();
-    // 	DB::beginTransaction();
-    // 	try {
-	// 		$purchaseOrdermodel = new PurchaseOrderTable();
-    //     	$addPurchaseOrder = $purchaseOrdermodel->savePurchaseOrder($id,$request);
-	// 		if($addPurchaseOrder>0){
-	// 			DB::commit();
-	// 			$msg = 'Purchase Order Added Successfully';
-	// 			return $msg;
-	// 		}
-	//     }
-	//     catch (Exception $exc) {
-	//     	DB::rollBack();
-	//     	$exc->getMessage();
-	//     }
-	// }
 	
-	//Get All Purchase Order List
-	public function getAllPurchaseOrder()
+	//Get All Delivery Schedule List
+	public function getAllDeliverySchedule()
     {
-		$purchaseOrdermodel = new PurchaseOrderTable();
-        $result = $purchaseOrdermodel->fetchAllPurchaseOrder();
+		$deliverySchedulemodel = new DeliveryScheduleTable();
+        $result = $deliverySchedulemodel->fetchAllDeliverySchedule();
         return $result;
 	}
 
@@ -42,8 +23,11 @@ class DeliveryScheduleService
     	DB::beginTransaction();
     	try {
 			$model = new DeliveryScheduleTable();
-        	$result = $model->saveDeliverySchedule($request);
-			return $result;
+			$result = $model->saveDeliverySchedule($request);
+			if($result > 0){
+				DB::commit();
+				return $result;
+			}
 	    }
 	    catch (Exception $exc) {
 	    	DB::rollBack();
@@ -51,6 +35,32 @@ class DeliveryScheduleService
 	    }
 	}
 
-	
+	//Update Delivery Schedule List By Id
+	public function getDeliveryScheduleById($id)
+    {
+		$deliverySchedulemodel = new DeliveryScheduleTable();
+        $result = $deliverySchedulemodel->fetchDeliveryScheduleById($id);
+        return $result;
+	}
+
+
+	public function updateDeliverySchedule($id,$request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$deliverySchedulemodel = new DeliveryScheduleTable();
+        	$result = $deliverySchedulemodel->updateDeliverySchedule($id,$request);
+			if($result>0){
+				DB::commit();
+				$msg = 'Delivery Schedule Updated Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
 	
 }

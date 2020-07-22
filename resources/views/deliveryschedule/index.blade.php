@@ -72,15 +72,14 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="purchaseOrderList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList">
                                         <thead>
                                             <tr>
-                                                <th>Po Number</th>
-                                                <th>Po Issued On</th>
-                                                <th>Vendor</th>
-                                                <th>Total Amount</th>
-                                                <th>Purchase Order Status</th>
-                                                <th>Quote Number</th>
+                                                <th>Item Name</th>
+                                                <th>Quantity</th>
+                                                <th>Delivery Date</th>
+                                                <th>Delivery Mode</th>
+                                                <th>Comments</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -101,34 +100,33 @@
   <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllActivePurchaseOrder();
+        getAllDeliverySchedule();
         $.unblockUI();
     });
-    function getAllActivePurchaseOrder()
+    function getAllDeliverySchedule()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#purchaseOrderList').DataTable({
+      $('#deliveryScheduleList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllPurchaseOrder") }}',
+                url:'{{ url("getAllDeliverySchedule") }}',
                 type: 'POST',
             },
             columns: [
                     
-                    { data: 'po_number', name: 'po_number'},
-                    { data: 'po_issued_on', name: 'po_issued_on'},
-                    { data: 'vendor_name', name: 'vendor_name'},
-                    { data: 'total_amount', name: 'total_amount'},
-                    { data: 'order_status', name: 'order_status',className:'firstcaps'},
-                    { data: 'quote_number', name: 'quote_number' },
+                    { data: 'item_name', name: 'item_name',className:'firstcaps'},
+                    { data: 'delivery_qty', name: 'delivery_qty'},
+                    { data: 'expected_date_of_delivery', name: 'expected_date_of_delivery'},
+                    { data: 'delivery_mode', name: 'delivery_mode'},
+                    { data: 'comments', name: 'comments' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]

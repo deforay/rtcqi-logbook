@@ -1,15 +1,15 @@
 
 <?php
 use App\Service\CommonService;
-$common = new CommonService();
-$issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
+// $common = new CommonService();
+// $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
 ?>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">Purchase Order Details</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">PURCHASE ORDER DETAILS</h2></center><hr>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
@@ -20,16 +20,16 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                         <div id="show_alert"  class="mt-1" style=""></div>
                         
                         @csrf
-                        <div>
+                        <!-- <div>
                             <center><h4><b>PURCHASE ORDER DETAILS</b></h4><center>
-                        </div>
+                        </div> -->
                         <br/>
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <h4><b>PO Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->po_number }} </span></h4>
                             </div>
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>PO Issued On : </b><span id="quoteNumber" class="spanFont">{{$issuedOn}}</span></h4>
+                                <h4><b>PO Issued On : </b><span id="quoteNumber" class="spanFont">{{$result[0]->po_issued_on}}</span></h4>
                             </div>
                         </div>
                         <br/>

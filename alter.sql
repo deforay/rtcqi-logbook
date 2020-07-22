@@ -230,3 +230,18 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'add', 'Add');
 ALTER TABLE `delivery_schedule` ADD `created_on` DATETIME NULL AFTER `comments`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`, ADD `po_id` INT NOT NULL AFTER `updated_by`;
 ALTER TABLE `delivery_schedule` CHANGE `po_id` `pod_id` INT(11) NOT NULL;
+
+--Sudarmathi 22 july 2020
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'edit', 'Edit');
+ALTER TABLE `delivery_schedule` CHANGE `qty` `delivery_qty` INT(11) NOT NULL;
+
+CREATE TABLE `delivery_schedule_edit_comments` (
+ `delivery_comment_id` int(11) NOT NULL AUTO_INCREMENT,
+ `delivery_id` int(11) NOT NULL,
+ `edit_comments` text NOT NULL,
+ `updated_by` int(11) DEFAULT NULL,
+ `created_by` int(11) DEFAULT NULL,
+ `created_on` datetime DEFAULT NULL,
+ `updated_on` datetime DEFAULT NULL,
+ PRIMARY KEY (`delivery_comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
