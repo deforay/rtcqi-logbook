@@ -176,7 +176,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Delivery Quantity<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="deliverQty isRequired" class="form-control" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
+                                    <input type="text" id="deliverQty" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
                                 </div>
                                 <input type="hidden" id="hiddenPo_id">
                             </fieldset>
@@ -197,7 +197,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Delivery Mode<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="deliveryMode isRequired" class="form-control " autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
+                                    <input type="text" id="deliveryMode" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
                                 </div>
                             </fieldset>
                         </div>
