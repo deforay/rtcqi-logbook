@@ -9,8 +9,8 @@
 @section('content')
 <?php
 use App\Service\CommonService;
-$common = new CommonService();
-$issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
+// $common = new CommonService();
+// $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
 ?>
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
@@ -69,7 +69,7 @@ $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
                                                 <h5>PO Issued On <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="issuedOn" readonly value="{{ $issuedOn }}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
+                                                    <input type="text" id="issuedOn" readonly value="{{ $result[0]->po_issued_on }}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
                                                 </div>
                                             </fieldset>
                                         </div>

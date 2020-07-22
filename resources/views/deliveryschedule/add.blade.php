@@ -166,7 +166,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Item Name<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                <select class="form-control select2" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
+                                <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
                                 </select>
                                 </div>
                             </fieldset>
@@ -176,7 +176,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Delivery Quantity<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="deliverQty" class="form-control" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
+                                    <input type="text" id="deliverQty isRequired" class="form-control" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
                                 </div>
                                 <input type="hidden" id="hiddenPo_id">
                             </fieldset>
@@ -188,7 +188,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Expected Delivery <span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="expectedDelivery"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
+                                    <input type="text" id="expectedDelivery isRequired"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
                                 </div>
                             </fieldset>
                         </div>
@@ -197,7 +197,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Delivery Mode<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="deliveryMode" class="form-control " autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
+                                    <input type="text" id="deliveryMode isRequired" class="form-control " autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
                                 </div>
                             </fieldset>
                         </div>
@@ -208,7 +208,7 @@ $currentDate=date('d-M-Y');
                                 <h5>Comments <span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="comments" class="form-control name="comments" placeholder="Enter Comments"  title="Please Enter Comments">
+                                    <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter Comments"  title="Please Enter Comments"></textarea>
                                 </div>
                             </fieldset>
                         </div>
@@ -281,7 +281,7 @@ $currentDate=date('d-M-Y');
                         {
                             let itemName = "'"+data[i]['item_name']+"'";
                             details+='<tr><td><input type="hidden" id="podId" name="podId[]" value="'+data[i]['pod_id']+'">\
-                                        <select id="item'+i+'" name="item[]" class="isRequired itemName form-control datas"  title="Please select item"><option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select></td>';
+                                        <select id="item'+i+'" name="item[]" disabled class="isRequired itemName form-control datas"  title="Please select item"><option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select></td>';
                             details+='<td><input type="hidden" id="unitId" name="unitId[]" value="'+data[i]['uom']+'">\
                                         <input type="text" id="unit'+i+'" name="unit[]" class="form-control" placeholder="unit" title="Please enter the unit" value="'+data[i]['unit_name']+'"/></td>';
                             details+='<td><input type="number" id="qty'+i+'" name="qty[]" class="form-control isRequired" placeholder="Qty" title="Please enter the qty" value="'+data[i]['quantity']+'" /></td>';
@@ -349,130 +349,6 @@ $currentDate=date('d-M-Y');
                 }
             });
         }
-    }
-
-    rowCount = 0;
-
-    function insRow() {
-        rowCount++;
-        rl = document.getElementById("itemDetails").rows.length;
-        var a = document.getElementById("itemDetails").insertRow(rl);
-        a.setAttribute("style", "display:none;");
-        // a.setAttribute("class", "data");
-        var b = a.insertCell(0);
-        var d = a.insertCell(1);
-        var e = a.insertCell(2);
-        var c = a.insertCell(3);
-        var f = a.insertCell(4);
-
-
-        rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
-                            <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
-        d.innerHTML = '<input type="text" readonly id="unitName' + rowCount + '" name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="unit">\
-                        <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
-                        <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
-        c.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
-        e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
-        f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
-        $(a).fadeIn(800);
-        $(".item").select2({
-            placeholder: "Select Item",
-            allowClear: true
-        });
-        $(".select2").select2({
-            tags: true
-        });
-        
-    }
-
-    function removeRow(el) {
-        $(el).parent().fadeOut("slow", function() {
-            $(el).parent().remove();
-            rowCount = rowCount - 1;
-            rl = document.getElementById("itemDetails").rows.length;
-            if (rl == 0) {
-                insRow();
-            }
-        });
-    }
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        return true;
-    }
-
-    function calLineTotal(){
-        var sum = 0;
-        $('.linetot').each(function() {
-            sum += Number($(this).val());
-        });
-        if(!isNaN(sum)){
-            $("#totalAmount").val(sum);
-        }
-        $('.linetot').blur(function(){
-            var num = parseFloat($(this).val());
-            var cleanNum = num.toFixed(2);
-            $(this).val(cleanNum);
-        });
-    }
-
-    function addNewItemField(obj,id)
-    {
-        
-        // checkValue = document.getElementById(obj).value;
-        checkValue = $("#"+obj+" option:selected").html();
-        if(checkValue!='')
-        {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "{{ url('/addNewItemField') }}",
-                method: 'post',
-                data: {
-                   value: checkValue,
-                },
-                success: function(result){
-                    if (result['id'] > 0)
-                    {
-                        $('#item'+id).html(result['option'])
-                    }
-                    value = $('#item'+id).val();
-                    unitByItem(id,value);
-                }
-            });
-        }
-    }
-
-    function unitByItem(id,val){
-        unit = '';
-		$.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "{{ url('/getItemUnit') }}",
-            method: 'post',
-            data: {
-                val:val,
-            },
-            success: function(result){
-                console.log(result)
-                if(result.length>0)
-                {
-                    $("#unitName"+id).val(result[0]['unit_name']);
-                    // unit = '<option value="'+result[0]['uom_id']+'">'+result[0]['unit_name']+'</option>'
-                    // $("#unitName"+id).html(unit);
-                    $("#unitId"+id).val(result[0]['uom_id']);
-				}
-			}
-
-		});
     }
 
     function getDeliverySchedule(po_id, item_id, item_name)
