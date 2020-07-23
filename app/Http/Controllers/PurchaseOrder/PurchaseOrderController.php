@@ -87,7 +87,7 @@ class PurchaseOrderController extends Controller
 
                         // $button .= '<div class = "row">';
                         // $button .= '<div class = "col-md-6 mt-1">
-                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="purchaseDetails" id="purchaseDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/purchaseDetailsView/'.base64_encode($data->po_id).'\' );" title="purchase Details"><b><i class="la la-eye"></i></b></button>';
+                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="purchaseDetails" id="purchaseDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/purchaseDetailsView/'.base64_encode($data->po_id).'\' );" title="purchase Details"><b><i class="ft-eye"></i></b></button>';
                         $button .= '</div>';
                         return $button;
                     })

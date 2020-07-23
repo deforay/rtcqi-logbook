@@ -209,9 +209,9 @@ use App\Service\CommonService;
                                             </div>
                                         </div>
                                         <div class="col-md-12">
+											<label class="col-md-2 label-control" for="description" >Description</label>
 											<div class="form-group row" >
-												<label class="col-md-2 label-control" for="description" style="margin-left: 64px !important;">Description</label>
-												<div class="col-md-8">
+												<div class="col-md-12">
 												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
 												</div>
 											</div>
