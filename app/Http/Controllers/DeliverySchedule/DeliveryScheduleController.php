@@ -51,20 +51,24 @@ class DeliveryScheduleController extends Controller
         $data = $service->getAllDeliverySchedule();
         return DataTables::of($data)
             ->editColumn('expected_date_of_delivery', function($data){
-                    $issuedOn = $data->expected_date_of_delivery;
-                    if($issuedOn){
-                        $issuedOn = date("d-M-Y", strtotime($issuedOn));
-                        return $issuedOn;
-                    }
+                $issuedOn = $data->expected_date_of_delivery;
+                if($issuedOn){
+                    $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                    return $issuedOn;
+                }
             })
             ->addColumn('action', function($data){
                 $button = '<div style="width: 180px;">';
                 $role = session('role');
-
-                if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
-                    $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/deliveryDetailsEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                }else{
-                    $button .= '';
+                if($data->delivery_status == 'pending'){
+                    if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
+                        $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/deliveryDetailsEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
+                }
+                else{
+                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_status).'</span>';
                 }
                 $button .= '</div>';
                 return $button;

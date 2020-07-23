@@ -118,10 +118,11 @@ else{
                                     <table class="table table-striped table-bordered zero-configuration" id="RfqList" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="width:20%">RFQ Number</th>
+                                                <th style="width:25%">RFQ Number</th>
                                                 <th style="width:15%">Issued On</th>
                                                 <th style="width:15%">Last Date</th>
-                                                <th style="width:10%">Status</th>
+                                                <th style="width:15%">Status</th>
+                                                <th style="width:30%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -134,12 +135,13 @@ else{
                                     <table class="table table-striped table-bordered zero-configuration" id="quotesList" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="width:20%">RFQ Number</th>
-                                                <th style="width:15%">Vendor Name</th>
-                                                <th style="width:20%">Quote Number</th>
-                                                <th style="width:15%">Invited On</th>
-                                                <th style="width:15%">Responded On</th>
-                                                <th style="width:15%">Status</th>
+                                                <th style="width:15%">RFQ Number</th>
+                                                <th style="width:14%">Vendor Name</th>
+                                                <th style="width:15%">Quote Number</th>
+                                                <th style="width:12%">Invited On</th>
+                                                <th style="width:12%">Responded On</th>
+                                                <th style="width:8%">Status</th>
+                                                <th style="width:29%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -268,7 +270,7 @@ $(document).ready(function() {
                     { data: 'rfq_issued_on', name: 'rfq_issued_on'},
                     { data: 'last_date', name: 'last_date'},
                     { data: 'rfq_status', name: 'rfq_status',className:'firstcaps'},
-                    // {data: 'action', name: 'action', orderable: false},
+                    { data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]
         });
@@ -302,7 +304,7 @@ $(document).ready(function() {
                     { data: 'invited_on', name: 'invited_on'},
                     { data: 'responded_on', name: 'responded_on', },
                     { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
-                    // {data: 'action', name: 'action', orderable: false},
+                    { data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]
         });
