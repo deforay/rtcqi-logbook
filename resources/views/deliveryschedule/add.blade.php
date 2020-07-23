@@ -162,18 +162,18 @@ $currentDate=date('d-M-Y');
 					</div>
                     <div id="show_modal_alert" class="mt-1" style=""></div>
                     <div id="deliverySchedulePreview" style="display:none;">
-                        <div><center><h4 class="ml-2 text-center"><b>Previous Delivery Schedule Details</b></h4><center></div>
+                        <div><center><h4 class="ml-2 text-center"><b>Previous Delivery Schedule History</b></h4><center></div>
                         <div class="row">
-                            <div class="table-responsive col-md-12">
+                            <div class="table-responsive col-md-12 mt-1">
                                 <div class="bd-example">
-                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%;margin-padding:1%;">
+                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="width:25%;">Item</th>
-                                            <th style="width:20%;">Quantity</th>
-                                            <th style="width:25%;">Delivery Date</th>
-                                            <th style="width:25%;">Delivery Mode</th>
-                                            <th style="width:30%;">comments</th>
+                                            <th style="width:20%;">Item</th>
+                                            <th style="width:10%;">Quantity</th>
+                                            <th style="width:20%;">Delivery Date</th>
+                                            <th style="width:15%;">Delivery Mode</th>
+                                            <th style="width:35%;">comments</th>
                                         </tr>
                                     </thead>
                                     <tbody id="deliveryScheduleDetails">
@@ -185,7 +185,7 @@ $currentDate=date('d-M-Y');
                         </div>
                         <hr>
                     </div>
-                    <h3>Add Delivery Schedule</h3><br/>
+                    <h4 class="text-center">Add Delivery Schedule</h4><br/>
                     <div class="row">
                         <div class="col-xl-6 col-lg-12">
                             <fieldset>
@@ -318,6 +318,12 @@ $currentDate=date('d-M-Y');
                         $("#poOrderDetails").html(details);
                     }
                     else{
+                        $('#poNumber').text('')
+                        $('#issuedOn').text('')
+                        $('#vendors').text('')
+                        $('#totalAmt').text('')
+                        $('#orderSts').text('')
+                        $('#paymentSts').text('')
                         details+='<tr><td colspan="5" class="text-center">No Pending Purchase Order Available</td></tr>';
                         $("#poOrderDetails").html(details);
                     }
@@ -474,7 +480,8 @@ $currentDate=date('d-M-Y');
                         if(result>0)
                         {
                             swal("Delivery Schedule Added Successfully")
-                            $("#deliveryScheduleAdd").modal('hide');
+                            $('.close').trigger('click')
+                            // $("#deliveryScheduleAdd").modal('hide');
                             getPurchaseOrder(po);
                         }
                         
