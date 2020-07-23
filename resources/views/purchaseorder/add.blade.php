@@ -182,13 +182,13 @@ $currentDate=date('d-M-Y');
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-											<div class="form-group row" >
-												<label class="col-md-2 label-control" for="description" style="margin-left: 64px !important;">Description</label>
-												<div class="col-md-8">
-												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$quotes['quotes'][0]->description}}</textarea>
-												</div>
-											</div>
+                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <div class="form-group row" >
+                                            <div class="col-md-12">
+                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$quotes['quotes'][0]->description}}</textarea>
+                                            </div>
                                         </div>
+                                    </div>
                                         
                                     <div class="form-actions right">
                                         <a href="/purchaseorder">
