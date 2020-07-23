@@ -50,7 +50,8 @@ class DeliveryScheduleTable extends Model
         if(session('loginType')=='users'){
             $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
-                    // ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
+                    ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
+                    // ->where('purchase_order_details.delivery_status', '=', 'pending')
                     // ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                     ->get();
         }
@@ -60,6 +61,7 @@ class DeliveryScheduleTable extends Model
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                    // ->where('purchase_order_details.delivery_status', '=', 'pending')
                     ->where('purchase_orders.vendor', '=', $userId)
                     ->get();
         }
@@ -74,7 +76,8 @@ class DeliveryScheduleTable extends Model
                 ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                 ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
-        ->where('delivery_schedule.delivery_id', '=', $id)->get();
+                ->where('purchase_order_details.delivery_status', '=', 'pending')
+                ->where('delivery_schedule.delivery_id', '=', $id)->get();
         return $data;
     }
 

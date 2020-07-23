@@ -84,7 +84,7 @@ class QuotesController extends Controller
                         }
                         // $button .= '<div class = "row">';
                         // $button .= '<div class = "col-md-6 mt-1">
-                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="quoteDetails" id="quoteDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/quoteDetailsView/'.base64_encode($data->quote_id).'\' );" title="Quote Details"><b><i class="la la-eye"></i></b></button>';
+                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="quoteDetails" id="quoteDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/quoteDetailsView/'.base64_encode($data->quote_id).'\' );" title="Quote Details"><b><i class="ft-eye"></i></b></button>';
                         return $button;
                     })
                     ->rawColumns(['quotes_status','action'])
