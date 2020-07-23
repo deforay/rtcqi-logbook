@@ -341,7 +341,7 @@ use App\Service\CommonService;
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" readonly id="unitName' + rowCount + '"  name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
-                        <input type="hidden" id="podId' + rowCount + '" name="podId[]" class="isRequired form-control"  title="Please enter Uom">';
+                        <input type="hidden" id="podId' + rowCount + '" name="podId[]" class="isRequired form-control"  title="Please enter Unit">';
         c.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
         e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
@@ -419,46 +419,5 @@ use App\Service\CommonService;
         });
     }
 
-    rowCount = 0;
-
-    function insRow() {
-        rowCount++;
-        rl = document.getElementById("itemDetails").rows.length;
-        var a = document.getElementById("itemDetails").insertRow(rl);
-        a.setAttribute("style", "display:none;");
-        // a.setAttribute("class", "data");
-        var b = a.insertCell(0);
-        var d = a.insertCell(1);
-        var e = a.insertCell(2);
-        var c = a.insertCell(3);
-        var f = a.insertCell(4);
-
-
-        rl = document.getElementById("itemDetails").rows.length - 1;
-        b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" >\
-                            <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
-        d.innerHTML = '<input type="text" id="unitName' + rowCount + '"  name="unitName[]" class="isRequired form-control"  title="Please enter Uom" placeholder="Uom">\
-                        <input type="hidden" id="podId' + rowCount + '" name="podId[]" class="isRequired form-control"  title="Please enter Uom">';
-        e.innerHTML = '<input type="number" id="unitPrice' + rowCount + '" name="unitPrice[]" class="linetot form-control isRequired" placeholder="Enter unit Price" title="Please enter Unit Price" />';
-        c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
-        f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
-        $(a).fadeIn(800);
-        $(".select2").select2();
-        $(".item").select2({
-            placeholder: "Select Item",
-            allowClear: true
-        });
-    }
-
-    function removeRow(el) {
-        $(el).parent().fadeOut("slow", function() {
-            $(el).parent().remove();
-            rowCount = rowCount - 1;
-            rl = document.getElementById("itemDetails").rows.length;
-            if (rl == 0) {
-                insRow();
-            }
-        });
-    }
 </script>
 @endsection

@@ -305,7 +305,7 @@ $currentDate=date('d-M-Y');
                         {
                             let itemName = "'"+data[i]['item_name']+"'";
                             details+='<tr><td><input type="hidden" id="podId" name="podId[]" value="'+data[i]['pod_id']+'">\
-                                        <select id="item'+i+'" name="item[]" disabled class="isRequired itemName form-control datas"  title="Please select item"><option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select></td>';
+                                        <select id="item'+i+'" name="item[]" disabled class="isRequired itemName form-control datas"  title="Please select item"><option value='+data[i]['item_id']+'>'+data[i]['item_name']+'</option></select></td>';
                             details+='<td><input type="hidden" id="unitId" name="unitId[]" value="'+data[i]['uom']+'">\
                                         <input type="text" id="unit'+i+'" name="unit[]" class="form-control" placeholder="unit" title="Please enter the unit" value="'+data[i]['unit_name']+'"/></td>';
                             details+='<td><input type="number" readonly id="qty'+i+'" name="qty[]" class="form-control isRequired" placeholder="Qty" title="Please enter the qty" value="'+data[i]['quantity']+'" /></td>';
@@ -313,10 +313,9 @@ $currentDate=date('d-M-Y');
                             // details+='<td></td>'
                             details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+','+data[i]['quantity']+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-calendar"></i></button></td>'
                             details+='</tr>';
-                            $("#poOrderDetails").append(details);
                             $('#item'+i).val(data[i]['item_id'])
                         }
-
+                        $("#poOrderDetails").html(details);
                     }
                     else{
                         details+='<tr><td colspan="5" class="text-center">No Pending Purchase Order Available</td></tr>';
