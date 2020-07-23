@@ -133,10 +133,10 @@ class PurchaseOrderController extends Controller
          
     }
 
-    public function getPurchaseOrderById(Request $request){
+    public function getPurchaseorderByIdForDelivery(Request $request){
         $id = base64_encode($request->id);
         $service = new PurchaseOrderService();
-        $result = $service->getPurchaseorderById($id);
+        $result = $service->getPurchaseorderByIdForDelivery($id);
         return json_encode($result);
     }
 }

@@ -206,6 +206,7 @@ Route::get('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@ed
 Route::post('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit');
 Route::post('/purchaseDetailsView/{id}', 'PurchaseOrder\PurchaseOrderController@purchaseDetailsView');
 Route::post('/getPurchaseOrderById', 'PurchaseOrder\PurchaseOrderController@getPurchaseOrderById');
+Route::post('/getPurchaseorderByIdForDelivery', 'PurchaseOrder\PurchaseOrderController@getPurchaseorderByIdForDelivery');
 
 //Delivery Schedule module
 
@@ -216,3 +217,4 @@ Route::post('/saveDeliverySchedule', 'DeliverySchedule\DeliveryScheduleControlle
 Route::post('/getAllDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@getAllDeliverySchedule');
 Route::post('/deliveryDetailsEdit/{id}', 'DeliverySchedule\DeliveryScheduleController@deliveryDetailsEdit');
 Route::post('/deliveryschedule/updateDeliverySchedule/{id}', 'DeliverySchedule\DeliveryScheduleController@updateDeliverySchedule');
+Route::post('/getDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@getDeliverySchedule');

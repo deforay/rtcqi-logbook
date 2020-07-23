@@ -63,4 +63,9 @@ class DeliveryScheduleService
 	    }
 	}
 	
+	public function getDeliverySchedule($request){
+		$deliverySchedulemodel = new DeliveryScheduleTable();
+        $result = $deliverySchedulemodel->fetchDeliverySchedule($request);
+        return $result;
+	}
 }

@@ -246,9 +246,29 @@ class PurchaseOrderTable extends Model
                 ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'purchase_order_details.uom')
                 ->where('purchase_orders.po_id', '=', $id)
                 ->get();
-        $issueDate = $data[0]->po_issued_on;
-        $issuedOn = date("d-M-Y", strtotime($issueDate));
-        $data[0]->po_issued_on = $issuedOn;
+        if(isset($data[0]->po_issued_on)){
+            $issueDate = $data[0]->po_issued_on;
+            $issuedOn = date("d-M-Y", strtotime($issueDate));
+            $data[0]->po_issued_on = $issuedOn;
+        }
+        return $data;
+    }
+    public function fetchPurchaseorderByIdForDelivery($id)
+    {
+        $id = base64_decode($id);
+        $data = DB::table('purchase_orders')
+                ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
+                ->join('purchase_order_details', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                ->join('items', 'items.item_id', '=', 'purchase_order_details.item_id')
+                ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'purchase_order_details.uom')
+                ->where('purchase_orders.po_id', '=', $id)
+                ->where('purchase_order_details.delivery_status', '=', 'pending')
+                ->get();
+        if(isset($data[0]->po_issued_on)){
+            $issueDate = $data[0]->po_issued_on;
+            $issuedOn = date("d-M-Y", strtotime($issueDate));
+            $data[0]->po_issued_on = $issuedOn;
+        }
         return $data;
     }
     public function updatePurchaseOrderDetails($params, $id)
