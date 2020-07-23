@@ -77,17 +77,17 @@ class QuotesController extends Controller
                         $role = session('role');
                         if (isset($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit']) && ($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit'] == "allow")){
                             if($data->quotes_status!='closed' ){
-                                $button .= '<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                                $button .= '&nbsp;&nbsp;<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                             }
                         }else{
                             $button .= '';
                         }
                         if($data->approve_status=='no' && $data->quotes_status=='responded' && session('loginType')=='users'){
-                            $button .= '&nbsp;&nbsp;&nbsp;<a href="/purchaseorder/add/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit">Approve</a>';
+                            $button .= '&nbsp;&nbsp;<a href="/purchaseorder/add/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit">Approve</a>';
                         }
                         // $button .= '<div class = "row">';
                         // $button .= '<div class = "col-md-6 mt-1">
-                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="quoteDetails" id="quoteDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/quoteDetailsView/'.base64_encode($data->quote_id).'\' );" title="Quote Details"><b><i class="ft-eye"></i></b></button>';
+                        $button .= '&nbsp;&nbsp;<button type="button" name="quoteDetails" id="quoteDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/quoteDetailsView/'.base64_encode($data->quote_id).'\' );" title="Quote Details"><b><i class="ft-eye"></i></b></button>';
                         return $button;
                     })
                     ->rawColumns(['quotes_status','action'])
