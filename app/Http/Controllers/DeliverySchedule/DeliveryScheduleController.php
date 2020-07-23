@@ -89,4 +89,10 @@ class DeliveryScheduleController extends Controller
         $add = $service->updateDeliverySchedule($id,$request);
         return Redirect::route('deliveryschedule.index')->with('status', $add);
     }
+
+    public function getDeliverySchedule(Request $request){
+        $service = new DeliveryScheduleService();
+        $result = $service->getDeliverySchedule($request);
+        return $result;
+    }
 }

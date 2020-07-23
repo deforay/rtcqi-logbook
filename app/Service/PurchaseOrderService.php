@@ -73,6 +73,13 @@ class PurchaseOrderService
         return $result;
 	}
 
+	public function getPurchaseorderByIdForDelivery($id)
+	{
+		$purchaseOrdermodel = new PurchaseOrderTable();
+        $result = $purchaseOrdermodel->fetchPurchaseorderByIdForDelivery($id);
+        return $result;
+	}
+
 	public function getPurchaseOrderDetailsId($id)
 	{
 		$purchaseOrdermodel = new PurchaseOrderTable();

@@ -100,8 +100,9 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </div>
                                             <br/>
+                                            <hr>
                                             <div>
-                                                <center><h4><b>Order Details</b></h4><center>
+                                                <center><h4><b>Purchase Order Details</b></h4><center>
                                             </div>
                                             <br/>
                                             <div class="row">
@@ -150,7 +151,7 @@ $currentDate=date('d-M-Y');
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="deliveryScheduleAddLabel">Add Delivery Schedule</h3>
+                    <h3 class="modal-title" id="deliveryScheduleAddLabel"> Delivery Schedule</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -160,6 +161,31 @@ $currentDate=date('d-M-Y');
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
 					</div>
                     <div id="show_modal_alert" class="mt-1" style=""></div>
+                    <div id="deliverySchedulePreview" style="display:none;">
+                        <div><center><h4 class="ml-2 text-center"><b>Previous Delivery Schedule Details</b></h4><center></div>
+                        <div class="row">
+                            <div class="table-responsive col-md-12">
+                                <div class="bd-example">
+                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%;margin-padding:1%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:25%;">Item</th>
+                                            <th style="width:20%;">Quantity</th>
+                                            <th style="width:25%;">Delivery Date</th>
+                                            <th style="width:25%;">Delivery Mode</th>
+                                            <th style="width:30%;">comments</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="deliveryScheduleDetails">
+                                        
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <h3>Add Delivery Schedule</h3><br/>
                     <div class="row">
                         <div class="col-xl-6 col-lg-12">
                             <fieldset>
@@ -176,8 +202,9 @@ $currentDate=date('d-M-Y');
                                 <h5>Delivery Quantity<span class="mandatory">*</span>
                                 </h5>
                                 <div class="form-group">
-                                    <input type="text" id="deliverQty" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
+                                    <input type="number" id="deliverQty" class="form-control isRequired" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
                                 </div>
+                                <input type="hidden" id="qtyMax" value="">
                                 <input type="hidden" id="hiddenPo_id">
                             </fieldset>
                         </div>
@@ -259,17 +286,14 @@ $currentDate=date('d-M-Y');
                 }
             });
             $.ajax({
-                url: "{{ url('/getPurchaseOrderById') }}",
+                url: "{{ url('/getPurchaseorderByIdForDelivery') }}",
                 method: 'post',
                 data: {
                     id : val
                 },
                 success: function(result) {
-                    console.log(result);
                     var data = JSON.parse(result);
-                    console.log(data);
-                    console.log(data.length);
-                    if(data){
+                    if(data.length>0){
                         $('#poNumber').text(data[0]['po_number'])
                         $('#issuedOn').text(data[0]['po_issued_on'])
                         $('#vendors').text(data[0]['vendor_name'])
@@ -284,15 +308,19 @@ $currentDate=date('d-M-Y');
                                         <select id="item'+i+'" name="item[]" disabled class="isRequired itemName form-control datas"  title="Please select item"><option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select></td>';
                             details+='<td><input type="hidden" id="unitId" name="unitId[]" value="'+data[i]['uom']+'">\
                                         <input type="text" id="unit'+i+'" name="unit[]" class="form-control" placeholder="unit" title="Please enter the unit" value="'+data[i]['unit_name']+'"/></td>';
-                            details+='<td><input type="number" id="qty'+i+'" name="qty[]" class="form-control isRequired" placeholder="Qty" title="Please enter the qty" value="'+data[i]['quantity']+'" /></td>';
+                            details+='<td><input type="number" readonly id="qty'+i+'" name="qty[]" class="form-control isRequired" placeholder="Qty" title="Please enter the qty" value="'+data[i]['quantity']+'" /></td>';
                             details+='<td><input type="number" class="form-control isRequired linetot" id="unitPrice'+i+'" name="unitPrice[]" placeholder="Unit Price" title="Please enter Unit Price" value="'+data[i]['unit_price']+'"/></td>';
                             // details+='<td></td>'
-                            details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-calendar"></i></button></td>'
+                            details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+','+data[i]['quantity']+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-calendar"></i></button></td>'
                             details+='</tr>';
                             $("#poOrderDetails").append(details);
                             $('#item'+i).val(data[i]['item_id'])
                         }
-                        
+
+                    }
+                    else{
+                        details+='<tr><td colspan="5" class="text-center">No Pending Purchase Order Available</td></tr>';
+                        $("#poOrderDetails").html(details);
                     }
                 }
             });
@@ -309,7 +337,7 @@ $currentDate=date('d-M-Y');
             }
         } else {
             // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $('#show_alert').html(flag).delay(3000).fadeOut();expected_date_of_delivery
             $('#show_alert').css("display", "block");
             $(".infocus").focus();
         }
@@ -351,8 +379,55 @@ $currentDate=date('d-M-Y');
         }
     }
 
-    function getDeliverySchedule(po_id, item_id, item_name)
+    let qtyMax = 0;
+    function getDeliverySchedule(po_id, item_id, item_name,qty)
     {
+        $('#qtyMax').val(qty)
+        $("#deliverQty").attr('max',qty)
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getDeliverySchedule') }}",
+            method: 'post',
+            data: {
+                item:item_id,
+                po_id:po_id,
+            },
+            success: function(data){
+                // var data = JSON.parse(result);
+                console.log(data)
+                var details = "";
+                $('#deliverySchedulePreview').show();
+                if(data.length>0){
+                    for(j=0;j<data.length;j++)
+                    {
+                        details+='<tr><td>'+data[j]['item_name']+'</td>';
+                        details+='<td>'+data[j]['delivery_qty']+'</td>';
+                        details+='<td>'+data[j]['delivery_date']+'</td>';
+                        details+='<td>'+data[j]['delivery_mode']+'</td>';
+                        details+='<td>'+data[j]['comments']+'</td></tr>';
+                        qtyMax += data[j]['delivery_qty'];
+                    }
+                    if(qtyMax>0){
+                        qtyBal = qty - qtyMax;
+                        $('#qtyMax').val(qtyBal)
+                        $("#deliverQty").attr('max',qtyBal)
+                    }
+                    else{
+                        $('#qtyMax').val(qty)
+                        $("#deliverQty").attr('max',qty)
+                    }
+                }
+                else{
+                    details+='<tr><td colspan="5" class="text-center">No Delivery Schedule Available</td></tr>';
+                }
+                $("#deliveryScheduleDetails").html(details);
+            }
+
+        });
         let option='<option value="'+item_id+'">'+item_name+'</option>';
         console.log(option);
         $("#ItemId").html(option);
@@ -367,34 +442,54 @@ $currentDate=date('d-M-Y');
         let expectedDelivery = $("#expectedDelivery").val();
         let deliveryMode = $("#deliveryMode").val();
         let comments = $("#comments").val();
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "{{ url('/saveDeliverySchedule') }}",
-            method: 'post',
-            data: {
-                item:item,
-                po_id:po_id,
-                deliverQty:deliverQty,
-                expectedDelivery:expectedDelivery,
-                deliveryMode:deliveryMode,
-                comments:comments
-            },
-            success: function(result){
-                console.log(result)
-                if(result>0)
-                {
-                    swal("Delivery Schedule Added Successfully")
-                    $("#deliveryScheduleAdd").modal('hide');
+        let po = $('#purchaseOrder').val();
+        console.log($('#qtyMax').val())
+        console.log(deliverQty)
+        if(item && deliverQty && expectedDelivery && deliveryMode && comments){
+            if(parseInt(deliverQty) <= parseInt($('#qtyMax').val())){
+                if(parseInt(deliverQty) == parseInt($('#qtyMax').val())){
+                    status = "scheduled";
                 }
-                
-			}
+                else{
+                    status = "";
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{ url('/saveDeliverySchedule') }}",
+                    method: 'post',
+                    data: {
+                        item:item,
+                        po_id:po_id,
+                        deliverQty:deliverQty,
+                        expectedDelivery:expectedDelivery,
+                        deliveryMode:deliveryMode,
+                        comments:comments,
+                        status:status
+                    },
+                    success: function(result){
+                        console.log(result)
+                        if(result>0)
+                        {
+                            swal("Delivery Schedule Added Successfully")
+                            $("#deliveryScheduleAdd").modal('hide');
+                            getPurchaseOrder(po);
+                        }
+                        
+                    }
 
-		});
+                });
+            }
+            else{
+                swal("Entered quantity exceeds purchase order quantity")
+            }
+        }
+        else{
+            swal("Please fill all the fields")
+        }
     }
 </script>
 @endsection

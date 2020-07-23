@@ -30,7 +30,15 @@ class DeliveryScheduleTable extends Model
                 'created_on'      => $commonservice->getDateTime(),
             ]
         );
-
+        if($data['status']){
+            $sts = DB::table('purchase_order_details')
+                    ->where('pod_id', '=', $data['po_id'])
+                    ->update(
+                        [
+                            'delivery_status'    => $data['status'],
+                        ]
+                    );
+        }
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), $autoId, 'Delivery Scheduler-add', 'Add Delivery Schedule ' . $data['po_id'], 'Purchase Order details');
         
@@ -48,7 +56,7 @@ class DeliveryScheduleTable extends Model
         }
         else{
             $userId=session('userId');
-            $data = DB::table('purchase_orders')
+            $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
@@ -108,4 +116,16 @@ class DeliveryScheduleTable extends Model
         return $commentId;
     }
     
+    public function fetchDeliverySchedule($request){
+        $data = $request->all();
+        // dd($data);
+        $delDate = DB::raw("DATE_FORMAT(delivery_schedule.expected_date_of_delivery,'%d-%b-%Y') as delivery_date");
+        $query = DB::table('delivery_schedule')
+                    ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
+                    ->where('delivery_schedule.pod_id', '=', $data['po_id'])
+                    ->where('delivery_schedule.item_id', '=', $data['item'])
+                    ->select('*',$delDate)
+                    ->get();
+        return $query;
+    }
 }
