@@ -28,7 +28,7 @@ class QuotesTable extends Model
             $query = DB::table('quotes')
                 ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
                 ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-                ->where('quotes.approve_status', '=', 'no')
+                // ->where('quotes.approve_status', '=', 'no')
                 ->where('quotes.quotes_status', '!=', 'pending')
                 ;
                 if(isset($req['rfqId']) && $req['rfqId'])
