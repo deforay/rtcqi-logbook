@@ -106,7 +106,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 <h5>Vendor Name
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" disabled id="vendorName" value="{{$result[0]->vendor_name}}" class="form-control" autocomplete="off" name="vendorName">
+                                                    <input type="text" disabled id="vendorName" value="{{$result[0]->vendor_name}}" class="form-control isRequired" autocomplete="off" name="vendorName">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -117,7 +117,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 <h5>Quote Number<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="quoteNumber" value="{{$result[0]->quote_number}}" class="form-control" autocomplete="off" name="quoteNumber">
+                                                    <input type="text" id="quoteNumber" value="{{$result[0]->quote_number}}" class="form-control isRequired" autocomplete="off" name="quoteNumber" title="Please enter quotes number">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -157,7 +157,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 <h5>Vendor Notes<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="vendorNotes" value="{{$vendor_notes}}" class="form-control" autocomplete="off" name="vendorNotes">
+                                                    <input type="text" id="vendorNotes" value="{{$vendor_notes}}" class="form-control isRequired" autocomplete="off" name="vendorNotes" title="Please vendor notes">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -166,7 +166,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 <h5>Mode of Delivery<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                <input type="text" id="deliveryMode" value="{{$mode_of_delivery}}" class="form-control" autocomplete="off" name="deliveryMode">
+                                                <input type="text" id="deliveryMode" value="{{$mode_of_delivery}}" class="form-control isRequired" autocomplete="off" name="deliveryMode" title="Please delivery mode">
                                                 </div>
                                             </fieldset>
                                         </div>
