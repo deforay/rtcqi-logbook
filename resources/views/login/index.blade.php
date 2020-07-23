@@ -13,9 +13,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
-    <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
-    <meta name="author" content="PIXINVENT">
+    <meta name="description" content="Procurement & Inventory Manager">
+    <meta name="keywords" content="Procurement & Inventory Manager">
+    <meta name="author" content="Deforay">
     <title>Procurement & Inventory Manager</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
     <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
@@ -62,19 +62,24 @@
                         <div class="col-lg-5 col-md-8 col-10 box-shadow-2 p-0">
                             <div class="card border-grey border-lighten-3 m-0">
                                 <div class="card-header border-0">
-                                    <div class="card-title text-center"><b>PIM</b>
-                                        <!-- <div class="p-1"><img src="{{ asset('app-assets/images/logo/asm_logo.png')}}" alt="branding logo" style="width: 100px;"></div> -->
+                                    <div class="card-title text-center">
+                                        <div class="p-1">
+                                            <h1>Procurement & Inventory Manager</h1>
+                                        </div>
                                     </div>
                                     <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login</span>
                                     </h6>
                                 </div>
-                                <div id="show_alert"  class="mt-1" style="font"></div>
+                                <div id="show_alert" class="mt-1" style="font"></div>
                                 @if (session('status'))
-                                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index" ><div class="text-center" style="font-size: 18px;"><b>
-                                        {{ session('status') }}</b></div>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <script>$('#show_alert_index').delay(3000).fadeOut();</script>
+                                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
+                                    <div class="text-center" style="font-size: 18px;"><b>
+                                            {{ session('status') }}</b></div>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <script>
+                                    $('#show_alert_index').delay(3000).fadeOut();
+                                </script>
                                 @endif
                                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -82,7 +87,7 @@
                                 <div class="card-content">
                                     <div class="card-body">
                                         <form class="form-horizontal form-simple" method="post" name="userLogin" id="userLogin" action="login/validate" autocomplete="off" onsubmit="validateNow();return false;">
-                                        @csrf
+                                            @csrf
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
                                                 <input type="email" class="form-control isRequired" name="username" id="username" placeholder="Your Email Id" title="Please enter the Email Id">
                                                 <div class="form-control-position">
@@ -136,39 +141,41 @@
 </html>
 <script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
 <script>
- duplicateName = true;
- ismob = true;
+    duplicateName = true;
+    ismob = true;
+
     function validateNow() {
         userNameVal = $('#username').val();
         var EmailValidation = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-        if (EmailValidation.test(userNameVal)){
+        if (EmailValidation.test(userNameVal)) {
             ismob = true;
+        } else {
+            $("html, body").animate({
+                scrollTop: 0
+            }, "slow");
+            $("#showAlertIndex").text('Please give valid email address');
+            $('#showAlertdiv').show();
+            ismob = false;
         }
-        else{
-	        $("html, body").animate({ scrollTop: 0 }, "slow");
-			$("#showAlertIndex").text('Please give valid email address');
-			$('#showAlertdiv').show();
-			ismob = false;
-        }
-            
-        if(ismob==true){
+
+        if (ismob == true) {
             flag = deforayValidator.init({
                 formId: 'userLogin'
             });
-            
+
             if (flag == true) {
                 if (duplicateName) {
                     document.getElementById('userLogin').submit();
                 }
-            }
-            else{
+            } else {
                 $('#show_alert').html(flag).delay(3000).fadeOut();
-                $('#show_alert').css("display","block");
+                $('#show_alert').css("display", "block");
                 $(".infocus").focus();
             }
         }
     }
-    function isNumberKey(evt){
+
+    function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode
         if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
