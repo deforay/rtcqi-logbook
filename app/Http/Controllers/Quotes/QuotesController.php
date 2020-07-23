@@ -56,13 +56,16 @@ class QuotesController extends Controller
                     ->addColumn('quotes_status', function($data){
                         $rfqSts = $data->quotes_status;
                         if($rfqSts == 'pending'){
-                           $sts = '<span class="badge badge-warning">'.ucfirst($rfqSts).'</span>';
+                           $sts = '<span class="badge badge-warning"><b>'.ucfirst($rfqSts).'</b></span>';
                         }
                         else if($rfqSts == 'active'){
-                            $sts = '<span class="badge badge-success">'.ucfirst($rfqSts).'</span>';
+                            $sts = '<span class="badge badge-success"><b>'.ucfirst($rfqSts).'</b></span>';
                         }
                         else if($rfqSts == 'responded'){
-                            $sts = '<span class="badge badge-danger">'.ucfirst($rfqSts).'</span>';
+                            $sts = '<span class="badge badge-info"><b>'.ucfirst($rfqSts).'</b></span>';
+                        }
+                        else if($rfqSts == 'closed'){
+                            $sts = '<span class="badge badge-danger"><b>'.ucfirst($rfqSts).'</b></span>';
                         }
                         else{
                             $sts='';
@@ -74,7 +77,7 @@ class QuotesController extends Controller
                         $role = session('role');
                         if (isset($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit']) && ($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit'] == "allow")){
                             if($data->quotes_status!='closed' ){
-                           $button .= '<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                                $button .= '<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                             }
                         }else{
                             $button .= '';
