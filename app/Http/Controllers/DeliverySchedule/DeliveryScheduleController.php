@@ -20,7 +20,9 @@ class DeliveryScheduleController extends Controller
     {
         if(session('login')==true)
         {
-            return view('deliveryschedule.index');
+            $service = new PurchaseOrderService();
+            $data = $service->getAllPurchaseorder();
+            return view('deliveryschedule.index',array('poList' => $data));
         }
         else
             return Redirect::to('login')->with('status', 'Please Login');
@@ -48,7 +50,7 @@ class DeliveryScheduleController extends Controller
     public function getAllDeliverySchedule(Request $request)
     {
         $service = new DeliveryScheduleService();
-        $data = $service->getAllDeliverySchedule();
+        $data = $service->getAllDeliverySchedule($request);
         return DataTables::of($data)
             ->editColumn('expected_date_of_delivery', function($data){
                 $issuedOn = $data->expected_date_of_delivery;
