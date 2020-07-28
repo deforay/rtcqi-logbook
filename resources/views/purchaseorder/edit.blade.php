@@ -9,8 +9,8 @@
 @section('content')
 <?php
 use App\Service\CommonService;
-// $common = new CommonService();
-// $issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
+$common = new CommonService();
+$lstDelDate = $common->humanDateFormat($result[0]->last_date_of_delivery);
 ?>
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
@@ -125,35 +125,52 @@ use App\Service\CommonService;
                                             </fieldset>
                                         </div>
                                     </div>
-                                        <hr>
-                                        <?php if(isset($result[0]->upload_path)){ ?>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="lastDeliveryDate" onchange="checkDate();return false;" value="{{$lstDelDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Last Delivery Date" name="lastDeliveryDate" title="Please enter Last Delivery Date">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Delivery Location<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="deliveryLoc" class="form-control isRequired" value="{{$result[0]->delivery_location}}" autocomplete="off" placeholder="Enter Delivery Location" name="deliveryLoc" title="Please enter Delivery Location">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <?php if(isset($result[0]->upload_path)){ ?>
                                         <div class="row">
-                                <fieldset>
+                                            <fieldset>
                                             <h5>Attachment Files <span class="mandatory">*</span>
                                             </h5>
-                                            <div class="form-group">
-                                             <?php
+                                                <div class="form-group">
+                                                <?php
 
-                                                $fileVaL= explode(",", $result[0]->upload_path);
-                                                $filecount=count($fileVaL);
-                                                if($filecount>1){
-                                                    $forcount=$filecount-1;
-                                                }else{
-                                                    $forcount=$filecount;
-                                                }
-                                                for($i=0;$i<$forcount;$i++)
-                                                {
-                                                $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                   
-                                                echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
-                                                 }
-                                            
-                                                ?>
-                                            </div>
-                                        </fieldset>
-                             
-                                </div>
-                                <?php  } ?>
+                                                    $fileVaL= explode(",", $result[0]->upload_path);
+                                                    $filecount=count($fileVaL);
+                                                    if($filecount>1){
+                                                        $forcount=$filecount-1;
+                                                    }else{
+                                                        $forcount=$filecount;
+                                                    }
+                                                    for($i=0;$i<$forcount;$i++)
+                                                    {
+                                                    $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                    
+                                                    echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
+                                                    }
+                                                
+                                                    ?>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    <?php  } ?>
                                         <div class="row">
                                             <div class="table-responsive">
                                                 <div class="bd-example">
@@ -417,6 +434,25 @@ use App\Service\CommonService;
             }
 
         });
+    }
+
+    function checkDate()
+    {
+        let lastDeliveryDate  = new Date($("#lastDeliveryDate").val())
+        let invitedOn  = new Date();
+        if(lastDeliveryDate  && invitedOn)
+        {
+            if(invitedOn > lastDeliveryDate)
+            {
+                    swal("Please enter the valid date")
+                    $("#lastDeliveryDate").val('')
+                return false
+            }
+            else
+            {
+                return true
+            }
+        }
     }
 
 </script>

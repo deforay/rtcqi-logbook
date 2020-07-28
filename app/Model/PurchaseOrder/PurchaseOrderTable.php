@@ -17,7 +17,6 @@ class PurchaseOrderTable extends Model
         $data = $request->all();
         $commonservice = new CommonService();
 
-
         $params = array(
             'approve_status' => 'yes',
             'updated_on' => $commonservice->getDateTime(),
@@ -50,6 +49,7 @@ class PurchaseOrderTable extends Model
 
         if ($request->input('poNumber') != null && trim($request->input('poNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
+            $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
             $poId = DB::table('purchase_orders')->insertGetId(
                 [
                     'po_number'      => $data['poNumber'],
@@ -63,6 +63,8 @@ class PurchaseOrderTable extends Model
                     'created_on'      => $commonservice->getDateTime(),
                     'upload_path'      => $uploadfile,
                     'quote_id'         => $quoteId,
+                    'last_date_of_delivery' => $lastDelDate,
+                    'delivery_location' => $data['deliveryLoc'],
                 ]
             );
 
@@ -315,6 +317,7 @@ class PurchaseOrderTable extends Model
         if ($params->input('poNumber') != null && trim($params->input('poNumber')) != '') {
             $commonservice = new CommonService();
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
+            $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
             $params = array(
                 'po_number' => $data['poNumber'],
                 'po_issued_on'    => $issuedOn,
@@ -325,6 +328,8 @@ class PurchaseOrderTable extends Model
                 'description' => $data['description'],
                 'updated_by'      => session('userId'),
                 'updated_on'      => $commonservice->getDateTime(),
+                'last_date_of_delivery' => $lastDelDate,
+                'delivery_location' => $data['deliveryLoc'],
             );
 
             $purchaseOrder = DB::table('purchase_orders')
