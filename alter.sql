@@ -245,3 +245,8 @@ CREATE TABLE `delivery_schedule_edit_comments` (
  `updated_on` datetime DEFAULT NULL,
  PRIMARY KEY (`delivery_comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+
+---sudarmathi july 28 2020
+
+ALTER TABLE `purchase_orders` ADD `last_date_of_delivery` DATE NULL AFTER `quote_id`, ADD `delivery_location` VARCHAR(255) NULL AFTER `last_date_of_delivery`

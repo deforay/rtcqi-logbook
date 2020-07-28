@@ -125,6 +125,24 @@ $currentDate=date('d-M-Y');
                                             </fieldset>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="lastDeliveryDate" onchange="checkDate();return false;" value="" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Last Delivery Date" name="lastDeliveryDate" title="Please enter Last Delivery Date">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset>
+                                                <h5>Delivery Location<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="deliveryLoc" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Location" name="deliveryLoc" title="Please enter Delivery Location">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <hr>
                                     <div class="row">
                                         <div class="table-responsive">
@@ -439,6 +457,25 @@ $currentDate=date('d-M-Y');
 			}
 
 		});
+    }
+
+    function checkDate()
+    {
+        let lastDeliveryDate  = new Date($("#lastDeliveryDate").val())
+        let invitedOn  = new Date();
+        if(lastDeliveryDate  && invitedOn)
+        {
+            if(invitedOn > lastDeliveryDate)
+            {
+                    swal("Please enter the valid date")
+                    $("#lastDeliveryDate").val('')
+                return false
+            }
+            else
+            {
+                return true
+            }
+        }
     }
 </script>
 @endsection
