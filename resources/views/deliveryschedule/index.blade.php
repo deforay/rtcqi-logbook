@@ -71,6 +71,25 @@
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
+                                <?php if(session('loginType')=='users'){ ?>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Purchase Order
+                                            </h5>
+                                            <div class="form-group">
+                                            <select class="form-control" autocomplete="off" style="width:100%;" id="rfqId" name="rfqId"  onchange="getAllDeliverySchedule(this.value)">
+                                            <option value=''>Select Purchase Order</option>
+                                                @foreach ($poList as $po)
+                                                <option value="{{$po->po_id}}" >{{$po->po_number}}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <?php }?>
+                                <br/>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList">
                                         <thead>
@@ -103,7 +122,7 @@
         getAllDeliverySchedule();
         $.unblockUI();
     });
-    function getAllDeliverySchedule()
+    function getAllDeliverySchedule(val = '')
     {
       $.ajaxSetup({
           headers: {
@@ -119,6 +138,9 @@
             ajax: {
                 url:'{{ url("getAllDeliverySchedule") }}',
                 type: 'POST',
+                data : {
+                    poId : val,
+                }
             },
             columns: [
                     

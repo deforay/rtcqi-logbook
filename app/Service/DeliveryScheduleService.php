@@ -10,10 +10,10 @@ class DeliveryScheduleService
 {
 	
 	//Get All Delivery Schedule List
-	public function getAllDeliverySchedule()
+	public function getAllDeliverySchedule($request)
     {
 		$deliverySchedulemodel = new DeliveryScheduleTable();
-        $result = $deliverySchedulemodel->fetchAllDeliverySchedule();
+        $result = $deliverySchedulemodel->fetchAllDeliverySchedule($request);
         return $result;
 	}
 

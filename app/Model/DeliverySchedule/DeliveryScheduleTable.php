@@ -46,14 +46,17 @@ class DeliveryScheduleTable extends Model
     }
 
     //all delivery schedule
-    public function fetchAllDeliverySchedule(){
+    public function fetchAllDeliverySchedule($params){
+        $req = $params->all();
         if(session('loginType')=='users'){
             $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
-                    ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
+                    ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id');
+                    if(isset($req['poId']) && $req['poId'])
+                       $data = $data->where('purchase_order_details.po_id', '=', $req['poId']);
                     // ->where('purchase_order_details.delivery_status', '=', 'pending')
                     // ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
-                    ->get();
+            $data = $data->get();
         }
         else{
             $userId=session('userId');
