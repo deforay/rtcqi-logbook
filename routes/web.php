@@ -218,3 +218,7 @@ Route::post('/getAllDeliverySchedule', 'DeliverySchedule\DeliveryScheduleControl
 Route::post('/deliveryDetailsEdit/{id}', 'DeliverySchedule\DeliveryScheduleController@deliveryDetailsEdit');
 Route::post('/deliveryschedule/updateDeliverySchedule/{id}', 'DeliverySchedule\DeliveryScheduleController@updateDeliverySchedule');
 Route::post('/getDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@getDeliverySchedule');
+Route::get('/itemreceive', 'DeliverySchedule\DeliveryScheduleController@itemreceive')->name('deliveryschedule.itemreceive');
+Route::post('/getAllPendingDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@getAllPendingDeliverySchedule');
+Route::post('/itemReceiveEdit/{id}', 'DeliverySchedule\DeliveryScheduleController@itemReceiveEdit');
+Route::post('/itemreceive/updateItemReceive/{id}', 'DeliverySchedule\DeliveryScheduleController@updateItemReceive');

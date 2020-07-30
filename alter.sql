@@ -250,3 +250,12 @@ CREATE TABLE `delivery_schedule_edit_comments` (
 ---sudarmathi july 28 2020
 
 ALTER TABLE `purchase_orders` ADD `last_date_of_delivery` DATE NULL AFTER `quote_id`, ADD `delivery_location` VARCHAR(255) NULL AFTER `last_date_of_delivery`
+
+---Sudarmathi july 29 2020
+
+ALTER TABLE `delivery_schedule` ADD `delivery_schedule_status` VARCHAR(255) NULL AFTER `pod_id`;
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController', 'itemreceive', 'Item Receive');
+
+---Sudarmathi july 30 2020
+ALTER TABLE `delivery_schedule` ADD `received_qty` INT NULL AFTER `delivery_schedule_status`, ADD `damaged_qty` INT NULL AFTER `received_qty`;
+ALTER TABLE `delivery_schedule` ADD `short_description` TEXT NULL AFTER `damaged_qty`;

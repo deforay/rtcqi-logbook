@@ -28,6 +28,7 @@ class DeliveryScheduleTable extends Model
                 'comments'  => $data['comments'],
                 'created_by'      => session('userId'),
                 'created_on'      => $commonservice->getDateTime(),
+                'delivery_schedule_status' => 'pending for shipping',
             ]
         );
         if($data['status']){
@@ -64,6 +65,29 @@ class DeliveryScheduleTable extends Model
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                    // ->where('purchase_order_details.delivery_status', '=', 'pending')
+                    ->where('purchase_orders.vendor', '=', $userId)
+                    ->get();
+        }
+        return $data;
+    }
+
+    public function fetchAllPendingDeliverySchedule(){
+        if(session('loginType')=='users'){
+            $data = DB::table('delivery_schedule')
+                    ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
+                    ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
+                    ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping');
+                    // ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+            $data = $data->get();
+        }
+        else{
+            $userId=session('userId');
+            $data = DB::table('delivery_schedule')
+                    ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
+                    ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
+                    ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                    ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping')
                     // ->where('purchase_order_details.delivery_status', '=', 'pending')
                     ->where('purchase_orders.vendor', '=', $userId)
                     ->get();
@@ -133,5 +157,31 @@ class DeliveryScheduleTable extends Model
                     ->select('*',$delDate)
                     ->get();
         return $query;
+    }
+
+    public function updateItemReceive($id,$request)
+    {
+        $data = $request->all();
+        // dd($data);
+        $commonservice = new CommonService();
+
+        $autoId = DB::table('delivery_schedule')
+                    ->where('delivery_id', '=', base64_decode($id))
+                    ->update(
+                        [
+                            'received_qty'      => $data['receivedQty'],
+                            'damaged_qty'    => $data['damagedQty'],
+                            'short_description' => $data['description'],
+                            'delivery_schedule_status' => $data['status'],
+                            'updated_by'      => session('userId'),
+                            'updated_on'      => $commonservice->getDateTime(),
+                        ]
+                    );
+
+
+        $commonservice = new CommonService();
+        $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
+        
+        return $autoId;
     }
 }

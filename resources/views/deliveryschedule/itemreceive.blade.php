@@ -1,7 +1,7 @@
 <!-- 
     Author             : Sudarmathi M
-    Created Date       : 17 July 2020
-    Description        : Delivery Schedule view screen
+    Created Date       : 29 July 2020
+    Description        : Purchase Order view screen
     Last Modified Date :   
     Last Modified Name :
 -->
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/deliveryschedule/">Delivery Schedule</a>
+                        <li class="breadcrumb-item"><a href="/itemreceive/">Item Receive</a>
                         </li>
                     </ol>
                 </div>
@@ -28,12 +28,7 @@
     
         <div class="content-header-right col-md-4 col-12 ">
             <div class="dropdown float-md-right">
-            <?php
-                $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['add']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['add'] == "allow")){ ?>
-                    <a href="/deliveryschedule/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-user-plus icon-left"></i> Add Delivery Schedule</b></a>
-            <?php } ?>
+            
             </div>
         </div>
     </div>
@@ -58,7 +53,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Delivery Schedule Details</h3>
+                            <h3 class="content-header-title mb-0">Pending For Shipping Delivery Schedule Details</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -71,24 +66,6 @@
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
-                                <?php if(session('loginType')=='users'){ ?>
-                                <div class="row">
-                                    <div class="col-xl-4 col-lg-12">
-                                        <fieldset>
-                                            <h5>Purchase Order
-                                            </h5>
-                                            <div class="form-group">
-                                            <select class="form-control" autocomplete="off" style="width:100%;" id="rfqId" name="rfqId"  onchange="getAllDeliverySchedule(this.value)">
-                                            <option value=''>Select Purchase Order</option>
-                                                @foreach ($poList as $po)
-                                                <option value="{{$po->po_id}}" >{{$po->po_number}}</option>
-                                                @endforeach
-                                            </select>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                                <?php }?>
                                 <br/>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList">
@@ -119,10 +96,10 @@
   <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllDeliverySchedule();
+        getAllPendingDeliverySchedule();
         $.unblockUI();
     });
-    function getAllDeliverySchedule(val = '')
+    function getAllPendingDeliverySchedule(val = '')
     {
       $.ajaxSetup({
           headers: {
@@ -136,7 +113,7 @@
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllDeliverySchedule") }}',
+                url:'{{ url("getAllPendingDeliverySchedule") }}',
                 type: 'POST',
                 data : {
                     poId : val,

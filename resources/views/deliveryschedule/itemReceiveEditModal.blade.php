@@ -18,7 +18,7 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                 <div class="card-content collapse show">
                     <div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
-                        <form class="form form-horizontal" role="form" name="updateDeliverySchedule" id="updateDeliverySchedule" method="post" action="/deliveryschedule/updateDeliverySchedule/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
+                        <form class="form form-horizontal" role="form" name="updateItemReceive" id="updateItemReceive" method="post" action="/itemreceive/updateItemReceive/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
                         @csrf
                         <!-- <div>
                             <center><h4><b>PURCHASE ORDER DETAILS</b></h4><center>
@@ -51,9 +51,29 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                             </div>
                         </div>
                         <br/>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12">
+                                <h4><b>Item Name : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$result[0]->item_name}} </span></h4>
+                            </div>
+                            <div class="col-xl-6 col-lg-12">
+                                <h4><b>Delivery Quantity : </b><span id="deliveryDate" class="spanFont" style="text-transform: capitalize;">{{$result[0]->delivery_qty}} </span></h4>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12">
+                                <h4><b>Expected Delivery : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$deliveryDate}} </span></h4>
+                            </div>
+                            <div class="col-xl-6 col-lg-12">
+                                <h4><b>Delivery Mode : </b><span id="deliveryDate" class="spanFont" style="text-transform: capitalize;">{{$result[0]->delivery_mode}} </span></h4>
+                            </div>
+                        </div>
+                        <br/>
+                       
                         <!-- <div class="row">
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php 
+                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">
+                                        <?php 
                                             // if(isset($result[0]->upload_path)){
 
                                             //     $fileVaL= explode(",", $result[0]->upload_path);
@@ -70,49 +90,26 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                                             //     echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                             //      }
                                             // }
-                                                ?> </span></h4>
+                                        ?> </span></h4>
                             </div>
                         </div> -->
                         <br/>
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <fieldset>
-                                    <h5>Item Name<span class="mandatory">*</span>
+                                    <h5>Received Quantity<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                    <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
-                                        <option value="{{$result[0]->item_id}}">{{$result[0]->item_name}}</option>
-                                    </select>
+                                        <input type="text" id="receivedQty" oninput="changeScheduleStatus()" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Received Quantity" name="receivedQty" title="Please enter Received Quantity" >
                                     </div>
                                 </fieldset>
                             </div>
                             <div class="col-xl-6 col-lg-12">
                                 <fieldset>
-                                    <h5>Delivery Quantity<span class="mandatory">*</span>
+                                    <h5>Damaged Quantity<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <input type="text" id="deliverQty" value="{{$result[0]->delivery_qty}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please enter Delivery Quantity" >
-                                    </div>
-                                    <input type="hidden" id="hiddenPo_id">
-                                </fieldset>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-12">
-                                <fieldset>
-                                    <h5>Expected Delivery <span class="mandatory">*</span>
-                                    </h5>
-                                    <div class="form-group">
-                                        <input type="text" id="expectedDelivery"  value="{{$deliveryDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-xl-6 col-lg-12">
-                                <fieldset>
-                                    <h5>Delivery Mode<span class="mandatory">*</span>
-                                    </h5>
-                                    <div class="form-group">
-                                        <input type="text" id="deliveryMode"  value="{{$result[0]->delivery_mode}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please enter Delivery mode" >
+                                        <input type="text" id="damagedQty" oninput="changeScheduleStatus();" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Damaged Quantity" name="damagedQty" title="Please enter Damaged Quantity" >
                                     </div>
                                 </fieldset>
                             </div>
@@ -120,10 +117,19 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <fieldset>
-                                    <h5>Comments <span class="mandatory">*</span>
+                                    <h5>Delivery Schedule Status<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Comments"></textarea>
+                                        <input type="text" id="status" value="" readonly class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-12">
+                                <fieldset>
+                                    <h5>Short Description <span class="mandatory">*</span>
+                                    </h5>
+                                    <div class="form-group">
+                                        <textarea id="description" class="form-control" name="description" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Description"></textarea>
                                     </div>
                                 </fieldset>
                             </div>
@@ -148,6 +154,7 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
 </section>
 
 <script>
+var deliveryQty = '{{$result[0]->delivery_qty}}';
 $(document).ready(function() {
     $('.datepicker').datepicker({
         // format: 'dd-M-yyyy',
@@ -164,20 +171,55 @@ $(document).ready(function() {
 
 duplicateName = true;
 function validateNow() {
-   
+    let total = 0;
+    receivedQty = $('#receivedQty').val();
+    damagedQty = $('#damagedQty').val();
+    total = parseInt(receivedQty) + parseInt(damagedQty);
     flag = deforayValidator.init({
-        formId: 'updateDeliverySchedule'
+        formId: 'updateItemReceive'
     });
-    
-    if (flag == true) {
-        if (duplicateName) {
-            document.getElementById('updateDeliverySchedule').submit();
-        }
+    if(total > deliveryQty){
+        swal("Please enter valid received and damaged quantity")
     }
     else{
-        $('#show_alert').html(flag).delay(3000).fadeOut();
-        $('#show_alert').css("display","block");
-        $(".infocus").focus();
+        if (flag == true) {
+            $('#status').prop('disabled',false)
+            if (duplicateName) {
+                document.getElementById('updateItemReceive').submit();
+            }
+        }
+        else{
+            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $('#show_alert').css("display","block");
+            $(".infocus").focus();
+        }
+    }
+}
+
+function changeScheduleStatus(){
+    receivedQty = $('#receivedQty').val();
+    damagedQty = $('#damagedQty').val();
+    if(damagedQty>0){
+        $('#description').addClass('isRequired');
+    }
+    if(receivedQty){
+        if(receivedQty>deliveryQty){
+            $('#receivedQty').val('')
+            swal("Entered Received Quantity cannot be greater than Delivery Quantity")
+            return
+        }
+        if(damagedQty>deliveryQty){
+            $('#damagedQty').val('')
+            swal("Entered Damaged Quantity cannot be greater than Delivery Quantity")
+            return
+        }
+        if(deliveryQty == receivedQty && (damagedQty=='' || damagedQty==0)){
+            $('#status').val('Received')
+            // $('#damagedQty').val(0);
+        }
+        else{
+            $('#status').val('Non Conformity')
+        }
     }
 }
 </script>
