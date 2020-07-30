@@ -68,4 +68,29 @@ class DeliveryScheduleService
         $result = $deliverySchedulemodel->fetchDeliverySchedule($request);
         return $result;
 	}
+
+	public function getAllPendingDeliverySchedule(){
+		$deliverySchedulemodel = new DeliveryScheduleTable();
+        $result = $deliverySchedulemodel->fetchAllPendingDeliverySchedule();
+        return $result;
+	}
+
+	public function updateItemReceive($id,$request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$deliverySchedulemodel = new DeliveryScheduleTable();
+        	$result = $deliverySchedulemodel->updateItemReceive($id,$request);
+			if($result>0){
+				DB::commit();
+				$msg = 'Item Receive Updated Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
 }

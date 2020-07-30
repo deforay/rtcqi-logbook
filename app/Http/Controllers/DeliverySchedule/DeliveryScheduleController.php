@@ -101,4 +101,70 @@ class DeliveryScheduleController extends Controller
         $result = $service->getDeliverySchedule($request);
         return $result;
     }
+
+    
+    //View pending Delivery schedule main screen
+    public function itemreceive()
+    {
+        if(session('login')==true)
+        {
+            return view('deliveryschedule.itemreceive');
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    // Get all the pending delivery schedule list
+    public function getAllPendingDeliverySchedule(Request $request)
+    {
+        $service = new DeliveryScheduleService();
+        $data = $service->getAllPendingDeliverySchedule();
+        return DataTables::of($data)
+            ->editColumn('expected_date_of_delivery', function($data){
+                $issuedOn = $data->expected_date_of_delivery;
+                if($issuedOn){
+                    $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                    return $issuedOn;
+                }
+            })
+            ->editColumn('delivery_schedule_status', function($data){
+                if($data->delivery_schedule_status){
+                    $del = '<span class="badge badge-warning">'.ucfirst($data->delivery_status).'</span>';
+                    return $del;
+                }
+            })
+            ->addColumn('action', function($data){
+                $button = '<div style="width: 180px;">';
+                $role = session('role');
+               
+                if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
+                    $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/itemReceiveEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                }else{
+                    $button .= '';
+                }
+               
+                $button .= '</div>';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function itemReceiveEdit($id)
+    {
+        $deliveryService = new DeliveryScheduleService();
+        $delivery = $deliveryService->getDeliveryScheduleById($id);
+        // dd($delivery);
+        $view = View::make('deliveryschedule.itemReceiveEditModal', ['deliveryId'=>$id,'result'=>$delivery]);
+        $contents = (string) $view;
+        return $contents;
+         
+    }
+
+    public function updateItemReceive($id,Request $request){
+        $deliveryService = new DeliveryScheduleService();
+        $delivery = $deliveryService->updateItemReceive($id,$request);
+        return Redirect::route('deliveryschedule.itemreceive')->with('status', $delivery);
+    }
+
 }
