@@ -123,7 +123,7 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                                     <h5>Comments <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Comments"></textarea>
+                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the description about damaged quantity"  title="Please Enter Comments"></textarea>
                                     </div>
                                 </fieldset>
                             </div>

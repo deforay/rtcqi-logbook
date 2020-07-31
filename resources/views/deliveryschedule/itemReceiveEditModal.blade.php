@@ -69,38 +69,57 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                             </div>
                         </div>
                         <br/>
-                       
-                        <!-- <div class="row">
-                            <div class="col-xl-6 col-lg-12">
-                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">
-                                        <?php 
-                                            // if(isset($result[0]->upload_path)){
-
-                                            //     $fileVaL= explode(",", $result[0]->upload_path);
-                                            //     $filecount=count($fileVaL);
-                                            //     if($filecount<1){
-                                            //         $forcount=$filecount-1;
-                                            //     }else{
-                                            //         $forcount=$filecount;
-                                            //     }
-                                            //     for($i=0;$i<$forcount;$i++)
-                                            //     {
-                                            //     $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                   
-                                            //     echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
-                                            //      }
-                                            // }
-                                        ?> </span></h4>
-                            </div>
-                        </div> -->
-                        <br/>
                         <div class="row">
+                            <div class="table-responsive">
+                                <div class="bd-example">
+                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:25%;">Expiry Date<span class="mandatory">*</span></th>
+                                            <th style="width:25%;">Service Date<span class="mandatory">*</span></th>
+                                            <th style="width:15%;">Received Quantity<span class="mandatory">*</span></th>
+                                            <th style="width:15%;">Damaged Quantity<span class="mandatory">*</span></th>
+                                            <th style="width:20%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemDetails">
+                                        <tr>
+                                            <td>
+                                                <input type="text" id="expiryDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
+                                            </td>
+                                            <td>
+                                                <input type="text" id="serviceDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">
+                                            </td>
+                                            <td>
+                                                <input type="number" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
+                                            </td>
+                                            <td>
+                                                <input type="number" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Expiry Qty" title="Please enter the expiry qty" value="" />
+                                            </td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-6" >
+                                                        <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
+                                                    </div>
+                                                    <!-- <div class="col-md-6 col-6">
+                                                        <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
+                                                    </div> -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <!-- <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <fieldset>
                                     <h5>Received Quantity<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <input type="text" id="receivedQty" oninput="changeScheduleStatus()" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Received Quantity" name="receivedQty" title="Please enter Received Quantity" >
+                                        <input type="text" id="receivedQty" oninput="changeScheduleStatus(this.value,this.id)" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Received Quantity" name="receivedQty" title="Please enter Received Quantity" >
                                     </div>
                                 </fieldset>
                             </div>
@@ -113,14 +132,17 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                                     </div>
                                 </fieldset>
                             </div>
-                        </div>
+                        </div> -->
+                        <input type="hidden" id="receivedQtySum"  value="" class="form-control" autocomplete="off" placeholder="Enter Received Quantity" name="receivedQtySum" title="Please enter Received Quantity" >
+                        <input type="hidden" id="damagedQtySum" value="" class="form-control" autocomplete="off" placeholder="Enter Damaged Quantity" name="damagedQtySum" title="Please enter Damaged Quantity" >
+                        <input type="hidden" id="itemId" name="itemId" class="form-control" value="{{$result[0]->item_id}}">
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-6 col-lg-12" style="display:none;">
                                 <fieldset>
                                     <h5>Delivery Schedule Status<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <input type="text" id="status" value="" readonly class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
+                                        <input type="text" id="status" value="" class="form-control" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
                                     </div>
                                 </fieldset>
                             </div>
@@ -163,7 +185,7 @@ $(document).ready(function() {
         changeMonth: true,
         changeYear: true,
         maxDate: 0,
-        // startDate:'today',
+        startDate:'today',
         todayHighlight: true,
         clearBtn: true,
     });
@@ -171,15 +193,35 @@ $(document).ready(function() {
 
 duplicateName = true;
 function validateNow() {
+    receivedQtySum = 0;
+    damagedQtySum = 0;
+    $('.receivedQty').each(function() {
+        receivedQtySum += Number($(this).val());
+        $('#receivedQtySum').val(receivedQtySum)
+    });
+    $('.damagedQty').each(function() {
+        damagedQtySum += Number($(this).val());
+        $('#damagedQtySum').val(damagedQtySum)
+    });
+    if(damagedQtySum>0){
+        $('#description').addClass('isRequired');
+        $('#status').val('Non Conformity')
+    }
+    else if(receivedQtySum == deliveryQty && damagedQtySum == 0){
+        $('#status').val('Received')
+        $('#description').removeClass('isRequired');
+    }
+    else{
+        $('#status').val('Non Conformity')
+    }
     let total = 0;
-    receivedQty = $('#receivedQty').val();
-    damagedQty = $('#damagedQty').val();
-    total = parseInt(receivedQty) + parseInt(damagedQty);
+    total = parseInt(receivedQtySum) + parseInt(damagedQtySum);
     flag = deforayValidator.init({
         formId: 'updateItemReceive'
     });
-    if(total > deliveryQty){
-        swal("Please enter valid received and damaged quantity")
+    if(parseInt(total) > parseInt(deliveryQty)){
+        swal("Please enter valid received and damaged quantity, can't exceed delivery quantity")
+        flag = false
     }
     else{
         if (flag == true) {
@@ -196,30 +238,94 @@ function validateNow() {
     }
 }
 
-function changeScheduleStatus(){
-    receivedQty = $('#receivedQty').val();
-    damagedQty = $('#damagedQty').val();
-    if(damagedQty>0){
-        $('#description').addClass('isRequired');
+function changeScheduleStatus(val,id){
+    // receivedQty = $('#receivedQty').val();
+    // damagedQty = $('#damagedQty').val();
+    // if(damagedQty>0){
+    //     $('#description').addClass('isRequired');
+    // }
+    // if(receivedQty){
+    //     if(receivedQty>deliveryQty){
+    //         $('#receivedQty').val('')
+    //         swal("Entered Received Quantity cannot be greater than Delivery Quantity")
+    //         return
+    //     }
+    //     if(damagedQty>deliveryQty){
+    //         $('#damagedQty').val('')
+    //         swal("Entered Damaged Quantity cannot be greater than Delivery Quantity")
+    //         return
+    //     }
+    //     if(deliveryQty == receivedQty && (damagedQty=='' || damagedQty==0)){
+    //         $('#status').val('Received')
+    //         // $('#damagedQty').val(0);
+    //     }
+    //     else{
+    //         $('#status').val('Non Conformity')
+    //     }
+    // }
+    receivedQtySum = 0;
+    damagedQtySum = 0;
+    $('.receivedQty').each(function() {
+        receivedQtySum += Number($(this).val());
+    });
+    $('.damagedQty').each(function() {
+        damagedQtySum += Number($(this).val());
+    });
+    if(parseInt(receivedQtySum) > parseInt(deliveryQty)){
+        swal("Total of Received Quantity cannot be greater than Delivery Quantity")
     }
-    if(receivedQty){
-        if(receivedQty>deliveryQty){
-            $('#receivedQty').val('')
-            swal("Entered Received Quantity cannot be greater than Delivery Quantity")
-            return
-        }
-        if(damagedQty>deliveryQty){
-            $('#damagedQty').val('')
-            swal("Entered Damaged Quantity cannot be greater than Delivery Quantity")
-            return
-        }
-        if(deliveryQty == receivedQty && (damagedQty=='' || damagedQty==0)){
-            $('#status').val('Received')
-            // $('#damagedQty').val(0);
-        }
-        else{
-            $('#status').val('Non Conformity')
-        }
+    if(parseInt(damagedQtySum) > parseInt(deliveryQty)){
+        swal("Total of Damaged Quantity cannot be greater than Delivery Quantity")
     }
+    if(parseInt(val)>parseInt(deliveryQty)){
+        $('#'+id).val('')
+        // $('#'+id).addClass('infocus');
+        swal("Entered Quantity cannot be greater than Delivery Quantity")
+    }
+    
+}
+
+rowCount = 0;
+function insRow() {
+    rowCount++;
+    rl = document.getElementById("itemDetails").rows.length;
+    var a = document.getElementById("itemDetails").insertRow(rl);
+    a.setAttribute("style", "display:none;");
+    // a.setAttribute("class", "data");
+    var b = a.insertCell(0);
+    var d = a.insertCell(1);
+    var c = a.insertCell(2);
+    var f = a.insertCell(3);
+    var e = a.insertCell(4);
+
+    rl = document.getElementById("itemDetails").rows.length - 1;
+    b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
+    d.innerHTML = '<input type="text" id="serviceDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">';
+    c.innerHTML = '<input type="number" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
+    f.innerHTML = '<input type="number" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Expiry Qty" title="Please enter the damaged qty" value="" />'
+    e.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+    $(a).fadeIn(800);
+    $('.datepicker').datepicker({
+        // format: 'dd-M-yyyy',
+        autoclose: true,
+        format: 'dd-M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+        startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
+    });
+}
+
+function removeRow(el) {
+    $(el).parent().fadeOut("slow", function () {
+        $(el).parent().remove();
+        rowCount = rowCount-1;
+        rl = document.getElementById("itemDetails").rows.length;
+        if (rl == 0) {
+            insRow();
+        }
+    });
 }
 </script>

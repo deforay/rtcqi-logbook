@@ -259,3 +259,6 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 ---Sudarmathi july 30 2020
 ALTER TABLE `delivery_schedule` ADD `received_qty` INT NULL AFTER `delivery_schedule_status`, ADD `damaged_qty` INT NULL AFTER `received_qty`;
 ALTER TABLE `delivery_schedule` ADD `short_description` TEXT NULL AFTER `damaged_qty`;
+
+--sudarmathi july 31 2020
+CREATE TABLE `asm`.`inventory_stock` ( `stock_id` INT NOT NULL AUTO_INCREMENT , `item_id` INT NOT NULL , `expiry_date` DATE NOT NULL , `service_date` DATE NOT NULL , `stock_quantity` INT NOT NULL , `created_on` DATETIME NULL , `updated_on` DATETIME NULL , `created_by` INT NULL , `updated_by` INT NULL , PRIMARY KEY (`stock_id`)) ENGINE = InnoDB;

@@ -169,8 +169,8 @@ class DeliveryScheduleTable extends Model
                     ->where('delivery_id', '=', base64_decode($id))
                     ->update(
                         [
-                            'received_qty'      => $data['receivedQty'],
-                            'damaged_qty'    => $data['damagedQty'],
+                            'received_qty'      => $data['receivedQtySum'],
+                            'damaged_qty'    => $data['damagedQtySum'],
                             'short_description' => $data['description'],
                             'delivery_schedule_status' => $data['status'],
                             'updated_by'      => session('userId'),
@@ -178,7 +178,20 @@ class DeliveryScheduleTable extends Model
                         ]
                     );
 
-
+        for($i=0;$i<count($data['expiryDate']);$i++){
+            $expiryDate = $commonservice->dateFormat($data['expiryDate'][$i]);
+            $serviceDate = $commonservice->dateFormat($data['serviceDate'][$i]);
+            $inv = DB::table('inventory_stock')->insertGetId(
+                        [
+                            'item_id'      => $data['itemId'],
+                            'expiry_date'    => $expiryDate,
+                            'service_date'  => $serviceDate,
+                            'stock_quantity'    => $data['receivedQty'][$i],
+                            'created_by'      => session('userId'),
+                            'created_on'      => $commonservice->getDateTime(),
+                        ]
+                    );
+        }
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
         
