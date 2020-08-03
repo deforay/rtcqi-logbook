@@ -11,13 +11,13 @@
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-		<h3 class="content-header-title mb-0 d-inline-block">Branch Type</h3>
+		<h3 class="content-header-title mb-0 d-inline-block">Location Type</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
 			<li class="breadcrumb-item">Manage
 			</li>
-			<li class="breadcrumb-item"><a href="/branchtype/">Branch Type</a>
+			<li class="breadcrumb-item"><a href="/branchtype/">Location Type</a>
 			</li>
 			<li class="breadcrumb-item active">Add</li>
 			</ol>
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
-                                            <h5>Branch Type Name <span class="mandatory">*</span>
+                                            <h5>Location Type Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <input type="text" id="branchTypeName" class="form-control isRequired" autocomplete="off" placeholder="Enter branch type name" name="branchTypeName" title="Please enter branch type name" onblur="checkNameValidation('branch_types','branch_type', this.id,'', 'Entered branch type name is already exist.')">
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
-											<h5>Branch Type Status<span class="mandatory">*</span>
+											<h5>Location Type Status<span class="mandatory">*</span>
 										</h5>
 										<div class="form-group">
 											<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="branchTypeStatus" name="branchTypeStatus" title="Please select branch type status">

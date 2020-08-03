@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/branchtype/">Branch Type</a>
+                        <li class="breadcrumb-item"><a href="/branchtype/">Location Type</a>
                         </li>
                     </ol>
                 </div>
@@ -32,7 +32,7 @@
                 $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\BranchType\\BranchTypeController']['add']) && ($role['App\\Http\\Controllers\\BranchType\\BranchTypeController']['add'] == "allow")){ ?>
                     <a href="/branchtype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-user-plus icon-left"></i> Add Branch Type</b></a>
+                    <b><i class="ft-user-plus icon-left"></i> Add Location Type</b></a>
             <?php } ?>
             </div>
         </div>
@@ -58,7 +58,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Branch Type Details</h3>
+                            <h3 class="content-header-title mb-0">Location Type Details</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -75,7 +75,7 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="branchTypeList">
                                         <thead>
                                             <tr>
-                                                <th>Branch Type Name</th>
+                                                <th>Location Type Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>

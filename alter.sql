@@ -262,3 +262,8 @@ ALTER TABLE `delivery_schedule` ADD `short_description` TEXT NULL AFTER `damaged
 
 --sudarmathi july 31 2020
 CREATE TABLE `asm`.`inventory_stock` ( `stock_id` INT NOT NULL AUTO_INCREMENT , `item_id` INT NOT NULL , `expiry_date` DATE NOT NULL , `service_date` DATE NOT NULL , `stock_quantity` INT NOT NULL , `created_on` DATETIME NULL , `updated_on` DATETIME NULL , `created_by` INT NULL , `updated_by` INT NULL , PRIMARY KEY (`stock_id`)) ENGINE = InnoDB;
+
+--Sudarmathi August 03 2020
+
+ALTER TABLE `inventory_stock` ADD `branch_id` INT NOT NULL AFTER `updated_by`;
+ALTER TABLE `delivery_schedule` ADD `branch_id` INT NOT NULL AFTER `short_description`;
