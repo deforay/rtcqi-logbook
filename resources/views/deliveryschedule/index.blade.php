@@ -94,6 +94,7 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList">
                                         <thead>
                                             <tr>
+                                                <th>Purchase Order</th>
                                                 <th>Item Name</th>
                                                 <th>Quantity</th>
                                                 <th>Delivery Date</th>
@@ -143,7 +144,7 @@
                 }
             },
             columns: [
-                    
+                    { data: 'po_number', name: 'po_number'},
                     { data: 'item_name', name: 'item_name',className:'firstcaps'},
                     { data: 'delivery_qty', name: 'delivery_qty'},
                     { data: 'expected_date_of_delivery', name: 'expected_date_of_delivery'},
