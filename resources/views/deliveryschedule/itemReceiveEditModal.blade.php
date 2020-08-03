@@ -4,6 +4,12 @@ use App\Service\CommonService;
 $common = new CommonService();
 $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
 ?>
+<style>
+td{
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+</style>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
         <div class="col-12">
@@ -72,29 +78,38 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                         <div class="row">
                             <div class="table-responsive">
                                 <div class="bd-example">
-                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg">
+                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:25%;">Expiry Date<span class="mandatory">*</span></th>
-                                            <th style="width:25%;">Service Date<span class="mandatory">*</span></th>
-                                            <th style="width:15%;">Received Quantity<span class="mandatory">*</span></th>
-                                            <th style="width:15%;">Damaged Quantity<span class="mandatory">*</span></th>
+                                            <th style="width:15%;">Expiry Date<span class="mandatory">*</span></th>
+                                            <th style="width:15%;">Service Date<span class="mandatory">*</span></th>
+                                            <th style="width:12%;">Received Qty<span class="mandatory">*</span></th>
+                                            <th style="width:12%;">Damaged Qty<span class="mandatory">*</span></th>
+                                            <th style="width:26%;">Locations<span class="mandatory">*</span></th>
                                             <th style="width:20%;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="itemDetails">
                                         <tr>
-                                            <td>
+                                            <td class="pr-1 pl-1">
                                                 <input type="text" id="expiryDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
                                             </td>
-                                            <td>
+                                            <td class="pr-1 pl-1">
                                                 <input type="text" id="serviceDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">
                                             </td>
-                                            <td>
+                                            <td class="pr-1 pl-1">
                                                 <input type="number" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
+                                            </td >
+                                            <td class="pr-1 pl-1">
+                                                <input type="number" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Damaged Qty" title="Please enter the damaged qty" value="" />
                                             </td>
-                                            <td>
-                                                <input type="number" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Expiry Qty" title="Please enter the expiry qty" value="" />
+                                            <td class="pr-1 pl-1">
+                                            <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches0" name="branches[]" title="Please select locations">
+                                                <option value="">Select Locations</option>
+                                                @foreach($branch as $type)
+                                                    <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                                @endforeach
+                                            </select>
                                             </td>
                                             <td>
                                                 <div class="row">
@@ -151,7 +166,7 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                                     <h5>Short Description <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <textarea id="description" class="form-control" name="description" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Description"></textarea>
+                                        <textarea id="description" class="form-control" name="description" placeholder="Enter the description about damaged quantity"  title="Please Enter Description"></textarea>
                                     </div>
                                 </fieldset>
                             </div>
@@ -296,13 +311,15 @@ function insRow() {
     var d = a.insertCell(1);
     var c = a.insertCell(2);
     var f = a.insertCell(3);
-    var e = a.insertCell(4);
-
+    var g = a.insertCell(4);
+    var e = a.insertCell(5);
     rl = document.getElementById("itemDetails").rows.length - 1;
     b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
     d.innerHTML = '<input type="text" id="serviceDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">';
     c.innerHTML = '<input type="number" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
-    f.innerHTML = '<input type="number" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Expiry Qty" title="Please enter the damaged qty" value="" />'
+    f.innerHTML = '<input type="number" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Damaged Qty" title="Please enter the damaged qty" value="" />'
+    g.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches' + rowCount + '" name="branches[]" title="Please select locations">\
+                        <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select>';
     e.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
     $(a).fadeIn(800);
     $('.datepicker').datepicker({

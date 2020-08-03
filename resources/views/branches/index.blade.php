@@ -24,7 +24,7 @@
                     </ol>
                 </div>
             </div>
-            <h3 class="content-header-title mb-0">Branches Details</h3>
+            <h3 class="content-header-title mb-0">Location Details</h3>
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
@@ -32,7 +32,7 @@
                 $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\Branches\\BranchesController']['add']) && ($role['App\\Http\\Controllers\\Branches\\BranchesController']['add'] == "allow")){ ?>
                     <a href="/branches/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-user-plus icon-left"></i> Add Branches</b></a>
+                    <b><i class="ft-user-plus icon-left"></i> Add Location</b></a>
             <?php } ?>
             </div>
         </div>
@@ -74,8 +74,8 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="branchList">
                                         <thead>
                                             <tr>
-                                                <th>Branch Name</th>
-                                                <th>Branch Type</th>
+                                                <th>Location Name</th>
+                                                <th>Location Type</th>
                                                 <th>Mobile No</th>
                                                 <th>Email</th>
                                                 <th>Country</th>

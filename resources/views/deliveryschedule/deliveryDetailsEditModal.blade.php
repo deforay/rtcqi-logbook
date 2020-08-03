@@ -3,6 +3,12 @@
 use App\Service\CommonService;
 $common = new CommonService();
 $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
+$issuedOn = $common->humanDateFormat($result[0]->po_issued_on);
+$branches = array();
+foreach($result as $branchList)
+{
+    array_push($branches, $branchList->branch_id);
+}
 ?>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
@@ -29,7 +35,7 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                                 <h4><b>PO Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->po_number }} </span></h4>
                             </div>
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>PO Issued On : </b><span id="quoteNumber" class="spanFont">{{$result[0]->po_issued_on}}</span></h4>
+                                <h4><b>PO Issued On : </b><span id="quoteNumber" class="spanFont">{{$issuedOn}}</span></h4>
                             </div>
                         </div>
                         <br/>
@@ -100,7 +106,7 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <fieldset>
-                                    <h5>Expected Delivery <span class="mandatory">*</span>
+                                    <h5>Estimated Delivery <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
                                         <input type="text" id="expectedDelivery"  value="{{$deliveryDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
@@ -123,7 +129,21 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
                                     <h5>Comments <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the description about damaged quantity"  title="Please Enter Comments"></textarea>
+                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Comments"></textarea>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-xl-6 col-lg-12">
+                                <fieldset>
+                                    <h5>Location <span class="mandatory">*</span>
+                                    </h5>
+                                    <div class="form-group">
+                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations">
+                                        <option value="">Select Locations</option>
+                                        @foreach($branch as $type)
+                                            <option value="{{ $type->branch_id }}" {{ in_array($type->branch_id, $branches) ?  'selected':''}}>{{ $type->branch_name }}</option>
+                                        @endforeach
+                                        </select>
                                     </div>
                                 </fieldset>
                             </div>
@@ -149,6 +169,11 @@ $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
 
 <script>
 $(document).ready(function() {
+    $(".select2").select2();
+    $("#branches").select2({
+        placeholder: "Select Locations",
+		allowClear: true
+    });
     $('.datepicker').datepicker({
         // format: 'dd-M-yyyy',
         autoclose: true,

@@ -239,6 +239,20 @@ $currentDate=date('d-M-Y');
                                 </div>
                             </fieldset>
                         </div>
+                        <div class="col-xl-6 col-lg-12">
+                            <fieldset>
+                                <h5>Location <span class="mandatory">*</span>
+                                </h5>
+                                <div class="form-group">
+                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations">
+                                    <option value="">Select Locations</option>
+                                    @foreach($branch as $type)
+                                        <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -447,50 +461,57 @@ $currentDate=date('d-M-Y');
         let expectedDelivery = $("#expectedDelivery").val();
         let deliveryMode = $("#deliveryMode").val();
         let comments = $("#comments").val();
+        let branches = $("#branches").val();
         let po = $('#purchaseOrder').val();
         console.log($('#qtyMax').val())
         console.log(deliverQty)
-        if(item && deliverQty && expectedDelivery && deliveryMode && comments){
-            if(parseInt(deliverQty) <= parseInt($('#qtyMax').val())){
-                if(parseInt(deliverQty) == parseInt($('#qtyMax').val())){
-                    status = "scheduled";
+        if(item && deliverQty && expectedDelivery && deliveryMode && comments && branches){
+            if(parseInt(deliverQty)>0){
+                if(parseInt(deliverQty) <= parseInt($('#qtyMax').val())){
+                    if(parseInt(deliverQty) == parseInt($('#qtyMax').val())){
+                        status = "scheduled";
+                    }
+                    else{
+                        status = "";
+                    }
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: "{{ url('/saveDeliverySchedule') }}",
+                        method: 'post',
+                        data: {
+                            item:item,
+                            po_id:po_id,
+                            deliverQty:deliverQty,
+                            expectedDelivery:expectedDelivery,
+                            deliveryMode:deliveryMode,
+                            comments:comments,
+                            status:status,
+                            branches:branches
+                        },
+                        success: function(result){
+                            console.log(result)
+                            if(result>0)
+                            {
+                                swal("Delivery Schedule Added Successfully")
+                                $('.close').trigger('click')
+                                // $("#deliveryScheduleAdd").modal('hide');
+                                getPurchaseOrder(po);
+                            }
+                            
+                        }
+
+                    });
                 }
                 else{
-                    status = "";
+                    swal("Entered quantity exceeds purchase order quantity")
                 }
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "{{ url('/saveDeliverySchedule') }}",
-                    method: 'post',
-                    data: {
-                        item:item,
-                        po_id:po_id,
-                        deliverQty:deliverQty,
-                        expectedDelivery:expectedDelivery,
-                        deliveryMode:deliveryMode,
-                        comments:comments,
-                        status:status
-                    },
-                    success: function(result){
-                        console.log(result)
-                        if(result>0)
-                        {
-                            swal("Delivery Schedule Added Successfully")
-                            $('.close').trigger('click')
-                            // $("#deliveryScheduleAdd").modal('hide');
-                            getPurchaseOrder(po);
-                        }
-                        
-                    }
-
-                });
             }
             else{
-                swal("Entered quantity exceeds purchase order quantity")
+                swal("Delivery quantity should be greater than zero")
             }
         }
         else{

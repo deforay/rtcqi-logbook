@@ -11,13 +11,13 @@
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-		<h3 class="content-header-title mb-0 d-inline-block">Branches</h3>
+		<h3 class="content-header-title mb-0 d-inline-block">Locations</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
 			<li class="breadcrumb-item">Manage
 			</li>
-			<li class="breadcrumb-item"><a href="/branches/">Branches</a>
+			<li class="breadcrumb-item"><a href="/branches/">Locations</a>
 			</li>
 			<li class="breadcrumb-item active">Add</li>
 			</ol>
@@ -32,7 +32,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Add Branches</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> Add Locations</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
-                                            <h5>Branch Name <span class="mandatory">*</span>
+                                            <h5>Location Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <input type="text" id="branchName" class="form-control isRequired" autocomplete="off" placeholder="Enter branch name" name="branchName" title="Please enter branch name" >
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
-											<h5>Branch Type<span class="mandatory">*</span>
+											<h5>Location Type<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branchType" name="branchType" title="Please select branch type" onchange="addNewField('branch_types','branch_type',this.id,'branch_type_status');">
@@ -151,7 +151,7 @@
 									</div>
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
-											<h5>Branch Status<span class="mandatory">*</span>
+											<h5>Location Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="branchStatus" name="branchStatus" title="Please select User status">

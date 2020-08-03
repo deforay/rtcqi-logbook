@@ -91,16 +91,17 @@
                                 <?php }?>
                                 <br/>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList" style="width:100%;">
                                         <thead>
                                             <tr>
-                                                <th>Purchase Order</th>
-                                                <th>Item Name</th>
-                                                <th>Quantity</th>
-                                                <th>Delivery Date</th>
-                                                <th>Delivery Mode</th>
-                                                <th>Comments</th>
-                                                <th>Action</th>
+                                                <th style="width:15%;">Purchase Order</th>
+                                                <th style="width:10%;">Item Name</th>
+                                                <th style="width:10%;">Quantity</th>
+                                                <th style="width:15%;">Estimated Delivery Date</th>
+                                                <th style="width:10%;">Delivery Mode</th>
+                                                <th style="width:10%;">Location</th>
+                                                <th style="width:20%;">Comments</th>
+                                                <th style="width:10%;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -149,6 +150,7 @@
                     { data: 'delivery_qty', name: 'delivery_qty'},
                     { data: 'expected_date_of_delivery', name: 'expected_date_of_delivery'},
                     { data: 'delivery_mode', name: 'delivery_mode'},
+                    { data: 'branch_name', name: 'branch_name' },
                     { data: 'comments', name: 'comments' },
                     {data: 'action', name: 'action', orderable: false},
                 ],

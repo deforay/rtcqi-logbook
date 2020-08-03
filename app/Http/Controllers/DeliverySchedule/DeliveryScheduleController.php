@@ -10,6 +10,7 @@ use App\Service\PurchaseOrderService;
 use App\Service\VendorsService;
 use App\Service\ItemService;
 use Yajra\DataTables\Facades\DataTables;
+use App\Service\BranchesService;
 use View;
 use Redirect;
 
@@ -35,7 +36,9 @@ class DeliveryScheduleController extends Controller
         $purchase = $purchaseOrderService->getAllActivePurchaseOrder();
         $itemservice = new ItemService();
         $item = $itemservice->getAllActiveItem();
-        return view('deliveryschedule.add',array('purchase'=>$purchase,'item' => $item));
+        $branchService = new BranchesService();
+        $branch = $branchService->getAllActiveBranches();
+        return view('deliveryschedule.add',array('purchase'=>$purchase,'item' => $item,'branch'=>$branch));
     }
     public function saveDeliverySchedule(Request $request)
     {
@@ -84,7 +87,9 @@ class DeliveryScheduleController extends Controller
         $deliveryService = new DeliveryScheduleService();
         $delivery = $deliveryService->getDeliveryScheduleById($id);
         // dd($delivery);
-        $view = View::make('deliveryschedule.deliveryDetailsEditModal', ['deliveryId'=>$id,'result'=>$delivery]);
+        $branchService = new BranchesService();
+        $branch = $branchService->getAllActiveBranches();
+        $view = View::make('deliveryschedule.deliveryDetailsEditModal', ['deliveryId'=>$id,'result'=>$delivery,'branch'=>$branch]);
         $contents = (string) $view;
         return $contents;
          
@@ -136,13 +141,19 @@ class DeliveryScheduleController extends Controller
             ->addColumn('action', function($data){
                 $button = '<div style="width: 180px;">';
                 $role = session('role');
-               
-                if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
-                    $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/itemReceiveEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                }else{
-                    $button .= '';
+                if($data->delivery_schedule_status == 'pending for shipping'){
+                    if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
+                        $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/itemReceiveEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                 }
-               
+                elseif(strtolower($data->delivery_schedule_status) == 'received'){
+                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
+                }
+                else{
+                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
+                }
                 $button .= '</div>';
                 return $button;
             })
@@ -155,7 +166,9 @@ class DeliveryScheduleController extends Controller
         $deliveryService = new DeliveryScheduleService();
         $delivery = $deliveryService->getDeliveryScheduleById($id);
         // dd($delivery);
-        $view = View::make('deliveryschedule.itemReceiveEditModal', ['deliveryId'=>$id,'result'=>$delivery]);
+        $branchService = new BranchesService();
+        $branch = $branchService->getAllActiveBranches();
+        $view = View::make('deliveryschedule.itemReceiveEditModal', ['deliveryId'=>$id,'result'=>$delivery,'branch'=>$branch]);
         $contents = (string) $view;
         return $contents;
          

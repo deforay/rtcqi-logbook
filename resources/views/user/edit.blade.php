@@ -144,11 +144,11 @@ foreach($result as $branchList)
 									</div>
                                     <div class="col-xl-6 col-lg-12">
 										<fieldset>
-											<h5>Branches<span class="mandatory">*</span>
+											<h5>Locations<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select branches">
-                                                <option value="">Select Branches</option>
+                                                <select class="form-control isRequired select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select locations">
+                                                <option value="">Select Locations</option>
                                                 @foreach($branch as $key=> $type)
 													<option value="{{ $type->branch_id }}" {{ in_array($type->branch_id, $branches) ?  'selected':''}}>{{ $type->branch_name }}</option>
 												@endforeach
@@ -195,7 +195,7 @@ foreach($result as $branchList)
 $(document).ready(function() {
     $(".select2").select2();
     $("#branches").select2({
-        placeholder: "Select Branches",
+        placeholder: "Select Locations",
 		allowClear: true
     });
     $('#confirmPassword').keyup(function() {			

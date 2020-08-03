@@ -53,7 +53,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Pending For Shipping Delivery Schedule Details</h3>
+                            <h3 class="content-header-title mb-0">Item Receive Details</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -71,10 +71,12 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="deliveryScheduleList">
                                         <thead>
                                             <tr>
+                                                <th>Purchase Order</th>
                                                 <th>Item Name</th>
                                                 <th>Quantity</th>
                                                 <th>Delivery Date</th>
                                                 <th>Delivery Mode</th>
+                                                <th>Location</th>
                                                 <th>Comments</th>
                                                 <th>Action</th>
                                             </tr>
@@ -120,11 +122,12 @@
                 }
             },
             columns: [
-                    
+                    { data: 'po_number', name: 'po_number'},
                     { data: 'item_name', name: 'item_name',className:'firstcaps'},
                     { data: 'delivery_qty', name: 'delivery_qty'},
                     { data: 'expected_date_of_delivery', name: 'expected_date_of_delivery'},
                     { data: 'delivery_mode', name: 'delivery_mode'},
+                    { data: 'branch_name', name: 'branch_name' },
                     { data: 'comments', name: 'comments' },
                     {data: 'action', name: 'action', orderable: false},
                 ],

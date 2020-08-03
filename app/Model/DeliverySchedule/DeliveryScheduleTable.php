@@ -26,6 +26,7 @@ class DeliveryScheduleTable extends Model
                 'delivery_qty'    => $data['deliverQty'],
                 'delivery_mode'    => $data['deliveryMode'],
                 'comments'  => $data['comments'],
+                'branch_id'       => $data['branches'],
                 'created_by'      => session('userId'),
                 'created_on'      => $commonservice->getDateTime(),
                 'delivery_schedule_status' => 'pending for shipping',
@@ -52,6 +53,7 @@ class DeliveryScheduleTable extends Model
         if(session('loginType')=='users'){
             $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
+                    ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id');
                     if(isset($req['poId']) && $req['poId'])
@@ -63,6 +65,7 @@ class DeliveryScheduleTable extends Model
             $userId=session('userId');
             $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
+                    ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                     // ->where('purchase_order_details.delivery_status', '=', 'pending')
@@ -75,19 +78,21 @@ class DeliveryScheduleTable extends Model
     public function fetchAllPendingDeliverySchedule(){
         if(session('loginType')=='users'){
             $data = DB::table('delivery_schedule')
+                    ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
-                    ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping');
-                    // ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                    ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id');
+                    // ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping');
             $data = $data->get();
         }
         else{
             $userId=session('userId');
             $data = DB::table('delivery_schedule')
+                    ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
-                    ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping')
+                    // ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping')
                     // ->where('purchase_order_details.delivery_status', '=', 'pending')
                     ->where('purchase_orders.vendor', '=', $userId)
                     ->get();
@@ -103,7 +108,7 @@ class DeliveryScheduleTable extends Model
                 ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                 ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
-                ->where('purchase_order_details.delivery_status', '=', 'pending')
+                ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping')
                 ->where('delivery_schedule.delivery_id', '=', $id)->get();
         return $data;
     }
@@ -126,6 +131,7 @@ class DeliveryScheduleTable extends Model
                             'item_id'          => $data['ItemId'],
                             'delivery_qty'    => $data['deliverQty'],
                             'delivery_mode'    => $data['deliveryMode'],
+                            'branch_id'       => $data['branches'],
                             'updated_by'      => session('userId'),
                             'updated_on'      => $commonservice->getDateTime(),
                         ]
@@ -181,16 +187,38 @@ class DeliveryScheduleTable extends Model
         for($i=0;$i<count($data['expiryDate']);$i++){
             $expiryDate = $commonservice->dateFormat($data['expiryDate'][$i]);
             $serviceDate = $commonservice->dateFormat($data['serviceDate'][$i]);
-            $inv = DB::table('inventory_stock')->insertGetId(
-                        [
-                            'item_id'      => $data['itemId'],
-                            'expiry_date'    => $expiryDate,
-                            'service_date'  => $serviceDate,
-                            'stock_quantity'    => $data['receivedQty'][$i],
-                            'created_by'      => session('userId'),
-                            'created_on'      => $commonservice->getDateTime(),
-                        ]
-                    );
+            $stk = DB::table('inventory_stock')
+                    ->where('expiry_date', '=', $expiryDate)
+                    ->where('branch_id', '=', $data['branches'][$i])
+                    ->where('item_id', '=', $data['itemId'])->get();
+                    // dd(($stk));
+            if(count($stk)>0){
+                $rQty = $data['receivedQty'][$i] + $stk[0]->stock_quantity;
+                $stkUp = DB::table('inventory_stock')
+                        ->where('expiry_date', '=', $expiryDate)
+                        ->where('branch_id', '=', $data['branches'][$i])
+                        ->where('item_id', '=', $data['itemId'])
+                        ->update(
+                            [
+                                'stock_quantity'  => $rQty,
+                                'updated_by'      => session('userId'),
+                                'updated_on'      => $commonservice->getDateTime(),
+                            ]
+                        );
+            }
+            else{
+                $inv = DB::table('inventory_stock')->insertGetId(
+                            [
+                                'item_id'      => $data['itemId'],
+                                'expiry_date'    => $expiryDate,
+                                'service_date'  => $serviceDate,
+                                'stock_quantity'    => $data['receivedQty'][$i],
+                                'created_by'      => session('userId'),
+                                'created_on'      => $commonservice->getDateTime(),
+                                'branch_id' => $data['branches'][$i],
+                            ]
+                        );
+            }
         }
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
