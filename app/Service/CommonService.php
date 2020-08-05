@@ -33,34 +33,6 @@ class CommonService
         }
         $countVal = count($user);
 
-        if (($fieldName == 'customer_phno' || $fieldName == 'mobile_no') && ($countVal == '0' || $countVal == '')) {
-            if ($fieldName == 'customer_phno') {
-                $employeeResult = DB::table('agent_keyperson')
-                    ->where('mobile_no', '=', $value)
-                    ->get();
-                $countVal = count($employeeResult);
-            } else {
-                $customerResult = DB::table('customers')
-                    ->where('customer_phno', '=', $value)
-                    ->get();
-                $countVal = count($customerResult);
-            }
-        }
-
-        if (($fieldName == 'customer_email' || $fieldName == 'email') && ($countVal == '0' || $countVal == '')) {
-            if ($fieldName == 'customer_email') {
-                $employeeResult = DB::table('agent_keyperson')
-                    ->where('email', '=', $value)
-                    ->get();
-                $countVal = count($employeeResult);
-            } else {
-                $customerResult = DB::table('customers')
-                    ->where('customer_email', '=', $value)
-                    ->get();
-                $countVal = count($customerResult);
-            }
-        }
-
         return $countVal;
     }
     public function mobileDuplicateValidation($request)
