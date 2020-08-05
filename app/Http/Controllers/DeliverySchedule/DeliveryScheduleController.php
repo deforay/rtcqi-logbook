@@ -65,15 +65,18 @@ class DeliveryScheduleController extends Controller
             ->addColumn('action', function($data){
                 $button = '<div style="width: 180px;">';
                 $role = session('role');
-                if($data->delivery_status == 'pending'){
+                if(strtolower($data->delivery_schedule_status) == 'pending for shipping'){
                     if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
                         $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/deliveryDetailsEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                     }else{
                         $button .= '';
                     }
                 }
+                else if(strtolower($data->delivery_schedule_status) == 'received'){
+                    $button .= '<span class="badge badge-success">'.ucfirst($data->delivery_schedule_status).'</span>';
+                }
                 else{
-                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_status).'</span>';
+                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
                 }
                 $button .= '</div>';
                 return $button;
