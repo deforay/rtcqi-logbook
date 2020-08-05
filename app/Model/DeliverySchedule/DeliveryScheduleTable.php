@@ -32,15 +32,15 @@ class DeliveryScheduleTable extends Model
                 'delivery_schedule_status' => 'pending for shipping',
             ]
         );
-        if($data['status']){
-            $sts = DB::table('purchase_order_details')
-                    ->where('pod_id', '=', $data['po_id'])
-                    ->update(
-                        [
-                            'delivery_status'    => $data['status'],
-                        ]
-                    );
-        }
+        // if($data['status']){
+        //     $sts = DB::table('purchase_order_details')
+        //             ->where('pod_id', '=', $data['po_id'])
+        //             ->update(
+        //                 [
+        //                     'delivery_status'    => $data['status'],
+        //                 ]
+        //             );
+        // }
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), $autoId, 'Delivery Scheduler-add', 'Add Delivery Schedule ' . $data['po_id'], 'Purchase Order details');
         
