@@ -197,7 +197,7 @@
                                     <i class="ft-x"></i> Cancel
                                     </button>
                                     </a>
-                                    <button type="submit" onclick="triggerSubmit();" class="btn btn-primary">
+                                    <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
                                     <i class="la la-check-square-o"></i> Save
                                     </button>
 								</div>
@@ -520,33 +520,38 @@ $(document).ready(function() {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $.ajax({
-                url: "{{ url('/addVendor') }}",
-                method: 'post',
-                data: {
-                    vendorEmail: vendorEmail,
-                    vendorName: vendorName,
-                },
-                success: function(result){
-                    console.log(result);
-                    if(result['id'])
-                    {
-                        let option = '';
-                        for(i=0;i<result['list'].length;i++)
+            if(duplicateName){
+                $.ajax({
+                    url: "{{ url('/addVendor') }}",
+                    method: 'post',
+                    data: {
+                        vendorEmail: vendorEmail,
+                        vendorName: vendorName,
+                    },
+                    success: function(result){
+                        console.log(result);
+                        if(result['id'])
                         {
-                            option+= '<option value='+result["list"][i]["vendor_id"]+'>'+result["list"][i]["vendor_name"]+'</option>'
+                            let option = '';
+                            for(i=0;i<result['list'].length;i++)
+                            {
+                                option+= '<option value='+result["list"][i]["vendor_id"]+'>'+result["list"][i]["vendor_name"]+'</option>'
+                            }
+                            $("#vendors").html(option);
+                            vendorList.push(result['id'])
+                            console.log(vendorList);
+                            $("#vendors").val(vendorList);
+                            $('#vendorAdd').modal('hide');
+                            $("#vendorName").val('')
+                            $("#vendorEmail").val('')
                         }
-                        $("#vendors").html(option);
-                        vendorList.push(result['id'])
-                        console.log(vendorList);
-                        $("#vendors").val(vendorList);
-                        $('#vendorAdd').modal('hide');
-                        $("#vendorName").val('')
-                        $("#vendorEmail").val('')
+                        
                     }
-                    
-                }
-            });
+                });
+            }
+            else{
+                swal("Entered Mail id is already there")
+            }
         }
     }
 
