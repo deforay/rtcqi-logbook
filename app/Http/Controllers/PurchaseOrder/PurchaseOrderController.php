@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\PurchaseOrderService;
 use App\Service\VendorsService;
 use App\Service\ItemService;
+use App\Service\BranchesService;
 // use App\Service\UnitService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -45,7 +46,9 @@ class PurchaseOrderController extends Controller
             $vendorDetailId = $purchaseOrderService->getAllVendorDetailById($id);
             $quotes = $purchaseOrderService->getSumOfQuoteById($id);
             $quoteDetails = $purchaseOrderService->getAllQuoteDetailsId($id);
-            return view('purchaseorder.add',array('quoteId'=>$id,'vendor'=>$vendor,'item'=>$item,'vendorDetailId'=>$vendorDetailId,'quotes'=>$quotes,'quoteDetails'=>$quoteDetails));
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            return view('purchaseorder.add',array('quoteId'=>$id,'vendor'=>$vendor,'item'=>$item,'vendorDetailId'=>$vendorDetailId,'quotes'=>$quotes,'quoteDetails'=>$quoteDetails,'branch'=>$branch));
         }
     }
 
@@ -113,8 +116,9 @@ class PurchaseOrderController extends Controller
             $vendor = $vendorService->getAllActiveVendors();
             $itemservice = new ItemService();
             $item = $itemservice->getAllActiveItem();
-
-            return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails));
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails,'branch'=>$branch));
         }
     }
     public function purchaseDetailsView(Request $request,$id)

@@ -63,7 +63,7 @@ class DeliveryScheduleController extends Controller
                 }
             })
             ->addColumn('action', function($data){
-                $button = '<div style="width: 180px;">';
+                $button = '';
                 $role = session('role');
                 if(strtolower($data->delivery_schedule_status) == 'pending for shipping'){
                     if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
@@ -73,12 +73,12 @@ class DeliveryScheduleController extends Controller
                     }
                 }
                 else if(strtolower($data->delivery_schedule_status) == 'received'){
-                    $button .= '<span class="badge badge-success">'.ucfirst($data->delivery_schedule_status).'</span>';
+                    $button .= '<span class="badge badge-success"><b>'.ucfirst($data->delivery_schedule_status).'</b></span>';
                 }
                 else{
-                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
+                    $button .= '<span class="badge badge-warning"><b>'.ucfirst($data->delivery_schedule_status).'</b></span>';
                 }
-                $button .= '</div>';
+                // $button .= '</div>';
                 return $button;
             })
             ->rawColumns(['action'])

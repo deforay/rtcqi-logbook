@@ -138,7 +138,12 @@ $currentDate=date('d-M-Y');
                                             <fieldset>
                                                 <h5>Delivery Location<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="deliveryLoc" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Location" name="deliveryLoc" title="Please enter Delivery Location">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="deliveryLoc" name="deliveryLoc" title="Please select delivery locations">
+                                                        <option value="">Select Locations</option>
+                                                        @foreach($branch as $type)
+                                                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </fieldset>
                                         </div>
