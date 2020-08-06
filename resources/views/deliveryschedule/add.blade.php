@@ -401,6 +401,12 @@ $currentDate=date('d-M-Y');
     let qtyMax = 0;
     function getDeliverySchedule(po_id, item_id, item_name,qty)
     {
+        $('#ItemId').val('')
+        $('#deliverQty').val('')
+        $('#expectedDelivery').val('')
+        $('#deliveryMode').val('')
+        $('#comments').val('')
+        $('#branches').val('')
         $('#qtyMax').val(qty)
         $("#deliverQty").attr('max',qty)
         $.ajaxSetup({

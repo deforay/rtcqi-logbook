@@ -135,7 +135,7 @@
             processing: true,
             destroy : true,
             serverSide: true,
-            scrollX: false,
+            scrollX: true,
             autoWidth:false,
             ajax: {
                 url:'{{ url("getAllDeliverySchedule") }}',
