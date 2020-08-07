@@ -222,3 +222,4 @@ Route::get('/itemreceive', 'DeliverySchedule\DeliveryScheduleController@itemrece
 Route::post('/getAllPendingDeliverySchedule', 'DeliverySchedule\DeliveryScheduleController@getAllPendingDeliverySchedule');
 Route::post('/itemReceiveEdit/{id}', 'DeliverySchedule\DeliveryScheduleController@itemReceiveEdit');
 Route::post('/itemreceive/updateItemReceive/{id}', 'DeliverySchedule\DeliveryScheduleController@updateItemReceive');
+Route::match(['get'],'/getAutoCompleteComments/{searchTerm}/{desc}', 'DeliverySchedule\DeliveryScheduleController@getAutoCompleteComments');

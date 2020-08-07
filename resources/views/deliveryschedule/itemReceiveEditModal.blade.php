@@ -9,6 +9,28 @@ td{
     padding-left: 1rem !important;
     padding-right: 1rem !important;
 }
+span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
+    cursor: pointer;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+}
 </style>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
@@ -84,7 +106,7 @@ td{
                                             <th style="width:15%;">Expiry Date<span class="mandatory">*</span></th>
                                             <th style="width:15%;">Service Date<span class="mandatory">*</span></th>
                                             <th style="width:12%;">Received Qty<span class="mandatory">*</span></th>
-                                            <th style="width:12%;">Damaged Qty<span class="mandatory">*</span></th>
+                                            <th style="width:12%;">Non Confromity Qty<span class="mandatory">*</span></th>
                                             <th style="width:26%;">Locations<span class="mandatory">*</span></th>
                                             <th style="width:20%;">Action</th>
                                         </tr>
@@ -98,10 +120,10 @@ td{
                                                 <input type="text" id="serviceDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">
                                             </td>
                                             <td class="pr-1 pl-1">
-                                                <input type="number" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
+                                                <input type="number" value="0" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
                                             </td >
                                             <td class="pr-1 pl-1">
-                                                <input type="number" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Damaged Qty" title="Please enter the damaged qty" value="" />
+                                                <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
                                             </td>
                                             <td class="pr-1 pl-1">
                                             <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches0" name="branches[]" title="Please select locations">
@@ -140,33 +162,26 @@ td{
                             </div>
                             <div class="col-xl-6 col-lg-12">
                                 <fieldset>
-                                    <h5>Damaged Quantity<span class="mandatory">*</span>
+                                    <h5>Non Confromity Quantity<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <input type="text" id="damagedQty" oninput="changeScheduleStatus();" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Damaged Quantity" name="damagedQty" title="Please enter Damaged Quantity" >
+                                        <input type="text" id="damagedQty" oninput="changeScheduleStatus();" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Non Confromity Quantity" name="damagedQty" title="Please enter Non Confromity Quantity" >
                                     </div>
                                 </fieldset>
                             </div>
                         </div> -->
                         <input type="hidden" id="receivedQtySum"  value="" class="form-control" autocomplete="off" placeholder="Enter Received Quantity" name="receivedQtySum" title="Please enter Received Quantity" >
-                        <input type="hidden" id="damagedQtySum" value="" class="form-control" autocomplete="off" placeholder="Enter Damaged Quantity" name="damagedQtySum" title="Please enter Damaged Quantity" >
+                        <input type="hidden" id="damagedQtySum" value="" class="form-control" autocomplete="off" placeholder="Enter Non Confromity Quantity" name="damagedQtySum" title="Please enter Non Confromity Quantity" >
                         <input type="hidden" id="itemId" name="itemId" class="form-control" value="{{$result[0]->item_id}}">
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12" style="display:none;">
-                                <fieldset>
-                                    <h5>Delivery Schedule Status<span class="mandatory">*</span>
-                                    </h5>
-                                    <div class="form-group">
-                                        <input type="text" id="status" value="" class="form-control" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-xl-6 col-lg-12">
+                    
+                            <input type="hidden" id="status" value="" class="form-control" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
+                            <div class="col-xl-8 col-lg-12">
                                 <fieldset>
                                     <h5>Short Description <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <textarea id="description" class="form-control" name="description" placeholder="Enter the description about damaged quantity"  title="Please Enter Description"></textarea>
+                                        <input type="text" id="description" class="form-control typeahead-bloodhound" name="description" placeholder="Enter the description about non conformity quantity"  title="Please Enter Description">
                                     </div>
                                 </fieldset>
                             </div>
@@ -204,6 +219,36 @@ $(document).ready(function() {
         todayHighlight: true,
         clearBtn: true,
     });
+    let autocompComments = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: "/getAutoCompleteComments",
+            replace: function(url, uriEncodedQuery) {
+                comments = $('#description').val();
+                return url + '/' + uriEncodedQuery + '/' + comments
+            },
+            filter: function(data) {
+                // Map the remote source JSON array to a JavaScript object array
+                return $.map(data, function(autocompComments) {
+                    return {
+                        value: autocompComments.value
+                    };
+                });
+            }
+        }
+    });
+
+    // Initialize the Bloodhound suggestion engine
+    autocompComments.initialize();
+
+    console.log(autocompComments)
+    $('#description').typeahead(null, {
+        name: 'value',
+        displayKey: 'value',
+        source: autocompComments.ttAdapter(),
+        limit:'Infinity'
+    });
 });
 
 duplicateName = true;
@@ -235,7 +280,7 @@ function validateNow() {
         formId: 'updateItemReceive'
     });
     if(parseInt(total) > parseInt(deliveryQty)){
-        swal("Please enter valid received and damaged quantity, can't exceed delivery quantity")
+        swal("Please enter valid Received and Non Confromity quantity, can't exceed delivery quantity")
         flag = false
     }
     else{
@@ -267,7 +312,7 @@ function changeScheduleStatus(val,id){
     //     }
     //     if(damagedQty>deliveryQty){
     //         $('#damagedQty').val('')
-    //         swal("Entered Damaged Quantity cannot be greater than Delivery Quantity")
+    //         swal("Entered Non Confromity Quantity cannot be greater than Delivery Quantity")
     //         return
     //     }
     //     if(deliveryQty == receivedQty && (damagedQty=='' || damagedQty==0)){
@@ -290,7 +335,7 @@ function changeScheduleStatus(val,id){
         swal("Total of Received Quantity cannot be greater than Delivery Quantity")
     }
     if(parseInt(damagedQtySum) > parseInt(deliveryQty)){
-        swal("Total of Damaged Quantity cannot be greater than Delivery Quantity")
+        swal("Total of Non Confromity Quantity cannot be greater than Delivery Quantity")
     }
     if(parseInt(val)>parseInt(deliveryQty)){
         $('#'+id).val('')
@@ -316,8 +361,8 @@ function insRow() {
     rl = document.getElementById("itemDetails").rows.length - 1;
     b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
     d.innerHTML = '<input type="text" id="serviceDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">';
-    c.innerHTML = '<input type="number" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
-    f.innerHTML = '<input type="number" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Damaged Qty" title="Please enter the damaged qty" value="" />'
+    c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
+    f.innerHTML = '<input type="number" value="0" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />'
     g.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches' + rowCount + '" name="branches[]" title="Please select locations">\
                         <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select>';
     e.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';

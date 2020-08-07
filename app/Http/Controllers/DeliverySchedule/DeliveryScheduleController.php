@@ -183,4 +183,10 @@ class DeliveryScheduleController extends Controller
         return Redirect::route('deliveryschedule.itemreceive')->with('status', $delivery);
     }
 
+    public function getAutoCompleteComments($searchTerm,$desc){
+        $service = new DeliveryScheduleService();
+        $result = $service->getAutoCompleteComments($searchTerm);
+        return $result;
+    }
+
 }

@@ -93,4 +93,10 @@ class DeliveryScheduleService
 	    	$exc->getMessage();
 	    }
 	}
+
+	public function getAutoCompleteComments($searchTerm){
+		$deliverySchedulemodel = new DeliveryScheduleTable();
+        $result = $deliverySchedulemodel->fetchAutoCompleteComments($searchTerm);
+        return $result;
+	}
 }
