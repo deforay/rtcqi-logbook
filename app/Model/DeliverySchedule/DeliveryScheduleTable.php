@@ -15,6 +15,7 @@ class DeliveryScheduleTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        dd($data);
         $commonservice = new CommonService();
 
         $expectedDelivery = $commonservice->dateFormat($data['expectedDelivery']);
@@ -32,15 +33,33 @@ class DeliveryScheduleTable extends Model
                 'delivery_schedule_status' => 'pending for shipping',
             ]
         );
-        // if($data['status']){
-        //     $sts = DB::table('purchase_order_details')
-        //             ->where('pod_id', '=', $data['po_id'])
-        //             ->update(
-        //                 [
-        //                     'delivery_status'    => $data['status'],
-        //                 ]
-        //             );
-        // }
+            $totalDelQty = 0;
+            $totalPodQty = 0;
+            $delQtySum = DB::raw('SUM(delivery_schedule.delivery_qty) as totQty');
+            $purchase = DB::table('purchase_order_details')
+                        // ->select($qtySum)
+                        ->where('po_id','=', $data['po'])->get();
+            for($k=0;$k<count($purchase);$k++){
+                $delQty = DB::table('delivery_schedule')
+                        ->select($delQtySum)
+                        ->where('pod_id','=', $purchase[$k]->pod_id)->get();
+                $totalDelQty += intval($delQty[0]->totQty);
+                $totalPodQty += intval($purchase[$k]->quantity);
+            }
+
+            if($totalPodQty == $totalDelQty){
+                $sts = 'delivery scheduled';
+            }
+            else{
+                $sts = 'some items scheduled for delivery';
+            }
+            $stsUp = DB::table('purchase_orders')
+                    ->where('po_id', '=', $data['po'])
+                    ->update(
+                        [
+                            'order_status'    => $sts,
+                        ]
+                    );
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), $autoId, 'Delivery Scheduler-add', 'Add Delivery Schedule ' . $data['po_id'], 'Purchase Order details');
         

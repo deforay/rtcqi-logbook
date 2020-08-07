@@ -201,6 +201,16 @@ class PurchaseOrderTable extends Model
         return $data;
     }
 
+    //fetchAllNotScheduledPurchaseOrder
+    public function fetchAllNotScheduledPurchaseOrder()
+    {
+        $data = DB::table('purchase_orders')
+            ->where('order_status', '!=', 'delivery scheduled')
+            ->orderBy('po_number', 'asc')
+            ->get();
+        return $data;
+    }
+
     // fetch particular Vendor details
     public function fetchVendorDetailById($id)
     {
@@ -240,7 +250,7 @@ class PurchaseOrderTable extends Model
     }
     public function fetchPurchaseorderById($id)
     {
-        $id = base64_decode($id);
+        // $id = base64_decode($id);
         $data = DB::table('purchase_orders')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
                 ->join('purchase_order_details', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
@@ -264,7 +274,7 @@ class PurchaseOrderTable extends Model
                 ->join('items', 'items.item_id', '=', 'purchase_order_details.item_id')
                 ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'purchase_order_details.uom')
                 ->where('purchase_orders.po_id', '=', $id)
-                ->where('purchase_order_details.delivery_status', '=', 'pending')
+                ->where('purchase_orders.order_status', '!=', 'delivery scheduled')
                 ->get();
         if(isset($data[0]->po_issued_on)){
             $issueDate = $data[0]->po_issued_on;

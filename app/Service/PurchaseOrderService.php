@@ -44,6 +44,14 @@ class PurchaseOrderService
         return $result;
 	}
 
+	//getAllNotScheduledPurchaseOrder
+	public function getAllNotScheduledPurchaseOrder()
+    {
+		$purchaseOrdermodel = new PurchaseOrderTable();
+        $result = $purchaseOrdermodel->fetchAllNotScheduledPurchaseOrder();
+        return $result;
+	}
+
 	//Get Particular Vendor Order Details
 	public function getAllVendorDetailById($id)
 	{

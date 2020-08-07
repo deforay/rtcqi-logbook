@@ -33,7 +33,7 @@ class DeliveryScheduleController extends Controller
     public function add(Request $request)
     {
         $purchaseOrderService = new PurchaseOrderService();
-        $purchase = $purchaseOrderService->getAllActivePurchaseOrder();
+        $purchase = $purchaseOrderService->getAllNotScheduledPurchaseOrder();
         $itemservice = new ItemService();
         $item = $itemservice->getAllActiveItem();
         $branchService = new BranchesService();
@@ -137,12 +137,12 @@ class DeliveryScheduleController extends Controller
             })
             ->editColumn('delivery_schedule_status', function($data){
                 if($data->delivery_schedule_status){
-                    $del = '<span class="badge badge-warning">'.ucfirst($data->delivery_status).'</span>';
+                    $del = '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
                     return $del;
                 }
             })
             ->addColumn('action', function($data){
-                $button = '<div style="width: 180px;">';
+                $button = '';
                 $role = session('role');
                 if($data->delivery_schedule_status == 'pending for shipping'){
                     if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
@@ -152,12 +152,12 @@ class DeliveryScheduleController extends Controller
                     }
                 }
                 elseif(strtolower($data->delivery_schedule_status) == 'received'){
-                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
+                    $button .= '<span class="badge badge-success"><b>'.ucfirst($data->delivery_schedule_status).'</b></span>';
                 }
                 else{
-                    $button .= '<span class="badge badge-warning">'.ucfirst($data->delivery_schedule_status).'</span>';
+                    $button .= '<span class="badge badge-warning"><b>'.ucfirst($data->delivery_schedule_status).'</b></span>';
                 }
-                $button .= '</div>';
+                // $button .= '</div>';
                 return $button;
             })
             ->rawColumns(['action'])
