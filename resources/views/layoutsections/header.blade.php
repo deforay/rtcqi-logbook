@@ -38,6 +38,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/timeline.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-ecommerce.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/sweetalert/sweetalert.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/extended/form-extended.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
 <!-- END: Page CSS-->
 
@@ -52,3 +53,10 @@
 <script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
 <!-- BEGIN Vendor JS-->
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/js/datepicker/datepicker3.css')}}">
+<script src="{{ asset('app-assets/vendors/js/forms/extended/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/vendors/js/forms/extended/typeahead/bloodhound.min.js') }}" type="text/javascript"></script>
+<!-- <script src="{{ asset('app-assets/js/scripts/forms/extended/form-typeahead.js') }}" type="text/javascript"></script> -->
+<script src="{{ asset('app-assets/vendors/js/forms/extended/typeahead/handlebars.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/vendors/js/forms/extended/formatter/formatter.min.js')}}"></script>
+<script src="{{ asset('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js')}}"></script>
+<script src="{{ asset('app-assets/vendors/js/forms/extended/card/jquery.card.js')}}"></script>

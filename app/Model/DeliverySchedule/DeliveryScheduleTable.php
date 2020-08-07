@@ -15,7 +15,7 @@ class DeliveryScheduleTable extends Model
     {
         //to get all request values
         $data = $request->all();
-        dd($data);
+        
         $commonservice = new CommonService();
 
         $expectedDelivery = $commonservice->dateFormat($data['expectedDelivery']);
@@ -243,5 +243,19 @@ class DeliveryScheduleTable extends Model
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
         
         return $autoId;
+    }
+
+    // Fetch All autocomplete comments list
+    public function fetchAutoCompleteComments($searchTerm)
+    {
+        $arr = array();
+        $data = DB::table('autocomplete_comments')
+                ->where('description', 'LIKE',  "%{$searchTerm}%")
+                ->get();
+        for ($k = 0; $k < count($data); $k++) {
+            $temp['value'] = $data[$k]->description;
+            array_push($arr, $temp);
+        }
+        return json_encode($arr);
     }
 }
