@@ -267,3 +267,16 @@ CREATE TABLE `asm`.`inventory_stock` ( `stock_id` INT NOT NULL AUTO_INCREMENT , 
 
 ALTER TABLE `inventory_stock` ADD `branch_id` INT NOT NULL AFTER `updated_by`;
 ALTER TABLE `delivery_schedule` ADD `branch_id` INT NOT NULL AFTER `short_description`;
+
+--Sudarmathi August 06 2020
+
+ALTER TABLE `purchase_order_details` DROP `delivery_status`;
+
+CREATE TABLE `autocomplete_comments` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `description` text NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Received in damaged condition'), (NULL, 'Expired');
+INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Not matching requirements/description'), (NULL, 'Did not meet expectations');
+INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Delayed delivery');

@@ -146,123 +146,125 @@ $currentDate=date('d-M-Y');
 
             <!-- horizontal grid end -->
 
-            <!--Start Delievery schedule Modal -->
-            <div class="modal fade" id="deliveryScheduleAdd" tabindex="-1" role="dialog" aria-labelledby="deliveryScheduleAddLabel" aria-hidden="true">
+        <!--Start Delievery schedule Modal -->
+        <div class="modal fade" id="deliveryScheduleAdd" tabindex="-1" role="dialog" aria-labelledby="deliveryScheduleAddLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="deliveryScheduleAddLabel"> Delivery Schedule</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showModalAlertdiv" role="alert" style="display:none"><span id="showModalAlertIndex"></span>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-					</div>
-                    <div id="show_modal_alert" class="mt-1" style=""></div>
-                    <div id="deliverySchedulePreview" style="display:none;">
-                        <div><center><h4 class="ml-2 text-center"><b>Previous Delivery Schedule History</b></h4><center></div>
-                        <div class="row">
-                            <div class="table-responsive col-md-12 mt-1">
-                                <div class="bd-example">
-                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:20%;">Item</th>
-                                            <th style="width:10%;">Quantity</th>
-                                            <th style="width:20%;">Delivery Date</th>
-                                            <th style="width:15%;">Delivery Mode</th>
-                                            <th style="width:35%;">comments</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="deliveryScheduleDetails">
-                                        
-                                    </tbody>
-                                    </table>
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="deliveryScheduleAddLabel"> Delivery Schedule</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showModalAlertdiv" role="alert" style="display:none"><span id="showModalAlertIndex"></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div id="show_modal_alert" class="mt-1" style=""></div>
+                        <div id="deliverySchedulePreview" style="display:none;">
+                            <div><center><h4 class="ml-2 text-center"><b>Previous Delivery Schedule History</b></h4><center></div>
+                            <div class="row">
+                                <div class="table-responsive col-md-12 mt-1">
+                                    <div class="bd-example">
+                                        <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:20%;">Item</th>
+                                                <th style="width:10%;">Quantity</th>
+                                                <th style="width:20%;">Delivery Date</th>
+                                                <th style="width:15%;">Delivery Mode</th>
+                                                <th style="width:35%;">comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="deliveryScheduleDetails">
+                                            
+                                        </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr>
+                        <div id="addDeliverySchedule">
+                            <h4 class="text-center">Add Delivery Schedule</h4><br/>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset>
+                                        <h5>Item Name<span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                        <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
+                                        </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset>
+                                        <h5>Delivery Quantity<span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <input type="number" id="deliverQty" class="form-control isRequired" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
+                                        </div>
+                                        <input type="hidden" id="qtyMax" value="">
+                                        <input type="hidden" id="hiddenPo_id">
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset>
+                                        <h5>Expected Delivery <span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <input type="text" id="expectedDelivery"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset>
+                                        <h5>Delivery Mode<span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <input type="text" id="deliveryMode" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset>
+                                        <h5>Comments <span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter Comments"  title="Please Enter Comments"></textarea>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-6 col-lg-12">
+                                    <fieldset>
+                                        <h5>Location <span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations">
+                                            <option value="">Select Locations</option>
+                                            @foreach($branch as $type)
+                                                <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                            @endforeach
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="addDeliverySchedule();">Save</button>
+                            </div>
+                        </div>
                     </div>
-                    <h4 class="text-center">Add Delivery Schedule</h4><br/>
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-12">
-                            <fieldset>
-                                <h5>Item Name<span class="mandatory">*</span>
-                                </h5>
-                                <div class="form-group">
-                                <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
-                                </select>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="col-xl-6 col-lg-12">
-                            <fieldset>
-                                <h5>Delivery Quantity<span class="mandatory">*</span>
-                                </h5>
-                                <div class="form-group">
-                                    <input type="number" id="deliverQty" class="form-control isRequired" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please Delivery Quantity" >
-                                </div>
-                                <input type="hidden" id="qtyMax" value="">
-                                <input type="hidden" id="hiddenPo_id">
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-12">
-                            <fieldset>
-                                <h5>Expected Delivery <span class="mandatory">*</span>
-                                </h5>
-                                <div class="form-group">
-                                    <input type="text" id="expectedDelivery"  class="form-control datepicker isRequired" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery" title="Please Select Expected Delivery Date">
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="col-xl-6 col-lg-12">
-                            <fieldset>
-                                <h5>Delivery Mode<span class="mandatory">*</span>
-                                </h5>
-                                <div class="form-group">
-                                    <input type="text" id="deliveryMode" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode" title="Please Delivery mode" >
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-12">
-                            <fieldset>
-                                <h5>Comments <span class="mandatory">*</span>
-                                </h5>
-                                <div class="form-group">
-                                    <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter Comments"  title="Please Enter Comments"></textarea>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="col-xl-6 col-lg-12">
-                            <fieldset>
-                                <h5>Location <span class="mandatory">*</span>
-                                </h5>
-                                <div class="form-group">
-                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations">
-                                    <option value="">Select Locations</option>
-                                    @foreach($branch as $type)
-                                        <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addDeliverySchedule();">Save</button>
-                </div>
                 </div>
             </div>
-            </div>
-        </section>
+        </div>
+    </section>
     </div>
 </div>
 
@@ -290,7 +292,7 @@ $currentDate=date('d-M-Y');
         });
     });
     duplicateName = true;
-
+    let totalQty = 0;
     function getPurchaseOrder(val){
         if (val != '') {
             $("#poOrderDetails").html('');
@@ -327,6 +329,7 @@ $currentDate=date('d-M-Y');
                             // details+='<td></td>'
                             details+='<td><button type="button" class="btn btn-primary" onclick="getDeliverySchedule('+data[i]['pod_id']+','+data[i]['item_id']+','+itemName+','+data[i]['quantity']+')" title="Add Delivery Schedule" data-placement="left" data-toggle="modal" data-target="#deliveryScheduleAdd"><i class="ft-calendar"></i></button></td>'
                             details+='</tr>';
+                            totalQty += data[i]['quantity'];
                             $('#item'+i).val(data[i]['item_id'])
                         }
                         $("#poOrderDetails").html(details);
@@ -398,9 +401,13 @@ $currentDate=date('d-M-Y');
         }
     }
 
-    let qtyMax = 0;
+    
     function getDeliverySchedule(po_id, item_id, item_name,qty)
     {
+        $('#addDeliverySchedule').show();
+        let qtyMax = 0;
+        // alert(qty)
+        $('#qtyMax').val('')
         $('#ItemId').val('')
         $('#deliverQty').val('')
         $('#expectedDelivery').val('')
@@ -440,10 +447,16 @@ $currentDate=date('d-M-Y');
                         qtyBal = qty - qtyMax;
                         $('#qtyMax').val(qtyBal)
                         $("#deliverQty").attr('max',qtyBal)
+                        if(qtyBal == 0){
+                            $('#addDeliverySchedule').hide();
+                        }
                     }
                     else{
                         $('#qtyMax').val(qty)
                         $("#deliverQty").attr('max',qty)
+                        if(qty == 0){
+                            $('#addDeliverySchedule').hide();
+                        }
                     }
                 }
                 else{
@@ -454,8 +467,11 @@ $currentDate=date('d-M-Y');
 
         });
         let option='<option value="'+item_id+'">'+item_name+'</option>';
-        console.log(option);
         $("#ItemId").html(option);
+        $("#branches").select2({
+            placeholder: "Select Branches",
+            allowClear: true
+        });
         $("#hiddenPo_id").val(po_id);
     }
 
@@ -474,12 +490,12 @@ $currentDate=date('d-M-Y');
         if(item && deliverQty && expectedDelivery && deliveryMode && comments && branches){
             if(parseInt(deliverQty)>0){
                 if(parseInt(deliverQty) <= parseInt($('#qtyMax').val())){
-                    if(parseInt(deliverQty) == parseInt($('#qtyMax').val())){
-                        status = "scheduled";
-                    }
-                    else{
-                        status = "";
-                    }
+                    // if(parseInt(deliverQty) == parseInt($('#qtyMax').val())){
+                    //     status = "scheduled";
+                    // }
+                    // else{
+                    //     status = "some items scheduled for delivery";
+                    // }
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -495,8 +511,9 @@ $currentDate=date('d-M-Y');
                             expectedDelivery:expectedDelivery,
                             deliveryMode:deliveryMode,
                             comments:comments,
-                            status:status,
-                            branches:branches
+                            // status:status,
+                            branches:branches,
+                            po:po,
                         },
                         success: function(result){
                             console.log(result)
