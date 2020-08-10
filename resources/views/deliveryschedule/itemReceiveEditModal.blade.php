@@ -176,7 +176,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         <div class="row">
                     
                             <input type="hidden" id="status" value="" class="form-control" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
-                            <div class="col-xl-8 col-lg-12">
+                            <div class="col-xl-6 col-lg-12">
                                 <fieldset>
                                     <h5>Short Description <span class="mandatory">*</span>
                                     </h5>
@@ -208,6 +208,11 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
 <script>
 var deliveryQty = '{{$result[0]->delivery_qty}}';
 $(document).ready(function() {
+    $(".select2").select2();
+    $("#branches").select2({
+        placeholder: "Select Locations",
+		allowClear: true
+    });
     $('.datepicker').datepicker({
         // format: 'dd-M-yyyy',
         autoclose: true,
@@ -249,6 +254,8 @@ $(document).ready(function() {
         source: autocompComments.ttAdapter(),
         limit:'Infinity'
     });
+    $('.twitter-typeahead').css('display','block')
+    $('.tt-menu').addClass('pl-1 pr-1')
 });
 
 duplicateName = true;
@@ -378,6 +385,7 @@ function insRow() {
         todayHighlight: true,
         clearBtn: true,
     });
+    $(".select2").select2();
 }
 
 function removeRow(el) {
