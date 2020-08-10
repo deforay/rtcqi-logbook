@@ -60,6 +60,7 @@ class DeliveryScheduleTable extends Model
                             'order_status'    => $sts,
                         ]
                     );
+
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), $autoId, 'Delivery Scheduler-add', 'Add Delivery Schedule ' . $data['po_id'], 'Purchase Order details');
         
@@ -164,7 +165,7 @@ class DeliveryScheduleTable extends Model
                 'created_on'      => $commonservice->getDateTime(),
             ]
         );
-
+        
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
         
@@ -238,6 +239,19 @@ class DeliveryScheduleTable extends Model
                             ]
                         );
             }
+        }
+        $autoCom = DB::table('autocomplete_comments')
+                    ->where('description', '=',  $data['description'])
+                    ->get();
+        // dd($autoCom);
+        if(count($autoCom)==0){
+            $autoComIns = DB::table('autocomplete_comments')->insertGetId(
+                            [
+                                'description'      => $data['description'],
+                                'created_by'      => session('userId'),
+                                'created_on'      => $commonservice->getDateTime(),
+                            ]
+                        );
         }
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
