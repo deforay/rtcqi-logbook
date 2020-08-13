@@ -37,7 +37,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">DELIVERY SCHEDULE DETAILS</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">Item Receive</h2></center><hr>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
@@ -99,31 +99,35 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         <br/>
                         <div class="row">
                             <div class="table-responsive">
-                                <div class="bd-example">
+                                <!-- <div class="bd-example"> -->
                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:15%;">Expiry Date<span class="mandatory">*</span></th>
-                                            <th style="width:15%;">Service Date<span class="mandatory">*</span></th>
-                                            <th style="width:12%;">Received Qty<span class="mandatory">*</span></th>
-                                            <th style="width:12%;">Non Confromity Qty<span class="mandatory">*</span></th>
-                                            <th style="width:26%;">Locations<span class="mandatory">*</span></th>
+                                            <th style="width:15%;">Expiry Date</th>
+                                            <th style="width:15%;">Batch Number</th>
+                                            <th style="width:10%;">Received Qty<span class="mandatory">*</span></th>
+                                            <th style="width:10%;">Non Confromity Qty<span class="mandatory">*</span></th>
+                                            <th style="width:10">Reason for non confirmity</th>
+                                            <th style="width:20%;">Locations<span class="mandatory">*</span></th>
                                             <th style="width:20%;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="itemDetails">
                                         <tr>
                                             <td class="pr-1 pl-1">
-                                                <input type="text" id="expiryDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
+                                                <input type="text" id="expiryDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
                                             </td>
                                             <td class="pr-1 pl-1">
-                                                <input type="text" id="serviceDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">
+                                                <input type="text" id="batchNo0" class="form-control datepicker " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">
                                             </td>
                                             <td class="pr-1 pl-1">
                                                 <input type="number" value="0" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
                                             </td >
                                             <td class="pr-1 pl-1">
                                                 <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
+                                            </td>
+                                            <td class="pr-1 pl-1">
+                                                <input type="text" id="description0" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">
                                             </td>
                                             <td class="pr-1 pl-1">
                                             <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches0" name="branches[]" title="Please select locations">
@@ -146,7 +150,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                         </tr>
                                     </tbody>
                                     </table>
-                                </div>
+                                <!-- </div> -->
                             </div>
                         </div>
                         <br/>
@@ -176,15 +180,15 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         <div class="row">
                     
                             <input type="hidden" id="status" value="" class="form-control" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
-                            <div class="col-xl-6 col-lg-12">
+                            <!-- <div class="col-xl-6 col-lg-12">
                                 <fieldset>
                                     <h5>Short Description <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <input type="text" id="description" class="form-control typeahead-bloodhound" name="description" placeholder="Enter the description about non conformity quantity"  title="Please Enter Description">
+                                        <input type="text" id="description" class="form-control typeahead-bloodhound" name="description" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">
                                     </div>
                                 </fieldset>
-                            </div>
+                            </div> -->
                         </div>
                         <br/>
                         <input type="hidden" value="{{$deliveryId}}" id="deliveryId" name="deliveryId" >
@@ -230,7 +234,7 @@ $(document).ready(function() {
         remote: {
             url: "/getAutoCompleteComments",
             replace: function(url, uriEncodedQuery) {
-                comments = $('#description').val();
+                comments = $('#description0').val();
                 return url + '/' + uriEncodedQuery + '/' + comments
             },
             filter: function(data) {
@@ -248,14 +252,14 @@ $(document).ready(function() {
     autocompComments.initialize();
 
     console.log(autocompComments)
-    $('#description').typeahead(null, {
+    $('#description0').typeahead(null, {
         name: 'value',
         displayKey: 'value',
         source: autocompComments.ttAdapter(),
         limit:'Infinity'
     });
-    $('.twitter-typeahead').css('display','block')
-    $('.tt-menu').addClass('pl-1 pr-1')
+    // $('.twitter-typeahead').css('display','block')
+    // $('.tt-menu').addClass('pl-1 pr-1')
 });
 
 duplicateName = true;
@@ -363,13 +367,15 @@ function insRow() {
     var d = a.insertCell(1);
     var c = a.insertCell(2);
     var f = a.insertCell(3);
-    var g = a.insertCell(4);
-    var e = a.insertCell(5);
+    var h = a.insertCell(4);
+    var g = a.insertCell(5);
+    var e = a.insertCell(6);
     rl = document.getElementById("itemDetails").rows.length - 1;
     b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
-    d.innerHTML = '<input type="text" id="serviceDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter service date" name="serviceDate[]" title="Please enter service date">';
+    d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
     c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
     f.innerHTML = '<input type="number" value="0" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />'
+    h.innerHTML = '<input type="text" id="description' + rowCount + '" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">';
     g.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches' + rowCount + '" name="branches[]" title="Please select locations">\
                         <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select>';
     e.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
@@ -386,6 +392,38 @@ function insRow() {
         clearBtn: true,
     });
     $(".select2").select2();
+    let autocompComments = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: "/getAutoCompleteComments",
+            replace: function(url, uriEncodedQuery) {
+                comments = $('#description'+rowCount).val();
+                return url + '/' + uriEncodedQuery + '/' + comments
+            },
+            filter: function(data) {
+                // Map the remote source JSON array to a JavaScript object array
+                return $.map(data, function(autocompComments) {
+                    return {
+                        value: autocompComments.value
+                    };
+                });
+            }
+        }
+    });
+
+    // Initialize the Bloodhound suggestion engine
+    autocompComments.initialize();
+
+    console.log(autocompComments)
+    $('#description'+rowCount).typeahead(null, {
+        name: 'value',
+        displayKey: 'value',
+        source: autocompComments.ttAdapter(),
+        limit:'Infinity'
+    });
+    $('.twitter-typeahead').css('display','block')
+    $('.tt-menu').addClass('pl-1 pr-1')
 }
 
 function removeRow(el) {

@@ -11,7 +11,7 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">Quote Order Details</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">Quote Order</h2></center><hr>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
@@ -23,7 +23,7 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                         <form class="form form-horizontal" role="form" name="updateBatchNumber" action="/quotes/updateBatchNumber" id="updateBatchNumber" method="post" autocomplete="off" >
                         @csrf
                         <div>
-                            <center><h4><b>QUOTE DETAILS</b></h4><center>
+                            <center><h4><b>QUOTE</b></h4><center>
                         </div>
                         <br/>
                         <div class="row">
