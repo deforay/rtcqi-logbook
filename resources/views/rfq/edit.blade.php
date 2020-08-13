@@ -121,6 +121,14 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="col-md-12">
+                                    <label class="col-md-2 label-control" for="mainContent">Description</label>
+                                    <div class="form-group row" >
+                                        <div class="col-md-12">
+                                        <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result['rfq'][0]->description}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                                 <?php if(isset($result['rfq'][0]->rfq_upload_file)){ ?>
                                 <div class="row">
                                 <fieldset>
@@ -137,10 +145,24 @@
                                                 }
                                                 for($i=0;$i<$forcount;$i++)
                                                 {
-                                                $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                   
-                                                echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
-                                                 }
+                                                    $attach = explode('/',$fileVaL[$i])[8];
+                                                    $attachext = explode('.',$attach);
+                                                    $attachext = end($attachext);
+                                                    $attachfile = explode('@@',$attach)[0];
+                                                    if($attachfile){
+                                                        if($attachext){
+                                                            $attachmentFile = $attachfile.'.'.$attachext;
+                                                        }
+                                                        else{
+                                                            $attachmentFile = $attachfile;
+                                                        }
+                                                    }
+                                                    else{
+                                                        $attachfile = 'Attachment';
+                                                    }
+                                                    $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                    echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">'.$attachmentFile.'</i></a></br>';
+                                                }
                                                 ?>
                                             </div>
                                         </fieldset>
@@ -204,14 +226,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <label class="col-md-2 label-control" for="mainContent">Description</label>
-                                    <div class="form-group row" >
-                                        <div class="col-md-12">
-                                        <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result['rfq'][0]->description}}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                                
 								<div class="form-actions right">
                                     <a href="/rfq" >
                                     <button type="button" class="btn btn-warning mr-1">

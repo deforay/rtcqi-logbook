@@ -93,8 +93,10 @@ class QuotesTable extends Model
     // Update particular Quotes  details
     public function updateQuotes($params, $id)
     {
+        $id = base64_decode($id);
         $commonservice = new CommonService();
         $data = $params->all();
+        // dd($data);
         if ($params->input('quoteNumber') != null && trim($params->input('quoteNumber')) != '') {
             
             for($i=0;$i<count($data['quoteQty']);$i++){
@@ -107,31 +109,76 @@ class QuotesTable extends Model
                 $ordUp = DB::table('quote_details') ->where('qd_id','=', $data['qdId'][$i])
                 ->update($quoteDetailsData);
             }
-            
             $response = DB::table('quotes')
-            ->where('quote_id', '=', base64_decode($id))
+            ->where('quote_id', '=', $id)
             ->update(
                 [
                     'quote_number' => $data['quoteNumber'],
-                        'description' => $data['description'],
-                        'quotes_status' => 'responded',
-                        'responded_on' => $commonservice->getDateTime(),
-                        'stock_available' => $data['stockable'],
-                        'eta_if_no_stock' => $data['notInStock'],
-                        'vendor_notes' => $data['vendorNotes'],
-                        'mode_of_delivery' => $data['deliveryMode'],
-                        'estimated_date_of_delivery' => $commonservice->dateFormat($data['estimatedDate']),
-                        ]
-                    );
-                    
+                    'quote_description' => $data['description'],
+                    'quotes_status' => 'responded',
+                    'responded_on' => $commonservice->getDateTime(),
+                    'stock_available' => $data['stockable'],
+                    'eta_if_no_stock' => $data['notInStock'],
+                    'vendor_notes' => $data['vendorNotes'],
+                    'mode_of_delivery' => $data['deliveryMode'],
+                    'estimated_date_of_delivery' => $commonservice->dateFormat($data['estimatedDate']),
+                ]
+            );
+
+            $filePathName='';
+            $fileName='';
+            $extension='';
+            if(isset($data['uploadFile'])){
+
+                for($i=0;$i<count($data['uploadFile']);$i++)
+                {
+        
+                    if (isset($_FILES['uploadFile']['name'][$i]) && $_FILES['uploadFile']['name'][$i] != '') {
+                        if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                            mkdir(public_path('uploads'),0755,true);
+                            // chmod (getcwd() .public_path('uploads'), 0755 );
+                        }
+                        
+                        if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes")) {
+                            mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes", 0755);
+                        }
+            
+                        $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $id;
+                        
+                        if (!file_exists($pathname) && !is_dir($pathname)) {
+                            mkdir($pathname);
+                        }
+                        // print_r($_FILES['uploadFile']['name'][$i]);die;
+                        $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
+                        $ext = '.'.$extension;
+                        $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $fileName = $orgFileName.'@@'.time(). "." . $extension;
+                        // print_r($fileName);die;
+
+                        $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                        
+                        move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
+                        $filePathName .=$filePath.','; 
+                    }
+                }
+                if($filePathName!=''){
+        
+                    $uploadData = array('quotes_upload_file' => $filePathName);
+                    $quotesUp = DB::table('quotes')
+                            ->where('quote_id', '=', $id)
+                            ->update(
+                                $uploadData
+                            );
+                }
+            }
             $commonservice = new CommonService();
-            $commonservice->eventLog(session('userId'), base64_decode($id), 'Quote-update', 'Update Quaote ' . $data['quoteNumber'], 'Item');
+            $commonservice->eventLog(session('userId'), base64_decode($id), 'Quote-update', 'Update Quote ' . $data['quoteNumber'], 'Item');
         }
         
         $data = DB::table('rfq')
         ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
         ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-        ->where('quotes.quote_id', '=', base64_decode($id))
+        ->where('quotes.quote_id', '=', $id)
         ->get();
         $rfqNumber=$data[0]->rfq_number;
         $quoteNumber=$data[0]->quote_number;

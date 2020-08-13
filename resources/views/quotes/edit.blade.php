@@ -86,31 +86,91 @@ if(isset($result[0]->mode_of_delivery)){
                         <div class="card-content collapse show">
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
-                                <form class="form form-horizontal" role="form" name="editQuotes" id="editQuotes" method="post" action="/quotes/edit/{{base64_encode($result[0]->quote_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                <form class="form form-horizontal" role="form" name="editQuotes" id="editQuotes" enctype="multipart/form-data" method="post" action="/quotes/edit/{{base64_encode($result[0]->quote_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
                                     @php
                                     $fnct = "quote_id##".($result[0]->quote_id);
                                     @endphp
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>RFQ Number
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" disabled id="rfqNumber" value="{{$result[0]->rfq_number}}" class="form-control" autocomplete="off" name="rfqNumber">
-                                                </div>
-                                            </fieldset>
+                                            <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->rfq_number }} </span></h4>
                                         </div>
                                         <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Vendor Name
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" disabled id="vendorName" value="{{$result[0]->vendor_name}}" class="form-control isRequired" autocomplete="off" name="vendorName">
-                                                </div>
-                                            </fieldset>
+                                            <h4><b>Vendor Name : </b><span id="quoteNumber" class="spanFont">{{$result[0]->vendor_name}}</span></h4>
                                         </div>
                                     </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-12">
+                                            <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$invitedOn}}</span></h4>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="col-md-12">
+                                        <label class="col-md-2 label-control" for="description" ><h5>Description</h5></label>
+                                        <div class="form-group row" >
+                                            <div class="col-md-12">
+                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result[0]->quote_description}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php if(isset($result[0]->quotes_upload_file)){ ?>
+                                        <div class="row">
+                                            <fieldset>
+                                                <h5>Attachment Files <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                <?php 
+                                                    $fileVaL= explode(",", $result[0]->quotes_upload_file);
+                                                    $filecount=count($fileVaL);
+                                                    if($filecount>1){
+                                                        $forcount=$filecount-1;
+                                                    }else{
+                                                        $forcount=$filecount;
+                                                    }
+                                                    for($i=0;$i<$forcount;$i++)
+                                                    {
+                                                        $attach = explode('/',$fileVaL[$i])[8];
+                                                        $attachext = explode('.',$attach);
+                                                        $attachext = end($attachext);
+                                                        $attachfile = explode('@@',$attach)[0];
+                                                        if($attachfile){
+                                                            if($attachext){
+                                                                $attachmentFile = $attachfile.'.'.$attachext;
+                                                            }
+                                                            else{
+                                                                $attachmentFile = $attachfile;
+                                                            }
+                                                        }
+                                                        else{
+                                                            $attachfile = 'Attachment';
+                                                        }
+                                                        $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">'.$attachmentFile.'</i></a></br>';
+                                                    }
+                                                
+                                                    ?>
+                                                </div>
+                                            </fieldset>
+
+                                    </div>
+                                    <?php  } else{ ?>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-12">
+                                                <fieldset class="form-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                        <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                        <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <br/>
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
@@ -121,17 +181,6 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Invited On
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="invitedOn" value="{{ $invitedOn }}" disabled class="form-control" autocomplete="off" placeholder="Enter Invited On" name="invitedOn" title="Please enter Invited On">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Currently in Stock?<span class="mandatory">*</span>
@@ -181,34 +230,6 @@ if(isset($result[0]->mode_of_delivery)){
                                         </div>
                                     </div>
                                     <br /><br />
-                                    <?php if(isset($result[0]->quotes_upload_file)){ ?>
-    
-                                        <div class="row">
-                                    <fieldset>
-                                                <h5>Attachment Files <span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                <?php 
-                                                    $fileVaL= explode(",", $result[0]->quotes_upload_file);
-                                                    $filecount=count($fileVaL);
-                                                    if($filecount>1){
-                                                        $forcount=$filecount-1;
-                                                    }else{
-                                                        $forcount=$filecount;
-                                                    }
-                                                    for($i=0;$i<$forcount;$i++)
-                                                    {
-                                                    $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                       
-                                                    echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
-                                                     }
-                                                
-                                                    ?>
-                                                </div>
-                                            </fieldset>
-                                 
-                                    </div>
-                                    <?php  } ?>
                                     <div class="row">
                                         <h4>Orders Details</h4>
                                     </div>
@@ -256,15 +277,6 @@ if(isset($result[0]->mode_of_delivery)){
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12">
-											<label class="col-md-2 label-control" for="description" >Description</label>
-											<div class="form-group row" >
-												<div class="col-md-12">
-												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$quotesDetail->description}}</textarea>
-												</div>
-											</div>
-                                        </div>
                                         
                                     <div class="form-actions right">
                                         <a href="/quotes">

@@ -65,11 +65,59 @@ class PurchaseOrderTable extends Model
                     'quote_id'         => $quoteId,
                     'last_date_of_delivery' => $lastDelDate,
                     'delivery_location' => $data['deliveryLoc'],
+                    'purchase_order_description' => $data['description'],
                 ]
             );
 
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $poId, 'Purchaseorder-add', 'Add Purchase Order ' . $data['poNumber'], 'Purchase Order');
+
+            $filePathName='';
+            $fileName='';
+            $extension='';
+            if(isset($data['uploadFile'])){
+
+                for($i=0;$i<count($data['uploadFile']);$i++)
+                {
+        
+                    if (isset($_FILES['uploadFile']['name'][$i]) && $_FILES['uploadFile']['name'][$i] != '') {
+                        if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                            mkdir(public_path('uploads'),0755,true);
+                            // chmod (getcwd() .public_path('uploads'), 0755 );
+                        }
+                        
+                        if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders")) {
+                            mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders", 0755);
+                        }
+            
+                        $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
+                        
+                        if (!file_exists($pathname) && !is_dir($pathname)) {
+                            mkdir($pathname);
+                        }
+                        // print_r($_FILES['uploadFile']['name'][$i]);die;
+                        $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
+                        $ext = '.'.$extension;
+                        $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $fileName = $orgFileName.'@@'.time(). "." . $extension;
+                        // print_r($fileName);die;
+
+                        $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                        
+                        move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
+                        $filePathName .=$filePath.','; 
+                    }
+                }
+                if($filePathName!=''){
+        
+                    $uploadData = array('purchase_order_upload_file' => $filePathName);
+                    $quotesUp = DB::table('purchase_orders')
+                            ->where('po_id', '=', $poId)
+                            ->update(
+                                $uploadData
+                            );
+                }
+            }
         }
 
         if ($request->input('item') != null) {
@@ -81,7 +129,7 @@ class PurchaseOrderTable extends Model
                         'uom'           => $data['unitId'][$k],
                         'unit_price'    => $data['unitPrice'][$k],
                         'quantity'      => $data['qty'][$k],
-                        'delivery_status'      => 'pending',
+                        // 'order_status'      => 'pending',
                         'created_on'    => $commonservice->getDateTime(),
                     ]
                 );
@@ -250,7 +298,7 @@ class PurchaseOrderTable extends Model
     }
     public function fetchPurchaseorderById($id)
     {
-        // $id = base64_decode($id);
+        $id = base64_decode($id);
         $data = DB::table('purchase_orders')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
                 ->join('purchase_order_details', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
@@ -310,7 +358,6 @@ class PurchaseOrderTable extends Model
                 'uom'               => $data['unitId'][$j],
                 'unit_price'        => $data['unitPrice'][$j],
                 'quantity'          => $data['qty'][$j],
-                'delivery_status'   => 'pending',
                 'created_on'        => $commonservice->getDateTime(),
             );
             if(isset($data['podId'][$j]) && $data['podId'][$j]!=''){
@@ -340,6 +387,7 @@ class PurchaseOrderTable extends Model
                 'updated_on'      => $commonservice->getDateTime(),
                 'last_date_of_delivery' => $lastDelDate,
                 'delivery_location' => $data['deliveryLoc'],
+                'purchase_order_description' => $data['description'],
             );
 
             $purchaseOrder = DB::table('purchase_orders')

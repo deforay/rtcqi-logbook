@@ -61,10 +61,13 @@ class RfqTable extends Model
                     if (!file_exists($pathname) && !is_dir($pathname)) {
                         mkdir($pathname);
                     }
-        
+                    // print_r($_FILES['uploadFile']['name'][$i]);die;
                     $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
-                    $fileName = $i.time(). "." . $extension;
-        
+                    $ext = '.'.$extension;
+                    $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                    $fileName = $orgFileName.'@@'.time(). "." . $extension;
+                    // print_r($fileName);die;
+
                     $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
                     
                     move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
@@ -104,27 +107,27 @@ class RfqTable extends Model
                         );
                     }
                 }
-                if (file_exists($filePath)) {
-                    if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes")) {
-                        mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes", 0755);
-                    }
+                // if (file_exists($filePath)) {
+                //     if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes")) {
+                //         mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "quotes", 0755);
+                //     }
         
-                    $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $quotes;
+                //     $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $quotes;
                     
-                    if (!file_exists($pathname) && !is_dir($pathname)) {
-                        mkdir($pathname);
-                    }
+                //     if (!file_exists($pathname) && !is_dir($pathname)) {
+                //         mkdir($pathname);
+                //     }
                     
-                    $quotesFilePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
-                    if (copy($filePath, $quotesFilePath)) {
-                        $uploadData = array('quotes_upload_file' => $quotesFilePath);
-                        $quotesUp = DB::table('quotes')
-                                ->where('quote_id', '=', $quotes)
-                                ->update(
-                                    $uploadData
-                                );
-                    }
-                }
+                //     $quotesFilePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                //     if (copy($filePath, $quotesFilePath)) {
+                //         $uploadData = array('quotes_upload_file' => $quotesFilePath);
+                //         $quotesUp = DB::table('quotes')
+                //                 ->where('quote_id', '=', $quotes)
+                //                 ->update(
+                //                     $uploadData
+                //                 );
+                //     }
+                // }
             }
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $id, 'quotes-add', 'add quotes '.$id, 'quotes');
@@ -381,7 +384,7 @@ class RfqTable extends Model
         try {
             if ($fieldValue != "") {
                 $updateData = array($fieldName => $fieldValue);
-                $updateQuotesData = array('quotes_status' => $fieldValue,'description'=>$rfqdescription,'quotes_upload_file'=>$uploadfile);
+                $updateQuotesData = array('quotes_status' => $fieldValue);
                 DB::table($tableName)
                     ->where($fieldIdName, '=', $fieldIdValue)
                     // ->where('approve_status', '=', 'no')

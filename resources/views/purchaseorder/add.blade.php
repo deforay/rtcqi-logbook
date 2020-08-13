@@ -52,8 +52,30 @@ $currentDate=date('d-M-Y');
                         <div class="card-content collapse show">
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
-                                <form class="form form-horizontal" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/purchaseorder/add/{{$quoteId}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                <form class="form form-horizontal" enctype="multipart/form-data" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/purchaseorder/add/{{$quoteId}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
+                                    <div class="col-md-12">
+                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <div class="form-group row" >
+                                            <div class="col-md-12">
+                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset class="form-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                    <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                    <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
@@ -159,7 +181,7 @@ $currentDate=date('d-M-Y');
                                                             <th style="width:25%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Quantity<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Action</th>
+                                                            <!-- <th style="width:20%;">Action</th> -->
                                                         </tr>
                                                     </thead>
                                                     <tbody id="itemDetails">
@@ -186,29 +208,21 @@ $currentDate=date('d-M-Y');
                                                             <td>
                                                                 <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <div class="row">
                                                                     <div class="col-md-6 col-6">
                                                                         <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
                                                                     </div>
-                                                                    <!-- <div class="col-md-6 col-6">
-                                                            <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
-                                                        </div> -->
+                                                                    <div class="col-md-6 col-6">
+                                                                        <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
+                                                                    </div>
                                                                 </div>
-                                                            </td>
+                                                            </td> -->
                                                         </tr>
                                                         <?php $j++; ?>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" >Description</label>
-                                        <div class="form-group row" >
-                                            <div class="col-md-12">
-                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$quotes['quotes'][0]->description}}</textarea>
                                             </div>
                                         </div>
                                     </div>

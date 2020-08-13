@@ -102,15 +102,23 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    <div class="col-md-12">
+                                        <label class="col-md-2 label-control" for="mainContent" >Description</label>
+                                        <div class="form-group row" >
+                                            <div class="col-md-12">
+                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-xl-6 col-lg-12">
-                                    <fieldset class="form-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
-                                            <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
-                                            <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
-                                         </div>
-                                    </fieldset>
-                                </div>
+                                        <fieldset class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -182,15 +190,6 @@
                                     </fieldset>
                                 </div>
                             </form> -->
-
-                                <div class="col-md-12">
-                                    <label class="col-md-2 label-control" for="mainContent" >Description</label>
-                                    <div class="form-group row" >
-                                        <div class="col-md-12">
-                                        <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
-                                        </div>
-                                    </div>
-                                </div>
 								<div class="form-actions right">
                                     <a href="/rfq" >
                                     <button type="button" class="btn btn-warning mr-1">
