@@ -288,3 +288,8 @@ ALTER TABLE `autocomplete_comments` ADD `created_on` DATETIME NULL AFTER `descri
 ALTER TABLE `quotes` CHANGE `description` `quote_description` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE `purchase_orders` ADD `purchase_order_description` TEXT NULL AFTER `delivery_location`;
 ALTER TABLE `purchase_orders` ADD `purchase_order_upload_file` TEXT NULL AFTER `purchase_order_description`;
+
+--Sudarmathi 13 August 2020
+ALTER TABLE `inventory_stock` ADD `non_conformity_comments` TEXT NULL AFTER `branch_id`;
+ALTER TABLE `inventory_stock` DROP `service_date`;
+ALTER TABLE `inventory_stock` ADD `batch_number` VARCHAR(255) NULL AFTER `non_conformity_comments`;

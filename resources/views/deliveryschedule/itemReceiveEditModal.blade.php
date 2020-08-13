@@ -5,9 +5,9 @@ $common = new CommonService();
 $deliveryDate = $common->humanDateFormat($result[0]->expected_date_of_delivery);
 ?>
 <style>
-td{
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+td {
+    padding-left: 0.50rem !important;
+    padding-right: 0.50rem !important;
 }
 span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
     cursor: pointer;
@@ -35,21 +35,21 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
         <div class="col-12">
-            <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
-                <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">Item Receive</h2></center><hr>
-                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                </div>
+            <div class="card" style="margin-top: 2%;margin-left:2%;border: solid;margin-right:2%;">
                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
-                <div class="card-content collapse show">
-                    <div class="card-body">
-                        <div id="show_alert"  class="mt-1" style=""></div>
+                <div id="show_alert"  class="" style=""></div>
+                <div class="card-header mb-0 pb-0">
+                    <center><h2 class="form-section" style="font-weight: 600;">Item Receive</h2></center><hr>
+                </div>
+                
+                <!-- <div class="card-content collapse show"> -->
+                    <div class="card-body mt-0 pt-0">
                         <form class="form form-horizontal" role="form" name="updateItemReceive" id="updateItemReceive" method="post" action="/itemreceive/updateItemReceive/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
                         @csrf
                         <!-- <div>
-                            <center><h4><b>PURCHASE ORDER DETAILS</b></h4><center>
+                            <center><h4><b>PURCHASE ORDER</b></h4><center>
                         </div> -->
                         <br/>
                         <div class="row">
@@ -98,38 +98,38 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="table-responsive">
+                            <div class="">
                                 <!-- <div class="bd-example"> -->
                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:15%;">Expiry Date</th>
-                                            <th style="width:15%;">Batch Number</th>
-                                            <th style="width:10%;">Received Qty<span class="mandatory">*</span></th>
-                                            <th style="width:10%;">Non Confromity Qty<span class="mandatory">*</span></th>
-                                            <th style="width:10">Reason for non confirmity</th>
-                                            <th style="width:20%;">Locations<span class="mandatory">*</span></th>
-                                            <th style="width:20%;">Action</th>
+                                            <th style="width:15%;" class="pl-1 pr-0">Expiry Date</th>
+                                            <th style="width:15%;" class="pl-1 pr-0">Batch No</th>
+                                            <th style="width:10%;" class="pl-1 pr-0">Received<br> Qty<span class="mandatory">*</span></th>
+                                            <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Qty<span class="mandatory">*</span></th>
+                                            <th style="width:20" class="pl-1 pr-0">Reason for<br> non conformity</th>
+                                            <th style="width:15%;" class="pl-1 pr-0">Locations<span class="mandatory">*</span></th>
+                                            <th style="width:15%;" class="pl-1 pr-0">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="itemDetails">
                                         <tr>
-                                            <td class="pr-1 pl-1">
+                                            <td>
                                                 <input type="text" id="expiryDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
                                             </td>
-                                            <td class="pr-1 pl-1">
-                                                <input type="text" id="batchNo0" class="form-control datepicker " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">
+                                            <td>
+                                                <input type="text" id="batchNo0" class="form-control " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">
                                             </td>
-                                            <td class="pr-1 pl-1">
+                                            <td>
                                                 <input type="number" value="0" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
                                             </td >
-                                            <td class="pr-1 pl-1">
+                                            <td>
                                                 <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
                                             </td>
-                                            <td class="pr-1 pl-1">
+                                            <td>
                                                 <input type="text" id="description0" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">
                                             </td>
-                                            <td class="pr-1 pl-1">
+                                            <td>
                                             <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches0" name="branches[]" title="Please select locations">
                                                 <option value="">Select Locations</option>
                                                 @foreach($branch as $type)
@@ -204,7 +204,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         </div>
                     </div>
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </section>
@@ -372,7 +372,7 @@ function insRow() {
     var e = a.insertCell(6);
     rl = document.getElementById("itemDetails").rows.length - 1;
     b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
-    d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
+    d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control isRequired" autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
     c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
     f.innerHTML = '<input type="number" value="0" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />'
     h.innerHTML = '<input type="text" id="description' + rowCount + '" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">';

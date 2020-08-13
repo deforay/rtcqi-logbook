@@ -197,7 +197,7 @@ class DeliveryScheduleTable extends Model
                         [
                             'received_qty'      => $data['receivedQtySum'],
                             'damaged_qty'    => $data['damagedQtySum'],
-                            'short_description' => $data['description'],
+                            // 'short_description' => $data['description'],
                             'delivery_schedule_status' => $data['status'],
                             'updated_by'      => session('userId'),
                             'updated_on'      => $commonservice->getDateTime(),
@@ -205,8 +205,14 @@ class DeliveryScheduleTable extends Model
                     );
 
         for($i=0;$i<count($data['expiryDate']);$i++){
+            if($data['description'][$i] && $data['description'][$i]!=null ){
+                $desc = $data['description'][$i];
+            }
+            else{
+                $desc='';
+            }
             $expiryDate = $commonservice->dateFormat($data['expiryDate'][$i]);
-            $serviceDate = $commonservice->dateFormat($data['serviceDate'][$i]);
+            // $serviceDate = $commonservice->dateFormat($data['serviceDate'][$i]);
             $stk = DB::table('inventory_stock')
                     ->where('expiry_date', '=', $expiryDate)
                     ->where('branch_id', '=', $data['branches'][$i])
@@ -220,9 +226,11 @@ class DeliveryScheduleTable extends Model
                         ->where('item_id', '=', $data['itemId'])
                         ->update(
                             [
+                                'batch_number' =>$data['batchNo'][$i],
                                 'stock_quantity'  => $rQty,
                                 'updated_by'      => session('userId'),
                                 'updated_on'      => $commonservice->getDateTime(),
+                                'non_conformity_comments' => $desc,
                             ]
                         );
             }
@@ -231,28 +239,34 @@ class DeliveryScheduleTable extends Model
                             [
                                 'item_id'      => $data['itemId'],
                                 'expiry_date'    => $expiryDate,
-                                'service_date'  => $serviceDate,
+                                'batch_number' =>$data['batchNo'][$i],
+                                // 'service_date'  => $serviceDate,
                                 'stock_quantity'    => $data['receivedQty'][$i],
                                 'created_by'      => session('userId'),
                                 'created_on'      => $commonservice->getDateTime(),
                                 'branch_id' => $data['branches'][$i],
+                                'non_conformity_comments' => $desc,
                             ]
                         );
             }
+
+            if($desc){
+                $autoCom = DB::table('autocomplete_comments')
+                        ->where('description', '=',  $desc)
+                        ->get();
+                // dd($desc);
+                if(count($autoCom)==0){
+                    $autoComIns = DB::table('autocomplete_comments')->insertGetId(
+                                    [
+                                        'description'      => $desc,
+                                        'created_by'      => session('userId'),
+                                        'created_on'      => $commonservice->getDateTime(),
+                                    ]
+                                );
+                }
+            }
         }
-        $autoCom = DB::table('autocomplete_comments')
-                    ->where('description', '=',  $data['description'])
-                    ->get();
-        // dd($autoCom);
-        if(count($autoCom)==0){
-            $autoComIns = DB::table('autocomplete_comments')->insertGetId(
-                            [
-                                'description'      => $data['description'],
-                                'created_by'      => session('userId'),
-                                'created_on'      => $commonservice->getDateTime(),
-                            ]
-                        );
-        }
+        
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
         
