@@ -102,7 +102,7 @@ $currentDate=date('d-M-Y');
                                             <br/>
                                             <hr>
                                             <div>
-                                                <center><h4><b>Purchase Order Details</b></h4><center>
+                                                <center><h4><b>Purchase Order</b></h4><center>
                                             </div>
                                             <br/>
                                             <div class="row">

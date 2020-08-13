@@ -43,7 +43,7 @@ Last Modified Name :
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Quotes Details</h3>
+                            <h3 class="content-header-title mb-0">Quotes</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
