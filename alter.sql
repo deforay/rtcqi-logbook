@@ -283,3 +283,8 @@ INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Delayed
 
 --Sudarmathi 10 August 2020
 ALTER TABLE `autocomplete_comments` ADD `created_on` DATETIME NULL AFTER `description`, ADD `updated_on` DATETIME NULL AFTER `created_on`, ADD `created_by` INT NULL AFTER `updated_on`, ADD `updated_by` INT NULL AFTER `created_by`;
+
+--Sudarmathi 12 August 2020
+ALTER TABLE `quotes` CHANGE `description` `quote_description` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `purchase_orders` ADD `purchase_order_description` TEXT NULL AFTER `delivery_location`;
+ALTER TABLE `purchase_orders` ADD `purchase_order_upload_file` TEXT NULL AFTER `purchase_order_description`;

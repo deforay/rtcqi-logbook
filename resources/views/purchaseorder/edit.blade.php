@@ -10,7 +10,12 @@
 <?php
 use App\Service\CommonService;
 $common = new CommonService();
-$lstDelDate = $common->humanDateFormat($result[0]->last_date_of_delivery);
+if(isset($result[0]->last_date_of_delivery)){
+    $lstDelDate = $common->humanDateFormat($result[0]->last_date_of_delivery);
+}
+else{
+    $lstDelDate = '';
+}
 $branches = array();
 foreach($result as $branchList)
 {
@@ -59,6 +64,55 @@ foreach($result as $branchList)
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" role="form" name="editPurchaseOrder" id="editPurchaseOrder" method="post" action="/purchaseorder/edit/{{base64_encode($result[0]->po_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
+                                    <div class="col-md-12">
+                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <div class="form-group row" >
+                                            <div class="col-md-12">
+                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php if(isset($result[0]->upload_path)){ ?>
+                                        <div class="row">
+                                            <fieldset>
+                                            <h5>Attachment Files <span class="mandatory">*</span>
+                                            </h5>
+                                                <div class="form-group">
+                                                <?php
+
+                                                    $fileVaL= explode(",", $result[0]->upload_path);
+                                                    $filecount=count($fileVaL);
+                                                    if($filecount>1){
+                                                        $forcount=$filecount-1;
+                                                    }else{
+                                                        $forcount=$filecount;
+                                                    }
+                                                    for($i=0;$i<$forcount;$i++)
+                                                    {
+                                                        $attach = explode('/',$fileVaL[$i])[8];
+                                                        $attachext = explode('.',$attach);
+                                                        $attachext = end($attachext);
+                                                        $attachfile = explode('@@',$attach)[0];
+                                                        if($attachfile){
+                                                            if($attachext){
+                                                                $attachmentFile = $attachfile.'.'.$attachext;
+                                                            }
+                                                            else{
+                                                                $attachmentFile = $attachfile;
+                                                            }
+                                                        }
+                                                        else{
+                                                            $attachfile = 'Attachment';
+                                                        }
+                                                        $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">'.$attachmentFile.'</i></a></br>';
+                                                    }
+                                                
+                                                    ?>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    <?php  } ?>
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
@@ -154,33 +208,6 @@ foreach($result as $branchList)
                                         </div>
                                     </div>
                                     <hr>
-                                    <?php if(isset($result[0]->upload_path)){ ?>
-                                        <div class="row">
-                                            <fieldset>
-                                            <h5>Attachment Files <span class="mandatory">*</span>
-                                            </h5>
-                                                <div class="form-group">
-                                                <?php
-
-                                                    $fileVaL= explode(",", $result[0]->upload_path);
-                                                    $filecount=count($fileVaL);
-                                                    if($filecount>1){
-                                                        $forcount=$filecount-1;
-                                                    }else{
-                                                        $forcount=$filecount;
-                                                    }
-                                                    for($i=0;$i<$forcount;$i++)
-                                                    {
-                                                    $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                    
-                                                    echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
-                                                    }
-                                                
-                                                    ?>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    <?php  } ?>
                                         <div class="row">
                                             <div class="table-responsive">
                                                 <div class="bd-example">
@@ -191,7 +218,7 @@ foreach($result as $branchList)
                                                             <th style="width:18%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:17%;">Quantity<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Action</th>
+                                                            <!-- <th style="width:20%;">Action</th> -->
                                                             </tr>
                                                         </thead>
                                                         <tbody id="itemDetails">
@@ -217,16 +244,16 @@ foreach($result as $branchList)
                                                             <td>
                                                                 <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <div class="row">
                                                                     <div class="col-md-6 col-6">
                                                                         <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
                                                                     </div>
-                                                                    <!-- <div class="col-md-6 col-6">
-                                                            <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
-                                                        </div> -->
+                                                                    <div class="col-md-6 col-6">
+                                                                        <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
+                                                                    </div>
                                                                 </div>
-                                                            </td>
+                                                            </td> -->
                                                         </tr>
                                                         <?php $j++; ?>
                                                         @endforeach
@@ -235,15 +262,6 @@ foreach($result as $branchList)
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-											<label class="col-md-2 label-control" for="description" >Description</label>
-											<div class="form-group row" >
-												<div class="col-md-12">
-												<textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
-												</div>
-											</div>
-                                        </div>
-                                        
                                         
                                         <div class="form-actions right">
                                             <a href="/purchaseorder">
