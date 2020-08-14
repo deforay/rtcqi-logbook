@@ -9,6 +9,7 @@ foreach($result as $branchList)
 {
     array_push($branches, $branchList->branch_id);
 }
+$delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
 ?>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
@@ -100,6 +101,7 @@ foreach($result as $branchList)
                                         <input type="text" id="deliverQty" value="{{$result[0]->delivery_qty}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty" title="Please enter Delivery Quantity" >
                                     </div>
                                     <input type="hidden" id="hiddenPo_id">
+                                    <input type="hidden" id="poId" name="poId" value="{{$result[0]->po_id}}">
                                 </fieldset>
                             </div>
                         </div>
@@ -189,20 +191,25 @@ $(document).ready(function() {
 
 duplicateName = true;
 function validateNow() {
-   
-    flag = deforayValidator.init({
-        formId: 'updateDeliverySchedule'
-    });
-    
-    if (flag == true) {
-        if (duplicateName) {
-            document.getElementById('updateDeliverySchedule').submit();
-        }
+    let delivery_schedule_status = '{{$delivery_schedule_status}}'
+    if(delivery_schedule_status == 'received'){
+        swal("Items are Already Received");
     }
     else{
-        $('#show_alert').html(flag).delay(3000).fadeOut();
-        $('#show_alert').css("display","block");
-        $(".infocus").focus();
+        flag = deforayValidator.init({
+            formId: 'updateDeliverySchedule'
+        });
+        
+        if (flag == true) {
+            if (duplicateName) {
+                document.getElementById('updateDeliverySchedule').submit();
+            }
+        }
+        else{
+            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $('#show_alert').css("display","block");
+            $(".infocus").focus();
+        }
     }
 }
 </script>
