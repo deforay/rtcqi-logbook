@@ -204,7 +204,7 @@ class QuotesTable extends Model
             $message = str_replace("&amp;nbsp;", "", strval($message));
             $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
-            
+            // dd($message);
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [

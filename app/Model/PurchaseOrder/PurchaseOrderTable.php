@@ -159,7 +159,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
+            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
             $mainReplace = array($vendorName, $data['poNumber']);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
@@ -167,7 +167,6 @@ class PurchaseOrderTable extends Model
             $message = str_replace("&amp;nbsp;", "", strval($message));
             $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
-            print_r($message);
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
@@ -193,7 +192,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
+            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
             $mainReplace = array($vendorName, $quoteNumber);
             $mailContent = trim($mailData[0]->mail_content);
             $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
@@ -201,7 +200,6 @@ class PurchaseOrderTable extends Model
             $pomessage = str_replace("&amp;nbsp;", "", strval($pomessage));
             $pomessage = html_entity_decode($pomessage, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
-            print_r($message);die;
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
