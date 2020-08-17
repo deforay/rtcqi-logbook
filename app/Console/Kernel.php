@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('sendmail:cron')
         ->timezone('Asia/Kolkata')
-            ->everyTenMinutes();
+            ->everyMinute();
     }
 
     /**
