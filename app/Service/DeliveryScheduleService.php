@@ -35,6 +35,24 @@ class DeliveryScheduleService
 	    }
 	}
 
+	public function saveDeliveryScheduleByDate($request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$model = new DeliveryScheduleTable();
+			$result = $model->saveDeliveryScheduleByDate($request);
+			if($result > 0){
+				DB::commit();
+				return $result;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
+
 	//Update Delivery Schedule List By Id
 	public function getDeliveryScheduleById($id)
     {

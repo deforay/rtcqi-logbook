@@ -172,7 +172,7 @@ class QuotesTable extends Model
                 }
             }
             $commonservice = new CommonService();
-            $commonservice->eventLog(session('userId'), base64_decode($id), 'Quote-update', 'Update Quote ' . $data['quoteNumber'], 'Item');
+            $commonservice->eventLog(session('userId'), $id, 'Quote-update', 'Update Quote ' . $data['quoteNumber'], 'Item');
         }
         
         $data = DB::table('rfq')
@@ -196,15 +196,15 @@ class QuotesTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBAER##');
+            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
             $mainReplace = array($vendorName, $quoteNumber);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
-            $message = str_replace("&nbsp;", "", strval($message));
+            // $message = str_replace("&nbsp;", "", strval($message));
             $message = str_replace("&amp;nbsp;", "", strval($message));
             $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
-
+            
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
