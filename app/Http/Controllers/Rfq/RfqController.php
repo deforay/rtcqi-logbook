@@ -70,13 +70,13 @@ class RfqController extends Controller
                     ->addColumn('rfq_status', function($data){
                         $rfqSts = $data->rfq_status;
                         if($rfqSts == 'draft'){
-                           $sts = '<span class="badge badge-warning">'.ucfirst($rfqSts).'</span>';
+                           $sts = '<span class="badge badge-warning"><b>'.ucfirst($rfqSts).'</b></span>';
                         }
                         else if($rfqSts == 'active'){
-                            $sts = '<span class="badge badge-success">'.ucfirst($rfqSts).'</span>';
+                            $sts = '<span class="badge badge-success"><b>'.ucfirst($rfqSts).'</b></span>';
                         }
                         else if($rfqSts == 'closed'){
-                            $sts = '<span class="badge badge-danger">'.ucfirst($rfqSts).'</span>';
+                            $sts = '<span class="badge badge-danger"><b>'.ucfirst($rfqSts).'</b></span>';
                         }
                         else{
                             $sts = '';
