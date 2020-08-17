@@ -41,7 +41,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                 </div>
                 <div id="show_alert"  class="" style=""></div>
                 <div class="card-header mb-0 pb-0">
-                    <center><h2 class="form-section" style="font-weight: 600;">Items</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">Receive Items</h2></center><hr>
                 </div>
                 
                 <!-- <div class="card-content collapse show"> -->

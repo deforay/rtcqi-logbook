@@ -11,7 +11,7 @@
 @section('content')
 @php
 $currentDate=date('d-M-Y');
-@endphp 
+@endphp
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
     <div class="content-header row">

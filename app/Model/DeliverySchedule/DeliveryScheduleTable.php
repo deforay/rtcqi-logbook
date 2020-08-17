@@ -67,6 +67,66 @@ class DeliveryScheduleTable extends Model
         return $autoId;
     }
 
+    public function saveDeliveryScheduleByDate($request)
+    {
+        //to get all request values
+        $data = $request->all();
+        // dd($data);
+        $autoId = 0;
+        $commonservice = new CommonService();
+
+        $expectedDelivery = $commonservice->dateFormat($data['expectedDelivery']);
+        for ($j = 0; $j < count($data['item']); $j++) {
+        $autoId = DB::table('delivery_schedule')->insertGetId(
+                [
+                    'pod_id'      => $data['podId'][$j],
+                    'expected_date_of_delivery'    => $expectedDelivery,
+                    'item_id'          => $data['item'][$j],
+                    'delivery_qty'    => $data['deliverQty'][$j],
+                    'delivery_mode'    => $data['deliveryMode'][$j],
+                    'comments'  => $data['comments'][$j],
+                    'branch_id'       => $data['branches'][$j],
+                    'created_by'      => session('userId'),
+                    'created_on'      => $commonservice->getDateTime(),
+                    'delivery_schedule_status' => 'pending for shipping',
+                ]
+            );
+                $totalDelQty = 0;
+                $totalPodQty = 0;
+                $delQtySum = DB::raw('SUM(delivery_schedule.delivery_qty) as totQty');
+                $purchase = DB::table('purchase_order_details')
+                            // ->select($qtySum)
+                            ->where('po_id','=', $data['po'])->get();
+                for($k=0;$k<count($purchase);$k++){
+                    $delQty = DB::table('delivery_schedule')
+                            ->select($delQtySum)
+                            ->where('pod_id','=', $purchase[$k]->pod_id)->get();
+                    $totalDelQty += intval($delQty[0]->totQty);
+                    $totalPodQty += intval($purchase[$k]->quantity);
+                }
+                
+                if($totalPodQty == $totalDelQty){
+                    $sts = 'delivery scheduled';
+                }
+                else{
+                    $sts = 'some items scheduled for delivery';
+                }
+                // dd($sts);
+                $stsUp = DB::table('purchase_orders')
+                        ->where('po_id', '=', $data['po'])
+                        ->update(
+                            [
+                                'order_status'    => $sts,
+                            ]
+                        );
+
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'), $autoId, 'Delivery Scheduler-add', 'Add Delivery Schedule ' . $data['po'], 'Purchase Order details');
+        }
+        
+        return $autoId;
+    }
+
     //all delivery schedule
     public function fetchAllDeliverySchedule($params){
         $req = $params->all();

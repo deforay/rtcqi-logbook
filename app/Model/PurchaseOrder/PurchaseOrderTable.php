@@ -15,6 +15,7 @@ class PurchaseOrderTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        // dd($data);
         $commonservice = new CommonService();
 
         $params = array(
@@ -162,11 +163,11 @@ class PurchaseOrderTable extends Model
             $mainReplace = array($vendorName, $data['poNumber']);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
-            $message = str_replace("&nbsp;", "", strval($message));
+            // $message = str_replace("&nbsp;", "", strval($message));
             $message = str_replace("&amp;nbsp;", "", strval($message));
             $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
-
+            print_r($message);
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
@@ -195,12 +196,12 @@ class PurchaseOrderTable extends Model
             $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
             $mainReplace = array($vendorName, $quoteNumber);
             $mailContent = trim($mailData[0]->mail_content);
-            $message = str_replace($mainContent, $mainReplace, $mailContent);
-            $message = str_replace("&nbsp;", "", strval($message));
-            $message = str_replace("&amp;nbsp;", "", strval($message));
-            $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+            $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
+            // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
+            $pomessage = str_replace("&amp;nbsp;", "", strval($pomessage));
+            $pomessage = html_entity_decode($pomessage, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
-
+            print_r($message);die;
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
@@ -212,7 +213,7 @@ class PurchaseOrderTable extends Model
                     'from_full_name' => $mailData[0]->from_name,
                     'status' => 'pending',
                     'datetime' => $createdon,
-                    'message' => $message,
+                    'message' => $pomessage,
                     'customer_name' => $vendorName
                 ]);
         }

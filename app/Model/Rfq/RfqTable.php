@@ -410,7 +410,7 @@ class RfqTable extends Model
                     $subject = str_replace("&nbsp;", "", strval($subject));
                     $subject = str_replace("&amp;nbsp;", "", strval($subject));
                     $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-                    $mainContent = array('##VENDOR-NAME##', '##RFG-NUMBER##');
+                    $mainContent = array('##VENDOR-NAME##', '##RFQ-NUMBER##');
                     $mainReplace = array($vendorName, $rfqNumber);
                     $mailContent = trim($mailData[0]->mail_content);
                     $message = str_replace($mainContent, $mainReplace, $mailContent);

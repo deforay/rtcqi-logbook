@@ -23,7 +23,11 @@ class DeliveryScheduleController extends Controller
         {
             $service = new PurchaseOrderService();
             $data = $service->getAllPurchaseorder();
-            return view('deliveryschedule.index',array('poList' => $data));
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            $purchaseOrderService = new PurchaseOrderService();
+            $purchase = $purchaseOrderService->getAllNotScheduledPurchaseOrder();
+            return view('deliveryschedule.index',array('poList' => $data,'purchase'=>$purchase,'branch'=>$branch));
         }
         else
             return Redirect::to('login')->with('status', 'Please Login');
@@ -45,6 +49,15 @@ class DeliveryScheduleController extends Controller
     
         $service = new DeliveryScheduleService();
         $add = $service->saveDeliverySchedule($request);
+        return $add;
+        // return Redirect::route('deliveryschedule.index')->with('status', $add);
+    }
+
+    public function saveDeliveryScheduleByDate(Request $request)
+    {
+    
+        $service = new DeliveryScheduleService();
+        $add = $service->saveDeliveryScheduleByDate($request);
         return $add;
         // return Redirect::route('deliveryschedule.index')->with('status', $add);
     }
