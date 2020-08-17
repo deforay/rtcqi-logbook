@@ -403,6 +403,7 @@ td {
                         }
                         $("#delivDetails").html(details);
                         $(".select2").select2();
+                        $('#deliveryScheduleAdd').modal('show');
                     }
                     else{
                         $('#poNumber').text('')
@@ -416,9 +417,9 @@ td {
                         details+='<tr><td colspan="5" class="text-center">No Pending Purchase Order Available</td></tr>';
                         $("#poOrderDetails").html(details);
                         $('#addDeliverySchedule').hide();
+                        swal("Delivery scheduled for all items")
+                        $('#deliveryScheduleAdd').modal('hide');
                     }
-                    $('#deliveryScheduleAdd').modal('show');
-                    
                 }
             });
         }
@@ -528,73 +529,6 @@ td {
         }
     }
 
-    // function addDeliverySchedule()
-    // {
-    //     let item = $("#ItemId").val();
-    //     let po_id = $("#hiddenPo_id").val();
-    //     let deliverQty = $("#deliverQty").val();
-    //     let expectedDelivery = $("#expectedDelivery").val();
-    //     let deliveryMode = $("#deliveryMode").val();
-    //     let comments = $("#comments").val();
-    //     let branches = $("#branches").val();
-    //     let po = $('#purchaseOrder').val();
-    //     console.log($('#qtyMax').val())
-    //     console.log(deliverQty)
-    //     if(item && deliverQty && expectedDelivery && deliveryMode && comments && branches){
-    //         if(parseInt(deliverQty)>0){
-    //             if(parseInt(deliverQty) <= parseInt($('#qtyMax').val())){
-    //                 // if(parseInt(deliverQty) == parseInt($('#qtyMax').val())){
-    //                 //     status = "scheduled";
-    //                 // }
-    //                 // else{
-    //                 //     status = "some items scheduled for delivery";
-    //                 // }
-    //                 $.ajaxSetup({
-    //                     headers: {
-    //                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //                     }
-    //                 });
-    //                 $.ajax({
-    //                     url: "{{ url('/saveDeliverySchedule') }}",
-    //                     method: 'post',
-    //                     data: {
-    //                         item:item,
-    //                         po_id:po_id,
-    //                         deliverQty:deliverQty,
-    //                         expectedDelivery:expectedDelivery,
-    //                         deliveryMode:deliveryMode,
-    //                         comments:comments,
-    //                         // status:status,
-    //                         branches:branches,
-    //                         po:po,
-    //                     },
-    //                     success: function(result){
-    //                         console.log(result)
-    //                         if(result>0)
-    //                         {
-    //                             swal("Delivery Schedule Added Successfully")
-    //                             $('.close').trigger('click')
-    //                             // $("#deliveryScheduleAdd").modal('hide');
-    //                             getPurchaseOrder(po);
-    //                         }
-                            
-    //                     }
-
-    //                 });
-    //             }
-    //             else{
-    //                 swal("Entered quantity exceeds purchase order quantity")
-    //             }
-    //         }
-    //         else{
-    //             swal("Delivery quantity should be greater than zero")
-    //         }
-    //     }
-    //     else{
-    //         swal("Please fill all the fields")
-    //     }
-    // }
-
     function addDeliverySchedule(){
         let podId = $("input[name='podId[]']").map(function(){return $(this).val();}).get();
         let expectedDelivery = $("#expectedDelivery").val();
@@ -639,6 +573,7 @@ td {
                     if(result>0)
                     {
                         swal("Delivery Schedule Added Successfully")
+                        $('#deliveryScheduleDetails').html('')
                         getPurchaseOrder()
                         // $('.close').trigger('click')
                         // $("#deliveryScheduleAdd").modal('hide');
