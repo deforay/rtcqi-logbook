@@ -293,3 +293,7 @@ ALTER TABLE `purchase_orders` ADD `purchase_order_upload_file` TEXT NULL AFTER `
 ALTER TABLE `inventory_stock` ADD `non_conformity_comments` TEXT NULL AFTER `branch_id`;
 ALTER TABLE `inventory_stock` DROP `service_date`;
 ALTER TABLE `inventory_stock` ADD `batch_number` VARCHAR(255) NULL AFTER `non_conformity_comments`;
+
+--Sudarmathi 17 August 2020
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Rfq\\RfqController', 'activate', 'Activate')
+UPDATE `privileges` SET `display_name` = 'Add' WHERE `privileges`.`resource_id` = 'App\\Http\\Controllers\\Rfq\\RfqController' AND `privileges`.`privilege_name` = 'add';
