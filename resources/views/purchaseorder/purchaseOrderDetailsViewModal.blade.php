@@ -86,7 +86,7 @@ use App\Service\CommonService;
                                         <tr>
                                             <th style="width:20%;">Item</th>
                                             <th style="width:20%;">Unit</th>
-                                            <th style="width:20%;">Qty</th>
+                                            <th style="width:20%;">Quantity</th>
                                             <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
                                         </tr>
                                     </thead>
