@@ -85,6 +85,7 @@ class DeliveryScheduleController extends Controller
                         $button .= '';
                     }
                 }
+
                 else if(strtolower($data->delivery_schedule_status) == 'received'){
                     $button .= '<span class="badge badge-success"><b>'.ucfirst($data->delivery_schedule_status).'</b></span>';
                 }
