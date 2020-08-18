@@ -214,9 +214,10 @@ foreach($result as $branchList)
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
                                                         <thead>
                                                             <tr>
-                                                            <th style="width:25%;">Item<span class="mandatory">*</span></th>
-                                                            <th style="width:18%;">Unit<span class="mandatory">*</span></th>
-                                                            <th style="width:17%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:30%;">Item<span class="mandatory">*</span></th>
+                                                            <th style="width:15%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Description</th>
+                                                            <th style="width:15%;">Quantity<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
                                                             <!-- <th style="width:20%;">Action</th> -->
                                                             </tr>
@@ -237,6 +238,9 @@ foreach($result as $branchList)
                                                                 <input type="text" readonly id="unitName{{$j}}"  name="unitName[]" value="{{$orderDetail->unit_name}}" class="isRequired form-control" title="Please enter unit" placeholder="Unit">
                                                                 <input type="hidden" id="unitId{{$j}}" name="unitId[]" value="{{$orderDetail->uom}}" class="isRequired form-control"  title="Please enter unit" >
                                                                 <input type="hidden" id="podId{{$j}}" name="podId[]" value="{{$orderDetail->pod_id}}" class="isRequired form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"  value="{{$orderDetail->description}}" id="quoteDesc{{$j}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />

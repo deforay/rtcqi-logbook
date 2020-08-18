@@ -244,7 +244,7 @@ CREATE TABLE `delivery_schedule_edit_comments` (
  `created_on` datetime DEFAULT NULL,
  `updated_on` datetime DEFAULT NULL,
  PRIMARY KEY (`delivery_comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 ---sudarmathi july 28 2020
@@ -276,7 +276,7 @@ CREATE TABLE `autocomplete_comments` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `description` text NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Received in damaged condition'), (NULL, 'Expired');
 INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Not matching requirements/description'), (NULL, 'Did not meet expectations');
 INSERT INTO `autocomplete_comments` (`id`, `description`) VALUES (NULL, 'Delayed delivery');
@@ -295,5 +295,10 @@ ALTER TABLE `inventory_stock` DROP `service_date`;
 ALTER TABLE `inventory_stock` ADD `batch_number` VARCHAR(255) NULL AFTER `non_conformity_comments`;
 
 --Sudarmathi 17 August 2020
-INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Rfq\\RfqController', 'activate', 'Activate')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Rfq\\RfqController', 'activate', 'Activate');
 UPDATE `privileges` SET `display_name` = 'Add' WHERE `privileges`.`resource_id` = 'App\\Http\\Controllers\\Rfq\\RfqController' AND `privileges`.`privilege_name` = 'add';
+
+--Prasath M 18 Aug 2020
+Alter table quote_details add column description Varchar(255) NULL;
+Alter table quotes change responded_on responded_on date NULL;
+Alter table purchase_order_details add column description Varchar(255) NULL;

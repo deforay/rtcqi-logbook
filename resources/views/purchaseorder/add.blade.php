@@ -178,9 +178,10 @@ $currentDate=date('d-M-Y');
                                                     <thead>
                                                         <tr>
                                                             <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Unit<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Quantity<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:15%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Description</th>
+                                                            <th style="width:15%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
                                                             <!-- <th style="width:20%;">Action</th> -->
                                                         </tr>
                                                     </thead>
@@ -202,6 +203,9 @@ $currentDate=date('d-M-Y');
                                                                 <input type="text" id="unitName{{$j}}" readonly name="unitName[]" value="{{$quoteDetail->unit_name}}" class="isRequired form-control" title="Please enter unit" placeholder="Unit">
                                                                 <input type="hidden" id="unitId{{$j}}" name="unitId[]" value="{{$quoteDetail->uom}}" class="isRequired form-control"  title="Please enter unit" >
                                                                 <input type="hidden" id="qdId{{$j}}" name="qdId[]" value="{{$quoteDetail->qd_id}}" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"  value="{{$quoteDetail->description}}" id="quoteDesc{{$j}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control  isRequired"  value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />

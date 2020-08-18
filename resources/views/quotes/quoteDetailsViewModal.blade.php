@@ -12,14 +12,9 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
                     <center><h2 class="form-section" style="font-weight: 600;">Quote Order</h2></center><hr>
-                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="card-content collapse show">
+                <div class="card-content collapse show" style="margin-top: -40px;">
                     <div class="card-body">
-                        <div id="show_alert"  class="mt-1" style=""></div>
                         <form class="form form-horizontal" role="form" name="updateBatchNumber" action="/quotes/updateBatchNumber" id="updateBatchNumber" method="post" autocomplete="off" >
                         @csrf
                         <div>
@@ -27,34 +22,32 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$quote[0]->rfq_number}} </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Quote Number : </b><span id="quoteNumber" class="spanFont">{{$quote[0]->quote_number}}</span></h4>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$invitedOn}} </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
+                        </div>
+                        <br/>
+                        <div class="row">
+                            
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Quote Status : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$quote[0]->quotes_status}} </span></h4>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Delivery Mode : </b><span id="deliveryMode" class="spanFont">{{$quote[0]->mode_of_delivery}} </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
-                                <h4><b>Estimated Delivery Date : </b><span id="deliveryDate" class="spanFont">{{$estDelDate}} </span></h4>
+                            <div class="col-xl-4 col-lg-12">
+                                <h4><b>Estimated Date : </b><span id="deliveryDate" class="spanFont">{{$estDelDate}} </span></h4>
                             </div>
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Vendor Notes : </b><span id="vendorNotes" class="spanFont">{{$quote[0]->vendor_notes}} </span></h4>
                             </div>
                         </div>
@@ -70,7 +63,7 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                                     <thead>
                                         <tr>
                                             <th style="width:20%;">Item</th>
-                                            <th style="width:20%;">Qty</th>
+                                            <th style="width:20%;">Quantity</th>
                                             <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
                                         </tr>
                                     </thead>
