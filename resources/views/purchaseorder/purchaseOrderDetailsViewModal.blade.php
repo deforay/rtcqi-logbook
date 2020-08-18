@@ -10,43 +10,34 @@ use App\Service\CommonService;
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
                     <center><h2 class="form-section" style="font-weight: 600;">PURCHASE ORDER</h2></center><hr>
-                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="card-content collapse show">
+                <div class="card-content collapse show" style="margin-top: -40px;">
                     <div class="card-body">
-                        <div id="show_alert"  class="mt-1" style=""></div>
-                        
                         @csrf
                         <!-- <div>
                             <center><h4><b>PURCHASE ORDER DETAILS</b></h4><center>
                         </div> -->
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>PO Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->po_number }} </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>PO Issued On : </b><span id="quoteNumber" class="spanFont">{{$result[0]->po_issued_on}}</span></h4>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Vendors : </b><span id="invitedDate" class="spanFont">@foreach($vendor as $type){{ $result[0]->vendor == $type->vendor_id ?  $type->vendor_name:''}} @endforeach </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
-                                <h4><b>Total Amount : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$result[0]->total_amount}} </span></h4>
-                            </div>
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
+                                <h4><b>Total Amount : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$result[0]->total_amount}} </span></h4>
+                            </div>
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Order Status : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$result[0]->order_status}} </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Payment Status : </b><span id="deliveryDate" class="spanFont" style="text-transform: capitalize;">{{$result[0]->payment_status}} </span></h4>
                             </div>
                         </div>
@@ -98,9 +89,9 @@ use App\Service\CommonService;
                                                 <td> @foreach ($item as $items)
                                                      {{ $orderDetail->item_id == $items->item_id ?  $items->item_name:''}}
                                                                     @endforeach</td>
-                                                <td style="text-align:right;">{{$orderDetail->unit_name}}</td>
-                                                <td>{{$orderDetail->quantity}}</td>
-                                                <td>{{$orderDetail->unit_price}}</td>
+                                                <td >{{$orderDetail->unit_name}}</td>
+                                                <td style="text-align:right;">{{$orderDetail->quantity}}</td>
+                                                <td style="text-align:right;">{{$orderDetail->unit_price}}</td>
                                             </tr>
                                             @php $z++; @endphp
                                         @endforeach

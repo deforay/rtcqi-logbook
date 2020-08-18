@@ -130,6 +130,7 @@ class PurchaseOrderTable extends Model
                         'uom'           => $data['unitId'][$k],
                         'unit_price'    => $data['unitPrice'][$k],
                         'quantity'      => $data['qty'][$k],
+                        'description'   =>  $data['quoteDesc'][$k],
                         // 'order_status'      => 'pending',
                         'created_on'    => $commonservice->getDateTime(),
                     ]
@@ -357,6 +358,7 @@ class PurchaseOrderTable extends Model
                 'uom'               => $data['unitId'][$j],
                 'unit_price'        => $data['unitPrice'][$j],
                 'quantity'          => $data['qty'][$j],
+                'description'       => $data['quoteDesc'][$j],
                 'created_on'        => $commonservice->getDateTime(),
             );
             if(isset($data['podId'][$j]) && $data['podId'][$j]!=''){

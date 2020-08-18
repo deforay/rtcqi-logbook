@@ -14,6 +14,7 @@ use App\Service\CommonService;
 // dd($result[0]->quotes_upload_file);
 $common = new CommonService();
 $invitedOn = $common->humanDateFormat($result[0]->invited_on);
+$deliveryDate = $common->humanDateFormat($result[0]->estimated_date_of_delivery);
 $respondedOn = $common->humanDateFormat($result[0]->responded_on);
 if(isset($result[0]->estimated_date_of_delivery)){
     $estimatedDate = $common->humanDateFormat($result[0]->estimated_date_of_delivery);
@@ -84,7 +85,7 @@ if(isset($result[0]->mode_of_delivery)){
                         <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                         </div>
-                        <div class="card-content collapse show">
+                        <div class="card-content collapse show" style="margin-top: -20px;">
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" role="form" name="editQuotes" id="editQuotes" enctype="multipart/form-data" method="post" action="/quotes/edit/{{base64_encode($result[0]->quote_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
@@ -106,7 +107,19 @@ if(isset($result[0]->mode_of_delivery)){
                                     <br/>
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
+                                            <h4><b>Quotes Status : </b> <span id="quotesStatus" class="spanFont">{{ucfirst($result[0]->quotes_status) }} </span></h4>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <h4><b>Delivery Mode : </b><span id="deliveryMode" class="spanFont">{{$result[0]->mode_of_delivery}}</span></h4>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
                                             <h4><b>Responded On : </b><span id="respondedDate" class="spanFont">{{$respondedOn}}</span></h4>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                         <div class="col-xl-6 col-lg-12">
+                                            <h4><b>Estimated Delivery Date : </b><span id="estimatedDate" class="spanFont">{{$deliveryDate}}</span></h4>
                                         </div>
                                     </div>
                                     <br/>
@@ -244,10 +257,11 @@ if(isset($result[0]->mode_of_delivery)){
                                                 <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:35%;">Item Name<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Unit<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Quantity<span class="mandatory">*</span></th>
-                                                            <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:30%;">Item Name<span class="mandatory">*</span></th>
+                                                            <th style="width:15%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Description</th>
+                                                            <th style="width:15%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="orderDetails">
@@ -266,6 +280,9 @@ if(isset($result[0]->mode_of_delivery)){
                                                             <td>
                                                                 <input type="text" id="unitName{{$z}}" readonly name="unitName[]" value="{{ $quotesDetail->unit_name }}" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">
                                                                 <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $quotesDetail->uom }}" class="isRequired form-control"  title="Please enter unit">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text"  value="{{$quotesDetail->description}}" id="quoteDesc{{$z}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" value="{{$quotesDetail->quantity}}" id="quoteQty{{$z}}" name="quoteQty[]" class="form-control isRequired" placeholder="Order Qty" title="Please enter the order qty" />
