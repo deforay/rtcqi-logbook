@@ -27,7 +27,7 @@ class PurchaseOrderController extends Controller
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
-    //Add Purchase Order (display add screen and add the rfq values)
+    //Add Purchase Order (display add screen and add the PO values)
     public function add($id,Request $request)
     {
         if ($request->isMethod('post')) 

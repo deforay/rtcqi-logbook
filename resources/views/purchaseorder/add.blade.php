@@ -188,6 +188,7 @@ $currentDate=date('d-M-Y');
                                                     <?php $j = 0; $qty=0; ?>
                                                         @foreach($quoteDetails as $quoteDetail)
                                                         @php $qty += $quoteDetail->quantity; @endphp
+                                                        <input type="hidden" id="rfqId" name="rfqId" value="{{$quoteDetail->rfq_id}}"  >
                                                         <tr>
                                                             <td>
                                                                 <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item" onchange="addNewItemField(this.id,{{$j}});">

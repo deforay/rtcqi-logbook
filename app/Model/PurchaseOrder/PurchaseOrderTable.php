@@ -24,7 +24,7 @@ class PurchaseOrderTable extends Model
             'quotes_status' => 'closed'
         );
         $response = DB::table('quotes')
-            ->where('quote_id', '=', base64_decode($id))
+            ->where('rfq_id', '=', $data['rfqId'])
             ->update(
                 $params
             );
@@ -281,9 +281,10 @@ class PurchaseOrderTable extends Model
     public function fetchAllQuoteDetailsId($id)
     {
         $id = base64_decode($id);
-        $data = DB::table('quote_details')
+        $data = DB::table('quotes')
+            ->join('quote_details','quote_details.quote_id','=','quotes.quote_id')
             ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'quote_details.uom')
-            ->where('quote_details.quote_id', '=', $id)->get();
+            ->where('quotes.quote_id', '=', $id)->get();
         return $data;
     }
 
