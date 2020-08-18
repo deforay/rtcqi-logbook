@@ -154,6 +154,7 @@ class RfqTable extends Model
         $userId=session('userId');
         if(session('loginType')=='users'){
             $data = DB::table('rfq')
+                    ->orderBy('rfq_issued_on', 'desc')
                     ->get();
         }
         else{
@@ -161,6 +162,7 @@ class RfqTable extends Model
                 ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
                 ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
                 ->where('quotes.vendor_id', '=', $userId)
+                ->orderBy('rfq.rfq_issued_on', 'desc')
                 ->get();
         }
         

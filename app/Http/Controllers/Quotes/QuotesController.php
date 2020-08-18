@@ -39,6 +39,20 @@ class QuotesController extends Controller
         $service = new QuotesService();
         $data = $service->getAllQuotes($request);
         return DataTables::of($data)
+                    ->editColumn('rfq_issued_on', function($data){
+                        $issOn = $data->rfq_issued_on;
+                        if($issOn){
+                            $issOn = date("d-M-Y", strtotime($issOn));
+                            return $issOn;
+                        }
+                    })
+                    ->editColumn('last_date', function($data){
+                        $lastDate = $data->last_date;
+                        if($lastDate){
+                            $lastDate = date("d-M-Y", strtotime($lastDate));
+                            return $lastDate;
+                        }
+                    })
                     ->editColumn('responded_on', function($data){
                         $respOn = $data->responded_on;
                         if($respOn){

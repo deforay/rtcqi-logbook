@@ -14,6 +14,7 @@ use App\Service\CommonService;
 // dd($result[0]->quotes_upload_file);
 $common = new CommonService();
 $invitedOn = $common->humanDateFormat($result[0]->invited_on);
+$respondedOn = $common->humanDateFormat($result[0]->responded_on);
 if(isset($result[0]->estimated_date_of_delivery)){
     $estimatedDate = $common->humanDateFormat($result[0]->estimated_date_of_delivery);
 }
@@ -92,17 +93,20 @@ if(isset($result[0]->mode_of_delivery)){
                                     $fnct = "quote_id##".($result[0]->quote_id);
                                     @endphp
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->rfq_number }} </span></h4>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <h4><b>Vendor Name : </b><span id="quoteNumber" class="spanFont">{{$result[0]->vendor_name}}</span></h4>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$invitedOn}}</span></h4>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$invitedOn}}</span></h4>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <h4><b>Responded On : </b><span id="respondedDate" class="spanFont">{{$respondedOn}}</span></h4>
                                         </div>
                                     </div>
                                     <br/>
@@ -242,7 +246,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                         <tr>
                                                             <th style="width:35%;">Item Name<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Unit<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Qty<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Quantity<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Unit Price<span class="mandatory">*</span></th>
                                                         </tr>
                                                     </thead>

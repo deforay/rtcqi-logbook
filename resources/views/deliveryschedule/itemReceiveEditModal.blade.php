@@ -105,8 +105,8 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                         <tr>
                                             <th style="width:15%;" class="pl-1 pr-0">Expiry Date</th>
                                             <th style="width:15%;" class="pl-1 pr-0">Batch No</th>
-                                            <th style="width:10%;" class="pl-1 pr-0">Received<br> Qty<span class="mandatory">*</span></th>
-                                            <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Qty<span class="mandatory">*</span></th>
+                                            <th style="width:10%;" class="pl-1 pr-0">Received<br> Quantity<span class="mandatory">*</span></th>
+                                            <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Quantity<span class="mandatory">*</span></th>
                                             <th style="width:20" class="pl-1 pr-0">Reason for<br> non conformity</th>
                                             <th style="width:15%;" class="pl-1 pr-0">Locations<span class="mandatory">*</span></th>
                                             <th style="width:15%;" class="pl-1 pr-0">Action</th>

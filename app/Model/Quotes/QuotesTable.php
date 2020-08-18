@@ -30,6 +30,8 @@ class QuotesTable extends Model
                 ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
                 // ->where('quotes.approve_status', '=', 'no')
                 ->where('quotes.quotes_status', '!=', 'pending')
+                ->orderBy('quotes.responded_on', 'desc')
+                ->orderBy('rfq.rfq_issued_on', 'desc')
                 ;
                 if(isset($req['rfqId']) && $req['rfqId'])
                     $query->where('quotes.rfq_id', '=', $req['rfqId']);
@@ -39,7 +41,9 @@ class QuotesTable extends Model
                     ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
                     ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
                     ->where('quotes.vendor_id', '=', $userId)
-                    ->where('quotes.quotes_status', '!=', 'pending');
+                    ->where('quotes.quotes_status', '!=', 'pending')
+                    ->orderBy('quotes.responded_on', 'desc')
+                    ->orderBy('rfq.rfq_issued_on', 'desc');
                     // ->where('quotes.approve_status', '=', 'yes')
                     
             }

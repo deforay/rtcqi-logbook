@@ -253,8 +253,8 @@ td {
                                         <thead>
                                             <tr>
                                                 <th style="width:10%;">Item<span class="mandatory">*</span></th>
-                                                <th style="width:10%;">Total<br/>Qty<span class="mandatory">*</span></th>
-                                                <th style="width:15%;">Delivery<br/>Qty<span class="mandatory">*</span></th>
+                                                <th style="width:10%;">Total<br/>Quantity<span class="mandatory">*</span></th>
+                                                <th style="width:15%;">Delivery<br/>Quantity<span class="mandatory">*</span></th>
                                                 <th style="width:15%;">Delivery<br/>Mode<span class="mandatory">*</span></th>
                                                 <th style="width:35%;">Comments<span class="mandatory">*</span></th>
                                                 <th style="width:25%;">Location<span class="mandatory">*</span></th>
@@ -575,6 +575,7 @@ td {
                         swal("Delivery Schedule Added Successfully")
                         $('#deliveryScheduleDetails').html('')
                         getPurchaseOrder()
+                        getAllDeliverySchedule(po)
                         // $('.close').trigger('click')
                         // $("#deliveryScheduleAdd").modal('hide');
                         // getPurchaseOrder(po);
