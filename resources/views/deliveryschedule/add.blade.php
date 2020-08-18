@@ -74,29 +74,26 @@ $currentDate=date('d-M-Y');
                                         <div class="col-12">
                                             <br/>
                                             <div class="row">
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-4 col-lg-12">
                                                     <h4><b>PO Number : </b> <span id="poNumber" class="spanFont"></span></h4>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-4 col-lg-12">
                                                     <h4><b>PO Issued On : </b><span id="issuedOn" class="spanFont"></span></h4>
                                                 </div>
-                                            </div>
-                                            <br/>
-                                            <div class="row">
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-4 col-lg-12">
                                                     <h4><b>Vendors : </b><span id="vendors" class="spanFont"></span></h4>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-12">
-                                                    <h4><b>Total Amount : </b><span id="totalAmt" class="spanFont" style="text-transform: capitalize;"></span></h4>
-                                                </div>
                                             </div>
                                             <br/>
                                             <div class="row">
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-4 col-lg-12">
                                                     <h4><b>Order Status : </b><span id="orderSts" class="spanFont"></span></h4>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-12">
+                                                <div class="col-xl-4 col-lg-12">
                                                     <h4><b>Payment Status : </b><span id="paymentSts" class="spanFont"></span></h4>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-12">
+                                                    <h4><b>Total Amount : </b><span id="totalAmt" class="spanFont" style="text-transform: capitalize;"></span></h4>
                                                 </div>
                                             </div>
                                             <br/>

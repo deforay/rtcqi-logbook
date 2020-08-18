@@ -32,29 +32,26 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                         </div> -->
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>PO Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->po_number }} </span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>PO Issued On : </b><span id="quoteNumber" class="spanFont">{{$issuedOn}}</span></h4>
                             </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Vendors : </b><span id="invitedDate" class="spanFont">{{$result[0]->vendor_name}}</span></h4>
                             </div>
-                            <div class="col-xl-6 col-lg-12">
-                                <h4><b>Total Amount : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$result[0]->total_amount}} </span></h4>
-                            </div>
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
-                                <h4><b>Order Status : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$result[0]->order_status}} </span></h4>
-                            </div>
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Payment Status : </b><span id="deliveryDate" class="spanFont" style="text-transform: capitalize;">{{$result[0]->payment_status}} </span></h4>
+                            </div>
+                            <div class="col-xl-4 col-lg-12">
+                                <h4><b>Total Amount : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$result[0]->total_amount}} </span></h4>
+                            </div>
+                            <div class="col-xl-4 col-lg-12">
+                                <h4><b>Order Status : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$result[0]->order_status}} </span></h4>
                             </div>
                         </div>
                         <br/>
