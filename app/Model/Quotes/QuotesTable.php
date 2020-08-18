@@ -107,6 +107,7 @@ class QuotesTable extends Model
                 $quoteDetailsData = array(
                     'quantity'=>$data['quoteQty'][$i],
                     'unit_price'=>$data['unitPrice'][$i],
+                    'description'=>$data['quoteDesc'][$i],
                     'updated_on' => $commonservice->getDateTime(),
                 );
                 

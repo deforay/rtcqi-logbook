@@ -37,36 +37,30 @@ foreach($vendor as $type){
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">RFQ</h2></center><hr>
-                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <center><h2 class="form-section" style="font-weight: 600;">RFQ</h2></center>
+                <hr>
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="card-content collapse show">
+                <div class="card-content collapse show" style="margin-top: -40px;">
                     <div class="card-body">
-                        <div id="show_alert"  class="mt-1" style=""></div>
-                        
                         @csrf
                         <div>
                             <center><h4><b>RFQ DETAILS</b></h4><center>
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$result['rfq'][0]->rfq_number}} </span></h4>
                             </div>
-                           
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
+                                <h4><b>Issued On : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$issuedOn}} </span></h4>
+                            </div>
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Vendors : </b><span id="invitedDate" class="spanFont">{{$vendor_name}}</span></h4>
                             </div>
                         </div>
                         <br/>
                         <div class="row">
-                            <div class="col-xl-6 col-lg-12">
-                                <h4><b>Issued On : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$issuedOn}} </span></h4>
-                            </div>
-                            <div class="col-xl-6 col-lg-12">
+                            <div class="col-xl-4 col-lg-12">
                                 <h4><b>Last On : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$lastDate}} </span></h4>
                             </div>
                         </div>
