@@ -88,12 +88,12 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                 <h4><b>Delivery Quantity : </b><span id="deliveryDate" class="spanFont" style="text-transform: capitalize;">{{$result[0]->delivery_qty}} </span></h4>
                             </div>
                         </div>
+                        <br/>
                         <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <h4><b>Order Status : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$result[0]->order_status}} </span></h4>
                             </div>
                         </div>
-                        <br/>
                         <br/>
                         <div class="row">
                             <div class="">
