@@ -302,3 +302,7 @@ UPDATE `privileges` SET `display_name` = 'Add' WHERE `privileges`.`resource_id` 
 Alter table quote_details add column description Varchar(255) NULL;
 Alter table quotes change responded_on responded_on date NULL;
 Alter table purchase_order_details add column description Varchar(255) NULL;
+
+
+--Sudarmathi M 18 Aug 2020
+ALTER TABLE `temp_mail` ADD `attachment` TEXT NULL AFTER `customer_name`;
