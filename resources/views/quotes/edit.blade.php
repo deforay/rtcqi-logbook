@@ -131,7 +131,7 @@ if(isset($result[0]->mode_of_delivery)){
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if(isset($result[0]->quotes_upload_file)){ ?>
+                                    <?php if(isset($result[0]->quotes_upload_file) && $result[0]->quotes_upload_file!='' && $result[0]->quotes_upload_file!=null){ ?>
                                         <div class="row">
                                             <fieldset>
                                                 <h5>Attachment Files <span class="mandatory">*</span>

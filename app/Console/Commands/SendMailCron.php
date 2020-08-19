@@ -45,6 +45,7 @@ class SendMailCron extends Command
                     ->where('status','=', 'pending')
                     ->get();
         $tempMail = $tempMail->toArray();
+        // print_r($tempMail);die;
         $msg = array();
         if (count($tempMail) > 0) {
             $mailData = array('status'=>'notsend');
@@ -60,6 +61,30 @@ class SendMailCron extends Command
                             }
                             if($mail->bcc){
                                 $send->cc($mail->bcc);
+                            }
+                            if($mail->attachment){
+                                // print_r($mail->attachment);
+                                $files = explode(',',$mail->attachment);
+                                for($k=0;$k<count($files);$k++){
+                                    $attach = explode('/',$files[$k])[8];
+                                    $attachext = explode('.',$attach);
+                                    $attachext = end($attachext);
+                                    $attachfile = explode('@@',$attach)[0];
+                                    // print_r($attachfile);die;
+                                    if($attachfile){
+                                        if($attachext){
+                                            $attachmentFile = $attachfile.'.'.$attachext;
+                                        }
+                                        else{
+                                            $attachmentFile = $attachfile;
+                                        }
+                                    }
+                                    // print_r($attachmentFile);
+                                    $send->attach($files[$k], [
+                                        'as' => $attachmentFile, 
+                                        // 'mime' => 'application/pdf'
+                                    ]);
+                                }
                             }
                 });
 

@@ -210,6 +210,18 @@ class QuotesTable extends Model
             $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
             // dd($message);
+            $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $id;
+            if(file_exists($pathname)){
+                $scan = scandir($pathname,1);
+                $scannedDirectory = array_diff($scan, array('..', '.'));
+                foreach($scannedDirectory as $sc=>$value){
+                    $scanDir[$sc] = $pathname.'/'.$value;
+                }
+                $attachment = implode(',',$scanDir);
+            }
+            else{
+                $attachment = '' ;
+            }
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
@@ -222,7 +234,8 @@ class QuotesTable extends Model
                     'status' => 'pending',
                     'datetime' => $createdon,
                     'message' => $message,
-                    'customer_name' => $vendorName
+                    'customer_name' => $vendorName,
+                    'attachment' => $attachment,
                 ]);
         }
         return $response;
