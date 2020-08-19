@@ -77,7 +77,7 @@ class UserTable extends Model
      // fetch particular User details
      public function fetchUserById($id)
      {
-         
+
          $id = base64_decode($id);
          $data = DB::table('users')
                 ->join('user_branch_map', 'users.user_id', '=', 'user_branch_map.user_id')
@@ -85,7 +85,7 @@ class UserTable extends Model
                 ->get();
          return $data;
      }
- 
+
      // Update particular User details
     public function updateUser($params,$id)
     {
@@ -154,6 +154,7 @@ class UserTable extends Model
         ->where('vendors.email', '=',$data['username'] )
         ->where('vendor_status','=','active')->get(),true);
         $config = array();
+        //dd($result);
         if(count($result)>0)
         {
             $hashedPassword = $result[0]['password'];
@@ -174,7 +175,7 @@ class UserTable extends Model
 
                     $commonservice = new CommonService();
                     $commonservice->eventLog($result[0]['user_id'], $result[0]['user_id'], 'Login', 'User Login '.$result[0]['login_id'], 'Login');
-                    
+
                     return 1;
                 }
                 else{
@@ -201,7 +202,7 @@ class UserTable extends Model
 
                     $commonservice = new CommonService();
                     $commonservice->eventLog($vendor[0]['vendor_id'], $vendor[0]['vendor_id'], 'Login', 'Vendor Login '.$vendor[0]['vendor_name'], 'Login');
-                                    
+
                     $registeredOn = $vendor[0]['registered_on'];
                     if($registeredOn==''){
                         return 3;
@@ -237,13 +238,13 @@ class UserTable extends Model
                  'updated_by' => session('userId'),
                  'updated_on' => $commonservice->getDateTime()
              );
-            
+
              $response = DB::table('users')
                  ->where('user_id', '=',base64_decode($id))
                  ->update(
                          $user
                      );
- 
+
          $commonservice = new CommonService();
          $commonservice->eventLog(session('userId'), base64_decode($id), 'User-update', 'Update User '.$data['firstName'], 'User');
          }
@@ -273,7 +274,7 @@ class UserTable extends Model
          }
          return $response;
      }
-     
+
      //Update Password
     public function updatePassword($params,$id)
     {
@@ -287,7 +288,7 @@ class UserTable extends Model
                 $response = DB::table('users')
                 ->where('user_id', '=',base64_decode($id))
                 ->update([
-                    'password'=> $newPassword   
+                    'password'=> $newPassword
                     ]
                 );
                 return $response;
@@ -301,5 +302,5 @@ class UserTable extends Model
             return 0;
         }
     }
- 
+
 }

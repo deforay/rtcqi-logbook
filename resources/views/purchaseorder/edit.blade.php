@@ -1,9 +1,9 @@
-<!-- 
+<!--
     Author             : Sriram V
     Date               : 25 June 2020
     Description        : Purchase Order edit screen
-    Last Modified Date : 
-    Last Modified Name : 
+    Last Modified Date :
+    Last Modified Name :
 -->
 @extends('layouts.main')
 @section('content')
@@ -65,7 +65,7 @@ foreach($result as $branchList)
                                 <form class="form form-horizontal" role="form" name="editPurchaseOrder" id="editPurchaseOrder" method="post" action="/purchaseorder/edit/{{base64_encode($result[0]->po_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
                                     <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <h5>Description</h5>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
                                             <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
@@ -73,12 +73,18 @@ foreach($result as $branchList)
                                         </div>
                                     </div>
                                     <?php if(isset($result[0]->upload_path)){ ?>
-                                        <div class="row">
-                                            <fieldset>
-                                            <h5>Attachment Files <span class="mandatory">*</span>
-                                            </h5>
-                                                <div class="form-group">
-                                                <?php
+                                        <div class="row p-1">
+                                            <div class="col-xl-6 col-md-12">
+                                                <div class="card" style="border: 1px solid #b7defa">
+                                                  <div class="card-content">
+                                                    <div class="card-body cleartfix">
+                                                      <div class="media align-items-stretch">
+                                                        <div class="align-self-center">
+                                                          <i class="la la-download info font-large-2 mr-2"></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                          <h4>Attachments</h4>
+                                                          <?php
 
                                                     $fileVaL= explode(",", $result[0]->upload_path);
                                                     $filecount=count($fileVaL);
@@ -105,15 +111,23 @@ foreach($result as $branchList)
                                                             $attachfile = 'Attachment';
                                                         }
                                                         $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                                                        echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">'.$attachmentFile.'</i></a></br>';
+                                                        echo  '<div><a href="'.$imagefile.'" target="_blank">'.$attachmentFile.'  <i class="ft-download"></i></a></div>';
+
                                                     }
-                                                
+
                                                     ?>
+
+                                                        </div>
+
+                                                      </div>
+                                                    </div>
+                                                  </div>
                                                 </div>
-                                            </fieldset>
+                                              </div>
+
                                         </div>
                                     <?php  } ?>
-                                    <div class="row">
+                                    <div class="row p-1">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>PO Number <span class="mandatory">*</span>
@@ -133,7 +147,7 @@ foreach($result as $branchList)
                                             </fieldset>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row p-1">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Vendors
@@ -158,7 +172,7 @@ foreach($result as $branchList)
                                             </fieldset>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row p-1">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Order Status<span class="mandatory">*</span> </h5>
@@ -184,7 +198,7 @@ foreach($result as $branchList)
                                             </fieldset>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row p-1">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
                                                 <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
@@ -208,11 +222,11 @@ foreach($result as $branchList)
                                         </div>
                                     </div>
                                     <hr>
-                                        <div class="row">
+                                        <div class="row p-1">
                                             <div class="table-responsive">
-                                                <div class="bd-example">
+                                                <div class="bd-example p-1">
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
-                                                        <thead>
+                                                        <thead style="background-color:#ebecd2">
                                                             <tr>
                                                             <th style="width:30%;">Item<span class="mandatory">*</span></th>
                                                             <th style="width:15%;">Unit<span class="mandatory">*</span></th>
@@ -266,7 +280,7 @@ foreach($result as $branchList)
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-actions right">
                                             <a href="/purchaseorder">
                                                 <button type="button" class="btn btn-warning mr-1">
