@@ -168,6 +168,19 @@ class PurchaseOrderTable extends Model
             $message = str_replace("&amp;nbsp;", "", strval($message));
             $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
+            $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . base64_decode($id);
+            if(file_exists($pathname)){
+                $scan = scandir($pathname,1);
+                $scannedDirectory = array_diff($scan, array('..', '.'));
+                foreach($scannedDirectory as $sc=>$value){
+                    $scanDir[$sc] = $pathname.'/'.$value;
+                }
+                $attachment = implode(',',$scanDir);
+            }
+            else{
+                $attachment = '' ;
+            }
+            
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
@@ -180,7 +193,8 @@ class PurchaseOrderTable extends Model
                     'status' => 'pending',
                     'datetime' => $createdon,
                     'message' => $message,
-                    'customer_name' => $vendorName
+                    'customer_name' => $vendorName,
+                    'attachment' => $attachment,
                 ]);
         }
         $mailData = DB::table('mail_template')
@@ -201,6 +215,19 @@ class PurchaseOrderTable extends Model
             $pomessage = str_replace("&amp;nbsp;", "", strval($pomessage));
             $pomessage = html_entity_decode($pomessage, ENT_QUOTES, 'UTF-8');
             $createdon = date('Y-m-d H:i:s');
+            $poPathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
+            if(file_exists($poPathname)){
+                $scan = scandir($poPathname,1);
+                $scannedDirectory = array_diff($scan, array('..', '.'));
+                foreach($scannedDirectory as $sc=>$value){
+                    $scanDir[$sc] = $poPathname.'/'.$value;
+                }
+                $poattachment = implode(',',$scanDir);
+            }
+            else{
+                $poattachment = '' ;
+            }
+            // print_r($attachment);die;
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
@@ -213,7 +240,8 @@ class PurchaseOrderTable extends Model
                     'status' => 'pending',
                     'datetime' => $createdon,
                     'message' => $pomessage,
-                    'customer_name' => $vendorName
+                    'customer_name' => $vendorName,
+                    'attachment' => $poattachment,
                 ]);
         }
         return $poId;

@@ -400,8 +400,20 @@ class RfqTable extends Model
                 $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName . '-' . $fieldValue, $tableName . ' changed to ' . $fieldValue, $tableName);
 
               //added in mail queue
-
-      
+                $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $fieldIdValue;
+                if(file_exists($pathname)){
+                    $scan = scandir($pathname,1);
+                    $scannedDirectory = array_diff($scan, array('..', '.'));
+                    foreach($scannedDirectory as $sc=>$value){
+                        $scanDir[$sc] = $pathname.'/'.$value;
+                    }
+                    $attachment = implode(',',$scanDir);
+                }
+                else{
+                   $attachment = '' ;
+                }
+                // dd($attachment);
+                
                 $mailData = DB::table('mail_template')
                 ->where('mail_temp_id', '=', 1)
                 ->get();
@@ -432,7 +444,8 @@ class RfqTable extends Model
                             'status' => 'pending',
                             'datetime' => $createdon,
                             'message' => $message,
-                            'customer_name' => $vendorName
+                            'customer_name' => $vendorName,
+                            'attachment' => $attachment,
                         ]);
                 }
             }
