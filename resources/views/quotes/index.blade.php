@@ -139,7 +139,7 @@ Last Modified Name :
                     { data: 'invited_on', name: 'invited_on'},
                     { data: 'responded_on', name: 'responded_on', },
                     { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
-                    {data: 'action', name: 'action', orderable: false},
+                    { data: 'action', name: 'action', orderable: false,className: 'text-center'},
                 ],
             order: [[0, 'desc']]
         });
