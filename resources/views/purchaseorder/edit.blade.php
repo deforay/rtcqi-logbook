@@ -64,11 +64,116 @@ foreach($result as $branchList)
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" role="form" name="editPurchaseOrder" id="editPurchaseOrder" method="post" action="/purchaseorder/edit/{{base64_encode($result[0]->po_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
+
+                                    <div class="row p-1">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>PO Number <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="poNumber" class="form-control isRequired" value="{{ $result[0]->po_number }}" autocomplete="off" placeholder="Enter Po Number" name="poNumber" title="Please enter PO Number">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>PO Issued On <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="input-group">
+
+                                                    <input type="text" id="issuedOn" readonly value="{{ $result[0]->po_issued_on }}" class="pl-1 form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="basic-addon1"><i class="la la-calendar"></i></span>
+                                                      </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Vendors
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control select2" readonly autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
+                                                        <option value="">Select Vendors</option>
+                                                        @foreach($vendor as $type)
+                                                        <option value="{{ $type->vendor_id }}" {{ $result[0]->vendor == $type->vendor_id ?  'selected':''}}>{{ $type->vendor_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="row p-1">
+
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Total Amount<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="totalAmount" readonly onkeypress="return isNumberKey(event);" value="{{ $result[0]->total_amount }}" class="form-control isRequired" autocomplete="off" placeholder="Enter Total Amount" name="totalAmount" title="Please enter Total Amount">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
+                                                <div class="input-group">
+                                                    <input type="text" id="lastDeliveryDate" onchange="checkDate();return false;" value="{{$lstDelDate}}" class="pl-1 form-control datepicker isRequired" autocomplete="off" placeholder="Enter Last Delivery Date" name="lastDeliveryDate" title="Please enter Last Delivery Date">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="basic-addon1"><i class="la la-calendar"></i></span>
+                                                      </div>
+                                                </div>
+
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Delivery Location<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="deliveryLoc" name="deliveryLoc" title="Please select delivery locations">
+                                                        <option value="">Select Locations</option>
+                                                        @foreach($branch as $type)
+                                                            <option value="{{ $type->branch_id }}" {{ in_array($type->branch_id, $branches) ?  'selected':''}}>{{ $type->branch_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </div>
+                                    <div class="row p-1">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Order Status<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="orderStatus" name="orderStatus" title="Please select status">
+                                                        <option value="active" {{ $result[0]->order_status == 'active' ?  'selected':''}}>Active</option>
+                                                        <option value="inactive" {{ $result[0]->order_status == 'inactive' ?  'selected':''}}>Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
+                                                        <option value="">Select</option>
+                                                        <option value="immediate" {{ $result[0]->payment_status == 'immediate' ?  'selected':''}}>Immediate</option>
+                                                        <option value="staggered" {{ $result[0]->payment_status == 'staggered' ?  'selected':''}}>Staggered</option>
+                                                        <option value="specified-date" {{ $result[0]->payment_status == 'specified-date' ?  'selected':''}}>Specified Date</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </div>
+
                                     <div class="col-md-12">
                                         <h5>Description</h5>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
-                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
+                                            <textarea id="description" name="description" class="form-control ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +185,7 @@ foreach($result as $branchList)
                                                     <div class="card-body cleartfix">
                                                       <div class="media align-items-stretch">
                                                         <div class="align-self-center">
-                                                          <i class="la la-download info font-large-2 mr-2"></i>
+                                                          <i class="la la-file-text info font-large-2 mr-2"></i>
                                                         </div>
                                                         <div class="media-body">
                                                           <h4>Attachments</h4>
@@ -127,101 +232,6 @@ foreach($result as $branchList)
 
                                         </div>
                                     <?php  } ?>
-                                    <div class="row p-1">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>PO Number <span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="poNumber" class="form-control isRequired" value="{{ $result[0]->po_number }}" autocomplete="off" placeholder="Enter Po Number" name="poNumber" title="Please enter PO Number">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>PO Issued On <span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="issuedOn" readonly value="{{ $result[0]->po_issued_on }}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row p-1">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Vendors
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control select2" readonly autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
-                                                        <option value="">Select Vendors</option>
-                                                        @foreach($vendor as $type)
-                                                        <option value="{{ $type->vendor_id }}" {{ $result[0]->vendor == $type->vendor_id ?  'selected':''}}>{{ $type->vendor_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Total Amount<span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="totalAmount" readonly onkeypress="return isNumberKey(event);" value="{{ $result[0]->total_amount }}" class="form-control isRequired" autocomplete="off" placeholder="Enter Total Amount" name="totalAmount" title="Please enter Total Amount">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row p-1">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Order Status<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="orderStatus" name="orderStatus" title="Please select status">
-                                                        <option value="active" {{ $result[0]->order_status == 'active' ?  'selected':''}}>Active</option>
-                                                        <option value="inactive" {{ $result[0]->order_status == 'inactive' ?  'selected':''}}>Inactive</option>
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
-                                                        <option value="">Select</option>
-                                                        <option value="immediate" {{ $result[0]->payment_status == 'immediate' ?  'selected':''}}>Immediate</option>
-                                                        <option value="staggered" {{ $result[0]->payment_status == 'staggered' ?  'selected':''}}>Staggered</option>
-                                                        <option value="specified-date" {{ $result[0]->payment_status == 'specified-date' ?  'selected':''}}>Specified Date</option>
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row p-1">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="lastDeliveryDate" onchange="checkDate();return false;" value="{{$lstDelDate}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Last Delivery Date" name="lastDeliveryDate" title="Please enter Last Delivery Date">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Delivery Location<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="deliveryLoc" name="deliveryLoc" title="Please select delivery locations">
-                                                        <option value="">Select Locations</option>
-                                                        @foreach($branch as $type)
-                                                            <option value="{{ $type->branch_id }}" {{ in_array($type->branch_id, $branches) ?  'selected':''}}>{{ $type->branch_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <hr>
                                         <div class="row p-1">
                                             <div class="table-responsive">
                                                 <div class="bd-example p-1">
