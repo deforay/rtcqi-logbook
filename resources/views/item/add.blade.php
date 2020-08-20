@@ -50,7 +50,7 @@
                             <form class="form form-horizontal" role="form" name="addItem" id="addItem" method="post" action="/item/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Item  Name <span class="mandatory">*</span>
                                             </h5>
@@ -60,7 +60,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Item  Code <span class="mandatory">*</span>
                                             </h5>
@@ -68,10 +68,8 @@
                                                 <input type="text" id="itemCode" class="form-control isRequired" autocomplete="off" placeholder="Enter Item  code" name="itemCode" title="Please enter Item  name" onblur="checkNameValidation('items','item_code', this.id,'', 'Entered Item  Code is already exist.')">
                                             </div>
                                         </fieldset>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>                               
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Item Category<span class="mandatory">*</span>
 										</h5>
@@ -83,8 +81,10 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Item Type<span class="mandatory">*</span>
 										</h5>
@@ -97,9 +97,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Brand Name<span class="mandatory">*</span>
 										</h5>
@@ -112,7 +110,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Unit Name<span class="mandatory">*</span>
 										</h5>
@@ -124,8 +122,10 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Stockable<span class="mandatory">*</span>
 										</h5>
