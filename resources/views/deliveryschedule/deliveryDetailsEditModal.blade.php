@@ -16,7 +16,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">DELIVERY SCHEDULE</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">DELIVERY SCHEDULE</h2></center>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
@@ -57,7 +57,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                         <br/>
                         <!-- <div class="row">
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php 
+                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php
                                             // if(isset($result[0]->upload_path)){
 
                                             //     $fileVaL= explode(",", $result[0]->upload_path);
@@ -70,7 +70,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                                             //     for($i=0;$i<$forcount;$i++)
                                             //     {
                                             //     $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                   
+
                                             //     echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                             //      }
                                             // }
@@ -187,6 +187,7 @@ $(document).ready(function() {
 });
 
 duplicateName = true;
+$('#show_alert').css("display","none");
 function validateNow() {
     let delivery_schedule_status = '{{$delivery_schedule_status}}'
     if(delivery_schedule_status == 'received'){
@@ -196,7 +197,7 @@ function validateNow() {
         flag = deforayValidator.init({
             formId: 'updateDeliverySchedule'
         });
-        
+
         if (flag == true) {
             if (duplicateName) {
                 document.getElementById('updateDeliverySchedule').submit();
