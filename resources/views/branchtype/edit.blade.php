@@ -53,7 +53,7 @@
                                 $fnct = "branch_type_id##".($result[0]->branch_type_id);
                             @endphp
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Location Type Name <span class="mandatory">*</span>
                                             </h5>
@@ -62,7 +62,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Location Type Status<span class="mandatory">*</span>
 										</h5>
