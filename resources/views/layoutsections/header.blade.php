@@ -119,4 +119,10 @@
         right: 20px;
     }
 
+    #blue-grey-box-shadow{
+        -webkit-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
+        -moz-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
+        box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
+    }
+
 </style>
