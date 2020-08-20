@@ -132,14 +132,20 @@ if(isset($result[0]->mode_of_delivery)){
                                         </div>
                                     </div>
                                     <?php if(isset($result[0]->quotes_upload_file) && $result[0]->quotes_upload_file!='' && $result[0]->quotes_upload_file!=null){ ?>
-                                        <div class="row">
-                                            <fieldset>
-                                                <h5>Attachment Files <span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                <?php 
-                                                    $fileVaL= explode(",", $result[0]->quotes_upload_file);
-                                                    $filecount=count($fileVaL);
+                                        <div class="row p-1">
+                                            <div class="col-xl-6 col-md-12">
+                                                <div class="card" style="border: 1px solid #b7defa">
+                                                  <div class="card-content">
+                                                    <div class="card-body cleartfix">
+                                                      <div class="media align-items-stretch">
+                                                        <div class="align-self-center">
+                                                          <i class="la la-file-text info font-large-2 mr-2"></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                          <h4>Attachments</h4>
+                                                          <?php
+                                                     $fileVaL= explode(",", $result[0]->quotes_upload_file);
+                                                     $filecount=count($fileVaL);
                                                     if($filecount>1){
                                                         $forcount=$filecount-1;
                                                     }else{
@@ -163,15 +169,17 @@ if(isset($result[0]->mode_of_delivery)){
                                                             $attachfile = 'Attachment';
                                                         }
                                                         $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                                                        echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">'.$attachmentFile.'</i></a></br>';
+                                                        echo  '<div><a href="'.$imagefile.'" target="_blank">'.$attachmentFile.'  <i class="ft-download"></i></a></div>';
                                                     }
-                                                
                                                     ?>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
                                                 </div>
-                                            </fieldset>
-
-                                    </div>
-                                    <?php  } else{ ?>
+                                              </div>
+                                        </div>
+                                        <?php  } else{ ?>
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <h5>Attachment Files <span class="mandatory">*</span></h5>
@@ -256,7 +264,7 @@ if(isset($result[0]->mode_of_delivery)){
                                             <div class="bd-example">
                                                 <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
-                                                        <tr>
+                                                        <tr style="background-color:#ebecd2">
                                                             <th style="width:30%;">Item Name<span class="mandatory">*</span></th>
                                                             <th style="width:15%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Description</th>

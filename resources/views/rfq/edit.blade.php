@@ -76,7 +76,7 @@
                             <form class="form form-horizontal" role="form" name="editRfq" id="editRfq" method="post" action="/rfq/edit/{{base64_encode($result['rfq'][0]->rfq_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>RFQ Number <span class="mandatory">*</span>
                                             </h5>
@@ -85,7 +85,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Vendors
                                             </h5>
@@ -99,9 +99,7 @@
                                             </div>
 										</fieldset>
 									</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Issued On <span class="mandatory">*</span>
                                             </h5>
@@ -110,7 +108,9 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Last Date <span class="mandatory">*</span>
                                             </h5>
@@ -130,51 +130,62 @@
                                     </div>
                                 </div>
                                 <?php if(isset($result['rfq'][0]->rfq_upload_file)){ ?>
-                                <div class="row">
-                                <fieldset>
-                                            <h5>Attachment Files <span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                            <?php 
-                                                $fileVaL= explode(",", $result['rfq'][0]->rfq_upload_file);
-                                                $filecount=count($fileVaL);
-                                                if($filecount>1){
-                                                    $forcount=$filecount-1;
-                                                }else{
-                                                    $forcount=$filecount;
-                                                }
-                                                for($i=0;$i<$forcount;$i++)
-                                                {
-                                                    $attach = explode('/',$fileVaL[$i])[8];
-                                                    $attachext = explode('.',$attach);
-                                                    $attachext = end($attachext);
-                                                    $attachfile = explode('@@',$attach)[0];
-                                                    if($attachfile){
-                                                        if($attachext){
-                                                            $attachmentFile = $attachfile.'.'.$attachext;
+                                        <div class="row p-1">
+                                            <div class="col-xl-6 col-md-12">
+                                                <div class="card" style="border: 1px solid #b7defa">
+                                                  <div class="card-content">
+                                                    <div class="card-body cleartfix">
+                                                      <div class="media align-items-stretch">
+                                                        <div class="align-self-center">
+                                                          <i class="la la-file-text info font-large-2 mr-2"></i>
+                                                        </div>
+                                                        <div class="media-body">
+                                                          <h4>Attachments</h4>
+                                                          <?php
+                                                    $fileVaL= explode(",", $result['rfq'][0]->rfq_upload_file);
+                                                    $filecount=count($fileVaL);
+                                                    if($filecount>1){
+                                                        $forcount=$filecount-1;
+                                                    }else{
+                                                        $forcount=$filecount;
+                                                    }
+                                                    for($i=0;$i<$forcount;$i++)
+                                                    {
+                                                        $attach = explode('/',$fileVaL[$i])[8];
+                                                        $attachext = explode('.',$attach);
+                                                        $attachext = end($attachext);
+                                                        $attachfile = explode('@@',$attach)[0];
+                                                        if($attachfile){
+                                                            if($attachext){
+                                                                $attachmentFile = $attachfile.'.'.$attachext;
+                                                            }
+                                                            else{
+                                                                $attachmentFile = $attachfile;
+                                                            }
                                                         }
                                                         else{
-                                                            $attachmentFile = $attachfile;
+                                                            $attachfile = 'Attachment';
                                                         }
+                                                        $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        echo  '<div><a href="'.$imagefile.'" target="_blank">'.$attachmentFile.'  <i class="ft-download"></i></a></div>';
                                                     }
-                                                    else{
-                                                        $attachfile = 'Attachment';
-                                                    }
-                                                    $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                                                    echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">'.$attachmentFile.'</i></a></br>';
-                                                }
-                                                ?>
-                                            </div>
-                                        </fieldset>
-                             
-                                </div>
-                                <?php  } ?>
+                                                    ?>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                        </div>
+                                    <?php  } ?>
+
+
                                     <hr>
                                 <div class="row">
                                     <div class="table-responsive">
                                         <div class="bd-example">
                                             <table class="table table-striped table-bordered table-condensed table-responsive-lg">
-                                            <thead>
+                                            <thead style="background-color:#ebecd2">
                                                 <tr>
                                                 <th style="width:30%;">Item<span class="mandatory">*</span></th>
                                                 <th style="width:25%;">Unit<span class="mandatory">*</span></th>

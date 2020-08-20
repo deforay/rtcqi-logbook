@@ -50,7 +50,7 @@
                             <form class="form form-horizontal" role="form" name="addUser" id="addUser" method="post" action="/user/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>First Name <span class="mandatory">*</span>
                                             </h5>
@@ -59,7 +59,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Last Name <span class="mandatory">*</span>
                                             </h5>
@@ -68,7 +68,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Role<span class="mandatory">*</span>
                                             </h5>
@@ -82,7 +82,7 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>User Name <span class="mandatory">*</span>
                                             </h5>
@@ -91,7 +91,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Password <span class="mandatory">*</span>
 											</h5>
@@ -103,7 +103,7 @@
 											</div>
 										</fieldset>
 									</div>
-									<div class="col-xl-6 col-lg-12">
+									<div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Confirm Password <span class="mandatory">*</span>
 											</h5>
@@ -114,7 +114,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
@@ -123,7 +123,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Email <span class="mandatory">*</span>
 											</h5>
@@ -132,7 +132,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Locations<span class="mandatory">*</span>
                                             </h5>
@@ -146,7 +146,7 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>User Status<span class="mandatory">*</span>
                                             </h5>

@@ -53,7 +53,7 @@
                                 $fnct = "branch_id##".($result[0]->branch_id);
                             @endphp
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Location Name <span class="mandatory">*</span>
                                             </h5>
@@ -62,7 +62,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Location Type<span class="mandatory">*</span>
                                             </h5>
@@ -76,7 +76,7 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
@@ -85,7 +85,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Email <span class="mandatory">*</span>
 											</h5>
@@ -94,7 +94,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Address Line 1 <span class="mandatory">*</span>
                                             </h5>
@@ -103,7 +103,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Address Line 2
                                             </h5>
@@ -113,7 +113,7 @@
                                         </fieldset>
                                     </div>
                                     
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Country<span class="mandatory">*</span> </h5>
 											<div class="form-group">
@@ -126,7 +126,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>State<span class="mandatory">*</span> </h5>
 											<div class="form-group">
@@ -134,7 +134,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>City <span class="mandatory">*</span>
 											</h5>
@@ -143,7 +143,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Pincode 
 											</h5>
@@ -152,7 +152,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Location Status<span class="mandatory">*</span>
                                             </h5>

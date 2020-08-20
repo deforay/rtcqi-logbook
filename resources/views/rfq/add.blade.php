@@ -52,7 +52,7 @@
                             <form class="form form-horizontal" role="form" enctype="multipart/form-data" name="addRfq" id="addRfq" method="post" action="/rfq/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>RFQ Number <span class="mandatory">*</span>
                                             </h5>
@@ -61,7 +61,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-5 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Vendors
                                             </h5>
@@ -82,9 +82,8 @@
                                                         </button>
 										</fieldset>
 									</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                               
+                                    <div class="col-xl-3 col-lg-12">
                                         <fieldset>
                                             <h5>Issued On <span class="mandatory">*</span>
                                             </h5>
@@ -93,7 +92,9 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Last Date <span class="mandatory">*</span>
                                             </h5>
@@ -125,7 +126,7 @@
                                     <div class="table-responsive">
                                         <div class="bd-example">
                                             <table class="table table-striped table-bordered table-condensed table-responsive-lg">
-                                            <thead>
+                                            <thead style="background-color:#ebecd2">
                                                 <tr>
                                                 <th style="width:30%;">Item<span class="mandatory">*</span></th>
                                                 <th style="width:25%;">Unit<span class="mandatory">*</span></th>
