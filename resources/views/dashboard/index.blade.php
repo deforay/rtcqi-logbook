@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Author             : Sudarmathi M
     Date               : 15 June 2020
     Description        : Dashboard screen
@@ -34,66 +34,98 @@ else{
 }
 @endphp
 <!-- <div class="middle"> <h1 style="font-size: -webkit-xxx-large;">Coming Soon...</h1></div> -->
-  <div class="row">
+<div class="row">
     <div class="col-xl-3 col-lg-6 col-12">
-        <div class="card text-white bg-info pull-up">
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="media d-flex">
-                        <div class="media-body text-left">
-                          <h3 class='text-white text-center' style="font-weight:800"><b>{{$details['rfqCount']}}</b></h3>
-                          <h5 class='text-white text-center' style="font-weight:500"><b>Active RFQ</b></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-6 col-12">
-        <div class="card text-white bg-danger pull-up">
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="media d-flex">
-                        <div class="media-body text-left">
-                            <h3 class='text-white text-center' style="font-weight:800"><b>{{$details['quotesCount']}}</b></h3>
-                            <h5 class='text-white text-center' style="font-weight:500"><b>Active Quotes</b></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-6 col-12">
-        <div class="card text-white bg-success pull-up">
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="media d-flex">
-                        <div class="media-body text-left">
-                          <h3 class='text-white text-center' style="font-weight:800"><b>{{$details['poCount']}}</b></h3>
-                          <h5 class='text-white text-center' style="font-weight:500"><b>Active Purchase Orders</b></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @if(session('loginType') == 'users')
-      <div class="col-xl-3 col-lg-6 col-12">
-          <div class="card text-white bg-dark pull-up">
-              <div class="card-content">
-                  <div class="card-body">
-                      <div class="media d-flex">
-                          <div class="media-body text-left">
-                            <h3 class='text-white text-center' style="font-weight:800"><b>{{$vendorsCount}}</b></h3>
-                            <h5 class='text-white text-center' style="font-weight:500"><b>Vendors</b></h5>
-                          </div>
-                      </div>
-                  </div>
+      <div class="card pull-up border-info border-lighten-2">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h3 class="info">{{$details['rfqCount']}}</h3>
+                <h6>Active RFQ</h6>
               </div>
+              <div>
+                <i class="icon-note info font-large-2 float-right"></i>
+              </div>
+            </div>
+            <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+              <div class="progress-bar bg-gradient-x-info" role="progressbar" style="width: @php echo (int)(($details['rfqCount']/100)*100) @endphp%"
+              aria-valuenow="@php echo (int)(($details['rfqCount']/100)*100) @endphp" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
           </div>
+        </div>
       </div>
+    </div>
+
+
+
+    <div class="col-xl-3 col-lg-6 col-12">
+        <div class="card pull-up border-success border-lighten-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="success">{{$details['quotesCount']}}</h3>
+                  <h6>Active Quotes</h6>
+                </div>
+                <div>
+                  <i class="icon-pie-chart success font-large-2 float-right"></i>
+                </div>
+              </div>
+              <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                <div class="progress-bar bg-gradient-x-success" role="progressbar" style="width: @php echo (int)(($details['quotesCount']/100)*100) @endphp%"
+                aria-valuenow="@php echo (int)(($details['quotesCount']/100)*100) @endphp" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-6 col-12">
+        <div class="card pull-up border-primary border-lighten-2">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="media-body text-left">
+                  <h3 class="primary">{{$details['poCount']}}</h3>
+                  <h6>Active Purchase Orders</h6>
+                </div>
+                <div>
+                  <i class="icon icon-basket-loaded primary font-large-2 float-right"></i>
+                </div>
+              </div>
+              <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+                <div class="progress-bar bg-gradient-x-primary" role="progressbar" style="width: @php echo (int)(($details['poCount']/100)*100) @endphp%"
+                aria-valuenow="@php echo (int)(($details['poCount']/100)*100) @endphp" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if(session('loginType') == 'users')
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card pull-up border-blue-grey border-lighten-2">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media d-flex">
+              <div class="media-body text-left">
+                <h3 class="blue-grey">{{$vendorsCount}}</h3>
+                <h6>Vendors</h6>
+              </div>
+              <div>
+                <i class="icon-users blue-grey font-large-2 float-right"></i>
+              </div>
+            </div>
+            <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
+              <div class="progress-bar bg-gradient-x-blue-grey" role="progressbar" style="width: @php echo (int)(($vendorsCount/100)*100) @endphp%"
+              aria-valuenow="@php echo (int)(($vendorsCount/100)*100) @endphp" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     @endif
-</div>
+  </div>
 
  <!-- Procurement Details display start -->
  <div class="row" id="rfqTable">
@@ -267,7 +299,7 @@ $(document).ready(function() {
                 type: 'POST',
             },
             columns: [
-                    
+
                     { data: 'rfq_number', name: 'rfq_number'},
                     { data: 'rfq_issued_on', name: 'rfq_issued_on'},
                     { data: 'last_date', name: 'last_date'},
@@ -299,7 +331,7 @@ $(document).ready(function() {
                 }
             },
             columns: [
-                    
+
                 { data: 'rfq_number', name: 'rfq_number' },
                 { data: 'rfq_issued_on', name: 'rfq_issued_on' },
                 { data: 'last_date', name: 'last_date' },
