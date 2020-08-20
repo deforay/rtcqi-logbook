@@ -17,45 +17,73 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                     <div class="card-body">
                         <form class="form form-horizontal" role="form" name="updateBatchNumber" action="/quotes/updateBatchNumber" id="updateBatchNumber" method="post" autocomplete="off" >
                         @csrf
-
                         <div class="row mt-3">
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$quote[0]->rfq_number}} </span></h4>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Quote Number : </b><span id="quoteNumber" class="spanFont">{{$quote[0]->quote_number}}</span></h4>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Invited On : </b><span id="invitedDate" class="spanFont">{{$invitedOn}} </span></h4>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
+                            <div class="col-12">
+                              <div class="card" style="border: 1px solid #ebeff0 !important;" id="blue-grey-box-shadow">
+                                <div class="card-content">
+                                  <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                      <div class=" text-center">
+                                        <div class="card-header" style=" background-color: #90a4ae2e; padding: 8px 2px 8px; ">
+                                            <span class="display-4 blue-grey darken-1 font-medium-5">RFQ Number - </span>
+                                            <span class="display-4 info darken-1 font-medium-5 pr-5">{{Str::upper($quote[0]->rfq_number)}}</span>
+                                            <span class="display-4 blue-grey darken-1 font-medium-5 pl-5">Quote Number - </span>
+                                            <span class="display-4 info darken-1 font-medium-5">@php echo (trim($quote[0]->quote_number)!='')?$quote[0]->quote_number:'' @endphp</span>
+                                        </div>
+                                        <div class="card-content mt-1">
 
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Quote Status : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$quote[0]->quotes_status}} </span></h4>
+                                          <ul class="row list-inline clearfix">
+
+                            <li class="col-md-3 border-right-blue-grey border-right-lighten-2">
+                                              <h1 class="success text-bold-400"> {{$quote[0]->quotes_status}}</h1>
+                                              <span class="blue-grey darken-1"> Quote Status</span>
+                                            </li>
+                            <li class="col-md-3 border-right-blue-grey border-right-lighten-2 ">
+                                              <h1 class="success text-bold-400">{{$invitedOn}}</h1>
+                                              <span class="blue-grey darken-1"> Invited On</span>
+                                            </li><li class="col-md-3 border-right-blue-grey border-right-lighten-2">
+                                              <h1 class="success text-bold-400">@php echo (trim($estDelDate)!='')?$estDelDate:'-' @endphp</h1>
+                                              <span class="blue-grey darken-1"> Estimated Date</span>
+                                            </li>
+                                            <li class="col-md-3 pl-0">
+                                              <h1 class="success text-bold-400">@php echo (trim($quote[0]->mode_of_delivery)!='')?$quote[0]->mode_of_delivery:'-' @endphp</h1>
+                                              <span class="blue-grey darken-1">Delivery Mode</span>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
+                                <div class="card accordion collapse-icon accordion-icon-rotate" style="border: 1px solid #dbf2fe !important;">
+                                    <a id="heading11" class="card-header info collapsed" data-toggle="collapse" href="#accordion11" aria-expanded="false" aria-controls="accordion11">
+                                        <div class="card-title lead">Vendor Notes</div>
+                          </a>
+                                    <div id="accordion11" role="tabpanel" data-parent="#accordionWrap1" aria-labelledby="heading11" class="collapse" style="">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                {{$quote[0]->vendor_notes}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Delivery Mode : </b><span id="deliveryMode" class="spanFont">{{$quote[0]->mode_of_delivery}} </span></h4>
                             </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Estimated Date : </b><span id="deliveryDate" class="spanFont">{{$estDelDate}} </span></h4>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Vendor Notes : </b><span id="vendorNotes" class="spanFont">{{$quote[0]->vendor_notes}} </span></h4>
-                            </div>
-                        </div>
-                        <br/>
+                          </div>
+
+
                         <div>
                             <center><h4><b>Order Details</b></h4><center>
                         </div>
                         <br/>
                         <div class="row">
                             <div class="table-responsive">
-                                <div class="bd-example">
+                                <div class="bd-example pr-1 pl-1">
                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
                                     <thead>
                                         <tr>
@@ -84,7 +112,7 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                         </form>
                         <br/>
                         <div class="form-actions right" style="margin-bottom: 5%;">
-                        <button type="button" class="btn btn-warning mr-1 float-right ml-2" data-dismiss = "modal">
+                        <button type="button" class="btn btn-warning mr-0 float-right ml-2" data-dismiss = "modal">
                         <i class="ft-x"></i> Close
                         </button>
                         <?php if(session('loginType')=='users' && $quotes->quotes_status=='responded' && $quotes->approve_status=='no' ){ ?>

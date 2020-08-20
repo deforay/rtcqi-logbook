@@ -1,9 +1,9 @@
-<!-- 
+<!--
 Author             : Sriram V
 Date               : 25 June 2020
 Description        : Quotes View Page
-Last Modified Date : 
-Last Modified Name : 
+Last Modified Date :
+Last Modified Name :
 -->
 @extends('layouts.main')
 @section('content')
@@ -57,7 +57,7 @@ Last Modified Name :
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <?php if(session('loginType')=='users'){ ?>
-                                <div class="row">
+                                <div class="row pl-1">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>RFQ
@@ -130,7 +130,7 @@ Last Modified Name :
                 }
             },
             columns: [
-                    
+
                     { data: 'rfq_number', name: 'rfq_number' },
                     { data: 'rfq_issued_on', name: 'rfq_issued_on' },
                     { data: 'last_date', name: 'last_date' },
@@ -145,6 +145,6 @@ Last Modified Name :
         });
     }
 
-    
+
   </script>
 @endsection
