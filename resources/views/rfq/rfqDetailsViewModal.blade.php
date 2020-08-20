@@ -43,25 +43,51 @@ foreach($vendor as $type){
                 <div class="card-content collapse show" style="">
                     <div class="card-body">
                         @csrf
+<div class="row">
+    <div class="col-12">
+      <div class="card border-blue-grey border-lighten-4" id="blue-grey-box-shadow">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-12 border-right-blue-grey border-right-lighten-5">
+                <div class="text-center">
+                  <span class="font-medium-5 info text-bold-300">{{Str::upper($result['rfq'][0]->rfq_number)}}</span>
+                </div>
+                <div class="text-center">
+                    <span class="blue-grey darken-1 font-medium-3 text-bold-500">RFQ Number </span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12 border-right-blue-grey border-right-lighten-5">
+                <div class="text-center">
+                  <span class="font-medium-5 info text-bold-300">{{$issuedOn}}</span>
+                </div>
+                <div class="text-center">
+                    <span class="blue-grey darken-1 font-medium-3 text-bold-500">Issued On</span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12 border-right-blue-grey border-right-lighten-5">
+                <div class="text-center">
+                  <span class="font-medium-5 info text-bold-300">{{ucfirst($vendor_name)}}</span>
+                </div>
+                <div class="text-center">
+                    <span class="blue-grey darken-1 font-medium-3 text-bold-500">Vendors</span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-12">
+                <div class="text-center">
+                    <span class="font-medium-5 info text-bold-300">{{$lastDate}}</span>
+                  </div>
+                  <div class="text-center">
+                      <span class="blue-grey darken-1 font-medium-3 text-bold-500">Last On</span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$result['rfq'][0]->rfq_number}} </span></h4>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Issued On : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$issuedOn}} </span></h4>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Vendors : </b><span id="invitedDate" class="spanFont">{{$vendor_name}}</span></h4>
-                            </div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-12">
-                                <h4><b>Last On : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$lastDate}} </span></h4>
-                            </div>
-                        </div>
-                        <br/>
                         <!-- <div class="row">
 
                                 <h4><b>Attachment Files : </b><span id="deliveryMode" class="spanFont">
@@ -91,7 +117,7 @@ foreach($vendor as $type){
                         <br/>
                         <div class="row">
                             <div class="table-responsive">
-                                <div class="bd-example">
+                                <div class="bd-example p-1">
                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
                                     <thead>
                                         <tr>
