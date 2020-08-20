@@ -24,7 +24,7 @@ class PurchaseOrderTable extends Model
             'quotes_status' => 'closed'
         );
         $response = DB::table('quotes')
-            ->where('rfq_id', '=', $data['rfqId'])
+            ->where('quote_id', '=', base64_decode($id))
             ->update(
                 $params
             );
