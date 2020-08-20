@@ -92,9 +92,9 @@ td {
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-4 col-lg-12" style="margin-top: 1.90rem !important">
+                                    {{-- <div class="col-xl-4 col-lg-12" style="margin-top: 1.90rem !important">
                                         <a href="#" onclick="getPurchaseOrder()" class="btn btn-outline-info box-shadow-1 px-2" id="btnGroupDrop1"><b><i class="ft-plus icon-left"></i> Update Delivery Schedule</b></a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <?php }?>
                                 <br/>

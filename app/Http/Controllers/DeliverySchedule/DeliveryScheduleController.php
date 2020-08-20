@@ -36,13 +36,20 @@ class DeliveryScheduleController extends Controller
     //Add Delivery schedule (display add screen and add the rfq values)
     public function add(Request $request)
     {
-        $purchaseOrderService = new PurchaseOrderService();
-        $purchase = $purchaseOrderService->getAllNotScheduledPurchaseOrder();
-        $itemservice = new ItemService();
-        $item = $itemservice->getAllActiveItem();
-        $branchService = new BranchesService();
-        $branch = $branchService->getAllActiveBranches();
-        return view('deliveryschedule.addDeliverySchedule',array('purchase'=>$purchase,'item' => $item,'branch'=>$branch));
+        if ($request->isMethod('post')) {
+            $service = new DeliveryScheduleService();
+            $add = $service->addDeliverySchedule($request);
+            return Redirect::route('deliveryschedule.index')->with('status', $add);
+        }
+        else{
+            $purchaseOrderService = new PurchaseOrderService();
+            $purchase = $purchaseOrderService->getAllNotScheduledPurchaseOrder();
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            return view('deliveryschedule.addDeliverySchedule',array('purchase'=>$purchase,'item' => $item,'branch'=>$branch));
+        }
     }
     public function saveDeliverySchedule(Request $request)
     {

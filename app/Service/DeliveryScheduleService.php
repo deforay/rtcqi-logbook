@@ -35,6 +35,25 @@ class DeliveryScheduleService
 	    }
 	}
 
+	public function addDeliverySchedule($request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$model = new DeliveryScheduleTable();
+			$result = $model->addDeliverySchedule($request);
+			if($result > 0){
+				DB::commit();
+				$msg = 'Delivery Scheduled Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
+
 	public function saveDeliveryScheduleByDate($request)
     {
     	$data =  $request->all();
