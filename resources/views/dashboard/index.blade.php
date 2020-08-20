@@ -135,13 +135,15 @@ else{
                                     <table class="table table-striped table-bordered zero-configuration" id="quotesList" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="width:15%">RFQ Number</th>
-                                                <th style="width:14%">Vendor Name</th>
-                                                <th style="width:15%">Quote Number</th>
-                                                <th style="width:12%">Invited On</th>
-                                                <th style="width:12%">Responded On</th>
-                                                <th style="width:8%">Status</th>
-                                                <th style="width:29%">Action</th>
+                                                <th style="width:10%">RFQ Number</th>
+                                                <th style="width:10%">RFQ Date</th>
+                                                <th style="width:10%">RFQ Last Date</th>
+                                                <th style="width:10%">Vendor Name</th>
+                                                <th style="width:12%">Quote Number</th>
+                                                <th style="width:10%">Invited On</th>
+                                                <th style="width:10%">Responded On</th>
+                                                <th style="width:10%">Status</th>
+                                                <th style="width:18%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -287,7 +289,7 @@ $(document).ready(function() {
             processing: true,
             destroy : true,
             serverSide: true,
-            scrollX: false,
+            scrollX: true,
             autoWidth:false,
             ajax: {
                 url:'{{ url("getAllQuotes") }}',
@@ -298,13 +300,15 @@ $(document).ready(function() {
             },
             columns: [
                     
-                    { data: 'rfq_number', name: 'rfq_number' },
-                    { data: 'vendor_name', name: 'vendor_name' },
-                    { data: 'quote_number', name: 'quote_number' },
-                    { data: 'invited_on', name: 'invited_on'},
-                    { data: 'responded_on', name: 'responded_on', },
-                    { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
-                    { data: 'action', name: 'action', orderable: false},
+                { data: 'rfq_number', name: 'rfq_number' },
+                { data: 'rfq_issued_on', name: 'rfq_issued_on' },
+                { data: 'last_date', name: 'last_date' },
+                { data: 'vendor_name', name: 'vendor_name' },
+                { data: 'quote_number', name: 'quote_number' },
+                { data: 'invited_on', name: 'invited_on'},
+                { data: 'responded_on', name: 'responded_on', },
+                { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
+                {data: 'action', name: 'action', orderable: false},
                 ],
             order: [[0, 'desc']]
         });
