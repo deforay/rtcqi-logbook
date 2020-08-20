@@ -38,9 +38,9 @@ foreach($vendor as $type){
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
                     <center><h2 class="form-section" style="font-weight: 600;">RFQ</h2></center>
-                <hr>
+
                 </div>
-                <div class="card-content collapse show" style="margin-top: -40px;">
+                <div class="card-content collapse show" style="">
                     <div class="card-body">
                         @csrf
 
