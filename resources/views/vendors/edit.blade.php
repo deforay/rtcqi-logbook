@@ -91,7 +91,7 @@
                                     $fnct = "vendor_id##".($vendors[0]->vendor_id);
                                     @endphp
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Vendor Name <span class="mandatory">*</span>
                                                 </h5>
@@ -100,7 +100,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Vendor Code<span class="mandatory">*</span>
                                                 </h5>
@@ -109,11 +109,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Vendor Type<span class="mandatory">*</span>
                                                 </h5>
@@ -127,7 +123,9 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Register On<span class="mandatory">*</span>
                                                 </h5>
@@ -136,9 +134,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Password
                                                 </h5>
@@ -150,7 +146,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Confirm Password
                                                 </h5>
@@ -161,9 +157,9 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
+                                    </div>                                   
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Address Line 1
                                                 </h5>
@@ -172,7 +168,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Address Line 2
                                                 </h5>
@@ -181,9 +177,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>City
                                                 </h5>
@@ -192,7 +186,9 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>State
                                                 </h5>
@@ -201,9 +197,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Pincode
                                                 </h5>
@@ -212,7 +206,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Country<span class="mandatory">*</span>
                                                 </h5>
@@ -225,7 +219,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Email
                                                 </h5>
@@ -234,7 +228,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Alternate Email
                                                 </h5>
@@ -243,9 +237,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Phone<span class="mandatory">*</span>
                                                 </h5>
@@ -254,7 +246,9 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Alternate Phone Number
                                                 </h5>
@@ -263,9 +257,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Vendor Status<span class="mandatory">*</span>
                                                 </h5>

@@ -52,7 +52,7 @@
                             <form class="form form-horizontal" role="form" name="addroles" id="addroles" method="post" action="/roles/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Role Name <span class="mandatory">*</span>
                                             </h5>
@@ -61,7 +61,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Role Code <span class="mandatory">*</span>
                                             </h5>
@@ -70,10 +70,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Description <span class="mandatory">*</span>
                                             </h5>
@@ -82,7 +79,9 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Status<span class="mandatory">*</span>
                                             </h5>
