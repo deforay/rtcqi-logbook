@@ -42,7 +42,7 @@ class DeliveryScheduleController extends Controller
         $item = $itemservice->getAllActiveItem();
         $branchService = new BranchesService();
         $branch = $branchService->getAllActiveBranches();
-        return view('deliveryschedule.add',array('purchase'=>$purchase,'item' => $item,'branch'=>$branch));
+        return view('deliveryschedule.addDeliverySchedule',array('purchase'=>$purchase,'item' => $item,'branch'=>$branch));
     }
     public function saveDeliverySchedule(Request $request)
     {
@@ -201,6 +201,16 @@ class DeliveryScheduleController extends Controller
         $service = new DeliveryScheduleService();
         $result = $service->getAutoCompleteComments($searchTerm);
         return $result;
+    }
+
+    public function getDeliveryScheduleByPurchaseOrder($id,Request $request){
+        // $id = base64_encode($id);
+        $service = new PurchaseOrderService();
+        $result = $service->getPurchaseorderByIdForDelivery($id);
+        $branchService = new BranchesService();
+        $branch = $branchService->getAllActiveBranches();
+        // dd($result);
+        return view('deliveryschedule.addDeliverySchedule',array('result' => $result,'branch'=>$branch));
     }
 
 }
