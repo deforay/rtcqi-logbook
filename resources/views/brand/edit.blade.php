@@ -53,7 +53,7 @@
                                 $fnct = "brand_id##".($result[0]->brand_id);
                             @endphp
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Brand Name <span class="mandatory">*</span>
                                             </h5>
@@ -62,7 +62,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Manufacturer Name <span class="mandatory">*</span>
                                             </h5>
@@ -71,9 +71,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Brand Status<span class="mandatory">*</span>
 										</h5>
@@ -84,8 +82,8 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
-                                </div>
+                                    </div>
+                                    </div>
 								<div class="form-actions right">
                                     <a href="/brand" >
                                     <button type="button" class="btn btn-warning mr-1">

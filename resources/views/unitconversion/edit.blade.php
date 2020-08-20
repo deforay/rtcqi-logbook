@@ -53,7 +53,7 @@
                                     $fnct = "conversion_id##".($result[0]->conversion_id);
                                     @endphp
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Base Unit<span class="mandatory">*</span>
                                                 </h5>
@@ -67,7 +67,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Multiplier <span class="mandatory">*</span>
                                                 </h5>
@@ -76,9 +76,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>To Type<span class="mandatory">*</span>
                                                 </h5>
@@ -92,7 +90,9 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Unit Status<span class="mandatory">*</span>
                                                 </h5>

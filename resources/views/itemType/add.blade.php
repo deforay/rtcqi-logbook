@@ -50,7 +50,7 @@
                             <form class="form form-horizontal" role="form" name="addItemType" id="addItemType" method="post" action="/itemType/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Item Type Name <span class="mandatory">*</span>
                                             </h5>
@@ -59,7 +59,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>item Category<span class="mandatory">*</span>
 										</h5>
@@ -72,9 +72,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Item Type Status<span class="mandatory">*</span>
 										</h5>

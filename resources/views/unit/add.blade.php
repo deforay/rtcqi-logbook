@@ -50,7 +50,7 @@
                             <form class="form form-horizontal" role="form" name="addunit" id="addunit" method="post" action="/unit/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Unit Name <span class="mandatory">*</span>
                                             </h5>
@@ -59,7 +59,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Unit Status<span class="mandatory">*</span>
 										</h5>
