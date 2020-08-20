@@ -57,7 +57,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                         <br/>
                         <!-- <div class="row">
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php 
+                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php
                                             // if(isset($result[0]->upload_path)){
 
                                             //     $fileVaL= explode(",", $result[0]->upload_path);
@@ -70,7 +70,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                                             //     for($i=0;$i<$forcount;$i++)
                                             //     {
                                             //     $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                   
+
                                             //     echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                             //      }
                                             // }
@@ -187,6 +187,7 @@ $(document).ready(function() {
 });
 
 duplicateName = true;
+$('#show_alert').css("display","none");
 function validateNow() {
     let delivery_schedule_status = '{{$delivery_schedule_status}}'
     if(delivery_schedule_status == 'received'){
@@ -196,7 +197,7 @@ function validateNow() {
         flag = deforayValidator.init({
             formId: 'updateDeliverySchedule'
         });
-        
+
         if (flag == true) {
             if (duplicateName) {
                 document.getElementById('updateDeliverySchedule').submit();
