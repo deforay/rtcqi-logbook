@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Author             : Sudarmathi M
     Date               : 18 June 2020
     Description        : Branches view screen
@@ -24,7 +24,7 @@
                     </ol>
                 </div>
             </div>
-            <h3 class="content-header-title mb-0">Location</h3>
+
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
@@ -57,7 +57,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title"></h4>
+                            <h4 class="card-title">Location</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -122,7 +122,7 @@
                 type: 'POST',
             },
             columns: [
-                    
+
                     { data: 'branch_name', name: 'branch_name',className:'firstcaps' },
                     { data: 'branch_type', name: 'branch_type',className:'firstcaps' },
                     { data: 'phone', name: 'phone'},
@@ -138,7 +138,7 @@
 
     function changeStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal,functionName)
     {
-       
+
         if(fieldIdValue!='')
         {
 
