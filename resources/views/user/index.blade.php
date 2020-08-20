@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Author             : Sudarmathi M
     Date               : 18 June 2020
     Description        : User view screen
@@ -24,7 +24,7 @@
                     </ol>
                 </div>
             </div>
-            <h3 class="content-header-title mb-0">User</h3>
+
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
@@ -57,7 +57,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title"></h4>
+                            <h3 class="content-header-title mb-0">User</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -121,7 +121,7 @@
                 type: 'POST',
             },
             columns: [
-                    
+
                     { data: 'first_name', name: 'first_name',className:'firstcaps' },
                     { data: 'last_name', name: 'last_name',className:'firstcaps' },
                     { data: 'phone', name: 'phone'},
@@ -136,7 +136,7 @@
 
     function changeStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal,functionName)
     {
-       
+
         if(fieldIdValue!='')
         {
 

@@ -10,12 +10,12 @@
 
 @section('content')
 
-<style>
+{{-- <style>
 td {
     padding-left: 0.50rem !important;
     padding-right: 0.50rem !important;
 }
-</style>
+</style> --}}
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-8 col-12 mb-2">
@@ -349,6 +349,32 @@ td {
 
     let totalQty = 0;
     let length = 0;
+
+    function getPurchaseOrder(){
+        val = encodeURIComponent(window.btoa($('#purchaseOrder').val()));
+        if (val != '') {
+            $("#poOrderDetails").html('');
+            
+            // $.ajaxSetup({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });
+            // $.ajax({
+            //     url: "{{ url('/getDeliveryScheduleByPurchaseOrder') }}",
+            //     method: 'post',
+            //     data: {
+            //         id : val
+            //     },
+            //     success: function(result) {
+                    window.location.href ="/getDeliveryScheduleByPurchaseOrder/"+val;
+            //     }
+            // });
+        }
+        else{
+            swal("Please Select Purchase Order")
+        }
+    }
     function getPurchaseOrder(){
         val = $('#purchaseOrder').val()
         if (val != '') {

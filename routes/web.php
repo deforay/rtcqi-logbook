@@ -224,3 +224,5 @@ Route::post('/itemReceiveEdit/{id}', 'DeliverySchedule\DeliveryScheduleControlle
 Route::post('/itemreceive/updateItemReceive/{id}', 'DeliverySchedule\DeliveryScheduleController@updateItemReceive');
 Route::match(['get'],'/getAutoCompleteComments/{searchTerm}/{desc}', 'DeliverySchedule\DeliveryScheduleController@getAutoCompleteComments');
 Route::post('/saveDeliveryScheduleByDate', 'DeliverySchedule\DeliveryScheduleController@saveDeliveryScheduleByDate');
+Route::post('/getDeliveryScheduleByPurchaseOrder/{id}', 'DeliverySchedule\DeliveryScheduleController@getDeliveryScheduleByPurchaseOrder');
+Route::get('/getDeliveryScheduleByPurchaseOrder/{id}', 'DeliverySchedule\DeliveryScheduleController@getDeliveryScheduleByPurchaseOrder');

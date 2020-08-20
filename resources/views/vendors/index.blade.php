@@ -1,9 +1,9 @@
-<!-- 
+<!--
     Author             : Sriran V
     Date               : 18 June 2020
     Description        : Vendors view screen
-    Last Modified Date : 
-    Last Modified Name : 
+    Last Modified Date :
+    Last Modified Name :
 -->
 
 @extends('layouts.main')
@@ -12,7 +12,7 @@
 <div class="content-wrapper">
   <div class="content-header row">
     <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-      <h3 class="content-header-title mb-0 d-inline-block">Vendors</h3>
+      {{--  <h3 class="content-header-title mb-0 d-inline-block">Vendors</h3>  --}}
       <div class="row breadcrumbs-top d-inline-block">
         <div class="breadcrumb-wrapper col-12">
           <ol class="breadcrumb">
@@ -41,7 +41,7 @@
             <div class="col-md-12"> -->
       <div class="card">
         <div class="card-header">
-          <!-- <h4 class="form-section"><i class="la la-plus-square"></i>Vendor</h4> -->
+          <h4 class="form-section"><i class="la la-plus-square"></i>Vendor</h4>
           <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
           <div class="heading-elements">
             <ul class="list-inline mb-0">

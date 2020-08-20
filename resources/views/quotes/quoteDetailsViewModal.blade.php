@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Service\CommonService;
 $common = new CommonService();
@@ -11,17 +11,14 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">Quote Order</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">Quote Order</h2></center>
                 </div>
                 <div class="card-content collapse show" style="margin-top: -40px;">
                     <div class="card-body">
                         <form class="form form-horizontal" role="form" name="updateBatchNumber" action="/quotes/updateBatchNumber" id="updateBatchNumber" method="post" autocomplete="off" >
                         @csrf
-                        <div>
-                            <center><h4><b>QUOTE</b></h4><center>
-                        </div>
-                        <br/>
-                        <div class="row">
+
+                        <div class="row mt-3">
                             <div class="col-xl-4 col-lg-12">
                                 <h4><b>RFQ Number : </b> <span id="rfqNumber" class="spanFont">{{$quote[0]->rfq_number}} </span></h4>
                             </div>
@@ -34,7 +31,7 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                         </div>
                         <br/>
                         <div class="row">
-                            
+
                             <div class="col-xl-4 col-lg-12">
                                 <h4><b>Quote Status : </b><span id="quoteSts" class="spanFont" style="text-transform: capitalize;">{{$quote[0]->quotes_status}} </span></h4>
                             </div>
@@ -96,7 +93,7 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                         <i class="la la-check-square-o"></i> Approve
                         <!-- </button> -->
                         </a>
-                        <?php }?> 
+                        <?php }?>
                         </div>
                     </div>
                 </div>
