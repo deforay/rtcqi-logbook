@@ -53,7 +53,7 @@
                                 $fnct = "item_id##".($result[0]->item_id);
                             @endphp
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Item Name <span class="mandatory">*</span>
                                             </h5>
@@ -62,7 +62,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Item  Code <span class="mandatory">*</span>
                                             </h5>
@@ -71,9 +71,8 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Item Category<span class="mandatory">*</span>
 										</h5>
@@ -85,8 +84,10 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>item Type<span class="mandatory">*</span>
 										</h5>
@@ -99,9 +100,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Brand Name<span class="mandatory">*</span>
 										</h5>
@@ -114,7 +113,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Unit Name<span class="mandatory">*</span>
 										</h5>
@@ -126,8 +125,10 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Stockable<span class="mandatory">*</span>
 										</h5>

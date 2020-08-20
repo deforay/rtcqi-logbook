@@ -53,7 +53,7 @@
 									$fnct = "vendor_type_id##".($vendorsType[0]->vendor_type_id);
 									@endphp
 									<div class="row">
-										<div class="col-xl-6 col-lg-12">
+										<div class="col-xl-4 col-lg-12">
 											<fieldset>
 												<h5>Vendor Type <span class="mandatory">*</span>
 												</h5>
@@ -62,13 +62,13 @@
 												</div>
 											</fieldset>
 										</div>									
-										<div class="col-xl-6 col-lg-12">
+										<div class="col-xl-4 col-lg-12">
 											<fieldset>
 												<h5>Status<span class="mandatory">*</span> </h5>
 												<div class="form-group">
 													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="status" name="status" title="Please select status">
-														<option value="active" {{ $vendorsType[0]->status == 'active' ?  'selected':''}}>Active</option>
-														<option value="inactive" {{ $vendorsType[0]->status == 'inactive' ?  'selected':''}}>Inactive</option>
+														<option value="active" {{ $vendorsType[0]->vendor_type_status == 'active' ?  'selected':''}}>Active</option>
+														<option value="inactive" {{ $vendorsType[0]->vendor_type_status == 'inactive' ?  'selected':''}}>Inactive</option>
 													</select>
 												</div>
 											</fieldset>

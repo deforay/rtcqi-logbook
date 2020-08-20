@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Author             : Sudarmathi M
     Date               : 22 June 2020
     Description        : Login screen
@@ -48,84 +48,74 @@
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
-
-<body class="horizontal-layout horizontal-menu horizontal-menu-padding 1-column   blank-page" data-open="click" data-menu="horizontal-menu" data-col="1-column">
-    <!-- BEGIN: Content-->
-    <div class="app-content container center-layout mt-2">
-        <div class="content-overlay"></div>
-        <div class="content-wrapper">
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <section class="row flexbox-container">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="col-lg-5 col-md-8 col-10 box-shadow-2 p-0">
-                            <div class="card border-grey border-lighten-3 m-0">
-                                <div class="card-header border-0">
-                                    <div class="card-title text-center">
-                                        <div class="p-1">
-                                            <h1>Procurement & Inventory Manager</h1>
-                                        </div>
-                                    </div>
-                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login</span>
-                                    </h6>
-                                </div>
-                                <div id="show_alert" class="mt-1" style="font"></div>
-                                @if (session('status'))
-                                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
-                                    <div class="text-center" style="font-size: 18px;"><b>
-                                            {{ session('status') }}</b></div>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <script>
-                                    $('#show_alert_index').delay(3000).fadeOut();
-                                </script>
-                                @endif
-                                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <form class="form-horizontal form-simple" method="post" name="userLogin" id="userLogin" action="login/validate" autocomplete="off" onsubmit="validateNow();return false;">
-                                            @csrf
-                                            <fieldset class="form-group position-relative has-icon-left mb-0">
-                                                <input type="email" class="form-control isRequired" name="username" id="username" placeholder="Your Email Id" title="Please enter the Email Id">
-                                                <div class="form-control-position">
-                                                    <i class="la la-user"></i>
-                                                </div>
-                                            </fieldset>
-                                            <fieldset class="form-group position-relative has-icon-left">
-                                                <input type="password" class="form-control isRequired" name="password" id="password" placeholder="Enter Password" title="Please enter login password">
-                                                <div class="form-control-position">
-                                                    <i class="la la-key"></i>
-                                                </div>
-                                            </fieldset>
-                                            <!-- <div class="form-group row">
-                                                <div class="col-sm-6 col-12 text-center text-sm-left">
-                                                    <fieldset>
-                                                        <input type="checkbox" id="remember-me" class="chk-remember">
-                                                        <label for="remember-me"> Remember Me</label>
-                                                    </fieldset>
-                                                </div>
-                                                <div class="col-sm-6 col-12 text-center text-sm-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
-                                            </div> -->
-                                            <button type="submit" class="btn btn-info btn-block"><i class="ft-unlock"></i> Login</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="">
-                                        <a href="/login/forgotPassword" name="forgotPassword" id="forgotPassword" class="" title="forgot Password" style="position: absolute;left: 50%;transform: translate(-50%, -50%);text-align: center;">Forgot Password ?</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<body class="vertical-layout vertical-overlay-menu 1-column  bg-full-screen-image menu-expanded blank-page blank-page"
+data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
+  <!-- ////////////////////////////////////////////////////////////////////////////-->
+  <div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+        <section class="flexbox-container">
+          <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="col-md-4 col-10 box-shadow-2 p-0">
+              <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                <div class="card-header border-0">
+                  <div class="card-title text-center">
+                    <div class="p-1">
+                        <h3>Procurement & Inventory Manager</h3>
                     </div>
-                </section>
+                  </div>
+                  <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                    <span>Login</span>
+                  </h6>
+                </div>
+                <div class="card-content">
+                    <div id="show_alert" class="mt-1" style="display:none;"></div>
+                    @if (session('status'))
+                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
+                        <div class="text-center" style="font-size: 18px;"><b>
+                                {{ session('status') }}</b></div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <script>
+                        $('#show_alert_index').delay(3000).fadeOut();
+                    </script>
+                    @endif
+                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                  <div class="card-body">
+                    <form class="form-horizontal" method="post" name="userLogin" id="userLogin" action="login/validate" autocomplete="off">
+                        @csrf
+                      <fieldset class="form-group position-relative has-icon-left">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Your Username"
+                        required>
+                        <div class="form-control-position">
+                          <i class="ft-user"></i>
+                        </div>
+                      </fieldset>
+                      <fieldset class="form-group position-relative has-icon-left">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"
+                        required>
+                        <div class="form-control-position">
+                          <i class="la la-key"></i>
+                        </div>
+                      </fieldset>
 
+                      <button type="button" class="btn btn-outline-info btn-block" onclick="validateNow()"><i class="ft-unlock"></i> Login</button>
+                    </form>
+                  </div>
+
+
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
+        </section>
+      </div>
     </div>
+  </div>
     <!-- END: Content-->
 
 

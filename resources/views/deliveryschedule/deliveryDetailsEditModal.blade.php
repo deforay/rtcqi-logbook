@@ -16,7 +16,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">DELIVERY SCHEDULE</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">DELIVERY SCHEDULE</h2></center>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>

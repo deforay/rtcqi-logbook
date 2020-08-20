@@ -53,7 +53,7 @@
                                 $fnct = "item_type_id##".($result[0]->item_type_id);
                             @endphp
                                 <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Item Type Name <span class="mandatory">*</span>
                                             </h5>
@@ -62,7 +62,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-6 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>item Category<span class="mandatory">*</span>
 										</h5>
@@ -74,10 +74,8 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
-                                </div>
-                                    <div class="row">
-                                    <div class="col-xl-6 col-lg-12">
+									</div>                               
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>item Type Status<span class="mandatory">*</span>
 										</h5>
@@ -88,7 +86,7 @@
                                             </select>
 											</div>
 										</fieldset>
-									</div>
+                                    </div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/itemType" >

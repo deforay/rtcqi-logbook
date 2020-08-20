@@ -41,9 +41,9 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                 </div>
                 <div id="show_alert"  class="" style=""></div>
                 <div class="card-header mb-0 pb-0">
-                    <center><h2 class="form-section" style="font-weight: 600;">Receive Items</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">Receive Items</h2></center>
                 </div>
-                
+
                 <!-- <div class="card-content collapse show"> -->
                     <div class="card-body mt-0 pt-0">
                         <form class="form form-horizontal" role="form" name="updateItemReceive" id="updateItemReceive" method="post" action="/itemreceive/updateItemReceive/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
@@ -76,7 +76,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                             </div>
                         </div>
                         <br/>
-                        
+
                         <div class="row">
                             <div class="col-xl-4 col-lg-12">
                                 <h4><b>Expected Delivery : </b><span id="deliveryMode" class="spanFont" style="text-transform: capitalize;">{{$deliveryDate}} </span></h4>
@@ -176,7 +176,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         <input type="hidden" id="damagedQtySum" value="" class="form-control" autocomplete="off" placeholder="Enter Non Confromity Quantity" name="damagedQtySum" title="Please enter Non Confromity Quantity" >
                         <input type="hidden" id="itemId" name="itemId" class="form-control" value="{{$result[0]->item_id}}">
                         <div class="row">
-                    
+
                             <input type="hidden" id="status" value="" class="form-control" autocomplete="off" placeholder="Enter Delivery Schedule Status" name="status" title="Please enter Delivery Schedule Status" >
                             <!-- <div class="col-xl-6 col-lg-12">
                                 <fieldset>
@@ -351,7 +351,7 @@ function changeScheduleStatus(val,id){
         // $('#'+id).addClass('infocus');
         swal("Entered Quantity cannot be greater than Delivery Quantity")
     }
-    
+
 }
 
 rowCount = 0;
