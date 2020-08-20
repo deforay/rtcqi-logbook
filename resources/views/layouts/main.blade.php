@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Author : Sudarmathi M
     Date : 27 Jan 2020
     Desc : Main page to integrate all the pages
@@ -20,7 +20,7 @@
     .single:hover{
       background-color: rgba(255, 255, 255, 0.05);
     }
-  
+
     .firstcaps{text-transform:capitalize;}
   /* .select2-selection__clear{display:none;}
   #show_alert{display:none;}
@@ -35,12 +35,13 @@
 background-color: #f2f3f5;
 } */
     </style>
-    <body class="horizontal-layout horizontal-menu horizontal-menu-padding 2-columns  " data-open="click" data-menu="horizontal-menu" data-col="2-columns">
-    
+
+    <body class="vertical-layout vertical-overlay-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+
     <!-- navbar starts-->
 
     @include('layoutsections.headernav')
-      
+
     <!-- navbar ends-->
 
     <!-- Side starts-->
@@ -51,7 +52,7 @@ background-color: #f2f3f5;
 
     <div class="app-content container center-layout mt-2" style="min-height: 600px;">
         <div class="content-overlay"></div>
-        
+
                 @section('content')
 
                 @show
@@ -61,7 +62,7 @@ background-color: #f2f3f5;
     <!-- footer starts-->
 
     @include('layoutsections.footer')
-      
+
     <!-- footer ends-->
 
     <!-- JavaScript files-->
@@ -84,30 +85,38 @@ ismob = true;
     var splitUrl = path.split('/');
     if(splitUrl[0]=="dashboard")
     {
-      $("#dashboard").addClass('active');  
-    }else if(splitUrl[0]=="roles" || splitUrl[0]=="branchtype")
+      //$("#dashboard").addClass('active');
+    }else if(splitUrl[0]=="roles" || splitUrl[0]=="branchtype" || splitUrl[0]=="user")
     {
-      $("#manage").addClass('active');  
+      $("#manage").addClass('active');
+      $("#manage > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
     }
     else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType" || splitUrl[0]=="item" || splitUrl[0]=="unit" || splitUrl[0]=="brand")
     {
-      $("#item").addClass('active');  
+      //$("#item").addClass('active');
+      $("#item").addClass('active');
+      $("#item > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
     }
     else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq")
     {
-      $("#procurement").addClass('active');  
+      //$("#procurement").addClass('active');
+      $("#procurement").addClass('active');
+      $("#procurement > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
     }
   });
 
   // $(function(){
-  //   $(".isRequired").on("blur", function(){ 
+  //   $(".isRequired").on("blur", function(){
   //     $(this).val(function(_, v){
   //     return v.replace(/(^\s*)|(\s*$)/gi, "");
-  //     });  
-  //   }); 
+  //     });
+  //   });
   // });
 
-     
+
   function showAjaxModal(url)
   {
       // SHOWING AJAX PRELOADER IMAGE
@@ -127,7 +136,7 @@ ismob = true;
           success: function (response)
           {
             jQuery('#modal_ajax .modal-content').html(response);
-            
+
           }
       });
   }
@@ -187,7 +196,7 @@ ismob = true;
           });
         }
     }
-  
+
     function isNumberKey(evt){
         var charCode = (evt.which) ? evt.which : evt.keyCode
         if (charCode > 31 && (charCode < 48 || charCode > 57))

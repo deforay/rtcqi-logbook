@@ -9,7 +9,7 @@ use App\Service\CommonService;
         <div class="col-12">
             <div class="card" style="margin-top: 3%;margin-left:3%;border: solid;margin-right:3%;">
                 <div class="card-header">
-                    <center><h2 class="form-section" style="font-weight: 600;">PURCHASE ORDER</h2></center><hr>
+                    <center><h2 class="form-section" style="font-weight: 600;">PURCHASE ORDER</h2></center>
                 </div>
                 <div class="card-content collapse show" style="margin-top: -40px;">
                     <div class="card-body">
@@ -18,7 +18,7 @@ use App\Service\CommonService;
                             <center><h4><b>PURCHASE ORDER DETAILS</b></h4><center>
                         </div> -->
                         <br/>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-xl-4 col-lg-12">
                                 <h4><b>PO Number : </b> <span id="rfqNumber" class="spanFont">{{$result[0]->po_number }} </span></h4>
                             </div>
@@ -44,7 +44,7 @@ use App\Service\CommonService;
                         <br/>
                         <!-- <div class="row">
                             <div class="col-xl-6 col-lg-12">
-                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php 
+                                <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php
                                             // if(isset($result[0]->upload_path)){
 
                                             //     $fileVaL= explode(",", $result[0]->upload_path);
@@ -57,7 +57,7 @@ use App\Service\CommonService;
                                             //     for($i=0;$i<$forcount;$i++)
                                             //     {
                                             //     $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
-                   
+
                                             //     echo  '<a href="'.$imagefile.'" target="_blank"><i class="ft-file">Attachment File</i></a></br>';
                                             //      }
                                             // }
@@ -85,7 +85,7 @@ use App\Service\CommonService;
                                         @php $z=0; @endphp
                                         @foreach($purchaseOrderDetails as $orderDetail)
                                             <tr>
-                                               
+
                                                 <td> @foreach ($item as $items)
                                                      {{ $orderDetail->item_id == $items->item_id ?  $items->item_name:''}}
                                                                     @endforeach</td>
@@ -100,13 +100,13 @@ use App\Service\CommonService;
                                 </div>
                             </div>
                         </div>
-                       
+
                         <br/>
                         <div class="form-actions right" style="margin-bottom: 5%;">
                         <button type="button" class="btn btn-warning mr-1 float-right ml-2" data-dismiss = "modal">
                         <i class="ft-x"></i> Close
                         </button>
-                    
+
                         </div>
                     </div>
                 </div>

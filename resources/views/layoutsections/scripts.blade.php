@@ -14,7 +14,7 @@
 
 <!-- START PAGE LEVEL JS -->
 <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js')}}"></script>
-<script src=".{{ asset('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
+<script src="{{ asset('app-assets/js/scripts/tables/datatables/datatable-basic.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/toggle/switchery.min.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/toggle/bootstrap-switch.min.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js')}}"></script>

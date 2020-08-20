@@ -30,7 +30,7 @@
 <!-- END: Theme CSS-->
 
 <!-- BEGIN: Page CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/horizontal-menu.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-overlay-menu.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/fonts/simple-line-icons/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/fonts/line-awesome/css/line-awesome.min.css') }}">
@@ -60,3 +60,56 @@
 <script src="{{ asset('app-assets/vendors/js/forms/extended/formatter/formatter.min.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/card/jquery.card.js')}}"></script>
+<style type="text/css">
+    table {
+        border-radius: 6px !important;
+        -webkit-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
+        -moz-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
+        box-shadow: 0px 0px 5px -1px rgb(197, 197, 197);
+    }
+
+    table>thead{
+        background-color: #d4e4f09e !important;
+        color: #9d9da0;
+        text-transform: uppercase !important;
+    }
+
+    .row > button{
+        vertical-align:
+    }
+
+    .table tr td:last-child{
+        vertical-align: middle !important;
+    }
+
+    .main-menu.menu-light .navigation > li.active > a {
+        font-weight: 700;
+        background: #2f9ff221 !important;
+        margin: 0 1rem 0 1rem;
+        border-radius: 0.3rem;
+    }
+    .main-menu.menu-light .navigation > li.open > ul > li:hover.active > a {
+        padding: 9px 18px 9px 40px;
+    }
+    .main-menu.menu-light .navigation > li .active > a {
+        color: #85899b;
+        font-weight: 700;
+        background: #bcbec821;
+        margin: 0 1rem 0 1rem;
+        border-radius: 0.3rem;
+        padding-left: 40px;
+    }
+
+    .card-header {
+        padding: 1.0rem 2.5rem;
+        margin-bottom: 0;
+        background-color: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .card-header:first-child {
+        border-radius: .45rem .45rem 0 0;
+        background-color: #dbf2ff;
+    }
+
+</style>
