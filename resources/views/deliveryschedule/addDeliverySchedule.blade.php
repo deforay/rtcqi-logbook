@@ -56,6 +56,7 @@ td {
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body">
+                                <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/deliveryschedule/add" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
                                     <p class="blue-grey"><span class="red">#</span><em>To Add Delivery Schedule Please Select the Purchase Order</em></p>
@@ -123,7 +124,7 @@ td {
                                                     <br/>
                                                     <div id="deliverySchedulePreview" >
                                                         <!-- <div><center><h4 class="ml-2 text-center"><b>Previous Delivery Schedule History</b></h4><center></div> -->
-                                                        <div class="row">
+                                                        <div class="">
                                                             <div class="table-responsive col-md-12 mt-1">
                                                                 <div class="bd-example">
                                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%;">
@@ -193,7 +194,7 @@ td {
                                         <i class="ft-x"></i> Cancel
                                         </button>
                                         </a>
-                                        <button type="submit" onclick="validateNow();return false;" id="submitBtn" class="btn btn-primary float-right" style="display:none">
+                                        <button type="" onclick="validateNow();return false;" id="submitBtn" class="btn btn-primary float-right" style="display:none">
                                         <i class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
@@ -205,11 +206,27 @@ td {
             </div>
             <!-- horizontal grid end -->
         </section>
+        <div id="toast-bottom-right" class="toast-container toast-bottom-right"><div class="toast toast-danger" aria-live="polite" style="display: none;"><div class="toast-message">I do not think that word means what you think it means.</div></div></div>
     </div>
 </div>
 
 <script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            // format: 'dd-M-yyyy',
+            autoclose: true,
+            format: 'dd-M-yyyy',
+            changeMonth: true,
+            changeYear: true,
+            maxDate: 0,
+            startDate:'today',
+            todayHighlight: true,
+            clearBtn: true,
+        });
+        $(".select2").select2();
+    });
     let totalQty = 0;
+    let rowCount = 0;
     let length = 0;
     function getPurchaseOrder(val){
         // val = $('#purchaseOrder').val()
@@ -241,9 +258,11 @@ td {
                         // $('#qtyTxt').text(data[0]['quantity'])
                         var details = '<div><h4 class="text-center"><b>Add Delivery Schedule</b></h4><br/>';
                         length = data.length;
+                        rowCount = length;
                         for(i=0;i<data.length;i++)
                         {
-                            details +='<div class="row" style="padding-left: 0.5rem !important;">\
+                            j = 0;
+                            details +='<div id="addDeliveryScheduleRow'+i+'"><div class="row" style="padding-left: 0.5rem !important;">\
                                             <div class="col-xl-4 col-lg-12">\
                                             <h4><b>Item : </b> <span id="itemName'+i+'" class="spanFont">'+data[i]['item_name']+'</span></h4>\
                                             </div>\
@@ -255,7 +274,7 @@ td {
                             details +='<div class="row">\
                                             <div class="table-responsive">\
                                                 <div class="bd-example pl-1 pr-1">\
-                                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">\
+                                                    <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%" >\
                                                     <thead style="background-color:#ebecd2">\
                                                         <tr>\
                                                             <th style="width:15%;">Delivery<br/>Date</th>\
@@ -268,30 +287,43 @@ td {
                                                     </thead>\
                                                     <tbody id="delivDetails'+i+'">\
                                                         <tr>\
-                                                            <input type="hidden" id="item'+i+'" name="item[]" value="'+data[i]['item_id']+'">\
+                                                            <td><input type="hidden" id="item'+i+'" name="item[]" value="'+data[i]['item_id']+'">\
                                                             <input type="hidden" id="podId'+i+'" name="podId[]" value="'+data[i]['pod_id']+'">\
-                                                            <td><input type="text" id="expectedDelivery'+i+'"  class="form-control datepicker delivClass" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery[]" title="Please Select Expected Delivery Date"></td>\
-                                                            <td><input type="number" id="deliverQty'+i+'" class="form-control delivClass hideClass" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty[]" title="Please Enter Delivery Quantity" oninput="validateQty('+i+',this.value)" ></td>\
-                                                            <td><input type="text" id="deliveryMode'+i+'" class="form-control delivClass hideClass" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode[]" title="Please Enter Delivery mode" ></td>\
-                                                            <td><select class="form-control delivClass select2" autocomplete="off" style="width:100%;" id="dbranches'+i+'" name="dbranches[]" title="Please select locations">\
+                                                            <input type="text" id="expectedDelivery'+i+'" onchange="addValidatingClass('+i+',this.value)" class="form-control datepicker delivClass'+i+'" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery[]" title="Please Select Expected Delivery Date"></td>\
+                                                            <td><input type="number" id="deliverQty'+i+'" class="form-control delivClass'+i+' hideClass quantityTot'+i+'" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty[]" title="Please Enter Delivery Quantity" oninput="validateQty('+i+',this.value)" ></td>\
+                                                            <td><input type="text" id="deliveryMode'+i+'" class="form-control delivClass'+i+' hideClass" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode[]" title="Please Enter Delivery mode" ></td>\
+                                                            <td><select class="form-control delivClass'+i+' select2" autocomplete="off" style="width:100%;" id="dbranches'+i+'" name="dbranches[]" title="Please select locations">\
                                                             <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select></td>\
-                                                            <td><input type="text" id="comments'+i+'" class="form-control delivClass hideClass" name="comments[]" placeholder="Enter Comments"  title="Please Enter Comments"></td>\
-                                                            <td><a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow('+i+');"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode,'+i+');"><i class="ft-minus"></i></a></td>\
-                                                            <input type="hidden" id="qtyMax'+i+'" value=""><input type="hidden" id="hiddenPo_id'+i+'" name="hiddenPo_id[]" value="'+data[i]['pod_id']+'">\
+                                                            <td><input type="text" id="comments'+i+'" class="form-control delivClass'+i+' hideClass" name="comments[]" placeholder="Enter Comments"  title="Please Enter Comments"></td>\
+                                                            <td><a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow('+i+','+data[i]['item_id']+','+data[i]['pod_id']+');"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;\
+                                                            <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode,'+i+','+data[i]['item_id']+','+data[i]['pod_id']+');"><i class="ft-minus"></i></a></td>\
+                                                            <input type="hidden" id="qtyMax'+i+'" class="qtyMax'+i+'" value=""><input type="hidden" id="hiddenPo_id'+i+'" name="hiddenPo_id[]" value="'+data[i]['pod_id']+'">\
                                                         </tr>\
                                                     </tbody>\
                                                     </table>\
                                                 </div>\
                                             </div>\
-                                        </div>\
+                                        </div></div>\
                                         <br/>'
                             let itemName = data[i]['item_name'];
                             totalQty += data[i]['quantity'];
                             $('#item'+i).val(data[i]['item_id'])
                             getDeliverySchedule(data[i]['pod_id'],data[i]['item_id'],itemName,data[i]['quantity'],i)
+                            iG = i;
                         }
                         details += '</div>'
                         $("#addDeliveryScheduleContent").html(details);
+                        $('.datepicker').datepicker({
+                            // format: 'dd-M-yyyy',
+                            autoclose: true,
+                            format: 'dd-M-yyyy',
+                            changeMonth: true,
+                            changeYear: true,
+                            maxDate: 0,
+                            startDate:'today',
+                            todayHighlight: true,
+                            clearBtn: true,
+                        });
                         $(".select2").select2();
                         // $('#deliveryScheduleAdd').modal('show');
                     }
@@ -356,7 +388,7 @@ td {
                     for(j=0;j<data.length;j++)
                     {
                         details+='<tr><td>'+data[j]['item_name']+'</td>';
-                        details+='<td>'+data[j]['delivery_qty']+'</td>';
+                        details+='<td style="text-align:right;">'+data[j]['delivery_qty']+'</td>';
                         details+='<td>'+data[j]['delivery_date']+'</td>';
                         details+='<td>'+data[j]['delivery_mode']+'</td>';
                         details+='<td>'+data[j]['comments']+'</td></tr>';
@@ -404,9 +436,11 @@ td {
         $("#hiddenPo_id"+id).val(po_id);
     }
 
-    rowCount = 0;
-    function insRow(id) {
-        rowCount++;
+    // let rowCount = length;
+    // rowCount = length;
+    function insRow(id,item,podId) {
+        qtymax = $('#qtyMax'+id).val();
+        // rowCount++;
         rl = document.getElementById("delivDetails"+id).rows.length;
         var a = document.getElementById("delivDetails"+id).insertRow(rl);
         a.setAttribute("style", "display:none;");
@@ -419,13 +453,16 @@ td {
         var h = a.insertCell(5);
         // var e = a.insertCell(6);
         rl = document.getElementById("delivDetails"+id).rows.length - 1;
-        g.innerHTML='<input type="text" id="expectedDelivery'+i+'"  class="form-control datepicker delivClass" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery[]" title="Please Select Expected Delivery Date">';
-        b.innerHTML = '<input type="number" id="deliverQty' + rowCount + '" class="form-control" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty[]" title="Please Delivery Quantity" >';
-        d.innerHTML = '<input type="text" id="deliveryMode' + rowCount + '" class="form-control" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode[]" title="Please Delivery mode" >';
-        f.innerHTML = '<select class="form-control select2" autocomplete="off" style="width:100%;" id="branches' + rowCount + '" name="branches[]" title="Please select locations">\
+        g.innerHTML='<input type="hidden" id="item'+rowCount+'" name="item[]" value="'+item+'">\
+                    <input type="hidden" id="podId'+rowCount+'" name="podId[]" value="'+podId+'">\
+                    <input type="text" id="expectedDelivery'+rowCount+'" onchange="addValidatingClass('+rowCount+',this.value)" class="form-control datepicker delivClass'+rowCount+'" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery[]" title="Please Select Expected Delivery Date">';
+        b.innerHTML = '<input type="number" id="deliverQty' + rowCount + '" class="form-control delivClass'+rowCount+' quantityTot'+id+'" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty[]" title="Please Delivery Quantity" oninput="validateQty('+rowCount+',this.value)" >';
+        d.innerHTML = '<input type="text" id="deliveryMode' + rowCount + '" class="form-control delivClass'+rowCount+'" autocomplete="off" placeholder="Enter Delivery Mode" name="deliveryMode[]" title="Please Delivery mode" >';
+        f.innerHTML = '<select class="form-control delivClass'+rowCount+' select2" autocomplete="off" style="width:100%;" id="dbranches' + rowCount + '" name="dbranches[]" title="Please select locations">\
                             <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select>';
-        c.innerHTML = '<input type="text" id="comments' + rowCount + '" class="form-control" name="comments[]" placeholder="Enter Comments"  title="Please Enter Comments">';
-        h.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow(' + id + ');"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode,' + id + ');"><i class="ft-minus"></i></a>';
+        c.innerHTML = '<input type="text" id="comments' + rowCount + '" class="form-control delivClass'+rowCount+'" name="comments[]" placeholder="Enter Comments"  title="Please Enter Comments">';
+        h.innerHTML = '<input type="hidden" id="qtyMax'+rowCount+'" class="qtyMax'+id+'" value="'+qtymax+'">\
+                      <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow(' + id + ','+item+','+podId+');"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode,' + id + ');"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $('.datepicker').datepicker({
             // format: 'dd-M-yyyy',
@@ -439,30 +476,58 @@ td {
             clearBtn: true,
         });
         $(".select2").select2();
+        rowCount++;
     }
 
-    function removeRow(el,id) {
+    function removeRow(el,id,item,podId) {
         $(el).parent().fadeOut("slow", function () {
             $(el).parent().remove();
             rowCount = rowCount-1;
             rl = document.getElementById("delivDetails"+id).rows.length;
             if (rl == 0) {
-                insRow(id);
+                insRow(id,item,podId);
             }
         });
     }
 
+    duplicateName = true;
     function validateNow() {
         flag = deforayValidator.init({
             formId: 'addPurchaseOrder'
         });
+        // console.log(length)
+        for(k=0;k<length;k++){
+            sum = 0;
+            $('.quantityTot'+k).each(function() {
+                sum += Number($(this).val());
+            });
+            // console.log(sum)
+            if(!isNaN(sum)){
+                max = parseInt($('.qtyMax'+k).val());
+                console.log(max+'max')
+                if(sum>max){
+                    duplicateName = false;
+                    break; 
+                }
+                else{
+                    duplicateName = true;
+                }
+            }
+        }
+        // alert(duplicateName)
         if (flag == true) {
             if (duplicateName) {
                 document.getElementById('addPurchaseOrder').submit();
             }
+            else{
+                msg = "Entered Quantity should not exceed Delivery Quantity.Please Check!"
+                // $('#show_alert').html(msg).delay(3000).fadeOut();
+                // $('#show_alert').css("display", "block");
+                swal(msg)
+            }
         } else {
             // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();expected_date_of_delivery
+            $('#show_alert').html(flag).delay(3000).fadeOut();
             $('#show_alert').css("display", "block");
             $(".infocus").focus();
         }
@@ -475,12 +540,21 @@ td {
         if(val>max){
             $('#deliverQty'+id).val('');
             msg = "Entered delivery quantity is greater than total quantity"
-            $("#showModalAlertIndex").text(msg);
-            $('#showModalAlertdiv').show();
+            $("#showAlertIndex").text(msg);
+            $('#showAlertdiv').show();
             duplicateName = false;
             $('#deliverQty' + id).focus();
             $('#deliverQty' + id).css('background-color', 'rgb(255, 255, 153)')
-            $('#showModalAlertdiv').delay(3000).fadeOut();
+            $('#showAlertdiv').delay(3000).fadeOut();
+        }
+    }
+
+    function addValidatingClass(id,val){
+        if(val){
+            $('.delivClass'+id).addClass('isRequired');
+        }
+        else{
+            $('.delivClass'+id).removeClass('isRequired');
         }
     }
 
