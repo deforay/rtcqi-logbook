@@ -8,7 +8,12 @@
 @extends('layouts.main')
 
 @section('content')
-
+<style>
+    td {
+        padding-left: 0.50rem !important;
+        padding-right: 0.50rem !important;
+    }
+</style>
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
 <div class="content-header row">
@@ -122,16 +127,17 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="table-responsive">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="overflow-x: hidden;">
                                         <div class="bd-example">
-                                            <table class="table table-striped table-bordered table-condensed table-responsive-lg">
+                                            <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                             <thead style="background-color:#ebecd2">
                                                 <tr>
-                                                <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                <th style="width:25%;">Unit<span class="mandatory">*</span></th>
-                                                <th style="width:25%;">Quantity<span class="mandatory">*</span></th>
-                                                <th style="width:20%;">Action</th>
+                                                <th style="width:20%;">Item<span class="mandatory">*</span></th>
+                                                <th style="width:15%;">Unit<span class="mandatory">*</span></th>
+                                                <th style="width:30%;">Description</th>
+                                                <th style="width:20%;">Quantity<span class="mandatory">*</span></th>
+                                                <th style="width:15%;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itemDetails">
@@ -151,7 +157,10 @@
                                                     <input type="hidden" id="unitId0" name="unitId[]" class="isRequired form-control"  title="Please enter unit" >
                                                 </td>
                                                 <td>
-                                                <input type="number" id="qty0" name="qty[]" min="0" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                    <input type="text"  value="" id="rfqDesc" name="rfqDesc[]" class="form-control" placeholder="Item description"  />
+                                                </td>
+                                                <td>
+                                                    <input type="number" id="qty0" name="qty[]" min="0" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                 </td>
                                                 <td>
                                                     <div class="row">
@@ -398,17 +407,18 @@ $(document).ready(function() {
         // a.setAttribute("class", "data");
         var b = a.insertCell(0);
         var d = a.insertCell(1);
-        var c = a.insertCell(2);
-        var f = a.insertCell(3);
+        var g = a.insertCell(2);
+        var c = a.insertCell(3);
+        var f = a.insertCell(4);
 
-        
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         // d.innerHTML = '<select id="unitName' + rowCount + '" name="unitName[]" class="unitName select2 isRequired form-control datas"  title="Please select unit" onchange="addNewUnitField(this.id,'+rowCount+');">\
         //                 </select>\
-        d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit">\
+        d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control" placeholder="Unit"  title="Please enter unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
+        g.innerHTML = '<input type="text"  value="" id="rfqDesc' + rowCount + '" name="rfqDesc[]" class="form-control" placeholder="Item description"  />'
         c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
