@@ -174,10 +174,22 @@ class RfqTable extends Model
     // Fetch All rfq List
     public function fetchAllActiveRfq()
     {
-        $data = DB::table('rfq')
-            ->where('rfq_status','=','active')
-            ->orderBy('rfq_number', 'asc')
-            ->get();
+        $userId=session('userId');
+        if(session('loginType')=='users'){
+            $data = DB::table('rfq')
+                ->where('rfq_status','=','active')
+                ->orderBy('rfq_issued_on', 'desc')
+                ->get();
+        }
+        else{
+            $data = DB::table('rfq')
+                ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
+                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                ->where('quotes.vendor_id', '=', $userId)
+                ->where('rfq.rfq_status','=','active')
+                ->orderBy('rfq.rfq_issued_on', 'desc')
+                ->get();
+        }
         return $data;
     }
 
