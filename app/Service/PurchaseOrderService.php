@@ -27,6 +27,25 @@ class PurchaseOrderService
 	    	$exc->getMessage();
 	    }
 	}
+
+	public function savePurchaseorderDirectPo($request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$purchaseOrdermodel = new PurchaseOrderTable();
+        	$addPurchaseOrder = $purchaseOrdermodel->savePurchaseorderDirectPo($request);
+			if($addPurchaseOrder>0){
+				DB::commit();
+				$msg = 'Purchase Order Added Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
 	
 	//Get All Purchase Order List
 	public function getAllPurchaseOrder()

@@ -52,6 +52,31 @@ class PurchaseOrderController extends Controller
         }
     }
 
+
+    public function adddirectpo(Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $service = new PurchaseOrderService();
+            $add = $service->savePurchaseorderDirectPo($request);
+            return Redirect::route('purchaseorder.index')->with('status', $add);
+        }
+        else
+        {
+            $service = new VendorsService();
+            $vendor = $service->getAllActiveVendors();
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            $purchaseOrderService = new PurchaseOrderService();
+            // $vendorDetailId = $purchaseOrderService->getAllVendorDetailById($id);
+            // $quotes = $purchaseOrderService->getSumOfQuoteById($id);
+            // $quoteDetails = $purchaseOrderService->getAllQuoteDetailsId($id);
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            return view('purchaseorder.adddirectpo',array('vendor'=>$vendor,'item'=>$item,'branch'=>$branch));
+        }
+    }
+
     // Get all the Purchase Order list
     public function getAllPurchaseOrder(Request $request)
     {

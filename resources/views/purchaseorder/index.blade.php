@@ -25,6 +25,19 @@
                 </div>
             </div>
         </div>
+
+
+
+        <div class="content-header-right col-md-4 col-12 ">
+            <div class="dropdown float-md-right">
+            <?php
+                $role = session('role');
+                if (isset($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['add']) && ($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['add'] == "allow")){ ?>
+                <a href="/purchaseorder/adddirectpo" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-user-plus icon-left"></i> Add Purchase Order</b></a>
+            <?php } ?>
+            </div>
+        </div>
     </div>
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">

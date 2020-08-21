@@ -200,6 +200,13 @@ Route::post('/getAllActiveRfqDisplay', 'Rfq\RfqController@getAllActiveRfqDisplay
 //Purchase Order module
 Route::get('/purchaseorder', 'PurchaseOrder\PurchaseOrderController@index')->name('purchaseorder.index')->middleware('access');
 Route::post('/purchaseorder/add/{id}', 'PurchaseOrder\PurchaseOrderController@add');
+
+
+Route::post('/purchaseorder/adddirectpo/', 'PurchaseOrder\PurchaseOrderController@adddirectpo');
+Route::get('/purchaseorder/adddirectpo/', 'PurchaseOrder\PurchaseOrderController@adddirectpo');
+// Route::get('/purchaseorder/adddirectpo', 'PurchaseOrder\PurchaseOrderController@adddirectpo')->middleware('access');
+
+
 Route::get('/purchaseorder/add/{id}', 'PurchaseOrder\PurchaseOrderController@add')->middleware('access');
 Route::post('/getAllPurchaseOrder', 'PurchaseOrder\PurchaseOrderController@getAllPurchaseOrder');
 Route::get('/purchaseorder/edit/{id}', 'PurchaseOrder\PurchaseOrderController@edit')->middleware('access');
