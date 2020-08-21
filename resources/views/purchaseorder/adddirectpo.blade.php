@@ -12,6 +12,12 @@
 @php
 $currentDate=date('d-M-Y');
 @endphp 
+<style>
+td {
+    padding-left: 0.50rem !important;
+    padding-right: 0.50rem !important;
+}
+</style> 
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -170,17 +176,17 @@ $currentDate=date('d-M-Y');
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive" style="overflow-x: hidden;">
                                             <div class="bd-example">
                                                 <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                            <th style="width:15%;">Unit<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Description</th>
-                                                            <th style="width:15%;">Quantity<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
-                                                            <!-- <th style="width:20%;">Action</th> -->
+                                                            <th style="width:25%;">Item<span class="mandatory">*</span></th>
+                                                            <th style="width:10%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:25%;">Description</th>
+                                                            <th style="width:10%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
+                                                            {{-- <th style="width:15%;">Action</th> --}}
                                                         </tr>
                                                     </thead>
                                                     <tbody id="itemDetails">
@@ -210,16 +216,16 @@ $currentDate=date('d-M-Y');
                                                             <td>
                                                                 <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
-                                                            <!-- <td>
-                                                                <div class="row">
+                                                            {{-- <td> --}}
+                                                                {{-- <div class="row">
                                                                     <div class="col-md-6 col-6">
                                                                         <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
-                                                                    </div>
-                                                                    <div class="col-md-6 col-6">
+                                                                    </div> --}}
+                                                                    {{-- <div class="col-md-6 col-6">
                                                                         <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </td> -->
+                                                                    </div> --}}
+                                                                {{-- </div> --}}
+                                                            {{-- </td> --}}
                                                         </tr>
                                                         <?php $j++; ?>
                                                     </tbody>
@@ -355,7 +361,7 @@ $currentDate=date('d-M-Y');
     //     });
     // }
 
-    rowCount = "{{$j}}";
+    rowCount = 0;
 
     function insRow() {
         rowCount++;
@@ -366,9 +372,9 @@ $currentDate=date('d-M-Y');
         var b = a.insertCell(0);
         var d = a.insertCell(1);
         var e = a.insertCell(2);
-        var c = a.insertCell(3);
-        var f = a.insertCell(4);
-
+        var g = a.insertCell(3)
+        var c = a.insertCell(4);
+        var f = a.insertCell(5);
 
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
@@ -376,8 +382,9 @@ $currentDate=date('d-M-Y');
         d.innerHTML = '<input type="text" readonly id="unitName' + rowCount + '" name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
-        c.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
-        e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
+        g.innerHTML = '<input type="text"  value="" id="quoteDesc' + rowCount + '" name="quoteDesc[]" class="form-control" placeholder="Item description"  />'
+        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired"  placeholder="Enter Qty" title="Please enter quantity" />';
+        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" oninput="calLineTotal();"/>';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".item").select2({

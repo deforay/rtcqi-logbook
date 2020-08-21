@@ -216,7 +216,7 @@ class QuotesTable extends Model
         $rfqNumber=$data[0]->rfq_number;
         $quoteNumber=$data[0]->quote_number;
         $vendorName=$data[0]->vendor_name;
-        $email='admin@gmail.com';
+        $email='admin@asmusa.org';
         // $email=$data[0]->email;
         
         $mailData = DB::table('mail_template')
