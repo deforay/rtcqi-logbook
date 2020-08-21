@@ -29,6 +29,14 @@ class QuotesService
         return $result;
 	}
 
+	//Get All responded Quotes List
+	public function getAllRespondedQuotes()
+    {
+		$model = new QuotesTable();
+        $result = $model->fetchAllRespondedQuotes();
+        return $result;
+	}
+
 	//Get Particular Quotes Details
 	public function getQuotesById($id)
 	{
