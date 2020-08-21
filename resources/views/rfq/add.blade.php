@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Vendors
+											<h5>Vendor
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="vendors" name="vendors[]" title="Please select vendors">
@@ -116,6 +116,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                            <h5>Attachment <span class="mandatory">*</span></h5>
+                                        </div>
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset class="form-group">
                                             <div class="custom-file">

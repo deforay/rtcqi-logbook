@@ -75,10 +75,10 @@ $currentDate=date('d-M-Y');
                                         </div>                                    
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Vendors<span class="mandatory">*</span>
+                                                <h5>Vendor<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
+                                                    <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendor">
                                                         <option value="">Select Vendors</option>
                                                         @foreach($vendor as $type)
                                                         <option value="{{ $type->vendor_id }}">{{ $type->vendor_name }}</option>
@@ -111,9 +111,9 @@ $currentDate=date('d-M-Y');
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
+                                                <h5>Payment<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment">
                                                         <option value="">Select</option>
                                                         <option value="immediate">Immediate</option>
                                                         <option value="staggered">Staggered</option>
@@ -156,7 +156,7 @@ $currentDate=date('d-M-Y');
                                     </div>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                            <h5>Attachment <span class="mandatory">*</span></h5>
                                         </div>
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset class="form-group">
