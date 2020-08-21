@@ -182,7 +182,7 @@ if(isset($result[0]->mode_of_delivery)){
                                         <?php  } else{ ?>
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                                <h5>Attachment <span class="mandatory">*</span></h5>
                                             </div>
                                             <div class="col-xl-6 col-lg-12">
                                                 <fieldset class="form-group">

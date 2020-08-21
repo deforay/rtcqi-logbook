@@ -81,11 +81,11 @@ td {
                                         </div>                                    
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Vendors<span class="mandatory">*</span>
+                                                <h5>Vendor<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
-                                                        <option value="">Select Vendors</option>
+                                                    <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendor">
+                                                        <option value="">Select Vendor</option>
                                                         @foreach($vendor as $type)
                                                         <option value="{{ $type->vendor_id }}">{{ $type->vendor_name }}</option>
                                                         @endforeach
@@ -117,9 +117,9 @@ td {
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
+                                                <h5>Payment<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment">
                                                         <option value="">Select</option>
                                                         <option value="immediate">Immediate</option>
                                                         <option value="staggered">Staggered</option>
@@ -162,7 +162,7 @@ td {
                                     </div>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                            <h5>Attachment <span class="mandatory">*</span></h5>
                                         </div>
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset class="form-group">
@@ -262,8 +262,8 @@ td {
         $(".select2").select2({
             tags: true
         });
-        $("#vendors").select2({
-            placeholder: "Select Vendors",
+        $("#vendorId").select2({
+            placeholder: "Select Vendor",
             allowClear: true
         });
 
