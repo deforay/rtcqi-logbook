@@ -21,10 +21,10 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
         $manage .= '<li id="li-user"><a class="menu-item" href="/user/">User</a></li>';
     }
     if (isset($role['App\Http\Controllers\BranchType\BranchTypeController']['index']) && ($role['App\Http\Controllers\BranchType\BranchTypeController']['index'] == "allow")){
-        $manage .= '<li id="li-li-branchtype"><a class="menu-item" href="/branchtype/">Branch Type</a></li>';
+        $manage .= '<li id="li-li-branchtype"><a class="menu-item" href="/branchtype/">Location Type</a></li>';
     }
     if (isset($role['App\Http\Controllers\Branches\BranchesController']['index']) && ($role['App\Http\Controllers\Branches\BranchesController']['index'] == "allow")){
-        $manage .= '<li id="li-li-branches"><a class="menu-item" href="/branches/">Branches</a></li>';
+        $manage .= '<li id="li-li-branches"><a class="menu-item" href="/branches/">Locations</a></li>';
     }
     if (isset($role['App\Http\Controllers\Countries\CountriesController']['index']) && ($role['App\Http\Controllers\Countries\CountriesController']['index'] == "allow"))
         $manage .= '<li id="li-countries"><a class="menu-item" href="/countries/">Countries</a></li>';
