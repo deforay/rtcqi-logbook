@@ -92,7 +92,7 @@ class RfqTable extends Model
                         'rfq_id' => $id,
                         'vendor_id' => $data['vendors'][$k],
                         'stock_available' => 'yes',
-                        'invited_on' =>  $issuedOn          
+                        'invited_on' =>  $issuedOn
                         ]
                     );
                 if ($request->input('item')!=null) {
@@ -103,6 +103,7 @@ class RfqTable extends Model
                             'item_id' => $data['item'][$j],
                             'uom' => $data['unitId'][$j],
                             'quantity' => $data['qty'][$j],
+                            'description' => $data['rfqDesc'][$j],
                             ]
                         );
                     }
@@ -141,6 +142,7 @@ class RfqTable extends Model
                                 'item_id' => $data['item'][$j],
                                 'uom' => $data['unitId'][$j],
                                 'quantity' => $data['qty'][$j],
+                                'item_description' => $data['rfqDesc'][$j],
                                 ]
                             );
             }
@@ -282,6 +284,7 @@ class RfqTable extends Model
                                 'item_id' => $data['item'][$i],
                                 'uom' => $data['unitId'][$i],
                                 'quantity' => $data['qty'][$i],
+                                'item_description' => $data['rfqDesc'][$i],
                             );
 
             if(isset($data['rdId'][$i]) && $data['rdId'][$i]!=''){
@@ -308,7 +311,8 @@ class RfqTable extends Model
                             'quote_id' => $result[0]->quote_id,
                             'item_id' => $data['item'][$i],
                             'uom' => $data['unitId'][$i],
-                            'quantity' => $data['qty'][$i]
+                            'quantity' => $data['qty'][$i],
+                            'description' => $data['rfqDesc'][$i],
                         );
                         if(isset($data['rdId'][$i]) && $data['rdId'][$i]!=''){
                             $itemDetails = DB::table('rfq_details')

@@ -306,3 +306,6 @@ Alter table purchase_order_details add column description Varchar(255) NULL;
 
 --Sudarmathi M 18 Aug 2020
 ALTER TABLE `temp_mail` ADD `attachment` TEXT NULL AFTER `customer_name`;
+
+--Sudarmathi 20 Aug 2020
+ALTER TABLE `rfq_details` ADD `item_description` TEXT NULL AFTER `quantity`;
