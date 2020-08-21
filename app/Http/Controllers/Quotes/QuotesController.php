@@ -112,7 +112,7 @@ class QuotesController extends Controller
     public function getAllActiveQuotesDisplay(Request $request)
     {
         $service = new QuotesService();
-        $data = $service->getAllActiveQuotes($request);
+        $data = $service->getAllRespondedQuotes($request);
         return DataTables::of($data)
                     ->editColumn('rfq_issued_on', function($data){
                         $issOn = $data->rfq_issued_on;

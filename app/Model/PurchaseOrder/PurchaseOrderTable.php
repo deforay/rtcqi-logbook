@@ -161,7 +161,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
             $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
-            $mainReplace = array($vendorName, $data['poNumber']);
+            $mainReplace = array($vendorName, $quoteNumber);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));
@@ -208,7 +208,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
             $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
-            $mainReplace = array($vendorName, $quoteNumber);
+            $mainReplace = array($vendorName, $data['poNumber']);
             $mailContent = trim($mailData[0]->mail_content);
             $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
             // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
@@ -255,55 +255,29 @@ class PurchaseOrderTable extends Model
         $data = $request->all();
         // dd($data);
         $commonservice = new CommonService();
-
-        // $params = array(
-        //     'approve_status' => 'yes',
-        //     'updated_on' => $commonservice->getDateTime(),
-        //     'quotes_status' => 'closed'
-        // );
-        // $response = DB::table('quotes')
-        //     ->where('quote_id', '=', base64_decode($id))
-        //     ->update(
-        //         $params
-        //     );
-
-        // ->join('vendors', 'quotes.rfq_id', '=', 'rfq.rfq_id')
-        // ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
         $vendorData = DB::table('vendors')
             ->where('vendors.vendor_id', '=', $data['vendorId'])
             ->get();
             $vendorName = $vendorData[0]->vendor_name;
             $email      = $vendorData[0]->email;
-            // // dd($rfqdata[0]);
-            // $rfqNumber=$rfqdata[0]->rfq_number;
-            // $rfqId=$rfqdata[0]->rfq_id;
-            // $quoteNumber=$rfqdata[0]->quote_number;
-            // $rfqdescription=$rfqdata[0]->description;
-            // $uploadfile=$rfqdata[0]->rfq_upload_file;
-            // $quoteId = $rfqdata[0]->quote_id;
-
-            // if($data['description']!=''){
-            //     $rfqdescription=$data['description'];
-            // }
-
         if ($request->input('poNumber') != null && trim($request->input('poNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
             $poId = DB::table('purchase_orders')->insertGetId(
                 [
-                    'po_number'      => $data['poNumber'],
-                    'po_issued_on'    => $issuedOn,
-                    'vendor'          => $data['vendorId'],
-                    'total_amount'    => $data['totalAmount'],
-                    'order_status'    => $data['orderStatus'],
-                    'payment_status'  => $data['paymentStatus'],
-                    // 'description'     => $rfqdescription,
-                    'created_by'      => session('userId'),
-                    'created_on'      => $commonservice->getDateTime(),
-                    // 'upload_path'      => $uploadfile,
-                    'quote_id'        => '',
-                    'last_date_of_delivery' => $lastDelDate,
-                    'delivery_location' => $data['deliveryLoc'],
+                    'po_number'                  => $data['poNumber'],
+                    'po_issued_on'               => $issuedOn,
+                    'vendor'                     => $data['vendorId'],
+                    'total_amount'               => $data['totalAmount'],
+                    'order_status'               => $data['orderStatus'],
+                    'payment_status'             => $data['paymentStatus'],
+                    // 'description'             => $rfqdescription,
+                    'created_by'                 => session('userId'),
+                    'created_on'                 => $commonservice->getDateTime(),
+                    // 'upload_path'             => $uploadfile,
+                    'quote_id'                   => 0,
+                    'last_date_of_delivery'      => $lastDelDate,
+                    'delivery_location'          => $data['deliveryLoc'],
                     'purchase_order_description' => $data['description'],
                 ]
             );
@@ -361,80 +335,24 @@ class PurchaseOrderTable extends Model
             for ($k = 0; $k < count($data['item']); $k++) {
                 $purchaseOrderDetailsId = DB::table('purchase_order_details')->insertGetId(
                     [
-                        'po_id'         =>  $poId,
-                        'item_id'       => $data['item'][$k],
-                        'uom'           => $data['unitId'][$k],
-                        'unit_price'    => $data['unitPrice'][$k],
-                        'quantity'      => $data['qty'][$k],
-                        'description'   =>  $data['quoteDesc'][$k],
-                        // 'order_status'      => 'pending',
-                        'created_on'    => $commonservice->getDateTime(),
+                        'po_id'             =>  $poId,
+                        'item_id'           => $data['item'][$k],
+                        'uom'               => $data['unitId'][$k],
+                        'unit_price'        => $data['unitPrice'][$k],
+                        'quantity'          => $data['qty'][$k],
+                        'description'       =>  $data['quoteDesc'][$k],
+                        // 'order_status'   => 'pending',
+                        'created_on'        => $commonservice->getDateTime(),
                     ]
                 );
             }
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $purchaseOrderDetailsId, 'Purchaseorderdetails-add', 'add Purchase Order Details ' . $purchaseOrderDetailsId, 'Purchase Order Details');
         }
-
-        // $paramsRfq = array(
-        //     'rfq_status' => 'closed'
-        // );
-        // $responseRfq = DB::table('rfq')
-        //     ->where('rfq_id', '=', $rfqId)
-        //     ->update(
-        //         $paramsRfq
-        //     );
-
-
+        
         $mailData = DB::table('mail_template')
-        ->where('mail_temp_id', '=', 3)
-        ->get();
-        if(count($mailData)>0)
-        {
-            $mailSubject = trim($mailData[0]->mail_subject);
-            $subject = $mailSubject;
-            $subject = str_replace("&nbsp;", "", strval($subject));
-            $subject = str_replace("&amp;nbsp;", "", strval($subject));
-            $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
-            $mainReplace = array($vendorName, $data['poNumber']);
-            $mailContent = trim($mailData[0]->mail_content);
-            $message = str_replace($mainContent, $mainReplace, $mailContent);
-            // $message = str_replace("&nbsp;", "", strval($message));
-            $message = str_replace("&amp;nbsp;", "", strval($message));
-            $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
-            $createdon = date('Y-m-d H:i:s');
-            $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . base64_decode($id);
-            if(file_exists($pathname)){
-                $scan = scandir($pathname,1);
-                $scannedDirectory = array_diff($scan, array('..', '.'));
-                foreach($scannedDirectory as $sc=>$value){
-                    $scanDir[$sc] = $pathname.'/'.$value;
-                }
-                $attachment = implode(',',$scanDir);
-            }else{
-                $attachment = '' ;
-            }
-            
-            $response = DB::table('temp_mail')
-            ->insertGetId(
-                [
-                    'from_mail' => $mailData[0]->mail_from,
-                    'to_email' => $email,
-                    'subject' => $mailData[0]->mail_subject,
-                    'cc' => $mailData[0]->mail_cc,
-                    'bcc' => $mailData[0]->mail_bcc,
-                    'from_full_name' => $mailData[0]->from_name,
-                    'status' => 'pending',
-                    'datetime' => $createdon,
-                    'message' => $message,
-                    'customer_name' => $vendorName,
-                    'attachment' => $attachment,
-                ]);
-        }
-        $mailData = DB::table('mail_template')
-        ->where('mail_temp_id', '=', 4)
-        ->get();
+                    ->where('mail_temp_id', '=', 4)
+                    ->get();
         if(count($mailData)>0)
         {
             $mailSubject = trim($mailData[0]->mail_subject);
@@ -443,7 +361,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
             $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
-            $mainReplace = array($vendorName, $quoteNumber);
+            $mainReplace = array($vendorName, $data['poNumber']);
             $mailContent = trim($mailData[0]->mail_content);
             $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
             // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
@@ -466,17 +384,17 @@ class PurchaseOrderTable extends Model
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
-                    'from_mail' => $mailData[0]->mail_from,
-                    'to_email' => $email,
-                    'subject' => $mailData[0]->mail_subject,
-                    'cc' => $mailData[0]->mail_cc,
-                    'bcc' => $mailData[0]->mail_bcc,
+                    'from_mail'      => $mailData[0]->mail_from,
+                    'to_email'       => $email,
+                    'subject'        => $mailData[0]->mail_subject,
+                    'cc'             => $mailData[0]->mail_cc,
+                    'bcc'            => $mailData[0]->mail_bcc,
                     'from_full_name' => $mailData[0]->from_name,
-                    'status' => 'pending',
-                    'datetime' => $createdon,
-                    'message' => $pomessage,
-                    'customer_name' => $vendorName,
-                    'attachment' => $poattachment,
+                    'status'         => 'pending',
+                    'datetime'       => $createdon,
+                    'message'        => $pomessage,
+                    'customer_name'  => $vendorName,
+                    'attachment'     => $poattachment,
                 ]);
         }
         return $poId;
