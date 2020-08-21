@@ -79,7 +79,7 @@ $currentDate=date('d-M-Y');
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendor">
-                                                        <option value="">Select Vendors</option>
+                                                        <option value="">Select Vendor</option>
                                                         @foreach($vendor as $type)
                                                         <option value="{{ $type->vendor_id }}">{{ $type->vendor_name }}</option>
                                                         @endforeach
@@ -256,8 +256,8 @@ $currentDate=date('d-M-Y');
         $(".select2").select2({
             tags: true
         });
-        $("#vendors").select2({
-            placeholder: "Select Vendors",
+        $("#vendorId").select2({
+            placeholder: "Select Vendor",
             allowClear: true
         });
 
