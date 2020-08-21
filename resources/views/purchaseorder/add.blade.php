@@ -53,10 +53,9 @@ $currentDate=date('d-M-Y');
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" enctype="multipart/form-data" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/purchaseorder/add/{{$quoteId}}" autocomplete="off" onsubmit="validateNow();return false;">
-                                    @csrf
-                                    
+                                    @csrf                                    
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>PO Number <span class="mandatory">*</span>
                                                 </h5>
@@ -65,7 +64,7 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>PO Issued On <span class="mandatory">*</span>
                                                 </h5>
@@ -74,15 +73,13 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Vendors
+                                                <h5>Vendor
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control select2" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
-                                                        <option value="">Select Vendors</option>
+                                                    <select class="form-control select2" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendor">
+                                                        <option value="">Select Vendor</option>
                                                         @foreach($vendor as $type)
                                                         <option value="{{ $type->vendor_id }}" {{ $vendorDetailId[0]->vendor_id == $type->vendor_id ?  'selected':''}}>{{ $type->vendor_name }}</option>
                                                         @endforeach
@@ -90,7 +87,9 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Total Amount<span class="mandatory">*</span>
                                                 </h5>
@@ -98,10 +97,8 @@ $currentDate=date('d-M-Y');
                                                     <input type="text" id="totalAmount" readonly onkeypress="return isNumberKey(event);" value="{{ $quotes[0]->tot }}" class="form-control isRequired" autocomplete="off" placeholder="Enter Total Amount" name="totalAmount" title="Please enter Total Amount">
                                                 </div>
                                             </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        </div>                                    
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Order Status<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
@@ -112,11 +109,11 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
+                                                <h5>Payment<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment">
                                                         <option value="">Select</option>
                                                         <option value="immediate">Immediate</option>
                                                         <option value="staggered">Staggered</option>
@@ -127,7 +124,7 @@ $currentDate=date('d-M-Y');
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
@@ -135,7 +132,7 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Delivery Location<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">

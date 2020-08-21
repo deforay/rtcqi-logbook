@@ -93,11 +93,11 @@
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Vendors
+											<h5>Vendor
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="vendors" name="vendors[]" title="Please select vendors">
-                                                <option value="">Select Vendors</option>
+                                                <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="vendors" name="vendors[]" title="Please select vendor">
+                                                <option value="">Select Vendor</option>
                                                 @foreach($vendor as $type)
 													<option value="{{ $type->vendor_id }}" {{ in_array($type->vendor_id, $vendors) ?  'selected':''}} >{{ $type->vendor_name }}</option>
 												@endforeach
@@ -280,7 +280,7 @@ $(document).ready(function() {
         tags: true
     });
     $("#vendors").select2({
-        placeholder: "Select Vendors",
+        placeholder: "Select Vendor",
         allowClear: true
     });
     

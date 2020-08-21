@@ -309,3 +309,6 @@ ALTER TABLE `temp_mail` ADD `attachment` TEXT NULL AFTER `customer_name`;
 
 --Sudarmathi 20 Aug 2020
 ALTER TABLE `rfq_details` ADD `item_description` TEXT NULL AFTER `quantity`;
+
+--sriram 21 AUG
+ALTER TABLE `purchase_orders` CHANGE `quote_id` `quote_id` INT(11) NULL DEFAULT NULL;
