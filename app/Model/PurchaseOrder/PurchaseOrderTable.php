@@ -161,7 +161,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
             $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
-            $mainReplace = array($vendorName, $data['poNumber']);
+            $mainReplace = array($vendorName, $quoteNumber);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));
@@ -208,7 +208,7 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
             $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
-            $mainReplace = array($vendorName, $quoteNumber);
+            $mainReplace = array($vendorName, $data['poNumber']);
             $mailContent = trim($mailData[0]->mail_content);
             $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
             // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
