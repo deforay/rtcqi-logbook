@@ -78,6 +78,34 @@ class QuotesTable extends Model
             return $data;
         }
 
+        //fetchAllRespondedQuotes
+
+        public function fetchAllRespondedQuotes()
+        {
+            // $req = $params->all();
+            // print_r($req);die;
+            if(session('loginType')=='users'){
+                $query = DB::table('quotes')
+                ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
+                ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                ->where('quotes.approve_status', '=', 'no')
+                ->where('quotes.quotes_status', '=', 'responded');
+                // if(isset($req['rfqId']) && $req['rfqId'])
+                //     $query->where('quotes.rfq_id', '=', $req['rfqId']);
+            }else{
+                $userId=session('userId');
+                $query = DB::table('quotes')
+                    ->join('rfq', 'rfq.rfq_id', '=', 'quotes.rfq_id')
+                    ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
+                    ->where('quotes.vendor_id', '=', $userId)
+                    ->where('quotes.quotes_status', '=', 'responded');
+                    // ->where('quotes.approve_status', '=', 'yes')
+                    
+            }
+                $data = $query->get();
+            return $data;
+        }
+
     // fetch particular Quotes  details
     public function fetchQuotesById($id)
     {
