@@ -8,6 +8,12 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+    td {
+        padding-left: 0.50rem !important;
+        padding-right: 0.50rem !important;
+    }
+</style>
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <?php
     use App\Service\CommonService;
@@ -187,10 +193,11 @@
                                             <table class="table table-striped table-bordered table-condensed table-responsive-lg">
                                             <thead style="background-color:#ebecd2">
                                                 <tr>
-                                                <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                <th style="width:25%;">Unit<span class="mandatory">*</span></th>
-                                                <th style="width:25%;">Quantity<span class="mandatory">*</span></th>
-                                                <th style="width:20%;">Action</th>
+                                                    <th style="width:20%;">Item<span class="mandatory">*</span></th>
+                                                    <th style="width:15%;">Unit<span class="mandatory">*</span></th>
+                                                    <th style="width:30%;">Description</th>
+                                                    <th style="width:20%;">Quantity<span class="mandatory">*</span></th>
+                                                    <th style="width:15%;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itemDetails">
@@ -211,7 +218,10 @@
                                                     <input type="hidden" id="unitId{{$z}}" name="unitId[]" value="{{ $rfq->uom }}" class="isRequired form-control"  title="Please zenter unit">
                                                 </td>
                                                 <td>
-                                                <input type="number" min="0" id="qty{{$z}}" name="qty[]" value="{{ $rfq->quantity }}" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
+                                                    <input type="text"  value="{{$rfq->item_description}}" id="rfqDesc{{$z}}" name="rfqDesc[]" class="form-control" placeholder="Item description"  />
+                                                </td>
+                                                <td>
+                                                    <input type="number" min="0" id="qty{{$z}}" name="qty[]" value="{{ $rfq->quantity }}" class="form-control isRequired linetot" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                 </td>
                                                 <td>
                                                     <!-- <div class="row"> -->
@@ -381,15 +391,16 @@ $(document).ready(function() {
         // a.setAttribute("class", "data");
         var b = a.insertCell(0);
         var d = a.insertCell(1);
-        var c = a.insertCell(2);
-        var f = a.insertCell(3);
-
+        var g = a.insertCell(2);
+        var c = a.insertCell(3);
+        var f = a.insertCell(4);
         
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item'+ rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+')">\
                             <option value="">Select Item </option>@foreach ($item as $items)<option value="{{ $items->item_id }}">{{ $items->item_name }}</option>@endforeach</select>';
         d.innerHTML = '<input type="text" id="unitName' + rowCount + '" readonly name="unitName[]" class="isRequired form-control"  title="Please enter unit" placeholder="Unit">\
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">';
+        g.innerHTML = '<input type="text"  value="" id="rfqDesc' + rowCount + '" name="rfqDesc[]" class="form-control" placeholder="Item description"  />'
         c.innerHTML = '<input type="number" id="qty' + rowCount + '" name="qty[]" min="0" class="linetot form-control isRequired" placeholder="Enter Qty" title="Please enter quantity" />';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);

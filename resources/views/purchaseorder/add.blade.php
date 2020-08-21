@@ -54,28 +54,7 @@ $currentDate=date('d-M-Y');
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" enctype="multipart/form-data" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/purchaseorder/add/{{$quoteId}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
-                                    <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" >Description</label>
-                                        <div class="form-group row" >
-                                            <div class="col-md-12">
-                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <h5>Attachment Files <span class="mandatory">*</span></h5>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset class="form-group">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
-                                                    <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
-                                                    <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
@@ -166,6 +145,28 @@ $currentDate=date('d-M-Y');
                                                             <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <div class="form-group row" >
+                                            <div class="col-md-12">
+                                            <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset class="form-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                    <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                    <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
                                                 </div>
                                             </fieldset>
                                         </div>

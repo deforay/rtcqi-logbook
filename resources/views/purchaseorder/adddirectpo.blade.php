@@ -54,6 +54,98 @@ $currentDate=date('d-M-Y');
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" enctype="multipart/form-data" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/purchaseorder/adddirectpo" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>PO Number <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="poNumber" class="form-control isRequired" autocomplete="off" placeholder="Enter Po Number" name="poNumber" title="Please enter PO Number">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>PO Issued On <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="issuedOn" value="<?php echo $currentDate; ?>" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
+                                                </div>
+                                            </fieldset>
+                                        </div>                                    
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Vendors<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
+                                                        <option value="">Select Vendors</option>
+                                                        @foreach($vendor as $type)
+                                                        <option value="{{ $type->vendor_id }}">{{ $type->vendor_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Total Amount<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="totalAmount" readonly onkeypress="return isNumberKey(event);"  class="form-control isRequired" autocomplete="off" placeholder="Enter Total Amount" name="totalAmount" title="Please enter Total Amount">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Order Status<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="orderStatus" name="orderStatus" title="Please select status">
+                                                        <option value="active" selected>Active</option>
+                                                        <option value="inactive">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
+                                                        <option value="">Select</option>
+                                                        <option value="immediate">Immediate</option>
+                                                        <option value="staggered">Staggered</option>
+                                                        <option value="specified-date">Specified Date</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="lastDeliveryDate" onchange="checkDate();return false;" value="" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Last Delivery Date" name="lastDeliveryDate" title="Please enter Last Delivery Date">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Delivery Location<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="deliveryLoc" name="deliveryLoc" title="Please select delivery locations">
+                                                        <option value="">Select Locations</option>
+                                                        @foreach($branch as $type)
+                                                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label class="col-md-2 label-control" for="description" >Description</label>
                                         <div class="form-group row" >
@@ -72,100 +164,6 @@ $currentDate=date('d-M-Y');
                                                     <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
                                                     <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
                                                     <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>PO Number <span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="poNumber" class="form-control isRequired" autocomplete="off" placeholder="Enter Po Number" name="poNumber" title="Please enter PO Number">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>PO Issued On <span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="issuedOn" value="<?php echo $currentDate; ?>" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Issued On" name="issuedOn" title="Please enter Issued On">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Vendors
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control select2" autocomplete="off" style="width:100%;" id="vendorId" name="vendorId" title="Please select vendors">
-                                                        <option value="">Select Vendors</option>
-                                                        @foreach($vendor as $type)
-                                                        <option value="{{ $type->vendor_id }}">{{ $type->vendor_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Total Amount<span class="mandatory">*</span>
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="totalAmount" readonly onkeypress="return isNumberKey(event);" value="" class="form-control isRequired" autocomplete="off" placeholder="Enter Total Amount" name="totalAmount" title="Please enter Total Amount">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Order Status<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="orderStatus" name="orderStatus" title="Please select status">
-                                                        <option value="active" selected>Active</option>
-                                                        <option value="inactive">Inactive</option>
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Payment Status<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="paymentStatus" name="paymentStatus" title="Please select Payment status">
-                                                        <option value="">Select</option>
-                                                        <option value="immediate">Immediate</option>
-                                                        <option value="staggered">Staggered</option>
-                                                        <option value="specified-date">Specified Date</option>
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Last Date of Delivery<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="lastDeliveryDate" onchange="checkDate();return false;" value="" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Last Delivery Date" name="lastDeliveryDate" title="Please enter Last Delivery Date">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-6 col-lg-12">
-                                            <fieldset>
-                                                <h5>Delivery Location<span class="mandatory">*</span> </h5>
-                                                <div class="form-group">
-                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="deliveryLoc" name="deliveryLoc" title="Please select delivery locations">
-                                                        <option value="">Select Locations</option>
-                                                        @foreach($branch as $type)
-                                                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
-                                                        @endforeach
-                                                    </select>
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -194,7 +192,7 @@ $currentDate=date('d-M-Y');
                                                                 <select id="item{{$j}}" name="item[]" class="item select2 isRequired itemName form-control datas" title="Please select item" onchange="addNewItemField(this.id,{{$j}});">
                                                                     <option value="">Select Item </option>
                                                                     @foreach ($item as $items)
-                                                                    <option value="{{ $items->item_id }}" >{{ $items->item_name }}</option>
+                                                                    <option value="{{ $items->item_id }}">{{ $items->item_name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </td>
@@ -224,7 +222,6 @@ $currentDate=date('d-M-Y');
                                                             </td> -->
                                                         </tr>
                                                         <?php $j++; ?>
-                                                       
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -469,7 +466,7 @@ $currentDate=date('d-M-Y');
                 val:val,
             },
             success: function(result){
-                console.log(result)
+                // console.log(result)
                 if(result.length>0)
                 {
                     $("#unitName"+id).val(result[0]['unit_name']);
