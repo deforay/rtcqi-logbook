@@ -70,8 +70,8 @@
 
     table>thead{
         background-color: #d4e4f09e !important;
-        color: #9d9da0;
-        text-transform: uppercase !important;
+        /* color: #9d9da0;
+        text-transform: uppercase !important; */
     }
 
     .row > button{

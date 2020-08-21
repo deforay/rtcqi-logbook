@@ -167,13 +167,13 @@ else{
                                     <table class="table table-striped table-bordered zero-configuration" id="quotesList" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th style="width:10%">Vendor Name</th>
+                                                <th style="width:12%">Quote Number</th>
+                                                <th style="width:10%">Quote Date</th>
                                                 <th style="width:10%">RFQ Number</th>
                                                 <th style="width:10%">RFQ Date</th>
                                                 <th style="width:10%">RFQ Last Date</th>
-                                                <th style="width:10%">Vendor Name</th>
-                                                <th style="width:12%">Quote Number</th>
                                                 <th style="width:10%">Invited On</th>
-                                                <th style="width:10%">Responded On</th>
                                                 <th style="width:10%">Status</th>
                                                 <th style="width:18%">Action</th>
                                             </tr>
@@ -295,7 +295,7 @@ $(document).ready(function() {
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllRfq") }}',
+                url:'{{ url("getAllActiveRfqDisplay") }}',
                 type: 'POST',
             },
             columns: [
@@ -324,7 +324,7 @@ $(document).ready(function() {
             scrollX: true,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllQuotes") }}',
+                url:'{{ url("getAllActiveQuotesDisplay") }}',
                 type: 'POST',
                 data : {
                     rfqId : val,
@@ -332,13 +332,13 @@ $(document).ready(function() {
             },
             columns: [
 
+                { data: 'vendor_name', name: 'vendor_name' },
+                { data: 'quote_number', name: 'quote_number' },
+                { data: 'responded_on', name: 'responded_on', },
                 { data: 'rfq_number', name: 'rfq_number' },
                 { data: 'rfq_issued_on', name: 'rfq_issued_on' },
                 { data: 'last_date', name: 'last_date' },
-                { data: 'vendor_name', name: 'vendor_name' },
-                { data: 'quote_number', name: 'quote_number' },
                 { data: 'invited_on', name: 'invited_on'},
-                { data: 'responded_on', name: 'responded_on', },
                 { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
                 {data: 'action', name: 'action', orderable: false},
                 ],

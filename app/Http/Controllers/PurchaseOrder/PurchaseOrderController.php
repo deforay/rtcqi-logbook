@@ -65,13 +65,13 @@ class PurchaseOrderController extends Controller
                                 return $issuedOn;
                             }
                     })
-                    // ->editColumn('last_date', function($data){
-                    //         $lastDate = $data->last_date;
-                    //         if($lastDate){
-                    //             $lastDate = date("d-M-Y", strtotime($lastDate));
-                    //             return $lastDate;
-                    //         }
-                    // })
+                    ->editColumn('last_date_of_delivery', function($data){
+                            $lastDate = $data->last_date_of_delivery;
+                            if($lastDate){
+                                $lastDate = date("d-M-Y", strtotime($lastDate));
+                                return $lastDate;
+                            }
+                    })
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
