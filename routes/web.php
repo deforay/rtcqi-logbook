@@ -148,7 +148,7 @@ Route::post('/getAllQuotes', 'Quotes\QuotesController@getAllQuotes');
 Route::get('/quotes/edit/{id}', 'Quotes\QuotesController@edit')->middleware('access');
 Route::post('/quotes/edit/{id}', 'Quotes\QuotesController@edit');
 Route::post('/quoteDetailsView/{id}', 'Quotes\QuotesController@quoteDetailsView');
-
+Route::post('/getAllActiveQuotesDisplay', 'Quotes\QuotesController@getAllActiveQuotesDisplay');
 
 
 //Mail template module
@@ -195,7 +195,7 @@ Route::get('/rfq/edit/{id}', 'Rfq\RfqController@edit')->middleware('access');
 Route::post('/rfq/edit/{id}', 'Rfq\RfqController@edit');
 Route::post('/changeQuotesStatus', 'Rfq\RfqController@changeQuotesStatus');
 Route::post('/rfqDetailsView/{id}', 'Rfq\RfqController@rfqDetailsView');
-
+Route::post('/getAllActiveRfqDisplay', 'Rfq\RfqController@getAllActiveRfqDisplay');
 
 //Purchase Order module
 Route::get('/purchaseorder', 'PurchaseOrder\PurchaseOrderController@index')->name('purchaseorder.index')->middleware('access');

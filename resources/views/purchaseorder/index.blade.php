@@ -66,9 +66,11 @@
                                             <tr>
                                                 <th>Po Number</th>
                                                 <th>Po Issued On</th>
+                                                <th>Last Date</th>
                                                 <th>Vendor</th>
                                                 <th>Total Amount</th>
                                                 <th>Purchase Order Status</th>
+                                                <th>Payment Status</th>
                                                 <th>Quote Number</th>
                                                 <th>Action</th>
                                             </tr>
@@ -104,7 +106,7 @@
             processing: true,
             destroy : true,
             serverSide: true,
-            scrollX: false,
+            scrollX: true,
             autoWidth:false,
             ajax: {
                 url:'{{ url("getAllPurchaseOrder") }}',
@@ -114,9 +116,11 @@
                     
                     { data: 'po_number', name: 'po_number'},
                     { data: 'po_issued_on', name: 'po_issued_on'},
+                    { data: 'last_date_of_delivery', name: 'last_date_of_delivery'},
                     { data: 'vendor_name', name: 'vendor_name'},
                     { data: 'total_amount', name: 'total_amount'},
                     { data: 'order_status', name: 'order_status',className:'firstcaps'},
+                    { data: 'payment_status', name: 'payment_status',className:'firstcaps'},
                     { data: 'quote_number', name: 'quote_number' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
