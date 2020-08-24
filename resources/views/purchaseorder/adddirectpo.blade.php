@@ -153,7 +153,7 @@ td {
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <label class="col-md-2 label-control" for="description" >Specification</label>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
                                             <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
@@ -186,7 +186,7 @@ td {
                                                             <th style="width:25%;">Description</th>
                                                             <th style="width:10%;">Quantity<span class="mandatory">*</span></th>
                                                             <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
-                                                            {{-- <th style="width:15%;">Action</th> --}}
+                                                            <th style="width:15%;">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="itemDetails">
@@ -216,16 +216,16 @@ td {
                                                             <td>
                                                                 <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
-                                                            {{-- <td> --}}
-                                                                {{-- <div class="row">
+                                                            <td>
+                                                                <div class="row">
                                                                     <div class="col-md-6 col-6">
                                                                         <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
-                                                                    </div> --}}
+                                                                    </div>
                                                                     {{-- <div class="col-md-6 col-6">
                                                                         <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
                                                                     </div> --}}
-                                                                {{-- </div> --}}
-                                                            {{-- </td> --}}
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                         <?php $j++; ?>
                                                     </tbody>
@@ -371,9 +371,9 @@ td {
         // a.setAttribute("class", "data");
         var b = a.insertCell(0);
         var d = a.insertCell(1);
-        var e = a.insertCell(2);
-        var g = a.insertCell(3)
-        var c = a.insertCell(4);
+        var g = a.insertCell(2)
+        var c = a.insertCell(3);
+        var e = a.insertCell(4);
         var f = a.insertCell(5);
 
         rl = document.getElementById("itemDetails").rows.length - 1;
