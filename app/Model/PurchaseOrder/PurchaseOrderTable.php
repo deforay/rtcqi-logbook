@@ -411,14 +411,14 @@ class PurchaseOrderTable extends Model
         if(session('loginType')=='users'){
             $data = DB::table('purchase_orders')
                     ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
-                    ->join('quotes', 'quotes.quote_id', '=', 'purchase_orders.quote_id')
+                    ->leftjoin('quotes', 'quotes.quote_id', '=', 'purchase_orders.quote_id')
                     ->get();
         }
         else{
             $userId=session('userId');
             $data = DB::table('purchase_orders')
                     ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
-                    ->join('quotes', 'quotes.quote_id', '=', 'purchase_orders.quote_id')
+                    ->leftjoin('quotes', 'quotes.quote_id', '=', 'purchase_orders.quote_id')
                     ->where('vendors.vendor_id', '=', $userId)
                     ->get();
         }
