@@ -338,3 +338,4 @@ CREATE TABLE `bank_details` (
 --sriram 25 AUG
  ALTER TABLE `inventory_stock` ADD `sl_number` INT(11) NULL DEFAULT NULL AFTER `batch_number`;
  ALTER TABLE `inventory_stock` ADD `manufacturing_date` DATE NULL DEFAULT NULL AFTER `sl_number`;
+ ALTER TABLE `inventory_stock` ADD `inventory_upload_file` VARCHAR(500) NULL DEFAULT NULL AFTER `manufacturing_date`;

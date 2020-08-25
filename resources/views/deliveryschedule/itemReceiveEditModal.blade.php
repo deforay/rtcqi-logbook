@@ -88,7 +88,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body mt-0 pt-0">
-                                <form class="form form-horizontal" role="form" name="updateItemReceive" id="updateItemReceive" method="post" action="/itemreceive/updateItemReceive/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                <form class="form form-horizontal" role="form" enctype="multipart/form-data"  name="updateItemReceive" id="updateItemReceive" method="post" action="/itemreceive/updateItemReceive/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
                                 @csrf
                                 <!-- <div>
                                     <center><h4><b>PURCHASE ORDER</b></h4><center>
@@ -198,6 +198,18 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                 </tr>
                                             </tbody>
                                             </table>
+                                            <div class="col-md-2">
+                                            <h5>Attachment <span class="mandatory">*</span></h5>
+                                        </div>
+                                    <div class="col-xl-6 col-lg-12">
+                                        <fieldset class="form-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                <label class="custom-file-label" multiple="multiple" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                         <!-- </div> -->
                                     </div>
                                 </div>

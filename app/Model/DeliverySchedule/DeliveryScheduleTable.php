@@ -364,28 +364,29 @@ class DeliveryScheduleTable extends Model
                     // dd(($stk));
             if(count($stk)>0){
                 $rQty = $data['receivedQty'][$i] + $stk[0]->stock_quantity;
-                $stkUp = DB::table('inventory_stock')
+                $stockId = DB::table('inventory_stock')
                         ->where('expiry_date', '=', $expiryDate)
                         ->where('branch_id', '=', $data['branches'][$i])
                         ->where('item_id', '=', $data['itemId'])
                         ->update(
                             [
-                                'batch_number' =>$data['batchNo'][$i],
-                                'stock_quantity'  => $rQty,
-                                'updated_by'      => session('userId'),
-                                'updated_on'      => $commonservice->getDateTime(),
+                                'batch_number'            => $data['batchNo'][$i],
+                                'sl_number'               => $data['slNumber'][$i],
+                                'manufacturing_date'      => $commonservice->dateFormat($data['manufacturingDate'][$i]),
+                                'stock_quantity'          => $rQty,
+                                'updated_by'              => session('userId'),
+                                'updated_on'              => $commonservice->getDateTime(),
                                 'non_conformity_comments' => $desc,
                             ]
                         );
-            }
-            else{
-                $inv = DB::table('inventory_stock')->insertGetId(
+            }else{
+                $stockId = DB::table('inventory_stock')->insertGetId(
                             [
                                 'item_id'                 => $data['itemId'],
                                 'sl_number'               => $data['slNumber'][$i],
                                 'manufacturing_date'      => $commonservice->dateFormat($data['manufacturingDate'][$i]),
                                 'expiry_date'             => $expiryDate,
-                                'batch_number'            =>$data['batchNo'][$i],
+                                'batch_number'            => $data['batchNo'][$i],
                                 // 'service_date'         => $serviceDate,
                                 'stock_quantity'          => $data['receivedQty'][$i],
                                 'created_by'              => session('userId'),
@@ -416,6 +417,53 @@ class DeliveryScheduleTable extends Model
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
         
+// dd($data['uploadFile']['name']);die;
+// print_r($data['uploadFile']);die;
+        $filePathName='';
+        $fileName='';
+        $extension='';
+        if(isset($data['uploadFile'])){
+
+            for($i=0;$i<count($data['uploadFile']);$i++)
+            {
+// print_r($_FILES['uploadFile']['name'][$i]);die;
+       
+                if (isset($_FILES['uploadFile']['name'][$i]) && $_FILES['uploadFile']['name'][$i] != '') {
+                    if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                        mkdir(public_path('uploads'),0755,true);
+                        // chmod (getcwd() .public_path('uploads'), 0755 );
+                    }
+                    
+                    if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "recieveitem") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "recieveitem")) {
+                        mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "recieveitem", 0755);
+                    }
+        
+                    $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "recieveitem" . DIRECTORY_SEPARATOR . $stockId;
+                    
+                    if (!file_exists($pathname) && !is_dir($pathname)) {
+                        mkdir($pathname);
+                    }
+                    // print_r($_FILES['uploadFile']['name'][$i]);die;
+                    $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
+                    $ext = '.'.$extension;
+                    $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                    $fileName = $orgFileName.'@@'.time(). "." . $extension;
+                    // print_r($fileName);die;
+
+                    $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                    
+                    move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
+                    $filePathName .=$filePath.','; 
+                }
+            }
+            if($filePathName!=''){
+    
+                $uploadData = array('inventory_upload_file' => $filePathName);
+                $invUp = DB::table('inventory_stock')
+                        ->where('stock_id', '=', $stockId)
+                        ->update($uploadData);
+            }
+        }
         return $autoId;
     }
 
