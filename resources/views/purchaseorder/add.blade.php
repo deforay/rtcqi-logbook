@@ -145,9 +145,18 @@ $currentDate=date('d-M-Y');
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Notes<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="poNotes" class="form-control isRequired" autocomplete="off" placeholder="Enter notes" name="poNotes" title="Please enter notes">
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" >Description</label>
+                                        <label class="col-md-2 label-control pl-0" for="description" >Specification</label>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
                                             <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>

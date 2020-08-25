@@ -167,7 +167,7 @@ class DeliveryScheduleController extends Controller
                 $role = session('role');
                 if($data->delivery_schedule_status == 'pending for shipping'){
                     if (isset($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit']) && ($role['App\\Http\\Controllers\\DeliverySchedule\\DeliveryScheduleController']['edit'] == "allow")){
-                        $button .= '&nbsp;&nbsp;&nbsp;<a onclick="showAjaxModal(\'/itemReceiveEdit/'.base64_encode($data->delivery_id).'\' );" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        $button .= '&nbsp;&nbsp;&nbsp;<a href="/itemReceiveEdit/'.base64_encode($data->delivery_id).'" name="edit" id="'.$data->delivery_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                     }else{
                         $button .= '';
                     }
@@ -192,9 +192,10 @@ class DeliveryScheduleController extends Controller
         // dd($delivery);
         $branchService = new BranchesService();
         $branch = $branchService->getAllActiveBranches();
-        $view = View::make('deliveryschedule.itemReceiveEditModal', ['deliveryId'=>$id,'result'=>$delivery,'branch'=>$branch]);
-        $contents = (string) $view;
-        return $contents;
+        // $view = View::make('deliveryschedule.itemReceiveEditModal', ['deliveryId'=>$id,'result'=>$delivery,'branch'=>$branch]);
+        // $contents = (string) $view;
+        // return $contents;
+        return view('deliveryschedule.itemReceiveEditModal',array('deliveryId'=>$id,'result'=>$delivery,'branch'=>$branch));
          
     }
 

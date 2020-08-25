@@ -8,6 +8,12 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+    td {
+        padding-left: 0.50rem !important;
+        padding-right: 0.50rem !important;
+    }
+</style>
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -220,7 +226,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                    <div class="col-xl-4 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Status<span class="mandatory">*</span> </h5>
                                                 <div class="form-group">
@@ -231,6 +237,52 @@
                                                 </div>
                                             </fieldset>
                                         </div>
+                                    </div>
+                                    <div class="table-responsive" style="overflow-x: hidden;">
+                                        <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                <th style="width:20%;">Bank Name<span class="mandatory">*</span></th>
+                                                <th style="width:20%;">Account No <span class="mandatory">*</span></th>
+                                                <th style="width:17%;">Branch Name<span class="mandatory">*</span></th>
+                                                <th style="width:15%;">SWIFT Code<span class="mandatory">*</span></th>
+                                                <th style="width:15%;">Status</th>
+                                                <th style="width:13%;" class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bankDetails">
+                                                <tr>
+                                                <td>
+                                                    <input type="text" id="bankName0" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="accNo0" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control qty isRequired" id="branch0" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control isRequired" id="ifscCode0" name="ifscCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
+                                                </td>
+                                                <td>
+                                                    <!-- <div class="form-check mb-4 text-center">
+                                                        <input class="form-check-input bankStatus" id="bankStatus0" name="bankStatus[]" type="checkbox" style="border: 1px solid #162336;!important" onclick="bankStatus(0);" value="no">
+                                                    </div> -->
+                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus0" name="bankStatus[]" title="Please select status" onchange="bankStatus(0,this.value);">
+                                                        <option value="1">Enable</option>
+                                                        <option value="0" selected>Disable</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    {{-- <div class="col-md-12"> --}}
+                                                        <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
+                                                        &nbsp;&nbsp;
+                                                        {{-- <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a> --}}
+                                                    {{-- </div> --}}
+                                                </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="form-actions right">
                                         <a href="/vendors">
@@ -443,6 +495,43 @@
         if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
         return true;
+    }
+
+    rowCount = 0;
+    function insRow() {
+        rowCount++;
+        rl = document.getElementById("bankDetails").rows.length;
+        var a = document.getElementById("bankDetails").insertRow(rl);
+        a.setAttribute("style", "display:none;");
+        a.setAttribute("class", "data");
+        var b = a.insertCell(0);
+        var c = a.insertCell(1);
+		var d = a.insertCell(2);
+        var e = a.insertCell(3);
+        var f = a.insertCell(4);
+        var h = a.insertCell(5);
+        rl = document.getElementById("bankDetails").rows.length - 1;
+        b.innerHTML = '<input type="text" id="bankName'+rowCount+'" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">';
+        c.innerHTML = '<input type="text" id="accNo'+rowCount+'" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">';
+        d.innerHTML = '<input type="text" class="form-control qty isRequired" id="branch'+rowCount+'" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>';
+		e.innerHTML = '<input type="text" class="form-control isRequired" id="ifscCode'+rowCount+'" name="ifscCode[]" placeholder="IFSC Code" title="Please enter IFSC code" value=""/>';
+        f.innerHTML = '<select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus'+rowCount+'" name="bankStatus[]" title="Please select status" onchange="bankStatus('+rowCount+',this.value);">\
+                            <option value="1">Enable</option>\
+                            <option value="0" selected>Disable</option>\
+                        </select>';
+        h.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void('+rowCount+');" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        $(a).fadeIn(800);
+    }
+
+    function removeRow(el) {
+        $(el).parent().fadeOut("slow", function () {
+            $(el).parent().remove();
+            rowCount = rowCount-1;
+            rl = document.getElementById("bankDetails").rows.length;
+            if (rl == 0) {
+                insRow();
+            }
+        });
     }
 </script>
 @endsection

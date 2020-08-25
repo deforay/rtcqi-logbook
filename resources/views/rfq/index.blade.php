@@ -122,7 +122,15 @@
             columns: [
                     
                     { data: 'rfq_number', name: 'rfq_number'},
-                    { data: 'rfq_issued_on', name: 'rfq_issued_on'},
+                    { data: 'rfq_issued_on', name: 'rfq_issued_on',type:'date',
+                    "render": function(data, type) {
+                        if (data == null){
+                                return '';
+                            }else{
+                                return type === 'sort' ? data : moment(data).format('DD-MMM-YYYY');
+                            }
+                        }
+                    },
                     { data: 'last_date', name: 'last_date'},
                     { data: 'rfq_status', name: 'rfq_status',className:'firstcaps'},
                     {data: 'action', name: 'action', orderable: false},

@@ -27,6 +27,7 @@ $optionSelect1='';
 $eta_if_no_stock='';
 $style = '';
 $vendor_notes = '';
+$quoteNotes = '';
 $mode_of_delivery = '';
 if(isset($result[0]->stock_available)){
     $style = 'display:none;';
@@ -43,6 +44,9 @@ if(isset($result[0]->eta_if_no_stock)){
 }
 if(isset($result[0]->vendor_notes)){
     $vendor_notes=$result[0]->vendor_notes;
+}
+if(isset($result[0]->quote_notes)){
+    $quoteNotes=$result[0]->quote_notes;
 }
 if(isset($result[0]->mode_of_delivery)){
     $mode_of_delivery=$result[0]->mode_of_delivery;
@@ -124,7 +128,7 @@ if(isset($result[0]->mode_of_delivery)){
                                     </div>
                                     <br/>
                                     <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" ><h5>Description</h5></label>
+                                        <label class="col-md-2 label-control pl-0" for="description" ><h4><b>Specification</b></h4></label>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
                                             <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result[0]->quote_description}}</textarea>
@@ -195,9 +199,8 @@ if(isset($result[0]->mode_of_delivery)){
                                             </div>
                                         </div>
                                     <?php } ?>
-                                    <br/>
                                     <div class="row">
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Quote Number<span class="mandatory">*</span>
                                                 </h5>
@@ -206,7 +209,16 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Quote Notes<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="quoteNotes" value="{{$quoteNotes}}" class="form-control isRequired" autocomplete="off" name="quoteNotes" title="Please vendor notes">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Currently in Stock?<span class="mandatory">*</span>
                                                 </h5>
@@ -218,7 +230,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12" id="ifNotInStockDiv" style="{{$style}}">
+                                        <div class="col-xl-4 col-lg-12" id="ifNotInStockDiv" style="{{$style}}">
                                             <fieldset>
                                                 <h5>If not in Stock</h5>
                                                 <div class="form-group">
@@ -226,7 +238,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Vendor Notes<span class="mandatory">*</span>
                                                 </h5>
@@ -235,7 +247,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Mode of Delivery<span class="mandatory">*</span>
                                                 </h5>
@@ -244,7 +256,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-6 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Estimated Date of Delivery<span class="mandatory">*</span>
                                                 </h5>
