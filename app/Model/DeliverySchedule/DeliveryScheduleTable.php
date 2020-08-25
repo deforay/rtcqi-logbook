@@ -381,14 +381,16 @@ class DeliveryScheduleTable extends Model
             else{
                 $inv = DB::table('inventory_stock')->insertGetId(
                             [
-                                'item_id'      => $data['itemId'],
-                                'expiry_date'    => $expiryDate,
-                                'batch_number' =>$data['batchNo'][$i],
-                                // 'service_date'  => $serviceDate,
-                                'stock_quantity'    => $data['receivedQty'][$i],
-                                'created_by'      => session('userId'),
-                                'created_on'      => $commonservice->getDateTime(),
-                                'branch_id' => $data['branches'][$i],
+                                'item_id'                 => $data['itemId'],
+                                'sl_number'               => $data['slNumber'][$i],
+                                'manufacturing_date'      => $commonservice->dateFormat($data['manufacturingDate'][$i]),
+                                'expiry_date'             => $expiryDate,
+                                'batch_number'            =>$data['batchNo'][$i],
+                                // 'service_date'         => $serviceDate,
+                                'stock_quantity'          => $data['receivedQty'][$i],
+                                'created_by'              => session('userId'),
+                                'created_on'              => $commonservice->getDateTime(),
+                                'branch_id'               => $data['branches'][$i],
                                 'non_conformity_comments' => $desc,
                             ]
                         );

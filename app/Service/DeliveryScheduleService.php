@@ -121,7 +121,7 @@ class DeliveryScheduleService
         	$result = $deliverySchedulemodel->updateItemReceive($id,$request);
 			if($result>0){
 				DB::commit();
-				$msg = 'Item Receive Updated Successfully';
+				$msg = 'Receive Item Updated Successfully';
 				return $msg;
 			}
 	    }
