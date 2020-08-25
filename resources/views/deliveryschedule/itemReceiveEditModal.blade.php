@@ -43,7 +43,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/itemreceive/">Item Receive</a>
+                        <li class="breadcrumb-item"><a href="/itemreceive/">Receive Item</a>
                         </li>
                     </ol>
                 </div>
@@ -76,7 +76,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Item Receive</h3>
+                            <h3 class="content-header-title mb-0">Receive Item</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -143,17 +143,25 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                             <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:15%;" class="pl-1 pr-0">Expiry Date</th>
-                                                    <th style="width:15%;" class="pl-1 pr-0">Batch No</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Sl.No</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Manufacturing<br> Date</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Expiry Date</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Batch No</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Received<br> Quantity<span class="mandatory">*</span></th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Quantity<span class="mandatory">*</span></th>
-                                                    <th style="width:20" class="pl-1 pr-0">Reason for<br> non conformity</th>
-                                                    <th style="width:15%;" class="pl-1 pr-0">Locations<span class="mandatory">*</span></th>
+                                                    <th style="width:15%;" class="pl-1 pr-0">Reason for<br> non conformity</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Locations<span class="mandatory">*</span></th>
                                                     <th style="width:15%;" class="pl-1 pr-0">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itemDetails">
                                                 <tr>
+                                                    <td>
+                                                        <input type="text" id="slNumber0" onkeypress="return isNumberKey(event);" class="form-control " autocomplete="off" placeholder="Sl No" name="slNumber[]" title="Please enter sl Number">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="manufacturingDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter Manufacturing Date" name="manufacturingDate[]" title="Please enter Manufacturing Date">
+                                                    </td>
                                                     <td>
                                                         <input type="text" id="expiryDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
                                                     </td>
@@ -407,14 +415,18 @@ function insRow() {
     var a = document.getElementById("itemDetails").insertRow(rl);
     a.setAttribute("style", "display:none;");
     // a.setAttribute("class", "data");
-    var b = a.insertCell(0);
-    var d = a.insertCell(1);
-    var c = a.insertCell(2);
-    var f = a.insertCell(3);
-    var h = a.insertCell(4);
-    var g = a.insertCell(5);
-    var e = a.insertCell(6);
+    var i = a.insertCell(0);
+    var j = a.insertCell(1);
+    var b = a.insertCell(2);
+    var d = a.insertCell(3);
+    var c = a.insertCell(4);
+    var f = a.insertCell(5);
+    var h = a.insertCell(6);
+    var g = a.insertCell(7);
+    var e = a.insertCell(8);
     rl = document.getElementById("itemDetails").rows.length - 1;
+    i.innerHTML = '<input type="text" id="slNumber' + rowCount + '" onkeypress="return isNumberKey(event);" class="form-control  isRequired" autocomplete="off" placeholder="Sl No" name="slNumber[]" title="Please enter Sl Number">';
+    j.innerHTML = '<input type="text" id="manufacturingDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter manufacturing date" name="manufacturingDate[]" title="Please enter manufacturing date">';
     b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
     d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control isRequired" autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
     c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
@@ -480,5 +492,11 @@ function removeRow(el) {
         }
     });
 }
+function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
 </script>
 @endsection
