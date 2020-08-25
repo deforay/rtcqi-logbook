@@ -333,4 +333,8 @@ CREATE TABLE `bank_details` (
  PRIMARY KEY (`bank_id`),
  KEY `vendor_id` (`vendor_id`),
  CONSTRAINT `bank_details_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`))
- ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+ ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+--sriram 25 AUG
+ ALTER TABLE `inventory_stock` ADD `sl_number` INT(11) NULL DEFAULT NULL AFTER `batch_number`;
+ ALTER TABLE `inventory_stock` ADD `manufacturing_date` DATE NULL DEFAULT NULL AFTER `sl_number`;
