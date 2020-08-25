@@ -341,3 +341,6 @@ CREATE TABLE `bank_details` (
  ALTER TABLE `inventory_stock` ADD `sl_number` INT(11) NULL DEFAULT NULL AFTER `batch_number`;
  ALTER TABLE `inventory_stock` ADD `manufacturing_date` DATE NULL DEFAULT NULL AFTER `sl_number`;
  ALTER TABLE `inventory_stock` ADD `inventory_upload_file` VARCHAR(500) NULL DEFAULT NULL AFTER `manufacturing_date`;
+ ALTER TABLE `bank_details` CHANGE `address` `bank_address` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ ALTER TABLE `bank_details` CHANGE `city` `bank_city` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ ALTER TABLE `bank_details` CHANGE `country` `bank_country` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;

@@ -83,9 +83,9 @@ class VendorsTable extends Model
                             'bank_account_no'       => $data['accNo'][$k],
                             'account_holder_name'   => $data['accName'][$k],
                             'bank_branch'      => $data['branch'][$k],
-                            'address'   =>  $data['address'][$k],
-                            'city'   =>  $data['city'][$k],
-                            'country'   =>  $data['country'][$k],
+                            'bank_address'   =>  $data['address'][$k],
+                            'bank_city'   =>  $data['city'][$k],
+                            'bank_country'   =>  $data['country'][$k],
                             'swift_code'   =>  $data['swiftCode'][$k],
                             'iban'   =>  $data['iban'][$k],
                             'intermediary_bank'   =>  $data['intermediaryBank'][$k],
@@ -131,7 +131,9 @@ class VendorsTable extends Model
     {
         $id = base64_decode($id);
         $data = DB::table('vendors')
+            ->leftjoin('bank_details', 'bank_details.vendor_id', '=', 'vendors.vendor_id')
             ->where('vendors.vendor_id', '=', $id)->get();
+            // dd($data);
         return $data;
     }
     // Update particular Vendor details
@@ -140,6 +142,7 @@ class VendorsTable extends Model
 
         $response = 0;
         $data = $params->all();
+        // dd($data);
         $vendorUp = '';
         //Vendor details
         $commonservice = new CommonService();
@@ -206,6 +209,47 @@ class VendorsTable extends Model
 
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), base64_decode($id), 'Vendor-update', 'Update Vendors ' . $data['vendorName'], 'Vendor');
+
+            if (isset($data['deleteBankDetail']) && ($data['deleteBankDetail'] != null) && trim($data['deleteBankDetail']) != '') {
+                $delBank = explode(",", $data['deleteBankDetail']);
+                for ($d = 0; $d < count($delBank); $d++) {
+                    $delBankUp = DB::table('bank_details')->where('bank_id', '=', $delBank[$d])->delete();
+                }
+            }
+
+            if ($data['bankName'] != null) {
+                for ($k = 0; $k < count($data['bankName']); $k++) {
+                    $bankDetails = array(
+                        'vendor_id'     => base64_decode($id),
+                        'bank_name'       => $data['bankName'][$k],
+                        'bank_account_no'       => $data['accNo'][$k],
+                        'account_holder_name'   => $data['accName'][$k],
+                        'bank_branch'      => $data['branch'][$k],
+                        'bank_address'   =>  $data['address'][$k],
+                        'bank_city'   =>  $data['city'][$k],
+                        'bank_country'   =>  $data['country'][$k],
+                        'swift_code'   =>  $data['swiftCode'][$k],
+                        'iban'   =>  $data['iban'][$k],
+                        'intermediary_bank'   =>  $data['intermediaryBank'][$k],
+                        'bank_status' => $data['bankStatus'][$k],
+                        'created_on'    => $commonservice->getDateTime(),
+                        'created_by'      => session('userId')
+                    );
+                    if(isset($data['bankId'][$k]) && $data['bankId'][$k]!=''){
+                        $bankUp = DB::table('bank_details') ->where('bank_id','=', $data['bankId'][$k])
+                                ->update($bankDetails);
+                        $commonservice = new CommonService();
+                        $commonservice->eventLog(session('userId'), $data['bankId'][$k], 'bankdetails-update', 'update Bank Details ' . $data['bankId'][$k], 'Bank Details');
+                    }
+                    else{
+                        $bankDetailId = DB::table('bank_details')->insertGetId($bankDetails);
+                        $commonservice = new CommonService();
+                        $commonservice->eventLog(session('userId'), $bankDetailId, 'bankdetails-add', 'add Bank Details ' . $bankDetailId, 'Bank Details');
+                    }
+                   
+                }
+                
+            }
         }
         if ($vendorUp) {
             $response = 1;
