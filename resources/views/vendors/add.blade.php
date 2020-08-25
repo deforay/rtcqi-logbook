@@ -238,16 +238,22 @@
                                             </fieldset>
                                         </div>
                                     </div>
-                                    <div class="table-responsive" style="overflow-x: hidden;">
+                                    <div class="table-responsive">
                                         <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                <th style="width:20%;">Bank Name<span class="mandatory">*</span></th>
-                                                <th style="width:20%;">Account No <span class="mandatory">*</span></th>
-                                                <th style="width:17%;">Branch Name<span class="mandatory">*</span></th>
-                                                <th style="width:15%;">SWIFT Code<span class="mandatory">*</span></th>
-                                                <th style="width:15%;">Status</th>
-                                                <th style="width:13%;" class="text-center">Action</th>
+                                                <th>Bank Name<span class="mandatory">*</span></th>
+                                                <th>Account No <span class="mandatory">*</span></th>
+                                                <th>Account <br/>Holder Name <span class="mandatory">*</span></th>
+                                                <th>Branch <br/>Name<span class="mandatory">*</span></th>
+                                                <th>Address <span class="mandatory">*</span>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</th>
+                                                <th>City<span class="mandatory">*</span></th>
+                                                <th>Country<span class="mandatory">*</span></th>
+                                                <th>SWIFT Code<span class="mandatory">*</span></th>
+                                                <th>IBAN<span class="mandatory">*</span></th>
+                                                <th>Intermediary<br>Bank<span class="mandatory">*</span></th>
+                                                <th>Status</th>
+                                                <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="bankDetails">
@@ -259,18 +265,33 @@
                                                     <input type="text" id="accNo0" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">
                                                 </td>
                                                 <td>
+                                                    <input type="text" id="accName0" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">
+                                                </td>
+                                                <td>
                                                     <input type="text" class="form-control qty isRequired" id="branch0" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control isRequired" id="ifscCode0" name="ifscCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
+                                                    <textarea id="address0" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>
                                                 </td>
                                                 <td>
-                                                    <!-- <div class="form-check mb-4 text-center">
-                                                        <input class="form-check-input bankStatus" id="bankStatus0" name="bankStatus[]" type="checkbox" style="border: 1px solid #162336;!important" onclick="bankStatus(0);" value="no">
-                                                    </div> -->
-                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus0" name="bankStatus[]" title="Please select status" onchange="bankStatus(0,this.value);">
-                                                        <option value="1">Enable</option>
-                                                        <option value="0" selected>Disable</option>
+                                                    <input type="text" id="city0" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="country0" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control isRequired" id="swiftCode0" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="iban0" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="intermediaryBank0" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus0" name="bankStatus[]" title="Please select status" >
+                                                        <option value="1">Active</option>
+                                                        <option value="0" selected>Inactive</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -508,18 +529,31 @@
         var c = a.insertCell(1);
 		var d = a.insertCell(2);
         var e = a.insertCell(3);
-        var f = a.insertCell(4);
-        var h = a.insertCell(5);
+        var m = a.insertCell(4);
+        var f = a.insertCell(5);
+        var g = a.insertCell(6);
+        var h = a.insertCell(7);
+        var i = a.insertCell(8);
+        var j = a.insertCell(9);
+        var k = a.insertCell(10);
+        var l = a.insertCell(11);
+
         rl = document.getElementById("bankDetails").rows.length - 1;
         b.innerHTML = '<input type="text" id="bankName'+rowCount+'" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">';
         c.innerHTML = '<input type="text" id="accNo'+rowCount+'" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">';
-        d.innerHTML = '<input type="text" class="form-control qty isRequired" id="branch'+rowCount+'" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>';
-		e.innerHTML = '<input type="text" class="form-control isRequired" id="ifscCode'+rowCount+'" name="ifscCode[]" placeholder="IFSC Code" title="Please enter IFSC code" value=""/>';
-        f.innerHTML = '<select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus'+rowCount+'" name="bankStatus[]" title="Please select status" onchange="bankStatus('+rowCount+',this.value);">\
-                            <option value="1">Enable</option>\
-                            <option value="0" selected>Disable</option>\
+        d.innerHTML = '<input type="text" id="accName'+rowCount+'" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">';
+        e.innerHTML = '<input type="text" class="form-control qty isRequired" id="branch'+rowCount+'" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>';
+        f.innerHTML = '<input type="text" id="city'+rowCount+'" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">'
+        m.innerHTML = '<textarea id="address'+rowCount+'" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>'
+        g.innerHTML = '<input type="text" id="country'+rowCount+'" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">'
+		h.innerHTML = '<input type="text" class="form-control isRequired" id="swiftCode'+rowCount+'" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>';
+        i.innerHTML = '<input type="text" id="iban'+rowCount+'" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">'
+        j.innerHTML = '<input type="text" id="intermediaryBank'+rowCount+'" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">';
+        k.innerHTML = '<select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus'+rowCount+'" name="bankStatus[]" title="Please select status">\
+                            <option value="1">Active</option>\
+                            <option value="0" selected>Inactive</option>\
                         </select>';
-        h.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void('+rowCount+');" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        l.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void('+rowCount+');" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
     }
 
