@@ -32,6 +32,7 @@ class RfqTable extends Model
                 'rfq_status' => 'draft',
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
+                'rfq_notes' => $data['iNotes'],
                 ]
             );
 
@@ -277,6 +278,7 @@ class RfqTable extends Model
                 'rfq_status' => 'draft',
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime(),
+                'rfq_notes' => $data['iNotes'],
             );
            
             $rfqUp = DB::table('rfq')

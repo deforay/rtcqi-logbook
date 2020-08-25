@@ -67,6 +67,7 @@ class PurchaseOrderTable extends Model
                     'last_date_of_delivery' => $lastDelDate,
                     'delivery_location' => $data['deliveryLoc'],
                     'purchase_order_description' => $data['description'],
+                    'purchase_order_notes'       => $data['poNotes'],
                 ]
             );
 
@@ -279,6 +280,7 @@ class PurchaseOrderTable extends Model
                     'last_date_of_delivery'      => $lastDelDate,
                     'delivery_location'          => $data['deliveryLoc'],
                     'purchase_order_description' => $data['description'],
+                    'purchase_order_notes'       => $data['poNotes'],
                 ]
             );
 
@@ -399,10 +401,6 @@ class PurchaseOrderTable extends Model
         }
         return $poId;
     }
-
-
-
-
 
 
     // Fetch All Purchase Order List
@@ -576,6 +574,7 @@ class PurchaseOrderTable extends Model
                 'last_date_of_delivery' => $lastDelDate,
                 'delivery_location' => $data['deliveryLoc'],
                 'purchase_order_description' => $data['description'],
+                'purchase_order_notes'       => $data['poNotes'],
             );
 
             $purchaseOrder = DB::table('purchase_orders')

@@ -151,9 +151,18 @@ td {
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Notes<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="poNotes" class="form-control isRequired" autocomplete="off" placeholder="Enter notes" name="poNotes" title="Please enter notes">
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="col-md-2 label-control" for="description" >Specification</label>
+                                        <label class="col-md-2 label-control pl-0" for="description" >Specification</label>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
                                             <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" ></textarea>
@@ -384,7 +393,7 @@ td {
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
         g.innerHTML = '<input type="text"  value="" id="quoteDesc' + rowCount + '" name="quoteDesc[]" class="form-control" placeholder="Item description"  />'
         c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired"  placeholder="Enter Qty" title="Please enter quantity" />';
-        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" oninput="calLineTotal();"/>';
+        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" oninput="calLineTotal();"/>';
         f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".item").select2({

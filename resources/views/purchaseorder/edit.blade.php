@@ -166,11 +166,19 @@ foreach($result as $branchList)
                                                 </div>
                                             </fieldset>
                                         </div>
-
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Notes<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="poNotes" value="{{ $result[0]->purchase_order_notes }}" class="form-control isRequired" autocomplete="off" placeholder="Enter notes" name="poNotes" title="Please enter notes">
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <h5>Description</h5>
+                                        <h5>Specification</h5>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
                                             <textarea id="description" name="description" class="form-control ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
@@ -270,7 +278,7 @@ foreach($result as $branchList)
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" oninput="calLineTotal();" />
                                                             </td>
                                                             <!-- <td>
                                                                 <div class="row">
@@ -509,6 +517,21 @@ foreach($result as $branchList)
                 return true
             }
         }
+    }
+
+    function calLineTotal(){
+        var sum = 0;
+        $('.linetot').each(function() {
+            sum += Number($(this).val());
+        });
+        if(!isNaN(sum)){
+            $("#totalAmount").val(sum);
+        }
+        $('.linetot').blur(function(){
+            var num = parseFloat($(this).val());
+            var cleanNum = num.toFixed(2);
+            $(this).val(cleanNum);
+        });
     }
 
 </script>

@@ -312,3 +312,25 @@ ALTER TABLE `rfq_details` ADD `item_description` TEXT NULL AFTER `quantity`;
 
 --sriram 21 AUG
 ALTER TABLE `purchase_orders` CHANGE `quote_id` `quote_id` INT(11) NULL DEFAULT NULL;
+
+--Sudarmathi 24 Aug 2020
+ALTER TABLE `rfq_notes` ADD `rfq_notes` TEXT NULL AFTER `description`;
+ALTER TABLE `quotes` ADD `quote_notes` TEXT NULL AFTER `quote_description`;
+ALTER TABLE `purchase_orders` ADD `purchase_order_notes` TEXT NULL AFTER `purchase_order_upload_file`;
+CREATE TABLE `bank_details` (
+ `bank_id` int(11) NOT NULL AUTO_INCREMENT,
+ `vendor_id` int(11) NOT NULL,
+ `bank_name` varchar(255) NOT NULL,
+ `bank_account_no` varchar(255) NOT NULL,
+ `bank_branch` varchar(255) NOT NULL,
+ `swift_code` varchar(255) NOT NULL,
+ `bank_status` int(11) DEFAULT NULL,
+ `created_on` datetime DEFAULT NULL,
+ `updated_on` datetime DEFAULT NULL,
+ `created_by` int(11) DEFAULT NULL,
+ `updated_by` int(11) DEFAULT NULL,
+ `branch_id` int(11) NOT NULL,
+ PRIMARY KEY (`bank_id`),
+ KEY `vendor_id` (`vendor_id`),
+ CONSTRAINT `bank_details_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`))
+ ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1

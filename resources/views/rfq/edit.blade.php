@@ -125,10 +125,19 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Notes<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                            <input type="text" value="{{$result['rfq'][0]->rfq_notes}}" id="iNotes" class="form-control isRequired" autocomplete="off" placeholder="Enter notes" name="iNotes" title="Please enter notes">
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="col-md-12">
-                                    <label class="col-md-2 label-control" for="mainContent">Description</label>
+                                    <label class="col-md-2 label-control pl-0" for="mainContent">Specification</label>
                                     <div class="form-group row" >
                                         <div class="col-md-12">
                                         <textarea id="description" name="description" class="form-control richtextarea ckeditor" placeholder="Enter Description" title="Please enter the description" >{{$result['rfq'][0]->description}}</textarea>

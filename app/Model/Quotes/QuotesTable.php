@@ -152,6 +152,7 @@ class QuotesTable extends Model
                     'responded_on' => $commonservice->getDateTime(),
                     'stock_available' => $data['stockable'],
                     'eta_if_no_stock' => $data['notInStock'],
+                    'quote_notes' => $data['quoteNotes'],
                     'vendor_notes' => $data['vendorNotes'],
                     'mode_of_delivery' => $data['deliveryMode'],
                     'estimated_date_of_delivery' => $commonservice->dateFormat($data['estimatedDate']),
