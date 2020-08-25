@@ -103,7 +103,7 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
                         </div>
                       </fieldset>
 
-                      <button type="button" class="btn btn-outline-info btn-block" onclick="validateNow()"><i class="ft-unlock"></i> Login</button>
+                      <button type="submit" class="btn btn-outline-info btn-block" onclick="validateNow()"><i class="ft-unlock"></i> Login</button>
                     </form>
                   </div>
 
