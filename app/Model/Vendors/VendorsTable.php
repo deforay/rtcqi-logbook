@@ -18,6 +18,7 @@ class VendorsTable extends Model
     public function saveVendors($request)
     {
         $data = $request->all();
+        // dd($data);
         $commonservice = new CommonService();
         $vendorsId = '';
         $role = DB::table('roles')
@@ -67,11 +68,36 @@ class VendorsTable extends Model
                     'created_on'     => $commonservice->getDateTime(),
                     'role'           => $roleId,
                     'password'       => Hash::make($data['password']), // Hashing passwords
-
+                    'created_on'    => $commonservice->getDateTime(),
+                    'created_by'      => session('userId'),
                 ]
             );
         }
         if ($vendorsId) {
+            if ($request->input('bankName') != null) {
+                for ($k = 0; $k < count($data['bankName']); $k++) {
+                    $bankDetailId = DB::table('bank_details')->insertGetId(
+                        [
+                            'vendor_id'     => $vendorsId,
+                            'bank_name'       => $data['bankName'][$k],
+                            'bank_account_no'       => $data['accNo'][$k],
+                            'account_holder_name'   => $data['accName'][$k],
+                            'bank_branch'      => $data['branch'][$k],
+                            'address'   =>  $data['address'][$k],
+                            'city'   =>  $data['city'][$k],
+                            'country'   =>  $data['country'][$k],
+                            'swift_code'   =>  $data['swiftCode'][$k],
+                            'iban'   =>  $data['iban'][$k],
+                            'intermediary_bank'   =>  $data['intermediaryBank'][$k],
+                            'bank_status' => $data['bankStatus'][$k],
+                            'created_on'    => $commonservice->getDateTime(),
+                            'created_by'      => session('userId'),
+                        ]
+                    );
+                }
+                $commonservice = new CommonService();
+                $commonservice->eventLog(session('userId'), $bankDetailId, 'bankdetails-add', 'add Bank Details ' . $bankDetailId, 'Bank Details');
+            }
             //Event Log
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'), $vendorsId, 'Vendors-add', 'Add Vendors ' . $data['vendorName'], 'Vendors');

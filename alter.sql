@@ -329,8 +329,12 @@ CREATE TABLE `bank_details` (
  `updated_on` datetime DEFAULT NULL,
  `created_by` int(11) DEFAULT NULL,
  `updated_by` int(11) DEFAULT NULL,
- `branch_id` int(11) NOT NULL,
  PRIMARY KEY (`bank_id`),
  KEY `vendor_id` (`vendor_id`),
  CONSTRAINT `bank_details_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`vendor_id`))
  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+
+ --Sudarmathi 25 Aug 2020
+ ALTER TABLE `bank_details` ADD `account_holder_name` VARCHAR(255) NOT NULL AFTER `branch_id`, ADD `address` VARCHAR(500) NULL AFTER `account_holder_name`, ADD `city` VARCHAR(255) NULL AFTER `address`, ADD `country` VARCHAR(255) NULL AFTER `city`, ADD `iban` VARCHAR(255) NOT NULL AFTER `country`;
+ ALTER TABLE `bank_details` ADD `intermediary_bank` VARCHAR(255) NULL AFTER `iban`;
+--  ALTER TABLE `bank_details` DROP `branch_id`;
