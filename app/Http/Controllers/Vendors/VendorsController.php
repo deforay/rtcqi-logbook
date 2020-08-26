@@ -97,7 +97,6 @@ class VendorsController extends Controller
         }
         else
         {
-            
             $vendorsService = new VendorsTypeService();
             $vendorTypeResult = $vendorsService->getActiveVendorsType();
             $countryService = new CountriesService();
