@@ -314,7 +314,7 @@ ALTER TABLE `rfq_details` ADD `item_description` TEXT NULL AFTER `quantity`;
 ALTER TABLE `purchase_orders` CHANGE `quote_id` `quote_id` INT(11) NULL DEFAULT NULL;
 
 --Sudarmathi 24 Aug 2020
-ALTER TABLE `rfq_notes` ADD `rfq_notes` TEXT NULL AFTER `description`;
+ALTER TABLE `rfq` ADD `rfq_notes` TEXT NULL AFTER `description`;
 ALTER TABLE `quotes` ADD `quote_notes` TEXT NULL AFTER `quote_description`;
 ALTER TABLE `purchase_orders` ADD `purchase_order_notes` TEXT NULL AFTER `purchase_order_upload_file`;
 CREATE TABLE `bank_details` (

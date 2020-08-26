@@ -86,13 +86,13 @@ ismob = true;
     if(splitUrl[0]=="dashboard")
     {
       //$("#dashboard").addClass('active');
-    }else if(splitUrl[0]=="roles" || splitUrl[0]=="branchtype" || splitUrl[0]=="user")
+    }else if(splitUrl[0]=="roles" || splitUrl[0]=="countries" || splitUrl[0]=="user" || splitUrl[0]=="item" || splitUrl[0]=="mailtemplate" || splitUrl[0]=="branchtype"|| splitUrl[0]=="branches"|| splitUrl[0]=="vendorstype"|| splitUrl[0]=="vendors")
     {
       $("#manage").addClass('active');
       $("#manage > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
-    else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType" || splitUrl[0]=="item" || splitUrl[0]=="unit" || splitUrl[0]=="brand" || splitUrl[0]=="unitconversion")
+    else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType" || splitUrl[0]=="unit" || splitUrl[0]=="brand" || splitUrl[0]=="unitconversion")
     {
       //$("#item").addClass('active');
       $("#item").addClass('active');

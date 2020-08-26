@@ -60,7 +60,7 @@ if(isset($result[0]->mode_of_delivery)){
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">Procurement
                         </li>
                         <li class="breadcrumb-item"><a href="/quotes/">Quotes </a>
                         </li>
