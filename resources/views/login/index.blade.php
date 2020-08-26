@@ -130,6 +130,7 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
 
 </html>
 <script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
+
 <script>
     duplicateName = true;
     ismob = true;

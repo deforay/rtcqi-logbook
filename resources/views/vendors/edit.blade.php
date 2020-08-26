@@ -330,8 +330,8 @@
                                                 </td>
                                                 <td>
                                                     <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status" >
-                                                        <option value="1">Active</option>
-                                                        <option value="0" selected>Inactive</option>
+                                                        <option value="1" {{ $vend->bank_status == 1 ?  'selected':''}}>Active</option>
+                                                        <option value="0" {{ $vend->bank_status == 0 ?  'selected':''}}>Inactive</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -378,8 +378,8 @@
                                                 </td>
                                                 <td>
                                                     <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status" >
-                                                        <option value="1" {{ $vendor->bank_status == 1 ?  'selected':''}}>Active</option>
-                                                        <option value="0" {{ $vendor->bank_status == 0 ?  'selected':''}}>Inactive</option>
+                                                        <option value="1" >Active</option>
+                                                        <option value="0" selected>Inactive</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -527,12 +527,12 @@
 
     function validateNow() {
         flag = deforayValidator.init({
-            formId: 'editvendors'
+            formId: 'editvendor'
         });
 
         if (flag == true) {
             if (duplicateName) {
-                document.getElementById('editvendors').submit();
+                document.getElementById('editvendor').submit();
             }
         } else {
             // Swal.fire('Any fool can use a computer');

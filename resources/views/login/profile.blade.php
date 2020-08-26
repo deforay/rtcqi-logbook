@@ -14,6 +14,55 @@ use App\Service\CommonService;
 $commonservice = new CommonService();
 
 ?>
+<style>
+    #addresstable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #addresstable td,
+    #addresstable th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #addresstable tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #addresstable tr:hover {
+        background-color: #ddd;
+    }
+
+    #addresstable th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #b0bec5;
+        color: white;
+    }
+
+    #addresstable input {
+        width: 250px;
+    }
+    td {
+        padding-left: 0.50rem !important;
+        padding-right: 0.50rem !important;
+    }
+    table {
+        border-radius: 6px !important;
+        -webkit-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
+        -moz-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
+        box-shadow: 0px 0px 5px -1px rgb(197, 197, 197);
+    }
+
+    table>thead{
+        background-color: #d4e4f09e !important;
+        /* color: #9d9da0;
+        text-transform: uppercase !important; */
+    }
+</style>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,7 +97,7 @@ $commonservice = new CommonService();
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
     <!-- END: Custom CSS-->
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
 </head>
 <style>.mandatory{
     color:red;
@@ -224,7 +273,127 @@ $commonservice = new CommonService();
                                         </div>
                                     </div>
                                    
-                      
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                <th>Bank Name<span class="mandatory">*</span></th>
+                                                <th>Account No <span class="mandatory">*</span></th>
+                                                <th>Account <br/>Holder Name <span class="mandatory">*</span></th>
+                                                <th>Branch <br/>Name<span class="mandatory">*</span></th>
+                                                <th>Address <span class="mandatory">*</span>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</th>
+                                                <th>City<span class="mandatory">*</span></th>
+                                                <th>Country<span class="mandatory">*</span></th>
+                                                <th>SWIFT Code<span class="mandatory">*</span></th>
+                                                <th>IBAN<span class="mandatory">*</span></th>
+                                                <th>Intermediary<br>Bank<span class="mandatory">*</span></th>
+                                                <th>Status</th>
+                                                <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <?php $z=0; ?>
+                                            <tbody id="bankDetails">
+                                            @if(isset($vendors[0]->bank_id) && $vendors[0]->bank_id!='')
+                                            @foreach($vendors as $vend)
+                                                <tr>
+                                                    <input type="hidden" name="bankId[]" id="bankId{{$z}}" value="{{ $vend->bank_id }}"/>
+                                                <td>
+                                                    <input type="text" id="bankName{{$z}}" value="{{ $vend->bank_name }}" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="accNo{{$z}}" value="{{ $vend->bank_account_no }}" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="accName{{$z}}" value="{{ $vend->account_holder_name }}" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="{{ $vend->bank_branch }}" class="form-control qty isRequired" id="branch{{$z}}" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>
+                                                </td>
+                                                <td>
+                                                    <textarea id="address{{$z}}" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address">{{ $vend->bank_address }}</textarea>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="city{{$z}}" value="{{ $vend->bank_city }}" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="country{{$z}}" value="{{ $vend->bank_country }}" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="{{ $vend->swift_code }}" class="form-control isRequired" id="swiftCode{{$z}}" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="{{ $vend->iban }}" id="iban{{$z}}" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="{{ $vend->intermediary_bank }}" id="intermediaryBank{{$z}}" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status" >
+                                                        <option value="1" {{ $vend->bank_status == 1 ?  'selected':''}}>Active</option>
+                                                        <option value="0" {{ $vend->bank_status == 0 ?  'selected':''}}>Inactive</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    {{-- <div class="col-md-12"> --}}
+                                                        <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
+                                                        &nbsp;&nbsp;
+                                                        <a class="btn btn-sm btn-warning" href="javascript:void(0);" id="{{$vend->bank_id}}" onclick="removeRow(this.parentNode);deleteBankDet(this.id,{{$z}})"><i class="ft-minus"></i></a>
+                                                    {{-- </div> --}}
+                                                </td>
+                                                </tr>
+                                            <?php $z++; ?>
+                                            @endforeach
+                                            @else
+                                            <tr>
+                                                <td>
+                                                    <input type="text" id="bankName{{$z}}" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="accNo{{$z}}" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="accName{{$z}}" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control qty isRequired" id="branch{{$z}}" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>
+                                                </td>
+                                                <td>
+                                                    <textarea id="address{{$z}}" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="city{{$z}}" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="country{{$z}}" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control isRequired" id="swiftCode{{$z}}" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="iban{{$z}}" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="intermediaryBank{{$z}}" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">
+                                                </td>
+                                                <td>
+                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status" >
+                                                        <option value="1">Active</option>
+                                                        <option value="0" selected>Inactive</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    {{-- <div class="col-md-12"> --}}
+                                                        <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
+                                                        &nbsp;&nbsp;
+                                                        <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
+                                                    {{-- </div> --}}
+                                                </td>
+                                            </tr>
+                                            @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <input type="hidden" name="deleteBankDetail" id="deleteBankDetail" value="" />
                                     <div class="form-actions right">
                                         <a href="/vendors">
                                             <button type="button" class="btn btn-warning mr-1">
@@ -255,9 +424,14 @@ $commonservice = new CommonService();
 
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js')}}"></script>
     <!-- BEGIN Vendor JS-->
 
-
+    <script src="{{ asset('app-assets/vendors/js/datepicker/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/ui/jquery-ui/date-pickers.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
 
 </body>
 <!-- END: Body-->
@@ -453,5 +627,62 @@ $commonservice = new CommonService();
         if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
         return true;
+    }
+
+    rowCount = {{$z}};
+    function insRow() {
+        rowCount++;
+        rl = document.getElementById("bankDetails").rows.length;
+        var a = document.getElementById("bankDetails").insertRow(rl);
+        a.setAttribute("style", "display:none;");
+        a.setAttribute("class", "data");
+        var b = a.insertCell(0);
+        var c = a.insertCell(1);
+		var d = a.insertCell(2);
+        var e = a.insertCell(3);
+        var m = a.insertCell(4);
+        var f = a.insertCell(5);
+        var g = a.insertCell(6);
+        var h = a.insertCell(7);
+        var i = a.insertCell(8);
+        var j = a.insertCell(9);
+        var k = a.insertCell(10);
+        var l = a.insertCell(11);
+
+        rl = document.getElementById("bankDetails").rows.length - 1;
+        b.innerHTML = '<input type="text" id="bankName'+rowCount+'" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">';
+        c.innerHTML = '<input type="text" id="accNo'+rowCount+'" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">';
+        d.innerHTML = '<input type="text" id="accName'+rowCount+'" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">';
+        e.innerHTML = '<input type="text" class="form-control qty isRequired" id="branch'+rowCount+'" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>';
+        f.innerHTML = '<input type="text" id="city'+rowCount+'" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">'
+        m.innerHTML = '<textarea id="address'+rowCount+'" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>'
+        g.innerHTML = '<input type="text" id="country'+rowCount+'" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">'
+		h.innerHTML = '<input type="text" class="form-control isRequired" id="swiftCode'+rowCount+'" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>';
+        i.innerHTML = '<input type="text" id="iban'+rowCount+'" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">'
+        j.innerHTML = '<input type="text" id="intermediaryBank'+rowCount+'" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">';
+        k.innerHTML = '<select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus'+rowCount+'" name="bankStatus[]" title="Please select status">\
+                            <option value="1">Active</option>\
+                            <option value="0" selected>Inactive</option>\
+                        </select>';
+        l.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void('+rowCount+');" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        $(a).fadeIn(800);
+    }
+
+    function removeRow(el) {
+        $(el).parent().fadeOut("slow", function () {
+            $(el).parent().remove();
+            rowCount = rowCount-1;
+            rl = document.getElementById("bankDetails").rows.length;
+            if (rl == 0) {
+                insRow();
+            }
+        });
+    }
+
+    deleteBankDetail = [];
+    function deleteBankDet(bankId,rowId) {
+        deleteBankDetail.push(bankId);
+        document.getElementById("deleteBankDetail").value=deleteBankDetail;
+        console.log(document.getElementById("deleteBankDetail").value)
     }
 </script>
