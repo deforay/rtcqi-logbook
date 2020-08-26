@@ -345,4 +345,14 @@ CREATE TABLE `bank_details` (
  ALTER TABLE `inventory_stock` ADD `sl_number` INT(11) NULL DEFAULT NULL AFTER `batch_number`;
  ALTER TABLE `inventory_stock` ADD `manufacturing_date` DATE NULL DEFAULT NULL AFTER `sl_number`;
  ALTER TABLE `inventory_stock` ADD `inventory_upload_file` VARCHAR(500) NULL DEFAULT NULL AFTER `manufacturing_date`;
+ 
+ --sriram 26 AUG
+ CREATE TABLE `global_config` (
+`config_id` tinyint(11) NOT NULL AUTO_INCREMENT,
+`display_name` varchar(255) DEFAULT NULL,
+`global_name` varchar(255) DEFAULT NULL,
+`global_value` varchar(255) DEFAULT NULL,
+PRIMARY KEY (`config_id`)
+);
 
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Email', 'email', 'admin@asmusa.org')

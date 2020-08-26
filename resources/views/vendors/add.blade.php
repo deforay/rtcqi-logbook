@@ -190,10 +190,10 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Email
+                                                <h5>Email<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="email" id="vendorEmail" class="form-control isEmail" autocomplete="off" placeholder="Enter Vendor Email" name="vendorEmail" title="Please Enter Valid Email">
+                                                    <input type="email" id="vendorEmail" onblur="checkNameValidation('vendors','email', this.id,'','Entered mail id is already exist.')" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Vendor Email" name="vendorEmail" title="Please Enter Valid Vendor Email">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -566,6 +566,41 @@
                 insRow();
             }
         });
+    }
+    function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
     }
 </script>
 @endsection
