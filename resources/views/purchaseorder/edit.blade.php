@@ -166,6 +166,7 @@ foreach($result as $branchList)
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        @if(session('loginType') === 'users')
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Notes<span class="mandatory">*</span>
@@ -175,6 +176,7 @@ foreach($result as $branchList)
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        @endif
                                     </div>
 
                                     <div class="col-md-12">
