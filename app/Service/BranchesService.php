@@ -49,6 +49,15 @@ class BranchesService
         $result = $model->fetchAllActiveBranches();
         return $result;
 	}
+
+	//get Branches By User
+	public function getBranchesByUser()
+    {
+		$model = new BranchesTable();
+        $result = $model->fetchBranchesByUser();
+        return $result;
+	}
+
 	//Get Particular Branches Details
 	public function getBranchesById($id)
 	{
