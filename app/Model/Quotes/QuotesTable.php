@@ -217,7 +217,14 @@ class QuotesTable extends Model
         $rfqNumber=$data[0]->rfq_number;
         $quoteNumber=$data[0]->quote_number;
         $vendorName=$data[0]->vendor_name;
-        $email='admin@asmusa.org';
+        $email='';
+        $global = DB::table('global_config')
+        ->where('global_config.global_name', '=', 'email')
+        ->select('global_value')
+        ->get();
+        $email = $global[0]->global_value;
+
+        // $email='admin@asmusa.org';
         // $email=$data[0]->email;
         
         $mailData = DB::table('mail_template')
