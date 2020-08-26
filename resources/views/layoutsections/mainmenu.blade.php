@@ -28,12 +28,19 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
     }
     if (isset($role['App\Http\Controllers\Countries\CountriesController']['index']) && ($role['App\Http\Controllers\Countries\CountriesController']['index'] == "allow"))
         $manage .= '<li id="li-countries"><a class="menu-item" href="/countries/">Countries</a></li>';
+
     if (isset($role['App\Http\Controllers\Vendors\VendorsController']['index']) && ($role['App\Http\Controllers\Vendors\VendorsController']['index'] == "allow"))
         $manage .= '<li id="li-vendors"><a class="menu-item" href="/vendors/">Vendors</a></li>';
+
     if (isset($role['App\Http\Controllers\VendorsType\VendorsTypeController']['index']) && ($role['App\Http\Controllers\VendorsType\VendorsTypeController']['index'] == "allow"))
         $manage .= '<li id="li-vendorstype"><a class="menu-item" href="/vendorstype/">Vendors Type</a></li>';
+
     if (isset($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['index']) && ($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['index'] == "allow"))
         $manage .= '<li id="li-mailtemplate"><a class="menu-item" href="/mailtemplate/">Mail Template</a></li>';
+
+    if (isset($role['App\Http\Controllers\Item\ItemController']['index']) && ($role['App\Http\Controllers\Item\ItemController']['index'] == "allow"))
+        $manage .= '<li id="li-item"><a class="menu-item" href="/item/" >Item</a>
+        </li>';
     $manage .= '</ul></li>';
 }
 
@@ -41,9 +48,6 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 if ((isset($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['index']) && ($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\ItemType\\ItemTypeController']['index']) && ($role['App\\Http\\Controllers\\ItemType\\ItemTypeController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Unit\\UnitController']['index']) && ($role['App\\Http\\Controllers\\Unit\\UnitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\UnitConversion\\UnitConversionController']['index']) && ($role['App\\Http\\Controllers\\UnitConversion\\UnitConversionController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Brand\\BrandController']['index']) && ($role['App\\Http\\Controllers\\Brand\\BrandController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Item\\ItemController']['index']) && ($role['App\\Http\\Controllers\\Item\\ItemController']['index'] == "allow")) ) {
     $item .= '<li class=" nav-item" id="item"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.item.main">Item</span></a>
                 <ul class="menu-content">';
-    if (isset($role['App\Http\Controllers\Item\ItemController']['index']) && ($role['App\Http\Controllers\Item\ItemController']['index'] == "allow"))
-        $item .= '<li id="li-item"><a class="menu-item" href="/item/" >Item</a>
-        </li>';
     if (isset($role['App\Http\Controllers\ItemCategory\ItemCategoryController']['index']) && ($role['App\Http\Controllers\ItemCategory\ItemCategoryController']['index'] == "allow"))
         $item .= '<li id="li-itemCategory"><a class="menu-item" href="/itemCategory/" >Item Category</a>
         </li>';
