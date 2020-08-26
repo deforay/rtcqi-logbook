@@ -134,10 +134,10 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Locations<span class="mandatory">*</span>
+											<h5>Locations
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select locations">
+                                                <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select locations">
                                                 <option value="">Select Locations</option>
                                                 @foreach($branch as $type)
 													<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>

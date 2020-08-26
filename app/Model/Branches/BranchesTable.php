@@ -63,6 +63,25 @@ class BranchesTable extends Model
         return $data;
     }
 
+    
+    // Fetch All Active Branch es List
+    public function fetchBranchesByUser()
+    {
+        $user = DB::table('user_branch_map')->where('user_id','=',session('userId'))->get();
+        if(count($user)>0){
+            $data = DB::table('user_branch_map')
+                    ->join('branches', 'branches.branch_id', '=', 'user_branch_map.branch_id')
+                    ->where('user_branch_map.user_id','=',session('userId'))
+                    ->get();
+        }
+        else{
+            $data = DB::table('branches')
+                ->where('branch_status','=','active')
+                ->get();
+        }
+        return $data;
+    }
+
      // fetch particular Branch es details
      public function fetchBranchesById($id)
      {

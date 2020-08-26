@@ -47,7 +47,7 @@ class DeliveryScheduleController extends Controller
             $itemservice = new ItemService();
             $item = $itemservice->getAllActiveItem();
             $branchService = new BranchesService();
-            $branch = $branchService->getAllActiveBranches();
+            $branch = $branchService->getBranchesByUser();
             return view('deliveryschedule.addDeliverySchedule',array('purchase'=>$purchase,'item' => $item,'branch'=>$branch));
         }
     }
