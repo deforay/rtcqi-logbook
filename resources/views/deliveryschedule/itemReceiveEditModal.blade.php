@@ -43,7 +43,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/itemreceive/">Receive Item</a>
+                        <li class="breadcrumb-item"><a href="/itemreceive/">Receive Deliveries</a>
                         </li>
                     </ol>
                 </div>
@@ -76,7 +76,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Receive Item</h3>
+                            <h3 class="content-header-title mb-0">Receive Deliveries</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -144,8 +144,8 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                             <thead>
                                                 <tr>
                                                     <th style="width:10%;" class="pl-1 pr-0">Sl.No</th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Manufacturing<br> Date</th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Expiry Date</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Manufacturing<br> Date<span class="mandatory">*</span></th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Expiry Date<span class="mandatory">*</span></th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Batch No</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Received<br> Quantity<span class="mandatory">*</span></th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Quantity<span class="mandatory">*</span></th>
@@ -160,10 +160,10 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                         <input type="text" id="slNumber0" onkeypress="return isNumberKey(event);" class="form-control " autocomplete="off" placeholder="Sl No" name="slNumber[]" title="Please enter sl Number">
                                                     </td>
                                                     <td>
-                                                        <input type="text" id="manufacturingDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter Manufacturing Date" name="manufacturingDate[]" title="Please enter Manufacturing Date">
+                                                        <input type="text" id="manufacturingDate0" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter Manufacturing Date" name="manufacturingDate[]" title="Please enter Manufacturing Date">
                                                     </td>
                                                     <td>
-                                                        <input type="text" id="expiryDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
+                                                        <input type="text" id="expiryDate0" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
                                                     </td>
                                                     <td>
                                                         <input type="text" id="batchNo0" class="form-control " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">
