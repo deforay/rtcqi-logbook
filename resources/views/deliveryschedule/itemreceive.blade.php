@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/itemreceive/">Receive Item</a>
+                        <li class="breadcrumb-item"><a href="/itemreceive/">Receive Deliveries</a>
                         </li>
                     </ol>
                 </div>
@@ -53,7 +53,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Receive Item</h3>
+                            <h3 class="content-header-title mb-0">Receive Deliveries</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">

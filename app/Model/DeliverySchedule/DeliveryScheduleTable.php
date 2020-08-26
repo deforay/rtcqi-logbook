@@ -333,6 +333,8 @@ class DeliveryScheduleTable extends Model
     {
         $data = $request->all();
         // dd($data);
+        $manufacturingDate='';
+        $expiryDate='';
         $commonservice = new CommonService();
 
         $autoId = DB::table('delivery_schedule')
@@ -355,7 +357,8 @@ class DeliveryScheduleTable extends Model
             else{
                 $desc='';
             }
-            $expiryDate = $commonservice->dateFormat($data['expiryDate'][$i]);
+            $expiryDate         = $commonservice->dateFormat($data['expiryDate'][$i]);
+            $manufacturingDate  = $commonservice->dateFormat($data['manufacturingDate'][$i]);
             // $serviceDate = $commonservice->dateFormat($data['serviceDate'][$i]);
             $stk = DB::table('inventory_stock')
                     ->where('expiry_date', '=', $expiryDate)
@@ -372,7 +375,7 @@ class DeliveryScheduleTable extends Model
                             [
                                 'batch_number'            => $data['batchNo'][$i],
                                 'sl_number'               => $data['slNumber'][$i],
-                                'manufacturing_date'      => $commonservice->dateFormat($data['manufacturingDate'][$i]),
+                                'manufacturing_date'      => $manufacturingDate,
                                 'stock_quantity'          => $rQty,
                                 'updated_by'              => session('userId'),
                                 'updated_on'              => $commonservice->getDateTime(),
@@ -384,7 +387,7 @@ class DeliveryScheduleTable extends Model
                             [
                                 'item_id'                 => $data['itemId'],
                                 'sl_number'               => $data['slNumber'][$i],
-                                'manufacturing_date'      => $commonservice->dateFormat($data['manufacturingDate'][$i]),
+                                'manufacturing_date'      => $manufacturingDate,
                                 'expiry_date'             => $expiryDate,
                                 'batch_number'            => $data['batchNo'][$i],
                                 // 'service_date'         => $serviceDate,
