@@ -76,7 +76,7 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
     if (isset($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['index']) && ($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['index'] == "allow"))
         $procurement .= '<li id="li-deliveryschedule"><a class="menu-item" href="/deliveryschedule/" >Delivery Schedule</a></li>';
     if (isset($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['itemreceive']) && ($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['itemreceive'] == "allow"))
-        $procurement .= '<li id="li-itemreceive"><a class="menu-item" href="/itemreceive/" >Item Receive</a></li>';
+        $procurement .= '<li id="li-itemreceive"><a class="menu-item" href="/itemreceive/" >Receive Deliveries</a></li>';
     $procurement .= '</ul></li>';
 
 }
