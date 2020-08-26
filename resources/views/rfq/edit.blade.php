@@ -125,6 +125,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    @if(session('loginType') === 'users')
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Notes<span class="mandatory">*</span>
@@ -134,6 +135,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    @endif
                                 </div>
                                 <hr>
                                 <div class="col-md-12">

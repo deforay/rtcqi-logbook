@@ -108,6 +108,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    @if(session('loginType') === 'users')
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Notes<span class="mandatory">*</span>
@@ -117,6 +118,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    @endif
                                     <div class="col-md-12">
                                         <label class="col-md-2 label-control pl-0" for="mainContent" >Specification</label>
                                         <div class="form-group row" >
