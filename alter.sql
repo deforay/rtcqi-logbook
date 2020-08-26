@@ -314,7 +314,7 @@ ALTER TABLE `rfq_details` ADD `item_description` TEXT NULL AFTER `quantity`;
 ALTER TABLE `purchase_orders` CHANGE `quote_id` `quote_id` INT(11) NULL DEFAULT NULL;
 
 --Sudarmathi 24 Aug 2020
-ALTER TABLE `rfq_notes` ADD `rfq_notes` TEXT NULL AFTER `description`;
+ALTER TABLE `rfq` ADD `rfq_notes` TEXT NULL AFTER `description`;
 ALTER TABLE `quotes` ADD `quote_notes` TEXT NULL AFTER `quote_description`;
 ALTER TABLE `purchase_orders` ADD `purchase_order_notes` TEXT NULL AFTER `purchase_order_upload_file`;
 CREATE TABLE `bank_details` (
@@ -335,12 +335,14 @@ CREATE TABLE `bank_details` (
  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
  --Sudarmathi 25 Aug 2020
- ALTER TABLE `bank_details` ADD `account_holder_name` VARCHAR(255) NOT NULL AFTER `branch_id`, ADD `address` VARCHAR(500) NULL AFTER `account_holder_name`, ADD `city` VARCHAR(255) NULL AFTER `address`, ADD `country` VARCHAR(255) NULL AFTER `city`, ADD `iban` VARCHAR(255) NOT NULL AFTER `country`;
+ ALTER TABLE `bank_details` ADD `account_holder_name` VARCHAR(255) NOT NULL AFTER `bank_status`, ADD `address` VARCHAR(500) NULL AFTER `account_holder_name`, ADD `city` VARCHAR(255) NULL AFTER `address`, ADD `country` VARCHAR(255) NULL AFTER `city`, ADD `iban` VARCHAR(255) NOT NULL AFTER `country`;
  ALTER TABLE `bank_details` ADD `intermediary_bank` VARCHAR(255) NULL AFTER `iban`;
+ ALTER TABLE `bank_details` CHANGE `address` `bank_address` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ ALTER TABLE `bank_details` CHANGE `city` `bank_city` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ ALTER TABLE `bank_details` CHANGE `country` `bank_country` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ 
  --sriram 25 AUG
  ALTER TABLE `inventory_stock` ADD `sl_number` INT(11) NULL DEFAULT NULL AFTER `batch_number`;
  ALTER TABLE `inventory_stock` ADD `manufacturing_date` DATE NULL DEFAULT NULL AFTER `sl_number`;
  ALTER TABLE `inventory_stock` ADD `inventory_upload_file` VARCHAR(500) NULL DEFAULT NULL AFTER `manufacturing_date`;
- ALTER TABLE `bank_details` CHANGE `address` `bank_address` VARCHAR(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
- ALTER TABLE `bank_details` CHANGE `city` `bank_city` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
- ALTER TABLE `bank_details` CHANGE `country` `bank_country` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
