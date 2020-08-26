@@ -103,7 +103,7 @@ class VendorsController extends Controller
             $countriesResult = $countryService->getAllActiveCountries();
             $vendorsService = new VendorsService();
             $result = $vendorsService->getVendorsById($id);
-            return view('vendors.edit',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult));
+            return view('vendors.edit',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult,'id'=>$id));
         }
     }
 

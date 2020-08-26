@@ -85,7 +85,7 @@
                         <div class="card-content collapse show">
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
-                                <form class="form form-horizontal" role="form" name="editvendor" id="editvendor" method="post" action="/vendors/profile/{{base64_encode($vendors[0]->vendor_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                <form class="form form-horizontal" role="form" name="editvendor" id="editvendor" method="post" action="/vendors/profile/{{$id}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
                                     @php
                                     $fnct = "vendor_id##".($vendors[0]->vendor_id);

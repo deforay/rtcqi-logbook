@@ -139,7 +139,7 @@ $commonservice = new CommonService();
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                    <form class="form form-horizontal" role="form" name="editvendor" id="editvendor" method="post" action="/vendors/edit/{{base64_encode($vendors[0]->vendor_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                    <form class="form form-horizontal" role="form" name="editvendor" id="editvendor" method="post" action="/vendors/edit/{{($id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
                                     @php
                                     $fnct = "vendor_id##".($vendors[0]->vendor_id);
