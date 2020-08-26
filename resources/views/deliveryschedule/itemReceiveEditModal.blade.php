@@ -41,7 +41,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">Procurement
                         </li>
                         <li class="breadcrumb-item"><a href="/itemreceive/">Receive Deliveries</a>
                         </li>
