@@ -209,6 +209,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        @if(session('loginType') === 'users')
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Quote Notes<span class="mandatory">*</span>
@@ -218,6 +219,7 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        @endif
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Currently in Stock?<span class="mandatory">*</span>

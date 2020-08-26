@@ -151,6 +151,7 @@ td {
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        @if(session('loginType') === 'users')
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Notes<span class="mandatory">*</span>
@@ -160,6 +161,7 @@ td {
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        @endif
                                     </div>
                                     <div class="col-md-12">
                                         <label class="col-md-2 label-control pl-0" for="description" >Specification</label>
