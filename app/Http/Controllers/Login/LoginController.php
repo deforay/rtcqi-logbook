@@ -48,7 +48,7 @@ class LoginController extends Controller
                 $vendorsId=base64_encode(session('userId'));
                 $vendorsService = new VendorsService();
                 $result = $vendorsService->getVendorsById($vendorsId);
-                return view('login.profile',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult));
+                return view('login.profile',array('vendors'=>$result,'vendors_type'=>$vendorTypeResult,'countries'=>$countriesResult,'id'=>$vendorsId));
                 
             }
             else
