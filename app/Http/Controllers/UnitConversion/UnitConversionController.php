@@ -49,11 +49,11 @@ class UnitConversionController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        // if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['edit']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['edit'] == "allow")){
+                        if (isset($role['App\Http\Controllers\UnitConversion\UnitConversionController']['edit']) && ($role['App\Http\Controllers\UnitConversion\UnitConversionController']['edit'] == "allow")){
                            $button .= '<a href="/unitconversion/edit/'. base64_encode($data->conversion_id).'" name="edit" id="'.$data->conversion_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        // }else{
-                        //     $button .= '';
-                        // }
+                        }else{
+                            $button .= '';
+                        }
                         if($data->unit_conversion_status == 'active'){
                             $buttonStatus="changeStatus('uom_conversion','conversion_id',$data->conversion_id,'unit_conversion_status', 'inactive', 'unitConversionList')";
                            $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->conversion_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Inactivate</button>';
