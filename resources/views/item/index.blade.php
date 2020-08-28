@@ -122,7 +122,7 @@
             },
             columns: [
                     
-                    { data: 'item_name', name: 'item_name',className:'firstcaps' },
+                    { data: 'item_name', name: 'item_name' },
                     { data: 'item_code', name: 'item_code' },
                     { data: 'item_type', name: 'item_type',className:'firstcaps' },
                     { data: 'brand_name', name: 'brand_name',className:'firstcaps' },
