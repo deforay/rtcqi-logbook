@@ -356,3 +356,8 @@ PRIMARY KEY (`config_id`)
 );
 
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Email', 'email', 'admin@asmusa.org')
+
+
+--Sudarmathi 26 AUG 2020
+
+ALTER TABLE `mail_template` CHANGE `mail_purpose` `mail_purpose` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;

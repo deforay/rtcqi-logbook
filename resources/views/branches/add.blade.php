@@ -149,17 +149,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    
-                                    <div class="col-xl-5 col-lg-12">
-										<fieldset>
-											<h5>Contact Mail
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="contactMail" name="contactMail" class="form-control" autocomplete="off" placeholder="Enter contact mail" title="Please enter contact mail">
-											</div>
-										</fieldset>
-                                    </div>
-                                    <div class="col-xl-3 col-lg-12">
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Location Status<span class="mandatory">*</span>
                                             </h5>
@@ -170,7 +160,7 @@
                                                 </select>
                                             </div>
 										</fieldset>
-                                    </div>
+									</div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/branches" >
