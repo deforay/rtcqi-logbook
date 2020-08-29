@@ -39,6 +39,8 @@ class DeliveryScheduleTable extends Model
             $purchase = DB::table('purchase_order_details')
                         // ->select($qtySum)
                         ->where('po_id','=', $data['po'])->get();
+            $poNum = $purchase[0]->po_number;
+            // dd($poNum);
             for($k=0;$k<count($purchase);$k++){
                 $delQty = DB::table('delivery_schedule')
                         ->select($delQtySum)
@@ -69,8 +71,23 @@ class DeliveryScheduleTable extends Model
 
     public function addDeliverySchedule($request){
         $data = $request->all();
-        // dd(count($data['expectedDelivery']));
+        $mailItemDetails = '';
+        $locEmail = '';
+        // dd($data);
         $commonservice = new CommonService();
+        $mailItemDetails .= '<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th><strong>Item</strong></th>
+                                            <th><strong>Quantity</strong></th>
+                                            <th><strong>Delivery<br/>Date</strong></th>
+                                            <th><strong>Delivery<br/>Quantity</strong></th>
+                                            <th><strong>Delivery<br/>Mode</strong></th>
+                                            <th><strong>Location</strong></th>
+                                            <th><strong>Comments</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
         for($k=0;$k<count($data['expectedDelivery']);$k++){
             // print_r("ex".$k);
             if(isset($data['expectedDelivery'][$k]) && $data['expectedDelivery'][$k]!=null){
@@ -89,12 +106,39 @@ class DeliveryScheduleTable extends Model
                         'delivery_schedule_status' => 'pending for shipping',
                     ]);
 
+                $branchEmail = DB::table('branches')
+                            ->where('branch_id','=', $data['dbranches'][$k])->get();
+                
+                if($locEmail){
+                    $locEmail .= $locEmail.','.$branchEmail[0]->email;
+                }
+                else{
+                    $locEmail = $branchEmail[0]->email;
+                }
+                // dd($locEmail);
+
+                $mailItemDetails .= '<tr>
+                                    <td>'.$data['itemNames'][$k].'</td>
+                                    <td>'.$data['quantityM'][$k].'</td>
+                                    <td>'.$data['expectedDelivery'][$k].'</td>
+                                    <td>'.$data['deliverQty'][$k].'</td>
+                                    <td>'.$data['deliveryMode'][$k].'</td>
+                                    <td>'.$branchEmail[0]->branch_name.'</td>
+                                    <td>'.$data['comments'][$k].'</td>
+                                </tr>';
+                
+
                     $totalDelQty = 0;
                     $totalPodQty = 0;
                     $delQtySum = DB::raw('SUM(delivery_schedule.delivery_qty) as totQty');
                     $purchase = DB::table('purchase_order_details')
                                 // ->select($qtySum)
-                                ->where('po_id','=', $data['purchaseOrder'])->get();
+                                ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                                ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
+                                ->where('purchase_order_details.po_id','=', $data['purchaseOrder'])->get();
+                    $poNum = $purchase[0]->po_number;
+                    $vendorName = $purchase[0]->vendor_name;
+                    // dd($poNum);
                     for($j=0;$j<count($purchase);$j++){
                         $delQty = DB::table('delivery_schedule')
                                 ->select($delQtySum)
@@ -120,6 +164,52 @@ class DeliveryScheduleTable extends Model
                 $commonservice = new CommonService();
                 $commonservice->eventLog(session('userId'), $autoId, 'Delivery Scheduler-add', 'Add Delivery Schedule ' . $data['podId'][$k], 'Add Delivery Schedule');
             }
+        }
+        $mailItemDetails .= '</tbody></table>';
+        $global = DB::table('global_config')
+        ->where('global_config.global_name', '=', 'email')
+        ->select('global_value')
+        ->get();
+        $adminMail = $global[0]->global_value;
+        $toEmail = $locEmail.','.$adminMail;
+        // dd($toEmail);
+        $mailData = DB::table('mail_template')
+        ->where('mail_temp_id', '=', 5)
+        ->get();
+        // dd($mailData);
+
+        if(count($mailData)>0)
+        {
+            $mailSubject = trim($mailData[0]->mail_subject);
+            $subject = $mailSubject;
+            $subject = str_replace("&nbsp;", "", strval($subject));
+            $subject = str_replace("&amp;nbsp;", "", strval($subject));
+            $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+            $mainContent = array( '##PO-NUMBER##','##ITEM-DETAILS##');
+            $mainReplace = array( $poNum,$mailItemDetails);
+            $mailContent = trim($mailData[0]->mail_content);
+            $message = str_replace($mainContent, $mainReplace, $mailContent);
+            // $message = str_replace("&nbsp;", "", strval($message));
+            $message = str_replace("&amp;nbsp;", "", strval($message));
+            $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+            $createdon = date('Y-m-d H:i:s');
+            
+            // dd($message);
+            $response = DB::table('temp_mail')
+            ->insertGetId(
+                [
+                    'from_mail' => $mailData[0]->mail_from,
+                    'to_email' => $toEmail,
+                    'subject' => $mailData[0]->mail_subject,
+                    'cc' => $mailData[0]->mail_cc,
+                    'bcc' => $mailData[0]->mail_bcc,
+                    'from_full_name' => $mailData[0]->from_name,
+                    'status' => 'pending',
+                    'datetime' => $createdon,
+                    'message' => $message,
+                    'customer_name' => $vendorName,
+                    // 'attachment' => $attachment,
+                ]);
         }
         // die;
         return $autoId;

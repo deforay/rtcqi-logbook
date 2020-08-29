@@ -52,9 +52,12 @@ class SendMailCron extends Command
             $updateTempMail = DB::table('temp_mail')->where('status','=', 'pending')
                                 ->update($mailData);
             foreach($tempMail as $mail){
+                
+                // dd($toEmail);
                 $msg['msg'] =  $mail->message;
                 Mail::send('mailtemplate.email', $msg, function ($message) use ($mail) {
-                    $send = $message->to($mail->to_email, $mail->from_full_name)
+                    $toEmail = explode(',',$mail->to_email);
+                    $send = $message->to($toEmail, $mail->from_full_name)
                                     ->subject($mail->subject);
                             if($mail->cc){
                                 $send->cc($mail->cc);

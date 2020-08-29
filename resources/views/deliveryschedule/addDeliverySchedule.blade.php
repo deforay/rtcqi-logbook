@@ -262,12 +262,14 @@ td {
                         for(i=0;i<data.length;i++)
                         {
                             j = 0;
+                            arg = data[i]['item_id']+"@"+data[i]['item_name']+"@"+data[i]['quantity'];
+                            console.log(arg)
                             details +='<div id="addDeliveryScheduleRow'+i+'"><div class="row" style="padding-left: 0.5rem !important;">\
                                             <div class="col-xl-4 col-lg-12">\
-                                            <h4><b>Item : </b> <span id="itemName'+i+'" class="spanFont">'+data[i]['item_name']+'</span></h4>\
+                                            <h4><b>Item : </b><input type="hidden" id="itemNames'+i+'" name="itemNames[]" value="'+data[i]['item_name']+'" ><span id="itemName'+i+'" class="spanFont" name="itemName'+i+'">'+data[i]['item_name']+'</span></h4>\
                                             </div>\
                                             <div class="col-xl-4 col-lg-12">\
-                                                <h4><b>Quantity : </b><span id="quantityDis'+i+'" class="spanFont">'+data[i]['quantity']+'</span></h4>\
+                                                <h4><b>Quantity : </b><input type="hidden" id="quantityM'+i+'" name="quantityM[]" value="'+data[i]['quantity']+'" ><span id="quantityDis'+i+'" name="quantityDis'+i+'" class="spanFont">'+data[i]['quantity']+'</span></h4>\
                                             </div>\
                                         </div>\
                                         <br/>'
@@ -295,7 +297,7 @@ td {
                                                             <td><select class="form-control delivClass'+i+' select2" autocomplete="off" style="width:100%;" id="dbranches'+i+'" name="dbranches[]" title="Please select locations">\
                                                             <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select></td>\
                                                             <td><input type="text" id="comments'+i+'" class="form-control delivClass'+i+' hideClass" name="comments[]" placeholder="Enter Comments"  title="Please Enter Comments"></td>\
-                                                            <td><a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow('+i+','+data[i]['item_id']+','+data[i]['pod_id']+');"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;\
+                                                            <td><a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow('+i+',\''+arg+'\','+data[i]['pod_id']+');"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;\
                                                             <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode,'+i+','+data[i]['item_id']+','+data[i]['pod_id']+');"><i class="ft-minus"></i></a></td>\
                                                             <input type="hidden" id="qtyMax'+i+'" class="qtyMax'+i+'" value=""><input type="hidden" id="hiddenPo_id'+i+'" name="hiddenPo_id[]" value="'+data[i]['pod_id']+'">\
                                                         </tr>\
@@ -439,6 +441,10 @@ td {
     // let rowCount = length;
     // rowCount = length;
     function insRow(id,item,podId) {
+        itemDt = item.split('@');
+        itemID = itemDt[0];
+        itemName = itemDt[1];
+        qtyV = itemDt[2];
         qtymax = $('#qtyMax'+id).val();
         // rowCount++;
         rl = document.getElementById("delivDetails"+id).rows.length;
@@ -453,7 +459,9 @@ td {
         var h = a.insertCell(5);
         // var e = a.insertCell(6);
         rl = document.getElementById("delivDetails"+id).rows.length - 1;
-        g.innerHTML='<input type="hidden" id="item'+rowCount+'" name="item[]" value="'+item+'">\
+        g.innerHTML='<input type="hidden" id="item'+rowCount+'" name="item[]" value="'+itemID+'">\
+                    <input type="hidden" id="itemNames'+rowCount+'" name="itemNames[]" value="'+itemName+'">\
+                    <input type="hidden" id="quantityM'+rowCount+'" name="quantityM[]" value="'+qtyV+'">\
                     <input type="hidden" id="podId'+rowCount+'" name="podId[]" value="'+podId+'">\
                     <input type="text" id="expectedDelivery'+rowCount+'" onchange="addValidatingClass('+rowCount+',this.value)" class="form-control datepicker delivClass'+rowCount+'" autocomplete="off" placeholder="Select Expected Delivery Date" name="expectedDelivery[]" title="Please Select Expected Delivery Date">';
         b.innerHTML = '<input type="number" id="deliverQty' + rowCount + '" class="form-control delivClass'+rowCount+' quantityTot'+id+'" min=0 autocomplete="off" placeholder="Enter Delivery Quantity" name="deliverQty[]" title="Please Delivery Quantity" oninput="validateQty('+rowCount+',this.value)" >';
