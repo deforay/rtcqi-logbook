@@ -389,7 +389,7 @@ class RfqTable extends Model
 
     public function changeQuotesStatus($request)
     {
-
+        $commonservice = new CommonService();
         $tableName = $request['tableName'];
         $fieldIdName = $request['fieldIdName'];
         $fieldIdValue = $request['fieldIdValue'];
@@ -411,7 +411,7 @@ class RfqTable extends Model
         $email=$data[0]->email;
         $rfqdescription=$rfqdata[0]->description;
         $uploadfile=$data[0]->rfq_upload_file;
-
+        $rfqDate=$commonservice->humanDateFormat($rfqdata[0]->rfq_issued_on);
 
         try {
             if ($fieldValue != "") {
@@ -426,7 +426,7 @@ class RfqTable extends Model
                     ->where('approve_status', '=', 'no')
                     ->update($updateQuotesData);
                 //Event Log
-                $commonservice = new CommonService();
+                
                 $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName . '-' . $fieldValue, $tableName . ' changed to ' . $fieldValue, $tableName);
 
               //added in mail queue
@@ -454,8 +454,8 @@ class RfqTable extends Model
                     $subject = str_replace("&nbsp;", "", strval($subject));
                     $subject = str_replace("&amp;nbsp;", "", strval($subject));
                     $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-                    $mainContent = array('##VENDOR-NAME##', '##RFQ-NUMBER##');
-                    $mainReplace = array($vendorName, $rfqNumber);
+                    $mainContent = array('##VENDOR-NAME##', '##RFQ-NUMBER##','##RFQ-DATE##');
+                    $mainReplace = array($vendorName, $rfqNumber,$rfqDate);
                     $mailContent = trim($mailData[0]->mail_content);
                     $message = str_replace($mainContent, $mainReplace, $mailContent);
                     $message = str_replace("&nbsp;", "", strval($message));
