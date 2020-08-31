@@ -21,6 +21,9 @@ class RfqTable extends Model
         $filePath = '';
         $fileName = '';
         $issuedOn = '';
+        if(isset($data['iNotes']) && $data['iNotes']!=''){
+            $iNotes = $data['iNotes'];
+        }
         if ($request->input('rfqNumber')!=null && trim($request->input('rfqNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDate = $commonservice->dateFormat($data['lastdate']);
@@ -32,7 +35,7 @@ class RfqTable extends Model
                 'rfq_status' => 'draft',
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
-                'rfq_notes' => $data['iNotes'],
+                'rfq_notes' => $iNotes,
                 ]
             );
 
@@ -270,6 +273,9 @@ class RfqTable extends Model
         if ($params->input('rfqNumber') != null && trim($params->input('rfqNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDate = $commonservice->dateFormat($data['lastdate']);
+            if(isset($data['iNotes']) && $data['iNotes']!=''){
+                $iNotes = $data['iNotes'];
+            }
             $rfq = array(
                 'rfq_number' => $data['rfqNumber'],
                 'description' => $data['description'],
@@ -278,7 +284,7 @@ class RfqTable extends Model
                 'rfq_status' => 'draft',
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime(),
-                'rfq_notes' => $data['iNotes'],
+                'rfq_notes' => $iNotes,
             );
            
             $rfqUp = DB::table('rfq')

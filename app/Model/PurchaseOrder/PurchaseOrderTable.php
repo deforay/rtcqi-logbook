@@ -51,6 +51,9 @@ class PurchaseOrderTable extends Model
         if ($request->input('poNumber') != null && trim($request->input('poNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
+            if(isset($data['poNotes']) && $data['poNotes']!=''){
+                $poNotes = $data['poNotes'];
+            }
             $poId = DB::table('purchase_orders')->insertGetId(
                 [
                     'po_number'      => $data['poNumber'],
@@ -67,7 +70,7 @@ class PurchaseOrderTable extends Model
                     'last_date_of_delivery' => $lastDelDate,
                     'delivery_location' => $data['deliveryLoc'],
                     'purchase_order_description' => $data['description'],
-                    'purchase_order_notes'       => $data['poNotes'],
+                    'purchase_order_notes'       => $poNotes,
                 ]
             );
 
@@ -264,6 +267,9 @@ class PurchaseOrderTable extends Model
         if ($request->input('poNumber') != null && trim($request->input('poNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
+            if(isset($data['poNotes']) && $data['poNotes']!=''){
+                $poNotes = $data['poNotes'];
+            }
             $poId = DB::table('purchase_orders')->insertGetId(
                 [
                     'po_number'                  => $data['poNumber'],
@@ -280,7 +286,7 @@ class PurchaseOrderTable extends Model
                     'last_date_of_delivery'      => $lastDelDate,
                     'delivery_location'          => $data['deliveryLoc'],
                     'purchase_order_description' => $data['description'],
-                    'purchase_order_notes'       => $data['poNotes'],
+                    'purchase_order_notes'       => $poNotes,
                 ]
             );
 
@@ -561,6 +567,9 @@ class PurchaseOrderTable extends Model
             $commonservice = new CommonService();
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
+            if(isset($data['poNotes']) && $data['poNotes']!=''){
+                $poNotes = $data['poNotes'];
+            }
             $params = array(
                 'po_number' => $data['poNumber'],
                 'po_issued_on'    => $issuedOn,
@@ -574,7 +583,7 @@ class PurchaseOrderTable extends Model
                 'last_date_of_delivery' => $lastDelDate,
                 'delivery_location' => $data['deliveryLoc'],
                 'purchase_order_description' => $data['description'],
-                'purchase_order_notes'       => $data['poNotes'],
+                'purchase_order_notes'       => $poNotes,
             );
 
             $purchaseOrder = DB::table('purchase_orders')
