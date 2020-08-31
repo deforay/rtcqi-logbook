@@ -142,6 +142,9 @@ class QuotesTable extends Model
                 $ordUp = DB::table('quote_details') ->where('qd_id','=', $data['qdId'][$i])
                 ->update($quoteDetailsData);
             }
+            if(isset($data['quoteNotes'])&&$data['quoteNotes']!=''){
+                $quoteNotes = $data['quoteNotes'];
+            }
             $response = DB::table('quotes')
             ->where('quote_id', '=', $id)
             ->update(
@@ -152,7 +155,7 @@ class QuotesTable extends Model
                     'responded_on' => $commonservice->getDateTime(),
                     'stock_available' => $data['stockable'],
                     'eta_if_no_stock' => $data['notInStock'],
-                    'quote_notes' => $data['quoteNotes'],
+                    'quote_notes' => $quoteNotes,
                     'vendor_notes' => $data['vendorNotes'],
                     'mode_of_delivery' => $data['deliveryMode'],
                     'estimated_date_of_delivery' => $commonservice->dateFormat($data['estimatedDate']),
