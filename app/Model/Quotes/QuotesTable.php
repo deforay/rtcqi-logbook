@@ -145,6 +145,9 @@ class QuotesTable extends Model
             if(isset($data['quoteNotes'])&&$data['quoteNotes']!=''){
                 $quoteNotes = $data['quoteNotes'];
             }
+            else{
+                $quoteNotes = '';
+            }
             $response = DB::table('quotes')
             ->where('quote_id', '=', $id)
             ->update(

@@ -54,6 +54,9 @@ class PurchaseOrderTable extends Model
             if(isset($data['poNotes']) && $data['poNotes']!=''){
                 $poNotes = $data['poNotes'];
             }
+            else{
+                $poNotes = '';
+            }
             $poId = DB::table('purchase_orders')->insertGetId(
                 [
                     'po_number'      => $data['poNumber'],
@@ -269,6 +272,9 @@ class PurchaseOrderTable extends Model
             $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
             if(isset($data['poNotes']) && $data['poNotes']!=''){
                 $poNotes = $data['poNotes'];
+            }
+            else{
+                $poNotes = '';
             }
             $poId = DB::table('purchase_orders')->insertGetId(
                 [
@@ -569,6 +575,9 @@ class PurchaseOrderTable extends Model
             $lastDelDate = $commonservice->dateFormat($data['lastDeliveryDate']);
             if(isset($data['poNotes']) && $data['poNotes']!=''){
                 $poNotes = $data['poNotes'];
+            }
+            else{
+                $poNotes = '';
             }
             $params = array(
                 'po_number' => $data['poNumber'],
