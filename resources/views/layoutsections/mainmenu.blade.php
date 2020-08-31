@@ -38,6 +38,9 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
     if (isset($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['index']) && ($role['App\\Http\\Controllers\\MailTemplate\\MailTemplateController']['index'] == "allow"))
         $manage .= '<li id="li-mailtemplate"><a class="menu-item" href="/mailtemplate/">Mail Template</a></li>';
 
+    if (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow"))
+        $manage .= '<li id="li-globalconfig"><a class="menu-item" href="/globalconfig/">Global Config</a></li>';
+
     if (isset($role['App\Http\Controllers\Item\ItemController']['index']) && ($role['App\Http\Controllers\Item\ItemController']['index'] == "allow"))
         $manage .= '<li id="li-item"><a class="menu-item" href="/item/" >Item</a>
         </li>';

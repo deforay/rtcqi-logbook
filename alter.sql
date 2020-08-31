@@ -361,3 +361,9 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 --Sudarmathi 26 AUG 2020
 
 ALTER TABLE `mail_template` CHANGE `mail_purpose` `mail_purpose` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
+
+--Sudarmathi 31 AUG 2020
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'Global Config', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'edit', 'Edit'), ('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'index', 'Access');
+ALTER TABLE `global_config` ADD `allow_admin_edit` VARCHAR(10) NOT NULL DEFAULT 'no' AFTER `global_value`, ADD `is_numeric` VARCHAR(10) NOT NULL DEFAULT 'no' AFTER `allow_admin_edit`;
+UPDATE `global_config` SET `allow_admin_edit` = 'yes' WHERE `global_config`.`config_id` = 1;
