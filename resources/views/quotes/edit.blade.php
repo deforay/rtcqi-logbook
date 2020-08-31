@@ -113,19 +113,19 @@ if(isset($result[0]->mode_of_delivery)){
                                         <div class="col-xl-4 col-lg-12">
                                             <h4><b>Quotes Status : </b> <span id="quotesStatus" class="spanFont">{{ucfirst($result[0]->quotes_status) }} </span></h4>
                                         </div>
-                                        <div class="col-xl-4 col-lg-12">
+                                        {{-- <div class="col-xl-4 col-lg-12">
                                             <h4><b>Delivery Mode : </b><span id="deliveryMode" class="spanFont">{{$result[0]->mode_of_delivery}}</span></h4>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-xl-4 col-lg-12">
                                             <h4><b>Responded On : </b><span id="respondedDate" class="spanFont">{{$respondedOn}}</span></h4>
                                         </div>
                                     </div>
                                     <br/>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                          <div class="col-xl-6 col-lg-12">
                                             <h4><b>Estimated Delivery Date : </b><span id="estimatedDate" class="spanFont">{{$deliveryDate}}</span></h4>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <br/>
                                     <div class="col-md-12">
                                         <label class="col-md-2 label-control pl-0" for="description" ><h4><b>Specification</b></h4></label>
