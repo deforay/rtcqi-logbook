@@ -84,6 +84,8 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                                     <h5>Item Name<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
+                                    <input type="hidden" id="itemNames" name="itemNames" value="{{$result[0]->item_name}}">
+                                    <input type="hidden" id="quantityM" name="quantityM" value="{{$result[0]->quantity}}">
                                     <select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="ItemId" name="ItemId">
                                         <option value="{{$result[0]->item_id}}">{{$result[0]->item_name}}</option>
                                     </select>

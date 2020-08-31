@@ -75,7 +75,7 @@ class DeliveryScheduleTable extends Model
         $locEmail = '';
         // dd($data);
         $commonservice = new CommonService();
-        $mailItemDetails .= '<table border="1" cellpadding="1" cellspacing="1" style="width:100%">
+        $mailItemDetails .= '<table border="1" style="width:100%; border-collapse: collapse;">
                                         <thead>
                                         <tr>
                                             <th><strong>Item</strong></th>
@@ -349,6 +349,47 @@ class DeliveryScheduleTable extends Model
         // dd($data);
         $commonservice = new CommonService();
         $expectedDelivery = $commonservice->dateFormat($data['expectedDelivery']);
+        $locEmail = '';
+        $mailItemDetails = '';
+        $mailItemDetails .= '<table border="1" style="width:100%; border-collapse: collapse;">
+                                        <thead>
+                                        <tr>
+                                            <th><strong>Item</strong></th>
+                                            <th><strong>Quantity</strong></th>
+                                            <th><strong>Delivery<br/>Date</strong></th>
+                                            <th><strong>Delivery<br/>Quantity</strong></th>
+                                            <th><strong>Delivery<br/>Mode</strong></th>
+                                            <th><strong>Location</strong></th>
+                                            <th><strong>Comments</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+        $branchEmail = DB::table('branches')
+                        ->where('branch_id','=', $data['branches'])->get();
+                        
+        if($locEmail){
+            $locEmail .= $locEmail.','.$branchEmail[0]->email;
+        }
+        else{
+            $locEmail = $branchEmail[0]->email;
+        }
+        $mailItemDetails .= '<tr>
+                                <td>'.$data['itemNames'].'</td>
+                                <td>'.$data['quantityM'].'</td>
+                                <td>'.$data['expectedDelivery'].'</td>
+                                <td>'.$data['deliverQty'].'</td>
+                                <td>'.$data['deliveryMode'].'</td>
+                                <td>'.$branchEmail[0]->branch_name.'</td>
+                                <td>'.$data['comments'].'</td>
+                            </tr>';
+        $mailItemDetails .= '</tbody></table>';
+        $purchase = DB::table('purchase_order_details')
+                    // ->select($qtySum)
+                    ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                    ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
+                    ->where('purchase_order_details.po_id','=', $data['poId'])->get();
+        $poNum = $purchase[0]->po_number;
+        $vendorName = $purchase[0]->vendor_name;
         // $totalDelQty = 0;
         // $totalPodQty = 0;
         // $delQtySum = DB::raw('SUM(delivery_schedule.delivery_qty) as totQty');
@@ -399,6 +440,52 @@ class DeliveryScheduleTable extends Model
                 'created_on'      => $commonservice->getDateTime(),
             ]
         );
+
+        $global = DB::table('global_config')
+                    ->where('global_config.global_name', '=', 'email')
+                    ->select('global_value')
+                    ->get();
+        $adminMail = $global[0]->global_value;
+        $toEmail = $locEmail.','.$adminMail;
+        // dd($toEmail);
+        $mailData = DB::table('mail_template')
+                    ->where('mail_temp_id', '=', 6)
+                    ->get();
+        // dd($mailData);
+
+        if(count($mailData)>0)
+        {
+            $mailSubject = trim($mailData[0]->mail_subject);
+            $subject = $mailSubject;
+            $subject = str_replace("&nbsp;", "", strval($subject));
+            $subject = str_replace("&amp;nbsp;", "", strval($subject));
+            $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+            $mainContent = array( '##PO-NUMBER##','##ITEM-DETAILS##');
+            $mainReplace = array( $poNum,$mailItemDetails);
+            $mailContent = trim($mailData[0]->mail_content);
+            $message = str_replace($mainContent, $mainReplace, $mailContent);
+            // $message = str_replace("&nbsp;", "", strval($message));
+            $message = str_replace("&amp;nbsp;", "", strval($message));
+            $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+            $createdon = date('Y-m-d H:i:s');
+            
+            // dd($message);
+            $response = DB::table('temp_mail')
+            ->insertGetId(
+                [
+                    'from_mail' => $mailData[0]->mail_from,
+                    'to_email' => $toEmail,
+                    'subject' => $mailData[0]->mail_subject,
+                    'cc' => $mailData[0]->mail_cc,
+                    'bcc' => $mailData[0]->mail_bcc,
+                    'from_full_name' => $mailData[0]->from_name,
+                    'status' => 'pending',
+                    'datetime' => $createdon,
+                    'message' => $message,
+                    'customer_name' => $vendorName,
+                    // 'attachment' => $attachment,
+                ]);
+        }
         
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
