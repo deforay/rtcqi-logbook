@@ -367,3 +367,4 @@ INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'edit', 'Edit'), ('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'index', 'Access');
 ALTER TABLE `global_config` ADD `allow_admin_edit` VARCHAR(10) NOT NULL DEFAULT 'no' AFTER `global_value`, ADD `is_numeric` VARCHAR(10) NOT NULL DEFAULT 'no' AFTER `allow_admin_edit`;
 UPDATE `global_config` SET `allow_admin_edit` = 'yes' WHERE `global_config`.`config_id` = 1;
+ALTER TABLE `purchase_orders` DROP `upload_path`;

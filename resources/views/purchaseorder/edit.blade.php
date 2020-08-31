@@ -62,7 +62,7 @@ foreach($result as $branchList)
                         <div class="card-content collapse show">
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
-                                <form class="form form-horizontal" role="form" name="editPurchaseOrder" id="editPurchaseOrder" method="post" action="/purchaseorder/edit/{{base64_encode($result[0]->po_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                <form class="form form-horizontal" enctype="multipart/form-data" role="form" name="editPurchaseOrder" id="editPurchaseOrder" method="post" action="/purchaseorder/edit/{{base64_encode($result[0]->po_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
 
                                     <div class="row p-1">
@@ -187,7 +187,7 @@ foreach($result as $branchList)
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if(isset($result[0]->upload_path) && $result[0]->upload_path!='' && $result[0]->upload_path!=null){ ?>
+                                    <?php if(isset($result[0]->purchase_order_upload_file) && $result[0]->purchase_order_upload_file!='' && $result[0]->purchase_order_upload_file!=null){ ?>
                                         <div class="row p-1">
                                             <div class="col-xl-6 col-md-12">
                                                 <div class="card" style="border: 1px solid #b7defa">
@@ -201,7 +201,7 @@ foreach($result as $branchList)
                                                           <h4>Attachments</h4>
                                                           <?php
 
-                                                    $fileVaL= explode(",", $result[0]->upload_path);
+                                                    $fileVaL= explode(",", $result[0]->purchase_order_upload_file);
                                                     $filecount=count($fileVaL);
                                                     if($filecount>1){
                                                         $forcount=$filecount-1;

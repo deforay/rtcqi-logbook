@@ -68,7 +68,7 @@ class PurchaseOrderTable extends Model
                     'description' => $rfqdescription,
                     'created_by'      => session('userId'),
                     'created_on'      => $commonservice->getDateTime(),
-                    'upload_path'      => $uploadfile,
+                    'purchase_order_upload_file'      => $uploadfile,
                     'quote_id'         => $quoteId,
                     'last_date_of_delivery' => $lastDelDate,
                     'delivery_location' => $data['deliveryLoc'],
@@ -619,7 +619,7 @@ class PurchaseOrderTable extends Model
                             mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders", 0755);
                         }
             
-                        $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
+                        $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . base64_decode($id);
                         
                         if (!file_exists($pathname) && !is_dir($pathname)) {
                             mkdir($pathname);
@@ -641,7 +641,7 @@ class PurchaseOrderTable extends Model
         
                     $uploadData = array('purchase_order_upload_file' => $filePathName);
                     $quotesUp = DB::table('purchase_orders')
-                            ->where('po_id', '=', $poId)
+                            ->where('po_id', '=', base64_decode($id))
                             ->update($uploadData);
                 }
             }
