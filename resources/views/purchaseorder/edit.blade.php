@@ -289,7 +289,7 @@ foreach($result as $branchList)
                                                                 <input type="hidden" id="podId{{$j}}" name="podId[]" value="{{$orderDetail->pod_id}}" class="isRequired form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="text"  value="{{$orderDetail->item_description}}" id="quoteDesc{{$j}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
+                                                                <input type="text"  value="{{$orderDetail->description}}" id="quoteDesc{{$j}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
