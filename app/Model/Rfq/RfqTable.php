@@ -24,6 +24,9 @@ class RfqTable extends Model
         if(isset($data['iNotes']) && $data['iNotes']!=''){
             $iNotes = $data['iNotes'];
         }
+        else{
+            $iNotes = '';
+        }
         if ($request->input('rfqNumber')!=null && trim($request->input('rfqNumber')) != '') {
             $issuedOn = $commonservice->dateFormat($data['issuedOn']);
             $lastDate = $commonservice->dateFormat($data['lastdate']);
@@ -275,6 +278,9 @@ class RfqTable extends Model
             $lastDate = $commonservice->dateFormat($data['lastdate']);
             if(isset($data['iNotes']) && $data['iNotes']!=''){
                 $iNotes = $data['iNotes'];
+            }
+            else{
+                $iNotes = '';
             }
             $rfq = array(
                 'rfq_number' => $data['rfqNumber'],
