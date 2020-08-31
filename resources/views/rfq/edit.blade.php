@@ -146,7 +146,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php if(isset($result['rfq'][0]->rfq_upload_file)){ ?>
+                                <?php if(isset($result['rfq'][0]->rfq_upload_file) && $result['rfq'][0]->rfq_upload_file!='' && $result['rfq'][0]->rfq_upload_file!=null){ ?>
                                         <div class="row p-1">
                                             <div class="col-xl-6 col-md-12">
                                                 <div class="card" style="border: 1px solid #b7defa">
