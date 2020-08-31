@@ -137,6 +137,7 @@ class DeliveryScheduleTable extends Model
                                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
                                 ->where('purchase_order_details.po_id','=', $data['purchaseOrder'])->get();
                     $poNum = $purchase[0]->po_number;
+                    $poDate = $commonservice->humanDateFormat($purchase[0]->po_issued_on);
                     $vendorName = $purchase[0]->vendor_name;
                     // dd($poNum);
                     for($j=0;$j<count($purchase);$j++){
@@ -185,8 +186,8 @@ class DeliveryScheduleTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array( '##PO-NUMBER##','##ITEM-DETAILS##');
-            $mainReplace = array( $poNum,$mailItemDetails);
+            $mainContent = array( '##PO-NUMBER##','##ITEM-DETAILS##','##PO-DATE##','##VENDOR-NAME##');
+            $mainReplace = array( $poNum,$mailItemDetails,$poDate,$vendorName);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));
@@ -389,6 +390,7 @@ class DeliveryScheduleTable extends Model
                     ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
                     ->where('purchase_order_details.po_id','=', $data['poId'])->get();
         $poNum = $purchase[0]->po_number;
+        $poDate = $commonservice->humanDateFormat($purchase[0]->po_issued_on);
         $vendorName = $purchase[0]->vendor_name;
         // $totalDelQty = 0;
         // $totalPodQty = 0;
@@ -460,8 +462,8 @@ class DeliveryScheduleTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array( '##PO-NUMBER##','##ITEM-DETAILS##');
-            $mainReplace = array( $poNum,$mailItemDetails);
+            $mainContent = array( '##PO-NUMBER##','##ITEM-DETAILS##','##PO-DATE##','##VENDOR-NAME##');
+            $mainReplace = array( $poNum,$mailItemDetails,$poDate,$vendorName);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));
