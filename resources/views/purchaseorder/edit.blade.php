@@ -183,7 +183,7 @@ foreach($result as $branchList)
                                         <h5>Specification</h5>
                                         <div class="form-group row" >
                                             <div class="col-md-12">
-                                            <textarea id="description" name="description" class="form-control ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->description}}</textarea>
+                                            <textarea id="description" name="description" class="form-control ckeditor" placeholder="Enter Description" title="Please enter the description" >{{ $result[0]->purchase_order_description}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -241,7 +241,22 @@ foreach($result as $branchList)
                                               </div>
 
                                         </div>
-                                    <?php  } ?>
+                                    <?php  }else{ ?>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <h5>Attachment Files <span class="mandatory">*</span></h5>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-12">
+                                                <fieldset class="form-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                        <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                        <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                         <div class="row p-1">
                                             <div class="table-responsive">
                                                 <div class="bd-example p-1">
@@ -274,7 +289,7 @@ foreach($result as $branchList)
                                                                 <input type="hidden" id="podId{{$j}}" name="podId[]" value="{{$orderDetail->pod_id}}" class="isRequired form-control">
                                                             </td>
                                                             <td>
-                                                                <input type="text"  value="{{$orderDetail->description}}" id="quoteDesc{{$j}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
+                                                                <input type="text"  value="{{$orderDetail->item_description}}" id="quoteDesc{{$j}}" name="quoteDesc[]" class="form-control" placeholder="Item description"  />
                                                             </td>
                                                             <td>
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
