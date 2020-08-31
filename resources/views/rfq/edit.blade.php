@@ -79,7 +79,7 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="editRfq" id="editRfq" method="post" action="/rfq/edit/{{base64_encode($result['rfq'][0]->rfq_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" enctype="multipart/form-data" name="editRfq" id="editRfq" method="post" action="/rfq/edit/{{base64_encode($result['rfq'][0]->rfq_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
