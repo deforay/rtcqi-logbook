@@ -234,3 +234,10 @@ Route::match(['get'],'/getAutoCompleteComments/{searchTerm}/{desc}', 'DeliverySc
 Route::post('/saveDeliveryScheduleByDate', 'DeliverySchedule\DeliveryScheduleController@saveDeliveryScheduleByDate');
 Route::post('/getDeliveryScheduleByPurchaseOrder/{id}', 'DeliverySchedule\DeliveryScheduleController@getDeliveryScheduleByPurchaseOrder');
 Route::get('/getDeliveryScheduleByPurchaseOrder/{id}', 'DeliverySchedule\DeliveryScheduleController@getDeliveryScheduleByPurchaseOrder');
+
+
+//global config module
+Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index')->middleware('access');
+Route::post('/getConfig', 'GlobalConfig\GlobalConfigController@getConfig');
+Route::get('/globalconfig/edit', 'GlobalConfig\GlobalConfigController@edit');
+Route::post('/globalconfig/edit', 'GlobalConfig\GlobalConfigController@edit');

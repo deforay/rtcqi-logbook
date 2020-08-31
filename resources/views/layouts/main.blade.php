@@ -86,7 +86,7 @@ ismob = true;
     if(splitUrl[0]=="dashboard")
     {
       //$("#dashboard").addClass('active');
-    }else if(splitUrl[0]=="roles" || splitUrl[0]=="countries" || splitUrl[0]=="user" || splitUrl[0]=="item" || splitUrl[0]=="mailtemplate" || splitUrl[0]=="branchtype"|| splitUrl[0]=="branches"|| splitUrl[0]=="vendorstype"|| splitUrl[0]=="vendors")
+    }else if(splitUrl[0]=="roles" || splitUrl[0]=="countries" || splitUrl[0]=="user" || splitUrl[0]=="item" || splitUrl[0]=="mailtemplate" || splitUrl[0]=="branchtype"|| splitUrl[0]=="branches"|| splitUrl[0]=="vendorstype"|| splitUrl[0]=="vendors" || splitUrl[0]=="globalconfig")
     {
       $("#manage").addClass('active');
       $("#manage > ul > li").removeClass('active');
