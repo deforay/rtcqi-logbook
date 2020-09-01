@@ -86,7 +86,7 @@ class PurchaseOrderController extends Controller
                     ->editColumn('po_issued_on', function($data){
                             $issuedOn = $data->po_issued_on;
                             if($issuedOn){
-                                $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                                // $issuedOn = date("d-M-Y", strtotime($issuedOn));
                                 return $issuedOn;
                             }
                     })

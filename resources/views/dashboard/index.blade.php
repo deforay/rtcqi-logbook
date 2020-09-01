@@ -301,12 +301,20 @@ $(document).ready(function() {
             columns: [
 
                     { data: 'rfq_number', name: 'rfq_number'},
-                    { data: 'rfq_issued_on', name: 'rfq_issued_on'},
+                    { data: 'rfq_issued_on', name: 'rfq_issued_on',type:'date',
+                    "render": function(data, type) {
+                        if (data == null){
+                                return '';
+                            }else{
+                                return type === 'sort' ? data : moment(data).format('DD-MMM-YYYY');
+                            }
+                        }
+                    },
                     { data: 'last_date', name: 'last_date'},
                     { data: 'rfq_status', name: 'rfq_status',className:'firstcaps'},
                     { data: 'action', name: 'action', orderable: false},
                 ],
-            order: [[0, 'desc']]
+            order: [[1, 'desc']]
         });
     }
 
@@ -334,15 +342,23 @@ $(document).ready(function() {
 
                 { data: 'vendor_name', name: 'vendor_name' },
                 { data: 'quote_number', name: 'quote_number' },
-                { data: 'responded_on', name: 'responded_on', },
+                { data: 'responded_on', name: 'responded_on', type:'date',
+                  "render": function(data, type) {
+                      if (data == null){
+                              return '';
+                          }else{
+                              return type === 'sort' ? data : moment(data).format('DD-MMM-YYYY');
+                          }
+                      }
+                  },
                 { data: 'rfq_number', name: 'rfq_number' },
                 { data: 'rfq_issued_on', name: 'rfq_issued_on' },
                 { data: 'last_date', name: 'last_date' },
                 { data: 'invited_on', name: 'invited_on'},
                 { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
-                {data: 'action', name: 'action', orderable: false},
+                { data: 'action', name: 'action', orderable: false},
                 ],
-            order: [[0, 'desc']]
+            order: [[2, 'desc']]
         });
     }
 </script>

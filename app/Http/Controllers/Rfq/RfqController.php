@@ -56,7 +56,7 @@ class RfqController extends Controller
                     ->editColumn('rfq_issued_on', function($data){
                             $issuedOn = $data->rfq_issued_on;
                             if($issuedOn){
-                                $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                                // $issuedOn = date("d-M-Y", strtotime($issuedOn));
                                 return $issuedOn;
                             }
                     })
@@ -132,7 +132,7 @@ class RfqController extends Controller
                     ->editColumn('rfq_issued_on', function($data){
                             $issuedOn = $data->rfq_issued_on;
                             if($issuedOn){
-                                $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                                // $issuedOn = date("d-M-Y", strtotime($issuedOn));
                                 return $issuedOn;
                             }
                     })

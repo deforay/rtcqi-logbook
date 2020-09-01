@@ -101,6 +101,7 @@
         $.blockUI();
         getAllRfq();
         $.unblockUI();
+
     });
     function getAllRfq()
     {
@@ -133,10 +134,12 @@
                     },
                     { data: 'last_date', name: 'last_date'},
                     { data: 'rfq_status', name: 'rfq_status',className:'firstcaps'},
-                    {data: 'action', name: 'action', orderable: false},
+                    { data: 'action', name: 'action', orderable: false},
                 ],
-            order: [[0, 'desc']]
+            order: [[1, 'desc']],
+            // columnDefs : [{"targets":1, "type":"date"}],
         });
+        
     }
 
     function changeQuotesStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal, dataTableName)

@@ -44,6 +44,7 @@ class PurchaseOrderTable extends Model
             $uploadfile=$rfqdata[0]->rfq_upload_file;
             $quoteId = $rfqdata[0]->quote_id;
             $quoteDate=$commonservice->humanDateFormat($rfqdata[0]->responded_on);
+            $rfqDate = $commonservice->humanDateFormat($rfqdata[0]->rfq_issued_on);
 
             if($data['description']!=''){
                 $rfqdescription=$data['description'];
@@ -168,8 +169,8 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##','##QUOTES-DATE##');
-            $mainReplace = array($vendorName, $quoteNumber,$quoteDate);
+            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##','##QUOTES-DATE##','##RFQ-NUMBER##','##RFQ-DATE##','##PO-NUMBER##','##PO-DATE##');
+            $mainReplace = array($vendorName, $quoteNumber,$quoteDate,$rfqNumber,$rfqDate ,$data['poNumber'],$data['issuedOn']);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));
@@ -205,53 +206,53 @@ class PurchaseOrderTable extends Model
                     'attachment' => $attachment,
                 ]);
         }
-        $mailData = DB::table('mail_template')
-        ->where('mail_temp_id', '=', 4)
-        ->get();
-        if(count($mailData)>0)
-        {
-            $mailSubject = trim($mailData[0]->mail_subject);
-            $subject = $mailSubject;
-            $subject = str_replace("&nbsp;", "", strval($subject));
-            $subject = str_replace("&amp;nbsp;", "", strval($subject));
-            $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##','##PO-DATE##');
-            $mainReplace = array($vendorName, $data['poNumber'],$data['issuedOn']);
-            $mailContent = trim($mailData[0]->mail_content);
-            $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
-            // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
-            $pomessage = str_replace("&amp;nbsp;", "", strval($pomessage));
-            $pomessage = html_entity_decode($pomessage, ENT_QUOTES, 'UTF-8');
-            $createdon = date('Y-m-d H:i:s');
-            $poPathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
-            if(file_exists($poPathname)){
-                $scan = scandir($poPathname,1);
-                $scannedDirectory = array_diff($scan, array('..', '.'));
-                foreach($scannedDirectory as $sc=>$value){
-                    $scanDir[$sc] = $poPathname.'/'.$value;
-                }
-                $poattachment = implode(',',$scanDir);
-            }
-            else{
-                $poattachment = '' ;
-            }
-            // print_r($attachment);die;
-            $response = DB::table('temp_mail')
-            ->insertGetId(
-                [
-                    'from_mail' => $mailData[0]->mail_from,
-                    'to_email' => $email,
-                    'subject' => $mailData[0]->mail_subject,
-                    'cc' => $mailData[0]->mail_cc,
-                    'bcc' => $mailData[0]->mail_bcc,
-                    'from_full_name' => $mailData[0]->from_name,
-                    'status' => 'pending',
-                    'datetime' => $createdon,
-                    'message' => $pomessage,
-                    'customer_name' => $vendorName,
-                    'attachment' => $poattachment,
-                ]);
-        }
+        // $mailData = DB::table('mail_template')
+        // ->where('mail_temp_id', '=', 4)
+        // ->get();
+        // if(count($mailData)>0)
+        // {
+        //     $mailSubject = trim($mailData[0]->mail_subject);
+        //     $subject = $mailSubject;
+        //     $subject = str_replace("&nbsp;", "", strval($subject));
+        //     $subject = str_replace("&amp;nbsp;", "", strval($subject));
+        //     $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+        //     $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##','##PO-DATE##');
+        //     $mainReplace = array($vendorName, $data['poNumber'],$data['issuedOn']);
+        //     $mailContent = trim($mailData[0]->mail_content);
+        //     $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
+        //     // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
+        //     $pomessage = str_replace("&amp;nbsp;", "", strval($pomessage));
+        //     $pomessage = html_entity_decode($pomessage, ENT_QUOTES, 'UTF-8');
+        //     $createdon = date('Y-m-d H:i:s');
+        //     $poPathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
+        //     if(file_exists($poPathname)){
+        //         $scan = scandir($poPathname,1);
+        //         $scannedDirectory = array_diff($scan, array('..', '.'));
+        //         foreach($scannedDirectory as $sc=>$value){
+        //             $scanDir[$sc] = $poPathname.'/'.$value;
+        //         }
+        //         $poattachment = implode(',',$scanDir);
+        //     }
+        //     else{
+        //         $poattachment = '' ;
+        //     }
+        //     // print_r($attachment);die;
+        //     $response = DB::table('temp_mail')
+        //     ->insertGetId(
+        //         [
+        //             'from_mail' => $mailData[0]->mail_from,
+        //             'to_email' => $email,
+        //             'subject' => $mailData[0]->mail_subject,
+        //             'cc' => $mailData[0]->mail_cc,
+        //             'bcc' => $mailData[0]->mail_bcc,
+        //             'from_full_name' => $mailData[0]->from_name,
+        //             'status' => 'pending',
+        //             'datetime' => $createdon,
+        //             'message' => $pomessage,
+        //             'customer_name' => $vendorName,
+        //             'attachment' => $poattachment,
+        //         ]);
+        // }
         return $poId;
     }
 
@@ -375,8 +376,8 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
-            $mainReplace = array($vendorName, $data['poNumber']);
+            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##','##PO-DATE##');
+            $mainReplace = array($vendorName, $data['poNumber'],$data['issuedOn']);
             $mailContent = trim($mailData[0]->mail_content);
             $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
             // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
