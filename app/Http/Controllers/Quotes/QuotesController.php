@@ -56,7 +56,7 @@ class QuotesController extends Controller
                     ->editColumn('responded_on', function($data){
                         $respOn = $data->responded_on;
                         if($respOn){
-                            $respOn = date("d-M-Y", strtotime($respOn));
+                            // $respOn = date("d-M-Y", strtotime($respOn));
                             return $respOn;
                         }
                     })
@@ -128,13 +128,13 @@ class QuotesController extends Controller
                             return $lastDate;
                         }
                     })
-                    ->editColumn('responded_on', function($data){
-                        $respOn = $data->responded_on;
-                        if($respOn){
-                            $respOn = date("d-M-Y", strtotime($respOn));
-                            return $respOn;
-                        }
-                    })
+                    // ->editColumn('responded_on', function($data){
+                    //     $respOn = $data->responded_on;
+                    //     if($respOn){
+                    //         $respOn = date("d-M-Y", strtotime($respOn));
+                    //         return $respOn;
+                    //     }
+                    // })
                     ->editColumn('invited_on', function($data){
                         $invOn = $data->invited_on;
                         if($invOn){

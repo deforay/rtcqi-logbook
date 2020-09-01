@@ -128,7 +128,15 @@
             columns: [
                     
                     { data: 'po_number', name: 'po_number'},
-                    { data: 'po_issued_on', name: 'po_issued_on'},
+                    { data: 'po_issued_on', name: 'po_issued_on' , type:'date',
+                    "render": function(data, type) {
+                        if (data == null){
+                                return '';
+                            }else{
+                                return type === 'sort' ? data : moment(data).format('DD-MMM-YYYY');
+                            }
+                        }
+                    },
                     { data: 'last_date_of_delivery', name: 'last_date_of_delivery'},
                     { data: 'vendor_name', name: 'vendor_name'},
                     { data: 'total_amount', name: 'total_amount'},
@@ -137,7 +145,7 @@
                     { data: 'quote_number', name: 'quote_number' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
-            order: [[0, 'desc']]
+            order: [[1, 'desc']]
         });
     }
 
