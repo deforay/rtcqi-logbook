@@ -184,9 +184,11 @@ class RfqController extends Controller
                             if(session('loginType') === 'users'){
                                 $button .= '<button type="button" name="closeStatus" id="closeStatus'.$data->rfq_id.'" onclick="'.$closeStatus.'" class="btn btn-outline-warning btn-sm">Change to Close</button>&nbsp;&nbsp;';
                             }
-                            if (isset($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit']) && ($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit'] == "allow")){
-                                if($data->quote_number=='' && $data->quote_number==null){
-                                    $button .= '&nbsp;&nbsp;<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-info btn-sm" title="Edit">Add Quote</a>';
+                            if(session('loginType') === 'vendor'){
+                                if (isset($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit']) && ($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit'] == "allow")){
+                                    if($data->quote_number=='' && $data->quote_number==null){
+                                        $button .= '&nbsp;&nbsp;<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-info btn-sm" title="Edit">Add Quote</a>';
+                                    }
                                 }
                             }
                             if (isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['edit'] == "allow")){
