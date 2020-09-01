@@ -163,6 +163,7 @@ class RfqTable extends Model
         $userId=session('userId');
         if(session('loginType')=='users'){
             $data = DB::table('rfq')
+                    ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
                     ->orderBy('rfq_issued_on', 'desc')
                     ->get();
         }
@@ -184,6 +185,7 @@ class RfqTable extends Model
         $userId=session('userId');
         if(session('loginType')=='users'){
             $data = DB::table('rfq')
+                ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
                 ->where('rfq_status','=','active')
                 ->orderBy('rfq_issued_on', 'desc')
                 ->get();

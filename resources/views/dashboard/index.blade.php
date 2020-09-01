@@ -153,8 +153,8 @@ else{
                                                 <th style="width:25%">RFQ Number</th>
                                                 <th style="width:15%">Issued On</th>
                                                 <th style="width:15%">Last Date</th>
-                                                <th style="width:15%">Status</th>
-                                                <th style="width:30%">Action</th>
+                                                <th style="width:10%">Status</th>
+                                                <th style="width:35%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
