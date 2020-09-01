@@ -117,16 +117,31 @@
 												<div class="alert" style="margin-left:22%;">
 														<?php 
 														if($mail[0]->template_name=='RFQ Activation'){
-														echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
-														echo '<div><b>##RFQ-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp RFQ Number</div>';
+															echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+															echo '<div><b>##RFQ-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp RFQ Number</div>';
+															echo '<div><b>##RFQ-DATE##</b>&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp RFQ Date</div>';
 														}
 														if($mail[0]->template_name=='Quotes Update' || $mail[0]->template_name=='Quotes Approval'){
-														echo '<div><b>##QUOTES-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Number</div>';
-														echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+															echo '<div><b>##QUOTES-NUMBER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Number</div>';
+															echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+															echo '<div><b>##QUOTES-DATE##</b>&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Quotes Date</div>';
 														}
 														if($mail[0]->template_name=='Purchase Order Approval'){
 															echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
 															echo '<div><b>##PO-NUMBER##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Number</div>';
+															echo '<div><b>##PO-DATE##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Date</div>';
+														}
+														if($mail[0]->template_name=='Delivery Schedule Add'){
+															echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+															echo '<div><b>##PO-NUMBER##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Number</div>';
+															echo '<div><b>##PO-DATE##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Date</div>';
+															echo '<div><b>##ITEM-DETAILS##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Delivery Schedule Item Details</div>';
+														}
+														if($mail[0]->template_name=='Delivery Schedule Update'){
+															echo '<div><b>##VENDOR-NAME##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Vendor Name</div>';
+															echo '<div><b>##PO-NUMBER##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Number</div>';
+															echo '<div><b>##PO-DATE##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Date</div>';
+															echo '<div><b>##ITEM-DETAILS##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Delivery Schedule Item Details</div>';
 														}
 														?>
 														<!-- 

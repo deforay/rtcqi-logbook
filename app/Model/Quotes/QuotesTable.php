@@ -222,6 +222,7 @@ class QuotesTable extends Model
         ->get();
         $rfqNumber=$data[0]->rfq_number;
         $quoteNumber=$data[0]->quote_number;
+        $quoteDate=$commonservice->humanDateFormat($data[0]->responded_on);
         $vendorName=$data[0]->vendor_name;
         $email='';
         $global = DB::table('global_config')
@@ -243,8 +244,8 @@ class QuotesTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
-            $mainReplace = array($vendorName, $quoteNumber);
+            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##','##QUOTES-DATE##');
+            $mainReplace = array($vendorName, $quoteNumber,$quoteDate);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));

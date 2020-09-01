@@ -43,6 +43,7 @@ class PurchaseOrderTable extends Model
             $rfqdescription=$rfqdata[0]->description;
             $uploadfile=$rfqdata[0]->rfq_upload_file;
             $quoteId = $rfqdata[0]->quote_id;
+            $quoteDate=$commonservice->humanDateFormat($rfqdata[0]->responded_on);
 
             if($data['description']!=''){
                 $rfqdescription=$data['description'];
@@ -167,8 +168,8 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##');
-            $mainReplace = array($vendorName, $quoteNumber);
+            $mainContent = array('##VENDOR-NAME##', '##QUOTES-NUMBER##','##QUOTES-DATE##');
+            $mainReplace = array($vendorName, $quoteNumber,$quoteDate);
             $mailContent = trim($mailData[0]->mail_content);
             $message = str_replace($mainContent, $mainReplace, $mailContent);
             // $message = str_replace("&nbsp;", "", strval($message));
@@ -214,8 +215,8 @@ class PurchaseOrderTable extends Model
             $subject = str_replace("&nbsp;", "", strval($subject));
             $subject = str_replace("&amp;nbsp;", "", strval($subject));
             $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##');
-            $mainReplace = array($vendorName, $data['poNumber']);
+            $mainContent = array('##VENDOR-NAME##', '##PO-NUMBER##','##PO-DATE##');
+            $mainReplace = array($vendorName, $data['poNumber'],$data['issuedOn']);
             $mailContent = trim($mailData[0]->mail_content);
             $pomessage = str_replace($mainContent, $mainReplace, $mailContent);
             // $pomessage = str_replace("&nbsp;", "", strval($pomessage));
