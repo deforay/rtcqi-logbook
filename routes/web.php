@@ -241,3 +241,12 @@ Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('
 Route::post('/getConfig', 'GlobalConfig\GlobalConfigController@getConfig');
 Route::get('/globalconfig/edit', 'GlobalConfig\GlobalConfigController@edit');
 Route::post('/globalconfig/edit', 'GlobalConfig\GlobalConfigController@edit');
+
+//Inventory Outwards module
+Route::get('/inventoryoutwards', 'InventoryOutwards\InventoryOutwardsController@index')->name('inventoryoutwards.index')->middleware('access');
+Route::post('/inventoryoutwards/add', 'InventoryOutwards\InventoryOutwardsController@add');
+Route::get('/inventoryoutwards/add', 'InventoryOutwards\InventoryOutwardsController@add')->middleware('access');
+Route::post('/getAllInventoryOutwards', 'InventoryOutwards\InventoryOutwardsController@getAllInventoryOutwards');
+Route::get('/inventoryoutwards/edit/{id}', 'InventoryOutwards\InventoryOutwardsController@edit')->middleware('access');
+Route::post('/inventoryoutwards/edit/{id}', 'InventoryOutwards\InventoryOutwardsController@edit');
+Route::post('/getItemByLoc', 'InventoryOutwards\InventoryOutwardsController@getItemByLoc');

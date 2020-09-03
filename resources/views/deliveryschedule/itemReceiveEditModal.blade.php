@@ -160,10 +160,10 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                         <input type="text" id="slNumber0" onkeypress="return isNumberKey(event);" class="form-control " autocomplete="off" placeholder="Sl No" name="slNumber[]" title="Please enter sl Number">
                                                     </td>
                                                     <td>
-                                                        <input type="text" id="manufacturingDate0" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter Manufacturing Date" name="manufacturingDate[]" title="Please enter Manufacturing Date">
+                                                        <input type="text" id="manufacturingDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter Manufacturing Date" name="manufacturingDate[]" title="Please enter Manufacturing Date">
                                                     </td>
                                                     <td>
-                                                        <input type="text" id="expiryDate0" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
+                                                        <input type="text" id="expiryDate0" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">
                                                     </td>
                                                     <td>
                                                         <input type="text" id="batchNo0" class="form-control " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">
@@ -172,7 +172,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                         <input type="number" value="0" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
                                                     </td >
                                                     <td>
-                                                        <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
+                                                        <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
                                                     </td>
                                                     <td>
                                                         <input type="text" id="description0" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">
@@ -374,30 +374,7 @@ function validateNow() {
 }
 
 function changeScheduleStatus(val,id){
-    // receivedQty = $('#receivedQty').val();
-    // damagedQty = $('#damagedQty').val();
-    // if(damagedQty>0){
-    //     $('#description').addClass('isRequired');
-    // }
-    // if(receivedQty){
-    //     if(receivedQty>deliveryQty){
-    //         $('#receivedQty').val('')
-    //         swal("Entered Received Quantity cannot be greater than Delivery Quantity")
-    //         return
-    //     }
-    //     if(damagedQty>deliveryQty){
-    //         $('#damagedQty').val('')
-    //         swal("Entered Non Confromity Quantity cannot be greater than Delivery Quantity")
-    //         return
-    //     }
-    //     if(deliveryQty == receivedQty && (damagedQty=='' || damagedQty==0)){
-    //         $('#status').val('Received')
-    //         // $('#damagedQty').val(0);
-    //     }
-    //     else{
-    //         $('#status').val('Non Conformity')
-    //     }
-    // }
+    
     receivedQtySum = 0;
     damagedQtySum = 0;
     $('.receivedQty').each(function() {

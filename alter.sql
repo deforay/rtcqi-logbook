@@ -368,3 +368,25 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 ALTER TABLE `global_config` ADD `allow_admin_edit` VARCHAR(10) NOT NULL DEFAULT 'no' AFTER `global_value`, ADD `is_numeric` VARCHAR(10) NOT NULL DEFAULT 'no' AFTER `allow_admin_edit`;
 UPDATE `global_config` SET `allow_admin_edit` = 'yes' WHERE `global_config`.`config_id` = 1;
 ALTER TABLE `purchase_orders` DROP `upload_path`;
+
+--Sudarmathi 02 SEP 2020
+
+CREATE TABLE `inventory_outwards` (
+ `outwards_id` int(11) NOT NULL AUTO_INCREMENT,
+ `item_id` int(11) NOT NULL,
+ `item_quantity` int(11) NOT NULL,
+ `issued_on` date NOT NULL,
+ `issued_to` varchar(255) NOT NULL,
+ `outwards_description` text,
+ `created_by` int(11) DEFAULT NULL,
+ `updated_by` int(11) DEFAULT NULL,
+ `created_on` date DEFAULT NULL,
+ `updated_on` date DEFAULT NULL,
+ PRIMARY KEY (`outwards_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'Inventory Outwards', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'add', 'Add'), ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'index', 'Access');
+ALTER TABLE `inventory_outwards` CHANGE `item_quantity` `item_issued_quantity` INT(11) NOT NULL;
+ALTER TABLE `inventory_outwards` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT NULL;
+ALTER TABLE `inventory_outwards` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;
