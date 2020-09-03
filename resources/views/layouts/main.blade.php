@@ -99,7 +99,7 @@ ismob = true;
       $("#item > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
-    else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq" || splitUrl[0]=="itemreceive" || splitUrl[0]=="deliveryschedule")
+    else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq" || splitUrl[0]=="itemreceive" || splitUrl[0]=="deliveryschedule" || splitUrl[0]=="inventoryoutwards")
     {
       //$("#procurement").addClass('active');
       $("#procurement").addClass('active');

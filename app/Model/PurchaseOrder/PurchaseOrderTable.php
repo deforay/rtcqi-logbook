@@ -437,7 +437,7 @@ class PurchaseOrderTable extends Model
         return $data;
     }
 
-    // Fetch All PurchaseOrder List
+    // Fetch All Active PurchaseOrder List
     public function fetchAllActivePurchaseOrder()
     {
         $data = DB::table('purchase_orders')
