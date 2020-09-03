@@ -88,6 +88,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body mt-0 pt-0">
+                                <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" role="form" enctype="multipart/form-data"  name="updateItemReceive" id="updateItemReceive" method="post" action="/itemreceive/updateItemReceive/{{$deliveryId}}" autocomplete="off" onsubmit="validateNow();return false;">
                                 @csrf
                                 <!-- <div>
@@ -144,8 +145,8 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                             <thead>
                                                 <tr>
                                                     <th style="width:10%;" class="pl-1 pr-0">Sl.No</th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Manufacturing<br> Date<span class="mandatory">*</span></th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Expiry Date<span class="mandatory">*</span></th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Manufacturing<br> Date</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Expiry Date</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Batch No</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Received<br> Quantity<span class="mandatory">*</span></th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Quantity<span class="mandatory">*</span></th>
@@ -374,7 +375,7 @@ function validateNow() {
 }
 
 function changeScheduleStatus(val,id){
-    
+
     receivedQtySum = 0;
     damagedQtySum = 0;
     $('.receivedQty').each(function() {
@@ -415,9 +416,9 @@ function insRow() {
     var e = a.insertCell(8);
     rl = document.getElementById("itemDetails").rows.length - 1;
     i.innerHTML = '<input type="text" id="slNumber' + rowCount + '" onkeypress="return isNumberKey(event);" class="form-control  isRequired" autocomplete="off" placeholder="Sl No" name="slNumber[]" title="Please enter Sl Number">';
-    j.innerHTML = '<input type="text" id="manufacturingDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter manufacturing date" name="manufacturingDate[]" title="Please enter manufacturing date">';
-    b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
-    d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control isRequired" autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
+    j.innerHTML = '<input type="text" id="manufacturingDate' + rowCount + '" class="form-control datepicker " autocomplete="off" placeholder="Enter manufacturing date" name="manufacturingDate[]" title="Please enter manufacturing date">';
+    b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
+    d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
     c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
     f.innerHTML = '<input type="number" value="0" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />'
     h.innerHTML = '<input type="text" id="description' + rowCount + '" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">';
