@@ -390,3 +390,6 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 ALTER TABLE `inventory_outwards` CHANGE `item_quantity` `item_issued_quantity` INT(11) NOT NULL;
 ALTER TABLE `inventory_outwards` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT NULL;
 ALTER TABLE `inventory_outwards` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;
+
+--Sudarmathi 03 SEP 2020
+ALTER TABLE `inventory_stock` CHANGE `expiry_date` `expiry_date` DATE NULL;

@@ -529,61 +529,107 @@ class DeliveryScheduleTable extends Model
                         ]
                     );
 
-        for($i=0;$i<count($data['expiryDate']);$i++){
+        for($i=0;$i<count($data['branches']);$i++){
             if($data['description'][$i] && $data['description'][$i]!=null ){
                 $desc = $data['description'][$i];
             }
             else{
                 $desc='';
             }
-            $expiryDate         = $commonservice->dateFormat($data['expiryDate'][$i]);
-            $manufacturingDate  = $commonservice->dateFormat($data['manufacturingDate'][$i]);
-            // $serviceDate = $commonservice->dateFormat($data['serviceDate'][$i]);
-            $stk = DB::table('inventory_stock')
+            if($data['expiryDate'][$i]){
+                $expiryDate = $commonservice->dateFormat($data['expiryDate'][$i]);
+            }
+            else{
+                $expiryDate = null;
+            }
+            if($data['manufacturingDate'][$i]){
+                $manufacturingDate  = $commonservice->dateFormat($data['manufacturingDate'][$i]);
+            }
+            else{
+                $manufacturingDate = null;
+            }
+            if($expiryDate){
+                $stk = DB::table('inventory_stock')
                     ->where('expiry_date', '=', $expiryDate)
                     ->where('branch_id', '=', $data['branches'][$i])
                     ->where('item_id', '=', $data['itemId'])->get();
-                    // dd(($stk));
-            if(count($stk)>0){
-                $rQty = $data['receivedQty'][$i] + $stk[0]->stock_quantity;
-                $stockId = DB::table('inventory_stock')
-                        ->where('expiry_date', '=', $expiryDate)
-                        ->where('branch_id', '=', $data['branches'][$i])
-                        ->where('item_id', '=', $data['itemId'])
-                        ->update(
-                            [
-                                'batch_number'            => $data['batchNo'][$i],
-                                'sl_number'               => $data['slNumber'][$i],
-                                'manufacturing_date'      => $manufacturingDate,
-                                'stock_quantity'          => $rQty,
-                                'updated_by'              => session('userId'),
-                                'updated_on'              => $commonservice->getDateTime(),
-                                'non_conformity_comments' => $desc,
-                            ]
-                        );
-            }else{
-                $stockId = DB::table('inventory_stock')->insertGetId(
-                            [
-                                'item_id'                 => $data['itemId'],
-                                'sl_number'               => $data['slNumber'][$i],
-                                'manufacturing_date'      => $manufacturingDate,
-                                'expiry_date'             => $expiryDate,
-                                'batch_number'            => $data['batchNo'][$i],
-                                // 'service_date'         => $serviceDate,
-                                'stock_quantity'          => $data['receivedQty'][$i],
-                                'created_by'              => session('userId'),
-                                'created_on'              => $commonservice->getDateTime(),
-                                'branch_id'               => $data['branches'][$i],
-                                'non_conformity_comments' => $desc,
-                            ]
-                        );
+                    if(count($stk)>0){
+                        $rQty = $data['receivedQty'][$i] + $stk[0]->stock_quantity;
+                        $stockId = DB::table('inventory_stock')
+                                ->where('expiry_date', '=', $expiryDate)
+                                ->where('branch_id', '=', $data['branches'][$i])
+                                ->where('item_id', '=', $data['itemId'])
+                                ->update(
+                                    [
+                                        'batch_number'            => $data['batchNo'][$i],
+                                        'sl_number'               => $data['slNumber'][$i],
+                                        'manufacturing_date'      => $manufacturingDate,
+                                        'stock_quantity'          => $rQty,
+                                        'updated_by'              => session('userId'),
+                                        'updated_on'              => $commonservice->getDateTime(),
+                                        'non_conformity_comments' => $desc,
+                                    ]
+                                );
+                    }else{
+                        $stockId = DB::table('inventory_stock')->insertGetId(
+                                    [
+                                        'item_id'                 => $data['itemId'],
+                                        'sl_number'               => $data['slNumber'][$i],
+                                        'manufacturing_date'      => $manufacturingDate,
+                                        'expiry_date'             => $expiryDate,
+                                        'batch_number'            => $data['batchNo'][$i],
+                                        'stock_quantity'          => $data['receivedQty'][$i],
+                                        'created_by'              => session('userId'),
+                                        'created_on'              => $commonservice->getDateTime(),
+                                        'branch_id'               => $data['branches'][$i],
+                                        'non_conformity_comments' => $desc,
+                                    ]
+                                );
+                    }
+            }
+            else{
+                $stk = DB::table('inventory_stock')
+                    ->where('branch_id', '=', $data['branches'][$i])
+                    ->where('item_id', '=', $data['itemId'])->get();
+                if(count($stk)>0){
+                    $rQty = $data['receivedQty'][$i] + $stk[0]->stock_quantity;
+                    $stockId = DB::table('inventory_stock')
+                            ->where('branch_id', '=', $data['branches'][$i])
+                            ->where('item_id', '=', $data['itemId'])
+                            ->update(
+                                [
+                                    'batch_number'            => $data['batchNo'][$i],
+                                    'sl_number'               => $data['slNumber'][$i],
+                                    'manufacturing_date'      => $manufacturingDate,
+                                    'stock_quantity'          => $rQty,
+                                    'updated_by'              => session('userId'),
+                                    'updated_on'              => $commonservice->getDateTime(),
+                                    'non_conformity_comments' => $desc,
+                                ]
+                            );
+                }else{
+                    $stockId = DB::table('inventory_stock')->insertGetId(
+                                [
+                                    'item_id'                 => $data['itemId'],
+                                    'sl_number'               => $data['slNumber'][$i],
+                                    'manufacturing_date'      => $manufacturingDate,
+                                    'expiry_date'             => $expiryDate,
+                                    'batch_number'            => $data['batchNo'][$i],
+                                    // 'service_date'         => $serviceDate,
+                                    'stock_quantity'          => $data['receivedQty'][$i],
+                                    'created_by'              => session('userId'),
+                                    'created_on'              => $commonservice->getDateTime(),
+                                    'branch_id'               => $data['branches'][$i],
+                                    'non_conformity_comments' => $desc,
+                                ]
+                            );
+                }
             }
 
             if($desc){
                 $autoCom = DB::table('autocomplete_comments')
                         ->where('description', '=',  $desc)
                         ->get();
-                // dd($desc);
                 if(count($autoCom)==0){
                     $autoComIns = DB::table('autocomplete_comments')->insertGetId(
                                     [
@@ -598,9 +644,7 @@ class DeliveryScheduleTable extends Model
         
         $commonservice = new CommonService();
         $commonservice->eventLog(session('userId'), base64_decode($id), 'Delivery Scheduler-edit', 'Update Delivery Schedule ' . $data['pod_id'], 'Purchase Order details');
-        
-// dd($data['uploadFile']['name']);die;
-// print_r($data['uploadFile']);die;
+
         $filePathName='';
         $fileName='';
         $extension='';
