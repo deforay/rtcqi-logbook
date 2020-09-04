@@ -169,14 +169,14 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                 <br/>
                                 </form>
                                 <div class="form-actions right" style="margin-bottom: 5%;">
-                                        <a href="/itemreceive" >
-                                            <button type="button" class="btn btn-warning mr-1 float-right ml-2">
-                                            <i class="ft-x"></i> Cancel
-                                            </button>
-                                        </a>
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
                                         <i class="la la-check-square-o"></i> Save
                                     </button>
+                                    <a href="/inventoryoutwards" >
+                                        <button type="button" class="btn btn-warning mr-1 float-right ml-2">
+                                        <i class="ft-x"></i> Cancel
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
