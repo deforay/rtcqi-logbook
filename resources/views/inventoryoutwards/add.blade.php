@@ -131,7 +131,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="number" value="0" id="itemQty0" name="itemQty[]" min="0" readonly class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" value="" />
+                                                        <input type="number" value="0" id="itemQty0" name="itemQty[]" min="0" readonly class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" />
                                                     </td >
                                                     <td>
                                                         <input type="number" value="0" id="itemIssuedQty0" name="itemIssuedQty[]" min="0" onchange="qtyRestriction(this.value,0)" class="form-control isRequired" placeholder="Enter Item Issued Qty" title="Please enter the item issued qty" value="" />
@@ -226,11 +226,15 @@ function getItemByLoc(val,id){
                 for(var k=0;k<data.length;k++){
                    
                     expiryDate = data[k]['expiry_date'];
-                    let anyDate = new Date(expiryDate);
-                    // console.log(anyDate.toShortFormat());
-                    exp = anyDate.toShortFormat();
+                    if(expiryDate){
+                        let anyDate = new Date(expiryDate);
+                        exp = ' ('+anyDate.toShortFormat()+')';
+                    }
+                    else{
+                        exp = '';
+                    }
                     // console.log(exp)
-                    opt += '<option value="'+data[k]['item_id']+'@@'+data[k]['stock_quantity']+'">'+data[k]['item_name']+' ('+exp+')</option>'
+                    opt += '<option value="'+data[k]['item_id']+'@@'+data[k]['stock_quantity']+'@@'+expiryDate+'">'+data[k]['item_name']+exp+'</option>'
                 }
                 $('#item'+id).html(opt)
             }
@@ -264,7 +268,7 @@ function validateNow() {
         formId: 'addIssueItem'
     });
     if (flag == true) {
-        $('#status').prop('disabled',false)
+        $('.itemQty').prop('disabled',false)
         if (duplicateName) {
             document.getElementById('addIssueItem').submit();
         }
@@ -366,8 +370,8 @@ function setQty(val,id){
 }
 
 function qtyRestriction(val,id){
-    itemQty = $('#itemQty'+id).val()
-    if(val > itemQty){
+    itemQty = parseInt($('#itemQty'+id).val())
+    if(parseInt(val) > itemQty){
         $('#itemIssuedQty'+id).val('')
         $('#itemIssuedQty'+id).focus();
         swal("Entered item issued quantity can't exceed item quantity")
