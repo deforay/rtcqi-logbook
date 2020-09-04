@@ -26,23 +26,41 @@ class InventoryOutwardsTable extends Model
 
     public function saveInventoryOutwards($request){
         $data = $request->all();
+        // dd($data);
         $autoId = 0;
         $commonservice = new CommonService();
         // dd($commonservice->getDateTime());
         for ($j = 0; $j < count($data['item']); $j++) {
             $issuedOn = $commonservice->dateFormat($data['issuedOn'][$j]);
-            $item = explode('@@',$data['item'][$j])[0];
+            $value = explode('@@',$data['item'][$j]);
+            $item = $value[0];
+            $itemQty = $value[1];
+            $expiryDate = $value[2];
+            $stkQty = intval($itemQty) - intval($data['itemIssuedQty'][$j]);
+            // dd($stkQty);
             $autoId = DB::table('inventory_outwards')->insertGetId(
                     [
-                        'item_id'          => $item,
-                        'issued_on'    => $issuedOn,
-                        'item_issued_quantity'    => $data['itemIssuedQty'][$j],
-                        'issued_to'    => $data['issuedTo'][$j],
+                        'item_id' => $item,
+                        'issued_on' => $issuedOn,
+                        'item_issued_quantity' => $data['itemIssuedQty'][$j],
+                        'issued_to' => $data['issuedTo'][$j],
                         'outwards_description'  => $data['description'][$j],
-                        'created_by'      => session('userId'),
-                        'created_on'      => $commonservice->getDateTime(),
+                        'created_by' => session('userId'),
+                        'created_on' => $commonservice->getDateTime(),
                     ]
                 );
+            
+            $invStock =  DB::table('inventory_stock')
+                        ->where('item_id', '=', $item)
+                        ->where('branch_id', '=', $data['branches'][$j]);
+            if($expiryDate){
+                $invStock = $invStock->where('expiry_date', '=', $expiryDate);
+            }
+            $invStock = $invStock->update(
+                            [
+                                'stock_quantity'    => $stkQty,
+                            ]
+                        );
         }
         return $autoId;
     }
