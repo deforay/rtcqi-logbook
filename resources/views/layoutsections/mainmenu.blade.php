@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Request;
 
 $role = session('role');
+// dd($role);
 $dashboard = '';
 $manage = '';
 $item = '';
 $procurement = '';
+$report = '';
 
 if (isset($role['App\Http\Controllers\Dashboard\DashboardController']['index']) && ($role['App\Http\Controllers\Dashboard\DashboardController']['index'] == "allow"))
     $dashboard = '<li class=" nav-item" id="dashboard"><a href="/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a></li>';
@@ -89,6 +91,13 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
     $procurement .= '</ul></li>';
 
 }
+if (isset($role['App\Http\Controllers\Report\ReportController']['inventoryReport']) && ($role['App\Http\Controllers\Report\ReportController']['inventoryReport'] == "allow")){
+    $report .= '<li class=" nav-item" id="report"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.item.main">Report</span></a>
+                    <ul class="menu-content">';
+    if (isset($role['App\Http\Controllers\Report\ReportController']['inventoryReport']) && ($role['App\Http\Controllers\Report\ReportController']['inventoryReport'] == "allow"))
+        $report .= '<li id="li-inventoryReport"><a class="menu-item" href="/inventoryReport/" >Inventory Report</a></li>';
+    $report .= '</ul></li>';
+}
 
 ?>
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow menu-border" data-scroll-to-active="true">
@@ -98,7 +107,7 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
         @php echo $manage; @endphp
         @php echo $item; @endphp
         @php echo $procurement; @endphp
-
+        @php echo $report; @endphp
       </ul>
     </div>
   </div>

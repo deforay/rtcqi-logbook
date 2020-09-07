@@ -78,4 +78,9 @@ class InventoryOutwardsService
         return $result;
 	}
 	
+	public function getInventoryReport($request){
+		$inventoryOutwardsmodel = new InventoryOutwardsTable();
+        $result = $inventoryOutwardsmodel->fetchInventoryReport($request);
+        return $result;
+	}
 }

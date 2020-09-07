@@ -87,4 +87,48 @@ class InventoryOutwardsTable extends Model
         }
         return $data;
     }
+
+    public function fetchInventoryReport($request){
+        $data = $request->all();
+        $arr = array();
+        // dd($data);
+        $userId=session('userId');
+        $item = DB::table('items')->get();
+        $qty = DB::raw('SUM(inventory_stock.stock_quantity) as stock_quantity');
+        $branch = DB::raw('group_concat(branches.branch_name) as branch_name');
+        // dd($item);
+        $a = 0;
+        for($k=0;$k<count($item);$k++){
+            $inv = DB::table('inventory_stock')
+                    ->join('branches', 'branches.branch_id', '=', 'inventory_stock.branch_id')
+                    ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
+                    // ->where('user_branch_map.user_id', '=', $userId)
+                    ->select($qty,$branch,'items.item_code','items.item_name')
+                    ->groupBy('inventory_stock.item_id','items.item_code','items.item_name')
+                    ->where('inventory_stock.item_id', '=', $item[$k]->item_id);
+            if($request['branchId']){
+                $inv = $inv->where('branches.branch_id', '=', $data['branchId']);
+            }
+            $inv = $inv->get();
+            // dd($inv);
+            // print_r($inv);
+            $inv = $inv->toArray();
+            // print_r(count($inv));
+            if(isset($inv) && count($inv)>0){
+                $arr[$a]['stock_quantity'] = $inv[0]->stock_quantity;
+                $arr[$a]['item_name'] = $inv[0]->item_name;
+                if($inv[0]->item_code!=null && $inv[0]->item_code!='' && $inv[0]->item_code!='null'){
+                    $arr[$a]['item_code'] = $inv[0]->item_code;
+                }
+                else{
+                    $arr[$a]['item_code'] = '';
+                }
+                $str = implode(',',array_unique(explode(',', $inv[0]->branch_name)));
+                $arr[$a]['branch_name'] = $str;
+                $a++;
+            }
+        }
+        // dd($arr);
+        return json_encode($arr);
+    }
 }

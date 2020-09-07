@@ -393,3 +393,8 @@ ALTER TABLE `inventory_outwards` CHANGE `updated_on` `updated_on` DATETIME NULL 
 
 --Sudarmathi 03 SEP 2020
 ALTER TABLE `inventory_stock` CHANGE `expiry_date` `expiry_date` DATE NULL;
+
+--Sudarmathi 04 SEP 2020
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Report\\ReportController', 'Report', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Report\\ReportController', 'inventoryReport', 'Inventory Report');
