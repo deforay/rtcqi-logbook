@@ -62,14 +62,31 @@ class InventoryOutwardsController extends Controller
                     ->addColumn('action', function($data){
                         $button = '';
                         $role = session('role');
-                        if (isset($role['App\\Http\\Controllers\\PurchaseOrder\\PurchaseOrderController']['edit']) && ($role['App\\Http\\Controllers\\PurchaseOrder\\PurchaseOrderController']['edit'] == "allow")){
-                            $button .= '&nbsp;&nbsp;&nbsp;<a href="/purchaseorder/edit/'. base64_encode($data->outwards_id).'" name="edit" id="'.$data->outwards_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        }else{
-                            $button .= '';
-                        }
+                        // if (isset($role['App\\Http\\Controllers\\PurchaseOrder\\PurchaseOrderController']['edit']) && ($role['App\\Http\\Controllers\\PurchaseOrder\\PurchaseOrderController']['edit'] == "allow")){
+                        //     $button .= '&nbsp;&nbsp;&nbsp;<a href="/purchaseorder/edit/'. base64_encode($data->outwards_id).'" name="edit" id="'.$data->outwards_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        // }else{
+                        //     $button .= '';
+                        // }
+                        $button .= '';
+
                         return $button;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
+    }
+    public function returnissueitems(Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $service = new InventoryOutwardsService();
+            $returnItems = $service->returnInventoryOutwards($request);
+            return Redirect::route('inventoryoutwards.index')->with('status', $returnItems);
+        }
+        else
+        {
+            $branchService = new BranchesService();
+            $branch = $branchService->getBranchesByUser();
+            return view('inventoryoutwards.returnissueitems',array('branch'=>$branch));
+        }
     }
 }
