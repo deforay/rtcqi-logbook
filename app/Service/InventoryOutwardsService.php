@@ -83,4 +83,23 @@ class InventoryOutwardsService
         $result = $inventoryOutwardsmodel->fetchInventoryReport($request);
         return $result;
 	}
+
+	public function returnInventoryOutwards($request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$inventoryOutwardsmodel = new InventoryOutwardsTable();
+        	$addInventoryOutwards = $inventoryOutwardsmodel->returnInventoryOutwards($request);
+			if($addInventoryOutwards>0){
+				DB::commit();
+				$msg = 'Inventory Outwards returned Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
 }
