@@ -119,9 +119,9 @@ class DeliveryScheduleTable extends Model
 
                 $mailItemDetails .= '<tr>
                                     <td>'.$data['itemNames'][$k].'</td>
-                                    <td>'.$data['quantityM'][$k].'</td>
+                                    <td style="text-align:right;">'.$data['quantityM'][$k].'</td>
                                     <td>'.$data['expectedDelivery'][$k].'</td>
-                                    <td>'.$data['deliverQty'][$k].'</td>
+                                    <td style="text-align:right;">'.$data['deliverQty'][$k].'</td>
                                     <td>'.$data['deliveryMode'][$k].'</td>
                                     <td>'.$branchEmail[0]->branch_name.'</td>
                                     <td>'.$data['comments'][$k].'</td>
