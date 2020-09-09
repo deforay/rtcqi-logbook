@@ -125,6 +125,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Min Quantity
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="minQuantity"  onkeypress="return isNumberKey(event);" maxlength="2"  class="form-control" autocomplete="off" placeholder="Enter Minimum Quantity" name="minQuantity" title="Please enter Minimum Quantity">
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Stockable<span class="mandatory">*</span>
@@ -290,6 +299,11 @@ $(document).ready(function() {
             });
         }
     }
-
+    function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 </script>
 @endsection
