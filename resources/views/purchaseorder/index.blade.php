@@ -145,6 +145,20 @@
                     { data: 'quote_number', name: 'quote_number' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
+                columnDefs: [
+                {
+                        "targets": 0,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 4,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 7,
+                        "className": "text-right",
+                },
+                ],                
             order: [[1, 'desc']]
         });
     }

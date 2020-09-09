@@ -148,6 +148,17 @@ Last Modified Name :
                     { data: 'quotes_status', name: 'quotes_status',className: 'firstcaps' },
                     { data: 'action', name: 'action', orderable: false,className: 'text-center'},
                 ],
+                    columnDefs: [
+                {
+                        "targets": 1,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 3,
+                        "className": "text-right",
+                },
+                ],
+                
             order: [[2, 'desc']]
         });
     }

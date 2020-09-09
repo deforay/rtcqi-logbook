@@ -343,6 +343,16 @@ td {
                     { data: 'comments', name: 'comments' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
+                columnDefs: [
+                {
+                        "targets": 0,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 2,
+                        "className": "text-right",
+                },
+                ],  
             order: [[0, 'desc']]
         });
     }
