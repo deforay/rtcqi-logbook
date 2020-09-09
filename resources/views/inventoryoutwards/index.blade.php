@@ -85,7 +85,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:20%">Item Name</th>
-                                                <th style="width:20%">Item Issued<br>Quantity</th>
+                                                <th style="width:20%">Item Issued Quantity</th>
                                                 <th style="width:15%">Issued On</th>
                                                 <th style="width:15%">Issued To</th>
                                                 <th style="width:10%">Description</th>
@@ -147,6 +147,12 @@
                     { data: 'outwards_description', name: 'outwards_description',className:'firstcaps'},
                     // { data: 'action', name: 'action', orderable: false},
                 ],
+                columnDefs: [
+              {
+                    "targets": 1,
+                    "className": "text-right",
+              },
+            ],
             order: [[2, 'desc']],
             // columnDefs : [{"targets":1, "type":"date"}],
         });

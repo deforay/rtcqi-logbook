@@ -129,6 +129,12 @@
                     { data: 'unit_name', name: 'unit_name', },
                     {data: 'action', name: 'action', orderable: false},
                 ],
+                columnDefs: [
+                {
+                        "targets": 1,
+                        "className": "text-right",
+                },
+                ], 
             order: [[0, 'desc']]
         });
     }
