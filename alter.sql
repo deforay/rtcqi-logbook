@@ -402,3 +402,5 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 --sri 08 SEP 2020
 ALTER TABLE `inventory_outwards` ADD `stock_return` VARCHAR(100) NOT NULL DEFAULT 'no' AFTER `updated_on`;
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'returnissueitems', 'Return Issue Item');
+--sri 09 SEP 2020
+ALTER TABLE `items` ADD `minimum_quantity` INT(5) NULL DEFAULT NULL AFTER `stockable`;
