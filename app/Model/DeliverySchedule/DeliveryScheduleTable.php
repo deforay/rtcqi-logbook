@@ -547,6 +547,11 @@ class DeliveryScheduleTable extends Model
             }
             else{
                 $manufacturingDate = null;
+            }if($data['receiveDate'][$i]){
+                $receivedDate  = $commonservice->dateFormat($data['receiveDate'][$i]);
+            }
+            else{
+                $receivedDate = null;
             }
             if($expiryDate){
                 $stk = DB::table('inventory_stock')
@@ -568,6 +573,9 @@ class DeliveryScheduleTable extends Model
                                         'updated_by'              => session('userId'),
                                         'updated_on'              => $commonservice->getDateTime(),
                                         'non_conformity_comments' => $desc,
+                                        'received_date' => $receivedDate,
+                                        'pod_id' => $data['pod_id'],
+                                        'delivery_id' => base64_decode($id),
                                     ]
                                 );
                     }else{
@@ -583,6 +591,9 @@ class DeliveryScheduleTable extends Model
                                         'created_on'              => $commonservice->getDateTime(),
                                         'branch_id'               => $data['branches'][$i],
                                         'non_conformity_comments' => $desc,
+                                        'received_date' => $receivedDate,
+                                        'pod_id' => $data['pod_id'],
+                                        'delivery_id' => base64_decode($id),
                                     ]
                                 );
                     }
@@ -605,6 +616,9 @@ class DeliveryScheduleTable extends Model
                                     'updated_by'              => session('userId'),
                                     'updated_on'              => $commonservice->getDateTime(),
                                     'non_conformity_comments' => $desc,
+                                    'received_date' => $receivedDate,
+                                    'pod_id' => $data['pod_id'],
+                                    'delivery_id' => base64_decode($id),
                                 ]
                             );
                 }else{
@@ -621,6 +635,9 @@ class DeliveryScheduleTable extends Model
                                     'created_on'              => $commonservice->getDateTime(),
                                     'branch_id'               => $data['branches'][$i],
                                     'non_conformity_comments' => $desc,
+                                    'received_date' => $receivedDate,
+                                    'pod_id' => $data['pod_id'],
+                                    'delivery_id' => base64_decode($id),
                                 ]
                             );
                 }

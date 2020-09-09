@@ -152,6 +152,12 @@
 															echo '<div><b>##PO-DATE##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Purchase Order Date</div>';
 															echo '<div><b>##ITEM-DETAILS##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Delivery Schedule Item Details</div>';
 														}
+														if($mail[0]->template_name=='Delayed Delivery Alert'){
+															echo '<div><b>##DELIVERY-DETAILS##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Delayed Delivery Schedule Item Details</div>';
+														}
+														if($mail[0]->template_name=='Non Conformity Delivery Alert'){
+															echo '<div><b>##ITEM-DETAILS##</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp --- &nbsp&nbsp Non Conformity Delivery Schedule Item Details</div>';
+														}
 														?>
 														<!-- 
 														<div><b>##SAP-ORDER##</b>&nbsp&nbsp&nbsp --- &nbsp&nbsp Sap Order Number</div>

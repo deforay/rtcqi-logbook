@@ -52,17 +52,19 @@ class SendNonConformityMailCron extends Command
                 $mailItemDetails = '';
                 $expected_date_of_delivery = '';
                 $po_issued_on = '';
-                $tempMail = DB::table('delivery_schedule')
-                ->join('branches', 'branches.branch_id', '=', 'delivery_schedule.branch_id')
-                ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
-                ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
+                $tempMail = DB::table('inventory_stock')
+                ->join('branches', 'branches.branch_id', '=', 'inventory_stock.branch_id')
+                ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
+                ->join('delivery_schedule', 'delivery_schedule.delivery_id', '=', 'inventory_stock.delivery_id')
+                ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'inventory_stock.pod_id')
                 ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
-                ->select('vendors.email AS vendor_email','vendors.vendor_name','branches.email AS branch_email','branches.branch_name','purchase_orders.po_number','purchase_orders.po_issued_on','purchase_order_details.*','vendors.vendor_name','delivery_schedule.*','items.*')
+                ->select('vendors.email AS vendor_email','vendors.vendor_name','inventory_stock.updated_on AS reported_on','branches.email AS branch_email','branches.branch_name','purchase_orders.po_number','purchase_orders.po_issued_on','purchase_order_details.*','vendors.vendor_name','inventory_stock.*','delivery_schedule.*','items.*')
                 ->where('delivery_schedule.delivery_schedule_status','=', 'Non Conformity')
-                ->where('delivery_schedule.branch_id','=', $loc->branch_id)
+                ->where('inventory_stock.branch_id','=', $loc->branch_id)
                 ->get();
                 $tempMail = $tempMail->toArray();
+                // dd($tempMail);
                 $global = DB::table('global_config')
                             ->where('global_config.global_name', '=', 'email')
                             ->select('global_value')
@@ -82,7 +84,9 @@ class SendNonConformityMailCron extends Command
                                             <th><strong>Non Conformity<br/>Quantity</strong></th>
                                             <th><strong>Location</strong></th>
                                             <th><strong>Reason for Non Conformity</strong></th>
-                                            <th><strong>Delivery <br/>Date</strong></th>
+                                            <th><strong>Scheduled <br/>Delivery Date</strong></th>
+                                            <th><strong>Reported On</strong></th>
+                                            <th><strong>Received On</strong></th>
                                         </tr>
                                     </thead>
                                     <tbody>';
@@ -93,6 +97,18 @@ class SendNonConformityMailCron extends Command
                         }
                         else{
                             $expected_date_of_delivery = '';
+                        }
+                        if($mail->received_date){
+                            $received_date = $commonservice->humanDateFormat($mail->received_date);
+                        }
+                        else{
+                            $received_date = '';
+                        }
+                        if($mail->reported_on){
+                            $reported_on = date("d-M-Y",strtotime($mail->reported_on));
+                        }
+                        else{
+                            $reported_on = '';
                         }
                         if($mail->po_issued_on){
                             $po_issued_on = $commonservice->humanDateFormat($mail->po_issued_on);
@@ -107,15 +123,23 @@ class SendNonConformityMailCron extends Command
                                 $toEmail = $mail->branch_email;
                             }
                         }
+                        if($mail->item_code){
+                            $itemName = $mail->item_name.'('.$mail->item_code .')';
+                        }
+                        else{
+                            $itemName = $mail->item_name;
+                        }
                         $mailItemDetails .= '<tr>
                                             <td>'.$mail->po_number.'</td>
                                             <td>'.$po_issued_on.'</td>
-                                            <td>'.$mail->item_name.'</td>
+                                            <td>'.$itemName.'</td>
                                             <td style="text-align:right;">'.$mail->quantity.'</td>
                                             <td style="text-align:right;">'.$mail->delivery_qty.'</td>
                                             <td>'.$mail->branch_name.'</td>
-                                            <td>'.$mail->short_description.'</td>
+                                            <td>'.$mail->non_conformity_comments.'</td>
                                             <td>'.$expected_date_of_delivery.'</td>
+                                            <td>'.$reported_on.'</td>
+                                            <td>'.$received_date.'</td>
                                         </tr>';
                     }
                     $mailItemDetails .= '</tbody></table>';

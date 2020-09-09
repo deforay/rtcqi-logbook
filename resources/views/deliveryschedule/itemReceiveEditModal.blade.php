@@ -148,11 +148,12 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                     <th style="width:10%;" class="pl-1 pr-0">Manufacturing<br> Date</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Expiry Date</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Batch No</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Received<br> Date<span class="mandatory">*</span></th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Received<br> Quantity<span class="mandatory">*</span></th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Non Conformity<br> Quantity<span class="mandatory">*</span></th>
-                                                    <th style="width:15%;" class="pl-1 pr-0">Reason for<br> non conformity</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Reason for<br> non conformity</th>
                                                     <th style="width:10%;" class="pl-1 pr-0">Locations<span class="mandatory">*</span></th>
-                                                    <th style="width:15%;" class="pl-1 pr-0">Action</th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itemDetails">
@@ -170,10 +171,13 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                         <input type="text" id="batchNo0" class="form-control " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">
                                                     </td>
                                                     <td>
-                                                        <input type="number" value="0" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
+                                                        <input type="text" id="receiveDate0" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter receive date" name="receiveDate[]" title="Please enter receive date">
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" value="0" id="receivedQty0" name="receivedQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id,0,0)" class="form-control isRequired receivedQty" placeholder="Enter Received Qty" title="Please enter the received qty" value="" />
                                                     </td >
                                                     <td>
-                                                        <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id)" class="form-control damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
+                                                        <input type="number" value="0" id="expiryQty0" name="expiryQty[]" min="0" onchange="changeScheduleStatus(this.value,this.id,1,0)" class="form-control damagedQty" placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />
                                                     </td>
                                                     <td>
                                                         <input type="text" id="description0" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">
@@ -374,10 +378,15 @@ function validateNow() {
     }
 }
 
-function changeScheduleStatus(val,id){
+function changeScheduleStatus(val,id,nc,count){
 
     receivedQtySum = 0;
     damagedQtySum = 0;
+    if(nc){
+        if(val){
+            $('#description'+count).addClass('isRequired');
+        }
+    }
     $('.receivedQty').each(function() {
         receivedQtySum += Number($(this).val());
     });
@@ -409,18 +418,20 @@ function insRow() {
     var j = a.insertCell(1);
     var b = a.insertCell(2);
     var d = a.insertCell(3);
-    var c = a.insertCell(4);
-    var f = a.insertCell(5);
-    var h = a.insertCell(6);
-    var g = a.insertCell(7);
-    var e = a.insertCell(8);
+    var l = a.insertCell(4);
+    var c = a.insertCell(5);
+    var f = a.insertCell(6);
+    var h = a.insertCell(7);
+    var g = a.insertCell(8);
+    var e = a.insertCell(9);
     rl = document.getElementById("itemDetails").rows.length - 1;
     i.innerHTML = '<input type="text" id="slNumber' + rowCount + '" onkeypress="return isNumberKey(event);" class="form-control  isRequired" autocomplete="off" placeholder="Sl No" name="slNumber[]" title="Please enter Sl Number">';
     j.innerHTML = '<input type="text" id="manufacturingDate' + rowCount + '" class="form-control datepicker " autocomplete="off" placeholder="Enter manufacturing date" name="manufacturingDate[]" title="Please enter manufacturing date">';
     b.innerHTML = '<input type="text" id="expiryDate' + rowCount + '" class="form-control datepicker " autocomplete="off" placeholder="Enter expiry date" name="expiryDate[]" title="Please enter expiry date">';
     d.innerHTML = '<input type="text" id="batchNo' + rowCount + '" class="form-control " autocomplete="off" placeholder="Enter batch number" name="batchNo[]" title="Please enter batch number">';
-    c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
-    f.innerHTML = '<input type="number" value="0" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id)" min="0" class="form-control damagedQty isRequired " placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />'
+    l.innerHTML = '<input type="text" id="receiveDate' + rowCount + '" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter receive date" name="receiveDate[]" title="Please enter receive date">'
+    c.innerHTML = '<input type="number" value="0" id="receivedQty' + rowCount + '" name="receivedQty[]" onchange="changeScheduleStatus(this.value,this.id,0,'+rowCount+')" min="0" class="form-control receivedQty isRequired " placeholder="Enter Received Qty" title="Please enter the received qty" value="" />';
+    f.innerHTML = '<input type="number" value="0" id="expiryQty' + rowCount + '" name="expiryQty[]" onchange="changeScheduleStatus(this.value,this.id,1,'+rowCount+')" min="0" class="form-control damagedQty isRequired " placeholder="Enter Non Confromity Qty" title="Please enter the Non Confromity qty" value="" />'
     h.innerHTML = '<input type="text" id="description' + rowCount + '" class="form-control typeahead-bloodhound" name="description[]" placeholder="Enter the description about non conformity quantity"  title="Enter the description about non conformity quantity">';
     g.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches' + rowCount + '" name="branches[]" title="Please select locations">\
                         <option value="">Select Locations</option>@foreach($branch as $type)<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>@endforeach</select>';
