@@ -130,6 +130,12 @@
                     { data: 'user_status', name: 'user_status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
+                columnDefs: [
+                {
+                        "targets": 2,
+                        "className": "text-right",
+                },
+                ], 
             order: [[0, 'desc']]
         });
     }

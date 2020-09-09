@@ -156,6 +156,16 @@
           orderable: false
         },
       ],
+      columnDefs: [
+                {
+                        "targets": 1,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 4,
+                        "className": "text-right",
+                },
+                ], 
       order: [
         [0, 'desc']
       ]

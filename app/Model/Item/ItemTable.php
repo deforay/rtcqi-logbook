@@ -27,6 +27,7 @@ class ItemTable extends Model
                 'brand' => $data['brandId'],
                 'base_unit' => $data['unitId'],
                 'stockable' => $data['stockable'],
+                'minimum_quantity' => $data['minQuantity'],
                 'created_on' => $commonservice->getDateTime(),
                 'created_by' => session('userId'),
                 ]
@@ -84,6 +85,7 @@ class ItemTable extends Model
                     'brand' => $data['brandId'],
                     'base_unit' => $data['unitId'],
                     'stockable' => $data['stockable'],
+                    'minimum_quantity' => $data['minQuantity'],
                     'updated_on' => $commonservice->getDateTime(),
                     'updated_by' => session('userId'),
                     ]);
