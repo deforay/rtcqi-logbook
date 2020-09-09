@@ -26,7 +26,7 @@
             </div>
             
         </div>
-        <div class="content-header-right col-md-4 col-12 ">
+        <div class="content-header-right col-md-12 col-12 ">
             <div class="dropdown float-md-right">
             <?php
                 $role = session('role');
@@ -35,6 +35,15 @@
                 <b><i class="ft-plus icon-left"></i> Add Issue Items</b></a>
             <?php } ?>
             </div>
+            <div class="dropdown float-md-right">
+            <?php
+                $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController']['returnissueitems']) && ($role['App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController']['returnissueitems'] == "allow")){ ?>
+                <a href="/inventoryoutwards/returnissueitems" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b>Return Issue Items</b></a>
+            <?php } ?>
+            </div>
+            
         </div>
     </div>
     @if (session('status'))
@@ -80,7 +89,7 @@
                                                 <th style="width:15%">Issued On</th>
                                                 <th style="width:15%">Issued To</th>
                                                 <th style="width:10%">Description</th>
-                                                <th style="width:25%">Action</th>
+                                                <!-- <th style="width:25%">Action</th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -136,7 +145,7 @@
                     },
                     { data: 'branch_name', name: 'branch_name'},
                     { data: 'outwards_description', name: 'outwards_description',className:'firstcaps'},
-                    { data: 'action', name: 'action', orderable: false},
+                    // { data: 'action', name: 'action', orderable: false},
                 ],
             order: [[2, 'desc']],
             // columnDefs : [{"targets":1, "type":"date"}],
