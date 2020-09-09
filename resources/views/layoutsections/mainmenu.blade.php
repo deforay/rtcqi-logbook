@@ -9,6 +9,7 @@ $manage = '';
 $item = '';
 $procurement = '';
 $report = '';
+$inventory='';
 
 if (isset($role['App\Http\Controllers\Dashboard\DashboardController']['index']) && ($role['App\Http\Controllers\Dashboard\DashboardController']['index'] == "allow"))
     $dashboard = '<li class=" nav-item" id="dashboard"><a href="/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a></li>';
@@ -86,9 +87,17 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
         $procurement .= '<li id="li-deliveryschedule"><a class="menu-item" href="/deliveryschedule/" >Delivery Schedule</a></li>';
     if (isset($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['itemreceive']) && ($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['itemreceive'] == "allow"))
         $procurement .= '<li id="li-itemreceive"><a class="menu-item" href="/itemreceive/" >Receive Deliveries</a></li>';
-    if (isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']) && ($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index'] == "allow"))
-        $procurement .= '<li id="li-inventoryoutwards"><a class="menu-item" href="/inventoryoutwards/" >Issue Items</a></li>';
+    // if (isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']) && ($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index'] == "allow"))
+    //     $procurement .= '<li id="li-inventoryoutwards"><a class="menu-item" href="/inventoryoutwards/" >Issue Items</a></li>';
     $procurement .= '</ul></li>';
+
+}
+if ((isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']))) {
+    $inventory .= '<li class=" nav-item" id="inventory"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.item.main">Inventory</span></a>
+                        <ul class="menu-content">';
+    if (isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']) && ($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index'] == "allow"))
+    $inventory .= '<li id="li-inventoryoutwards"><a class="menu-item" href="/inventoryoutwards/" >Issue Items</a></li>';
+    $inventory .= '</ul></li>';
 
 }
 if (isset($role['App\Http\Controllers\Report\ReportController']['inventoryReport']) && ($role['App\Http\Controllers\Report\ReportController']['inventoryReport'] == "allow")){
@@ -107,6 +116,7 @@ if (isset($role['App\Http\Controllers\Report\ReportController']['inventoryReport
         @php echo $manage; @endphp
         @php echo $item; @endphp
         @php echo $procurement; @endphp
+        @php echo $inventory; @endphp
         @php echo $report; @endphp
       </ul>
     </div>
