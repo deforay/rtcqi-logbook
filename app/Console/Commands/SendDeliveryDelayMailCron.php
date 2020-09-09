@@ -159,7 +159,6 @@ class SendDeliveryDelayMailCron extends Command
                         $msg['from_full_name'] = $mailData[0]->from_name;
                         $msg['subject'] = $subject;
                         $msg['ccEmail'] = $ccEmail;
-                        // print_r($adminMail);die;
                         Mail::send('mailtemplate.email', $msg, function ($message) use ($msg) {
                             $toEmail = explode(',',$msg['toEmail']);
                             $ccMail = explode(',',$msg['ccEmail']);
