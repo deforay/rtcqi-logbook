@@ -250,6 +250,9 @@ Route::post('/getAllInventoryOutwards', 'InventoryOutwards\InventoryOutwardsCont
 Route::get('/inventoryoutwards/edit/{id}', 'InventoryOutwards\InventoryOutwardsController@edit')->middleware('access');
 Route::post('/inventoryoutwards/edit/{id}', 'InventoryOutwards\InventoryOutwardsController@edit');
 Route::post('/getItemByLoc', 'InventoryOutwards\InventoryOutwardsController@getItemByLoc');
+Route::post('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems');
+Route::get('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems')->middleware('access');
+
 
 //Report Controller
 Route::get('/inventoryReport', 'Report\ReportController@inventoryReport')->name('inventoryReport.index')->middleware('access');
