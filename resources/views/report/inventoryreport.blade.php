@@ -85,8 +85,8 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="inventoryReport" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="width:25%">Item Code</th>
                                                 <th style="width:25%">Item Name</th>
+                                                <th style="width:25%">Item Code</th>
                                                 <th style="width:25%">Current Inventory</th>
                                                 <th style="width:25%">Location</th>
                                             </tr>

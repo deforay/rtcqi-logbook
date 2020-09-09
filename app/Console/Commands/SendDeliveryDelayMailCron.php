@@ -114,7 +114,7 @@ class SendDeliveryDelayMailCron extends Command
                                             <td>'.$mail->po_number.'</td>
                                             <td>'.$po_issued_on.'</td>
                                             <td>'.$mail->vendor_name.'</td>
-                                            <td>'.$mail->item_name.'</td>
+                                            <td>'.$mail->item_name.'('.$mail->item_code .')'.'</td>
                                             <td style="text-align:right;">'.$mail->quantity.'</td>
                                             <td>'.$expected_date_of_delivery.'</td>
                                             <td style="text-align:right;">'.$mail->delivery_qty.'</td>
