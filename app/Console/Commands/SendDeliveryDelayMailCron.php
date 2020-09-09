@@ -115,9 +115,9 @@ class SendDeliveryDelayMailCron extends Command
                                             <td>'.$po_issued_on.'</td>
                                             <td>'.$mail->vendor_name.'</td>
                                             <td>'.$mail->item_name.'</td>
-                                            <td>'.$mail->quantity.'</td>
+                                            <td style="text-align:right;">'.$mail->quantity.'</td>
                                             <td>'.$expected_date_of_delivery.'</td>
-                                            <td>'.$mail->delivery_qty.'</td>
+                                            <td style="text-align:right;">'.$mail->delivery_qty.'</td>
                                             <td>'.$mail->delivery_mode.'</td>
                                             <td>'.$mail->branch_name.'</td>
                                             <td>'.$mail->comments.'</td>
@@ -159,7 +159,6 @@ class SendDeliveryDelayMailCron extends Command
                         $msg['from_full_name'] = $mailData[0]->from_name;
                         $msg['subject'] = $subject;
                         $msg['ccEmail'] = $ccEmail;
-                        // print_r($adminMail);die;
                         Mail::send('mailtemplate.email', $msg, function ($message) use ($msg) {
                             $toEmail = explode(',',$msg['toEmail']);
                             $ccMail = explode(',',$msg['ccEmail']);
