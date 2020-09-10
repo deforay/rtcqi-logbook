@@ -406,5 +406,8 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 --sri 09 SEP 2020
 ALTER TABLE `items` ADD `minimum_quantity` INT(5) NULL DEFAULT NULL AFTER `stockable`
 
---Sudar 10 SEP 2020
+--Sudar 09 SEP 2020
 ALTER TABLE `inventory_stock` ADD `received_date` DATE NULL DEFAULT NULL AFTER `inventory_upload_file`;
+
+--Sudar 10 SEP 2020
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Expiry Alert', 'expiry_alert', '7', 'yes', 'yes');
