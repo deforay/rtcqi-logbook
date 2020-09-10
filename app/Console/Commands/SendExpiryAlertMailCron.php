@@ -83,7 +83,6 @@ class SendExpiryAlertMailCron extends Command
                                             <th><strong>Quantity Ordered</strong></th>
                                             <th><strong>Expiry Date</strong></th>
                                             <th><strong>Location</strong></th>
-                                            <th><strong>Scheduled <br/>Delivery Date</strong></th>
                                         </tr>
                                     </thead>
                                     <tbody>';
@@ -127,7 +126,6 @@ class SendExpiryAlertMailCron extends Command
                                             <td style="text-align:right;">'.$mail->quantity.'</td>
                                             <td>'.$expiry_date.'</td>
                                             <td>'.$mail->branch_name.'</td>
-                                            <td>'.$expected_date_of_delivery.'</td>
                                         </tr>';
                     }
                     $mailItemDetails .= '</tbody></table>';
