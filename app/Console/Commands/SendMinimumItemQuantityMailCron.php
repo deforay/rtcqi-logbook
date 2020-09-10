@@ -66,7 +66,6 @@ class SendMinimumItemQuantityMailCron extends Command
                 ->where('inventory_stock.branch_id','=', $loc->branch_id)
                 ->get();
                 $tempMail = $tempMail->toArray();
-                // dd($tempMail);
                 $global = DB::table('global_config')
                             ->where('global_config.global_name', '=', 'email')
                             ->select('global_value')
@@ -129,6 +128,7 @@ class SendMinimumItemQuantityMailCron extends Command
                         $subject = $mailSubject;
                         $subject = str_replace("&nbsp;", "", strval($subject));
                         $subject = str_replace("&amp;nbsp;", "", strval($subject));
+                        $subject = str_replace("##LOCATION##", $mail->branch_name, strval($subject));
                         $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
                         $mainContent = array( '##ITEM-DETAILS##');
                         $mainReplace = array( $mailItemDetails);
