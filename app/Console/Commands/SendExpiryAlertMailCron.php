@@ -7,21 +7,21 @@ use App\Service\CommonService;
 use DB;
 use Mail;
 
-class SendNonConformityMailCron extends Command
+class SendExpiryAlertMailCron extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sendnonconformitymail:cron';
+    protected $signature = 'sendexpiryalertmail:cron';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send Non Conformity Mail';
+    protected $description = 'Send Expiry Alert Mail';
 
     /**
      * Create a new command instance.
@@ -60,7 +60,7 @@ class SendNonConformityMailCron extends Command
                 ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                 ->join('vendors', 'purchase_orders.vendor', '=', 'vendors.vendor_id')
                 ->select('vendors.email AS vendor_email','vendors.vendor_name','inventory_stock.updated_on AS reported_on','branches.email AS branch_email','branches.branch_name','purchase_orders.po_number','purchase_orders.po_issued_on','purchase_order_details.*','vendors.vendor_name','inventory_stock.*','delivery_schedule.*','items.*')
-                ->where('delivery_schedule.delivery_schedule_status','=', 'Non Conformity')
+                ->whereRaw('inventory_stock.expiry_date <= (DATE(NOW()) - INTERVAL 7 DAY)')
                 ->where('inventory_stock.branch_id','=', $loc->branch_id)
                 ->get();
                 $tempMail = $tempMail->toArray();
@@ -81,12 +81,9 @@ class SendNonConformityMailCron extends Command
                                             <th><strong>PO Date</strong></th>
                                             <th><strong>Item Name</strong></th>
                                             <th><strong>Quantity Ordered</strong></th>
-                                            <th><strong>Non Conformity<br/>Quantity</strong></th>
+                                            <th><strong>Expiry Date</strong></th>
                                             <th><strong>Location</strong></th>
-                                            <th><strong>Reason for Non Conformity</strong></th>
                                             <th><strong>Scheduled <br/>Delivery Date</strong></th>
-                                            <th><strong>Reported On</strong></th>
-                                            <th><strong>Received On</strong></th>
                                         </tr>
                                     </thead>
                                     <tbody>';
@@ -98,17 +95,11 @@ class SendNonConformityMailCron extends Command
                         else{
                             $expected_date_of_delivery = '';
                         }
-                        if($mail->received_date){
-                            $received_date = $commonservice->humanDateFormat($mail->received_date);
+                        if($mail->expiry_date){
+                            $expiry_date = $commonservice->humanDateFormat($mail->expiry_date);
                         }
                         else{
-                            $received_date = '';
-                        }
-                        if($mail->reported_on){
-                            $reported_on = date("d-M-Y",strtotime($mail->reported_on));
-                        }
-                        else{
-                            $reported_on = '';
+                            $expiry_date = '';
                         }
                         if($mail->po_issued_on){
                             $po_issued_on = $commonservice->humanDateFormat($mail->po_issued_on);
@@ -134,17 +125,14 @@ class SendNonConformityMailCron extends Command
                                             <td>'.$po_issued_on.'</td>
                                             <td>'.$itemName.'</td>
                                             <td style="text-align:right;">'.$mail->quantity.'</td>
-                                            <td style="text-align:right;">'.$mail->delivery_qty.'</td>
+                                            <td>'.$expiry_date.'</td>
                                             <td>'.$mail->branch_name.'</td>
-                                            <td>'.$mail->non_conformity_comments.'</td>
                                             <td>'.$expected_date_of_delivery.'</td>
-                                            <td>'.$reported_on.'</td>
-                                            <td>'.$received_date.'</td>
                                         </tr>';
                     }
                     $mailItemDetails .= '</tbody></table>';
                     $mailData = DB::table('mail_template')
-                        ->where('mail_temp_id', '=', 8)
+                        ->where('mail_temp_id', '=', 9)
                         ->get();
                     // dd($mailData);
                     if(count($mailData)>0)

@@ -146,6 +146,7 @@ class SendDeliveryDelayMailCron extends Command
                         $subject = str_replace("&nbsp;", "", strval($subject));
                         $subject = str_replace("&amp;nbsp;", "", strval($subject));
                         $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+                        $subject = str_replace("##LOCATION##", $mail->branch_name, strval($subject));
                         $mainContent = array( '##DELIVERY-DETAILS##');
                         $mainReplace = array( $mailItemDetails);
                         $mailContent = trim($mailData[0]->mail_content);
