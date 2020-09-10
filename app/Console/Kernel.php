@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\SendMailCron::class,
         Commands\SendDeliveryDelayMailCron::class,
         Commands\SendNonConformityMailCron::class,
+        Commands\SendMinimumItemQuantityMailCron::class,
     ];
 
     /**
@@ -44,6 +45,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('sendnonconformitymail:cron')
                 ->timezone('Asia/Kolkata')
                 ->dailyAt('6:00');
+
+        $schedule->command('sendminimumitemquantitymail:cron')
+                ->timezone('Asia/Kolkata')
+                ->dailyAt('6:00');        
+        
     }
 
     /**
