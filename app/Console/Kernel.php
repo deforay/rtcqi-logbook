@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\SendMailCron::class,
         Commands\SendDeliveryDelayMailCron::class,
         Commands\SendNonConformityMailCron::class,
+        Commands\SendExpiryAlertMailCron::class,
     ];
 
     /**
@@ -42,6 +43,10 @@ class Kernel extends ConsoleKernel
                 ->dailyAt('6:00');
 
         $schedule->command('sendnonconformitymail:cron')
+                ->timezone('Asia/Kolkata')
+                ->dailyAt('6:00');
+
+        $schedule->command('sendexpiryalertmail:cron')
                 ->timezone('Asia/Kolkata')
                 ->dailyAt('6:00');
     }
