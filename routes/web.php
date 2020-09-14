@@ -254,6 +254,22 @@ Route::post('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryO
 Route::get('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems')->middleware('access');
 
 
+
+//Asset Tag module
+Route::get('/assettag', 'AssetTag\AssetTagController@index')->name('assettag.index')->middleware('access');
+Route::post('/assettag/add', 'AssetTag\AssetTagController@add');
+Route::get('/assettag/add', 'AssetTag\AssetTagController@add')->middleware('access');
+Route::post('/getAllAssetTag', 'AssetTag\AssetTagController@getAllAssetTag');
+Route::get('/assettag/edit/{id}', 'AssetTag\AssetTagController@edit')->middleware('access');
+Route::post('/assettag/edit/{id}', 'AssetTag\AssetTagController@edit');
+Route::post('/createAssetId', 'AssetTag\AssetTagController@createAssetId');
+// Route::post('/getItemByLoc', 'AssetTag\AssetTagController@getItemByLoc');
+
+
+// Route::post('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems');
+// Route::get('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems')->middleware('access');
+
+
 //Report Controller
 Route::get('/inventoryReport', 'Report\ReportController@inventoryReport')->name('inventoryReport.index')->middleware('access');
 Route::post('/getInventoryReport', 'Report\ReportController@getInventoryReport');

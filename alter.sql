@@ -411,3 +411,29 @@ ALTER TABLE `inventory_stock` ADD `received_date` DATE NULL DEFAULT NULL AFTER `
 
 --Sudar 10 SEP 2020
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Expiry Alert', 'expiry_alert', '7', 'yes', 'yes');
+
+--Sri 12 SEP 2020
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\AssetTag\\AssetTagController', 'index', 'Access'), ('App\\Http\\Controllers\\AssetTag\\AssetTagController', 'add', 'Add');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\AssetTag\\AssetTagController', 'edit', 'Edit');
+
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Maintenance\\MaintenanceController', 'index', 'Access'), ('App\\Http\\Controllers\\Maintenance\\MaintenanceController', 'add', 'Add');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Maintenance\\MaintenanceController', 'edit', 'Edit');
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\AssetTag\\AssetTagController', 'Asset Tag', 'active'), ('App\\Http\\Controllers\\Maintenance\\MaintenanceController', 'Maintenance', 'active');
+
+CREATE TABLE `asset_tags` (
+ `asset_id` int(11) NOT NULL AUTO_INCREMENT,
+ `location_id` int(11) NOT NULL,
+ `item_id` int(11) NOT NULL,
+ `asset_tag` varchar(255) NOT NULL,
+ `asset_tag_status` varchar(100) NOT NULL,
+ `created_by` int(11) DEFAULT NULL,
+ `updated_by` int(11) DEFAULT NULL,
+ `created_on` date DEFAULT NULL,
+ `updated_on` date DEFAULT NULL,
+ PRIMARY KEY (`asset_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `asset_tags` ADD `status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `asset_tag`;
+ALTER TABLE `branches` ADD `branch_code` VARCHAR(255) NULL DEFAULT NULL AFTER `branch_name`;
+
+ALTER TABLE `asset_tags` CHANGE `location_id` `branch_id` INT(11) NOT NULL;
