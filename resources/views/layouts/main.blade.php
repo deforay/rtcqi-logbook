@@ -113,6 +113,18 @@ ismob = true;
       $("#inventory > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
+    else if(splitUrl[0]=="maintenance")
+    {
+      $("#maintenance").addClass('active');
+      $("#maintenance > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
+    }
+    else if(splitUrl[0]=="assettag")
+    {
+      $("#assettag").addClass('active');
+      $("#assettag > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
+    }
   });
 
   // $(function(){

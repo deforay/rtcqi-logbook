@@ -22,19 +22,20 @@ class BranchesTable extends Model
         if ($request->input('branchName')!=null && trim($request->input('branchName')) != '') {
             $id = DB::table('branches')->insertGetId(
                 [
-                'branch_name' => $data['branchName'],
-                'branch_type_id' => $data['branchType'],
-                'phone' => $data['mobileNo'],
-                'email' => $data['email'],
-                'address_line_1' => $data['addressLine1'],
-                'address_line_2' => $data['addressLine2'],
-                'country' => $data['country'],
-                'state' => $data['state'],
-                'city' => $data['city'],
-                'pincode' => $data['pincode'],
-                'branch_status' => $data['branchStatus'],
-                'created_by' => session('userId'),
-                'created_on' => $commonservice->getDateTime(),
+                'branch_name'       => $data['branchName'],
+                'branch_code'       =>$data['branchCode'],
+                'branch_type_id'    => $data['branchType'],
+                'phone'             => $data['mobileNo'],
+                'email'             => $data['email'],
+                'address_line_1'    => $data['addressLine1'],
+                'address_line_2'    => $data['addressLine2'],
+                'country'           => $data['country'],
+                'state'             => $data['state'],
+                'city'              => $data['city'],
+                'pincode'           => $data['pincode'],
+                'branch_status'     => $data['branchStatus'],
+                'created_by'        => session('userId'),
+                'created_on'        => $commonservice->getDateTime(),
                 ]
             );
 
@@ -103,19 +104,20 @@ class BranchesTable extends Model
                 ->where('branch_id', '=',base64_decode($id))
                 ->update(
                     [
-                        'branch_name' => $data['branchName'],
-                        'branch_type_id' => $data['branchType'],
-                        'phone' => $data['mobileNo'],
-                        'email' => $data['email'],
-                        'address_line_1' => $data['addressLine1'],
-                        'address_line_2' => $data['addressLine2'],
-                        'country' => $data['country'],
-                        'state' => $data['state'],
-                        'city' => $data['city'],
-                        'pincode' => $data['pincode'],
-                        'branch_status' => $data['branchStatus'],
-                        'updated_on' => $commonservice->getDateTime(),
-                        'updated_by' => session('userId'),
+                        'branch_name'     => $data['branchName'],
+                        'branch_code'     =>$data['branchCode'],
+                        'branch_type_id'  => $data['branchType'],
+                        'phone'           => $data['mobileNo'],
+                        'email'           => $data['email'],
+                        'address_line_1'  => $data['addressLine1'],
+                        'address_line_2'  => $data['addressLine2'],
+                        'country'         => $data['country'],
+                        'state'           => $data['state'],
+                        'city'            => $data['city'],
+                        'pincode'         => $data['pincode'],
+                        'branch_status'   => $data['branchStatus'],
+                        'updated_on'      => $commonservice->getDateTime(),
+                        'updated_by'      => session('userId'),
                     ]);
 
         $commonservice = new CommonService();

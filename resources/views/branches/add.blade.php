@@ -60,6 +60,15 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Location Code<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="branchCode" class="form-control isRequired" autocomplete="off" placeholder="Enter Location Code" name="branchCode" title="Please enter Location code" onblur="checkNameValidation('branches','branch_code', this.id,'', 'Entered Location  Code is already exist.')" >
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Location Type<span class="mandatory">*</span>
                                             </h5>
