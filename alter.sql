@@ -437,3 +437,20 @@ ALTER TABLE `asset_tags` ADD `status` VARCHAR(100) NOT NULL DEFAULT 'active' AFT
 ALTER TABLE `branches` ADD `branch_code` VARCHAR(255) NULL DEFAULT NULL AFTER `branch_name`;
 
 ALTER TABLE `asset_tags` CHANGE `location_id` `branch_id` INT(11) NOT NULL;
+
+--Sri 15 SEP 2020
+
+CREATE TABLE `maintenance` (
+ `maintenance_id` int(11) NOT NULL AUTO_INCREMENT,
+ `service_date` date NOT NULL,
+ `service_done_by` varchar(255) NOT NULL,
+ `verified_by` varchar(255) NOT NULL,
+ `regular_service` varchar(255) NOT NULL,
+ `next_maintenance_date` date NOT NULL,
+ `maintenance_status` varchar(100) NOT NULL,
+ `created_by` int(11) DEFAULT NULL,
+ `updated_by` int(11) DEFAULT NULL,
+ `created_on` date DEFAULT NULL,
+ `updated_on` date DEFAULT NULL,
+ PRIMARY KEY (`maintenance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
