@@ -125,15 +125,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                <div class="col-xl-4 col-lg-12">
-                                            <fieldset>
-                                                <h5>Min Quantity
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="minQuantity"  onkeypress="return isNumberKey(event);" maxlength="2"  class="form-control" autocomplete="off" placeholder="Enter Minimum Quantity" name="minQuantity" title="Please enter Minimum Quantity">
-                                                </div>
-                                            </fieldset>
-                                        </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Min Quantity
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="minQuantity"  onkeypress="return isNumberKey(event);" class="form-control" autocomplete="off" placeholder="Enter Minimum Quantity" name="minQuantity" title="Please enter Minimum Quantity">
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Stockable<span class="mandatory">*</span>
@@ -143,9 +143,33 @@
                                             <option value="yes" >Yes</option>
                                             <option value="no" >No</option>
                                             </select>
-											</div>
+										</div>
 										</fieldset>
-									</div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Requires Service
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="requiresService" name="requiresService" title="Please select requires service">
+                                                    <option value="yes" >Yes</option>
+                                                    <option value="no" selected>No</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Can Expire
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="canExpire" name="canExpire" title="Can Expire">
+                                                    <option value="yes" >Yes</option>
+                                                    <option value="no" selected>No</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/item" >

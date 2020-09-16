@@ -101,6 +101,25 @@ class ItemService
 	    	$exc->getMessage();
 	    }
 	}
+
+	public function bulkItemUpload($request)
+    {
+    	$data =  $request->all();
+    	DB::beginTransaction();
+    	try {
+			$model = new ItemTable();
+        	$add = $model->bulkItemUpload($request);
+			if($add>0){
+                DB::commit();
+				$msg = 'Item Uploaded Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
 	
 }
 
