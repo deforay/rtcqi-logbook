@@ -34,6 +34,8 @@
                     <a href="/item/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                     <b><i class="ft-user-plus icon-left"></i> Add Item</b></a>
             <?php } ?>
+            <a href="/item/bulkItemUpload" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
+                <b><i class="ft-file-plus icon-left"></i> Import excel</b></a>
             </div>
         </div>
     </div>

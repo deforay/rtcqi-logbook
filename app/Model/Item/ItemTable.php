@@ -3,10 +3,14 @@
 namespace App\Model\Item;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Imports\BulkItemUpload;
 use DB;
 use App\Service\ItemService;
 use App\Service\CommonService;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
+use Validator;
+use Importer;
 
 class ItemTable extends Model
 {
@@ -28,6 +32,8 @@ class ItemTable extends Model
                 'base_unit' => $data['unitId'],
                 'stockable' => $data['stockable'],
                 'minimum_quantity' => $data['minQuantity'],
+                'requires_service' => $data['requiresService'],
+                'can_expire' => $data['canExpire'],
                 'created_on' => $commonservice->getDateTime(),
                 'created_by' => session('userId'),
                 ]
@@ -162,5 +168,160 @@ class ItemTable extends Model
             error_log($exc->getMessage());
         }
         return $data;
+    }
+
+    public function bulkItemUpload($request)
+    {
+        $data = $request->all();
+        // dd($data);
+
+        $bulkUpload = 0;
+        $validator = Validator::make($request->all(), [
+        'uploadFile'  => 'required|mimes:xls,xlsx'
+        ]);
+        // dd($validator->passes());
+        if ($validator->passes()) {
+            $dateTime = date('Ymd_His');
+            $file = $request->file('uploadFile');
+            $fileName = $dateTime.'-'.$file->getClientOriginalName();
+            $savePath = public_path('/uploads/bulkitemupload/');
+            if (!file_exists($savePath) && !is_dir($savePath)) {
+                mkdir($savePath,0755,true);
+            }
+            $file->move($savePath, $fileName);
+            // dd($savePath.$fileName);
+            $savePathVal =  Excel::toArray(new BulkItemUpload(), $savePath.$fileName);
+            $j=1;
+            // dd($savePathVal);
+            foreach($savePathVal[0] as $excelval){
+                // dd($excelval);
+                if(isset($excelval) && $excelval!='' && $excelval!=null){
+                    if($j>1){
+                        // dd($excelval);
+                        $itemCat = DB::table('item_categories')
+                                    ->where('item_category', '=', $excelval[2])
+                                    ->get();
+                        $itemCat = $itemCat->toArray();
+                        // dd($itemCat);
+                        if(count($itemCat)==0){
+                            $itemCatId = DB::table('item_categories')->insertGetId(
+                                        ['item_category' => $excelval[2],
+                                        'item_category_status' => 'active',
+                                        'created_on' => $commonservice->getDateTime(),
+                                        'created_by' => session('userId'),
+                                        ]
+                                    );
+                
+                            $commonservice = new CommonService();
+                            $commonservice->eventLog(session('userId'), $itemCatId, 'Item Category-add', 'Add Item Category By Excel'.$excelval[2], 'Item Category');
+                        }
+                        else{
+                            $itemCatId = $itemCat[0]->item_category_id;
+                        }
+
+                        $itemType = DB::table('item_types')
+                                    ->where('item_type', '=', $excelval[3])
+                                    ->get();
+                        $itemType = $itemType->toArray();
+                        // dd($itemType);
+                        if(count($itemType)==0){
+                            $id = DB::table('item_types')->insertGetId(
+                                    ['item_type' => $excelval[3],
+                                    'item_category' => $itemCatId,
+                                    'item_type_status' => 'active',
+                                    'created_on' => $commonservice->getDateTime(),
+                                    'created_by' => session('userId'),
+                                    ]
+                                );
+                
+                            $commonservice = new CommonService();
+                            $commonservice->eventLog(session('userId'), $itemTypeId, 'Item Type-add', 'Add Item Type By Excel'.$excelval[3], 'Item Type');
+                        }
+                        else{
+                            $itemTypeId = $itemType[0]->item_type_id;
+                        }
+
+                        $brand = DB::table('brands')
+                                    ->where('brand_name', '=', $excelval[4])
+                                    ->get();
+                        $brand = $brand->toArray();
+                        // dd($brand);
+                        if(count($brand)==0){
+                            $brandId = DB::table('brands')->insertGetId(
+                                        ['brand_name' => $excelval[4],
+                                        'brand_status' => 'active',
+                                        'created_on' => $commonservice->getDateTime(),
+                                        'created_by' => session('userId'),
+                                        ]
+                                    );
+                
+                            $commonservice = new CommonService();
+                            $commonservice->eventLog(session('userId'), $brandId, 'Brand-add', 'Add Brand By Excel'.$excelval[4], 'Brand');
+                        }
+                        else{
+                            $brandId = $brand[0]->brand_id;
+                        }
+                        // dd($brandId);
+
+                        $unit = DB::table('units_of_measure')
+                                    ->where('unit_name', '=', $excelval[5])
+                                    ->get();
+                        $unit = $unit->toArray();
+                        // dd($unit);
+                        if(count($unit)==0){
+                            $unitId = DB::table('units_of_measure')->insertGetId(
+                                        ['unit_name' => $excelval[5],
+                                        'unit_status' => 'active',
+                                        'created_on' => $commonservice->getDateTime(),
+                                        'created_by' => session('userId'),
+                                        ]
+                                    );
+                
+                            $commonservice = new CommonService();
+                            $commonservice->eventLog(session('userId'), $unitId, 'Unit-add', 'Add Unit By Excel'.$excelval[5], 'Unit');
+                        }
+                        else{
+                            $unitId = $unit[0]->uom_id;
+                        }
+
+                        $item = DB::table('items')
+                                ->where('item_code', '=', $excelval[1])
+                                ->get();
+
+                        $item = $item->toArray();
+                        if(count($item)==0){
+                            $commonservice = new CommonService();
+                            $bulkUpload = DB::table('items')->insertGetId(
+                                            ['item_name' => $excelval[0],
+                                            'item_code' => $excelval[1],
+                                            'item_type' => $itemTypeId,
+                                            'brand' => $brandId,
+                                            'base_unit' => $unitId,
+                                            'stockable' => $excelval[7],
+                                            'minimum_quantity' => $excelval[6],
+                                            'requires_service' => $excelval[8],
+                                            'can_expire' => $excelval[9],
+                                            'created_on' => $commonservice->getDateTime(),
+                                            'created_by' => session('userId'),
+                                            ]
+                                        );
+                
+                            $commonservice->eventLog(session('userId'), $bulkUpload, 'Item-add', 'Add Item by excel'.$excelval[0], 'Item');
+                        }
+                        // else{
+
+                        // }
+                    }
+                }
+                $j++;
+            }
+            // dd($savePathVal);
+            $commonservice = new CommonService();
+            $commonservice->eventLog(session('userId'),$bulkUpload, 'Grade price-update', 'Update Grade price import grade price details', 'grade price');
+        }
+        else{
+
+        }
+        return $bulkUpload;
     }
 }

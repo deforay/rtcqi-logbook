@@ -454,3 +454,7 @@ CREATE TABLE `maintenance` (
  `updated_on` date DEFAULT NULL,
  PRIMARY KEY (`maintenance_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--Sudarmathi 15 SEP 2020
+
+ALTER TABLE `items` ADD `requires_service` VARCHAR(50) NOT NULL DEFAULT 'no' AFTER `updated_by`, ADD `can_expire` VARCHAR(50) NOT NULL DEFAULT 'no' AFTER `requires_service`;
