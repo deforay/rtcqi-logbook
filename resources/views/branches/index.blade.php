@@ -2,24 +2,21 @@
     Author             : Sudarmathi M
     Date               : 18 June 2020
     Description        : Branches view screen
-    Last Modified Date : 18 June 2020
-    Last Modified Name : Sudarmathi M
+    Last Modified Date : 15 Sep 2020
+    Last Modified Name : Sriram V
 -->
 
 @extends('layouts.main')
-
 @section('content')
-
-
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-6 col-12 mb-2">
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/branches/">Locations</a>
-                        </li>
                         <li class="breadcrumb-item active">Manage
+                        </li>
+                        <li class="breadcrumb-item"><a href="/branches/">Locations</a>
                         </li>
                     </ol>
                 </div>
