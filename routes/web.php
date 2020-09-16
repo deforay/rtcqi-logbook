@@ -101,6 +101,8 @@ Route::get('/item/edit/{id}', 'Item\ItemController@edit')->middleware('access');
 Route::post('/item/edit/{id}', 'Item\ItemController@edit');
 Route::post('/getItemUnit', 'Item\ItemController@getItemUnit');
 Route::post('/addNewItemField', 'Item\ItemController@addNewItemField');
+Route::post('/item/bulkItemUpload', 'Item\ItemController@bulkItemUpload');
+Route::get('/item/bulkItemUpload', 'Item\ItemController@bulkItemUpload');
 
 //user module
 Route::get('/user', 'User\UserController@index')->name('user.index')->middleware('access');

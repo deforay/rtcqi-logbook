@@ -107,4 +107,24 @@ class ItemController extends Controller
         $data = $service->addNewItemField($request);
         return $data;
     }
+
+    // Get all the bulk item Upload using excel
+    public function bulkItemUpload(Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $service = new ItemService();
+            $result = $service->bulkItemUpload($request);
+            return view('item.bulkitemupload',array('status'=>$result));
+        }
+        else
+        {
+            if(session('login')==true)
+            {
+                return view('item.bulkitemupload');
+            }
+            else
+                return Redirect::to('login')->with('status', 'Please Login');
+        }
+    }
 }

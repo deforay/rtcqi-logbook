@@ -437,3 +437,7 @@ ALTER TABLE `asset_tags` ADD `status` VARCHAR(100) NOT NULL DEFAULT 'active' AFT
 ALTER TABLE `branches` ADD `branch_code` VARCHAR(255) NULL DEFAULT NULL AFTER `branch_name`;
 
 ALTER TABLE `asset_tags` CHANGE `location_id` `branch_id` INT(11) NOT NULL;
+
+--Sudarmathi 15 SEP 2020
+
+ALTER TABLE `items` ADD `requires_service` VARCHAR(50) NOT NULL DEFAULT 'no' AFTER `updated_by`, ADD `can_expire` VARCHAR(50) NOT NULL DEFAULT 'no' AFTER `requires_service`;
