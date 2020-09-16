@@ -60,7 +60,7 @@ class VendorsTypeController extends Controller
                 } else {
                     $buttonStatus="changeStatus('vendor_types','vendor_type_id',$data->vendor_type_id,'vendor_type_status', 'active', 'vendorsTypeList')";
 
-                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->vendor_type_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-success btn-sm">Activate/button>';
+                    $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus' . $data->vendor_type_id . '" onclick="' . $buttonStatus . '" class="btn btn-outline-success btn-sm">Activate</button>';
                 }
                 $button .= '</div>';
                 return $button;

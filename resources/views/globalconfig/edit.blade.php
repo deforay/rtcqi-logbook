@@ -6,14 +6,25 @@
     Last Modified Name : Sudarmathi M
 -->
 @extends('layouts.main')
-@php 
-//dd($config);
-@endphp
 @section('content')
 
 <div class="content-wrapper">
 <div class="content-header row">
-	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
+    <!-- <div class="content-header-left col-md-8 col-12 mb-2">
+      <div class="row breadcrumbs-top d-block">
+        <div class="breadcrumb-wrapper col-12">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Manage
+            </li>
+            <li class="breadcrumb-item"><a href="/globalconfig/">Global Config</a>
+            </li>
+            <li class="breadcrumb-item active">Edit</li>
+          </ol>
+        </div>
+      </div>
+
+    </div> -->
+    <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
 		<h3 class="content-header-title mb-0 d-inline-block">Global Config</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
@@ -35,7 +46,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<!-- <h4 class="form-section"><i class="la la-plus-square"></i> Edit Global Config</h4> -->
+						<h4 class="form-section"><i class="la la-plus-square"></i> Edit Global Config</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
