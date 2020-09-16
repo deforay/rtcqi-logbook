@@ -268,6 +268,15 @@ Route::post('/createAssetId', 'AssetTag\AssetTagController@createAssetId');
 // Route::post('/getItemByLoc', 'AssetTag\AssetTagController@getItemByLoc');
 
 
+// Maintenance module
+
+Route::get('/maintenance', 'Maintenance\MaintenanceController@index')->name('maintenance.index')->middleware('access');
+Route::post('/maintenance/add', 'Maintenance\MaintenanceController@add');
+Route::get('/maintenance/add', 'Maintenance\MaintenanceController@add')->middleware('access');
+Route::post('/getAllMaintenance', 'Maintenance\MaintenanceController@getAllMaintenance');
+Route::get('/maintenance/edit/{id}', 'Maintenance\MaintenanceController@edit')->middleware('access');
+Route::post('/maintenance/edit/{id}', 'Maintenance\MaintenanceController@edit');
+
 // Route::post('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems');
 // Route::get('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems')->middleware('access');
 
