@@ -130,7 +130,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                                     <h5>Comments <span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
-                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Comments"></textarea>
+                                        <textarea id="comments" class="form-control isRequired" name="comments" placeholder="Enter the reason for editing delivery schedule"  title="Please Enter Comments">{{$result[0]->comments}}</textarea>
                                     </div>
                                 </fieldset>
                             </div>
