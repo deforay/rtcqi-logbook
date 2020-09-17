@@ -64,6 +64,7 @@ class RfqTable extends Model
                     }
         
                     $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+                    $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
                     
                     if (!file_exists($pathname) && !is_dir($pathname)) {
                         mkdir($pathname);
@@ -75,7 +76,7 @@ class RfqTable extends Model
                     $orgFileName = str_replace(' ','-',$orgFileName);
                     $fileName = $orgFileName.'@@'.time(). "." . $extension;
 
-                    $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                    $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                     
                     move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                     $filePathName .=$filePath.','; 
@@ -413,8 +414,8 @@ class RfqTable extends Model
                     $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
                     $orgFileName = str_replace(' ','-',$orgFileName);
                     $fileName = $orgFileName.'@@'.time(). "." . $extension;
-
-                    $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                    $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+                    $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                     
                     move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                     $filePathName .=$filePath.','; 
