@@ -109,6 +109,7 @@ class PurchaseOrderTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
 
@@ -328,6 +329,7 @@ class PurchaseOrderTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
 
@@ -630,6 +632,7 @@ class PurchaseOrderTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
 
