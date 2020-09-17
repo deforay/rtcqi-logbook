@@ -160,6 +160,7 @@
                                                           <h4>Attachments</h4>
                                                           <?php
                                                     $fileVaL= explode(",", $result['rfq'][0]->rfq_upload_file);
+                                                    
                                                     $filecount=count($fileVaL);
                                                     if($filecount>1){
                                                         $forcount=$filecount-1;

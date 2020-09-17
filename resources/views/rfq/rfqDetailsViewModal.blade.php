@@ -23,10 +23,15 @@ $vendors = array();
         }
     }
 
-
+$vendor_name = '';
 foreach($vendor as $type){
     if (in_array($type->vendor_id, $vendors)) {
-       $vendor_name= $type->vendor_name;
+        if($vendor_name){
+            $vendor_name = $vendor_name.','.$type->vendor_name;
+        }
+        else{
+            $vendor_name = $type->vendor_name;
+        }
     }
 }
 
