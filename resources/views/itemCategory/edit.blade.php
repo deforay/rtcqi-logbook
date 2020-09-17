@@ -15,7 +15,7 @@
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
-			<li class="breadcrumb-item">Manage
+			<li class="breadcrumb-item">Item
 			</li>
 			<li class="breadcrumb-item"><a href="/itemCategory/">Item Category</a>
 			</li>
