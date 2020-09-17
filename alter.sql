@@ -458,3 +458,8 @@ CREATE TABLE `maintenance` (
 --Sudarmathi 15 SEP 2020
 
 ALTER TABLE `items` ADD `requires_service` VARCHAR(50) NOT NULL DEFAULT 'no' AFTER `updated_by`, ADD `can_expire` VARCHAR(50) NOT NULL DEFAULT 'no' AFTER `requires_service`;
+
+--sri SEP 2020
+ALTER TABLE `units_of_measure` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
+ALTER TABLE `uom_conversion` ADD `created_by` INT(11) NULL DEFAULT NULL AFTER `updated_on`;
+ALTER TABLE `uom_conversion` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
