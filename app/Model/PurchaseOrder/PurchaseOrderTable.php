@@ -101,6 +101,7 @@ class PurchaseOrderTable extends Model
                         }
             
                         $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
+                        $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
                         
                         if (!file_exists($pathname) && !is_dir($pathname)) {
                             mkdir($pathname);
@@ -109,10 +110,11 @@ class PurchaseOrderTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
 
-                        $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                        $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                         
                         move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                         $filePathName .=$filePath.','; 
@@ -320,6 +322,7 @@ class PurchaseOrderTable extends Model
                         }
             
                         $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
+                        $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . $poId;
                         
                         if (!file_exists($pathname) && !is_dir($pathname)) {
                             mkdir($pathname);
@@ -328,10 +331,11 @@ class PurchaseOrderTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
 
-                        $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                        $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                         
                         move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                         $filePathName .=$filePath.','; 
@@ -622,7 +626,8 @@ class PurchaseOrderTable extends Model
                         }
             
                         $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR . base64_decode($id);
-                        
+                        $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "purchaseorders" . DIRECTORY_SEPARATOR .base64_decode($id);
+
                         if (!file_exists($pathname) && !is_dir($pathname)) {
                             mkdir($pathname);
                         }
@@ -630,10 +635,11 @@ class PurchaseOrderTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
 
-                        $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                        $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                         
                         move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                         $filePathName .=$filePath.','; 

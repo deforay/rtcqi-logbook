@@ -383,7 +383,7 @@ CREATE TABLE `inventory_outwards` (
  `created_on` date DEFAULT NULL,
  `updated_on` date DEFAULT NULL,
  PRIMARY KEY (`outwards_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'Inventory Outwards', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'add', 'Add'), ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'index', 'Access');
@@ -464,7 +464,10 @@ ALTER TABLE `units_of_measure` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER 
 ALTER TABLE `uom_conversion` ADD `created_by` INT(11) NULL DEFAULT NULL AFTER `updated_on`;
 ALTER TABLE `uom_conversion` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
 
-ALTER TABLE `maintenance` ADD `item_id` INT(11) NULL DEFAULT NULL AFTER `maintenance_id`;
-ALTER TABLE `maintenance` ADD `location_id` INT(11) NULL DEFAULT NULL AFTER `maintenance_id`;
+-- Prasath M 21 SEP 2020  
+ALTER TABLE `inventory_stock` ADD `pod_id` INT(11)  NULL AFTER `updated_by`;
+ALTER TABLE `inventory_stock` ADD `delivery_id` INT(11)  NULL AFTER `updated_by`;
+
+--sri 21 Sep 2020
 ALTER TABLE `maintenance` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT NULL;
 ALTER TABLE `maintenance` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;

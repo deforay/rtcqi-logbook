@@ -125,14 +125,15 @@ $currentDate=date('d-M-Y');
                                         </div>
                                     </div>
                                     <div class="form-actions right">
+                                        
+                                        <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
+                                            <i class="la la-check-square-o"></i> Add
+                                        </button>
                                         <a href="/deliveryschedule">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> Close
                                             </button>
                                         </a>
-                                        <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save
-                                        </button>
                                     </div>
                                 </form>
                             </div>

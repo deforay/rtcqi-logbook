@@ -184,6 +184,7 @@ class QuotesTable extends Model
                         }
             
                         $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $id;
+                        $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "quotes" . DIRECTORY_SEPARATOR . $id;
                         
                         if (!file_exists($pathname) && !is_dir($pathname)) {
                             mkdir($pathname);
@@ -192,10 +193,11 @@ class QuotesTable extends Model
                         $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                         $ext = '.'.$extension;
                         $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                        $orgFileName = str_replace(' ','-',$orgFileName);
                         $fileName = $orgFileName.'@@'.time(). "." . $extension;
                         // print_r($fileName);die;
-
-                        $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                        
+                        $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                         
                         move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                         $filePathName .=$filePath.','; 

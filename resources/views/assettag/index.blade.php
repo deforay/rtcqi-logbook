@@ -13,12 +13,10 @@
 
 <div class="content-wrapper">
     <div class="content-header row">
-        <div class="content-header-left col-md-8 col-12 mb-2">
+        <div class="content-header-left col-md-6 col-12 mb-2">
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Asset Tag
-                        </li>
                         <li class="breadcrumb-item"><a href="/assettag/">Asset Tag</a>
                         </li>
                     </ol>
@@ -26,7 +24,7 @@
             </div>
             
         </div>
-        <div class="content-header-right col-md-12 col-12 ">
+        <div class="content-header-right col-md-6 col-12 ">
             <div class="dropdown float-md-right">
             <?php
                 $role = session('role');

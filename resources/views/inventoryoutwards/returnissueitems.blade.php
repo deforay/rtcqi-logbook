@@ -52,6 +52,8 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         </li>
                         <li class="breadcrumb-item"><a href="/inventoryoutwards/">Issue Items</a>
                         </li>
+                        <li class="breadcrumb-item active">Return
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -83,7 +85,7 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Issue Items</h3>
+                            <h3 class="content-header-title mb-0">Return Issue Items</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -170,11 +172,11 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                 </form>
                                 <div class="form-actions right" style="margin-bottom: 5%;">
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
-                                        <i class="la la-check-square-o"></i> Save
+                                        <i class="la la-check-square-o"></i> Add
                                     </button>
                                     <a href="/inventoryoutwards" >
                                         <button type="button" class="btn btn-warning mr-1 float-right ml-2">
-                                        <i class="ft-x"></i> Cancel
+                                        <i class="ft-x"></i> Close
                                         </button>
                                     </a>
                                 </div>
