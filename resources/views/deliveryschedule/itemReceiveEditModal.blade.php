@@ -388,6 +388,14 @@ function changeScheduleStatus(val,id,nc,count){
         if(val){
             $('#description'+count).addClass('isRequired');
         }
+        else
+        {
+            $('#description'+count).removeClass('isRequired');
+        }
+    }
+    else
+    {
+        $('#description'+count).removeClass('isRequired');
     }
     $('.receivedQty').each(function() {
         receivedQtySum += Number($(this).val());
@@ -400,6 +408,10 @@ function changeScheduleStatus(val,id,nc,count){
     }
     if(parseInt(damagedQtySum) > parseInt(deliveryQty)){
         swal("Total of Non Confromity Quantity cannot be greater than Delivery Quantity")
+    }
+    if((parseInt(damagedQtySum) + parseInt(receivedQtySum)) > parseInt(deliveryQty)){
+        swal("Non Confromity and Received  Quantity are more than Total Quantity")
+        $('#'+id).val('')
     }
     if(parseInt(val)>parseInt(deliveryQty)){
         $('#'+id).val('')
