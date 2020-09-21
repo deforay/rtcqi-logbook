@@ -45,6 +45,8 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                         </li>
                         <li class="breadcrumb-item"><a href="/itemreceive/">Receive Deliveries</a>
                         </li>
+                        <li class="breadcrumb-item active">Edit
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -262,11 +264,11 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                 <div class="form-actions right" style="margin-bottom: 5%;">
                                         <a href="/itemreceive" >
                                             <button type="button" class="btn btn-warning mr-1 float-right ml-2">
-                                            <i class="ft-x"></i> Cancel
+                                            <i class="ft-x"></i> Close
                                             </button>
                                         </a>
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
-                                        <i class="la la-check-square-o"></i> Save
+                                        <i class="la la-check-square-o"></i> Update
                                     </button>
                                 </div>
                             </div>

@@ -383,7 +383,7 @@ CREATE TABLE `inventory_outwards` (
  `created_on` date DEFAULT NULL,
  `updated_on` date DEFAULT NULL,
  PRIMARY KEY (`outwards_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'Inventory Outwards', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'add', 'Add'), ('App\\Http\\Controllers\\InventoryOutwards\\InventoryOutwardsController', 'index', 'Access');

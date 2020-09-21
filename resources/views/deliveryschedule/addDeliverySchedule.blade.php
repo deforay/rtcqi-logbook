@@ -189,14 +189,15 @@ td {
                                             </div>
                                     </div>
                                     <div class="col-12">
+                                        
+                                        <button type="" onclick="validateNow();return false;" id="submitBtn" class="btn btn-primary float-right" style="display:none">
+                                        <i class="la la-check-square-o"></i> Add
+                                        </button>
                                         <a href="/deliveryschedule" >
                                         <button type="button" class="btn btn-warning mr-1 float-right ml-2">
-                                        <i class="ft-x"></i> Cancel
+                                        <i class="ft-x"></i> Close
                                         </button>
                                         </a>
-                                        <button type="" onclick="validateNow();return false;" id="submitBtn" class="btn btn-primary float-right" style="display:none">
-                                        <i class="la la-check-square-o"></i> Save
-                                        </button>
                                     </div>
                                 </form>
                             </div>
