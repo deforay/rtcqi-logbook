@@ -473,4 +473,4 @@ ALTER TABLE `maintenance` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT
 ALTER TABLE `maintenance` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;
 
 --Sudarmathi 21 SEP 2020
-INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Logo', 'logo_path', '/assets/images/logo.png', 'yes', 'no');
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Logo', 'logo_path', '/images/logo.png', 'yes', 'no');
