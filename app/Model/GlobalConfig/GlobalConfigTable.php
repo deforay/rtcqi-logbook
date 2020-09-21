@@ -17,6 +17,12 @@ class GlobalConfigTable extends Model
         return $data;
     }
 
+    public function fetchGlobalConfigLogo(){
+        $data = DB::table('global_config')->where('allow_admin_edit','=','yes')->where('global_name','=','logo_path')
+                ->get();
+        return $data;
+    }
+
     public function fetchAllConfigEdit()
     {
         $data = DB::table('global_config')->where('allow_admin_edit','=','yes')
