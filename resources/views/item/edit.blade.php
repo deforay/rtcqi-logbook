@@ -79,7 +79,7 @@
 										<div class="form-group">
 											<select class="form-control select2 isRequired" autocomplete="off" style="width:100%;" id="itemCatId" name="itemCatId" title="Please select Item Category Name" onchange="addNewField('item_categories','item_category',this.id,'item_category_status');" >
                                             @foreach($itemCat as $itemCats)
-                                                <option value="{{ $itemCats->item_category_id}}" >{{$itemCats->item_category}}</option>
+                                                <option value="{{ $itemCats->item_category_id}}" {{ $result[0]->item_category_id == $itemCats->item_category_id ?  'selected':''}} >{{$itemCats->item_category}}</option>
                                             @endforeach
                                             </select>
 											</div>
@@ -94,7 +94,7 @@
 										<div class="form-group">
 											<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="itemTypeId" name="itemTypeId" title="Please select Item Type Name" onchange="addNewField('item_types','item_type',this.id,'item_type_status');">
                                             @foreach($itemType as $itemTypes)
-                                                <option value="{{ $itemTypes->item_type_id}}" {{ $result[0]->item_type == $itemTypes->item_type_id ?  'selected':''}}>{{$itemTypes->item_type}}</option>
+                                                <option value="{{ $itemTypes->item_type_id}}" {{ $result[0]->item_type_id == $itemTypes->item_type_id ?  'selected':''}}>{{$itemTypes->item_type}}</option>
                                             @endforeach
                                             </select>
 											</div>
@@ -192,7 +192,6 @@ $(document).ready(function() {
         var brandId = $("#brandId").val();
         var unitId = $("#unitId").val();
         var unitId = $("#unitId").val();
-        
         if(itemName!='')
         {
             $.ajaxSetup({
