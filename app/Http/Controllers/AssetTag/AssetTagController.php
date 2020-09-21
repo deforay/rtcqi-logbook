@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Service\AssetTagService;
 use App\Service\BranchesService;
 use App\Service\InventoryOutwardsService;
+use App\Service\GlobalConfigService;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
 use View;
@@ -94,11 +95,17 @@ class AssetTagController extends Controller
         {
             $assetService = new AssetTagService();
             $assetResult = $assetService->getAssetTagById($id);
+            $configService = new GlobalConfigService();
+            $config = $configService->getGlobalConfigLogo();
+            $assetResult[0]->logo = public_path('assets').$config[0]->global_value;
+            // dd($assetResult);
             // view('assettag.assettagpdf',array('result'=>$assetResult));
             // dd($assetResult);
             // $assetTag = $assetResult[0]->asset_tag;
             view()->share('assetResult',$assetResult);
-            $pdf = PDF::loadView('assettag.assettagpdf', $assetResult);
+            $customPaper = array(0,0,250.00,400.00);
+            $pdf = PDF::loadView('assettag.assettagpdf', $assetResult)->setPaper($customPaper, 'landscape');
+            // dd($pdf);
             return $pdf->download('assettagpdf.pdf');
             // dd($assetResult);
         }

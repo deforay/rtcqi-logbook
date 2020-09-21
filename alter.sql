@@ -463,3 +463,7 @@ ALTER TABLE `items` ADD `requires_service` VARCHAR(50) NOT NULL DEFAULT 'no' AFT
 ALTER TABLE `units_of_measure` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
 ALTER TABLE `uom_conversion` ADD `created_by` INT(11) NULL DEFAULT NULL AFTER `updated_on`;
 ALTER TABLE `uom_conversion` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
+
+--Sudarmathi 21 SEP 2020
+
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Logo', 'logo_path', '/assets/images/logo.png', 'yes', 'no');

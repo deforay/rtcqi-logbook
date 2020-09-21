@@ -24,6 +24,14 @@ class GlobalConfigService
         $result = $configModel->fetchAllConfigEdit();
         return $result;
 	}
+
+	//Get Logo from Global Config List
+	public function getGlobalConfigLogo()
+    {
+		$configModel = new GlobalConfigTable();
+        $result = $configModel->fetchGlobalConfigLogo();
+        return $result;
+	}
 	
 	//Update Particular Global Config Details
 	public function updateGlobalConfig($params)
