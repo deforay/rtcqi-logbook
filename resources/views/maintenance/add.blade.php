@@ -15,8 +15,6 @@
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
-                        </li>
                         <li class="breadcrumb-item"><a href="/maintenance/">Maintenance</a>
                         </li>
                         <li class="breadcrumb-item active">Add</li>
@@ -108,13 +106,13 @@
                                         </div>
                                     </div>
                                     <div class="form-actions right">
-                                        <a href="/assettag">
+                                      <a href="/assettag">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> Close
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save
+                                            <i class="la la-check-square-o"></i> Add
                                         </button>
                                     </div>
                                 </form>

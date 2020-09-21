@@ -158,7 +158,7 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                             <i class="ft-x"></i> Close
                             </button>
                             <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
-                                <i class="la la-check-square-o"></i> Save
+                                <i class="la la-check-square-o"></i> Update
                             </button>
                         </div>
                     </div>
