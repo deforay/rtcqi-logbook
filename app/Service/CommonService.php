@@ -532,7 +532,7 @@ class CommonService
         $primaryValue = $request['fnct'];
         $items = array();
         try {
-            if (isset($fnct) && trim($fnct) !== '') {
+            if (isset($primaryValue) && trim($primaryValue) !== '') {
                   $items = DB::table('items')
                     ->where('item_name','=',$itemName)
                     ->where('item_type','=',$itemTypeId)

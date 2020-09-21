@@ -17,8 +17,6 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Asset Tag
-                        </li>
                         <li class="breadcrumb-item"><a href="/assettag/">Asset Tag</a>
                         </li>
                     </ol>
