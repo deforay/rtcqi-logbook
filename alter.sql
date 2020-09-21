@@ -463,3 +463,7 @@ ALTER TABLE `items` ADD `requires_service` VARCHAR(50) NOT NULL DEFAULT 'no' AFT
 ALTER TABLE `units_of_measure` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
 ALTER TABLE `uom_conversion` ADD `created_by` INT(11) NULL DEFAULT NULL AFTER `updated_on`;
 ALTER TABLE `uom_conversion` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
+
+-- Prasath M 21 SEP 2020  
+ALTER TABLE `inventory_stock` ADD `pod_id` INT(11)  NULL AFTER `updated_by`;
+ALTER TABLE `inventory_stock` ADD `delivery_id` INT(11)  NULL AFTER `updated_by`;
