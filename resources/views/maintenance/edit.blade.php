@@ -11,9 +11,9 @@
 @php
 
 use App\Service\CommonService;
-// dd($result[0]->quotes_upload_file);
 $common = new CommonService();
 $serviceDate = $common->humanDateFormat($result[0]->service_date);
+$expiryDate = $common->humanDateFormat($result[0]->expiry_date);
 $maintenanceDate = $common->humanDateFormat($result[0]->next_maintenance_date);
 @endphp
 <div class="content-wrapper">
@@ -23,8 +23,8 @@ $maintenanceDate = $common->humanDateFormat($result[0]->next_maintenance_date);
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
-			<li class="breadcrumb-item">Manage
-			</li>
+			<!-- <li class="breadcrumb-item">Manage
+			</li> -->
 			<li class="breadcrumb-item"><a href="/maintenance/">Maintenance</a>
 			</li>
 			<li class="breadcrumb-item active">Edit</li>
@@ -61,6 +61,29 @@ $maintenanceDate = $common->humanDateFormat($result[0]->next_maintenance_date);
                                 $fnct = "maintenance_id##".($result[0]->maintenance_id);
                             @endphp
                                 <div class="row">
+                                <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Location<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="location" name="location" title="Please select location" onchange="getItemByLoc(this.value,0)">
+                                                        <option value="">Select location</option>
+                                                        @foreach($branch as $type)
+                                                        <option value="{{ $type->branch_type_id }}" {{ $result[0]->location_id == $type->branch_type_id ?  'selected':''}}>{{ $type->branch_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Item Name<span class="mandatory">*</span>
+                                                </h5>
+                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="itemName" name="itemName" title="Please select item" onchange="createAssetId(this.value)">
+                                                    <option value="{{$result[0]->item_id}}">{{$result[0]->item_name}} ({{$expiryDate}})</option>
+                                                </select>
+                                            </fieldset>
+                                        </div>
                                 <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>Service Date<span class="mandatory">*</span>
@@ -161,12 +184,12 @@ $(document).ready(function() {
  duplicateName = true;
     function validateNow() {
             flag = deforayValidator.init({
-                formId: 'editAssetTag'
+                formId: 'editMaintenance'
             });
             
             if (flag == true) {
                 if (duplicateName) {
-                    document.getElementById('editAssetTag').submit();
+                    document.getElementById('editMaintenance').submit();
                 }
             }
             else{
