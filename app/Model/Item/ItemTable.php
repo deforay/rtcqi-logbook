@@ -72,6 +72,7 @@ class ItemTable extends Model
          $id = base64_decode($id);
          $data = DB::table('items')
                 ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
+                ->leftjoin('item_categories', 'item_categories.item_category_id', '=', 'items.item_category_id')
                  ->where('item_id', '=',$id )->get();
          return $data;
      }
@@ -92,6 +93,7 @@ class ItemTable extends Model
                     'base_unit' => $data['unitId'],
                     'stockable' => $data['stockable'],
                     'minimum_quantity' => $data['minQuantity'],
+                    'item_category_id' => $data['itemCatId'],
                     'updated_on' => $commonservice->getDateTime(),
                     'updated_by' => session('userId'),
                     ]);
