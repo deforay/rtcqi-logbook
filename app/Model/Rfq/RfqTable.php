@@ -64,6 +64,7 @@ class RfqTable extends Model
                     }
         
                     $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+                    $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
                     
                     if (!file_exists($pathname) && !is_dir($pathname)) {
                         mkdir($pathname);
@@ -72,10 +73,10 @@ class RfqTable extends Model
                     $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
                     $ext = '.'.$extension;
                     $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                    $orgFileName = str_replace(' ','-',$orgFileName);
                     $fileName = $orgFileName.'@@'.time(). "." . $extension;
-                    // print_r($fileName);die;
 
-                    $filePath = $pathname . DIRECTORY_SEPARATOR .$fileName;
+                    $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
                     
                     move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
                     $filePathName .=$filePath.','; 
@@ -383,6 +384,54 @@ class RfqTable extends Model
                 
             }
         }
+
+        $filePathName='';
+        $fileName='';
+        $extension='';
+        if(isset($data['uploadFile'])){
+
+            for($i=0;$i<count($data['uploadFile']);$i++)
+            {
+       
+                if (isset($_FILES['uploadFile']['name'][$i]) && $_FILES['uploadFile']['name'][$i] != '') {
+                    if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                        mkdir(public_path('uploads'),0755,true);
+                        // chmod (getcwd() .public_path('uploads'), 0755 );
+                    }
+                    
+                    if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq")) {
+                        mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "rfq", 0755);
+                    }
+        
+                    $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+                    
+                    if (!file_exists($pathname) && !is_dir($pathname)) {
+                        mkdir($pathname);
+                    }
+                    // print_r($_FILES['uploadFile']['name'][$i]);die;
+                    $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][$i], PATHINFO_EXTENSION));
+                    $ext = '.'.$extension;
+                    $orgFileName = explode($ext,$_FILES['uploadFile']['name'][$i])[0];
+                    $orgFileName = str_replace(' ','-',$orgFileName);
+                    $fileName = $orgFileName.'@@'.time(). "." . $extension;
+                    $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "rfq" . DIRECTORY_SEPARATOR . $id;
+                    $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
+                    
+                    move_uploaded_file($_FILES["uploadFile"]["tmp_name"][$i], $pathname . DIRECTORY_SEPARATOR .$fileName);
+                    $filePathName .=$filePath.','; 
+                }
+            }
+            if($filePathName!=''){
+    
+                $uploadData = array('rfq_upload_file' => $filePathName);
+                $rfqUp = DB::table('rfq')
+                        ->where('rfq_id', '=', $id)
+                        ->update(
+                            $uploadData
+                        );
+            }
+        }
+
         if ($rfqUp || $delQuoteItem || $delRfqItem || $quotesDetails || $quotesIns || $quoteItemUp || $quotesItemIns || $rfqItemUp || $rfqItemIns) {
             $response = 1;
         }

@@ -154,11 +154,11 @@ $delivery_schedule_status = strtolower($result[0]->delivery_schedule_status);
                         <input type="hidden" value="{{$result[0]->pod_id}}" id="pod_id" name="pod_id" >
                         </form>
                         <div class="form-actions right" style="margin-bottom: 5%;">
-                            <button type="button" class="btn btn-warning mr-1 float-right ml-2" data-dismiss = "modal">
+                            <button type="button" class="btn btn-warning float-right " data-dismiss = "modal">
                             <i class="ft-x"></i> Close
                             </button>
-                            <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
-                                <i class="la la-check-square-o"></i> Save
+                            <button type="submit" onclick="validateNow();return false;" class="btn btn-primary mr-1 float-right ml-2">
+                                <i class="la la-check-square-o"></i> Update
                             </button>
                         </div>
                     </div>

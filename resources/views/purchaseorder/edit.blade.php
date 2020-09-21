@@ -210,7 +210,7 @@ foreach($result as $branchList)
                                                     }
                                                     for($i=0;$i<$forcount;$i++)
                                                     {
-                                                        $attach = explode('/',$fileVaL[$i])[8];
+                                                        $attach = explode('/',$fileVaL[$i])[4];
                                                         $attachext = explode('.',$attach);
                                                         $attachext = end($attachext);
                                                         $attachfile = explode('@@',$attach)[0];
@@ -225,7 +225,8 @@ foreach($result as $branchList)
                                                         else{
                                                             $attachfile = 'Attachment';
                                                         }
-                                                        $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        // $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        $imagefile= $fileVaL[$i];
                                                         echo  '<div><a href="'.$imagefile.'" target="_blank">'.$attachmentFile.'  <i class="ft-download"></i></a></div>';
 
                                                     }

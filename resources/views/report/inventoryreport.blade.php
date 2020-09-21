@@ -17,7 +17,7 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Procurement
+                        <li class="breadcrumb-item active">Report
                         </li>
                         <li class="breadcrumb-item"><a href="/inventoryReport/">Inventory Report</a>
                         </li>

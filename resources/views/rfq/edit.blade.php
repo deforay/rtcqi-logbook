@@ -160,6 +160,7 @@
                                                           <h4>Attachments</h4>
                                                           <?php
                                                     $fileVaL= explode(",", $result['rfq'][0]->rfq_upload_file);
+                                                    
                                                     $filecount=count($fileVaL);
                                                     if($filecount>1){
                                                         $forcount=$filecount-1;
@@ -168,7 +169,7 @@
                                                     }
                                                     for($i=0;$i<$forcount;$i++)
                                                     {
-                                                        $attach = explode('/',$fileVaL[$i])[8];
+                                                        $attach = explode('/',$fileVaL[$i])[4];
                                                         $attachext = explode('.',$attach);
                                                         $attachext = end($attachext);
                                                         $attachfile = explode('@@',$attach)[0];
@@ -183,7 +184,9 @@
                                                         else{
                                                             $attachfile = 'Attachment';
                                                         }
-                                                        $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        // $imagefile= str_replace('/var/www/asm-pi/public', '', $fileVaL[$i]);
+                                                        $imagefile= $fileVaL[$i];
+                                                        // echo $imagefile;
                                                         echo  '<div><a href="'.$imagefile.'" target="_blank">'.$attachmentFile.'  <i class="ft-download"></i></a></div>';
                                                     }
                                                     ?>
@@ -194,9 +197,20 @@
                                                 </div>
                                               </div>
                                         </div>
-                                    <?php  } ?>
-
-
+                                    <?php  }else{ ?>
+                                        <div class="col-md-2">
+                                            <h5>Attachment <span class="mandatory">*</span></h5>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-12">
+                                            <fieldset class="form-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" multiple>
+                                                    <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                    <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    <?php } ?>
                                     <hr>
                                 <div class="row">
                                     <div class="table-responsive">
