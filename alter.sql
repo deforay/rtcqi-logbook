@@ -464,6 +464,13 @@ ALTER TABLE `units_of_measure` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER 
 ALTER TABLE `uom_conversion` ADD `created_by` INT(11) NULL DEFAULT NULL AFTER `updated_on`;
 ALTER TABLE `uom_conversion` ADD `updated_by` INT(11) NULL DEFAULT NULL AFTER `created_by`;
 
---Sudarmathi 21 SEP 2020
+-- Prasath M 21 SEP 2020  
+ALTER TABLE `inventory_stock` ADD `pod_id` INT(11)  NULL AFTER `updated_by`;
+ALTER TABLE `inventory_stock` ADD `delivery_id` INT(11)  NULL AFTER `updated_by`;
 
+--sri 21 Sep 2020
+ALTER TABLE `maintenance` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT NULL;
+ALTER TABLE `maintenance` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;
+
+--Sudarmathi 21 SEP 2020
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Logo', 'logo_path', '/assets/images/logo.png', 'yes', 'no');

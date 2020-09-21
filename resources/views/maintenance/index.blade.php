@@ -13,10 +13,11 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <!-- <li class="breadcrumb-item active">Maintenance -->
-                        <!-- </li> -->
+                        <!-- <li class="breadcrumb-item active">Maintenance
+                        </li> -->
                         <li class="breadcrumb-item"><a href="/maintenance/">Maintenance</a>
                         </li>
+                        <li class="breadcrumb-item active">All Records</li>
                     </ol>
                 </div>
             </div>
@@ -71,6 +72,7 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="maintenanceList" style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th style="width:20%">Item Name</th>
                                                 <th style="width:20%">Service Date</th>
                                                 <th style="width:10%">Service Done By</th>
                                                 <th style="width:10%">Verified By</th>
@@ -117,6 +119,7 @@
                 type: 'POST',
             },
             columns: [
+                    { data: 'item_name', name: 'item_name'},
                     { data: 'service_date', name: 'service_date'},
                     { data: 'service_done_by', name: 'service_done_by'},
                     { data: 'verified_by', name: 'verified_by'},
