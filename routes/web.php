@@ -265,6 +265,8 @@ Route::post('/getAllAssetTag', 'AssetTag\AssetTagController@getAllAssetTag');
 Route::get('/assettag/edit/{id}', 'AssetTag\AssetTagController@edit')->middleware('access');
 Route::post('/assettag/edit/{id}', 'AssetTag\AssetTagController@edit');
 Route::post('/createAssetId', 'AssetTag\AssetTagController@createAssetId');
+Route::get('/assettag/createPdf/{id}', 'AssetTag\AssetTagController@createPdf');
+Route::post('/assettag/createPdf/{id}', 'AssetTag\AssetTagController@createPdf');
 // Route::post('/getItemByLoc', 'AssetTag\AssetTagController@getItemByLoc');
 
 
