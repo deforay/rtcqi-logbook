@@ -6,6 +6,8 @@ use App\Service\AssetTagService;
 use App\Service\BranchesService;
 use App\Service\InventoryOutwardsService;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
+use View;
 use Redirect;
 
 class AssetTagController extends Controller
@@ -49,10 +51,11 @@ class AssetTagController extends Controller
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
                         if (isset($role['App\\Http\\Controllers\\AssetTag\\AssetTagController']['edit']) && ($role['App\\Http\\Controllers\\AssetTag\\AssetTagController']['edit'] == "allow")){
-                           $button .= '<a href="/assettag/edit/'. base64_encode($data->branch_id).'" name="edit" id="'.$data->branch_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                           $button .= '<a href="/assettag/edit/'. base64_encode($data->asset_id).'" name="edit" id="'.$data->asset_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         }else{
                             $button .= '';
                         }
+                        $button .= '&nbsp;&nbsp;<a href="/assettag/createPdf/'. base64_encode($data->asset_id).'" name="edit" id="'.$data->asset_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-file"></i></a>';
                         $button .= '</div>';
                         return $button;
                     })
@@ -79,6 +82,25 @@ class AssetTagController extends Controller
             $assetService = new BranchesService();
             $branch = $assetService->getBranchesByUser();
             return view('assettag.edit',array('result'=>$assetResult,'branch'=>$branch));
+        }
+    }
+    public function createPdf(Request $request,$id)
+    {
+        if ($request->isMethod('post')) 
+        {
+
+        }
+        else
+        {
+            $assetService = new AssetTagService();
+            $assetResult = $assetService->getAssetTagById($id);
+            // view('assettag.assettagpdf',array('result'=>$assetResult));
+            // dd($assetResult);
+            // $assetTag = $assetResult[0]->asset_tag;
+            view()->share('assetResult',$assetResult);
+            $pdf = PDF::loadView('assettag.assettagpdf', $assetResult);
+            return $pdf->download('assettagpdf.pdf');
+            // dd($assetResult);
         }
     }
 }
