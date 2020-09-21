@@ -99,8 +99,10 @@ ismob = true;
       $("#item > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
-    else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq" || splitUrl[0]=="itemreceive" || splitUrl[0]=="deliveryschedule")
+    else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="itemReceiveEdit" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq" || splitUrl[0]=="itemreceive" || splitUrl[0]=="deliveryschedule")
     {
+      if(splitUrl[0]=="itemReceiveEdit")
+        splitUrl[0] = "itemreceive";
       //$("#procurement").addClass('active');
       $("#procurement").addClass('active');
       $("#procurement > ul > li").removeClass('active');
@@ -123,6 +125,12 @@ ismob = true;
     {
       $("#assettag").addClass('active');
       $("#assettag > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
+    }
+    else if(splitUrl[0]=="inventoryReport")
+    {
+      $("#report").addClass('active');
+      $("#report > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
   });
