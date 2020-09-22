@@ -30,7 +30,7 @@ class QuotesService
 	}
 
 	//Get All responded Quotes List
-	public function getAllRespondedQuotesNew()
+	public function getAllRespondedQuotes()
     {
 		$model = new QuotesTable();
         $result = $model->fetchAllRespondedQuotes();
