@@ -103,8 +103,9 @@ class AssetTagController extends Controller
             // dd($assetResult);
             // $assetTag = $assetResult[0]->asset_tag;
             view()->share('assetResult',$assetResult);
-            $customPaper = array(0,0,250.00,400.00);
-            $pdf = PDF::loadView('assettag.assettagpdf', $assetResult)->setPaper($customPaper, 'landscape');
+            // $customPaper = array(0,0,250.00,400.00);
+            //->setPaper($customPaper, 'landscape')
+            $pdf = PDF::loadView('assettag.assettagpdf', $assetResult);
             // dd($pdf);
             return $pdf->download($assetResult[0]->asset_tag.'.pdf');
             // dd($assetResult);
