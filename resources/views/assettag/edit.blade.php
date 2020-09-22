@@ -59,7 +59,7 @@
                                                     <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="location" name="location" title="Please select location" onchange="getItemByLoc(this.value,0)">
                                                         <option value="">Select location</option>
                                                         @foreach($branch as $type)
-                                                        <option value="{{ $type->branch_type_id }}" {{ $result[0]->branch_id == $type->branch_type_id ?  'selected':''}}>{{ $type->branch_name }}</option>
+                                                        <option value="{{ $type->branch_id }}" {{ $result[0]->branch_id == $type->branch_id ?  'selected':''}}>{{ $type->branch_name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

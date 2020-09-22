@@ -99,14 +99,14 @@ class AssetTagController extends Controller
             $config = $configService->getGlobalConfigLogo();
             $assetResult[0]->logo = public_path('assets').$config[0]->global_value;
             // dd($assetResult);
-            // view('assettag.assettagpdf',array('result'=>$assetResult));
+            // return view('assettag.assettagpdf',array('assetResult'=>$assetResult));
             // dd($assetResult);
             // $assetTag = $assetResult[0]->asset_tag;
             view()->share('assetResult',$assetResult);
             $customPaper = array(0,0,250.00,400.00);
             $pdf = PDF::loadView('assettag.assettagpdf', $assetResult)->setPaper($customPaper, 'landscape');
             // dd($pdf);
-            return $pdf->download('assettagpdf.pdf');
+            return $pdf->download($assetResult[0]->asset_tag.'.pdf');
             // dd($assetResult);
         }
     }
