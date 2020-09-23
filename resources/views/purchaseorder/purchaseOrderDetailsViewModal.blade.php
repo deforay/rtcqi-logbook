@@ -42,6 +42,21 @@ use App\Service\CommonService;
                             </div>
                         </div>
                         <br/>
+                        <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
+                            <div class="card accordion collapse-icon accordion-icon-rotate" style="border: 1px solid #dbf2fe !important;">
+                                <a id="heading11" class="card-header info collapsed" data-toggle="collapse" href="#accordion11" aria-expanded="false" aria-controls="accordion11">
+                                    <div class="card-title lead">Specification</div>
+                                </a>
+                                <div id="accordion11" role="tabpanel" data-parent="#accordionWrap1" aria-labelledby="heading11" class="collapse" style="">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <?php echo $result[0]->description; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
                         <!-- <div class="row">
                             <div class="col-xl-6 col-lg-12">
                                 <h4><b>Attachment Files : </b><span id="vendorNotes" class="spanFont">                        <?php

@@ -58,11 +58,11 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                                   </div>
                                 </div>
                               </div>
-                              <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
+                            <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
                                 <div class="card accordion collapse-icon accordion-icon-rotate" style="border: 1px solid #dbf2fe !important;">
                                     <a id="heading11" class="card-header info collapsed" data-toggle="collapse" href="#accordion11" aria-expanded="false" aria-controls="accordion11">
                                         <div class="card-title lead">Vendor Notes</div>
-                          </a>
+                                    </a>
                                     <div id="accordion11" role="tabpanel" data-parent="#accordionWrap1" aria-labelledby="heading11" class="collapse" style="">
                                         <div class="card-content">
                                             <div class="card-body">
@@ -71,6 +71,21 @@ $estDelDate = $common->humanDateFormat($quote[0]->estimated_date_of_delivery);
                                         </div>
                                     </div>
 
+                                </div>
+                            </div>
+                            <div id="accordionWrap2" role="tablist" aria-multiselectable="true">
+                                <div class="card accordion collapse-icon accordion-icon-rotate" style="border: 1px solid #dbf2fe !important;">
+                                    <a id="heading12" class="card-header info collapsed" data-toggle="collapse" href="#accordion12" aria-expanded="false" aria-controls="accordion12">
+                                        <div class="card-title lead">Specification</div>
+                                    </a>
+                                    <div id="accordion12" role="tabpanel" data-parent="#accordionWrap2" aria-labelledby="heading12" class="collapse" style="">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <?php echo $quote[0]->description; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
                                 </div>
                             </div>
                             </div>

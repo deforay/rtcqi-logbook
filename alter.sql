@@ -471,6 +471,8 @@ ALTER TABLE `inventory_stock` ADD `delivery_id` INT(11)  NULL AFTER `updated_by`
 --sri 21 Sep 2020
 ALTER TABLE `maintenance` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT NULL;
 ALTER TABLE `maintenance` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;
+ALTER TABLE `maintenance` ADD `location_id` INT(11) NULL DEFAULT NULL AFTER `maintenance_id`;
+ALTER TABLE `maintenance` ADD `item_id` INT(11) NULL DEFAULT NULL AFTER `location_id`;
 
 --Sudarmathi 21 SEP 2020
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Logo', 'logo_path', '/images/logo.png', 'yes', 'no');

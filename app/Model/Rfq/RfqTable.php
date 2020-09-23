@@ -172,7 +172,7 @@ class RfqTable extends Model
             $data = DB::table('rfq')
                 ->join('quotes', 'quotes.rfq_id', '=', 'rfq.rfq_id')
                 ->join('vendors', 'vendors.vendor_id', '=', 'quotes.vendor_id')
-                ->where('quotes.vendor_id', '=', $userId)
+                ->where('vendors.vendor_id', '=', $userId)
                 ->orderBy('rfq.rfq_issued_on', 'desc')
                 ->get();
         }

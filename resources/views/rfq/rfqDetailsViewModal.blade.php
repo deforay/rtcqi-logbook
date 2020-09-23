@@ -25,18 +25,33 @@ $vendors = array();
 
 $vendor_name = '';
 foreach($vendor as $type){
-    if (in_array($type->vendor_id, $vendors)) {
-        if($vendor_name){
-            $vendor_name = $vendor_name.','.$type->vendor_name;
+    if(session('loginType')=='users'){
+        if (in_array($type->vendor_id, $vendors)) {
+            if($vendor_name){
+                $vendor_name = $vendor_name.','.$type->vendor_name;
+            }
+            else{
+                $vendor_name = $type->vendor_name;
+            }
         }
-        else{
+    }
+    else{
+        $userId=session('userId');
+        if ($type->vendor_id == $userId) {
             $vendor_name = $type->vendor_name;
         }
     }
 }
 
+if($result['rfq'][0]->description){
+    $specification = $result['rfq'][0]->description;
+}
+else{
+    $specification = '';
+}
 
-    ?>
+?>
+<script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <section class="horizontal-grid" id="horizontal-grid">
     <div class="row">
         <div class="col-12">
@@ -92,7 +107,21 @@ foreach($vendor as $type){
       </div>
     </div>
   </div>
+    <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
+        <div class="card accordion collapse-icon accordion-icon-rotate" style="border: 1px solid #dbf2fe !important;">
+            <a id="heading11" class="card-header info collapsed" data-toggle="collapse" href="#accordion11" aria-expanded="false" aria-controls="accordion11">
+                <div class="card-title lead">Specification</div>
+            </a>
+            <div id="accordion11" role="tabpanel" data-parent="#accordionWrap1" aria-labelledby="heading11" class="collapse" style="">
+                <div class="card-content">
+                    <div class="card-body">
+                        <?php echo $specification; ?>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
                         <!-- <div class="row">
 
                                 <h4><b>Attachment Files : </b><span id="deliveryMode" class="spanFont">
