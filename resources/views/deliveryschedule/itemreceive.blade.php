@@ -74,6 +74,8 @@
                                                 <th>Purchase Order</th>
                                                 <th>Item Name</th>
                                                 <th>Quantity</th>
+                                                <th>Non Conformity<br>Quantity</th>
+                                                <th>Received<br>Quantity</th>
                                                 <th>Delivery Date</th>
                                                 <th>Delivery Mode</th>
                                                 <th>Location</th>
@@ -112,7 +114,7 @@
             processing: true,
             destroy : true,
             serverSide: true,
-            scrollX: false,
+            scrollX: true,
             autoWidth:false,
             ajax: {
                 url:'{{ url("getAllPendingDeliverySchedule") }}',
@@ -125,11 +127,27 @@
                     { data: 'po_number', name: 'po_number'},
                     { data: 'item_name', name: 'item_name',className:'firstcaps'},
                     { data: 'delivery_qty', name: 'delivery_qty'},
+                    { data: 'damaged_qty', name: 'damaged_qty'},
+                    { data: 'received_qty', name: 'received_qty'},
                     { data: 'expected_date_of_delivery', name: 'expected_date_of_delivery'},
                     { data: 'delivery_mode', name: 'delivery_mode'},
                     { data: 'branch_name', name: 'branch_name' },
                     { data: 'comments', name: 'comments' },
                     {data: 'action', name: 'action', orderable: false},
+                ],
+                columnDefs: [
+                {
+                        "targets": 2,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 3,
+                        "className": "text-right",
+                },
+                {
+                        "targets": 4,
+                        "className": "text-right",
+                },
                 ],
             order: [[0, 'desc']]
         });

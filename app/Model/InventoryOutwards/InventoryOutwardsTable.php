@@ -18,6 +18,7 @@ class InventoryOutwardsTable extends Model
         $data = DB::table('inventory_stock')
             ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
             ->where('inventory_stock.branch_id', '=', $req['id'])
+            ->where('inventory_stock.stock_quantity', '!=', 0)
             ->select('items.item_name', 'inventory_stock.item_id', 'inventory_stock.stock_quantity', 'inventory_stock.expiry_date')
             ->distinct('inventory_stock.item_id')
             ->get();
