@@ -476,3 +476,8 @@ ALTER TABLE `maintenance` ADD `item_id` INT(11) NULL DEFAULT NULL AFTER `locatio
 
 --Sudarmathi 21 SEP 2020
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Logo', 'logo_path', '/images/logo.png', 'yes', 'no');
+
+--Sudarmathi 24 SEP 2020
+ALTER TABLE `inventory_outwards` ADD `from_location` INT NOT NULL AFTER `stock_return`;
+ALTER TABLE `inventory_outwards` ADD `return_on` DATE NULL AFTER `issued_from`, ADD `return_quantity` INT NULL AFTER `return_on`;
+ALTER TABLE `inventory_outwards` ADD `stock_expiry_date` DATE NULL AFTER `return_quantity`;
