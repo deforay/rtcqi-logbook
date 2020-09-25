@@ -45,11 +45,18 @@ class InventoryOutwardsController extends Controller
         return $item;
     }
 
+    public function getItemByLocReturn(Request $request){
+        $service = new InventoryOutwardsService();
+        $item = $service->getItemByLocReturn($request);
+        return $item;
+    }
+
     // Get all the Inventory Outwards list
     public function getAllinventoryoutwards(Request $request)
     {
         $service = new InventoryOutwardsService();
         $data = $service->getAllinventoryoutwards();
+        // dd($data);
         return DataTables::of($data)
                     ->editColumn('issued_on', function($data){
                             $issuedOn = $data->issued_on;

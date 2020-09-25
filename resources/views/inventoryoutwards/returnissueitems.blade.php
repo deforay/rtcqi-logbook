@@ -107,12 +107,12 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                             <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:13%;" class="pl-1 pr-0">Locations</th>
+                                                    <th style="width:13%;" class="pl-1 pr-0">Issued Locations</th>
                                                     <th style="width:20%;" class="pl-1 pr-0">Item<span class="mandatory">*</span></th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Item<br> Quantity<span class="mandatory">*</span></th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Returned Issued<br> Quantity<span class="mandatory">*</span></th>
-                                                    <th style="width:10%;" class="pl-1 pr-0">Issued On<span class="mandatory">*</span></th>
-                                                    <th style="width:15%;" class="pl-1 pr-0">Issued To<span class="mandatory">*</span></th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Issued Item<br> Quantity<span class="mandatory">*</span></th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Return<br> Quantity<span class="mandatory">*</span></th>
+                                                    <th style="width:10%;" class="pl-1 pr-0">Return On<span class="mandatory">*</span></th>
+                                                    <th style="width:15%;" class="pl-1 pr-0">Return To<span class="mandatory">*</span></th>
                                                     <th style="width:20%;" class="pl-1 pr-0">Description<span class="mandatory">*</span></th>
                                                     <th style="width:12%;" class="pl-1 pr-0">Action</th>
                                                 </tr>
@@ -136,18 +136,13 @@ span.twitter-typeahead .tt-menu, span.twitter-typeahead .tt-dropdown-menu {
                                                         <input type="number" value="0" id="itemQty0" name="itemQty[]" min="0" readonly class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" />
                                                     </td >
                                                     <td>
-                                                        <input type="number" value="0" id="itemIssuedQty0" name="itemIssuedQty[]" min="0" onchange="qtyRestriction(this.value,0)" class="form-control isRequired" placeholder="Enter Item Issued Qty" title="Please enter the item issued qty" value="" />
+                                                        <input type="number" value="0" id="itemIssuedQty0" name="itemIssuedQty[]" min="0" onchange="qtyRestriction(this.value,0)" class="form-control isRequired" placeholder="Enter Item Return Qty" title="Please enter the item Return qty" value="" />
                                                     </td >
                                                     <td>
-                                                        <input type="text" id="issuedOn0" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter issued on" name="issuedOn[]" title="Please enter issued on">
+                                                        <input type="text" id="issuedOn0" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter Return on" name="issuedOn[]" title="Please enter Return on">
                                                     </td>
                                                     <td>
-                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="issuedTo0" name="issuedTo[]" title="Please select locations">
-                                                            <option value="">Select Locations</option>
-                                                            @foreach($branch as $type)
-                                                                <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <input type="text" id="issuedTo0" class="form-control isRequired " autocomplete="off" disabled placeholder="Enter Return to" name="issuedTo[]" title="Please enter Return to">
                                                     </td>
                                                     <td>
                                                         <textarea id="description0" class="form-control isRequired" name="description[]"></textarea>
@@ -216,7 +211,7 @@ function getItemByLoc(val,id){
             }
         });
         $.ajax({
-            url: "{{ url('/getItemByLoc') }}",
+            url: "{{ url('/getItemByLocReturn') }}",
             method: 'post',
             data: {
                 id : val
@@ -226,17 +221,24 @@ function getItemByLoc(val,id){
                 console.log(data)
                 var opt = '<option value="">Select Item</option>';
                 for(var k=0;k<data.length;k++){
-                   
-                    expiryDate = data[k]['expiry_date'];
-                    if(expiryDate){
-                        let anyDate = new Date(expiryDate);
-                        exp = ' ('+anyDate.toShortFormat()+')';
+                    expiryDate = data[k]['stock_expiry_date'];
+                    issuedOn = data[k]['issued_on'];
+                    if(issuedOn){
+                        let anyDate = new Date(issuedOn);
+                        iss = ' ('+anyDate.toShortFormat()+')';
+                    }
+                    else{
+                        iss = '';
+                    }
+                    if(expiryDate && expiryDate!=undefined){
+                        let expDate = new Date(expiryDate);
+                        exp = ' ('+expDate.toShortFormat()+')';
                     }
                     else{
                         exp = '';
                     }
-                    // console.log(exp)
-                    opt += '<option value="'+data[k]['item_id']+'@@'+data[k]['stock_quantity']+'@@'+expiryDate+'">'+data[k]['item_name']+exp+'</option>'
+                    // console.log(iss)
+                    opt += '<option value="'+data[k]['item_id']+'@@'+data[k]['item_issued_quantity']+'@@'+issuedOn+'@@'+data[k]['branch_name']+'@@'+data[k]['issued_from']+'@@'+expiryDate+'">'+data[k]['item_name']+iss+'</option>'
                 }
                 $('#item'+id).html(opt)
             }
@@ -329,14 +331,9 @@ function insRow() {
                         <option value="">Select Item</option>\
                     </select>';
     b.innerHTML = '<input type="number" id="itemQty'+rowCount+'" name="itemQty[]" min="0" readonly class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" value="0" />';
-    d.innerHTML = '<input type="number" id="itemIssuedQty'+rowCount+'" name="itemIssuedQty[]" min="0" onchange="qtyRestriction(this.value,'+rowCount+')" class="form-control isRequired" placeholder="Enter Item Issued Qty" title="Please enter the item issued qty" value="0" />';
-    c.innerHTML = '<input type="text" id="issuedOn'+rowCount+'" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter issued on" name="issuedOn[]" title="Please enter issued on">';
-    f.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="issuedTo'+rowCount+'" name="issuedTo[]" title="Please select locations">\
-                        <option value="">Select Locations</option>\
-                        @foreach($branch as $type)\
-                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>\
-                        @endforeach\
-                    </select>'
+    d.innerHTML = '<input type="number" id="itemIssuedQty'+rowCount+'" name="itemIssuedQty[]" min="0" onchange="qtyRestriction(this.value,'+rowCount+')" class="form-control isRequired" placeholder="Enter Item Return Qty" title="Please enter the item Return qty" value="0" />';
+    c.innerHTML = '<input type="text" id="issuedOn'+rowCount+'" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter Return on" name="issuedOn[]" title="Please enter Return on">';
+    f.innerHTML = '<input type="text" id="issuedTo'+rowCount+'" class="form-control isRequired " autocomplete="off" disabled placeholder="Enter Return to" name="issuedTo[]" title="Please enter Return to">'
     h.innerHTML = '<textarea id="description'+rowCount+'" class="form-control isRequired" name="description[]"></textarea>';
     e.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
     $(a).fadeIn(800);
@@ -369,6 +366,7 @@ function removeRow(el) {
 function setQty(val,id){
     value = val.split('@@');
     $('#itemQty'+id).val(value[1])
+    $('#issuedTo'+id).val(value[3])
 }
 
 function qtyRestriction(val,id){
@@ -376,7 +374,7 @@ function qtyRestriction(val,id){
     if(parseInt(val) > itemQty){
         $('#itemIssuedQty'+id).val('')
         $('#itemIssuedQty'+id).focus();
-        swal("Entered item issued quantity can't exceed item quantity")
+        swal("Entered item Return quantity can't exceed item quantity")
     }
 }
 

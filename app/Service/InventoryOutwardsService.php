@@ -77,6 +77,14 @@ class InventoryOutwardsService
         $result = $inventoryOutwardsmodel->fetchItemByLoc($request);
         return $result;
 	}
+
+	//change Particular quotes status
+	public function getItemByLocReturn($request)
+	{
+		$inventoryOutwardsmodel = new InventoryOutwardsTable();
+        $result = $inventoryOutwardsmodel->fetchItemByLocReturn($request);
+        return $result;
+	}
 	
 	public function getInventoryReport($request){
 		$inventoryOutwardsmodel = new InventoryOutwardsTable();

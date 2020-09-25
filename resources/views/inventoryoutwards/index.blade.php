@@ -84,9 +84,10 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="issueItemList" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th style="width:20%">Item Name</th>
-                                                <th style="width:20%">Item Issued Quantity</th>
+                                                <th style="width:15%">Item Name</th>
+                                                <th style="width:10%">Item Issued<br/>Quantity</th>
                                                 <th style="width:15%">Issued On</th>
+                                                <th style="width:15%">Issued From</th>
                                                 <th style="width:15%">Issued To</th>
                                                 <th style="width:10%">Description</th>
                                                 <!-- <th style="width:25%">Action</th> -->
@@ -143,7 +144,8 @@
                             }
                         }
                     },
-                    { data: 'branch_name', name: 'branch_name'},
+                    { data: 'issuedFrom', name: 'issuedFrom'},
+                    { data: 'issuedTo', name: 'issuedTo'},
                     { data: 'outwards_description', name: 'outwards_description',className:'firstcaps'},
                     // { data: 'action', name: 'action', orderable: false},
                 ],
