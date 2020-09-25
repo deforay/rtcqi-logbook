@@ -266,16 +266,13 @@ td {
                             arg = data[i]['item_id']+"@"+data[i]['item_name']+"@"+data[i]['quantity'];
                             console.log(arg)
                             details +='<div id="addDeliveryScheduleRow'+i+'"><div class="row" style="padding-left: 0.5rem !important;">\
-                                            <div class="col-xl-3 col-lg-12">\
+                                            <div class="col-xl-5 col-lg-12">\
                                             <h4><b>Item : </b><input type="hidden" id="itemNames'+i+'" name="itemNames[]" value="'+data[i]['item_name']+'" ><span id="itemName'+i+'" class="spanFont" name="itemName'+i+'">'+data[i]['item_name']+'</span></h4>\
                                             </div>\
                                             <div class="col-xl-3 col-lg-12">\
                                                 <h4><b>Total Quantity : </b><input type="hidden" id="quantityM'+i+'" name="quantityM[]" value="'+data[i]['quantity']+'" ><span id="quantityDis'+i+'" name="quantityDis'+i+'" class="spanFont">'+data[i]['quantity']+'</span></h4>\
                                             </div>\
-                                            <div class="col-xl-3 col-lg-12">\
-                                                <h4><b>Scheduled Quantity : </b><span id="scheduledQty'+i+'" name="scheduledQty'+i+'" class="spanFont"></span></h4>\
-                                            </div>\
-                                            <div class="col-xl-3 col-lg-12">\
+                                            <div class="col-xl-4 col-lg-12">\
                                                 <h4><b>Pending Quantity : </b><span id="pendingQty'+i+'" name="pendingQty'+i+'" class="spanFont"></span></h4>\
                                             </div>\
                                         </div>\
