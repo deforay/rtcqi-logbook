@@ -391,7 +391,7 @@ ALTER TABLE `inventory_outwards` CHANGE `item_quantity` `item_issued_quantity` I
 ALTER TABLE `inventory_outwards` CHANGE `created_on` `created_on` DATETIME NULL DEFAULT NULL;
 ALTER TABLE `inventory_outwards` CHANGE `updated_on` `updated_on` DATETIME NULL DEFAULT NULL;
 
---Sudarmathi 03 SEP 2020
+---Sudarmathi 03 SEP 2020
 ALTER TABLE `inventory_stock` CHANGE `expiry_date` `expiry_date` DATE NULL;
 
 --Sudarmathi 04 SEP 2020
