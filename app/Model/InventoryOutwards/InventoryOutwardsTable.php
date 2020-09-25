@@ -226,17 +226,19 @@ class InventoryOutwardsTable extends Model
                 }
                 $invStock = $invStock->get();
                 // dd($invStock);
-                $stkQty = intval($invStock[0]->stock_quantity) + intval($data['itemIssuedQty'][$j]);
-                $invStockUp =  DB::table('inventory_stock')
-                                ->where('item_id', '=', $item)
-                                ->where('branch_id', '=', $data['branches'][$j]);
-                $invStockUp = $invStockUp->update(
-                    [
-                        'stock_quantity'        => $stkQty,
-                        'updated_by'            => session('userId'),
-                        'updated_on'            => $commonservice->getDateTime(),
-                    ]
-                );
+                if(count($invStock)>0){
+                    $stkQty = intval($invStock[0]->stock_quantity) + intval($data['itemIssuedQty'][$j]);
+                    $invStockUp =  DB::table('inventory_stock')
+                                    ->where('item_id', '=', $item)
+                                    ->where('branch_id', '=', $data['branches'][$j]);
+                    $invStockUp = $invStockUp->update(
+                        [
+                            'stock_quantity'        => $stkQty,
+                            'updated_by'            => session('userId'),
+                            'updated_on'            => $commonservice->getDateTime(),
+                        ]
+                    );
+                }
                
             }
         }
