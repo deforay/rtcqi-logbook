@@ -180,7 +180,7 @@ class InventoryOutwardsTable extends Model
             $issuedFrom = $value[3];
             $issuedFromId = $value[4];
             $expiryDate = $value[5];
-            $newIssuedItemQty = intval($itemQty) - intval($data['itemIssuedQty']);
+            $newIssuedItemQty = intval($itemQty) - intval($data['itemIssuedQty'][$j]);
             if($data['issuedOn'][$j]){
                 $returnOn = $commonservice->dateFormat($data['issuedOn'][$j]);
             }
@@ -220,7 +220,7 @@ class InventoryOutwardsTable extends Model
 
                 $invStock =  DB::table('inventory_stock')
                     ->where('item_id', '=', $item)
-                    ->where('branch_id', '=', $data['branches'][$j]);
+                    ->where('branch_id', '=', $issuedFromId);
                 if ($expiryDate) {
                     $invStock = $invStock->where('expiry_date', '=', $expiryDate);
                 }
