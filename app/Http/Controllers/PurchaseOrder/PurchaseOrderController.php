@@ -148,7 +148,9 @@ class PurchaseOrderController extends Controller
             $item = $itemservice->getAllActiveItem();
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails,'branch'=>$branch));
+            $globalConfigService = new GlobalConfigService();
+            $config = $globalConfigService->getGlobalConfigBaseCurrency();
+            return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails,'branch'=>$branch,'config'=>$config));
         }
     }
     public function purchaseDetailsView(Request $request,$id)
