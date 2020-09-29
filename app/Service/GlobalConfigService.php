@@ -32,6 +32,14 @@ class GlobalConfigService
         $result = $configModel->fetchGlobalConfigLogo();
         return $result;
 	}
+
+	//Get Base Currency from Global Config List
+	public function getGlobalConfigBaseCurrency()
+    {
+		$configModel = new GlobalConfigTable();
+        $result = $configModel->fetchGlobalConfigBaseCurrency();
+        return $result;
+	}
 	
 	//Update Particular Global Config Details
 	public function updateGlobalConfig($params)

@@ -481,3 +481,7 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 ALTER TABLE `inventory_outwards` ADD `issued_from` INT NOT NULL AFTER `stock_return`;
 ALTER TABLE `inventory_outwards` ADD `return_on` DATE NULL AFTER `issued_from`, ADD `return_quantity` INT NULL AFTER `return_on`;
 ALTER TABLE `inventory_outwards` ADD `stock_expiry_date` DATE NULL AFTER `return_quantity`;
+
+--Sudarmathi 28 SEP 2020
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`, `allow_admin_edit`, `is_numeric`) VALUES (NULL, 'Base Currency', 'base_currency', 'GBP', 'yes', 'no');
+ALTER TABLE `purchase_orders` ADD `base_currency` VARCHAR(50) NOT NULL DEFAULT 'yes' AFTER `purchase_order_notes`, ADD `exchange_rate` VARCHAR(255) NOT NULL AFTER `base_currency`;
