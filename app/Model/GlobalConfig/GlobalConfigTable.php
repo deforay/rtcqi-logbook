@@ -23,6 +23,12 @@ class GlobalConfigTable extends Model
         return $data;
     }
 
+    public function fetchGlobalConfigBaseCurrency(){
+        $data = DB::table('global_config')->where('allow_admin_edit','=','yes')->where('global_name','=','base_currency')
+                ->get();
+        return $data;
+    }
+
     public function fetchAllConfigEdit()
     {
         $data = DB::table('global_config')->where('allow_admin_edit','=','yes')

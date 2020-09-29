@@ -8,7 +8,7 @@ use App\Service\PurchaseOrderService;
 use App\Service\VendorsService;
 use App\Service\ItemService;
 use App\Service\BranchesService;
-// use App\Service\UnitService;
+use App\Service\GlobalConfigService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -48,7 +48,9 @@ class PurchaseOrderController extends Controller
             $quoteDetails = $purchaseOrderService->getAllQuoteDetailsId($id);
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            return view('purchaseorder.add',array('quoteId'=>$id,'vendor'=>$vendor,'item'=>$item,'vendorDetailId'=>$vendorDetailId,'quotes'=>$quotes,'quoteDetails'=>$quoteDetails,'branch'=>$branch));
+            $globalConfigService = new GlobalConfigService();
+            $config = $globalConfigService->getGlobalConfigBaseCurrency();
+            return view('purchaseorder.add',array('quoteId'=>$id,'vendor'=>$vendor,'item'=>$item,'vendorDetailId'=>$vendorDetailId,'quotes'=>$quotes,'quoteDetails'=>$quoteDetails,'branch'=>$branch,'config'=>$config));
         }
     }
 
@@ -68,12 +70,15 @@ class PurchaseOrderController extends Controller
             $itemservice = new ItemService();
             $item = $itemservice->getAllActiveItem();
             $purchaseOrderService = new PurchaseOrderService();
+            $globalConfigService = new GlobalConfigService();
+            $config = $globalConfigService->getGlobalConfigBaseCurrency();
+            // dd($config);
             // $vendorDetailId = $purchaseOrderService->getAllVendorDetailById($id);
             // $quotes = $purchaseOrderService->getSumOfQuoteById($id);
             // $quoteDetails = $purchaseOrderService->getAllQuoteDetailsId($id);
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            return view('purchaseorder.adddirectpo',array('vendor'=>$vendor,'item'=>$item,'branch'=>$branch));
+            return view('purchaseorder.adddirectpo',array('vendor'=>$vendor,'item'=>$item,'branch'=>$branch,'config'=>$config));
         }
     }
 
