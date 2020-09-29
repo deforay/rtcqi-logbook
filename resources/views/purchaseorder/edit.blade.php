@@ -178,7 +178,28 @@ foreach($result as $branchList)
                                         </div>
                                         @endif
                                     </div>
-
+                                    <div class="row p-1">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Base Currency ({{$config[0]->global_value}}) <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" onchange="changeExchangeRate(this.value)" style="width:100%;" id="baseCurrency" name="baseCurrency" title="Please select base currency">
+                                                        <option value="yes" {{ $result[0]->base_currency == 'yes' ?  'selected':''}}>Yes</option>
+                                                        <option value="no" {{ $result[0]->base_currency == 'no' ?  'selected':''}}>No</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Exchange Rate<span class="mandatory">*</span> </h5>
+                                                <div class="form-group">
+                                                <input type="text" id="exchangeRate" oninput="changeUnitPrice(this.value)" value="{{$result[0]->exchange_rate}}" class="form-control isRequired" autocomplete="off" placeholder="Enter exchange rate" name="exchangeRate" title="Please enter exchange rate">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <h5>Specification</h5>
                                         <div class="form-group row" >
@@ -187,7 +208,7 @@ foreach($result as $branchList)
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if(isset($result[0]->purchase_order_upload_file) && $result[0]->purchase_order_upload_file!='' && $result[0]->purchase_order_upload_file!=null){ ?>
+                                    <?php if(isset($result[0]->purchase_order_upload_file) && $result[0]->purchase_order_upload_file!='' && $result[0]->purchase_order_upload_file!=null && $result[0]->purchase_order_upload_file!='null'){ ?>
                                         <div class="row p-1">
                                             <div class="col-xl-6 col-md-12">
                                                 <div class="card" style="border: 1px solid #b7defa">
@@ -366,6 +387,31 @@ foreach($result as $branchList)
         });
     });
     duplicateName = true;
+    function changeExchangeRate(val){
+        if(val == 'yes'){
+            $('#exchangeRate').val(1)
+            // $('#exchangeRate').prop("disabled",false)
+        }
+        // else{
+            // $('#exchangeRate').prop('disabled',true)
+        // }
+    }
+
+    function changeUnitPrice(val){
+        exchangeRate = $('#exchangeRate').val();
+        // console.log(exchangeRate)
+        if(Number(exchangeRate) > 0){
+            $('.linetot').each(function(id) {
+                // console.log(id+"id")
+                price = Number($(this).val()) * Number(exchangeRate);
+                // console.log(typeof(price))
+                console.log(price)
+                $('#unitPrice'+id).val(price)
+                // $(this).val(price)
+            });
+            calLineTotal()
+        }
+    }
 
     function validateNow() {
         flag = deforayValidator.init({

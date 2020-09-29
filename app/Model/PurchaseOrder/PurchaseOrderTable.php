@@ -299,6 +299,8 @@ class PurchaseOrderTable extends Model
                     'delivery_location'          => $data['deliveryLoc'],
                     'purchase_order_description' => $data['description'],
                     'purchase_order_notes'       => $poNotes,
+                    'base_currency' => $data['baseCurrency'],
+                    'exchange_rate' => $data['exchangeRate'],
                 ]
             );
 
@@ -601,6 +603,8 @@ class PurchaseOrderTable extends Model
                 'delivery_location' => $data['deliveryLoc'],
                 'purchase_order_description' => $data['description'],
                 'purchase_order_notes'       => $poNotes,
+                'base_currency' => $data['baseCurrency'],
+                'exchange_rate' => $data['exchangeRate'],
             );
 
             $purchaseOrder = DB::table('purchase_orders')
