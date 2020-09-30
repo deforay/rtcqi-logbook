@@ -142,6 +142,7 @@ class PurchaseOrderTable extends Model
                         'item_id'       => $data['item'][$k],
                         'uom'           => $data['unitId'][$k],
                         'unit_price'    => $data['unitPrice'][$k],
+                        'converted_price'        => $data['convertedPrice'][$k],
                         'quantity'      => $data['qty'][$k],
                         'description'   =>  $data['quoteDesc'][$k],
                         // 'order_status'      => 'pending',
@@ -266,7 +267,7 @@ class PurchaseOrderTable extends Model
     {
         //to get all request values
         $data = $request->all();
-        dd($data);
+        // dd($data);
         $commonservice = new CommonService();
         $vendorData = DB::table('vendors')
             ->where('vendors.vendor_id', '=', $data['vendorId'])
@@ -363,7 +364,7 @@ class PurchaseOrderTable extends Model
                         'item_id'           => $data['item'][$k],
                         'uom'               => $data['unitId'][$k],
                         'unit_price'        => $data['unitPrice'][$k],
-                        'converted_price'        => $data['convertedPrice'][$k],
+                        'converted_price'   => $data['convertedPrice'][$k],
                         'quantity'          => $data['qty'][$k],
                         'description'       =>  $data['quoteDesc'][$k],
                         // 'order_status'   => 'pending',
@@ -565,6 +566,7 @@ class PurchaseOrderTable extends Model
                 'item_id'           => $data['item'][$j],
                 'uom'               => $data['unitId'][$j],
                 'unit_price'        => $data['unitPrice'][$j],
+                'converted_price'   => $data['convertedPrice'][$j],
                 'quantity'          => $data['qty'][$j],
                 'description'       => $data['quoteDesc'][$j],
                 'created_on'        => $commonservice->getDateTime(),

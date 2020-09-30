@@ -251,7 +251,7 @@ td {
                                                             <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="" oninput="calLineTotal({{$j}});" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="convertedPrice{{$j}}" name="convertedPrice[]" value="" class="form-control isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />
+                                                                <input type="number" min="0" id="convertedPrice{{$j}}" name="convertedPrice[]" value="" class="form-control contot isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -351,17 +351,20 @@ td {
     function changeUnitPrice(val){
         exchangeRate = $('#exchangeRate').val();
         // console.log(exchangeRate)
+        var sum = 0;
         if(Number(exchangeRate) > 0){
             $('.linetot').each(function(id) {
                 // console.log(id+"id")
                 console.log(Number($(this).val()))
                 price = Number($(this).val()) * Number(exchangeRate);
                 $('#convertedPrice'+id).val(price)
-                // console.log(typeof(price))
-                // console.log(price)
-                // $(this).val(price)
             });
-            // calLineTotal()
+            $('.contot').each(function() {
+                sum += Number($(this).val());
+            });
+            if(!isNaN(sum)){
+                $("#totalAmount").val(sum);
+            }
         }
     }
 
@@ -450,7 +453,7 @@ td {
         g.innerHTML = '<input type="text"  value="" id="quoteDesc' + rowCount + '" name="quoteDesc[]" class="form-control" placeholder="Item description"  />'
         c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class=" form-control isRequired"  placeholder="Enter Qty" title="Please enter quantity" />';
         e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" oninput="calLineTotal('+rowCount+');"/>';
-        f.innerHTML = '<input type="number" min="0" id="convertedPrice' + rowCount + '" name="convertedPrice[]" value="" class="form-control isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />';
+        f.innerHTML = '<input type="number" min="0" id="convertedPrice' + rowCount + '" name="convertedPrice[]" value="" class="contot form-control isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />';
         h.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".item").select2({
@@ -483,11 +486,11 @@ td {
     function calLineTotal(id){
         exchangeRate = $('#exchangeRate').val();
         var sum = 0;
-        $('.linetot').each(function() {
-            // console.log(id)
+        price = Number($('#unitPrice'+id).val()) * Number(exchangeRate);
+        // console.log(price)
+        $('#convertedPrice'+id).val(price)
+        $('.contot').each(function() {
             sum += Number($(this).val());
-            price = Number($(this).val()) * Number(exchangeRate);
-            $('#convertedPrice'+id).val(price)
         });
         if(!isNaN(sum)){
             $("#totalAmount").val(sum);

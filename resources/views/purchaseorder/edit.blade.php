@@ -22,6 +22,12 @@ foreach($result as $branchList)
     array_push($branches, $branchList->delivery_location);
 }
 ?>
+<style>
+    td {
+        padding-left: 0.50rem !important;
+        padding-right: 0.50rem !important;
+    }
+</style> 
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -285,11 +291,12 @@ foreach($result as $branchList)
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg">
                                                         <thead style="background-color:#ebecd2">
                                                             <tr>
-                                                            <th style="width:30%;">Item<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Item<span class="mandatory">*</span></th>
                                                             <th style="width:15%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Description</th>
                                                             <th style="width:15%;">Quantity<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:15%;">Converted <br/>Price<span class="mandatory">*</span></th>
                                                             <!-- <th style="width:20%;">Action</th> -->
                                                             </tr>
                                                         </thead>
@@ -317,7 +324,10 @@ foreach($result as $branchList)
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control isRequired" value="{{$orderDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" oninput="calLineTotal();" />
+                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$orderDetail->unit_price}}" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" oninput="calLineTotal({{$j}});" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" min="0" id="convertedPrice{{$j}}" name="convertedPrice[]" value="{{$orderDetail->converted_price}}" class="form-control contot isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />
                                                             </td>
                                                             <!-- <td>
                                                                 <div class="row">
@@ -400,16 +410,20 @@ foreach($result as $branchList)
     function changeUnitPrice(val){
         exchangeRate = $('#exchangeRate').val();
         // console.log(exchangeRate)
+        var sum = 0;
         if(Number(exchangeRate) > 0){
             $('.linetot').each(function(id) {
                 // console.log(id+"id")
+                console.log(Number($(this).val()))
                 price = Number($(this).val()) * Number(exchangeRate);
-                // console.log(typeof(price))
-                console.log(price)
-                $('#unitPrice'+id).val(price)
-                // $(this).val(price)
+                $('#convertedPrice'+id).val(price)
             });
-            calLineTotal()
+            $('.contot').each(function() {
+                sum += Number($(this).val());
+            });
+            if(!isNaN(sum)){
+                $("#totalAmount").val(sum);
+            }
         }
     }
 
@@ -583,9 +597,13 @@ foreach($result as $branchList)
         }
     }
 
-    function calLineTotal(){
+    function calLineTotal(id){
+        exchangeRate = $('#exchangeRate').val();
         var sum = 0;
-        $('.linetot').each(function() {
+        price = Number($('#unitPrice'+id).val()) * Number(exchangeRate);
+        // console.log(price)
+        $('#convertedPrice'+id).val(price)
+        $('.contot').each(function() {
             sum += Number($(this).val());
         });
         if(!isNaN(sum)){
@@ -597,6 +615,5 @@ foreach($result as $branchList)
             $(this).val(cleanNum);
         });
     }
-
 </script>
 @endsection
