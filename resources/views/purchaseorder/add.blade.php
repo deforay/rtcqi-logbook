@@ -11,7 +11,13 @@
 @section('content')
 @php
 $currentDate=date('d-M-Y');
-@endphp 
+@endphp
+<style>
+    td {
+        padding-left: 0.50rem !important;
+        padding-right: 0.50rem !important;
+    }
+</style> 
 <script src="{{ asset('assets/js/ckeditor/ckeditor.js')}}"></script>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -208,11 +214,12 @@ $currentDate=date('d-M-Y');
                                                 <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:30%;">Item<span class="mandatory">*</span></th>
-                                                            <th style="width:15%;">Unit<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Item<span class="mandatory">*</span></th>
+                                                            <th style="width:12%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:20%;">Description</th>
-                                                            <th style="width:15%;">Quantity<span class="mandatory">*</span></th>
-                                                            <th style="width:20%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:12%;">Quantity<span class="mandatory">*</span></th>
+                                                            <th style="width:18%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:18%;">Converted <br/>Price<span class="mandatory">*</span></th>
                                                             <!-- <th style="width:20%;">Action</th> -->
                                                         </tr>
                                                     </thead>
@@ -242,7 +249,10 @@ $currentDate=date('d-M-Y');
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control  isRequired"  value="{{$quoteDetail->quantity}}" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="{{$quoteDetail->unit_price}}" oninput="calLineTotal({{$j}});" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" min="0" id="convertedPrice{{$j}}" name="convertedPrice[]" value="" class="form-control contot isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />
                                                             </td>
                                                             <!-- <td>
                                                                 <div class="row">
@@ -343,16 +353,20 @@ $currentDate=date('d-M-Y');
     function changeUnitPrice(val){
         exchangeRate = $('#exchangeRate').val();
         // console.log(exchangeRate)
+        var sum = 0;
         if(Number(exchangeRate) > 0){
             $('.linetot').each(function(id) {
                 // console.log(id+"id")
+                console.log(Number($(this).val()))
                 price = Number($(this).val()) * Number(exchangeRate);
-                // console.log(typeof(price))
-                console.log(price)
-                $('#unitPrice'+id).val(price)
-                // $(this).val(price)
+                $('#convertedPrice'+id).val(price)
             });
-            calLineTotal()
+            $('.contot').each(function() {
+                sum += Number($(this).val());
+            });
+            if(!isNaN(sum)){
+                $("#totalAmount").val(sum);
+            }
         }
     }
 
@@ -429,7 +443,7 @@ $currentDate=date('d-M-Y');
         var e = a.insertCell(2);
         var c = a.insertCell(3);
         var f = a.insertCell(4);
-
+        var h = a.insertCell(5);
 
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
@@ -438,8 +452,9 @@ $currentDate=date('d-M-Y');
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
         c.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" />';
-        e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal();" placeholder="Enter Qty" title="Please enter quantity" />';
-        f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        e.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired" oninput="calLineTotal('+rowCount+');" placeholder="Enter Qty" title="Please enter quantity" />';
+        f.innerHTML = '<input type="number" min="0" id="convertedPrice' + rowCount + '" name="convertedPrice[]" value="" class="contot form-control isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />';
+        h.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".item").select2({
             placeholder: "Select Item",
@@ -468,9 +483,13 @@ $currentDate=date('d-M-Y');
         return true;
     }
 
-    function calLineTotal(){
+    function calLineTotal(id){
+        exchangeRate = $('#exchangeRate').val();
         var sum = 0;
-        $('.linetot').each(function() {
+        price = Number($('#unitPrice'+id).val()) * Number(exchangeRate);
+        // console.log(price)
+        $('#convertedPrice'+id).val(price)
+        $('.contot').each(function() {
             sum += Number($(this).val());
         });
         if(!isNaN(sum)){
@@ -479,7 +498,6 @@ $currentDate=date('d-M-Y');
         $('.linetot').blur(function(){
             var num = parseFloat($(this).val());
             var cleanNum = num.toFixed(2);
-            // console.log(cleanNum)
             $(this).val(cleanNum);
         });
     }
