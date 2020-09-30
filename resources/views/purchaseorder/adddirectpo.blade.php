@@ -214,12 +214,13 @@ td {
                                                 <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:25%;">Item<span class="mandatory">*</span></th>
+                                                            <th style="width:20%;">Item<span class="mandatory">*</span></th>
                                                             <th style="width:10%;">Unit<span class="mandatory">*</span></th>
                                                             <th style="width:25%;">Description</th>
                                                             <th style="width:10%;">Quantity<span class="mandatory">*</span></th>
-                                                            <th style="width:15%;">Unit Price<span class="mandatory">*</span></th>
-                                                            <th style="width:15%;">Action</th>
+                                                            <th style="width:11%;">Unit Price<span class="mandatory">*</span></th>
+                                                            <th style="width:12%;">Converted <br/>Price<span class="mandatory">*</span></th>
+                                                            <th style="width:12%;">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="itemDetails">
@@ -247,7 +248,10 @@ td {
                                                                 <input type="number" min="0" id="qty{{$j}}" name="qty[]" class="form-control  isRequired"  value="" placeholder="Enter Qty" title="Please enter the qty" value="" />
                                                             </td>
                                                             <td>
-                                                                <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="" oninput="calLineTotal();" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                            <input type="number" min="0" id="unitPrice{{$j}}" name="unitPrice[]" value="" oninput="calLineTotal({{$j}});" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter the Unit Price" value="" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" min="0" id="convertedPrice{{$j}}" name="convertedPrice[]" value="" class="form-control isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />
                                                             </td>
                                                             <td>
                                                                 <div class="row">
@@ -350,13 +354,14 @@ td {
         if(Number(exchangeRate) > 0){
             $('.linetot').each(function(id) {
                 // console.log(id+"id")
+                console.log(Number($(this).val()))
                 price = Number($(this).val()) * Number(exchangeRate);
+                $('#convertedPrice'+id).val(price)
                 // console.log(typeof(price))
-                console.log(price)
-                $('#unitPrice'+id).val(price)
+                // console.log(price)
                 // $(this).val(price)
             });
-            calLineTotal()
+            // calLineTotal()
         }
     }
 
@@ -434,6 +439,7 @@ td {
         var c = a.insertCell(3);
         var e = a.insertCell(4);
         var f = a.insertCell(5);
+        var h = a.insertCell(6);
 
         rl = document.getElementById("itemDetails").rows.length - 1;
         b.innerHTML = '<select id="item' + rowCount + '" name="item[]" class="item select2 isRequired itemName form-control datas"  title="Please select item" onchange="addNewItemField(this.id,'+rowCount+');">\
@@ -442,9 +448,10 @@ td {
                         <input type="hidden" id="unitId' + rowCount + '" name="unitId[]" class="isRequired form-control"  title="Please enter unit">\
                         <input type="hidden" id="qdId' + rowCount + '" name="qdId[]" class="form-control">';
         g.innerHTML = '<input type="text"  value="" id="quoteDesc' + rowCount + '" name="quoteDesc[]" class="form-control" placeholder="Item description"  />'
-        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class="linetot form-control isRequired"  placeholder="Enter Qty" title="Please enter quantity" />';
-        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" oninput="calLineTotal();"/>';
-        f.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        c.innerHTML = '<input type="number" min="0" id="qty' + rowCount + '" name="qty[]" class=" form-control isRequired"  placeholder="Enter Qty" title="Please enter quantity" />';
+        e.innerHTML = '<input type="number" min="0" id="unitPrice' + rowCount + '" name="unitPrice[]" class="form-control linetot isRequired" placeholder="Enter Unit Price" title="Please enter Unit Price" oninput="calLineTotal('+rowCount+');"/>';
+        f.innerHTML = '<input type="number" min="0" id="convertedPrice' + rowCount + '" name="convertedPrice[]" value="" class="form-control isRequired" placeholder="Enter Converted Price" title="Please enter the Converted Price" value="" />';
+        h.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
         $(".item").select2({
             placeholder: "Select Item",
@@ -473,10 +480,14 @@ td {
         return true;
     }
 
-    function calLineTotal(){
+    function calLineTotal(id){
+        exchangeRate = $('#exchangeRate').val();
         var sum = 0;
         $('.linetot').each(function() {
+            // console.log(id)
             sum += Number($(this).val());
+            price = Number($(this).val()) * Number(exchangeRate);
+            $('#convertedPrice'+id).val(price)
         });
         if(!isNaN(sum)){
             $("#totalAmount").val(sum);
