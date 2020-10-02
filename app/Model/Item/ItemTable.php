@@ -176,12 +176,11 @@ class ItemTable extends Model
     {
         $data = $request->all();
         // dd($data);
-
+        $commonservice = new CommonService();
         $bulkUpload = 0;
         $validator = Validator::make($request->all(), [
         'uploadFile'  => 'required|mimes:xls,xlsx'
         ]);
-        // dd($validator->passes());
         if ($validator->passes()) {
             $dateTime = date('Ymd_His');
             $file = $request->file('uploadFile');
@@ -191,20 +190,16 @@ class ItemTable extends Model
                 mkdir($savePath,0755,true);
             }
             $file->move($savePath, $fileName);
-            // dd($savePath.$fileName);
             $savePathVal =  Excel::toArray(new BulkItemUpload(), $savePath.$fileName);
             $j=1;
-            // dd($savePathVal);
             foreach($savePathVal[0] as $excelval){
-                // dd($excelval);
                 if(isset($excelval) && $excelval!='' && $excelval!=null){
                     if($j>1){
-                        // dd($excelval);
                         $itemCat = DB::table('item_categories')
                                     ->where('item_category', '=', $excelval[2])
                                     ->get();
                         $itemCat = $itemCat->toArray();
-                        // dd($itemCat);
+                        
                         if(count($itemCat)==0){
                             $itemCatId = DB::table('item_categories')->insertGetId(
                                         ['item_category' => $excelval[2],
@@ -214,7 +209,7 @@ class ItemTable extends Model
                                         ]
                                     );
                 
-                            $commonservice = new CommonService();
+
                             $commonservice->eventLog(session('userId'), $itemCatId, 'Item Category-add', 'Add Item Category By Excel'.$excelval[2], 'Item Category');
                         }
                         else{
@@ -225,9 +220,8 @@ class ItemTable extends Model
                                     ->where('item_type', '=', $excelval[3])
                                     ->get();
                         $itemType = $itemType->toArray();
-                        // dd($itemType);
                         if(count($itemType)==0){
-                            $id = DB::table('item_types')->insertGetId(
+                            $itemTypeId = DB::table('item_types')->insertGetId(
                                     ['item_type' => $excelval[3],
                                     'item_category' => $itemCatId,
                                     'item_type_status' => 'active',
@@ -263,13 +257,11 @@ class ItemTable extends Model
                         else{
                             $brandId = $brand[0]->brand_id;
                         }
-                        // dd($brandId);
 
                         $unit = DB::table('units_of_measure')
                                     ->where('unit_name', '=', $excelval[5])
                                     ->get();
                         $unit = $unit->toArray();
-                        // dd($unit);
                         if(count($unit)==0){
                             $unitId = DB::table('units_of_measure')->insertGetId(
                                         ['unit_name' => $excelval[5],
@@ -317,7 +309,6 @@ class ItemTable extends Model
                 }
                 $j++;
             }
-            // dd($savePathVal);
             $commonservice = new CommonService();
             $commonservice->eventLog(session('userId'),$bulkUpload, 'Grade price-update', 'Update Grade price import grade price details', 'grade price');
         }
