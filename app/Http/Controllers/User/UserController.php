@@ -72,7 +72,7 @@ class UserController extends Controller
     }
 
     //edit user
-    public function edit(Request $request,$id)
+    public function edit($id,Request $request)
     {
         if ($request->isMethod('post')) 
         {
@@ -88,7 +88,7 @@ class UserController extends Controller
             $role = $RoleService->getAllActiveRole();
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            return view('user.edit',array('result'=>$result,'role'=>$role,'branch'=>$branch));
+            return view('user.edit',array('result'=>$result,'role'=>$role,'branch'=>$branch,'id'=>$id));
         }
     }
 

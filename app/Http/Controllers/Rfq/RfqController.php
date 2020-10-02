@@ -198,7 +198,7 @@ class RfqController extends Controller
                             }
                         }
 
-                        $button .= '<button type="button" name="rfqDetails" id="rfqDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/rfqDetailsView/'.base64_encode($data->rfq_id).'\' );" title="RFQ Details"><b><i class="ft-eye"></i></b></button>';
+                        $button .= '&nbsp;&nbsp;<button type="button" name="rfqDetails" id="rfqDetails" class="btn btn-outline-success btn-sm" onclick="showAjaxModal(\'/rfqDetailsView/'.base64_encode($data->rfq_id).'\' );" title="RFQ Details"><b><i class="ft-eye"></i></b></button>';
 
                         // $button .= '</div>';
                         return $button;
