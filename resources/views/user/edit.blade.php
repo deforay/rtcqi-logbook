@@ -54,7 +54,7 @@ foreach($result as $branchList)
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="editUser" id="editUser" method="post" action="/user/edit/{{base64_encode($result[0]->user_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editUser" id="editUser" method="post" action="/user/edit/{{$id}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                             @php
                                 $fnct = "user_id##".($result[0]->user_id);

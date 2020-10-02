@@ -162,12 +162,15 @@ class UserTable extends Model
                 $configFile =  "acl.config.json";
                 if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
                     $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
+                    $roleName = strtolower($result[0]['role_name']);
                     session(['username' => $result[0]['login_id']]);
                     session(['name' => $result[0]['first_name']]);
                     session(['lastName' => $result[0]['last_name']]);
                     session(['email' => $result[0]['email']]);
                     session(['phone' => $result[0]['phone']]);
                     session(['userId' => $result[0]['user_id']]);
+                    session(['roleCode' => $result[0]['role_code']]);
+                    session(['roleName' => $roleName]);
                     session(['roleId' => $result[0]['role']]);
                     session(['role' => $config[$result[0]['role_code']]]);
                     session(['login' => true]);
