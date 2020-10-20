@@ -17,7 +17,7 @@ use App\Service\CommonService;
 use App\Service\VendorsService;
 use App\Service\VendorsTypeService;
 use App\Service\CountriesService;
-
+use Mail;
 class LoginController extends Controller
 {
      //View Login main screen
@@ -41,6 +41,25 @@ class LoginController extends Controller
             
             elseif(trim($login)==3)
             { 
+                $msg = array();
+                $permitted_chars = '0123456789';
+			    $otp_no = substr(str_shuffle($permitted_chars), 0, 6);
+                $msg['msg'] =  $otp_no.' is the OTP for your Vendor login';
+                session(['login_otp' => $otp_no]);
+                // print_r(session('login_otp'));die;
+                Mail::send('mailtemplate.email', $msg, function ($message)  {
+                    $toEmail = session('email');
+                    $subject = 'OTP - Procurement & Inventory Manager.';
+                    $send = $message->to($toEmail, session('name'))
+                                    ->subject($subject);
+                });
+
+                if (Mail::failures()) {
+                    \Log::info('Mail sent failed for - '.session('userId'));
+                }
+                else {
+                    \Log::info('Mail sent successfully - '.session('userId'));
+                }
                 $vendorsService = new VendorsTypeService();
                 $vendorTypeResult = $vendorsService->getActiveVendorsType();
                 $countryService = new CountriesService();
