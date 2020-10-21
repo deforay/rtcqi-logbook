@@ -294,6 +294,31 @@ $commonservice = new CommonService();
                                                         </fieldset>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-xl-6 col-lg-12">
+                                                        <fieldset>
+                                                            <h5>Password <span class="mandatory">*</span>
+                                                            </h5>
+                                                            <div class="form-group">
+                                                                <input type="password" id="password" class="form-control isRequired" autocomplete="off" placeholder="Enter Password" name="password" title="Please Enter Password">
+                                                                <div class="invalid-feedback">
+                                                                    must contain atleast 6 characters, 1 number , 1 alphabet and 1 special character
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    <div class="col-xl-6 col-lg-12">
+                                                        <fieldset>
+                                                            <h5>Confirm Password <span class="mandatory">*</span>
+                                                            </h5>
+                                                            <div class="form-group">
+                                                                <input type="password" id="confirmPassword" onkeyup="checkPasswordMatch()" class="form-control isRequired" autocomplete="off" placeholder="Enter Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
+                                                                <span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
+                                                                <input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" title="Passwords do not match.">
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
                                             
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
@@ -419,7 +444,7 @@ $commonservice = new CommonService();
                                                 <div class="form-actions right">
                                                     <input type="hidden" id="vendorStatus" value="active" name="vendorStatus">
                                                     <input type="hidden" id="vendorProfile" value="vendorProfile" name="vendorProfile">
-                                                    <input type="hidden" id="password" value="{{$vendors[0]->password}}" name="password">
+                                                    <!-- <input type="hidden" id="password" value="{{$vendors[0]->password}}" name="password"> -->
                                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
                                                         <i class="la la-check-square-o"></i> Update
                                                     </button>
