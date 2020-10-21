@@ -173,7 +173,10 @@ class VendorsTable extends Model
                     'updated_on'     => $commonservice->getDateTime(),
                     'updated_by'     => session('userId'),
                 );
-            
+                if (trim($data['password'])){
+
+                    $params['password'] = Hash::make(trim($data['password'])); // Hashing passwords
+                }
 
             }else{
 
@@ -197,7 +200,7 @@ class VendorsTable extends Model
                 );
                 if (trim($data['password'])){
 
-                    $params['password'] = Hash::make($data['password']); // Hashing passwords
+                    $params['password'] = Hash::make(trim($data['password'])); // Hashing passwords
                 }
             }
 
