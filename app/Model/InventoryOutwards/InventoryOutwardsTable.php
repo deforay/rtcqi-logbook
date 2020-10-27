@@ -99,9 +99,11 @@ class InventoryOutwardsTable extends Model
             $data = DB::table('inventory_outwards')
                 ->join('items', 'items.item_id', '=', 'inventory_outwards.item_id')
                 ->join('branches as b1', 'b1.branch_id', '=', 'inventory_outwards.issued_to')
-                ->join('branches as b2', 'b2.branch_id', '=', 'inventory_outwards.issued_from')
-                ->join('user_branch_map', 'b1.branch_id', '=', 'user_branch_map.branch_id')
-                ->select('items.*','b1.branch_name as issuedTo','b2.branch_name as issuedFrom','inventory_outwards.*');
+                ->join('branches as b2', 'b2.branch_id', '=', 'inventory_outwards.issued_from');
+                if(strtolower(session('roleName'))!='admin'){
+                    $data = $data->join('user_branch_map', 'b1.branch_id', '=', 'user_branch_map.branch_id');
+                }
+                $data = $data->select('items.*','b1.branch_name as issuedTo','b2.branch_name as issuedFrom','inventory_outwards.*');
                 if(strtolower(session('roleName'))!='admin'){
                     $data = $data->where('user_branch_map.user_id', '=', $userId);
                 }
