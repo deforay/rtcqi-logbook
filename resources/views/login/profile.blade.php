@@ -178,10 +178,11 @@ $commonservice = new CommonService();
                                                     </div>
                                                     <div class="col-xl-6 col-lg-12">
                                                         <fieldset>
-                                                            <h5>Vendor Code<span class="mandatory">*</span>
+                                                            <h5>Vendor Code
+                                                            <!-- <span class="mandatory">*</span> -->
                                                             </h5>
                                                             <div class="form-group">
-                                                                <input type="text" id="vendorCode" value="{{ $vendors[0]->vendor_code }}" class="form-control isRequired" autocomplete="off" placeholder="Enter Vendor Code" name="vendorCode" title="Please enter Vendor Code">
+                                                                <input type="text" id="vendorCode" value="{{ $vendors[0]->vendor_code }}" class="form-control" autocomplete="off" placeholder="Enter Vendor Code" name="vendorCode" title="Please enter Vendor Code">
                                                             </div>
                                                         </fieldset>
                                                     </div>
