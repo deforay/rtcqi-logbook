@@ -154,7 +154,7 @@ class UserTable extends Model
         ->where('vendors.email', '=',$data['username'] )
         ->where('vendor_status','=','active')->get(),true);
         $config = array();
-        //dd($result);
+        // dd($result);
         if(count($result)>0)
         {
             $hashedPassword = $result[0]['password'];
