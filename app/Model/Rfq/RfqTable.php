@@ -225,8 +225,11 @@ class RfqTable extends Model
         $id = base64_decode($id);
         $response = 0;
         $data = $params->all();
-        // dd($data);
+        $rfqDet =  DB::table('rfq')
+                    ->where('rfq_id', '=', $id)->get();
         $commonservice = new CommonService();
+        $issuedOn = $rfqDet[0]->rfq_issued_on;
+        $rfqStat = $rfqDet[0]->rfq_status;
         if(isset($data['vendorDetail']) && ($data['vendorDetail']!=null) && trim($data['vendorDetail'])!=''){
 
             $delVen = explode(",",$data['vendorDetail']);
@@ -277,7 +280,7 @@ class RfqTable extends Model
             }
         }
         if ($params->input('rfqNumber') != null && trim($params->input('rfqNumber')) != '') {
-            $issuedOn = $commonservice->dateFormat($data['issuedOn']);
+            
             $lastDate = $commonservice->dateFormat($data['lastdate']);
             if(isset($data['iNotes']) && $data['iNotes']!=''){
                 $iNotes = $data['iNotes'];
@@ -288,9 +291,7 @@ class RfqTable extends Model
             $rfq = array(
                 'rfq_number' => $data['rfqNumber'],
                 'description' => $data['description'],
-                'rfq_issued_on' => $issuedOn,
                 'last_date' => $lastDate,
-                'rfq_status' => 'draft',
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime(),
                 'rfq_notes' => $iNotes,
@@ -364,6 +365,8 @@ class RfqTable extends Model
                                     [
                                     'rfq_id' => $id,
                                     'vendor_id' => $data['vendors'][$f],
+                                    'invited_on' =>  $issuedOn,
+                                    'quotes_status' => $rfqStat
                                     ]
                                 );
                     if ($params->input('item')!=null) {
