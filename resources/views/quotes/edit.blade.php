@@ -22,6 +22,12 @@ if(isset($result[0]->estimated_date_of_delivery)){
 else{
     $estimatedDate = '';
 }
+if(isset($result[0]->quote_expiry_date)){
+    $expiryDate = $common->humanDateFormat($result[0]->quote_expiry_date);
+}
+else{
+    $expiryDate = '';
+}
 $optionSelect='';
 $optionSelect1='';
 $eta_if_no_stock='';
@@ -265,6 +271,15 @@ if(isset($result[0]->mode_of_delivery)){
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="estimatedDate" value="{{$estimatedDate}}" onchange="checkDate();return false;" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Estimated Date of Delivery" name="estimatedDate" title="Please enter Estimated Date of Delivery">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Expiry Date<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="expiryDate" value="{{$expiryDate}}" onchange="checkDate();return false;" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate" title="Please enter Expiry Date">
                                                 </div>
                                             </fieldset>
                                         </div>

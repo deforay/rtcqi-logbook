@@ -488,3 +488,6 @@ ALTER TABLE `purchase_orders` ADD `base_currency` VARCHAR(50) NOT NULL DEFAULT '
 
 --Sudarmathi 30 SEP 2020
 ALTER TABLE `purchase_order_details` ADD `converted_price` VARCHAR(255) NULL AFTER `description`;
+
+--Sudarmathi 09 Nov 2020
+ALTER TABLE `quotes` ADD `quote_expiry_date` DATE NULL AFTER `quote_notes`;
