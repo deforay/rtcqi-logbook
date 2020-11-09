@@ -162,6 +162,7 @@ class QuotesTable extends Model
                     'vendor_notes' => $data['vendorNotes'],
                     'mode_of_delivery' => $data['deliveryMode'],
                     'estimated_date_of_delivery' => $commonservice->dateFormat($data['estimatedDate']),
+                    'quote_expiry_date' => $commonservice->dateFormat($data['expiryDate']),
                 ]
             );
 
