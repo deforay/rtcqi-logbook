@@ -21,7 +21,7 @@ class Access
         }
         // print_r($role);
         $routeInfo = $request->route()->getAction();
-        // print_r($routeInfo);
+        // print_r($routeInfo);die;
         list($resource,$view) = explode("@",$routeInfo['controller']);
         //    print_r($role[$resource]);die;
         if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){

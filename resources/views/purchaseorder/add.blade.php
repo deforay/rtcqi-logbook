@@ -123,6 +123,7 @@ $currentDate=date('d-M-Y');
                                                         <option value="">Select</option>
                                                         <option value="immediate">Immediate</option>
                                                         <option value="staggered">Staggered</option>
+                                                        <option value="completed">Completed</option>
                                                         <option value="specified-date">Specified Date</option>
                                                     </select>
                                                 </div>

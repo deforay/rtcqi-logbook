@@ -29,8 +29,9 @@ class QuotesController extends Controller
             $rfq = $service->getAllRfq();
             return view('quotes.index',array('rfqList' => $rfq));
         }
-        else
+        else{
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // Get all the Quotes list
@@ -195,21 +196,27 @@ class QuotesController extends Controller
     //edit Quotes
     public function edit(Request $request,$id)
     {
-        if ($request->isMethod('post')) 
-        {
-            $service = new QuotesService();
-            $edit = $service->updateQuotes($request,$id);
-            return Redirect::route('quotes.index')->with('status', $edit);
-        }
-        else
-        {
-            $service = new QuotesService();
-            $result = $service->getQuotesById($id);
-            // dd($result);
-            $service = new ItemService();
-            $itemResult = $service->getAllActiveItem();
-            // dd($itemResult);
-            return view('quotes.edit',array('result'=>$result,'items'=>$itemResult));
-        }
+        // if(session('login')==true){
+            if ($request->isMethod('post')) 
+            {
+                $service = new QuotesService();
+                $edit = $service->updateQuotes($request,$id);
+                return Redirect::route('quotes.index')->with('status', $edit);
+            }
+            else
+            {
+                $service = new QuotesService();
+                $result = $service->getQuotesById($id);
+                // dd($result);
+                $service = new ItemService();
+                $itemResult = $service->getAllActiveItem();
+                // dd($itemResult);
+                return view('quotes.edit',array('result'=>$result,'items'=>$itemResult));
+            }
+        // }
+        // else{
+        //     print_r(url()->current());die;
+        //     session(['url' => url()->current()]);
+        // }
     }
 }
