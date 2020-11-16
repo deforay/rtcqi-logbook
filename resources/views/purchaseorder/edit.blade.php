@@ -167,6 +167,7 @@ foreach($result as $branchList)
                                                         <option value="">Select</option>
                                                         <option value="immediate" {{ $result[0]->payment_status == 'immediate' ?  'selected':''}}>Immediate</option>
                                                         <option value="staggered" {{ $result[0]->payment_status == 'staggered' ?  'selected':''}}>Staggered</option>
+                                                        <option value="completed" {{ $result[0]->payment_status == 'completed' ?  'selected':''}}>Completed</option>
                                                         <option value="specified-date" {{ $result[0]->payment_status == 'specified-date' ?  'selected':''}}>Specified Date</option>
                                                     </select>
                                                 </div>
