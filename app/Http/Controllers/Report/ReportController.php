@@ -64,4 +64,10 @@ class ReportController extends Controller
           );
         return Response::download($file, $name, $headers);
     }
+
+    public function getDetailedInventoryReport(Request $request){
+        $service = new InventoryOutwardsService();
+        $data = $service->getDetailedInventoryReport($request);
+        return $data;
+    }
 }
