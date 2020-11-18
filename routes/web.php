@@ -287,3 +287,5 @@ Route::post('/maintenance/edit/{id}', 'Maintenance\MaintenanceController@edit');
 //Report Controller
 Route::get('/inventoryReport', 'Report\ReportController@inventoryReport')->name('inventoryReport.index')->middleware('access');
 Route::post('/getInventoryReport', 'Report\ReportController@getInventoryReport');
+Route::post('/report/export/', 'Report\ReportController@export');
+Route::get('/report/exportDownload/', 'Report\ReportController@exportDownload');
