@@ -110,4 +110,10 @@ class InventoryOutwardsService
 	    	$exc->getMessage();
 	    }
 	}
+
+	public function getDetailedInventoryReport($request){
+		$inventoryOutwardsmodel = new InventoryOutwardsTable();
+        $result = $inventoryOutwardsmodel->fetchDetailedInventoryReport($request);
+        return $result;
+	}
 }

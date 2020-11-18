@@ -289,3 +289,4 @@ Route::get('/inventoryReport', 'Report\ReportController@inventoryReport')->name(
 Route::post('/getInventoryReport', 'Report\ReportController@getInventoryReport');
 Route::post('/report/export/', 'Report\ReportController@export');
 Route::get('/report/exportDownload/', 'Report\ReportController@exportDownload');
+Route::post('/getDetailedInventoryReport', 'Report\ReportController@getDetailedInventoryReport');

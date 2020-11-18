@@ -86,22 +86,63 @@
                                     </div>
                                 </div>
                                 <p class="card-text"></p>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="inventoryReport" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th style="width:25%">Item Name</th>
-                                                <th style="width:25%">Item Code</th>
-                                                <th style="width:25%">Current Inventory</th>
-                                                <th style="width:25%">Location</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="inventoryReportDetails">
+                                <div id="tabs">
+                                    <ul class="nav nav-tabs nav-top-border no-hover-bg nav-justified" id="myTab">
+                                      <li class="nav-item">
+                                        <a class="nav-link active" id="reportConstab-tab1" data-toggle="tab" href="#reportConstab"
+                                        aria-controls="reportConstab" aria-expanded="true"><i class="ft-edit"></i>Consolidated Data</a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link" id="reportBrktab-tab1" data-toggle="tab" href="#reportBrktab" aria-controls="reportBrktab"
+                                        aria-expanded="false"><i class="ft-package"></i> Detailed Data</a>
+                                      </li>
+                                    </ul>
+                                    <div class="tab-content px-1 pt-1">
+                                        <div role="tabpanel" class="tab-pane active" id="reportConstab" aria-labelledby="reportConstab-tab1" aria-expanded="true">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered zero-configuration" id="inventoryReport" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:25%">Item Name</th>
+                                                            <th style="width:25%">Item Code</th>
+                                                            <th style="width:25%">Current Inventory</th>
+                                                            <th style="width:25%">Location</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="inventoryReportDetails">
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="reportBrktab" role="tabpanel" aria-labelledby="reportBrktab-tab1" aria-expanded="false">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered zero-configuration" id="inventoryReportBrk" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:0%">Item Name</th>
+                                                            <th style="width:0%">Item Code</th>
+                                                            <th style="width:0%">Current Inventory</th>
+                                                            <th style="width:0%">Location</th>
+                                                            <th style="width:0%">PO Number</th>
+                                                            <th style="width:0%">PO Issued On</th>
+                                                            <th style="width:0%">Vendor</th>
+                                                            <th style="width:0%">Expiry<br/>Date</th>
+                                                            <th style="width:0%">Manufacturing<br/>Date</th>
+                                                            <th style="width:0%">Received<br/>Date</th>
+                                                            <th style="width:0%">Brand</th>
 
-                                        </tbody>
-                                        </table>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="inventoryReporBrkDetails">
+            
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -112,9 +153,28 @@
 </div>
   <script>
     $(document).ready(function() {
+        $('#inventoryReportBrk').DataTable( {
+            "scrollX": true
+        });
         $.blockUI();
         getInventoryReport();
+        getDetailedInventoryReport();
         $.unblockUI();
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+          localStorage.setItem('activeTab', $(e.target).attr('href'));
+          $('#tabStatus').val('');
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+            if(activeTab=='#reportConstab'){
+                getInventoryReport();
+            }
+            if(activeTab=='#reportBrktab'){
+                getDetailedInventoryReport();
+            }
+            
+        }
 
     });
     function getInventoryReport(val='')
@@ -145,14 +205,57 @@
                     }
                 }
                 else{
-                    opt += '<tr colspan="4">No Data Available</tr>'
+                    opt += '<tr colspan="11">No Data Available</tr>'
                 }
                 $('#inventoryReportDetails').html(opt)
             }
         });
         
     }
-
+    function getDetailedInventoryReport(val='')
+    {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getDetailedInventoryReport') }}",
+            method: 'post',
+            data: {
+                branchId : val
+            },
+            success: function(result) {
+                var data = JSON.parse(result);
+                console.log(data)
+                var opt = '';
+                if(data.length>0){
+                    for(var k=0;k<data.length;k++){
+                        opt += '<tr>'
+                        opt += '<td class="firstcaps">'+data[k]['item_name']+'</td>'
+                        opt += '<td>'+data[k]['item_code']+'</td>'
+                        opt += '<td>'+data[k]['stock_quantity']+'</td>'
+                        opt += '<td>'+data[k]['branch_name']+'</td>'
+                        opt += '<td>'+data[k]['po_number']+'</td>'
+                        opt += '<td>'+data[k]['po_issued_on']+'</td>'
+                        opt += '<td>'+data[k]['vendor_name']+'</td>'
+                        opt += '<td>'+data[k]['expiry_date']+'</td>'
+                        opt += '<td>'+data[k]['manufacturing_date']+'</td>'
+                        opt += '<td>'+data[k]['received_date']+'</td>'
+                        opt += '<td>'+data[k]['brand_name']+'</td>'
+                        opt += '</tr>'
+                        
+                    }
+                }
+                else{
+                    opt += '<tr colspan="4">No Data Available</tr>'
+                }
+                $('#inventoryReporBrkDetails').html(opt)
+               
+            }
+        });
+        
+    }
 
     var excelFile;
     function getExportData(){
