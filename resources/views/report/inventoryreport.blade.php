@@ -70,7 +70,7 @@
                                             <h5>Location<span class="mandatory">*</span>
                                         </h5>
                                         <div class="form-group">
-                                            <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches0" name="branches[]" title="Please select locations" onchange="getInventoryReport(this.value)">
+                                            <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations" onchange="getInventoryReport(this.value)">
                                                 <option value="">Select Locations</option>
                                                 @foreach($branch as $type)
                                                     <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
@@ -78,6 +78,11 @@
                                             </select>
                                         </div>
                                         </fieldset>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-12 mt-2">
+                                        <a class="btn btn-default" href="/report/exportDownload/" style="display:none;" onclick="location.href=this.href+'?file='+excelFile;return false;"id="excelDownload" ></a>
+                                        <a href="javascript:void(0)" onclick="getExportData();" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                                            <b><i class="ft-download icon-left"></i> Export Inventory Report</b></a>
                                     </div>
                                 </div>
                                 <p class="card-text"></p>
@@ -149,6 +154,24 @@
     }
 
 
+    var excelFile;
+    function getExportData(){
+        var branches = $('#branches').val();
+
+        $.post("{{ url('/report/export') }}",
+         { branches:branches},
+        function(data){
+            console.log("{{ base_path()}}");
+            storage = "{{ base_path() . "/storage/app/"}}"+data;
+            console.log(data)
+            // storage = "/storage/app/"+data;
+            // $('#excelDownload').attr("href", data);
+            excelFile = data;
+            $("#excelDownload").click()
+            // window.open(storage, '_blank');
+            // window.location.href = storage;
+        });
+    }
     
   </script>
 @endsection
