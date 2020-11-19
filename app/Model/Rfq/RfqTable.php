@@ -542,7 +542,7 @@ class RfqTable extends Model
     }
 
     
-    // Fetch All Rfq List
+    // Fetch All Rfq Ourchase Category List
     public function fetchPurchaseCategory()
     {
         
