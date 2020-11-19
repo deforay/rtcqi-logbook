@@ -185,6 +185,20 @@ td {
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Purchase Category<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select id="purchaseCategory" name="purchaseCategory" class="select2 isRequired form-control datas"  title="Please select purchase category" >
+                                                        <option value="">Select Purchase Category </option>
+                                                        @foreach ($pc as $pcs)
+                                                            <option value="{{ $pcs->po_purchase_category }}" >{{ $pcs->po_purchase_category }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="col-md-2 label-control pl-0" for="description" >Specification</label>

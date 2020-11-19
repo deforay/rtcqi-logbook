@@ -10,6 +10,7 @@ use App\Service\ItemService;
 use App\Service\BranchesService;
 use App\Service\GlobalConfigService;
 use Yajra\DataTables\Facades\DataTables;
+use App\Service\RfqService;
 use Redirect;
 use View;
 
@@ -50,7 +51,9 @@ class PurchaseOrderController extends Controller
             $branch = $branchService->getAllActiveBranches();
             $globalConfigService = new GlobalConfigService();
             $config = $globalConfigService->getGlobalConfigBaseCurrency();
-            return view('purchaseorder.add',array('quoteId'=>$id,'vendor'=>$vendor,'item'=>$item,'vendorDetailId'=>$vendorDetailId,'quotes'=>$quotes,'quoteDetails'=>$quoteDetails,'branch'=>$branch,'config'=>$config));
+            $rfqservice = new RfqService();
+            $pc = $rfqservice->getPurchaseCategory($request);
+            return view('purchaseorder.add',array('quoteId'=>$id,'vendor'=>$vendor,'item'=>$item,'vendorDetailId'=>$vendorDetailId,'quotes'=>$quotes,'quoteDetails'=>$quoteDetails,'branch'=>$branch,'config'=>$config,'pc'=>$pc));
         }
     }
 
@@ -72,13 +75,14 @@ class PurchaseOrderController extends Controller
             $purchaseOrderService = new PurchaseOrderService();
             $globalConfigService = new GlobalConfigService();
             $config = $globalConfigService->getGlobalConfigBaseCurrency();
+            $pc = $purchaseOrderService->getPoPurchaseCategory($request);
             // dd($config);
             // $vendorDetailId = $purchaseOrderService->getAllVendorDetailById($id);
             // $quotes = $purchaseOrderService->getSumOfQuoteById($id);
             // $quoteDetails = $purchaseOrderService->getAllQuoteDetailsId($id);
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            return view('purchaseorder.adddirectpo',array('vendor'=>$vendor,'item'=>$item,'branch'=>$branch,'config'=>$config));
+            return view('purchaseorder.adddirectpo',array('vendor'=>$vendor,'item'=>$item,'branch'=>$branch,'config'=>$config,'pc'=>$pc));
         }
     }
 
@@ -150,7 +154,8 @@ class PurchaseOrderController extends Controller
             $branch = $branchService->getAllActiveBranches();
             $globalConfigService = new GlobalConfigService();
             $config = $globalConfigService->getGlobalConfigBaseCurrency();
-            return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails,'branch'=>$branch,'config'=>$config));
+            $pc = $service->getPoPurchaseCategory($request);
+            return view('purchaseorder.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'purchaseOrderDetails'=>$purchaseOrderDetails,'branch'=>$branch,'config'=>$config,'pc'=>$pc));
         }
     }
     public function purchaseDetailsView(Request $request,$id)

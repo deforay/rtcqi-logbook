@@ -132,5 +132,13 @@ class PurchaseOrderService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//get all purchase category in PO table
+	public function getPoPurchaseCategory()
+    {
+		$rfqmodel = new PurchaseOrderTable();
+        $result = $rfqmodel->fetchPoPurchaseCategory();
+        return $result;
+	}
 	
 }

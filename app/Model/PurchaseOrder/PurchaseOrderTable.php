@@ -78,6 +78,7 @@ class PurchaseOrderTable extends Model
                     'purchase_order_notes'       => $poNotes,
                     'base_currency' => $data['baseCurrency'],
                     'exchange_rate' => $data['exchangeRate'],
+                    'po_purchase_category' => $data['purchaseCategory'],
                 ]
             );
 
@@ -302,6 +303,7 @@ class PurchaseOrderTable extends Model
                     'purchase_order_notes'       => $poNotes,
                     'base_currency' => $data['baseCurrency'],
                     'exchange_rate' => $data['exchangeRate'],
+                    'po_purchase_category' => $data['purchaseCategory'],
                 ]
             );
 
@@ -492,6 +494,7 @@ class PurchaseOrderTable extends Model
         $id = base64_decode($id);
         $data = DB::table('quotes')
             ->join('quote_details','quote_details.quote_id','=','quotes.quote_id')
+            ->join('rfq','rfq.rfq_id','=','quotes.rfq_id')
             ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'quote_details.uom')
             ->where('quotes.quote_id', '=', $id)->get();
         return $data;
@@ -608,6 +611,7 @@ class PurchaseOrderTable extends Model
                 'purchase_order_notes'       => $poNotes,
                 'base_currency' => $data['baseCurrency'],
                 'exchange_rate' => $data['exchangeRate'],
+                'po_purchase_category' => $data['purchaseCategory'],
             );
 
             $purchaseOrder = DB::table('purchase_orders')
@@ -670,4 +674,18 @@ class PurchaseOrderTable extends Model
         }
         return $response;
     }
+
+
+    // Fetch All PO Ourchase Category List
+    public function fetchPoPurchaseCategory()
+    {
+        
+        $data = DB::table('purchase_orders')
+            ->select('po_purchase_category')
+            ->distinct()
+            ->where('po_purchase_category','!=',null)
+            ->get();
+        return $data;
+    }
+
 }
