@@ -119,6 +119,20 @@
                                         </fieldset>
                                     </div>
                                     @endif
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Purchase Category<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select id="purchaseCategory" name="purchaseCategory" class="select2 isRequired form-control datas"  title="Please select purchase category" >
+                                                    <option value="">Select Purchase Category </option>
+                                                    @foreach ($pc as $pcs)
+                                                        <option value="{{ $pcs->purchase_category }}">{{ $pcs->purchase_category }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
                                     <div class="col-md-12">
                                         <label class="col-md-2 label-control pl-0" for="mainContent" >Specification</label>
                                         <div class="form-group row" >
@@ -647,6 +661,33 @@ $(document).ready(function() {
             });
         }
     }
+
+    // function addPurchaseCategory(tableName,value,id){
+    //     fieldName = 'purchase_category';
+    //     checkValue = $("#"+id+" option:selected").html();
+    //     if(checkValue!='')
+    //     {
+    //         $.ajaxSetup({
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             }
+    //         });
+    //         $.ajax({
+    //             url: "{{ url('/addPurchaseCategory') }}",
+    //             method: 'post',
+    //             data: {
+    //                 tableName: tableName, fieldName: fieldName, value: checkValue,
+    //             },
+    //             success: function(result){
+    //                 console.log(result)
+    //                 if (result['option'])
+    //                 {
+    //                     $('#'+obj).html(result['option'])
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }
 
 </script>
 @endsection

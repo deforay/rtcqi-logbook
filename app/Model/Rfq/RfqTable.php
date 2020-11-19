@@ -39,6 +39,7 @@ class RfqTable extends Model
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
                 'rfq_notes' => $iNotes,
+                'purchase_category' => $data['purchaseCategory'],
                 ]
             );
 
@@ -295,6 +296,7 @@ class RfqTable extends Model
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime(),
                 'rfq_notes' => $iNotes,
+                'purchase_category' => $data['purchaseCategory'],
             );
            
             $rfqUp = DB::table('rfq')
@@ -537,5 +539,18 @@ class RfqTable extends Model
             error_log($exc->getMessage());
         }
         return $fieldIdValue;
+    }
+
+    
+    // Fetch All Rfq List
+    public function fetchPurchaseCategory()
+    {
+        
+        $data = DB::table('rfq')
+            ->select('purchase_category')
+            ->distinct()
+            ->where('purchase_category','!=',null)
+            ->get();
+        return $data;
     }
 }

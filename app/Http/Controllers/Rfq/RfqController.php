@@ -42,7 +42,9 @@ class RfqController extends Controller
             $item = $itemservice->getAllActiveItem();
             $uomservice = new UnitService();
             $uom = $uomservice->getAllActiveUnit();
-            return view('rfq.add',array('vendor'=>$vendor,'item'=>$item,'uom'=>$uom));
+            $rfqservice = new RfqService();
+            $pc = $rfqservice->getPurchaseCategory($request);
+            return view('rfq.add',array('vendor'=>$vendor,'item'=>$item,'uom'=>$uom,'pc'=>$pc));
         }
     }
 
@@ -226,8 +228,9 @@ class RfqController extends Controller
             $uom = $uomservice->getAllActiveUnit();
             $service = new RfqService();
             $result = $service->getRfqById($id);
+            $pc = $service->getPurchaseCategory($request);
             // dd($result);
-            return view('rfq.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'uom'=>$uom));
+            return view('rfq.edit',array('result'=>$result,'vendor'=>$vendor,'item'=>$item,'uom'=>$uom,'pc'=>$pc));
         }
     }
 
