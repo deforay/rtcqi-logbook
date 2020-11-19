@@ -491,3 +491,6 @@ ALTER TABLE `purchase_order_details` ADD `converted_price` VARCHAR(255) NULL AFT
 
 --Sudarmathi 09 Nov 2020
 ALTER TABLE `quotes` ADD `quote_expiry_date` DATE NULL AFTER `quote_notes`;
+
+--Sudarmathi 19 Nov 2020
+ALTER TABLE `rfq` ADD `purchase_category` VARCHAR(255) NULL AFTER `rfq_notes`;

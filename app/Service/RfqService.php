@@ -77,5 +77,13 @@ class RfqService
         $result = $rfqmodel->changeQuotesStatus($id);
         return $result;
 	}
+
+	//get all purchase category in rfq table
+	public function getPurchaseCategory()
+    {
+		$rfqmodel = new RfqTable();
+        $result = $rfqmodel->fetchPurchaseCategory();
+        return $result;
+	}
 	
 }
