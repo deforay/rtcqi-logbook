@@ -494,4 +494,4 @@ ALTER TABLE `quotes` ADD `quote_expiry_date` DATE NULL AFTER `quote_notes`;
 
 --Sudarmathi 19 Nov 2020
 ALTER TABLE `rfq` ADD `purchase_category` VARCHAR(255) NULL AFTER `rfq_notes`;
-ALTER TABLE `purchase_orders` ADD `purchase_category` VARCHAR(255) NULL AFTER `exchange_rate`;
+ALTER TABLE `purchase_orders` ADD `po_purchase_category` VARCHAR(255) NULL AFTER `exchange_rate`;
