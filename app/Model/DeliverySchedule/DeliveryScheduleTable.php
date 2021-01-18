@@ -279,19 +279,23 @@ class DeliveryScheduleTable extends Model
     //all delivery schedule
     public function fetchAllDeliverySchedule($params){
         $req = $params->all();
+        $userId = session('userId');
         if(session('loginType')=='users'){
             $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
+                    ->leftjoin('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id');
                     if(isset($req['poId']) && $req['poId'])
                        $data = $data->where('purchase_order_details.po_id', '=', $req['poId']);
+                    if(session('loginType') != 'vendor' && strtolower(session('roleName'))!='admin'){
+                        $data = $data->where('user_branch_map.user_id', '=', $userId);
+                    }
                     // ->where('purchase_order_details.delivery_status', '=', 'pending')
             $data = $data->get();
         }
         else{
-            $userId=session('userId');
             $data = DB::table('delivery_schedule')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
@@ -305,17 +309,21 @@ class DeliveryScheduleTable extends Model
     }
 
     public function fetchAllPendingDeliverySchedule(){
+        $userId=session('userId');
         if(session('loginType')=='users'){
             $data = DB::table('delivery_schedule')
                     ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
+                    ->leftjoin('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
                     ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'delivery_schedule.pod_id')
                     ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id');
+                    if(session('loginType') != 'vendor' && strtolower(session('roleName'))!='admin'){
+                        $data = $data->where('user_branch_map.user_id', '=', $userId);
+                    }
                     // ->where('delivery_schedule.delivery_schedule_status', '=', 'pending for shipping');
             $data = $data->get();
         }
         else{
-            $userId=session('userId');
             $data = DB::table('delivery_schedule')
                     ->leftjoin('branches', 'delivery_schedule.branch_id', '=', 'branches.branch_id')
                     ->join('items', 'items.item_id', '=', 'delivery_schedule.item_id')
