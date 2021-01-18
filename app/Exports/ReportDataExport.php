@@ -40,11 +40,11 @@ class ReportDataExport implements FromCollection, WithHeadings, WithTitle
             $inv = DB::table('inventory_stock')
                 ->join('branches', 'branches.branch_id', '=', 'inventory_stock.branch_id')
                 ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
-                ->join('purchase_order_details', 'purchase_order_details.pod_id', '=', 'inventory_stock.pod_id')
-                ->join('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
-                ->join('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
-                ->join('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
-                ->join('brands', 'brands.brand_id', '=', 'items.brand');
+                ->leftjoin('purchase_order_details', 'purchase_order_details.pod_id', '=', 'inventory_stock.pod_id')
+                ->leftjoin('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
+                ->leftjoin('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
+                ->leftjoin('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
+                ->leftjoin('brands', 'brands.brand_id', '=', 'items.brand');
                 // ->select($qty, 'items.item_code', 'items.item_name')
                 // ->groupBy('inventory_stock.branch_id')
                 // ->groupBy('inventory_stock.item_id', 'items.item_code', 'items.item_name')
