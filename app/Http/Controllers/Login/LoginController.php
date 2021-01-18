@@ -30,7 +30,11 @@ class LoginController extends Controller
     {
             $service = new UserService();
             $login = $service->validateLogin($request);
-            if(trim($login)==1)
+            if(trim($login)==1 && session('loginType')!= "vendor" && strtolower(session('roleName'))!='admin')
+            {
+                return Redirect::to('/inventoryoutwards');
+            }
+            elseif(trim($login)==1)
             {
                 return Redirect::to('/dashboard');
             }
