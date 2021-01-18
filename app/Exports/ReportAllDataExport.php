@@ -38,7 +38,7 @@ class ReportAllDataExport implements FromCollection, WithHeadings, WithTitle
             $inv = DB::table('inventory_stock')
                 ->join('branches', 'branches.branch_id', '=', 'inventory_stock.branch_id')
                 ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
-                ->join('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
+                ->leftjoin('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
                 // ->where('user_branch_map.user_id', '=', $userId)
                 ->select($qty, $branch, 'items.item_code', 'items.item_name')
                 ->groupBy('inventory_stock.item_id', 'items.item_code', 'items.item_name')
