@@ -31,6 +31,8 @@ class ReportController extends Controller
         $service = new InventoryOutwardsService();
         $data = $service->getInventoryReport($request);
         return $data;
+        // return DataTables::of($data)
+        //             ->make(true);
     }
 
     public function export(Request $request) 

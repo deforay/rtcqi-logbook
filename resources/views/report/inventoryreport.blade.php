@@ -63,44 +63,44 @@
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="card-body card-dashboard">
-                                <div class="row">
-                                    <div class="col-xl-4 col-lg-12">
-                                        <fieldset>
-                                            <h5>Location<span class="mandatory">*</span>
-                                        </h5>
-                                        <div class="form-group">
-                                            <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations" onchange="getInventoryReport(this.value)">
-                                                <option value="">Select Locations</option>
-                                                @foreach($branch as $type)
-                                                    <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-xl-3 col-lg-12 mt-2">
-                                        <a class="btn btn-default" href="/report/exportDownload/" style="display:none;" onclick="location.href=this.href+'?file='+excelFile;return false;"id="excelDownload" ></a>
-                                        <a href="javascript:void(0)" onclick="getExportData();" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                                            <b><i class="ft-download icon-left"></i> Export Inventory Report</b></a>
-                                    </div>
+                            <div class="row float-md-right">
+                                <div class="col-xl-12 col-lg-12 mt-2">
+                                    <a class="btn btn-default" href="/report/exportDownload/" style="display:none;" onclick="location.href=this.href+'?file='+excelFile;return false;"id="excelDownload" ></a>
+                                    <a href="javascript:void(0)" onclick="getExportData();" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                                        <b><i class="ft-download icon-left"></i> Export Inventory Report</b></a>
                                 </div>
+                            </div>
+                            <div class="card-body card-dashboard mt-2">
                                 <p class="card-text"></p>
                                 <div id="tabs">
-                                    <ul class="nav nav-tabs nav-top-border no-hover-bg nav-justified" id="myTab">
+                                    <ul class="nav nav-tabs nav-top-border no-hover-bg nav-justified mt-3" id="myTab">
                                       <li class="nav-item">
                                         <a class="nav-link active" id="reportConstab-tab1" data-toggle="tab" href="#reportConstab"
-                                        aria-controls="reportConstab" aria-expanded="true"><i class="ft-edit"></i>Consolidated Data</a>
+                                        aria-controls="reportConstab" aria-expanded="true" onclick="getInventoryReport()"><i class="ft-edit"></i>Consolidated Data</a>
                                       </li>
                                       <li class="nav-item">
                                         <a class="nav-link" id="reportBrktab-tab1" data-toggle="tab" href="#reportBrktab" aria-controls="reportBrktab"
-                                        aria-expanded="false"><i class="ft-package"></i> Detailed Data</a>
+                                        aria-expanded="false" onclick="getDetailedInventoryReport()"><i class="ft-package"></i> Detailed Data</a>
                                       </li>
                                     </ul>
                                     <div class="tab-content px-1 pt-1">
                                         <div role="tabpanel" class="tab-pane active" id="reportConstab" aria-labelledby="reportConstab-tab1" aria-expanded="true">
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Location<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations" onchange="getInventoryReport(this.value)">
+                                                        <option value="">Select Locations</option>
+                                                        @foreach($branch as $type)
+                                                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                </fieldset>
+                                            </div>
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered zero-configuration" id="inventoryReport" style="width:100%">
+                                                <table class="table table-striped table-bordered" id="inventoryReport" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th style="width:25%">Item Name</th>
@@ -116,8 +116,22 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="reportBrktab" role="tabpanel" aria-labelledby="reportBrktab-tab1" aria-expanded="false">
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Location<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="branches" name="branches" title="Please select locations" onchange="getDetailedInventoryReport(this.value)">
+                                                        <option value="">Select Locations</option>
+                                                        @foreach($branch as $type)
+                                                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                </fieldset>
+                                            </div>
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered zero-configuration" id="inventoryReportBrk" style="width:100%">
+                                                <table class="table table-striped table-bordered" id="inventoryReportBrk" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th style="width:0%">Item Name</th>
@@ -153,18 +167,12 @@
 </div>
   <script>
     $(document).ready(function() {
-        $('#inventoryReportBrk').DataTable( {
-            "scrollX": true
-        });
-        $.blockUI();
-        getInventoryReport();
-        getDetailedInventoryReport();
-        $.unblockUI();
         $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
           localStorage.setItem('activeTab', $(e.target).attr('href'));
           $('#tabStatus').val('');
         });
         var activeTab = localStorage.getItem('activeTab');
+        $.blockUI();
         if(activeTab){
             $('#myTab a[href="' + activeTab + '"]').tab('show');
             if(activeTab=='#reportConstab'){
@@ -175,6 +183,11 @@
             }
             
         }
+        else{
+            getInventoryReport();
+            getDetailedInventoryReport();
+        }
+        $.unblockUI(); 
 
     });
     function getInventoryReport(val='')
@@ -208,6 +221,9 @@
                     opt += '<tr colspan="11">No Data Available</tr>'
                 }
                 $('#inventoryReportDetails').html(opt)
+                $('#inventoryReport').DataTable( {
+                    "scrollX": true
+                });
             }
         });
         
@@ -231,14 +247,22 @@
                 var opt = '';
                 if(data.length>0){
                     for(var k=0;k<data.length;k++){
+                        var poNum = "";
+                        var vendorName = "";
+                        if(data[k]['po_number'] != null && data[k]['po_number'] != "null"){
+                            poNum = data[k]['po_number']
+                        }
+                        if(data[k]['vendor_name'] != null && data[k]['vendor_name'] != "null"){
+                            vendorName = data[k]['vendor_name']
+                        }
                         opt += '<tr>'
                         opt += '<td class="firstcaps">'+data[k]['item_name']+'</td>'
                         opt += '<td>'+data[k]['item_code']+'</td>'
                         opt += '<td>'+data[k]['stock_quantity']+'</td>'
                         opt += '<td>'+data[k]['branch_name']+'</td>'
-                        opt += '<td>'+data[k]['po_number']+'</td>'
+                        opt += '<td>'+poNum+'</td>'
                         opt += '<td>'+data[k]['po_issued_on']+'</td>'
-                        opt += '<td>'+data[k]['vendor_name']+'</td>'
+                        opt += '<td>'+vendorName+'</td>'
                         opt += '<td>'+data[k]['expiry_date']+'</td>'
                         opt += '<td>'+data[k]['manufacturing_date']+'</td>'
                         opt += '<td>'+data[k]['received_date']+'</td>'
@@ -251,7 +275,9 @@
                     opt += '<tr colspan="4">No Data Available</tr>'
                 }
                 $('#inventoryReporBrkDetails').html(opt)
-               
+                $('#inventoryReportBrk').DataTable( {
+                    "scrollX": true
+                });
             }
         });
         
