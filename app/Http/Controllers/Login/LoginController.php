@@ -32,7 +32,7 @@ class LoginController extends Controller
             $login = $service->validateLogin($request);
             if(trim($login)==1 && session('loginType')!= "vendor" && strtolower(session('roleName'))!='admin')
             {
-                return Redirect::to('/inventoryoutwards');
+                return Redirect::to('/inventoryReport');
             }
             elseif(trim($login)==1)
             {
