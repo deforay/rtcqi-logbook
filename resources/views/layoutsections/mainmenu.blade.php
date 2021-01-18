@@ -74,7 +74,7 @@ if ((isset($role['App\\Http\\Controllers\\ItemCategory\\ItemCategoryController']
         $item .= '</ul></li>';
 }
 
-if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['index'] == "allow")) || (isset($role['App\Http\Controllers\Quotes\QuotesController']['index']) && ($role['App\Http\Controllers\Quotes\QuotesController']['index'] == "allow")) || (isset($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['index']) && ($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['index'] == "allow"))) {
+if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($role['App\\Http\\Controllers\\Rfq\\RfqController']['index'] == "allow")) || (isset($role['App\Http\Controllers\Quotes\QuotesController']['index']) && ($role['App\Http\Controllers\Quotes\QuotesController']['index'] == "allow")) || (isset($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['index']) && ($role['App\Http\Controllers\PurchaseOrder\PurchaseOrderController']['index'] == "allow")) || (isset($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['index']) && ($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['index'] == "allow")) || (isset($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['itemreceive']) && ($role['App\Http\Controllers\DeliverySchedule\DeliveryScheduleController']['itemreceive'] == "allow"))) {
     $procurement .= '<li class=" nav-item" id="procurement"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.item.main">Procurement</span></a>
                         <ul class="menu-content">';
 
