@@ -188,10 +188,11 @@
             getDetailedInventoryReport();
         }
         $.unblockUI(); 
-
+        $('#inventoryReport').DataTable();
     });
     function getInventoryReport(val='')
     {
+        $('#inventoryReportDetails').html('')
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -205,7 +206,7 @@
             },
             success: function(result) {
                 var data = JSON.parse(result);
-                console.log(data)
+                console.log(data.length)
                 var opt = '';
                 if(data.length>0){
                     for(var k=0;k<data.length;k++){
@@ -216,14 +217,15 @@
                         opt += '<td>'+data[k]['branch_name']+'</td>'
                         opt += '</tr>'
                     }
+                    $("#inventoryReport").dataTable().fnDestroy();
+                    $('#inventoryReportDetails').html(opt)
+                    $('#inventoryReport').DataTable();
                 }
                 else{
-                    opt += '<tr colspan="11">No Data Available</tr>'
-                }
-                $('#inventoryReportDetails').html(opt)
-                $('#inventoryReport').DataTable( {
-                    "scrollX": true
-                });
+                    opt += '<tr ><td colspan="4">No Data Available</td></tr>'
+                    $("#inventoryReport").dataTable().fnDestroy();
+                    $('#inventoryReportDetails').html(opt)
+                }                
             }
         });
         
@@ -243,7 +245,6 @@
             },
             success: function(result) {
                 var data = JSON.parse(result);
-                console.log(data)
                 var opt = '';
                 if(data.length>0){
                     for(var k=0;k<data.length;k++){
@@ -270,14 +271,19 @@
                         opt += '</tr>'
                         
                     }
+                    $("#inventoryReportBrk").dataTable().fnDestroy();
+                    $('#inventoryReporBrkDetails').html(opt)
+                    $('#inventoryReportBrk').DataTable();
                 }
                 else{
-                    opt += '<tr colspan="4">No Data Available</tr>'
+                    opt += '<td colspan="10">No Data Available</td>\
+                            <td style="display: none"></td>\
+                            <td style="display: none"></td>\
+                            <td style="display: none"></td>'
+                    $("#inventoryReportBrk").dataTable().fnDestroy();
+                    $('#inventoryReporBrkDetails').html(opt)
                 }
-                $('#inventoryReporBrkDetails').html(opt)
-                $('#inventoryReportBrk').DataTable( {
-                    "scrollX": true
-                });
+                
             }
         });
         
