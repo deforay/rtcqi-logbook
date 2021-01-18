@@ -105,11 +105,12 @@ class ReportDataExport implements FromCollection, WithHeadings, WithTitle
         $colForm[3] = 'Location';
         $colForm[4] = 'Expiry Date';
         $colForm[5] = 'Manufacturing Date';
-        $colForm[6] = 'Brand Name';
-        $colForm[7] = 'Manufacturer';
-        $colForm[8] = 'Vendor';
-        $colForm[9] = 'PO Number';
-        $colForm[10] = 'PO Issued On';
+        $colForm[6] = 'Received Date';
+        $colForm[7] = 'Brand Name';
+        $colForm[8] = 'Manufacturer';
+        $colForm[9] = 'Vendor';
+        $colForm[10] = 'PO Number';
+        $colForm[11] = 'PO Issued On';
 
         // print_r($colForm);die;
         return [
