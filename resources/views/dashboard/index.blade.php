@@ -275,12 +275,19 @@ else{
 </div> -->
 <script>
 loginType = '{{$loginType}}';
+roleName = "{{session('roleName')}}";
+
 $(document).ready(function() {
-      $.blockUI();
-      getAllRfq();
-      getAllQuotes();
-      $.unblockUI();
-  });
+  if(loginType != 'vendor' && roleName !='admin'){
+      $('#rfqTable').hide();
+  }
+  else{
+    $.blockUI();
+    getAllRfq();
+    getAllQuotes();
+    $.unblockUI();
+  }
+});
     function getAllRfq()
     {
       $.ajaxSetup({
