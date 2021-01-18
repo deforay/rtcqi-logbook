@@ -34,7 +34,7 @@ else{
 }
 @endphp
 <!-- <div class="middle"> <h1 style="font-size: -webkit-xxx-large;">Coming Soon...</h1></div> -->
-<div class="row">
+<div class="row" id="activeCards">
     <div class="col-xl-3 col-lg-6 col-12">
       <div class="card pull-up border-info border-lighten-2">
         <div class="card-content">
@@ -280,6 +280,7 @@ roleName = "{{session('roleName')}}";
 $(document).ready(function() {
   if(loginType != 'vendor' && roleName !='admin'){
       $('#rfqTable').hide();
+      $('#activeCards').hide();
   }
   else{
     $.blockUI();
