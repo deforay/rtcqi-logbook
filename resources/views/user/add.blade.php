@@ -61,10 +61,10 @@
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Last Name <span class="mandatory">*</span>
+                                            <h5>Last Name 
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastName" class="form-control isRequired" autocomplete="off" placeholder="Enter last name" name="lastName" title="Please enter last name" >
+                                                <input type="text" id="lastName" class="form-control " autocomplete="off" placeholder="Enter last name" name="lastName" title="Please enter last name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -116,10 +116,10 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Mobile Number<span class="mandatory">*</span>
+											<h5>Mobile Number
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -278,18 +278,18 @@ function isNumberKey(evt){
  duplicateName = true;
     function validateNow() {
         mobNum = $('#mobileNo').val();
-		if(mobNum.length!=10){
-			$("html, body").animate({ scrollTop: 0 }, "slow");
-			$("#showAlertIndex").text('Please give 10  digit mobile number');
-			$('#showAlertdiv').show();
-			ismob = false;
-			$('#mobileNo').css('background-color', 'rgb(255, 255, 153)')
-			$('#showAlertdiv').delay(3000).fadeOut();
-		}
-		else{
-			ismob = true;
-		}
-		if(ismob==true){
+		// if(mobNum.length!=10){
+		// 	$("html, body").animate({ scrollTop: 0 }, "slow");
+		// 	$("#showAlertIndex").text('Please give 10  digit mobile number');
+		// 	$('#showAlertdiv').show();
+		// 	ismob = false;
+		// 	$('#mobileNo').css('background-color', 'rgb(255, 255, 153)')
+		// 	$('#showAlertdiv').delay(3000).fadeOut();
+		// }
+		// else{
+		// 	ismob = true;
+		// }
+		// if(ismob==true){
             flag = deforayValidator.init({
                 formId: 'addUser'
             });
@@ -305,7 +305,7 @@ function isNumberKey(evt){
                 $('#show_alert').css("display","block");
                 $(".infocus").focus();
             }
-        }
+        // }
 	}
 	
 	function checkNameValidation(tableName, fieldName, obj,fnct, msg)
