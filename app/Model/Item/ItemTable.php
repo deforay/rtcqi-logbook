@@ -49,9 +49,9 @@ class ItemTable extends Model
         public function fetchAllItem()
         {
             $data = DB::table('items')
-                    ->join('item_types', 'item_types.item_type_id', '=', 'items.item_type')
-                    ->join('brands', 'brands.brand_id', '=', 'items.brand')
-                    ->join('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
+                    ->leftjoin('item_types', 'item_types.item_type_id', '=', 'items.item_type')
+                    ->leftjoin('brands', 'brands.brand_id', '=', 'items.brand')
+                    ->leftjoin('units_of_measure', 'units_of_measure.uom_id', '=', 'items.base_unit')
                     ->get();
             return $data;
         }

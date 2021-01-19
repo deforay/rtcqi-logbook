@@ -134,7 +134,7 @@ class InventoryOutwardsTable extends Model
         $branch = DB::raw('group_concat(branches.branch_name) as branch_name');
         // dd($item);
         $a = 0;
-        for ($k = 0; $k < count($item); $k++) {
+        // for ($k = 0; $k < count($item); $k++) {
             $inv = DB::table('inventory_stock')
                 ->join('branches', 'branches.branch_id', '=', 'inventory_stock.branch_id')
                 ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
@@ -142,33 +142,35 @@ class InventoryOutwardsTable extends Model
                 // ->leftjoin('purchase_order_details', 'purchase_order_details.pod_id', '=', 'inventory_stock.pod_id')
                 // ->leftjoin('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                 // ->where('user_branch_map.user_id', '=', $userId)
-                ->select($qty, $branch, 'items.item_code', 'items.item_name')
-                ->groupBy('inventory_stock.item_id', 'items.item_code', 'items.item_name')
-                ->where('inventory_stock.item_id', '=', $item[$k]->item_id);
+                ->select($qty, $branch, 'items.item_code', 'items.item_name');
+                // ->groupBy('inventory_stock.item_id', 'items.item_code', 'items.item_name');
+                // ->where('inventory_stock.item_id', '=', $item[$k]->item_id);
             if ($request['branchId'] && $request['branchId']!=null && $request['branchId']!="null") {
                 $inv = $inv->where('branches.branch_id', '=', $data['branchId']);
             }
             if(session('loginType') != 'vendor' && strtolower(session('roleName'))!='admin'){
                 $inv = $inv->where('user_branch_map.user_id', '=', $userId);
             }
-            $inv = $inv->get();
+            $inv = $inv->groupBy('inventory_stock.item_id')->get();
             // dd($inv);
             // print_r($inv);
             $inv = $inv->toArray();
             // print_r(count($inv));
             if (isset($inv) && count($inv) > 0) {
-                $arr[$a]['stock_quantity'] = $inv[0]->stock_quantity;
-                $arr[$a]['item_name'] = $inv[0]->item_name;
-                if ($inv[0]->item_code != null && $inv[0]->item_code != '' && $inv[0]->item_code != 'null') {
-                    $arr[$a]['item_code'] = $inv[0]->item_code;
-                } else {
-                    $arr[$a]['item_code'] = '';
+                for ($l = 0; $l < count($inv); $l++) {
+                    $arr[$a]['stock_quantity'] = $inv[$l]->stock_quantity;
+                    $arr[$a]['item_name'] = $inv[$l]->item_name;
+                    if ($inv[$l]->item_code != null && $inv[$l]->item_code != '' && $inv[$l]->item_code != 'null') {
+                        $arr[$a]['item_code'] = $inv[$l]->item_code;
+                    } else {
+                        $arr[$a]['item_code'] = '';
+                    }
+                    $str = implode(',', array_unique(explode(',', $inv[$l]->branch_name)));
+                    $arr[$a]['branch_name'] = $str;
+                    $a++;
                 }
-                $str = implode(',', array_unique(explode(',', $inv[0]->branch_name)));
-                $arr[$a]['branch_name'] = $str;
-                $a++;
             }
-        }
+        // }
         // dd($arr);
         return json_encode($arr);
     }
@@ -267,7 +269,7 @@ class InventoryOutwardsTable extends Model
         $commonservice = new CommonService();
         // dd($item);
         $a = 0;
-        for ($k = 0; $k < count($item); $k++) {
+        // for ($k = 0; $k < count($item); $k++) {
             $inv = DB::table('inventory_stock')
                 ->join('branches', 'branches.branch_id', '=', 'inventory_stock.branch_id')
                 ->join('items', 'items.item_id', '=', 'inventory_stock.item_id')
@@ -275,15 +277,15 @@ class InventoryOutwardsTable extends Model
                 ->leftjoin('purchase_orders', 'purchase_orders.po_id', '=', 'purchase_order_details.po_id')
                 ->leftjoin('vendors', 'vendors.vendor_id', '=', 'purchase_orders.vendor')
                 ->leftjoin('user_branch_map', 'user_branch_map.branch_id', '=', 'branches.branch_id')
-                ->leftjoin('brands', 'brands.brand_id', '=', 'items.brand')
-                ->where('inventory_stock.item_id', '=', $item[$k]->item_id);
+                ->leftjoin('brands', 'brands.brand_id', '=', 'items.brand');
+                // ->where('inventory_stock.item_id', '=', $item[$k]->item_id);
             if(session('loginType') != 'vendor' && strtolower(session('roleName'))!='admin'){
                 $inv = $inv->where('user_branch_map.user_id', '=', $userId);
             }
             if ($request['branchId'] && $request['branchId']!=null && $request['branchId']!='null') {
                 $inv = $inv->where('branches.branch_id', '=', $data['branchId']);
             }
-            $inv = $inv->get();
+            $inv = $inv->groupBy('inventory_stock.item_id')->get();
             // dd($inv);
             // print_r($inv);
             $inv = $inv->toArray();
@@ -311,7 +313,7 @@ class InventoryOutwardsTable extends Model
                     // array_push($wholeArr,$arr);
                 }
             }
-        }
+        // }
         // dd($arr);
         return json_encode($arr);
     }
