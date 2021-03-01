@@ -97,8 +97,10 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
 if ((isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']))) {
     $inventory .= '<li class=" nav-item" id="inventory"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.item.main">Inventory</span></a>
                         <ul class="menu-content">';
+    if (isset($role['App\Http\Controllers\InventoryStock\InventoryStockController']['index']) && ($role['App\Http\Controllers\InventoryStock\InventoryStockController']['index'] == "allow"))
+        $inventory .= '<li id="li-inventorystock"><a class="menu-item" href="/inventorystock/" >Import Inventory</a></li>';
     if (isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']) && ($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index'] == "allow"))
-    $inventory .= '<li id="li-inventoryoutwards"><a class="menu-item" href="/inventoryoutwards/" >Issue Items</a></li>';
+        $inventory .= '<li id="li-inventoryoutwards"><a class="menu-item" href="/inventoryoutwards/" >Issue Items</a></li>';
     $inventory .= '</ul></li>';
 
 }
