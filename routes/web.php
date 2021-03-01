@@ -290,3 +290,8 @@ Route::post('/getInventoryReport', 'Report\ReportController@getInventoryReport')
 Route::post('/report/export/', 'Report\ReportController@export');
 Route::get('/report/exportDownload/', 'Report\ReportController@exportDownload');
 Route::post('/getDetailedInventoryReport', 'Report\ReportController@getDetailedInventoryReport');
+
+//Inventory Stock
+
+Route::get('/inventorystock', 'InventoryStock\InventoryStockController@index')->name('inventorystock.index')->middleware('access');
+Route::post('/inventorystock', 'InventoryStock\InventoryStockController@inventoryStockUpload');

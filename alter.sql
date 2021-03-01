@@ -495,3 +495,8 @@ ALTER TABLE `quotes` ADD `quote_expiry_date` DATE NULL AFTER `quote_notes`;
 --Sudarmathi 19 Nov 2020
 ALTER TABLE `rfq` ADD `purchase_category` VARCHAR(255) NULL AFTER `rfq_notes`;
 ALTER TABLE `purchase_orders` ADD `po_purchase_category` VARCHAR(255) NULL AFTER `exchange_rate`;
+
+--Sudarmathi 21 Jan 2020
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\InventoryStock\\InventoryStockController', 'Inventory Stock', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\InventoryStock\\InventoryStockController', 'index', 'Access');
