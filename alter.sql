@@ -496,7 +496,32 @@ ALTER TABLE `quotes` ADD `quote_expiry_date` DATE NULL AFTER `quote_notes`;
 ALTER TABLE `rfq` ADD `purchase_category` VARCHAR(255) NULL AFTER `rfq_notes`;
 ALTER TABLE `purchase_orders` ADD `po_purchase_category` VARCHAR(255) NULL AFTER `exchange_rate`;
 
---Sudarmathi 21 Jan 2020
+--Sudarmathi 21 Jan 2021
 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\InventoryStock\\InventoryStockController', 'Inventory Stock', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\InventoryStock\\InventoryStockController', 'index', 'Access');
+
+--Sudarmathi 02 Mar 2021
+
+CREATE TABLE `requested_items` (
+ `requested_item_id` int(11) NOT NULL AUTO_INCREMENT,
+ `request_item_qty` int(11) NOT NULL,
+ `need_on` datetime DEFAULT NULL,
+ `reason` text,
+ `item_id` int(11) NOT NULL,
+ `created_on` datetime DEFAULT NULL,
+ `created_by` int(11) DEFAULT NULL,
+ `updated_on` datetime DEFAULT NULL,
+ `updated_by` int(11) DEFAULT NULL,
+ PRIMARY KEY (`requested_item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'Request Item', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'index', 'Access');
+
+ALTER TABLE `requested_items`  ADD `branch_id` INT NULL  AFTER `updated_by`;
+ALTER TABLE `requested_items` CHANGE `created_on` `requested_on` DATETIME NULL DEFAULT NULL;
+ALTER TABLE `requested_items` CHANGE `created_by` `requested_by` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `requested_items` ADD `request_item_status` VARCHAR(50) NULL AFTER `branch_id`;
+ALTER TABLE `requested_items` ADD `approved_by` INT NULL AFTER `request_item_status`, ADD `approved_on` DATETIME NULL AFTER `approved_by`;
+ALTER TABLE `requested_items` CHANGE `qty` `request_item_qty` INT(11) NOT NULL;
