@@ -29,10 +29,10 @@ class RequestItemService
 	}
 	
 	//Get All RequestItem List
-	public function getAllRequestItem()
+	public function getRequestItemByLogin()
     {
 		$reqmodel = new RequestItemTable();
-        $result = $reqmodel->fetchAllRequestItem();
+        $result = $reqmodel->fetchRequestItemByLogin();
         return $result;
 	}
 

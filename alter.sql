@@ -518,10 +518,12 @@ CREATE TABLE `requested_items` (
 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'Request Item', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'index', 'Access');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'add', 'Add');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'edit', 'Edit');
 
 ALTER TABLE `requested_items`  ADD `branch_id` INT NULL  AFTER `updated_by`;
-ALTER TABLE `requested_items` CHANGE `created_on` `requested_on` DATETIME NULL DEFAULT NULL;
+ALTER TABLE `requested_items` CHANGE `created_on` `requested_on` DATE NULL DEFAULT NULL;
 ALTER TABLE `requested_items` CHANGE `created_by` `requested_by` INT(11) NULL DEFAULT NULL;
 ALTER TABLE `requested_items` ADD `request_item_status` VARCHAR(50) NULL AFTER `branch_id`;
-ALTER TABLE `requested_items` ADD `approved_by` INT NULL AFTER `request_item_status`, ADD `approved_on` DATETIME NULL AFTER `approved_by`;
+ALTER TABLE `requested_items` ADD `approved_by` INT NULL AFTER `request_item_status`, ADD `approved_on` DATE NULL AFTER `approved_by`;
 ALTER TABLE `requested_items` CHANGE `qty` `request_item_qty` INT(11) NOT NULL;
