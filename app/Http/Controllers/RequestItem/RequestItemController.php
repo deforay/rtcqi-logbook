@@ -18,22 +18,78 @@ class RequestItemController extends Controller
     {
         if(session('login')==true)
         {
-            if ($request->isMethod('post')) 
-            {
-                $service = new RequestItemService();
-                $add = $service->saveRequestItem($request);
-                return Redirect::route('requestitem.index')->with('status', $add);
-            }
-            else
-            {
-                $branchService = new BranchesService();
-                $branch = $branchService->getBranchesByUser();
-                $itemservice = new ItemService();
-                $item = $itemservice->getAllActiveItem();
-                return view('requestitem.index',array('branch'=>$branch,'item'=>$item));
-            }
+            return view('requestitem.index');
         }
         else
             return Redirect::to('login')->with('status', 'Please Login');
     }
+
+    public function add(Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $service = new RequestItemService();
+            $add = $service->saveRequestItem($request);
+            return Redirect::route('requestitem.add')->with('status', $add);
+        }
+        else
+        {
+            $branchService = new BranchesService();
+            $branch = $branchService->getBranchesByUser();
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            return view('requestitem.add',array('branch'=>$branch,'item'=>$item));
+        }
+    }
+
+    public function getRequestItemByLogin(Request $request)
+    {
+        $service = new RequestItemService();
+        $data = $service->getRequestItemByLogin();
+        // print_r($data);die;
+        return DataTables::of($data)
+                    ->editColumn('requested_on', function($data){
+                            $issuedOn = $data->requested_on;
+                            if($issuedOn){
+                                // $issuedOn = date("d-M-Y", strtotime($issuedOn));
+                                return $issuedOn;
+                            }
+                    })
+                    ->addColumn('action', function($data){
+                        $button = '<div style="width: 180px;">';
+                        $role = session('role');
+                      
+                        if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit'] == "allow")){
+                            $button .= '&nbsp;&nbsp;&nbsp;<a href="/requestitem/edit/'. base64_encode($data->requested_item_id).'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        }else{
+                            $button .= '';
+                        }
+                        $button .= '</div>';
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+    }
+
+    public function edit(Request $request,$id)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $service = new RequestItemService();
+            $edit = $service->updateRequestItem($request,$id);
+            return Redirect::route('requestitem.index')->with('status', $edit);
+        }
+        else
+        {
+            $service = new RequestItemService();
+            $result = $service->getRequestItemById($id);
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            // dd($result);
+            return view('requestitem.edit',array('result'=>$result,'item'=>$item,'branch'=>$branch));
+        }
+    }
+
 }
