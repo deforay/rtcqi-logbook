@@ -256,8 +256,6 @@ Route::post('/getItemByLocReturn', 'InventoryOutwards\InventoryOutwardsControlle
 Route::post('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems');
 Route::get('/inventoryoutwards/returnissueitems', 'InventoryOutwards\InventoryOutwardsController@returnissueitems')->middleware('access');
 
-
-
 //Asset Tag module
 Route::get('/assettag', 'AssetTag\AssetTagController@index')->name('assettag.index')->middleware('access');
 Route::post('/assettag/add', 'AssetTag\AssetTagController@add');
@@ -295,3 +293,7 @@ Route::post('/getDetailedInventoryReport', 'Report\ReportController@getDetailedI
 
 Route::get('/inventorystock', 'InventoryStock\InventoryStockController@index')->name('inventorystock.index')->middleware('access');
 Route::post('/inventorystock', 'InventoryStock\InventoryStockController@inventoryStockUpload');
+
+//request item
+Route::get('/requestitem', 'RequestItem\RequestItemController@index')->name('requestitem.index')->middleware('access');
+Route::post('/requestitem', 'RequestItem\RequestItemController@index');

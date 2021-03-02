@@ -12,6 +12,7 @@ $report = '';
 $inventory='';
 $assettag='';
 $maintenance='';
+$reqItem = '';
 
 if (isset($role['App\Http\Controllers\Dashboard\DashboardController']['index']) && ($role['App\Http\Controllers\Dashboard\DashboardController']['index'] == "allow"))
     $dashboard = '<li class=" nav-item" id="dashboard"><a href="/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a></li>';
@@ -94,6 +95,10 @@ if ((isset($role['App\\Http\\Controllers\\Rfq\\RfqController']['index']) && ($ro
     $procurement .= '</ul></li>';
 
 }
+if ((isset($role['App\Http\Controllers\RequestItem\RequestItemController']['index'])) && ($role['App\Http\Controllers\RequestItem\RequestItemController']['index'] == "allow")) {
+    $reqItem = '<li class=" nav-item" id="requestitem"><a href="/requestitem"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.dash.main">Request Item</span></a></li>';
+
+}
 if ((isset($role['App\Http\Controllers\InventoryOutwards\InventoryOutwardsController']['index']))) {
     $inventory .= '<li class=" nav-item" id="inventory"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title" data-i18n="nav.item.main">Inventory</span></a>
                         <ul class="menu-content">';
@@ -128,6 +133,7 @@ if (isset($role['App\Http\Controllers\Maintenance\MaintenanceController']['index
         @php echo $inventory; @endphp
         @php echo $assettag; @endphp
         @php echo $maintenance; @endphp
+        @php echo $reqItem; @endphp
         @php echo $report; @endphp
       </ul>
     </div>
