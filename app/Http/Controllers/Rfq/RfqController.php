@@ -189,7 +189,7 @@ class RfqController extends Controller
                             if(session('loginType') === 'vendor'){
                                 if (isset($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit']) && ($role['App\\Http\\Controllers\\Quotes\\QuotesController']['edit'] == "allow")){
                                     if($data->quote_number=='' && $data->quote_number==null){
-                                        $button .= '&nbsp;&nbsp;<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-info btn-sm" title="Edit">Add Quote</a>';
+                                        $button .= '&nbsp;&nbsp;<a href="/quotes/edit/'. base64_encode($data->quote_id).'" name="edit" id="'.$data->quote_id.'" class="btn btn-outline-info btn-sm" title="Add Quote">Add Quote</a>';
                                     }
                                 }
                             }

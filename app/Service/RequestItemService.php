@@ -71,19 +71,12 @@ class RequestItemService
 	}
 
 	//change Particular quotes status
-	public function changeQuotesStatus($id)
+	public function changeApproveStatus($params)
 	{
 		$reqmodel = new RequestItemTable();
-        $result = $reqmodel->changeQuotesStatus($id);
+        $result = $reqmodel->changeApproveStatus($params);
         return $result;
 	}
-
-	//get all purchase category in RequestItem table
-	public function getPurchaseCategory()
-    {
-		$reqmodel = new RequestItemTable();
-        $result = $reqmodel->fetchPurchaseCategory();
-        return $result;
-	}
+	
 	
 }

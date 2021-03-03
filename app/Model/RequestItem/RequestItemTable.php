@@ -38,12 +38,46 @@ class RequestItemTable extends Model
 
     public function fetchRequestItemByLogin()
     {
+        $role = session('role');
+        // dd($role);
         $data = DB::table('requested_items')
                 ->leftjoin('items', 'requested_items.item_id', '=', 'items.item_id')
-                ->leftjoin('branches', 'requested_items.branch_id', '=', 'branches.branch_id')
-                ->where('requested_by', '=', session('userId'))
-                ->get();
+                ->leftjoin('branches', 'requested_items.branch_id', '=', 'branches.branch_id');
+        // if($role == "lab/location user"){
+        //     $data = $data ->where('requested_by', '=', session('userId'));
+        // }
+        if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow")){
+            $data = $data->leftjoin('user_branch_map', 'branches.branch_id', '=', 'user_branch_map.branch_id')->where('user_branch_map.user_id', '=', session('userId'));
+        }
+        else{
+            $data = $data ->where('requested_by', '=', session('userId'));
+        }
+        $data = $data->get();
         return $data;
+    }
+
+    public function changeApproveStatus($request)
+    {
+        $commonservice = new CommonService();
+        $id = $request['id'];
+        try {
+            if ($id != "") {
+                $updateData = array(
+                                'request_item_status' => $request['sts'],
+                                'approved_by' => session('userId'),
+                                'approved_on' => $commonservice->getDateTime(),
+                                'updated_on' => $commonservice->getDateTime(),
+                                'updated_by' => session('userId'),
+                            );
+                DB::table('requested_items')
+                    ->where('requested_item_id', '=', $id)
+                    ->update($updateData);
+               
+            }
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return $id;
     }
 
     public function fetchRequestItemById($id)

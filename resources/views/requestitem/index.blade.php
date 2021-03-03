@@ -72,7 +72,7 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="RfqList" style="width:100%">
+                                    <table class="table table-striped table-bordered zero-configuration" id="ReqList" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th style="width:20%">Item Name</th>
@@ -111,7 +111,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#RfqList').DataTable({
+      $('#ReqList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
@@ -135,7 +135,7 @@
                         }
                     },
                     { data: 'branch_name', name: 'branch_name'},
-                    { data: 'request_item_status', name: 'request_item_status',className:'firstcaps'},
+                    { data: 'request_item_status', name: 'request_item_status'},
                     { data: 'action', name: 'action', orderable: false},
                 ],
             order: [[1, 'desc']],
@@ -144,12 +144,17 @@
         
     }
 
-    function changeQuotesStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal, dataTableName)
+    function changeApproveStatus(id,sts,dataTableName)
     {
-        if(fieldIdValue!='')
+        if(id!='')
         {
-
-          swal("Are you sure you want to make "+fieldVal+" this?", {
+            if(sts == "approved"){
+                stsmsg = "approve"
+            }
+            else if(sts == "declined"){
+                stsmsg = "decline"
+            }
+          swal("Are you sure you want to "+stsmsg+" this?", {
           buttons: {
             cancel: {
                 text: "No",
@@ -175,14 +180,14 @@
                 }
             });
                 $.ajax({
-                      url: "{{ url('/changeQuotesStatus') }}",
+                      url: "{{ url('/changeApproveStatus') }}",
                       method: 'post',
                       data: {
-                          tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
+                        id: id, dataTableName : dataTableName,sts : sts,
                       },
                       success: function(result){
                         // getAllItemCategory();
-                        $("#showAlertIndex").text('Status has been changed to '+fieldVal);
+                        $("#showAlertIndex").text('Status has been changed to '+sts);
                         $('#showAlertdiv').show();
                         $('#showAlertdiv').delay(3000).fadeOut();
                         $('#'+dataTableName).DataTable().ajax.reload();
