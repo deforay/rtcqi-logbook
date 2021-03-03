@@ -55,19 +55,43 @@ class RequestItemController extends Controller
                                 return $issuedOn;
                             }
                     })
+                    ->editColumn('request_item_status', function($data){
+                        $request_item_status = $data->request_item_status;
+                        $sts = "<div>";
+                        if($request_item_status == "pending"){
+                            $sts .= '<span class="badge badge-warning"><strong>'.ucfirst($request_item_status).'</strong></span>';
+                        }
+                        else if($request_item_status == "approved"){
+                            $sts .= '<span class="badge badge-success"><strong>'.ucfirst($request_item_status).'</strong></span>';
+                        }
+                        else if($request_item_status == "declined"){
+                            $sts .= '<span class="badge badge-danger"><strong>'.ucfirst($request_item_status).'</strong></span>';
+                        }
+                        $sts .= "</div>";
+                        return $sts;
+                    })
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                      
+                        $approveStatus = "changeApproveStatus($data->requested_item_id,'approved', 'ReqList')";
+                        $declineStatus = "changeApproveStatus($data->requested_item_id,'declined', 'ReqList')";
                         if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit'] == "allow")){
                             $button .= '&nbsp;&nbsp;&nbsp;<a href="/requestitem/edit/'. base64_encode($data->requested_item_id).'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         }else{
                             $button .= '';
                         }
+                        if($data->request_item_status == 'pending'){
+                            if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow")){
+                                $button .= '&nbsp;&nbsp;<button onclick="'.$approveStatus.'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-info btn-sm" title="Approve">Approve</button>';
+                                $button .= '&nbsp;&nbsp;<button onclick="'.$declineStatus.'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-danger btn-sm" title="Decline"><i class="ft-x"></i></button>';
+                            }else{
+                                $button .= '';
+                            }
+                        }
                         $button .= '</div>';
                         return $button;
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['request_item_status','action'])
                     ->make(true);
     }
 
@@ -90,6 +114,13 @@ class RequestItemController extends Controller
             // dd($result);
             return view('requestitem.edit',array('result'=>$result,'item'=>$item,'branch'=>$branch));
         }
+    }
+
+    public function changeApproveStatus(Request $request)
+    {
+        $service = new RequestItemService();
+        $data = $service->changeApproveStatus($request);
+        return $data;
     }
 
 }
