@@ -96,7 +96,6 @@ class RequestItemTable extends Model
     {
         $commonservice = new CommonService();
         $data = $params->all();
-        // dd($data);die;
         if ($params->input('item')!=null && trim($params->input('item')) != '') {
             $neededOn = $commonservice->dateFormat($data['neededOn']);
             $response = DB::table('requested_items')
