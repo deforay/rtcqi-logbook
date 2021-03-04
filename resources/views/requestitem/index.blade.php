@@ -76,10 +76,10 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:20%">Item Name</th>
-                                                <th style="width:10%">Quantity</th>
+                                                <th style="width:8%">Quantity</th>
                                                 <th style="width:10%">Requested On</th>
                                                 <th style="width:10%">Needed On</th>
-                                                <th style="width:10%">Location</th>
+                                                <th style="width:12%">Location</th>
                                                 <th style="width:15%">Reason</th>
                                                 <th style="width:10%">Status</th>
                                                 <th style="width:15%">Action</th>
