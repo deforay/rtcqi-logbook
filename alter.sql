@@ -531,3 +531,7 @@ ALTER TABLE `requested_items` CHANGE `qty` `request_item_qty` INT(11) NOT NULL;
 --Sudarmathi 03 Mar 2020
 
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'approverequestitem', 'Approve Request Item');
+
+--Sudarmathi 04 Mar 2020
+
+ALTER TABLE `requested_items` ADD `request_id` INT NULL AFTER `approved_on`;

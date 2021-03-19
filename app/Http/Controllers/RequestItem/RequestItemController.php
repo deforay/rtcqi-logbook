@@ -30,7 +30,7 @@ class RequestItemController extends Controller
         {
             $service = new RequestItemService();
             $add = $service->saveRequestItem($request);
-            return Redirect::route('requestitem.add')->with('status', $add);
+            return Redirect::route('requestitem.index')->with('status', $add);
         }
         else
         {
@@ -46,7 +46,6 @@ class RequestItemController extends Controller
     {
         $service = new RequestItemService();
         $data = $service->getRequestItemByLogin();
-        // print_r($data);die;
         return DataTables::of($data)
                     ->editColumn('requested_on', function($data){
                             $issuedOn = $data->requested_on;
@@ -73,17 +72,19 @@ class RequestItemController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
                         $role = session('role');
-                        $approveStatus = "changeApproveStatus($data->requested_item_id,'approved', 'ReqList')";
-                        $declineStatus = "changeApproveStatus($data->requested_item_id,'declined', 'ReqList')";
-                        if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit'] == "allow")){
-                            $button .= '&nbsp;&nbsp;&nbsp;<a href="/requestitem/edit/'. base64_encode($data->requested_item_id).'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        }else{
-                            $button .= '';
-                        }
+                        $approveStatus = "changeApproveStatus($data->request_id,'approved', 'ReqList')";
+                        $declineStatus = "changeApproveStatus($data->request_id,'declined', 'ReqList')";
+                        
                         if($data->request_item_status == 'pending'){
+                            if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit'] == "allow")){
+                                $button .= '&nbsp;&nbsp;&nbsp;<a href="/requestitem/edit/'. base64_encode($data->request_id).'" name="edit" id="'.$data->request_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                            }else{
+                                $button .= '';
+                            }
+
                             if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow")){
-                                $button .= '&nbsp;&nbsp;<button onclick="'.$approveStatus.'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-info btn-sm" title="Approve">Approve</button>';
-                                $button .= '&nbsp;&nbsp;<button onclick="'.$declineStatus.'" name="edit" id="'.$data->requested_item_id.'" class="btn btn-outline-danger btn-sm" title="Decline"><i class="ft-x"></i></button>';
+                                $button .= '&nbsp;&nbsp;<button onclick="'.$approveStatus.'" name="edit" id="'.$data->request_id.'" class="btn btn-outline-info btn-sm" title="Approve">Approve</button>';
+                                $button .= '&nbsp;&nbsp;<button onclick="'.$declineStatus.'" name="edit" id="'.$data->request_id.'" class="btn btn-outline-danger btn-sm" title="Decline"><i class="ft-x"></i></button>';
                             }else{
                                 $button .= '';
                             }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Service\CommonService;
 use Illuminate\Support\Facades\Session;
 use DB;
+use File;
 
 class RequestItemTable extends Model
 {
@@ -16,9 +17,16 @@ class RequestItemTable extends Model
         $autoId = 0;
         $commonservice = new CommonService();
         // dd($commonservice->getDateTime());
+        $reqId = DB::table('requested_items')->orderBy('request_id','desc')->limit('1')->get();
+        // dd($reqId);
+        if(count($reqId)>0){
+            $rqstId = $reqId[0]->request_id + 1;
+        }
+        else{
+            $rqstId = 1;
+        }
         for ($j = 0; $j < count($data['item']); $j++) {
             $neededOn = $commonservice->dateFormat($data['neededOn'][$j]);
-            
             $autoId = DB::table('requested_items')->insertGetId(
                 [
                     'item_id' => $data['item'][$j],
@@ -29,10 +37,11 @@ class RequestItemTable extends Model
                     'requested_by' => session('userId'),
                     'requested_on' => $commonservice->getDateTime(),
                     'request_item_status' => 'pending',
+                    'request_id' => $rqstId,
                 ]
             );
-
         }
+        
         return $autoId;
     }
 
@@ -40,19 +49,20 @@ class RequestItemTable extends Model
     {
         $role = session('role');
         // dd($role);
+        $item = DB::raw('group_concat(items.item_name) as item_name');
         $data = DB::table('requested_items')
                 ->leftjoin('items', 'requested_items.item_id', '=', 'items.item_id')
-                ->leftjoin('branches', 'requested_items.branch_id', '=', 'branches.branch_id');
-        // if($role == "lab/location user"){
-        //     $data = $data ->where('requested_by', '=', session('userId'));
-        // }
+                ->leftjoin('branches', 'requested_items.branch_id', '=', 'branches.branch_id')
+                ->select('requested_items.*', $item,'branches.branch_name');
         if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow")){
-            $data = $data->leftjoin('user_branch_map', 'branches.branch_id', '=', 'user_branch_map.branch_id')->where('user_branch_map.user_id', '=', session('userId'));
+            if(strtolower(session('roleName'))!= 'admin'){
+                $data = $data->leftjoin('user_branch_map', 'branches.branch_id', '=', 'user_branch_map.branch_id')->where('user_branch_map.user_id', '=', session('userId'));
+            }
         }
         else{
             $data = $data ->where('requested_by', '=', session('userId'));
         }
-        $data = $data->get();
+        $data = $data->groupBy('requested_items.request_id')->get();
         return $data;
     }
 
@@ -70,7 +80,7 @@ class RequestItemTable extends Model
                                 'updated_by' => session('userId'),
                             );
                 DB::table('requested_items')
-                    ->where('requested_item_id', '=', $id)
+                    ->where('request_id', '=', $id)
                     ->update($updateData);
                
             }
@@ -86,7 +96,7 @@ class RequestItemTable extends Model
         $data = DB::table('requested_items')
                 ->leftjoin('items', 'requested_items.item_id', '=', 'items.item_id')
                 ->leftjoin('branches', 'requested_items.branch_id', '=', 'branches.branch_id')
-                ->where('requested_items.requested_item_id', '=', $id)
+                ->where('requested_items.request_id', '=', $id)
                 ->get();
         return $data;
     }
@@ -96,19 +106,149 @@ class RequestItemTable extends Model
     {
         $commonservice = new CommonService();
         $data = $params->all();
-        if ($params->input('item')!=null && trim($params->input('item')) != '') {
-            $neededOn = $commonservice->dateFormat($data['neededOn']);
-            $response = DB::table('requested_items')
-                ->where('requested_item_id', '=',base64_decode($id))
-                ->update(
-                    ['item_id' => $data['item'],
-                    'request_item_qty' => $data['itemQty'],
-                    'need_on' => $neededOn,
-                    'branch_id' => $data['location'],
-                    'reason'  => $data['reason'],
-                    'updated_on' => $commonservice->getDateTime(),
-                    'updated_by' => session('userId'),
-                    ]);
+        // dd($data);
+        $loc = array();
+        $mailItemDetails = '';
+        $mailItemDetails .= '<table border="1" style="width:100%; border-collapse: collapse;">
+                                        <thead>
+                                        <tr>
+                                            <th><strong>Item</strong></th>
+                                            <th><strong>Quantity</strong></th>
+                                            <th><strong>Requested<br/>On</strong></th>
+                                            <th><strong>Needed<br/>On</strong></th>
+                                            <th><strong>Location</strong></th>
+                                            <th><strong>Reason</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
+
+         if(isset($data['deleteItemDetail']) && $data['deleteItemDetail']!=null && trim($data['deleteItemDetail'])!=''){
+            $delReqItemId = explode(",",$data['deleteItemDetail']);
+            for($e = 0;$e<count($delReqItemId);$e++){
+               $delUp = DB::table('requested_items')->where('requested_item_id', '=', $delReqItemId[$e])->delete();
+            }
+        }
+        for ($j = 0; $j < count($data['item']); $j++) {
+            $requestId = $data['requestId'];
+            $neededOn = $commonservice->dateFormat($data['neededOn'][$j]);
+            if (isset($data['requestItemId'][$j]) && ($data['requestItemId'][$j]!=null)) {
+                $response = DB::table('requested_items')
+                    ->where('requested_item_id', '=',$data['requestItemId'][$j])
+                    ->update(
+                        ['item_id' => $data['item'][$j],
+                        'request_item_qty' => $data['itemQty'][$j],
+                        'need_on' => $neededOn,
+                        'branch_id' => $data['location'][$j],
+                        'reason'  => $data['reason'][$j],
+                        'request_id' => $requestId,
+                        'updated_on' => $commonservice->getDateTime(),
+                        'updated_by' => session('userId'),
+                        ]);
+            }
+            else{
+                $autoId = DB::table('requested_items')->insertGetId(
+                    [
+                        'item_id' => $data['item'][$j],
+                        'request_item_qty' => $data['itemQty'][$j],
+                        'need_on' => $neededOn,
+                        'branch_id' => $data['location'][$j],
+                        'reason'  => $data['reason'][$j],
+                        'requested_by' => session('userId'),
+                        'requested_on' => $commonservice->getDateTime(),
+                        'request_item_status' => 'pending',
+                        'request_id' => $requestId,
+                    ]
+                );
+            }
+            if(!in_array($data['location'][$j],$loc)){
+                array_push($loc,$data['location'][$j]);
+            }
+            // print_r($loc);die;
+            $branchEmail = DB::table('branches')
+                            ->where('branch_id','=', $data['location'][$j])->get();
+            $itemName = DB::table('items')
+                            ->where('item_id','=', $data['item'][$j])->get();
+
+            $mailItemDetails .= '<tr>
+                                    <td>'.$itemName[0]->item_name.'</td>
+                                    <td style="text-align:right;">'.$data['itemQty'][$j].'</td>
+                                    <td>'.$data['neededOn'][$j].'</td>
+                                    <td>'.date('d-M-Y').'</td>
+                                    <td>'.$branchEmail[0]->branch_name.'</td>
+                                    <td>'.$data['reason'][$j].'</td>
+                                </tr>';
+        }
+        $mailItemDetails .= '</tbody></table>';
+        $role = DB::table('roles')->where('role_status','=', 'active')->get();
+        $configFile =  "acl.config.json";
+        if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile))
+        {
+            $acl = json_decode(File::get(public_path($configFile)),true);
+        }
+        // print_r($acl);die;
+        
+        $userName = session('name').' '.session('lastName');
+        $fromMail = session('email');
+        $mailData = DB::table('mail_template')
+                    ->where('mail_temp_id', '=', 11)
+                    ->get();
+        $userMail = "";
+        for($m=0;$m<count($role);$m++){
+            if(isset($role[$m]->role_code)){
+                // print_r($acl['ADM']['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']);die;
+                if(isset($acl[$role[$m]->role_code]['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && $acl[$role[$m]->role_code]['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow" ){
+                    $userData = DB::table('users')
+                                ->leftjoin('user_branch_map', 'user_branch_map.user_id', '=', 'users.user_id')
+                                ->where('users.role', '=', $role[$m]->role_id)
+                                ->whereIn('user_branch_map.branch_id', $loc)
+                                ->get();
+                                // dd($userData);
+                    for($u=0;$u<count($userData);$u++){
+                        if($userMail == ""){
+                            $userMail = $userData[$u]->email;
+                        }
+                        else{
+                            $userMail = $userMail.','.$userData[$u]->email;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        if(count($mailData)>0)
+        {
+            $labAdm = array();
+            
+            $mailSubject = trim($mailData[0]->mail_subject);
+                        $subject = $mailSubject;
+                        $subject = str_replace("&nbsp;", "", strval($subject));
+                        $subject = str_replace("&amp;nbsp;", "", strval($subject));
+                        $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+                        $mainContent = array('##LAB-USER##','##ITEM-DETAILS##');
+                        $mainReplace = array($userName,$mailItemDetails);
+                        $mailContent = trim($mailData[0]->mail_content);
+                        $message = str_replace($mainContent, $mainReplace, $mailContent);
+                        // $message = str_replace("&nbsp;", "", strval($message));
+                        $message = str_replace("&amp;nbsp;", "", strval($message));
+                        $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+                        $createdon = date('Y-m-d H:i:s');
+                        // dd($message);
+        
+            $response = DB::table('temp_mail')
+            ->insertGetId(
+                [
+                    'from_mail' => $fromMail,
+                    'to_email' => $userMail,
+                    'subject' => $mailData[0]->mail_subject,
+                    'cc' => $mailData[0]->mail_cc,
+                    'bcc' => $mailData[0]->mail_bcc,
+                    'from_full_name' => $userName,
+                    'status' => 'pending',
+                    'datetime' => $createdon,
+                    'message' => $message,
+                    'customer_name' => $userName,
+                ]);
+            // dd($userData);
         }
         return $response;
     }

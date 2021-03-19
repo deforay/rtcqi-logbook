@@ -63,7 +63,7 @@ td {
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Add Issue Items</h3>
+                            <h3 class="content-header-title mb-0">Edit Requested Items</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -90,53 +90,58 @@ td {
                                                     <th style="width:17%;" class="pl-1 pr-0">Needed On<span class="mandatory">*</span></th>
                                                     <th style="width:15%;" class="pl-1 pr-0">Location<span class="mandatory">*</span></th>
                                                     <th style="width:20%;" class="pl-1 pr-0">Reason</th>
+                                                    <th style="width:12%;" class="pl-1 pr-0">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="itemDetails">
+                                            <?php $z=0; ?>
+                                                @foreach($result as $reqItem)
                                                 <tr>
                                                     <td>
-                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="item0" name="item" title="Please select item" >
+                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="item<?php echo $z; ?>" name="item[]" title="Please select item" >
                                                             <option value="">Select Item </option>
                                                             @foreach ($item as $items)
-                                                            <option value="{{ $items->item_id }}" {{ $result[0]->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
+                                                            <option value="{{ $items->item_id }}" {{ $reqItem->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </td>
                                                     <td>
-                                                    <input type="number" value="{{$result[0]->request_item_qty}}" id="itemQty0" name="itemQty" min="0" class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" />
+                                                    <input type="number" value="{{$reqItem->request_item_qty}}" id="itemQty<?php echo $z; ?>" name="itemQty[]" min="0" class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" />
                                                     </td >
                                                     <td>
-                                                        <input type="text" id="neededOn0" class="form-control isRequired datepicker " value="{{$neededOn}}" autocomplete="off" placeholder="Enter needed on" name="neededOn" title="Please enter needed on">
+                                                        <input type="text" id="neededOn<?php echo $z; ?>" class="form-control isRequired datepicker " value="{{$neededOn}}" autocomplete="off" placeholder="Enter needed on" name="neededOn[]" title="Please enter needed on">
                                                     </td>
                                                     <td>
-                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="location0" name="location" title="Please select locations">
+                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="location<?php echo $z; ?>" name="location[]" title="Please select locations">
                                                             <option value="">Select Locations</option>
                                                             @foreach($branch as $type)
-                                                                <option value="{{ $type->branch_id }}" {{ $result[0]->branch_id == $type->branch_id ?  'selected':''}}>{{ $type->branch_name }}</option>
+                                                                <option value="{{ $type->branch_id }}" {{ $reqItem->branch_id == $type->branch_id ?  'selected':''}}>{{ $type->branch_name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </td>
                                                     <td>
-                                                    <textarea id="reason0" class="form-control" name="reason">{{$result[0]->reason}}</textarea>
+                                                    <textarea id="reason<?php echo $z; ?>" class="form-control" name="reason[]">{{$reqItem->reason}}</textarea>
                                                     </td>
-                                                    {{-- <td>
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-6" >
-                                                                <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
-                                                            </div>
-                                                            <!-- <div class="col-md-6 col-6">
-                                                                <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
-                                                            </div> -->
+                                                    <td>
+                                                        <div >
+                                                            <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
+                                                            &nbsp;&nbsp;
+                                                            <a class="btn btn-sm btn-warning" href="javascript:void(0);" id="{{$reqItem->requested_item_id}}" onclick="removeRow(this.parentNode.parentNode);deleteItemDet(this.id,{{$z}})"><i class="ft-minus"></i></a>
                                                         </div>
-                                                    </td> --}}
+                                                    </td>
                                                 </tr>
+                                                <input type="hidden" name="requestId" id="requestId" value="{{ $reqItem->request_id}}" />
+                                                <input type="hidden" name="requestItemId[]" id="requestItemId{{$z}}" value="{{ $reqItem->requested_item_id}}" />
+                                                <?php $z++; ?>
+                                            @endforeach
                                             </tbody>
                                             </table>
                                         <!-- </div> -->
                                     </div>
                                 </div>
                                 <br/>
-                                </form>
+                                <input type="hidden" name="deleteItemDetail" id="deleteItemDetail" value="" />
+                                
                                 <div class="form-actions right" style="margin-bottom: 5%;">
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary float-right">
                                         <i class="la la-check-square-o"></i> Update
@@ -147,6 +152,7 @@ td {
                                         </button>
                                     </a>
                                 </div>
+                            </form>
                             </div>
                         </div>
                     </div>
@@ -208,6 +214,71 @@ function validateNow() {
         $('#show_alert').css("display","block");
         $(".infocus").focus();
     }
+}
+
+rowCount = "{{$z}}";
+function insRow() {
+    rowCount++;
+    rl = document.getElementById("itemDetails").rows.length;
+    var a = document.getElementById("itemDetails").insertRow(rl);
+    a.setAttribute("style", "display:none;");
+    // a.setAttribute("class", "data");
+    var j = a.insertCell(0);
+    var b = a.insertCell(1);
+    var c = a.insertCell(2);
+    var f = a.insertCell(3);
+    var h = a.insertCell(4);
+    // var g = a.insertCell(7);
+    var e = a.insertCell(5);
+    rl = document.getElementById("itemDetails").rows.length - 1;
+   
+    j.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="item'+rowCount+'" name="item[]" title="Please select item" onchange="setQty(this.value,'+rowCount+')">\
+                        <option value="">Select Item </option>\
+                        @foreach ($item as $items)\
+                        <option value="{{ $items->item_id }}" >{{ $items->item_name }}</option>\
+                        @endforeach\
+                    </select>';
+    b.innerHTML = '<input type="number" id="itemQty'+rowCount+'" name="itemQty[]" min="0" class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" value="0" />';
+    c.innerHTML = '<input type="text" id="neededOn'+rowCount+'" class="form-control isRequired datepicker " autocomplete="off" placeholder="Enter issued on" name="neededOn[]" title="Please enter issued on">';
+    f.innerHTML = '<select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="location'+rowCount+'" name="location[]" title="Please select locations">\
+                        <option value="">Select Locations</option>\
+                        @foreach($branch as $type)\
+                            <option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>\
+                        @endforeach\
+                    </select>'
+    h.innerHTML = '<textarea id="reason'+rowCount+'" class="form-control" name="reason[]"></textarea>';
+    e.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+    $(a).fadeIn(800);
+    $('.datepicker').datepicker({
+        // format: 'dd-M-yyyy',
+        autoclose: true,
+        format: 'dd-M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+        startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
+    });
+    $(".select2").select2();
+   
+}
+
+function removeRow(el) {
+    $(el).parent().fadeOut("slow", function () {
+        $(el).parent().remove();
+        rowCount = rowCount-1;
+        rl = document.getElementById("itemDetails").rows.length;
+        if (rl == 0) {
+            insRow();
+        }
+    });
+}
+deleteItemDetail = [];
+function deleteItemDet(rfqdId,rowId) {
+    deleteItemDetail.push(rfqdId);
+    document.getElementById("deleteItemDetail").value=deleteItemDetail;
+    console.log(document.getElementById("deleteItemDetail").value)
 }
 
 </script>
