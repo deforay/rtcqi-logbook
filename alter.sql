@@ -535,3 +535,9 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 --Sudarmathi 04 Mar 2020
 
 ALTER TABLE `requested_items` ADD `request_id` INT NULL AFTER `approved_on`;
+
+--Sudarmathi 22 Mar 2020
+
+Insert into `mail_template` (`mail_purpose`, `template_name`, `from_name`, `mail_from`, `mail_cc`, `mail_bcc`, `mail_subject`, `mail_content`) values (null, 'Request Item Alert', 'American Society for Microbiology', 'test@gmail.com', null, null, 'Request Item Alert', '<p>Hello,</p><p>The following items are requested by ##LAB-USER##.</p><p>##ITEM-DETAILS##</p><p>Please note: This is a system generated message</p>')
+
+Insert into `mail_template` (`mail_purpose`, `template_name`, `from_name`, `mail_from`, `mail_cc`, `mail_bcc`, `mail_subject`, `mail_content`) values (null, 'Request Item Approval', 'American Society for Microbiology', 'test@gmail.com', null, null, 'Request Item  ##STATUS## ', '<p>Hello,</p><p>The following items are ##STATUS## by ##LAB-ADMIN##.</p><p>##ITEM-DETAILS##</p><p>Please note: This is a system generated message</p>')
