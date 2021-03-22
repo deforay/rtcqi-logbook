@@ -18,6 +18,20 @@ class RequestItemTable extends Model
         $commonservice = new CommonService();
         // dd($commonservice->getDateTime());
         $reqId = DB::table('requested_items')->orderBy('request_id','desc')->limit('1')->get();
+        $loc = array();
+        $mailItemDetails = '';
+        $mailItemDetails .= '<table border="1" style="width:100%; border-collapse: collapse;">
+                                        <thead>
+                                        <tr>
+                                            <th><strong>Item</strong></th>
+                                            <th><strong>Quantity</strong></th>
+                                            <th><strong>Requested<br/>On</strong></th>
+                                            <th><strong>Needed<br/>On</strong></th>
+                                            <th><strong>Location</strong></th>
+                                            <th><strong>Reason</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
         // dd($reqId);
         if(count($reqId)>0){
             $rqstId = $reqId[0]->request_id + 1;
@@ -40,8 +54,96 @@ class RequestItemTable extends Model
                     'request_id' => $rqstId,
                 ]
             );
+            if(!in_array($data['location'][$j],$loc)){
+                array_push($loc,$data['location'][$j]);
+            }
+            // print_r($loc);die;
+            $branchEmail = DB::table('branches')
+                            ->where('branch_id','=', $data['location'][$j])->get();
+            $itemName = DB::table('items')
+                            ->where('item_id','=', $data['item'][$j])->get();
+
+            $mailItemDetails .= '<tr>
+                                    <td>'.$itemName[0]->item_name.'</td>
+                                    <td style="text-align:right;">'.$data['itemQty'][$j].'</td>
+                                    <td>'.$data['neededOn'][$j].'</td>
+                                    <td>'.date('d-M-Y').'</td>
+                                    <td>'.$branchEmail[0]->branch_name.'</td>
+                                    <td>'.$data['reason'][$j].'</td>
+                                </tr>';
         }
+        $mailItemDetails .= '</tbody></table>';
+        $role = DB::table('roles')->where('role_status','=', 'active')->get();
+        $configFile =  "acl.config.json";
+        if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile))
+        {
+            $acl = json_decode(File::get(public_path($configFile)),true);
+        }
+        // print_r($acl);die;
         
+        $userName = session('name').' '.session('lastName');
+        $fromMail = session('email');
+        $mailData = DB::table('mail_template')
+                    ->where('mail_temp_id', '=', 11)
+                    ->get();
+        $userMail = "";
+        for($m=0;$m<count($role);$m++){
+            if(isset($role[$m]->role_code)){
+                // print_r($acl['ADM']['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']);die;
+                if(isset($acl[$role[$m]->role_code]['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && $acl[$role[$m]->role_code]['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow" ){
+                    $userData = DB::table('users')
+                                ->leftjoin('user_branch_map', 'user_branch_map.user_id', '=', 'users.user_id')
+                                ->where('users.role', '=', $role[$m]->role_id)
+                                ->whereIn('user_branch_map.branch_id', $loc)
+                                ->get();
+                                // dd($userData);
+                    for($u=0;$u<count($userData);$u++){
+                        if($userMail == ""){
+                            $userMail = $userData[$u]->email;
+                        }
+                        else{
+                            $userMail = $userMail.','.$userData[$u]->email;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        if(count($mailData)>0)
+        {
+            $labAdm = array();
+            
+            $mailSubject = trim($mailData[0]->mail_subject);
+            $subject = $mailSubject;
+            $subject = str_replace("&nbsp;", "", strval($subject));
+            $subject = str_replace("&amp;nbsp;", "", strval($subject));
+            $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+            $mainContent = array('##LAB-USER##','##ITEM-DETAILS##');
+            $mainReplace = array($userName,$mailItemDetails);
+            $mailContent = trim($mailData[0]->mail_content);
+            $message = str_replace($mainContent, $mainReplace, $mailContent);
+            // $message = str_replace("&nbsp;", "", strval($message));
+            $message = str_replace("&amp;nbsp;", "", strval($message));
+            $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+            $createdon = date('Y-m-d H:i:s');
+                        // dd($message);
+        
+            $response = DB::table('temp_mail')
+            ->insertGetId(
+                [
+                    'from_mail' => $fromMail,
+                    'to_email' => $userMail,
+                    'subject' => $subject,
+                    'cc' => $mailData[0]->mail_cc,
+                    'bcc' => $mailData[0]->mail_bcc,
+                    'from_full_name' => $userName,
+                    'status' => 'pending',
+                    'datetime' => $createdon,
+                    'message' => $message,
+                    'customer_name' => $userName,
+                ]);
+            // dd($userData);
+        }
         return $autoId;
     }
 
@@ -72,6 +174,20 @@ class RequestItemTable extends Model
         $id = $request['id'];
         try {
             if ($id != "") {
+                $loc = array();
+                $mailItemDetails = '';
+                $mailItemDetails .= '<table border="1" style="width:100%; border-collapse: collapse;">
+                                                <thead>
+                                                <tr>
+                                                    <th><strong>Item</strong></th>
+                                                    <th><strong>Quantity</strong></th>
+                                                    <th><strong>Requested<br/>On</strong></th>
+                                                    <th><strong>Needed<br/>On</strong></th>
+                                                    <th><strong>Location</strong></th>
+                                                    <th><strong>Reason</strong></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>';
                 $updateData = array(
                                 'request_item_status' => $request['sts'],
                                 'approved_by' => session('userId'),
@@ -82,7 +198,78 @@ class RequestItemTable extends Model
                 DB::table('requested_items')
                     ->where('request_id', '=', $id)
                     ->update($updateData);
+                $reqItem = DB::table('requested_items')->where('request_id', '=', $id)->get();
+                $requestBy = "";
+                for($j=0;$j<count($reqItem);$j++){
+                    if(!in_array($reqItem[$j]->branch_id,$loc)){
+                        array_push($loc,$reqItem[$j]->branch_id);
+                    }
+                    // print_r($loc);die;
+                    $branchEmail = DB::table('branches')
+                                    ->where('branch_id','=', $reqItem[$j]->branch_id)->get();
+                    $itemName = DB::table('items')
+                                    ->where('item_id','=', $reqItem[$j]->item_id)->get();
+                    $requestBy =  $reqItem[$j]->requested_by;
+                    $mailItemDetails .= '<tr>
+                                            <td>'.$itemName[0]->item_name.'</td>
+                                            <td style="text-align:right;">'.$reqItem[$j]->request_item_qty.'</td>
+                                            <td>'.$commonservice->humanDateFormat($reqItem[$j]->need_on).'</td>
+                                            <td>'.date('d-M-Y').'</td>
+                                            <td>'.$branchEmail[0]->branch_name.'</td>
+                                            <td>'.$reqItem[$j]->reason.'</td>
+                                        </tr>';
+                }
+                $mailItemDetails .= '</tbody></table>';
+                $userName = session('name').' '.session('lastName');
+                $fromMail = session('email');
+                $mailData = DB::table('mail_template')
+                            ->where('mail_temp_id', '=', 12)
+                            ->get();
+                $userMail = "";
+                $userData = DB::table('users')
+                            ->leftjoin('user_branch_map', 'user_branch_map.user_id', '=', 'users.user_id')
+                            ->where('users.user_id', '=', $requestBy)
+                            ->whereIn('user_branch_map.branch_id', $loc)
+                            ->get();
                
+                $userMail = $userData[0]->email;
+                  
+                if(count($mailData)>0)
+                {
+                    $labAdm = array();
+                    
+                    $mailSubject = trim($mailData[0]->mail_subject);
+                    $subject = $mailSubject;
+                    $subject = str_replace("##STATUS##", ucfirst($request['sts']), strval($subject));
+                    $subject = str_replace("&nbsp;", "", strval($subject));
+                    $subject = str_replace("&amp;nbsp;", "", strval($subject));
+                    $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+                    // dd($subject);
+                    $mainContent = array('##LAB-ADMIN##','##ITEM-DETAILS##','##STATUS##');
+                    $mainReplace = array($userName,$mailItemDetails,ucfirst($request['sts']));
+                    $mailContent = trim($mailData[0]->mail_content);
+                    $message = str_replace($mainContent, $mainReplace, $mailContent);
+                    // $message = str_replace("&nbsp;", "", strval($message));
+                    $message = str_replace("&amp;nbsp;", "", strval($message));
+                    $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+                    $createdon = date('Y-m-d H:i:s');
+                
+                    $response = DB::table('temp_mail')
+                    ->insertGetId(
+                        [
+                            'from_mail' => $fromMail,
+                            'to_email' => $userMail,
+                            'subject' => $subject,
+                            'cc' => $mailData[0]->mail_cc,
+                            'bcc' => $mailData[0]->mail_bcc,
+                            'from_full_name' => $userName,
+                            'status' => 'pending',
+                            'datetime' => $createdon,
+                            'message' => $message,
+                            'customer_name' => $userName,
+                        ]);
+                    // dd($userData);
+                }
             }
         } catch (Exception $exc) {
             error_log($exc->getMessage());
@@ -220,26 +407,26 @@ class RequestItemTable extends Model
             $labAdm = array();
             
             $mailSubject = trim($mailData[0]->mail_subject);
-                        $subject = $mailSubject;
-                        $subject = str_replace("&nbsp;", "", strval($subject));
-                        $subject = str_replace("&amp;nbsp;", "", strval($subject));
-                        $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-                        $mainContent = array('##LAB-USER##','##ITEM-DETAILS##');
-                        $mainReplace = array($userName,$mailItemDetails);
-                        $mailContent = trim($mailData[0]->mail_content);
-                        $message = str_replace($mainContent, $mainReplace, $mailContent);
-                        // $message = str_replace("&nbsp;", "", strval($message));
-                        $message = str_replace("&amp;nbsp;", "", strval($message));
-                        $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
-                        $createdon = date('Y-m-d H:i:s');
-                        // dd($message);
+            $subject = $mailSubject;
+            $subject = str_replace("&nbsp;", "", strval($subject));
+            $subject = str_replace("&amp;nbsp;", "", strval($subject));
+            $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+            $mainContent = array('##LAB-USER##','##ITEM-DETAILS##');
+            $mainReplace = array($userName,$mailItemDetails);
+            $mailContent = trim($mailData[0]->mail_content);
+            $message = str_replace($mainContent, $mainReplace, $mailContent);
+            // $message = str_replace("&nbsp;", "", strval($message));
+            $message = str_replace("&amp;nbsp;", "", strval($message));
+            $message = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+            $createdon = date('Y-m-d H:i:s');
+            // dd($message);
         
             $response = DB::table('temp_mail')
             ->insertGetId(
                 [
                     'from_mail' => $fromMail,
                     'to_email' => $userMail,
-                    'subject' => $mailData[0]->mail_subject,
+                    'subject' => $subject,
                     'cc' => $mailData[0]->mail_cc,
                     'bcc' => $mailData[0]->mail_bcc,
                     'from_full_name' => $userName,
