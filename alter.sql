@@ -528,16 +528,20 @@ ALTER TABLE `requested_items` ADD `request_item_status` VARCHAR(50) NULL AFTER `
 ALTER TABLE `requested_items` ADD `approved_by` INT NULL AFTER `request_item_status`, ADD `approved_on` DATE NULL AFTER `approved_by`;
 ALTER TABLE `requested_items` CHANGE `qty` `request_item_qty` INT(11) NOT NULL;
 
---Sudarmathi 03 Mar 2020
+-- Sudarmathi 03 Mar 2020
 
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\RequestItem\\RequestItemController', 'approverequestitem', 'Approve Request Item');
 
---Sudarmathi 04 Mar 2020
+-- Sudarmathi 04 Mar 2020
 
 ALTER TABLE `requested_items` ADD `request_id` INT NULL AFTER `approved_on`;
 
---Sudarmathi 22 Mar 2020
+-- Sudarmathi 22 Mar 2020
 
 Insert into `mail_template` (`mail_purpose`, `template_name`, `from_name`, `mail_from`, `mail_cc`, `mail_bcc`, `mail_subject`, `mail_content`) values (null, 'Request Item Alert', 'American Society for Microbiology', 'test@gmail.com', null, null, 'Request Item Alert', '<p>Hello,</p><p>The following items are requested by ##LAB-USER##.</p><p>##ITEM-DETAILS##</p><p>Please note: This is a system generated message</p>')
 
 Insert into `mail_template` (`mail_purpose`, `template_name`, `from_name`, `mail_from`, `mail_cc`, `mail_bcc`, `mail_subject`, `mail_content`) values (null, 'Request Item Approval', 'American Society for Microbiology', 'test@gmail.com', null, null, 'Request Item  ##STATUS## ', '<p>Hello,</p><p>The following items are ##STATUS## by ##LAB-ADMIN##.</p><p>##ITEM-DETAILS##</p><p>Please note: This is a system generated message</p>')
+
+-- Sudarmathi 25 Mar 2020
+
+ALTER TABLE `purchase_orders` CHANGE `payment_status` `payment_status` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL;
