@@ -11,22 +11,24 @@ class InventoryStockService
    
     public function importInventoryStock($request)
     {
-    	$data =  $request->all();
-    	DB::beginTransaction();
-    	try {
-			$model = new InventoryStockTable();
-			$add = $model->importInventoryStock($request);
-			// print_r($add);die;
-			if($add>0){
-				DB::commit();
-				$msg = 'Inventory Stock Imported Successfully';
-				return $msg;
-			}
-	    }
-	    catch (Exception $exc) {
-	    	DB::rollBack();
-	    	$exc->getMessage();
-	    }
+		$data =  $request->all();
+		$model = new InventoryStockTable();
+		$add = $model->importInventoryStock($request);
+		// print_r($add);die;
+		return $add;
+    	// DB::beginTransaction();
+    	// try {
+			
+		// 	if($add>0){
+		// 		DB::commit();
+		// 		// $msg = 'Inventory Stock Imported Successfully';
+		// 		return $add;
+		// 	}
+	    // }
+	    // catch (Exception $exc) {
+	    // 	DB::rollBack();
+	    // 	$exc->getMessage();
+	    // }
 	}
 	
 

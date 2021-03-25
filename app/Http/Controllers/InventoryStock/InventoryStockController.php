@@ -34,6 +34,7 @@ class InventoryStockController extends Controller
         $invService = new InventoryStockService();
         $result = $invService->importInventoryStock($request);
         // print_r($result);die;
+        // return view('inventorystock.index',array('status'=>$result));
         return Redirect::to('inventorystock')->with('status', $result);
         // return view('inventorystock.index',array('status'=>$result));
     }
