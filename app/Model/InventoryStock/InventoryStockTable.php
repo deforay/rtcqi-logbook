@@ -101,6 +101,7 @@ class InventoryStockTable extends Model
                         $base_currency = $row[19];
                         $exchange_rate = $row[20];
                         $unit_price = $row[21];
+                        $total_price = 0;
                         // if($i>2){
                             $itemCat = DB::table('item_categories')
                                         ->where('item_category', '=', $item_category)
@@ -358,27 +359,12 @@ class InventoryStockTable extends Model
                                                     'converted_price'   => $converted_price,
                                                 ]
                                             );
+                                    
                                 }
                                 else{
                                     $poId = $po[0]->po_id;
-                                    $poData = DB::table('purchase_order_details')
-                                                ->where('purchase_order_details.po_id', '=', $poId)
-                                                ->where('purchase_order_details.item_id', '=', $itemId)
-                                                ->get();
-                                                // dd($poData);
-                                    if($base_currency == "yes"){
-                                        if($exchange_rate != ""){
-                                            $converted_price = $exchange_rate * $unit_price;
-                                        }
-                                        else{
-                                            $converted_price = 1 * $unit_price;
-                                        }
-                                    }
-                                    else{
-                                        $converted_price = 1 * $unit_price;
-                                    }
-                                    $total_price = intval($poData[0]->converted_price) + (int)$converted_price;
-                                    $podId = $poData[0]->pod_id;
+                                    // dd($po);
+                                    $total_price = intval($po[0]->total_amount) + (int)$converted_price;
                                     $poParams = array(
                                         'po_number' => $po_number,
                                         'po_issued_on' => $po_date,
@@ -398,18 +384,63 @@ class InventoryStockTable extends Model
                                                         );
 
                                     $poUp++;
+                                    $poData = DB::table('purchase_order_details')
+                                                ->where('purchase_order_details.po_id', '=', $poId)
+                                                ->where('purchase_order_details.item_id', '=', $itemId)
+                                                ->get();
 
-                                    $purchaseOrderDetailsData = array(
-                                        'po_id'             => $poId,
-                                        'item_id'           => $itemId,
-                                        'uom'               => $unitId,
-                                        'quantity'          => $item_qty,
-                                        'unit_price'        => $unit_price,
-                                        'converted_price'   => $converted_price,
-                                    );
-                                    $purchaseOrderdetailsUp = DB::table('purchase_order_details')
-                                                                ->where('pod_id', '=', $podId)
-                                                                ->update($purchaseOrderDetailsData);
+                                    if(count($poData) > 0){
+                                        if($base_currency == "yes"){
+                                            if($exchange_rate != ""){
+                                                $converted_price = $exchange_rate * $unit_price;
+                                            }
+                                            else{
+                                                $converted_price = 1 * $unit_price;
+                                            }
+                                        }
+                                        else{
+                                            $converted_price = 1 * $unit_price;
+                                        }
+                                        // dd($poData);
+                                        // $total_price = intval($po[0]->total_amount) + (int)$converted_price;
+                                        $podId = $poData[0]->pod_id;
+                                        
+
+                                        $purchaseOrderDetailsData = array(
+                                            'po_id'             => $poId,
+                                            'item_id'           => $itemId,
+                                            'uom'               => $unitId,
+                                            'quantity'          => $item_qty,
+                                            'unit_price'        => $unit_price,
+                                            'converted_price'   => $converted_price,
+                                        );
+                                        $purchaseOrderdetailsUp = DB::table('purchase_order_details')
+                                                                    ->where('pod_id', '=', $podId)
+                                                                    ->update($purchaseOrderDetailsData);
+                                    }
+                                    else{
+                                        if($base_currency == "yes"){
+                                            if($exchange_rate != ""){
+                                                $converted_price = $exchange_rate * $unit_price;
+                                            }
+                                            else{
+                                                $converted_price = 1 * $unit_price;
+                                            }
+                                        }
+                                        else{
+                                            $converted_price = 1 * $unit_price;
+                                        }
+                                        $podId = DB::table('purchase_order_details')->insertGetId(
+                                            [
+                                                'po_id'             => $poId,
+                                                'item_id'           => $itemId,
+                                                'uom'               => $unitId,
+                                                'quantity'          => $item_qty,
+                                                'unit_price'        => $unit_price,
+                                                'converted_price'   => $converted_price,
+                                            ]
+                                        );
+                                    }
                                 }
                                 $invStk = DB::table('inventory_stock')->where('item_id', '=', $itemId)->where('branch_id', '=', $locationId);
                                 if($expiry_date!="" && $expiry_date!=null){
@@ -505,7 +536,7 @@ class InventoryStockTable extends Model
                 $rslt .= $itemCatIns." Item Category are Inserted and ".$itemCatUp." are Updated <br>";
                 $rslt .= $itemTypeIns." Item Type are Inserted and ".$itemTypeUp." are Updated <br>";
                 $rslt .= $itemIdIns." Item are Inserted and ".$itemIdUp." are Updated <br>";
-                $rslt .= $brandIns." Brands are Inserted and ".$brandUp." are Updated <br>";
+                $rslt .= $brandIns." Brand are Inserted and ".$brandUp." are Updated <br>";
                 $rslt .= $locationIns." Location are Inserted and ".$locationUp." are Updated <br>";
                 $rslt .= $locationTypeIns." Location Type are Inserted and ".$locationTypeUp." are Updated <br>";
                 $rslt .= $vendorIns." Vendors are Inserted and ".$vendorUp." are Updated <br>";
