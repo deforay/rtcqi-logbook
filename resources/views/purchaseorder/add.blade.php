@@ -59,7 +59,7 @@ $currentDate=date('d-M-Y');
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <form class="form form-horizontal" enctype="multipart/form-data" role="form" name="addPurchaseOrder" id="addPurchaseOrder" method="post" action="/purchaseorder/add/{{$quoteId}}" autocomplete="off" onsubmit="validateNow();return false;">
-                                    @csrf                                    
+                                    @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
