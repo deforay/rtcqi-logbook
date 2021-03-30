@@ -330,6 +330,9 @@ class RequestItemTable extends Model
                         'request_id' => $requestId,
                         'updated_on' => $commonservice->getDateTime(),
                         'updated_by' => session('userId'),
+                        'request_item_status' => $data['status'][$j],
+                        'rejection_reason_id' => $data['rejReason'][$j],
+                        'rejection_reason_other' => $data['otherReason'][$j],
                         ]);
             }
             else{
@@ -355,7 +358,7 @@ class RequestItemTable extends Model
                             ->where('branch_id','=', $data['location'][$j])->get();
             $itemName = DB::table('items')
                             ->where('item_id','=', $data['item'][$j])->get();
-
+            // dd($itemName);
             $mailItemDetails .= '<tr>
                                     <td>'.$itemName[0]->item_name.'</td>
                                     <td style="text-align:right;">'.$data['itemQty'][$j].'</td>
@@ -438,6 +441,12 @@ class RequestItemTable extends Model
             // dd($userData);
         }
         return $response;
+    }
+
+    public function getRejectionReason(){
+        $data = DB::table('rejection_reason')
+                ->get();
+        return $data;
     }
 
 }

@@ -31,7 +31,7 @@ td {
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/requestitem">Request Items</a>
                         </li>
-                        <li class="breadcrumb-item active">Edit
+                        <li class="breadcrumb-item active">Approve / Decline
                         </li>
                     </ol>
                 </div>
@@ -64,7 +64,7 @@ td {
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Edit Requested Items</h3>
+                            <h3 class="content-header-title mb-0">Approve / Decline Requested Items</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -108,29 +108,33 @@ td {
                                                 @foreach($result as $reqItem)
                                                 <tr>
                                                     <td>
-                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100% !important;" id="item<?php echo $z; ?>" name="item[]" title="Please select item" >
+                                                        <input type="text"  id="itemName<?php echo $z; ?>" class="form-control input" value="{{$reqItem->item_name}}" autocomplete="off" placeholder="Enter needed on" name="itemName[]" title="Please enter needed on">
+                                                        <input type="hidden"  id="item<?php echo $z; ?>" class="form-control input" value="{{$reqItem->item_id}}" autocomplete="off" placeholder="Enter needed on" name="item[]" title="Please enter needed on">
+                                                        {{-- <select class="form-control select2"  autocomplete="off" style="width:100% !important;" id="item<?php echo $z; ?>" name="item[]" title="Please select item" >
                                                             <option value="">Select Item </option>
                                                             @foreach ($item as $items)
                                                             <option value="{{ $items->item_id }}" {{ $reqItem->item_id == $items->item_id ?  'selected':''}}>{{ $items->item_name }}</option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> --}}
                                                     </td>
                                                     <td>
-                                                    <input type="number" value="{{$reqItem->request_item_qty}}" id="itemQty<?php echo $z; ?>" name="itemQty[]" min="0" class="form-control isRequired itemQty" placeholder="Enter Item Qty" title="Please enter the item qty" />
+                                                    <input type="number"  value="{{$reqItem->request_item_qty}}" id="itemQty<?php echo $z; ?>" name="itemQty[]" min="0" class="form-control itemQty input" placeholder="Enter Item Qty" title="Please enter the item qty" />
                                                     </td >
                                                     <td>
-                                                        <input type="text" id="neededOn<?php echo $z; ?>" class="form-control isRequired datepicker " value="{{$neededOn}}" autocomplete="off" placeholder="Enter needed on" name="neededOn[]" title="Please enter needed on">
+                                                        <input type="text"  id="neededOn<?php echo $z; ?>" class="form-control datepicker input" value="{{$neededOn}}" autocomplete="off" placeholder="Enter needed on" name="neededOn[]" title="Please enter needed on">
                                                     </td>
                                                     <td>
-                                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="location<?php echo $z; ?>" name="location[]" title="Please select locations">
+                                                        <input type="text"  id="locationName<?php echo $z; ?>" class="form-control input" value="{{$reqItem->branch_name}}" autocomplete="off" placeholder="Enter needed on" name="locationName[]" title="Please enter needed on">
+                                                        <input type="hidden"  id="location<?php echo $z; ?>" class="form-control input" value="{{$reqItem->branch_id}}" autocomplete="off" placeholder="Enter needed on" name="location[]" title="Please enter needed on">
+                                                        {{-- <select class="form-control select2"  autocomplete="off" style="width:100%;" id="location<?php echo $z; ?>" name="location[]" title="Please select locations">
                                                             <option value="">Select Locations</option>
                                                             @foreach($branch as $type)
                                                                 <option value="{{ $type->branch_id }}" {{ $reqItem->branch_id == $type->branch_id ?  'selected':''}}>{{ $type->branch_name }}</option>
                                                             @endforeach
-                                                        </select>
+                                                        </select> --}}
                                                     </td>
                                                     <td>
-                                                    <textarea id="reason<?php echo $z; ?>" class="form-control" name="reason[]">{{$reqItem->reason}}</textarea>
+                                                    <textarea id="reason<?php echo $z; ?>"  class="form-control input" name="reason[]">{{$reqItem->reason}}</textarea>
                                                     </td>
                                                     <?php
                                                     if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit'] == "allow")){
@@ -144,23 +148,36 @@ td {
                                                                     <option value="declined" {{ $reqItem->request_item_status == 'declined' ?  'selected':''}}>Declined</option>
                                                                 </select>
                                                             </div>
-                                                            
-                                                            <div class="col-md-6 p-0 pr-1 pl-1" style="display:none" id="rejReasonDiv{{$z}}">
+                                                            @if(isset($reqItem->rejection_reason_id) && $reqItem->rejection_reason_id!="")
+                                                            <div class="col-md-6 p-0 pr-1 pl-1" id="rejReasonDiv{{$z}}">
                                                                 <select class="form-control select2" autocomplete="off" style="width:100%;" id="rejReason<?php echo $z; ?>" name="rejReason[]" title="Please select rejection reason" onchange="showOtherReason(this.id,{{$z}})">
                                                                     <option value="">Select Rejection Reason</option>
-                                                                    {{-- <option value="1">Not enough stock</option>
-                                                                    <option value="2">Reason not justified</option>
-                                                                    <option value="3">Others</option> --}}
                                                                     @foreach($rejReason as $list)
                                                                         <option value="{{ $list->rejection_reason_id }}" {{ $reqItem->rejection_reason_id == $list->rejection_reason_id ?  'selected':''}}>{{ $list->rejection_reason }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
+                                                            @else
+                                                            <div class="col-md-6 p-0 pr-1 pl-1" style="display:none" id="rejReasonDiv{{$z}}">
+                                                                <select class="form-control select2" autocomplete="off" style="width:100%;" id="rejReason<?php echo $z; ?>" name="rejReason[]" title="Please select rejection reason" onchange="showOtherReason(this.id,{{$z}})">
+                                                                    <option value="">Select Rejection Reason</option>
+                                                                    @foreach($rejReason as $list)
+                                                                        <option value="{{ $list->rejection_reason_id }}" {{ $reqItem->rejection_reason_id == $list->rejection_reason_id ?  'selected':''}}>{{ $list->rejection_reason }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            @endif
                                                         </div>
                                                         <br>
-                                                        <div style="display:none" id="othersRejReasonDiv{{$z}}">
-                                                                <textarea id="otherReason<?php echo $z; ?>" class="form-control" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
+                                                        @if(isset($reqItem->rejection_reason_other) && $reqItem->rejection_reason_other!="")
+                                                        <div id="othersRejReasonDiv{{$z}}">
+                                                            <textarea id="otherReason<?php echo $z; ?>" class="form-control" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
                                                         </div>
+                                                        @else
+                                                        <div style="display:none" id="othersRejReasonDiv{{$z}}">
+                                                            <textarea id="otherReason<?php echo $z; ?>" class="form-control" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
+                                                        </div>
+                                                        @endif
                                                     </td>
                                                     <?php
                                                     }
@@ -211,6 +228,7 @@ td {
 <script>
 var deliveryQty = '';
 $(document).ready(function() {
+    $(".input").prop('disabled', true);
     $(".select2").select2();
     $('.datepicker').datepicker({
         // format: 'dd-M-yyyy',
@@ -245,7 +263,7 @@ return `${day}-${monthName}-${year}`;
 
 duplicateName = true;
 function validateNow() {
-    
+    $(".input").prop('disabled', false);
     flag = deforayValidator.init({
         formId: 'addIssueItem'
     });
@@ -330,11 +348,11 @@ function deleteItemDet(rfqdId,rowId) {
 function showRejReason(val,z){
     if(val=="declined"){
         $('#rejReasonDiv'+z).show()
-        $('#rejReasonDiv'+z).addClass('isRequired');
+        // $('#rejReasonDiv'+z).addClass('isRequired');
     }
     else{
         $('#rejReasonDiv'+z).hide()
-        $('#rejReasonDiv'+z).removeClass('isRequired');
+        // $('#rejReasonDiv'+z).removeClass('isRequired');
     }
 }
 
@@ -342,11 +360,11 @@ function showOtherReason(id,z){
     val = $("#"+id+" option:selected").text();
     if(val=="others"){
         $('#othersRejReasonDiv'+z).show()
-        $('#othersRejReasonDiv'+z).addClass('isRequired');
+        // $('#othersRejReasonDiv'+z).addClass('isRequired');
     }
     else{
         $('#othersRejReasonDiv'+z).hide()
-        $('#othersRejReasonDiv'+z).removeClass('isRequired');
+        // $('#othersRejReasonDiv'+z).removeClass('isRequired');
     }
 }
 </script>
