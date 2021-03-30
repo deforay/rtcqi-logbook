@@ -544,7 +544,7 @@ class InventoryStockTable extends Model
                 $rslt .= $invIns." Inventory Stock are Inserted and ".$invUp." are Updated <br>";
                 // dd($rslt);
                 DB::commit();
-            }
+            } 
             catch (Exception $exc) {
                 DB::rollBack();
                 $exc->getMessage();

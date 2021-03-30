@@ -81,14 +81,15 @@ class RequestItemController extends Controller
                             }else{
                                 $button .= '';
                             }
+                        }
 
                             if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow")){
-                                $button .= '&nbsp;&nbsp;<button onclick="'.$approveStatus.'" name="edit" id="'.$data->request_id.'" class="btn btn-outline-info btn-sm" title="Approve">Approve</button>';
-                                $button .= '&nbsp;&nbsp;<button onclick="'.$declineStatus.'" name="edit" id="'.$data->request_id.'" class="btn btn-outline-danger btn-sm" title="Decline"><i class="ft-x"></i></button>';
+                                $button .= '&nbsp;&nbsp;<a href="/requestitem/updateStatus/'. base64_encode($data->request_id).'" name="updateSts" id="'.$data->request_id.'" class="btn btn-outline-info btn-sm" title="Approve/Decline">Approve/Decline</a>';
+                                // $button .= '&nbsp;&nbsp;<button onclick="'.$declineStatus.'" name="edit" id="'.$data->request_id.'" class="btn btn-outline-danger btn-sm" title="Decline"><i class="ft-x"></i></button>';
                             }else{
                                 $button .= '';
                             }
-                        }
+                        // }
                         $button .= '</div>';
                         return $button;
                     })
@@ -108,12 +109,35 @@ class RequestItemController extends Controller
         {
             $service = new RequestItemService();
             $result = $service->getRequestItemById($id);
+            $rejReason = $service->getRejectionReason();
             $itemservice = new ItemService();
             $item = $itemservice->getAllActiveItem();
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            // dd($result);
-            return view('requestitem.edit',array('result'=>$result,'item'=>$item,'branch'=>$branch));
+            // dd($rejReason);
+            return view('requestitem.edit',array('result'=>$result,'item'=>$item,'branch'=>$branch,'rejReason'=>$rejReason));
+        }
+    }
+
+    public function updateStatus(Request $request,$id)
+    {
+        if ($request->isMethod('post')) 
+        {
+            $service = new RequestItemService();
+            $edit = $service->updateRequestItem($request,$id);
+            return Redirect::route('requestitem.index')->with('status', $edit);
+        }
+        else
+        {
+            $service = new RequestItemService();
+            $result = $service->getRequestItemById($id);
+            $rejReason = $service->getRejectionReason();
+            $itemservice = new ItemService();
+            $item = $itemservice->getAllActiveItem();
+            $branchService = new BranchesService();
+            $branch = $branchService->getAllActiveBranches();
+            // dd($rejReason);
+            return view('requestitem.updatestatus',array('result'=>$result,'item'=>$item,'branch'=>$branch,'rejReason'=>$rejReason));
         }
     }
 

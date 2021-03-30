@@ -81,7 +81,7 @@
                                                 <th style="width:10%">Needed On</th>
                                                 <th style="width:12%">Location</th>
                                                 <th style="width:15%">Reason</th>
-                                                <th style="width:10%">Status</th>
+                                                {{-- <th style="width:10%">Status</th> --}}
                                                 <th style="width:15%">Action</th>
                                             </tr>
                                         </thead>
@@ -117,7 +117,7 @@
             processing: true,
             destroy : true,
             serverSide: true,
-            scrollX: false,
+            scrollX: true,
             autoWidth:false,
             ajax: {
                 url:'{{ url("getRequestItemByLogin") }}',
@@ -147,7 +147,7 @@
                     },
                     { data: 'branch_name', name: 'branch_name'},
                     { data: 'reason', name: 'reason'},
-                    { data: 'request_item_status', name: 'request_item_status'},
+                    // { data: 'request_item_status', name: 'request_item_status'},
                     { data: 'action', name: 'action', orderable: false},
                 ],
             order: [[1, 'desc']],

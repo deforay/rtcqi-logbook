@@ -302,3 +302,5 @@ Route::post('/getRequestItemByLogin', 'RequestItem\RequestItemController@getRequ
 Route::get('/requestitem/edit/{id}', 'RequestItem\RequestItemController@edit');
 Route::post('/requestitem/edit/{id}', 'RequestItem\RequestItemController@edit');
 Route::post('/changeApproveStatus', 'RequestItem\RequestItemController@changeApproveStatus');
+Route::get('/requestitem/updateStatus/{id}', 'RequestItem\RequestItemController@updateStatus');
+Route::post('/requestitem/updateStatus/{id}', 'RequestItem\RequestItemController@updateStatus');

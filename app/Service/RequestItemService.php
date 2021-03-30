@@ -77,6 +77,12 @@ class RequestItemService
         $result = $reqmodel->changeApproveStatus($params);
         return $result;
 	}
+
+	public function getRejectionReason(){
+		$reqmodel = new RequestItemTable();
+        $result = $reqmodel->getRejectionReason();
+        return $result;
+	}
 	
 	
 }
