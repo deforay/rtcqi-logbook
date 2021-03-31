@@ -76,10 +76,20 @@ td {
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body mt-0 pt-0">
-                                <div id="show_alert" class="mt-1" style=""></div>
+                            <div id="show_alert" class="mt-1" style=""></div>
                             <form class="form form-horizontal" role="form"  name="addIssueItem" id="addIssueItem" method="post" action="/requestitem/updateStatus/{{$id}}" autocomplete="off" onsubmit="validateNow();return false;">
                                 @csrf
                                 <br/>
+                                <div class="row">
+                                    <div class="col-md-4 p-0 pl-1">
+                                        <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="allStatus" name="allStatus" title="Please select the status" onchange="selectAll(this.value)">
+                                            <option value="">Select Status</option>
+                                            <option value="approved" >Approve All</option>
+                                            <option value="declined" >Decline All</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="row">
                                     <div class="" style="width:100%">
                                         <!-- <div class="bd-example"> -->
@@ -137,12 +147,12 @@ td {
                                                     <textarea id="reason<?php echo $z; ?>"  class="form-control input" name="reason[]">{{$reqItem->reason}}</textarea>
                                                     </td>
                                                     <?php
-                                                    if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['edit'] == "allow")){
+                                                    if (isset($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem']) && ($role['App\\Http\\Controllers\\RequestItem\\RequestItemController']['approverequestitem'] == "allow")){
                                                     ?>
                                                     <td>
                                                         <div class="row">
                                                             <div class="col-md-6 p-0 pl-1">
-                                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="status<?php echo $z; ?>" name="status[]" title="Please select status" onchange="showRejReason(this.value,{{$z}})">
+                                                                <select class="form-control isRequired select2 statusUp" autocomplete="off" style="width:100%;" id="status<?php echo $z; ?>" name="status[]" title="Please select status" onchange="showRejReason(this.value,{{$z}})">
                                                                     <option value="">Select Status</option>
                                                                     <option value="approved" {{ $reqItem->request_item_status == 'approved' ?  'selected':''}}>Approved</option>
                                                                     <option value="declined" {{ $reqItem->request_item_status == 'declined' ?  'selected':''}}>Declined</option>
@@ -150,7 +160,7 @@ td {
                                                             </div>
                                                             @if(isset($reqItem->rejection_reason_id) && $reqItem->rejection_reason_id!="")
                                                             <div class="col-md-6 p-0 pr-1 pl-1" id="rejReasonDiv{{$z}}">
-                                                                <select class="form-control select2" autocomplete="off" style="width:100%;" id="rejReason<?php echo $z; ?>" name="rejReason[]" title="Please select rejection reason" onchange="showOtherReason(this.id,{{$z}})">
+                                                                <select class="form-control select2 rejReason" autocomplete="off" style="width:100%;" id="rejReason<?php echo $z; ?>" name="rejReason[]" title="Please select rejection reason" onchange="showOtherReason(this.id,{{$z}})">
                                                                     <option value="">Select Rejection Reason</option>
                                                                     @foreach($rejReason as $list)
                                                                         <option value="{{ $list->rejection_reason_id }}" {{ $reqItem->rejection_reason_id == $list->rejection_reason_id ?  'selected':''}}>{{ $list->rejection_reason }}</option>
@@ -159,7 +169,7 @@ td {
                                                             </div>
                                                             @else
                                                             <div class="col-md-6 p-0 pr-1 pl-1" style="display:none" id="rejReasonDiv{{$z}}">
-                                                                <select class="form-control select2" autocomplete="off" style="width:100%;" id="rejReason<?php echo $z; ?>" name="rejReason[]" title="Please select rejection reason" onchange="showOtherReason(this.id,{{$z}})">
+                                                                <select class="form-control select2 rejReason" autocomplete="off" style="width:100%;" id="rejReason<?php echo $z; ?>" name="rejReason[]" title="Please select rejection reason" onchange="showOtherReason(this.id,{{$z}})">
                                                                     <option value="">Select Rejection Reason</option>
                                                                     @foreach($rejReason as $list)
                                                                         <option value="{{ $list->rejection_reason_id }}" {{ $reqItem->rejection_reason_id == $list->rejection_reason_id ?  'selected':''}}>{{ $list->rejection_reason }}</option>
@@ -171,11 +181,11 @@ td {
                                                         <br>
                                                         @if(isset($reqItem->rejection_reason_other) && $reqItem->rejection_reason_other!="")
                                                         <div id="othersRejReasonDiv{{$z}}">
-                                                            <textarea id="otherReason<?php echo $z; ?>" class="form-control" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
+                                                            <textarea id="otherReason<?php echo $z; ?>" class="form-control otherReason" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
                                                         </div>
                                                         @else
                                                         <div style="display:none" id="othersRejReasonDiv{{$z}}">
-                                                            <textarea id="otherReason<?php echo $z; ?>" class="form-control" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
+                                                            <textarea id="otherReason<?php echo $z; ?>" class="form-control otherReason" name="otherReason[]">{{$reqItem->rejection_reason_other}}</textarea>
                                                         </div>
                                                         @endif
                                                     </td>
@@ -355,7 +365,7 @@ function showRejReason(val,z){
         $('#rejReasonDiv'+z).hide()
         $('#othersRejReasonDiv'+z).hide()
         $('#otherReason'+z).val('');
-        console.log($('#otherReason').text())
+        // console.log($('#otherReason').text())
         $('#rejReason'+z).val('')
         // $('#rejReasonDiv'+z).removeClass('isRequired');
     }
@@ -370,9 +380,18 @@ function showOtherReason(id,z){
     else{
         $('#othersRejReasonDiv'+z).hide()
         $('#otherReason'+z).val('');
-        console.log($('#otherReason').text())
+        // console.log($('#otherReason').text())
         // $('#othersRejReasonDiv'+z).removeClass('isRequired');
     }
 }
+
+function selectAll(val){
+    // alert(val)
+    // $('.statusUp').select2('val',val)
+    $('.statusUp').val(val)
+    $('.statusUp').select2().trigger('change');
+    
+}
+
 </script>
 @endsection
