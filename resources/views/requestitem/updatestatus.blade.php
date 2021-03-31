@@ -77,7 +77,7 @@ td {
                         <div class="card-content collapse show">
                             <div class="card-body mt-0 pt-0">
                                 <div id="show_alert" class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form"  name="addIssueItem" id="addIssueItem" method="post" action="/requestitem/edit/{{base64_encode($result[0]->requested_item_id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form"  name="addIssueItem" id="addIssueItem" method="post" action="/requestitem/updateStatus/{{$id}}" autocomplete="off" onsubmit="validateNow();return false;">
                                 @csrf
                                 <br/>
                                 <div class="row">
@@ -348,10 +348,15 @@ function deleteItemDet(rfqdId,rowId) {
 function showRejReason(val,z){
     if(val=="declined"){
         $('#rejReasonDiv'+z).show()
+        $('#othersRejReasonDiv'+z).show()
         // $('#rejReasonDiv'+z).addClass('isRequired');
     }
     else{
         $('#rejReasonDiv'+z).hide()
+        $('#othersRejReasonDiv'+z).hide()
+        $('#otherReason'+z).val('');
+        console.log($('#otherReason').text())
+        $('#rejReason'+z).val('')
         // $('#rejReasonDiv'+z).removeClass('isRequired');
     }
 }
@@ -364,6 +369,8 @@ function showOtherReason(id,z){
     }
     else{
         $('#othersRejReasonDiv'+z).hide()
+        $('#otherReason'+z).val('');
+        console.log($('#otherReason').text())
         // $('#othersRejReasonDiv'+z).removeClass('isRequired');
     }
 }

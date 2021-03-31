@@ -124,8 +124,13 @@ class RequestItemController extends Controller
         if ($request->isMethod('post')) 
         {
             $service = new RequestItemService();
-            $edit = $service->updateRequestItem($request,$id);
-            return Redirect::route('requestitem.index')->with('status', $edit);
+            // dd(($id));
+            $msg = "";
+            $edit = $service->changeApproveStatus($request,$id);
+            if($edit){
+                $msg = "Status Updated Successfully!";
+            }
+            return Redirect::route('requestitem.index')->with('status', $msg);
         }
         else
         {
@@ -136,8 +141,8 @@ class RequestItemController extends Controller
             $item = $itemservice->getAllActiveItem();
             $branchService = new BranchesService();
             $branch = $branchService->getAllActiveBranches();
-            // dd($rejReason);
-            return view('requestitem.updatestatus',array('result'=>$result,'item'=>$item,'branch'=>$branch,'rejReason'=>$rejReason));
+            // dd($id);
+            return view('requestitem.updatestatus',array('result'=>$result,'item'=>$item,'branch'=>$branch,'rejReason'=>$rejReason,'id'=>$id));
         }
     }
 
