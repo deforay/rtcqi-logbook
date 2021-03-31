@@ -168,10 +168,13 @@ class RequestItemTable extends Model
         return $data;
     }
 
-    public function changeApproveStatus($request)
+    public function changeApproveStatus($request,$id)
     {
         $commonservice = new CommonService();
-        $id = $request['id'];
+        $data = $request->all();
+        $id = base64_decode($id);
+        // dd($data);
+        // $id = $request['id'];
         try {
             if ($id != "") {
                 $loc = array();
@@ -185,20 +188,32 @@ class RequestItemTable extends Model
                                                     <th><strong>Needed<br/>On</strong></th>
                                                     <th><strong>Location</strong></th>
                                                     <th><strong>Reason</strong></th>
+                                                    <th><strong>Status</strong></th>
+                                                    <th><strong>Approve/Decline <br> Reason</strong></th>
                                                 </tr>
                                             </thead>
                                             <tbody>';
-                $updateData = array(
-                                'request_item_status' => $request['sts'],
-                                'approved_by' => session('userId'),
-                                'approved_on' => $commonservice->getDateTime(),
-                                'updated_on' => $commonservice->getDateTime(),
-                                'updated_by' => session('userId'),
-                            );
-                DB::table('requested_items')
-                    ->where('request_id', '=', $id)
-                    ->update($updateData);
+                for ($k = 0; $k < count($data['status']); $k++) {
+                    $otherReason = "";
+                    if($data['rejReason'][$k]!=null){
+                        $otherReason = $data['otherReason'][$k];
+                    }
+                    $updateData = array(
+                                    'request_item_status' => $data['status'][$k],
+                                    'rejection_reason_id' => $data['rejReason'][$k],
+                                    'rejection_reason_other' => $otherReason,
+                                    'approved_by' => session('userId'),
+                                    'approved_on' => $commonservice->getDateTime(),
+                                    'updated_on' => $commonservice->getDateTime(),
+                                    'updated_by' => session('userId'),
+                                );
+                                // dd($updateData);
+                    DB::table('requested_items')
+                        ->where('requested_item_id', '=', $data['requestItemId'][$k])
+                        ->update($updateData);
+                }
                 $reqItem = DB::table('requested_items')->where('request_id', '=', $id)->get();
+                // dd($reqItem);
                 $requestBy = "";
                 for($j=0;$j<count($reqItem);$j++){
                     if(!in_array($reqItem[$j]->branch_id,$loc)){
@@ -210,6 +225,19 @@ class RequestItemTable extends Model
                     $itemName = DB::table('items')
                                     ->where('item_id','=', $reqItem[$j]->item_id)->get();
                     $requestBy =  $reqItem[$j]->requested_by;
+                    if($reqItem[$j]->rejection_reason_id){
+                        $rejReason = DB::table('rejection_reason')->where('rejection_reason_id','=', $reqItem[$j]->rejection_reason_id)->get();
+                        // dd($rejReason);
+                        if($rejReason[0]->rejection_reason == "others"){
+                            $rej = $reqItem[$j]->rejection_reason_other;
+                        }
+                        else{
+                            $rej = $rejReason[0]->rejection_reason;
+                        }
+                    }
+                    else{
+                        $rej = "";
+                    }
                     $mailItemDetails .= '<tr>
                                             <td>'.$itemName[0]->item_name.'</td>
                                             <td style="text-align:right;">'.$reqItem[$j]->request_item_qty.'</td>
@@ -217,6 +245,8 @@ class RequestItemTable extends Model
                                             <td>'.date('d-M-Y').'</td>
                                             <td>'.$branchEmail[0]->branch_name.'</td>
                                             <td>'.$reqItem[$j]->reason.'</td>
+                                            <td>'.$reqItem[$j]->request_item_status.'</td>
+                                            <td>'.$rej.'</td>
                                         </tr>';
                 }
                 $mailItemDetails .= '</tbody></table>';

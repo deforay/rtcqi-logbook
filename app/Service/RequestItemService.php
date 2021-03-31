@@ -71,10 +71,10 @@ class RequestItemService
 	}
 
 	//change Particular quotes status
-	public function changeApproveStatus($params)
+	public function changeApproveStatus($params,$id)
 	{
 		$reqmodel = new RequestItemTable();
-        $result = $reqmodel->changeApproveStatus($params);
+        $result = $reqmodel->changeApproveStatus($params,$id);
         return $result;
 	}
 
