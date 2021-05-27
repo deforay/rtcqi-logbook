@@ -1,9 +1,9 @@
 <!--
-    Author             : Sudarmathi M
-    Date               : 18 June 2020
+    Author             : Prasath M
+    Date               : 27 May 2021
     Description        : User view screen
-    Last Modified Date : 18 June 2020
-    Last Modified Name : Sudarmathi M
+    Last Modified Date : 27 May 2021
+    Last Modified Name : Prasath M
 -->
 
 @extends('layouts.main')
@@ -28,12 +28,8 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <?php
-                $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\User\\UserController']['add']) && ($role['App\\Http\\Controllers\\User\\UserController']['add'] == "allow")){ ?>
-                    <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
-            <?php } ?>
+                <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
             </div>
         </div>
     </div>
@@ -78,7 +74,6 @@
                                                 <th>Last Name</th>
                                                 <th>Mobile No</th>
                                                 <th>Email</th>
-                                                <th>User Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -126,7 +121,6 @@
                     { data: 'last_name', name: 'last_name',className:'firstcaps' },
                     { data: 'phone', name: 'phone'},
                     { data: 'email', name: 'email'},
-                    { data: 'login_id', name: 'login_id',className:'firstcaps' },
                     { data: 'user_status', name: 'user_status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
                 ],

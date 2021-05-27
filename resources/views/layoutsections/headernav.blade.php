@@ -1,13 +1,8 @@
 <?php
-
-if(session('loginType')=='users'){
-
     $profileURl="/user/profile/".base64_encode(session('userId'));
-}else{
-    $profileURl="/vendors/profile/".base64_encode(session('userId'));
-}
+
 ?>
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center" style="background-color: #4fb2c1 !important;">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center" style="background-color: #b75858 !important;">
         <div class="navbar-wrapper">
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
@@ -15,7 +10,7 @@ if(session('loginType')=='users'){
                     <li class="nav-item"><a class="navbar-brand" href="/dashboard">
                     <!-- <h3 class="text-center ml-2"><b></b></h3> -->
                         <!-- <img class="brand-logo" alt="modern admin logo" src="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
-                            <h3 class="brand-text">P &amp; I Management</h3>
+                            <h3 class="brand-text">RTCQI LOGBOOK</h3>
                         </a></li>
                     <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a></li>
                 </ul>

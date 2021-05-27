@@ -1,9 +1,9 @@
 <!--
-    Author             : Sudarmathi M
-    Date               : 22 June 2020
+    Author             : Prasath M
+    Date               : 27 May 2021
     Description        : Login screen
-    Last Modified Date : 22 June 2020
-    Last Modified Name : Sudarmathi M
+    Last Modified Date : 27 May 2021
+    Last Modified Name : Prasath M
 -->
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -16,7 +16,7 @@
     <meta name="description" content="Procurement & Inventory Manager">
     <meta name="keywords" content="Procurement & Inventory Manager">
     <meta name="author" content="Deforay">
-    <title>Procurement & Inventory Manager</title>
+    <title>RTCQI LOGBOOK</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
     <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -46,7 +46,12 @@
 
 </head>
 <!-- END: Head-->
-
+<style>
+  html body.bg-full-screen-image {
+      background: url(../../app-assets/images/backgrounds/bg-9.jpg)  !important;
+      background-size: cover !important;
+  }
+</style>
 <!-- BEGIN: Body-->
 <body class="vertical-layout vertical-overlay-menu 1-column  bg-full-screen-image menu-expanded blank-page blank-page"
 data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
@@ -63,7 +68,7 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
                 <div class="card-header border-0">
                   <div class="card-title text-center">
                     <div class="p-1">
-                        <h3>Procurement & Inventory Manager</h3>
+                        <h3>RTCQI LOGBOOK</h3>
                     </div>
                   </div>
                   <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">

@@ -7,7 +7,6 @@ texchange.komodoproject
 ^public/temporary/(?!index.php)
 ^public/acl.config.json
 ^bootstrap/
-^storage/
 error_log
 Thumbs.db
 Thumbs.db.orig

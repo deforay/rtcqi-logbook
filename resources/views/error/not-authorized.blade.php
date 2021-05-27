@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>ASM - Procurement & Inventory Manager | Unauthorised </title>
+<title>RTCQI LOGBOOK</title>
 <link rel="icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png') }}"/>
 <link rel="icon" href="{{ asset('app-assets/images/logo/asm_logo.png') }}" type="image/png" sizes="16x16">
 <!--vendors-->
@@ -21,7 +21,7 @@
 </head>
 <style>
 .bg-pattern {
-    background-image: url("{{ asset('app-assets/images/backgrounds/bg-2.jpg')}}");
+    background-image: url("{{ asset('app-assets/images/backgrounds/bg-9.jpg')}}");
 }
 </style>
 <body class="jumbo-page">
@@ -42,7 +42,6 @@
                             You are not granted priviliges to access this page. Please contact the Administrator.
                             <!-- of <strong>IASBYHEART Team</strong>. -->
                         </p>
-                        <img alt="image" src="{{ asset('app-assets/images/logo/asm_logo.png') }}" style="width:30%;height:auto">
                         <div class="p-t-10">
                             @if(session('login') == true)
                                 <a href="/dashboard" class="btn btn-lg" style="background-color: #812720;color: #fff;">Go Back Dashboard</a>

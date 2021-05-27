@@ -720,8 +720,6 @@ class ComposerStaticInitb28ddcc0527d5fc15387d56357eaf00b
         'App\\Service\\VendorsService' => __DIR__ . '/../..' . '/app/Service/VendorsService.php',
         'App\\Service\\VendorsTypeService' => __DIR__ . '/../..' . '/app/Service/VendorsTypeService.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
-        'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
-        'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
         'Barryvdh\\DomPDF\\ServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',

@@ -1,20 +1,14 @@
 <!-- 
-    Author             : Sudarmathi M
-    Date               : 18 June 2020
+    Author             : Prasath M
+    Date               : 27 May 2021
     Description        : User edit screen
-    Last Modified Date : 18 June 2020
-    Last Modified Name : Sudarmathi M
+    Last Modified Date : 27 May 2021
+    Last Modified Name : Prasath M
 -->
 @extends('layouts.main')
 
 @section('content')
-<?php  
- $branches = array();
-foreach($result as $branchList)
-{
-    array_push($branches, $branchList->branch_id);
-}
-?>
+
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -97,21 +91,6 @@ foreach($result as $branchList)
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-6 col-lg-12">
-										<fieldset>
-											<h5>Branches<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select branches">
-                                                <option value="">Select Branches</option>
-                                                @foreach($branch as $key=> $type)
-													<option value="{{ $type->branch_id }}" {{ in_array($type->branch_id, $branches) ?  'selected':''}}>{{ $type->branch_name }}</option>
-												@endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-                                    
                                 </div>
 								<div class="form-actions right">
                                     <a href="/dashboard" >

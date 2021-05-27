@@ -114,8 +114,6 @@ return array(
     'App\\Service\\VendorsService' => $baseDir . '/app/Service/VendorsService.php',
     'App\\Service\\VendorsTypeService' => $baseDir . '/app/Service/VendorsTypeService.php',
     'App\\User' => $baseDir . '/app/User.php',
-    'Asm89\\Stack\\Cors' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/Cors.php',
-    'Asm89\\Stack\\CorsService' => $vendorDir . '/asm89/stack-cors/src/Asm89/Stack/CorsService.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',
     'Barryvdh\\DomPDF\\PDF' => $vendorDir . '/barryvdh/laravel-dompdf/src/PDF.php',
     'Barryvdh\\DomPDF\\ServiceProvider' => $vendorDir . '/barryvdh/laravel-dompdf/src/ServiceProvider.php',

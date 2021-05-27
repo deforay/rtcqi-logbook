@@ -5,8 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\UserService;
-use App\Service\RolesService;
-use App\Service\BranchesService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -16,12 +14,12 @@ class UserController extends Controller
     //View user main screen
     public function index()
     {
-        if(session('login')==true)
-        {
+        // if(session('login')==true)
+        // {
             return view('user.index');
-        }
-        else
-            return Redirect::to('login')->with('status', 'Please Login');
+        // }
+        // else
+        //     return Redirect::to('login')->with('status', 'Please Login');
     }
 
     //Add user (display add screen and add the user values)
@@ -35,11 +33,8 @@ class UserController extends Controller
         }
         else
         {
-            $roleService = new RolesService();
-            $role = $roleService->getAllActiveRole();
-            $branchService = new BranchesService();
-            $branch = $branchService->getAllActiveBranches();
-            return view('user.add',array('role'=>$role,'branch'=>$branch));
+            
+            return view('user.add');
         }
     }
 
@@ -51,19 +46,7 @@ class UserController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div style="width: 180px;">';
-                        $role = session('role');
-                        if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")){
-                           $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        }else{
-                            $button .= '';
-                        }
-                        if($data->user_status == 'active'){
-                            $buttonStatus="changeStatus('users','user_id',$data->user_id,'user_status', 'inactive', 'userList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->user_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-warning btn-sm">Inactivate</button>';
-                        }else{
-                            $buttonStatus="changeStatus('users','user_id',$data->user_id,'user_status', 'active', 'userList')";
-                           $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="changeStatus" id="changeStatus'.$data->user_id.'" onclick="'.$buttonStatus.'" class="btn btn-outline-success btn-sm">Activate</button>';
-                        }
+                        $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         $button .= '</div>';
                         return $button;
                     })
@@ -84,11 +67,7 @@ class UserController extends Controller
         {
             $UserService = new UserService();
             $result = $UserService->getUserById($id);
-            $RoleService = new RolesService();
-            $role = $RoleService->getAllActiveRole();
-            $branchService = new BranchesService();
-            $branch = $branchService->getAllActiveBranches();
-            return view('user.edit',array('result'=>$result,'role'=>$role,'branch'=>$branch,'id'=>$id));
+            return view('user.edit',array('result'=>$result,'id'=>$id));
         }
     }
 
@@ -99,7 +78,6 @@ class UserController extends Controller
         {
             $UserService = new UserService();
             $edit = $UserService->updateProfile($request,$id);
-            // return Redirect::to('/dashboard');
             return Redirect::to('/dashboard')->with('status', $edit);
         }
         else
@@ -107,12 +85,7 @@ class UserController extends Controller
             
             $UserService = new UserService();
             $result = $UserService->getUserById($id);
-            $RoleService = new RolesService();
-            $role = $RoleService->getAllActiveRole();
-            $branchService = new BranchesService();
-            $branch = $branchService->getAllActiveBranches();
-         
-            return view('user.profile',array('result'=>$result,'role'=>$role,'branch'=>$branch));
+            return view('user.profile',array('result'=>$result));
         }
     }
 }
