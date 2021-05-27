@@ -10,7 +10,6 @@ Last Modified Name : Prasath M
 namespace App\Service;
 use App\Model\User\UserTable;
 use DB;
-use Redirect;
 
 class UserService
 {

@@ -13,4 +13,4 @@ Thumbs.db.orig
 .DS_Store
 .phpunit.result.cache
 .DS_Store.orig
-
+^storage/
