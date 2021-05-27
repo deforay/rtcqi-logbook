@@ -1,20 +1,13 @@
 <!-- 
-    Author             : Sudarmathi M
-    Date               : 18 June 2020
+    Author             : Prasath M
+    Date               : 27 May 2021
     Description        : User edit screen
-    Last Modified Date : 18 June 2020
-    Last Modified Name : Sudarmathi M
+    Last Modified Date : 27 May 2021
+    Last Modified Name : Prasath M
 -->
 @extends('layouts.main')
 
 @section('content')
-<?php  
-$branches = array();
-foreach($result as $branchList)
-{
-    array_push($branches, $branchList->branch_id);
-}
-?>
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -78,29 +71,7 @@ foreach($result as $branchList)
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Role<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="role" name="role" title="Please select role">
-                                                <option value="">Select Role</option>
-                                                @foreach($role as $type)
-													<option value="{{ $type->role_id }}" {{ $result[0]->role == $type->role_id ?  'selected':''}}>{{ $type->role_name }}</option>
-												@endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-                                        <fieldset>
-                                            <h5>User Name <span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <input type="text" id="loginId" value="{{$result[0]->login_id}}" class="form-control isRequired" autocomplete="off" placeholder="Enter user name" name="loginId" title="Please enter user name" onblur="checkNameValidation('users','login_id', this.id,'{{$fnct}}','Entered user name is already exist.')">
-                                            </div>
-                                        </fieldset>
-                                    </div>
+                                    
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Password
@@ -140,20 +111,6 @@ foreach($result as $branchList)
 											<div class="form-group">
                                                 <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'{{$fnct}}','Entered mail id is already exist.')">
 											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Locations<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select locations">
-                                                <option value="">Select Locations</option>
-                                                @foreach($branch as $key=> $type)
-													<option value="{{ $type->branch_id }}" {{ in_array($type->branch_id, $branches) ?  'selected':''}}>{{ $type->branch_name }}</option>
-												@endforeach
-                                                </select>
-                                            </div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">

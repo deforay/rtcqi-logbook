@@ -1,9 +1,9 @@
 <!-- 
-    Author             : Sudarmathi M
-    Date               : 18 June 2020
+    Author             : Prasath M
+    Date               : 27 May 2021
     Description        : User add screen
-    Last Modified Date : 18 June 2020
-    Last Modified Name : Sudarmathi M
+    Last Modified Date : 27 May 2021
+    Last Modified Name : Prasath M
 -->
 @extends('layouts.main')
 
@@ -68,29 +68,7 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Role<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="role" name="role" title="Please select role">
-                                                <option value="">Select Role</option>
-                                                @foreach($role as $type)
-													<option value="{{ $type->role_id }}">{{ $type->role_name }}</option>
-												@endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-                                        <fieldset>
-                                            <h5>User Name <span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <input type="text" id="loginId" class="form-control isRequired" autocomplete="off" placeholder="Enter user name" name="loginId" title="Please enter user name" onblur="checkNameValidation('users','login_id', this.id,'','Entered user name is already exist.')">
-                                            </div>
-                                        </fieldset>
-                                    </div>
+                                    
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Password <span class="mandatory">*</span>
@@ -130,20 +108,6 @@
 											<div class="form-group">
                                                 <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'','Entered mail id is already exist.')">
 											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Locations
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control select2" multiple="multiple" autocomplete="off" style="width:100%;" id="branches" name="branches[]" title="Please select locations">
-                                                <option value="">Select Locations</option>
-                                                @foreach($branch as $type)
-													<option value="{{ $type->branch_id }}">{{ $type->branch_name }}</option>
-												@endforeach
-                                                </select>
-                                            </div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">

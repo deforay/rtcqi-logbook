@@ -1,5 +1,5 @@
-<!--Author : Sudarmathi M
-    Date : 27 Jan 2020
+<!--Author : Prastah M
+    Date : 27 May 2021
     Desc : head tag elements
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,7 +9,7 @@
 <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
 <meta name="author" content="Deforay">
 <meta name="csrf-token" content="{{csrf_token()}}">
-<title>Procurement & Inventory Manager</title>
+<title>RTCQI LOGBOOK</title>
 <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
 <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -109,7 +109,7 @@
 
     .card-header:first-child {
         border-radius: .45rem .45rem 0 0;
-        background-color: #dbf2ff;
+        background-color: #fba44a;
     }
 
     .card-header .heading-elements, .card-header .heading-elements-toggle {
