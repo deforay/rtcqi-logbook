@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use App\Service\UserService;
 use Redirect;
 use Session;
-use App\Service\CommonService;
-use Mail;
 class LoginController extends Controller
 {
      //View Login main screen
