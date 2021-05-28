@@ -13,6 +13,7 @@ $manage = '';
     $manage .= '<li id="li-user"><a class="menu-item" href="/user/">User</a></li>';
     $manage .= '<li id="li-testsite"><a class="menu-item" href="/testsite/">Test Site</a></li>';
     $manage .= '<li id="li-testkit"><a class="menu-item" href="/testkit/">Test Kit</a></li>';
+    $manage .= '<li id="li-facility"><a class="menu-item" href="/facility/">Facility</a></li>';
     $manage .= '</ul></li>';
 
 ?>

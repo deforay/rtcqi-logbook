@@ -39,11 +39,11 @@ CREATE TABLE `district` (
 --
 
 CREATE TABLE `facility` (
-  `facility_id` varchar(50) NOT NULL DEFAULT '0',
+  `facility_id` int(50) ,
   `facility_name` varchar(50) DEFAULT NULL,
   `facility_latitude` varchar(50) DEFAULT NULL,
   `facility_longitude` varchar(50) DEFAULT NULL,
-  `facility_address1` int(11) DEFAULT NULL,
+  `facility_address1` varchar(50) DEFAULT NULL,
   `facility_address2` varchar(50) DEFAULT NULL,
   `facility_city` varchar(20) DEFAULT NULL,
   `facility_state` varchar(20) DEFAULT NULL,

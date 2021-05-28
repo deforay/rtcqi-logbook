@@ -70,8 +70,6 @@ Route::post('/testsite/add', 'TestSite\TestSiteController@add');
 Route::get('/testsite/add', 'TestSite\TestSiteController@add');
 Route::get('/testsite/edit/{id}', 'TestSite\TestSiteController@edit');
 Route::post('/testsite/edit/{id}', 'TestSite\TestSiteController@edit');
-Route::get('/testsite/profile/{id}', 'TestSite\TestSiteController@profile');
-Route::post('/testsite/profile/{id}', 'TestSite\TestSiteController@profile');
 Route::post('/getAllTestSite', 'TestSite\TestSiteController@getAllTestSite');
 
 //test kit module
@@ -80,6 +78,12 @@ Route::post('/testkit/add', 'TestKit\TestKitController@add');
 Route::get('/testkit/add', 'TestKit\TestKitController@add');
 Route::get('/testkit/edit/{id}', 'TestKit\TestKitController@edit');
 Route::post('/testkit/edit/{id}', 'TestKit\TestKitController@edit');
-Route::get('/testkit/profile/{id}', 'TestKit\TestKitController@profile');
-Route::post('/testkit/profile/{id}', 'TestKit\TestKitController@profile');
 Route::post('/getAllTestKit', 'TestKit\TestKitController@getAllTestKit');
+
+//Facility module
+Route::get('/facility', 'Facility\FacilityController@index')->name('facility.index');
+Route::post('/facility/add', 'Facility\FacilityController@add');
+Route::get('/facility/add', 'Facility\FacilityController@add');
+Route::get('/facility/edit/{id}', 'Facility\FacilityController@edit');
+Route::post('/facility/edit/{id}', 'Facility\FacilityController@edit');
+Route::post('/getAllFacility', 'Facility\FacilityController@getAllFacility');
