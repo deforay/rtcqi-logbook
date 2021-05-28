@@ -10,7 +10,8 @@ $manage = '';
 
     $manage .= '<li class=" nav-item" id="manage"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title">Manage</span></a>
                 <ul class="menu-content">';
-        $manage .= '<li id="li-user"><a class="menu-item" href="/user/">User</a></li>';
+    $manage .= '<li id="li-user"><a class="menu-item" href="/user/">User</a></li>';
+    $manage .= '<li id="li-testsite"><a class="menu-item" href="/testsite/">Test Site</a></li>';
     $manage .= '</ul></li>';
 
 ?>

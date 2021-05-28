@@ -85,63 +85,14 @@ ismob = true;
     var splitUrl = path.split('/');
     if(splitUrl[0]=="dashboard")
     {
-      //$("#dashboard").addClass('active');
-    }else if(splitUrl[0]=="roles" || splitUrl[0]=="countries" || splitUrl[0]=="user" || splitUrl[0]=="item" || splitUrl[0]=="mailtemplate" || splitUrl[0]=="branchtype"|| splitUrl[0]=="branches"|| splitUrl[0]=="vendorstype"|| splitUrl[0]=="vendors" || splitUrl[0]=="globalconfig")
+      $("#dashboard").addClass('active');
+    }else if(splitUrl[0]=="testsite"  || splitUrl[0]=="user" )
     {
       $("#manage").addClass('active');
       $("#manage > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
-    else if(splitUrl[0]=="itemCategory" || splitUrl[0]=="itemType" || splitUrl[0]=="unit" || splitUrl[0]=="brand" || splitUrl[0]=="unitconversion")
-    {
-      //$("#item").addClass('active');
-      $("#item").addClass('active');
-      $("#item > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
-    }
-    else if(splitUrl[0]=="purchaseorder" || splitUrl[0]=="itemReceiveEdit" || splitUrl[0]=="quotes" || splitUrl[0]=="rfq" || splitUrl[0]=="itemreceive" || splitUrl[0]=="deliveryschedule")
-    {
-      if(splitUrl[0]=="itemReceiveEdit")
-        splitUrl[0] = "itemreceive";
-      //$("#procurement").addClass('active');
-      $("#procurement").addClass('active');
-      $("#procurement > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
-    }
-    else if(splitUrl[0]=="inventoryoutwards")
-    {
-      //$("#procurement").addClass('active');
-      $("#inventory").addClass('active');
-      $("#inventory > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
-    }
-    else if(splitUrl[0]=="maintenance")
-    {
-      $("#maintenance").addClass('active');
-      $("#maintenance > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
-    }
-    else if(splitUrl[0]=="assettag")
-    {
-      $("#assettag").addClass('active');
-      $("#assettag > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
-    }
-    else if(splitUrl[0]=="inventoryReport")
-    {
-      $("#report").addClass('active');
-      $("#report > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
-    }
   });
-
-  // $(function(){
-  //   $(".isRequired").on("blur", function(){
-  //     $(this).val(function(_, v){
-  //     return v.replace(/(^\s*)|(\s*$)/gi, "");
-  //     });
-  //   });
-  // });
 
 
   function showAjaxModal(url)

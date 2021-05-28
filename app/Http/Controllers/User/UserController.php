@@ -45,7 +45,7 @@ class UserController extends Controller
         $data = $user->getAllUser();
         return DataTables::of($data)
                     ->addColumn('action', function($data){
-                        $button = '<div style="width: 180px;">';
+                        $button = '<div>';
                         $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         $button .= '</div>';
                         return $button;
