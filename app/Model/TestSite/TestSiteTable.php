@@ -5,7 +5,6 @@ namespace App\Model\TestSite;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class TestSiteTable extends Model
