@@ -1,8 +1,8 @@
 <!-- 
     Author             : Prasath M
-    Date               : 27 May 2021
-    Description        : User add screen
-    Last Modified Date : 27 May 2021
+    Date               : 28 May 2021
+    Description        : Test Kit add screen
+    Last Modified Date : 28 May 2021
     Last Modified Name : Prasath M
 -->
 @extends('layouts.main')
@@ -11,13 +11,13 @@
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-		<h3 class="content-header-title mb-0 d-inline-block">User</h3>
+		<h3 class="content-header-title mb-0 d-inline-block">Test Kit</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
 			<li class="breadcrumb-item">Manage
 			</li>
-			<li class="breadcrumb-item"><a href="/user/">User</a>
+			<li class="breadcrumb-item"><a href="/testkit/">Test Kit</a>
 			</li>
 			<li class="breadcrumb-item active">Add</li>
 			</ol>
@@ -32,7 +32,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Add User</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> Add Test Kit</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -47,75 +47,88 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="addUser" id="addUser" method="post" action="/user/add" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="addTestKit" id="addTestKit" method="post" action="/testkit/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>First Name <span class="mandatory">*</span>
+                                            <h5>Kit Name Id
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="firstName" class="form-control isRequired" autocomplete="off" placeholder="Enter first name" name="firstName" title="Please enter first name" >
+                                                <input type="text" id="kit_name_id" class="form-control" autocomplete="off" placeholder="Enter Kit name Id" name="kit_name_id" title="Please enter Kit name Id" >
                                             </div>
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Last Name 
+                                            <h5>Kit Name Id1  <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastName" class="form-control " autocomplete="off" placeholder="Enter last name" name="lastName" title="Please enter last name" >
+                                                <input type="text" id="kit_name_id1" class="form-control isRequired" autocomplete="off" placeholder="Enter Kit name 1" name="kit_name_id1" title="Please enter Kit name 1" >
                                             </div>
                                         </fieldset>
                                     </div>
                                     
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Password <span class="mandatory">*</span>
+											<h5>Kit Name Short 
 											</h5>
 											<div class="form-group">
-                                                <input type="password" id="password" class="form-control isRequired" autocomplete="off" placeholder="Enter Password" name="password" title="Please Enter Password">
-                                                <div class="invalid-feedback">
-													must contain atleast 6 characters, 1 number , 1 alphabet and 1 special character
-												</div>
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Confirm Password <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="password" id="confirmPassword" onkeyup="checkPasswordMatch()" class="form-control isRequired" autocomplete="off" placeholder="Enter Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
-                                                <span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
-                                                <input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" title="Passwords do not match.">
+                                                <input type="text" id="kit_name_short" class="form-control " autocomplete="off" placeholder="Enter kit name short" name="kit_name_short" title="Please Enter kit name short" >
 											</div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Mobile Number
+											<h5>Kit Name  <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="text" id="kit_name" class="form-control isRequired" autocomplete="off" placeholder="Enter kit name" name="kit_name" title="Please Enter kit name" >
 											</div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Email <span class="mandatory">*</span>
+											<h5>Kit Manufacturer <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'','Entered mail id is already exist.')">
+                                                <input type="text" id="kit_manufacturer" class="form-control  isRequired" autocomplete="off" placeholder="Enter kit manufacturer" name="kit_manufacturer" title="Please Enter kit manufacturer" >
 											</div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>User Status<span class="mandatory">*</span>
+											<h5>Installation Id <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="installation_id" class="form-control  isRequired" autocomplete="off" placeholder="Enter installation id" name="installation_id" title="Please Enter installation id" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Kit Expiry Date <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="kit_expiry_date" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Postal Code" name="kit_expiry_date" title="Please Enter Ki expiry date" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Comments 
+											</h5>
+											<div class="form-group">
+											<textarea id="kit_name_comments" name="kit_name_comments" class="form-control" placeholder="Enter Comments" title="Please enter the comments" ></textarea>
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Test Kit Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userStatus" name="userStatus" title="Please select User status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitStatus" name="testKitStatus" title="Please select Test Kit status">
                                                     <option value="active" selected>Active</option>
                                                     <option value="inactive">Inactive</option>
                                                 </select>
@@ -124,7 +137,7 @@
 									</div>
                                 </div>
 								<div class="form-actions right">
-                                    <a href="/user" >
+                                    <a href="/testkit" >
                                     <button type="button" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
                                     </button>
@@ -146,121 +159,28 @@
 </div>
 
 <script>
+
 $(document).ready(function() {
-    $(".select2").select2();
-    $("#branches").select2({
-        placeholder: "Select Locations",
-		allowClear: true
+    $('.datepicker').datepicker({
+        autoclose: true,
+        format: 'dd-M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+        // startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
     });
-    $('#confirmPassword').keyup(function() {			
-        var nPws=$('#password').val();
-        var cPws=$('#confirmPassword').val();
-        if(nPws!=cPws){
-            $('#confirmresult').html('Passwords do not match.')
-            $('#passwordCheck').val('');
-        }else{
-
-            $('#passwordCheck').val('passwordCheck');
-        $('#confirmresult').html('')}
-    })
-    $('#password').change(function() {
-        
-        $('#result').html(checkStrength($('#password').val()))
-    })
 });
-
-function checkStrength(password) {
-    var strength = 0
-    if (password.length < 7) {
-    $('#result').removeClass()
-    $('#result').addClass('short')
-    $('#passwordCheck').val('')
-    $("#password").val("");
-    $(".invalid-feedback").show();
-    return 'Too short'
-    }
-    if (password.length > 7) strength += 1
-    // If password contains both lower and uppercase characters, increase strength value.
-    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
-    // If it has numbers and characters, increase strength value.
-    if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
-    // If it has one special character, increase strength value.
-    if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-    // If it has two special characters, increase strength value.
-    if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-    // Calculated strength value, we can return messages
-    // If value is less than 2
-    if (strength < 2) {
-    $('#result').removeClass()
-    $('#result').addClass('weak')
-    $('#passwordCheck').val('')
-    $("#password").val("");
-    $(".invalid-feedback").show();
-    return 'Weak'
-    } else if (strength == 2) {
-    $('#result').removeClass()
-    $('#result').addClass('good')
-    $('#passwordCheck').val('good')
-    $(".invalid-feedback").hide();
-    return 'Good'
-    } else {
-    $('#result').removeClass()
-    $('#result').addClass('strong')
-    $('#passwordCheck').val('strong')
-    $(".invalid-feedback").hide();
-    return 'Strong'
-    }
-}
-
-function checkPasswordMatch()
-{
-    var password = $("#password").val();
-    var confirmPassword = $("#confirmPassword").val();
-    if(password.trim() && confirmPassword.trim())
-    {
-        if(password.trim() != confirmPassword.trim())
-        {
-            $("#confirmPassword").onfocus = function () {
-                // $("#confirmPassword").style.background = "#FFFFFF";
-            }
-        }
-        else
-        {
-            $("#password").focusout();
-            $("#confirmPassword").focusout();
-        }
-    }
-}
-
-function isNumberKey(evt){
-    var charCode = (evt.which) ? evt.which : evt.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57))
-        return false;
-    return true;
-}
-
  duplicateName = true;
     function validateNow() {
-        mobNum = $('#mobileNo').val();
-		// if(mobNum.length!=10){
-		// 	$("html, body").animate({ scrollTop: 0 }, "slow");
-		// 	$("#showAlertIndex").text('Please give 10  digit mobile number');
-		// 	$('#showAlertdiv').show();
-		// 	ismob = false;
-		// 	$('#mobileNo').css('background-color', 'rgb(255, 255, 153)')
-		// 	$('#showAlertdiv').delay(3000).fadeOut();
-		// }
-		// else{
-		// 	ismob = true;
-		// }
-		// if(ismob==true){
             flag = deforayValidator.init({
-                formId: 'addUser'
+                formId: 'addTestKit'
             });
             
             if (flag == true) {
                 if (duplicateName) {
-                    document.getElementById('addUser').submit();
+                    document.getElementById('addTestKit').submit();
                 }
             }
             else{
@@ -269,76 +189,6 @@ function isNumberKey(evt){
                 $('#show_alert').css("display","block");
                 $(".infocus").focus();
             }
-        // }
 	}
-	
-	function checkNameValidation(tableName, fieldName, obj,fnct, msg)
-    {
-        checkValue = document.getElementById(obj).value;
-        if(checkValue!='')
-        {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "{{ url('/checkNameValidation') }}",
-                method: 'post',
-                data: {
-                    tableName: tableName, fieldName: fieldName, value: checkValue,
-                },
-                success: function(result){
-                    // console.log(result)
-                    if (result > 0)
-                    {
-                        $("#showAlertIndex").text(msg);
-                        $('#showAlertdiv').show();
-                        duplicateName = false;
-                        document.getElementById(obj).value = "";
-                        $('#'+obj).focus();
-                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
-                        $('#showAlertdiv').delay(3000).fadeOut();
-                    }
-                    else {
-                        duplicateName = true;
-                    }
-                }
-            });
-        }
-    }
-    function mobileDuplicateValidation(tableName1, tableName2, fieldName, obj, msg) {
-        checkValue = document.getElementById(obj).value;
-        if (checkValue != '') {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "{{ url('/mobileDuplicateValidation') }}",
-                method: 'post',
-                data: {
-                    tableName1: tableName1,
-                    tableName2: tableName2,
-                    fieldName: fieldName,
-                    value: checkValue,
-                },
-                success: function(result) {
-                    if (result > 0) {
-                        $("#showAlertIndex").text(msg);
-                        $('#showAlertdiv').show();
-                        duplicateName = false;
-                        document.getElementById(obj).value = "";
-                        $('#' + obj).focus();
-                        $('#' + obj).css('background-color', 'rgb(255, 255, 153)')
-                        $('#showAlertdiv').delay(3000).fadeOut();
-                    } else {
-                        duplicateName = true;
-                    }
-                }
-            });
-        }
-    }
 </script>
 @endsection

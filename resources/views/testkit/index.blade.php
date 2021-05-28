@@ -29,7 +29,7 @@
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
                 <a href="/testkit/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add Test Kit</b></a>
+                <b><i class="ft-plus icon-left"></i> Add Test Kit</b></a>
             </div>
         </div>
     </div>
@@ -71,8 +71,9 @@
                                         <thead>
                                             <tr>
                                                 <th>Kit Name</th>
-                                                <th>Manufacturer Name</th>
-                                                <th>Expiry Date</th>
+                                                <th>Manufacturer</th>
+                                                <th>Kit Name Id 1</th>
+                                                <th>Installation Id</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -94,10 +95,10 @@
   <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllUser();
+        getAllTestKit();
         $.unblockUI();
     });
-    function getAllUser()
+    function getAllTestKit()
     {
       $.ajaxSetup({
           headers: {
@@ -117,21 +118,14 @@
             columns: [
 
                     { data: 'test_kit_name', name: 'test_kit_name',className:'firstcaps' },
-                    { data: 'test_kit_manufacturer', name: 'test_kit_manufacturer',className:'firstcaps' },
-                    { data: 'test_kit_expiry_date', name: 'test_kit_expiry_date'},
+                    { data: 'test_kit_manufacturer', name: 'test_kit_manufacturer'},
+                    { data: 'test_kit_name_id_1', name: 'test_kit_name_id_1'},
+                    { data: 'Installation_id', name: 'Installation_id' },
                     { data: 'test_kit_status', name: 'test_kit_status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
-                columnDefs: [
-                {
-                        "targets": 2,
-                        "className": "text-right",
-                },
-                ], 
             order: [[0, 'desc']]
         });
     }
-
-   
   </script>
 @endsection
