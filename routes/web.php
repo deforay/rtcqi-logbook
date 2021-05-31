@@ -103,3 +103,12 @@ Route::get('/district/add', 'District\DistrictController@add');
 Route::get('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/getAllDistrict', 'District\DistrictController@getAllDistrict');
+
+
+//sitetype module
+Route::get('/sitetype', 'SiteType\SiteTypeController@index')->name('sitetype.index');
+Route::post('/sitetype/add', 'SiteType\SiteTypeController@add');
+Route::get('/sitetype/add', 'SiteType\SiteTypeController@add');
+Route::get('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
+Route::post('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
+Route::post('/getAllSiteType', 'SiteType\SiteTypeController@getAllSiteType');
