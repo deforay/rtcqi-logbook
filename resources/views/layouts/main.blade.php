@@ -86,7 +86,7 @@ ismob = true;
     if(splitUrl[0]=="dashboard")
     {
       $("#dashboard").addClass('active');
-    }else if(splitUrl[0]=="testsite"  || splitUrl[0]=="user" || splitUrl[0]=="testkit" || splitUrl[0]=="facility" )
+    }else if(splitUrl[0]=="testsite"  || splitUrl[0]=="user" || splitUrl[0]=="testkit" || splitUrl[0]=="facility" || splitUrl[0]=="province" || splitUrl[0]=="district" )
     {
       $("#manage").addClass('active');
       $("#manage > ul > li").removeClass('active');

@@ -87,3 +87,19 @@ Route::get('/facility/add', 'Facility\FacilityController@add');
 Route::get('/facility/edit/{id}', 'Facility\FacilityController@edit');
 Route::post('/facility/edit/{id}', 'Facility\FacilityController@edit');
 Route::post('/getAllFacility', 'Facility\FacilityController@getAllFacility');
+
+//Province module
+Route::get('/province', 'Province\ProvinceController@index')->name('province.index');
+Route::post('/province/add', 'Province\ProvinceController@add');
+Route::get('/province/add', 'Province\ProvinceController@add');
+Route::get('/province/edit/{id}', 'Province\ProvinceController@edit');
+Route::post('/province/edit/{id}', 'Province\ProvinceController@edit');
+Route::post('/getAllProvince', 'Province\ProvinceController@getAllProvince');
+
+//District module
+Route::get('/district', 'District\DistrictController@index')->name('district.index');
+Route::post('/district/add', 'District\DistrictController@add');
+Route::get('/district/add', 'District\DistrictController@add');
+Route::get('/district/edit/{id}', 'District\DistrictController@edit');
+Route::post('/district/edit/{id}', 'District\DistrictController@edit');
+Route::post('/getAllDistrict', 'District\DistrictController@getAllDistrict');
