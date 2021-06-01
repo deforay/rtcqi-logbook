@@ -23,12 +23,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `district`
+-- Table structure for table `districts`
 --
 
-CREATE TABLE `district` (
+CREATE TABLE `districts` (
   `district_id` int(11) NOT NULL,
-  `province_id` int(11) NOT NULL,
+  `provincesss_id` int(11) NOT NULL,
   `district_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -51,7 +51,7 @@ CREATE TABLE `facility` (
   `facility_country` varchar(20) DEFAULT NULL,
   `facility_region` varchar(20) DEFAULT NULL,
   `contact_name` varchar(50) DEFAULT NULL,
-  `contact_email` varchar(20) DEFAULT NULL,
+  `contact_email` varchar(50) DEFAULT NULL,
   `contact_phoneno` varchar(20) DEFAULT NULL,
   `facility_status` varchar(20) NOT NULL DEFAULT 'active' COMMENT '1 = Site is active, 0 deleted but present in database as som',
   `updated_on` datetime DEFAULT NULL,
@@ -75,11 +75,11 @@ CREATE TABLE `facility_district_map` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `province`
+-- Table structure for table `provinces`
 --
 
-CREATE TABLE `province` (
-  `province_id` int(11) NOT NULL,
+CREATE TABLE `provinces` (
+  `provincesss_id` int(11) NOT NULL,
   `province_name` varchar(100) NOT NULL,
   `province_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -108,7 +108,7 @@ CREATE TABLE `survey_data_collection` (
   `st_id` int(11) NOT NULL,
   `is_barcode_available` varchar(100) NOT NULL DEFAULT 'no',
   `site_unique_id` varchar(100) DEFAULT NULL,
-  `province_id` int(11) NOT NULL,
+  `provincesss_id` int(11) NOT NULL,
   `site_manager` varchar(100) DEFAULT NULL,
   `is_flc` varchar(10) NOT NULL DEFAULT 'no',
   `contact_no` varchar(100) DEFAULT NULL,
@@ -252,11 +252,11 @@ CREATE TABLE `users_facility_map` (
 --
 
 --
--- Indexes for table `district`
+-- Indexes for table `districts`
 --
-ALTER TABLE `district`
+ALTER TABLE `districts`
   ADD PRIMARY KEY (`district_id`),
-  ADD KEY `province_id` (`province_id`);
+  ADD KEY `provincesss_id` (`provincesss_id`);
 
 --
 -- Indexes for table `facility`
@@ -271,10 +271,10 @@ ALTER TABLE `facility_district_map`
   ADD PRIMARY KEY (`fdm_id`);
 
 --
--- Indexes for table `province`
+-- Indexes for table `provinces`
 --
-ALTER TABLE `province`
-  ADD PRIMARY KEY (`province_id`);
+ALTER TABLE `provinces`
+  ADD PRIMARY KEY (`provincesss_id`);
 
 --
 -- Indexes for table `site_type`
@@ -289,7 +289,7 @@ ALTER TABLE `survey_data_collection`
   ADD PRIMARY KEY (`sdc_id`),
   ADD KEY `ts_id` (`ts_id`),
   ADD KEY `st_id` (`st_id`),
-  ADD KEY `province_id` (`province_id`);
+  ADD KEY `provincesss_id` (`provincesss_id`);
 
 --
 -- Indexes for table `survey_individual_test`
@@ -334,9 +334,9 @@ ALTER TABLE `users_facility_map`
 --
 
 --
--- AUTO_INCREMENT for table `district`
+-- AUTO_INCREMENT for table `districts`
 --
-ALTER TABLE `district`
+ALTER TABLE `districts`
   MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `facility_district_map`
@@ -344,10 +344,10 @@ ALTER TABLE `district`
 ALTER TABLE `facility_district_map`
   MODIFY `fdm_id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `province`
+-- AUTO_INCREMENT for table `provinces`
 --
-ALTER TABLE `province`
-  MODIFY `province_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `provinces`
+  MODIFY `provincesss_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `site_type`
 --
@@ -383,10 +383,10 @@ ALTER TABLE `users_facility_map`
 --
 
 --
--- Constraints for table `district`
+-- Constraints for table `districts`
 --
-ALTER TABLE `district`
-  ADD CONSTRAINT `district_ibfk_1` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`);
+ALTER TABLE `districts`
+  ADD CONSTRAINT `district_ibfk_1` FOREIGN KEY (`provincesss_id`) REFERENCES `provinces` (`provincesss_id`);
 
 --
 -- Constraints for table `survey_data_collection`
@@ -394,7 +394,7 @@ ALTER TABLE `district`
 ALTER TABLE `survey_data_collection`
   ADD CONSTRAINT `survey_data_collection_ibfk_1` FOREIGN KEY (`ts_id`) REFERENCES `test_site` (`ts_id`),
   ADD CONSTRAINT `survey_data_collection_ibfk_2` FOREIGN KEY (`st_id`) REFERENCES `site_type` (`st_id`),
-  ADD CONSTRAINT `survey_data_collection_ibfk_3` FOREIGN KEY (`province_id`) REFERENCES `province` (`province_id`);
+  ADD CONSTRAINT `survey_data_collection_ibfk_3` FOREIGN KEY (`provincesss_id`) REFERENCES `provinces` (`provincesss_id`);
 
 --
 -- Constraints for table `survey_individual_test`
@@ -413,4 +413,4 @@ ALTER TABLE `users_facility_map`
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- Prasath M 21 May 2021
-ALTER TABLE `province` CHANGE `province_status` `province_status` VARCHAR(100) NOT NULL;
+ALTER TABLE `provinces` CHANGE `province_status` `province_status` VARCHAR(100) NOT NULL;

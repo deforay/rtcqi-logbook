@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class SiteTypeTable extends Model
 {
-    protected $table = 'site_type';
+    protected $table = 'site_types';
 
     //add SiteType
     public function saveSiteType($request)
@@ -18,7 +18,7 @@ class SiteTypeTable extends Model
         $data = $request->all();
         $commonservice = new CommonService();
         if ($request->input('siteTypeName')!=null && trim($request->input('siteTypeName')) != '') {
-            $id = DB::table('site_type')->insertGetId(
+            $id = DB::table('site_types')->insertGetId(
                 [
                 'site_type_name' => $data['siteTypeName'],
                 'site_type_status' => $data['siteTypeStatus'],
@@ -32,7 +32,7 @@ class SiteTypeTable extends Model
     // Fetch All SiteType List
     public function fetchAllSiteType()
     {
-        $data = DB::table('site_type')
+        $data = DB::table('site_types')
                 ->get();
         return $data;
     }
@@ -40,7 +40,7 @@ class SiteTypeTable extends Model
     // Fetch All Active SiteType List
     public function fetchAllActiveSiteType()
     {
-        $data = DB::table('site_type')
+        $data = DB::table('site_types')
                 ->where('site_type_status','=','active')
                 ->get();
         return $data;
@@ -51,8 +51,8 @@ class SiteTypeTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('site_type')
-                ->where('site_type.st_id', '=',$id )
+         $data = DB::table('site_types')
+                ->where('site_types.st_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -65,7 +65,7 @@ class SiteTypeTable extends Model
                 'site_type_name' => $data['siteTypeName'],
                 'site_type_status' => $data['siteTypeStatus'],
             );
-            $response = DB::table('site_type')
+            $response = DB::table('site_types')
                 ->where('st_id', '=',base64_decode($id))
                 ->update(
                         $upData

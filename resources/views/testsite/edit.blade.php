@@ -57,7 +57,7 @@
                                             <h5>Site Id
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteId" value="{{$result[0]->site_ID}}" class="form-control" autocomplete="off" placeholder="Enter Site Id" name="siteId" title="Please enter Site Id" >
+                                                <input type="text" id="siteId" value="{{$result[0]->site_id}}" class="form-control" autocomplete="off" placeholder="Enter Site Id" name="siteId" title="Please enter Site Id" >
                                             </div>
                                         </fieldset>
                                     </div>

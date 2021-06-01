@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
                                                     @foreach($province as $row)
-                                                    <option value="{{$row->province_id}}" {{ $result[0]->province_id == $row->province_id ?  'selected':''}}>{{$row->province_name}}</option>
+                                                    <option value="{{$row->provincesss_id}}" {{ $result[0]->provincesss_id == $row->provincesss_id ?  'selected':''}}>{{$row->province_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
