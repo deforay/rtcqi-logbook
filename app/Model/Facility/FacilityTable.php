@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class FacilityTable extends Model
 {
-    protected $table = 'facility';
+    protected $table = 'facilities';
 
     //add Facility
     public function saveFacility($request)
@@ -19,7 +19,7 @@ class FacilityTable extends Model
         $commonservice = new CommonService();
        
         if ($request->input('facilityName')!=null && trim($request->input('facilityName')) != '') {
-            $id = DB::table('facility')->insertGetId(
+            $id = DB::table('facilities')->insertGetId(
                 [
                 'facility_name' => $data['facilityName'],
                 'facility_latitude' => $data['latitude'],
@@ -47,7 +47,7 @@ class FacilityTable extends Model
     // Fetch All Facility List
     public function fetchAllFacility()
     {
-        $data = DB::table('facility')
+        $data = DB::table('facilities')
                 ->get();
         return $data;
     }
@@ -55,7 +55,7 @@ class FacilityTable extends Model
     // Fetch All Active Facility List
     public function fetchAllActiveFacility()
     {
-        $data = DB::table('facility')
+        $data = DB::table('facilities')
                 ->where('facility_status','=','active')
                 ->get();
         return $data;
@@ -66,8 +66,8 @@ class FacilityTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('facility')
-                ->where('facility.facility_id', '=',$id )
+         $data = DB::table('facilities')
+                ->where('facilities.facility_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -95,7 +95,7 @@ class FacilityTable extends Model
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );
-            $response = DB::table('facility')
+            $response = DB::table('facilities')
                 ->where('facility_id', '=',base64_decode($id))
                 ->update(
                         $testData

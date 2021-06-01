@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class TestKitTable extends Model
 {
-    protected $table = 'test_kit_information';
+    protected $table = 'test_kits';
 
     //add TestKit
     public function saveTestKit($request)
@@ -19,7 +19,7 @@ class TestKitTable extends Model
         $commonservice = new CommonService();
         if ($request->input('kit_name')!=null && trim($request->input('kit_name')) != '') {
             $expiry = $commonservice->dateFormat($data['kit_expiry_date']);
-            $id = DB::table('test_kit_information')->insertGetId(
+            $id = DB::table('test_kits')->insertGetId(
                 ['test_kit_name_id' => $data['kit_name_id'],
                 'test_kit_name_id_1' => $data['kit_name_id1'],
                 'test_kit_name_short' => $data['kit_name_short'],
@@ -41,7 +41,7 @@ class TestKitTable extends Model
     // Fetch All TestKit List
     public function fetchAllTestKit()
     {
-        $data = DB::table('test_kit_information')
+        $data = DB::table('test_kits')
                 ->get();
         return $data;
     }
@@ -49,7 +49,7 @@ class TestKitTable extends Model
     // Fetch All Active TestKit List
     public function fetchAllActiveTestKit()
     {
-        $data = DB::table('test_kit_information')
+        $data = DB::table('test_kits')
                 ->where('test_kit_status','=','active')
                 ->get();
         return $data;
@@ -60,8 +60,8 @@ class TestKitTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('test_kit_information')
-                ->where('test_kit_information.tk_id', '=',$id )
+         $data = DB::table('test_kits')
+                ->where('test_kits.tk_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -85,7 +85,7 @@ class TestKitTable extends Model
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );
-            $response = DB::table('test_kit_information')
+            $response = DB::table('test_kits')
                 ->where('tk_id', '=',base64_decode($id))
                 ->update(
                         $testData

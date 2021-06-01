@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class DistrictTable extends Model
 {
-    protected $table = 'district';
+    protected $table = 'districts';
 
     //add District
     public function saveDistrict($request)
@@ -17,10 +17,10 @@ class DistrictTable extends Model
         //to get all request values
         $data = $request->all();
         if ($request->input('districtName')!=null && trim($request->input('districtName')) != '') {
-            $id = DB::table('district')->insertGetId(
+            $id = DB::table('districts')->insertGetId(
                 [
                 'district_name' => $data['districtName'],
-                'province_id' => $data['provinceId'],
+                'provincesss_id' => $data['provinceId'],
                 ]
             );
         }
@@ -31,8 +31,8 @@ class DistrictTable extends Model
     // Fetch All District List
     public function fetchAllDistrict()
     {
-        $data = DB::table('district')
-                ->join('province', 'province.province_id', '=', 'district.province_id')
+        $data = DB::table('districts')
+                ->join('provinces', 'provinces.provincesss_id', '=', 'districts.provincesss_id')
                 ->get();
         return $data;
     }
@@ -42,8 +42,8 @@ class DistrictTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('district')
-                ->where('district.district_id', '=',$id )
+         $data = DB::table('districts')
+                ->where('districts.district_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -54,9 +54,9 @@ class DistrictTable extends Model
         $data = $params->all();
             $upData = array(
                 'district_name' => $data['districtName'],
-                'province_id' => $data['provinceId'],
+                'provincesss_id' => $data['provinceId'],
             );
-            $response = DB::table('district')
+            $response = DB::table('districts')
                 ->where('district_id', '=',base64_decode($id))
                 ->update(
                         $upData

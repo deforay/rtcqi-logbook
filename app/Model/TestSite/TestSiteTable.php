@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class TestSiteTable extends Model
 {
-    protected $table = 'test_site';
+    protected $table = 'test_sites';
 
     //add TestSite
     public function saveTestSite($request)
@@ -18,7 +18,7 @@ class TestSiteTable extends Model
         $data = $request->all();
         $commonservice = new CommonService();
         if ($request->input('siteName')!=null && trim($request->input('siteName')) != '') {
-            $id = DB::table('test_site')->insertGetId(
+            $id = DB::table('test_sites')->insertGetId(
                 ['site_ID' => $data['siteId'],
                 'site_name' => $data['siteName'],
                 'site_latitude' => $data['latitude'],
@@ -42,7 +42,7 @@ class TestSiteTable extends Model
     // Fetch All TestSite List
     public function fetchAllTestSite()
     {
-        $data = DB::table('test_site')
+        $data = DB::table('test_sites')
                 ->get();
         return $data;
     }
@@ -50,7 +50,7 @@ class TestSiteTable extends Model
     // Fetch All Active TestSite List
     public function fetchAllActiveTestSite()
     {
-        $data = DB::table('test_site')
+        $data = DB::table('test_sites')
                 ->where('test_site_status','=','active')
                 ->get();
         return $data;
@@ -61,8 +61,8 @@ class TestSiteTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('test_site')
-                ->where('test_site.ts_id', '=',$id )
+         $data = DB::table('test_sites')
+                ->where('test_sites.ts_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -87,7 +87,7 @@ class TestSiteTable extends Model
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );
-            $response = DB::table('test_site')
+            $response = DB::table('test_sites')
                 ->where('ts_id', '=',base64_decode($id))
                 ->update(
                         $testData

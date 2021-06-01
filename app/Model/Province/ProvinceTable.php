@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class ProvinceTable extends Model
 {
-    protected $table = 'province';
+    protected $table = 'provinces';
 
     //add Province
     public function saveProvince($request)
@@ -18,7 +18,7 @@ class ProvinceTable extends Model
         $data = $request->all();
         $commonservice = new CommonService();
         if ($request->input('provinceName')!=null && trim($request->input('provinceName')) != '') {
-            $id = DB::table('province')->insertGetId(
+            $id = DB::table('provinces')->insertGetId(
                 [
                 'province_name' => $data['provinceName'],
                 'province_status' => $data['provinceStatus'],
@@ -32,7 +32,7 @@ class ProvinceTable extends Model
     // Fetch All Province List
     public function fetchAllProvince()
     {
-        $data = DB::table('province')
+        $data = DB::table('provinces')
                 ->get();
         return $data;
     }
@@ -40,7 +40,7 @@ class ProvinceTable extends Model
     // Fetch All Active Province List
     public function fetchAllActiveProvince()
     {
-        $data = DB::table('province')
+        $data = DB::table('provinces')
                 ->where('province_status','=','active')
                 ->get();
         return $data;
@@ -51,8 +51,8 @@ class ProvinceTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('province')
-                ->where('province.province_id', '=',$id )
+         $data = DB::table('provinces')
+                ->where('provinces.provincesss_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -65,8 +65,8 @@ class ProvinceTable extends Model
                 'province_name' => $data['provinceName'],
                 'province_status' => $data['provinceStatus'],
             );
-            $response = DB::table('province')
-                ->where('province_id', '=',base64_decode($id))
+            $response = DB::table('provinces')
+                ->where('provincesss_id', '=',base64_decode($id))
                 ->update(
                         $upData
                     );

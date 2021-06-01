@@ -49,7 +49,7 @@
                             <form class="form form-horizontal" role="form" name="editProvince" id="editProvince" method="post" action="/province/edit/{{$id}}" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                             @php
-                                $fnct = "province_id##".($result[0]->province_id);
+                                $fnct = "provincesss_id##".($result[0]->provincesss_id);
                             @endphp
                             <div class="row">
 							<div class="col-xl-4 col-lg-12">
