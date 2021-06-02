@@ -32,7 +32,7 @@ class DistrictTable extends Model
     public function fetchAllDistrict()
     {
         $data = DB::table('districts')
-                ->join('provinces', 'provinces.provincesss_id', '=', 'districts.provincesss_id')
+                ->join('provinces', 'provi7nces.provincesss_id', '=', 'districts.provincesss_id')
                 ->get();
         return $data;
     }
