@@ -112,3 +112,11 @@ Route::get('/sitetype/add', 'SiteType\SiteTypeController@add');
 Route::get('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
 Route::post('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
 Route::post('/getAllSiteType', 'SiteType\SiteTypeController@getAllSiteType');
+
+//monthlyreport module
+Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index');
+Route::post('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
+Route::get('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
+Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
+Route::post('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
+Route::post('/getAllMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllMonthlyReport');

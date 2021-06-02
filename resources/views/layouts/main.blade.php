@@ -92,6 +92,12 @@ ismob = true;
       $("#manage > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
+    else if(splitUrl[0]=="monthlyreport"  || splitUrl[0]=="monthlyreportpages" )
+    {
+      $("#tests").addClass('active');
+      $("#tests > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
+    }
   });
 
 
