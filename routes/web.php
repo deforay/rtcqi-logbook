@@ -104,6 +104,13 @@ Route::get('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/getAllDistrict', 'District\DistrictController@getAllDistrict');
 
+//monthlyreport module
+Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index');
+Route::post('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
+Route::get('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
+Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
+Route::post('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
+Route::post('/getAllMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllMonthlyReport');
 
 //sitetype module
 Route::get('/sitetype', 'SiteType\SiteTypeController@index')->name('sitetype.index');
