@@ -17,6 +17,7 @@ $manage = '';
     $manage .= '<li id="li-province"><a class="menu-item" href="/province/">Province</a></li>';
     $manage .= '<li id="li-district"><a class="menu-item" href="/district/">District</a></li>';
     $manage .= '<li id="li-sitetype"><a class="menu-item" href="/sitetype/">Site Type</a></li>';
+    $manage .= '<li id="li-globalconfig"><a class="menu-item" href="/globalconfig/">Global Config</a></li>';
     $manage .= '</ul></li>';
 
     $manage .= '<li class=" nav-item" id="tests"><a href="javascript:void(0)"><i class="la la-file"></i><span class="menu-title">Tests</span></a>
