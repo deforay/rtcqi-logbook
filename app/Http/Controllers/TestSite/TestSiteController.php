@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TestSite;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Service\FacilityService;
 use App\Service\TestSiteService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -33,8 +34,9 @@ class TestSiteController extends Controller
         }
         else
         {
-            
-            return view('testsite.add');
+            $FacilityService = new FacilityService();  
+            $facility = $FacilityService->getAllActiveFacility();
+            return view('testsite.add',array('facility'=>$facility));
         }
     }
 
@@ -65,9 +67,11 @@ class TestSiteController extends Controller
         }
         else
         {
+            $FacilityService = new FacilityService();  
+            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $result = $TestSiteService->getTestSiteById($id);
-            return view('testsite.edit',array('result'=>$result,'id'=>$id));
+            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility));
         }
     }
 }
