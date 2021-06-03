@@ -91,14 +91,125 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Province Status<span class="mandatory">*</span>
+											<h5>Site Unique Id <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="siteUniqueId" class="form-control  isRequired" autocomplete="off" placeholder="Enter Site Unique Id" name="siteUniqueId" title="Please Enter Site Unique Id" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Site Manager 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="siteManager" class="form-control" autocomplete="off" placeholder="Enter Site Manager" name="siteManager" title="Please Enter Site Manager" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Is Flu<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceStatus" name="provinceStatus" title="Please select Province status">
-                                                    <option value="active" selected>Active</option>
-                                                    <option value="inactive">Inactive</option>
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is Flu status">
+                                                    <option value="yes" >Yes</option>
+                                                    <option value="no" selected>No</option>
                                                 </select>
                                             </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Is Recency<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Is Recency status">
+                                                    <option value="yes" >Yes</option>
+                                                    <option value="no" selected>No</option>
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Contact Number 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="contactNo" class="form-control" autocomplete="off" placeholder="Enter Contact Number" name="contactNo" title="Please Enter Contact Number" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Latitude <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="latitude" class="form-control isRequired " autocomplete="off" placeholder="Enter latitude" name="latitude" title="Please Enter latitude" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Longitude <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Algorithm Type 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="algoType" class="form-control" autocomplete="off" placeholder="Enter Algorithm Type" name="algoType" title="Please Enter Algorithm Type" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Date of data collection <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="DateOfCollect" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Reporting Month <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="reportingMon" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Book Number <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="bookNo" class="form-control isRequired" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Signature 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="signature" class="form-control  " autocomplete="off" placeholder="Enter Signature" name="signature" title="Please Enter Signature" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Name of Data Collected 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="nameOfDataCollect" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected" >
+											</div>
 										</fieldset>
 									</div>
                                 </div>
@@ -125,7 +236,18 @@
 </div>
 
 <script>
-
+$(document).ready(function() {
+    $('.datepicker').datepicker({
+        autoclose: true,
+        format: 'dd-M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+        // startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
+    });
+});
  duplicateName = true;
     function validateNow() {
             flag = deforayValidator.init({

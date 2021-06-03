@@ -286,7 +286,7 @@ DROP TABLE IF EXISTS `allowed_testkits`;
 CREATE TABLE `allowed_testkits` (
   `test_kit_no` INT(11) NOT NULL,
   `testkit_id` INT(11) NOT NULL,
-  PRIMARY KEY (`test_kit_no`)
+  PRIMARY KEY (`test_kit_no`, `testkit_id`)
 );
 
 -- ---
