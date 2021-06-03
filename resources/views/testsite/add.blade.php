@@ -153,6 +153,20 @@
                                             </div>
 										</fieldset>
 									</div>
+									<div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Facilty Name<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
+												<option>Select Facility Name</option>
+												 @foreach($facility as $row)
+                                                    <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/testsite" >

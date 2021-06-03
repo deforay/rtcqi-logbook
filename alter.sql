@@ -348,3 +348,8 @@ ALTER TABLE `allowed_testkits` ADD FOREIGN KEY (testkit_id) REFERENCES `test_kit
 -- ('','','','');
 -- INSERT INTO `allowed_testkits` (`test_kit_no`,`testkit_id`) VALUES
 -- ('','');
+
+
+-- Sakthivel P 3 June 2021
+ALTER TABLE test_sites ADD facility_id int(11);
+ALTER TABLE `test_sites` ADD FOREIGN KEY (facility_id) REFERENCES `facilities` (`facility_id`);

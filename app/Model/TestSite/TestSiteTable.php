@@ -30,6 +30,7 @@ class TestSiteTable extends Model
                 'site_state' => $data['state'],
                 'site_country' => $data['country'],
                 'test_site_status' => $data['testSiteStatus'],
+                'facility_id' => $data['facilityId'],
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
                 ]
@@ -43,6 +44,7 @@ class TestSiteTable extends Model
     public function fetchAllTestSite()
     {
         $data = DB::table('test_sites')
+                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->get();
         return $data;
     }
@@ -84,6 +86,7 @@ class TestSiteTable extends Model
                 'site_state' => $data['state'],
                 'site_country' => $data['country'],
                 'test_site_status' => $data['testSiteStatus'],
+                'facility_id' => $data['facilityId'],
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );

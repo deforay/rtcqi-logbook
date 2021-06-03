@@ -74,6 +74,7 @@
                                                 <th>Site City</th>
                                                 <th>Site State</th>
                                                 <th>Site Country</th>
+                                                <th>Facility Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -121,6 +122,7 @@
                     { data: 'site_city', name: 'site_city'},
                     { data: 'site_state', name: 'site_state'},
                     { data: 'site_country', name: 'site_country' },
+                    { data: 'facility_name', name: 'facility_name' },
                     { data: 'test_site_status', name: 'test_site_status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
