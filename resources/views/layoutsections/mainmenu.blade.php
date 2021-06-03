@@ -19,6 +19,12 @@ $manage = '';
     $manage .= '<li id="li-sitetype"><a class="menu-item" href="/sitetype/">Site Type</a></li>';
     $manage .= '</ul></li>';
 
+    $manage .= '<li class=" nav-item" id="tests"><a href="javascript:void(0)"><i class="la la-file"></i><span class="menu-title">Tests</span></a>
+                <ul class="menu-content">';
+    $manage .= '<li id="li-monthlyreport"><a class="menu-item" href="/monthlyreport/">Monthly Report</a></li>';
+    $manage .= '<li id="li-monthlyreportpages"><a class="menu-item" href="/monthlyreportpages/">Monthly Report Pages</a></li>';
+    $manage .= '</ul></li>';
+
 ?>
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow menu-border" data-scroll-to-active="true">
     <div class="main-menu-content">
