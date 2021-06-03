@@ -197,13 +197,11 @@ CREATE TABLE `users` (
 
 DROP TABLE IF EXISTS `users_facility_map`;
 		
-CREATE TABLE `users_facility_map` (
+CREATE TABLE `users_facility_map` ( 
   `ufm_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11) NOT NULL,
-  `facility_id` INT(11) NOT NULL,
-KEY (`user_id`),
-  PRIMARY KEY (`ufm_id`)
-);
+ `user_id` INT(11) NOT NULL, 
+ `ts_id` INT(11) NOT NULL, KEY (`user_id`), 
+ PRIMARY KEY (`ufm_id`) );
 
 -- ---
 -- Table 'facilities'
@@ -300,6 +298,7 @@ ALTER TABLE `districts` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` 
 ALTER TABLE `districts` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
 ALTER TABLE `monthly_reports_pages` ADD FOREIGN KEY (mr_id) REFERENCES `monthly_reports` (`mr_id`);
 ALTER TABLE `users_facility_map` ADD FOREIGN KEY (user_id) REFERENCES `users` (`user_id`);
+ALTER TABLE `users_facility_map` ADD FOREIGN KEY (ts_id) REFERENCES `test_sites` (`ts_id`)
 ALTER TABLE `allowed_testkits` ADD FOREIGN KEY (testkit_id) REFERENCES `test_kits` (`tk_id`);
 
 -- ---
