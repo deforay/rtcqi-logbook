@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Service\FacilityService;
 use App\Service\UserService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -33,8 +34,9 @@ class UserController extends Controller
         }
         else
         {
-            
-            return view('user.add');
+            $FacilityService = new FacilityService();
+            $facility = $FacilityService->getAllActiveFacility();     
+            return view('user.add',array('facility'=>$facility));
         }
     }
 
@@ -66,8 +68,15 @@ class UserController extends Controller
         else
         {
             $UserService = new UserService();
+            $FacilityService = new FacilityService();
+            $facility = $FacilityService->getAllActiveFacility();    
             $result = $UserService->getUserById($id);
-            return view('user.edit',array('result'=>$result,'id'=>$id));
+            $facilityId = array(); 
+            foreach($result as $value) {
+                array_push($facilityId,$value->facility_id);
+            }
+            // dd($result);die;
+            return view('user.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'facilityId' => $facilityId));
         }
     }
 
