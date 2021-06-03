@@ -112,3 +112,12 @@ Route::get('/sitetype/add', 'SiteType\SiteTypeController@add');
 Route::get('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
 Route::post('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
 Route::post('/getAllSiteType', 'SiteType\SiteTypeController@getAllSiteType');
+
+
+//user facility map module
+Route::get('/userfacilitymap', 'UserFacilityMap\UserFacilityMapController@index')->name('userfacilitymap.index');
+Route::post('/userfacilitymap/add', 'UserFacilityMap\UserFacilityMapController@add');
+Route::get('/userfacilitymap/add', 'UserFacilityMap\UserFacilityMapController@add');
+Route::get('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
+Route::post('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
+Route::post('/getAllUserFacility', 'UserFacilityMap\UserFacilityMapController@getAllUserFacility');
