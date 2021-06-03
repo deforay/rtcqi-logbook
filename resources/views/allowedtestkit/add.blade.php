@@ -72,7 +72,6 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testKitName" name="testKitName[]" title="Please select Test Kit Name">
-                                                <option>Select Test Kit Name</option>
                                                     @foreach($test as $row)
                                                     <option value="{{$row->tk_id}}">{{$row->test_kit_name}}</option>
                                                     @endforeach
@@ -125,6 +124,10 @@
 	}
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
+    $selectElement = $('#testKitName').select2({
+    placeholder: "Please select an Test Kit Name",
+    allowClear: true
+  });
 });
 </script>
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />

@@ -194,6 +194,7 @@ CREATE TABLE `users` (
 -- Table 'users_facility_map'
 -- 
 -- ---
+-- Sakthivel P 3 June 2021
 
 DROP TABLE IF EXISTS `users_facility_map`;
 		
@@ -298,7 +299,8 @@ ALTER TABLE `districts` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` 
 ALTER TABLE `districts` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
 ALTER TABLE `monthly_reports_pages` ADD FOREIGN KEY (mr_id) REFERENCES `monthly_reports` (`mr_id`);
 ALTER TABLE `users_facility_map` ADD FOREIGN KEY (user_id) REFERENCES `users` (`user_id`);
-ALTER TABLE `users_facility_map` ADD FOREIGN KEY (ts_id) REFERENCES `test_sites` (`ts_id`)
+-- Sakthivel P 3 June 2021
+ALTER TABLE `users_facility_map` ADD FOREIGN KEY (ts_id) REFERENCES `test_sites` (`ts_id`);
 ALTER TABLE `allowed_testkits` ADD FOREIGN KEY (testkit_id) REFERENCES `test_kits` (`tk_id`);
 
 -- ---

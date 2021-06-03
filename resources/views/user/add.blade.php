@@ -128,7 +128,6 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
-                                                <option>Select Test Site Name</option>
                                                     @foreach($test as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach
@@ -356,6 +355,10 @@ function isNumberKey(evt){
     }
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
+    $selectElement = $('#testSiteId').select2({
+    placeholder: "Please select an Site Name",
+    allowClear: true
+  });
 });
 </script>
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />
