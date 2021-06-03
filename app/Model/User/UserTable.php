@@ -32,12 +32,11 @@ class UserTable extends Model
                 'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            for ($x = 0; $x < count($data['facilityId']); $x++){
-                // echo($data['facilityId'][$x]);
+            for ($x = 0; $x < count($data['testSiteId']); $x++){
             $userFacility = DB::table('users_facility_map')->insertGetId(
                 [
                 'user_id' => $id,
-                'facility_id' => $data['facilityId'][$x],
+                'ts_id' => $data['testSiteId'][$x],
                 ]
             );
         }
@@ -98,12 +97,11 @@ class UserTable extends Model
                     );
                     DB::delete('delete from users_facility_map where user_id = ?',[base64_decode($id)]);
 
-                    for ($x = 0; $x < count($data['facilityId']); $x++){
-                        // echo($data['facilityId'][$x]);
+                    for ($x = 0; $x < count($data['testSiteId']); $x++){
                     $userFacility = DB::table('users_facility_map')->insertGetId(
                         [
                         'user_id' => base64_decode($id),
-                        'facility_id' => $data['facilityId'][$x],
+                        'ts_id' => $data['testSiteId'][$x],
                         ]
                     );
                 }

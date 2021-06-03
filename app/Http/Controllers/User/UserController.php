@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Service\FacilityService;
+use App\Service\TestSiteService;
 use App\Service\UserService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -34,9 +34,9 @@ class UserController extends Controller
         }
         else
         {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();     
-            return view('user.add',array('facility'=>$facility));
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllActiveTestSite();     
+            return view('user.add',array('test'=>$testSite));
         }
     }
 
@@ -68,15 +68,15 @@ class UserController extends Controller
         else
         {
             $UserService = new UserService();
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();    
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllActiveTestSite();    
             $result = $UserService->getUserById($id);
-            $facilityId = array(); 
+            $testSiteId = array(); 
             foreach($result as $value) {
-                array_push($facilityId,$value->facility_id);
+                array_push($testSiteId,$value->ts_id);
             }
             // dd($result);die;
-            return view('user.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'facilityId' => $facilityId));
+            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId));
         }
     }
 

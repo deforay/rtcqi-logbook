@@ -127,13 +127,13 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Facilty Name<span class="mandatory">*</span>
+											<h5>Test Site Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId[]" title="Please select Facility Name">
-                                                <option>Select Facility Name</option>
-                                                    @foreach($facility as $row)
-                                                    <option value="{{$row->facility_id}}" {{ in_array($row->facility_id, $facilityId) ?  'selected':''}}>{{$row->facility_name}}</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                <option>Select Test Site Name</option>
+                                                    @foreach($test as $row)
+                                                    <option value="{{$row->ts_id}}" {{ in_array($row->ts_id, $testSiteId) ?  'selected':''}}>{{$row->site_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
