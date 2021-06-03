@@ -1,416 +1,349 @@
--- phpMyAdmin SQL Dump
--- version 4.6.6deb5ubuntu0.5
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: May 28, 2021 at 10:08 AM
--- Server version: 5.7.32-0ubuntu0.18.04.1
--- PHP Version: 7.2.24-0ubuntu0.18.04.7
+-- ---
+-- Globals
+-- ---
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
 
+-- ---
+-- Table 'monthly_reports'
+-- 
+-- ---
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+DROP TABLE IF EXISTS `monthly_reports`;
+		
+CREATE TABLE `monthly_reports` (
+  `mr_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `ts_id` INT(11) NOT NULL COMMENT 'Site Name',
+  `st_id` INT(11) NOT NULL,
+  `site_unique_id` VARCHAR(100) NULL DEFAULT NULL,
+  `provincesss_id` INT(11) NOT NULL,
+  `site_manager` VARCHAR(100) NULL DEFAULT NULL,
+  `is_flc` VARCHAR(10) NOT NULL DEFAULT 'no',
+  `is_recency` VARCHAR(20) NOT NULL DEFAULT 'no',
+  `contact_no` VARCHAR(100) NULL DEFAULT NULL,
+  `latitude` VARCHAR(100) NOT NULL,
+  `longitude` VARCHAR(200) NOT NULL,
+  `algorithm_type` VARCHAR(255) NULL DEFAULT NULL,
+  `date_of_data_collection` DATE NOT NULL,
+  `reporting_month` DATE NOT NULL,
+  `book_no` INT(10) NOT NULL DEFAULT 0,
+  `name_of_data_collector` VARCHAR(100) NULL DEFAULT NULL,
+  `signature` MEDIUMTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`mr_id`),
+KEY (`ts_id`),
+KEY (`provincesss_id`),
+KEY (`st_id`)
+);
 
---
--- Database: `rtcqi-logbook`
---
+-- ---
+-- Table 'provinces'
+-- 
+-- ---
 
--- --------------------------------------------------------
-
---
--- Table structure for table `districts`
---
-
-CREATE TABLE `districts` (
-  `district_id` int(11) NOT NULL,
-  `provincesss_id` int(11) NOT NULL,
-  `district_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `facility`
---
-
-CREATE TABLE `facility` (
-  `facility_id` int(50) ,
-  `facility_name` varchar(50) DEFAULT NULL,
-  `facility_latitude` varchar(50) DEFAULT NULL,
-  `facility_longitude` varchar(50) DEFAULT NULL,
-  `facility_address1` varchar(50) DEFAULT NULL,
-  `facility_address2` varchar(50) DEFAULT NULL,
-  `facility_city` varchar(20) DEFAULT NULL,
-  `facility_state` varchar(20) DEFAULT NULL,
-  `facility_postal_code` varchar(20) DEFAULT NULL,
-  `facility_country` varchar(20) DEFAULT NULL,
-  `facility_region` varchar(20) DEFAULT NULL,
-  `contact_name` varchar(50) DEFAULT NULL,
-  `contact_email` varchar(50) DEFAULT NULL,
-  `contact_phoneno` varchar(20) DEFAULT NULL,
-  `facility_status` varchar(20) NOT NULL DEFAULT 'active' COMMENT '1 = Site is active, 0 deleted but present in database as som',
-  `updated_on` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `created_on` datetime NOT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `facility_district_map`
---
-
-CREATE TABLE `facility_district_map` (
-  `fdm_id` int(11) NOT NULL,
-  `facility_id` int(11) NOT NULL,
-  `district_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `provinces`
---
-
+DROP TABLE IF EXISTS `provinces`;
+		
 CREATE TABLE `provinces` (
-  `provincesss_id` int(11) NOT NULL,
-  `province_name` varchar(100) NOT NULL,
-  `province_status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `provincesss_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `province_name` VARCHAR(100) NOT NULL,
+  `province_status` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`provincesss_id`)
+);
 
--- --------------------------------------------------------
+-- ---
+-- Table 'districts'
+-- 
+-- ---
 
---
--- Table structure for table `site_type`
---
+DROP TABLE IF EXISTS `districts`;
+		
+CREATE TABLE `districts` (
+  `district_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `provincesss_id` INT(11) NOT NULL,
+  `district_name` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`district_id`),
+KEY (`provincesss_id`)
+);
 
-CREATE TABLE `site_type` (
-  `st_id` int(10) NOT NULL,
-  `site_type_name` varchar(100) NOT NULL,
-  `site_type_status` varchar(10) NOT NULL DEFAULT 'active'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- ---
+-- Table 'monthly_reports_pages'
+-- 
+-- ---
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `monthly_reports_pages`;
+		
+CREATE TABLE `monthly_reports_pages` (
+  `mrp_id` INT(11) NOT NULL,
+  `mr_id` INT(11) NOT NULL,
+  `page_no` VARCHAR(50) NULL DEFAULT NULL,
+  `start_test_date` DATE NULL DEFAULT NULL,
+  `end_test_date` DATE NULL DEFAULT NULL,
+  `lot_no_1` VARCHAR(200) NULL DEFAULT NULL,
+  `expiry_date_1` DATE NULL DEFAULT NULL,
+  `test_1_kit_id` INT(11) NULL DEFAULT NULL,
+  `test_1_reactive` INT(11) NULL DEFAULT NULL,
+  `test_1_nonreactive` INT(11) NULL DEFAULT NULL,
+  `test_1_invalid` INT(11) NULL DEFAULT NULL,
+  `lot_no_2` VARCHAR(100) NULL DEFAULT NULL,
+  `expiry_date_2` DATE NULL DEFAULT NULL,
+  `test_2_kit_id` INT(11) NULL DEFAULT NULL,
+  `test_2_reactive` INT(11) NULL DEFAULT NULL,
+  `test_2_nonreactive` INT(11) NULL DEFAULT NULL,
+  `test_2_invalid` INT(11) NULL DEFAULT NULL,
+  `test_3_kit_id` INT(11) NULL DEFAULT NULL,
+  `lot_no_3` VARCHAR(200) NULL DEFAULT NULL,
+  `expiry_date_3` DATE NULL DEFAULT NULL,
+  `test_3_reactive` INT(11) NULL DEFAULT NULL,
+  `test_3_nonreactive` INT(11) NULL DEFAULT NULL,
+  `test_3_invalid` INT(11) NULL DEFAULT NULL,
+  `lot_no_4` VARCHAR(200) NULL DEFAULT NULL,
+  `expiry_date_4` DATE NULL DEFAULT NULL,
+  `test_4_kit_id` INT(11) NULL DEFAULT NULL,
+  `test_4_reactive` INT(11) NULL DEFAULT NULL,
+  `test_4_nonreactive` INT(11) NULL DEFAULT NULL,
+  `test_4_invalid` INT(11) NULL DEFAULT NULL,
+  `final_positive` INT(11) NULL DEFAULT NULL,
+  `final_negative` INT(11) NULL DEFAULT NULL,
+  `final_undetermined` INT(11) NULL DEFAULT NULL,
+  `total_high_vl` VARCHAR(200) NULL DEFAULT NULL,
+  `low_vl` VARCHAR(200) NULL DEFAULT NULL,
+  `total_vl_not_reported` VARCHAR(200) NULL DEFAULT NULL,
+  `recency_total_recent` VARCHAR(200) NULL DEFAULT NULL,
+  `recency_total_negative` VARCHAR(100) NULL DEFAULT NULL,
+  `recency_total_inconclusive` VARCHAR(200) NULL DEFAULT NULL,
+  `recency_total_longterm` VARCHAR(200) NULL DEFAULT NULL,
+  `positive_percentage` INT(11) NULL DEFAULT NULL,
+  `positive_agreement` VARCHAR(11) NULL DEFAULT NULL,
+  `overall_agreement` VARCHAR(200) NULL DEFAULT NULL,
+  `updated_by` INT(11) NULL DEFAULT NULL,
+  `updated_on` DATETIME NULL DEFAULT NULL,
+KEY (`updated_by`),
+  PRIMARY KEY (`mrp_id`),
+KEY (`page_no`),
+KEY (`mr_id`),
+KEY (`test_3_invalid`)
+);
 
---
--- Table structure for table `survey_data_collection`
---
+-- ---
+-- Table 'site_types'
+-- 
+-- ---
 
-CREATE TABLE `survey_data_collection` (
-  `sdc_id` int(11) NOT NULL,
-  `ts_id` int(11) NOT NULL COMMENT 'Site Name',
-  `st_id` int(11) NOT NULL,
-  `is_barcode_available` varchar(100) NOT NULL DEFAULT 'no',
-  `site_unique_id` varchar(100) DEFAULT NULL,
-  `provincesss_id` int(11) NOT NULL,
-  `site_manager` varchar(100) DEFAULT NULL,
-  `is_flc` varchar(10) NOT NULL DEFAULT 'no',
-  `contact_no` varchar(100) DEFAULT NULL,
-  `latitude` varchar(100) NOT NULL,
-  `longitude` varchar(200) NOT NULL,
-  `algorithm_type` varchar(255) DEFAULT NULL,
-  `date_of_data_collection` date NOT NULL,
-  `reporting_month` date NOT NULL,
-  `book_no` int(10) NOT NULL DEFAULT '0',
-  `name_of_data_collector` varchar(100) DEFAULT NULL,
-  `signature` mediumtext
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `site_types`;
+		
+CREATE TABLE `site_types` (
+  `st_id` INT(10) NOT NULL AUTO_INCREMENT,
+  `site_type_name` VARCHAR(100) NOT NULL,
+  `site_type_status` VARCHAR(10) NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`st_id`)
+);
 
--- --------------------------------------------------------
+-- ---
+-- Table 'test_sites'
+-- 
+-- ---
 
---
--- Table structure for table `survey_individual_test`
---
+DROP TABLE IF EXISTS `test_sites`;
+		
+CREATE TABLE `test_sites` (
+  `ts_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `site_id` VARCHAR(100) NULL DEFAULT NULL,
+  `site_name` VARCHAR(50) NULL DEFAULT NULL,
+  `site_latitude` VARCHAR(100) NULL DEFAULT NULL,
+  `site_longitude` VARCHAR(100) NULL DEFAULT NULL,
+  `site_address1` VARCHAR(50) NULL DEFAULT NULL,
+  `site_address2` VARCHAR(50) NULL DEFAULT NULL,
+  `site_postal_code` VARCHAR(20) NULL DEFAULT NULL,
+  `site_city` VARCHAR(20) NULL DEFAULT NULL,
+  `site_state` VARCHAR(20) NULL DEFAULT NULL,
+  `site_country` VARCHAR(20) NULL DEFAULT NULL,
+  `updated_by` INT(11) NOT NULL,
+  `updated_on` DATETIME NULL DEFAULT NULL,
+  `test_site_status` VARCHAR(10) NULL DEFAULT 'active' COMMENT '1 = Site is active, 0 deleted but present in database as som',
+  `created_on` DATE NULL DEFAULT NULL,
+  `created_by` INT(11) NOT NULL,
+  `new field` INT(11) NULL DEFAULT NULL,
+  UNIQUE KEY (`ts_id`),
+  PRIMARY KEY (`ts_id`),
+KEY (`site_postal_code`)
+);
 
-CREATE TABLE `survey_individual_test` (
-  `sit_id` int(11) NOT NULL,
-  `sdc_id` int(11) NOT NULL,
-  `page_no` varchar(50) DEFAULT NULL,
-  `start_test_date` date DEFAULT NULL,
-  `end_test_date` date DEFAULT NULL,
-  `test_1_kit_id` int(11) DEFAULT NULL,
-  `test_2_kit_id` int(11) DEFAULT NULL,
-  `test_3_kit_id` int(11) DEFAULT NULL,
-  `test_4_kit_id` int(11) DEFAULT NULL,
-  `test_1_reactive` int(11) DEFAULT NULL,
-  `test_1_nonreactive` int(11) DEFAULT NULL,
-  `test_1_invalid` int(11) DEFAULT NULL,
-  `test_2_reactive` int(11) DEFAULT NULL,
-  `test_2_nonreactive` int(11) DEFAULT NULL,
-  `test_2_invalid` int(11) DEFAULT NULL,
-  `test_3_reactive` int(11) DEFAULT NULL,
-  `test_3_nonreactive` int(11) DEFAULT NULL,
-  `test_3_invalid` int(11) DEFAULT NULL,
-  `test_4_reactive` int(11) DEFAULT NULL,
-  `test_4_nonreactive` int(11) DEFAULT NULL,
-  `test_4_invalid` int(11) DEFAULT NULL,
-  `final_positive` int(11) DEFAULT NULL,
-  `final_negative` int(11) DEFAULT NULL,
-  `final_undetermined` int(11) DEFAULT NULL,
-  `positive_percentage` int(11) DEFAULT NULL,
-  `positive_agreement` varchar(11) DEFAULT NULL,
-  `overall_agreement` varchar(200) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_on` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-- ---
+-- Table 'users'
+-- 
+-- ---
 
--- --------------------------------------------------------
-
---
--- Table structure for table `test_kit_information`
---
-
-CREATE TABLE `test_kit_information` (
-  `tk_id` int(11) NOT NULL,
-  `test_kit_name_id` varchar(50) DEFAULT NULL,
-  `test_kit_name_id_1` varchar(50) NOT NULL,
-  `test_kit_name_short` varchar(100) DEFAULT NULL,
-  `test_kit_name` varchar(100) NOT NULL,
-  `test_kit_comments` varchar(50) DEFAULT NULL,
-  `test_kit_manufacturer` varchar(100) NOT NULL,
-  `test_kit_expiry_date` date DEFAULT NULL,
-  `Installation_id` varchar(50) DEFAULT NULL,
-  `test_kit_status` varchar(100) NOT NULL DEFAULT 'active',
-  `updated_on` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `created_on` date NOT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `test_site`
---
-
-CREATE TABLE `test_site` (
-  `ts_id` int(11) NOT NULL,
-  `site_ID` varchar(100) DEFAULT NULL,
-  `site_name` varchar(50) DEFAULT NULL,
-  `site_latitude` varchar(100) DEFAULT NULL,
-  `site_longitude` varchar(100) DEFAULT NULL,
-  `site_address1` varchar(50) DEFAULT NULL,
-  `site_address2` varchar(50) DEFAULT NULL,
-  `site_postal_code` varchar(20) DEFAULT NULL,
-  `site_city` varchar(20) DEFAULT NULL,
-  `site_state` varchar(20) DEFAULT NULL,
-  `site_country` varchar(20) DEFAULT NULL,
-  `updated_by` int(11) NOT NULL,
-  `updated_on` datetime DEFAULT NULL,
-  `test_site_status` varchar(10) DEFAULT 'active' COMMENT '1 = Site is active, 0 deleted but present in database as som',
-  `created_on` date DEFAULT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
+DROP TABLE IF EXISTS `users`;
+		
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
-  `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `user_status` varchar(255) DEFAULT 'active',
-  `created_on` datetime DEFAULT NULL,
-  `updated_on` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(255) NULL DEFAULT NULL,
+  `last_name` VARCHAR(255) NULL DEFAULT NULL,
+  `password` VARCHAR(255) NULL DEFAULT NULL,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
+  `phone` VARCHAR(255) NULL DEFAULT NULL,
+  `user_status` VARCHAR(255) NULL DEFAULT 'active',
+  `created_on` DATETIME NULL DEFAULT NULL,
+  `updated_on` DATETIME NULL DEFAULT NULL,
+  `created_by` INT(11) NULL DEFAULT NULL,
+  `updated_by` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+);
 
---
--- Dumping data for table `users`
---
+-- ---
+-- Table 'users_facility_map'
+-- 
+-- ---
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `password`, `email`, `phone`, `user_status`, `created_on`, `updated_on`, `created_by`, `updated_by`) VALUES
-(2, 'Prasath', 'Mahalingam', '$2y$10$bl209TD.1CtLkQl8RMfNiu7bP91Rke60cmEAgJIDPxUvKPCEIpEqO', 'mprasath2410@gmail.com', '6548789987', 'active', '2021-05-27 14:08:55', '2021-05-27 14:53:29', NULL, 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users_facility_map`
---
-
+DROP TABLE IF EXISTS `users_facility_map`;
+		
 CREATE TABLE `users_facility_map` (
-  `ufm_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `facility_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ufm_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `facility_id` INT(11) NOT NULL,
+KEY (`user_id`),
+  PRIMARY KEY (`ufm_id`)
+);
 
---
--- Indexes for dumped tables
---
+-- ---
+-- Table 'facilities'
+-- 
+-- ---
 
---
--- Indexes for table `districts`
---
-ALTER TABLE `districts`
-  ADD PRIMARY KEY (`district_id`),
-  ADD KEY `provincesss_id` (`provincesss_id`);
+DROP TABLE IF EXISTS `facilities`;
+		
+CREATE TABLE `facilities` (
+  `facility_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `facility_name` VARCHAR(50) NULL DEFAULT NULL,
+  `facility_latitude` VARCHAR(50) NULL DEFAULT NULL,
+  `facility_longitude` VARCHAR(50) NULL DEFAULT NULL,
+  `facility_address1` VARCHAR(255) NULL DEFAULT NULL,
+  `facility_address2` VARCHAR(50) NULL DEFAULT NULL,
+  `facility_city` VARCHAR(20) NULL DEFAULT NULL,
+  `facility_state` VARCHAR(20) NULL DEFAULT NULL,
+  `facility_postal_code` VARCHAR(20) NULL DEFAULT NULL,
+  `facility_country` VARCHAR(20) NULL DEFAULT NULL,
+  `facility_region` VARCHAR(20) NULL DEFAULT NULL,
+  `contact_name` VARCHAR(50) NULL DEFAULT NULL,
+  `contact_email` VARCHAR(20) NULL DEFAULT NULL,
+  `contact_phoneno` VARCHAR(20) NULL DEFAULT NULL,
+  `facility_status` VARCHAR(20) NOT NULL DEFAULT 'active' COMMENT '1 = Site is active, 0 deleted but present in database as som',
+  `updated_on` DATETIME NULL DEFAULT NULL,
+  `updated_by` INT(11) NULL DEFAULT NULL,
+  `created_on` DATETIME NOT NULL,
+  `created_by` INT(11) NOT NULL,
+  PRIMARY KEY (`facility_id`)
+);
 
---
--- Indexes for table `facility`
---
-ALTER TABLE `facility`
-  ADD PRIMARY KEY (`facility_id`);
+-- ---
+-- Table 'test_kits'
+-- 
+-- ---
 
---
--- Indexes for table `facility_district_map`
---
-ALTER TABLE `facility_district_map`
-  ADD PRIMARY KEY (`fdm_id`);
+DROP TABLE IF EXISTS `test_kits`;
+		
+CREATE TABLE `test_kits` (
+  `tk_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `test_kit_name_id` VARCHAR(50) NULL DEFAULT NULL,
+  `test_kit_name_id_1` VARCHAR(50) NOT NULL,
+  `test_kit_name_short` VARCHAR(100) NULL DEFAULT NULL,
+  `test_kit_name` VARCHAR(100) NOT NULL,
+  `test_kit_comments` VARCHAR(50) NULL DEFAULT NULL,
+  `test_kit_manufacturer` VARCHAR(100) NOT NULL,
+  `test_kit_expiry_date` DATE NULL DEFAULT NULL,
+  `Installation_id` VARCHAR(50) NULL DEFAULT NULL,
+  `test_kit_status` VARCHAR(100) NOT NULL DEFAULT 'active',
+  `updated_on` DATETIME NULL DEFAULT NULL,
+  `updated_by` INT(11) NULL DEFAULT NULL,
+  `created_on` DATE NOT NULL,
+  `created_by` INT(11) NOT NULL,
+KEY (`Installation_id`),
+  PRIMARY KEY (`tk_id`)
+);
 
---
--- Indexes for table `provinces`
---
-ALTER TABLE `provinces`
-  ADD PRIMARY KEY (`provincesss_id`);
+-- ---
+-- Table 'global_config'
+-- 
+-- ---
 
---
--- Indexes for table `site_type`
---
-ALTER TABLE `site_type`
-  ADD PRIMARY KEY (`st_id`);
+DROP TABLE IF EXISTS `global_config`;
+		
+CREATE TABLE `global_config` (
+  `config_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `display_name` VARCHAR(200) NOT NULL,
+  `global_name` VARCHAR(200) NOT NULL,
+  `global_value` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`config_id`)
+);
 
---
--- Indexes for table `survey_data_collection`
---
-ALTER TABLE `survey_data_collection`
-  ADD PRIMARY KEY (`sdc_id`),
-  ADD KEY `ts_id` (`ts_id`),
-  ADD KEY `st_id` (`st_id`),
-  ADD KEY `provincesss_id` (`provincesss_id`);
+-- ---
+-- Table 'allowed_testkits'
+-- 
+-- ---
 
---
--- Indexes for table `survey_individual_test`
---
-ALTER TABLE `survey_individual_test`
-  ADD PRIMARY KEY (`sit_id`),
-  ADD KEY `sdc_id` (`sdc_id`),
-  ADD KEY `test_3_invalid` (`test_3_invalid`),
-  ADD KEY `updated_by` (`updated_by`),
-  ADD KEY `page_no` (`page_no`);
+DROP TABLE IF EXISTS `allowed_testkits`;
+		
+CREATE TABLE `allowed_testkits` (
+  `test_kit_no` INT(11) NOT NULL,
+  `testkit_id` INT(11) NOT NULL,
+  PRIMARY KEY (`test_kit_no`)
+);
 
---
--- Indexes for table `test_kit_information`
---
-ALTER TABLE `test_kit_information`
-  ADD PRIMARY KEY (`tk_id`),
-  ADD KEY `Installation_id` (`Installation_id`);
+-- ---
+-- Foreign Keys 
+-- ---
 
---
--- Indexes for table `test_site`
---
-ALTER TABLE `test_site`
-  ADD PRIMARY KEY (`ts_id`),
-  ADD UNIQUE KEY `ts_id` (`ts_id`),
-  ADD KEY `site_postal_code` (`site_postal_code`);
+ALTER TABLE `monthly_reports` ADD FOREIGN KEY (ts_id) REFERENCES `test_sites` (`ts_id`);
+ALTER TABLE `monthly_reports` ADD FOREIGN KEY (st_id) REFERENCES `site_types` (`st_id`);
+ALTER TABLE `monthly_reports` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
+ALTER TABLE `districts` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
+ALTER TABLE `districts` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
+ALTER TABLE `monthly_reports_pages` ADD FOREIGN KEY (mr_id) REFERENCES `monthly_reports` (`mr_id`);
+ALTER TABLE `users_facility_map` ADD FOREIGN KEY (user_id) REFERENCES `users` (`user_id`);
+ALTER TABLE `allowed_testkits` ADD FOREIGN KEY (testkit_id) REFERENCES `test_kits` (`tk_id`);
 
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+-- ---
+-- Table Properties
+-- ---
 
---
--- Indexes for table `users_facility_map`
---
-ALTER TABLE `users_facility_map`
-  ADD PRIMARY KEY (`ufm_id`),
-  ADD KEY `user_id` (`user_id`);
+-- ALTER TABLE `monthly_reports` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `provinces` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `districts` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `monthly_reports_pages` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `site_types` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `test_sites` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `users_facility_map` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `facilities` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `test_kits` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `global_config` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `allowed_testkits` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- AUTO_INCREMENT for dumped tables
---
+-- ---
+-- Test Data
+-- ---
 
---
--- AUTO_INCREMENT for table `districts`
---
-ALTER TABLE `districts`
-  MODIFY `district_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `facility_district_map`
---
-ALTER TABLE `facility_district_map`
-  MODIFY `fdm_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `provinces`
---
-ALTER TABLE `provinces`
-  MODIFY `provincesss_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `site_type`
---
-ALTER TABLE `site_type`
-  MODIFY `st_id` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `survey_data_collection`
---
-ALTER TABLE `survey_data_collection`
-  MODIFY `sdc_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `test_kit_information`
---
-ALTER TABLE `test_kit_information`
-  MODIFY `tk_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `test_site`
---
-ALTER TABLE `test_site`
-  MODIFY `ts_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `users_facility_map`
---
-ALTER TABLE `users_facility_map`
-  MODIFY `ufm_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `districts`
---
-ALTER TABLE `districts`
-  ADD CONSTRAINT `district_ibfk_1` FOREIGN KEY (`provincesss_id`) REFERENCES `provinces` (`provincesss_id`);
-
---
--- Constraints for table `survey_data_collection`
---
-ALTER TABLE `survey_data_collection`
-  ADD CONSTRAINT `survey_data_collection_ibfk_1` FOREIGN KEY (`ts_id`) REFERENCES `test_site` (`ts_id`),
-  ADD CONSTRAINT `survey_data_collection_ibfk_2` FOREIGN KEY (`st_id`) REFERENCES `site_type` (`st_id`),
-  ADD CONSTRAINT `survey_data_collection_ibfk_3` FOREIGN KEY (`provincesss_id`) REFERENCES `provinces` (`provincesss_id`);
-
---
--- Constraints for table `survey_individual_test`
---
-ALTER TABLE `survey_individual_test`
-  ADD CONSTRAINT `survey_individual_test_ibfk_1` FOREIGN KEY (`sdc_id`) REFERENCES `survey_data_collection` (`sdc_id`);
-
---
--- Constraints for table `users_facility_map`
---
-ALTER TABLE `users_facility_map`
-  ADD CONSTRAINT `users_facility_map_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
--- Prasath M 21 May 2021
-ALTER TABLE `provinces` CHANGE `province_status` `province_status` VARCHAR(100) NOT NULL;
+-- INSERT INTO `monthly_reports` (`mr_id`,`ts_id`,`st_id`,`site_unique_id`,`provincesss_id`,`site_manager`,`is_flc`,`is_recency`,`contact_no`,`latitude`,`longitude`,`algorithm_type`,`date_of_data_collection`,`reporting_month`,`book_no`,`name_of_data_collector`,`signature`) VALUES
+-- ('','','','','','','','','','','','','','','','','');
+-- INSERT INTO `provinces` (`provincesss_id`,`province_name`,`province_status`) VALUES
+-- ('','','');
+-- INSERT INTO `districts` (`district_id`,`provincesss_id`,`district_name`) VALUES
+-- ('','','');
+-- INSERT INTO `monthly_reports_pages` (`mrp_id`,`mr_id`,`page_no`,`start_test_date`,`end_test_date`,`lot_no_1`,`expiry_date_1`,`test_1_kit_id`,`test_1_reactive`,`test_1_nonreactive`,`test_1_invalid`,`lot_no_2`,`expiry_date_2`,`test_2_kit_id`,`test_2_reactive`,`test_2_nonreactive`,`test_2_invalid`,`test_3_kit_id`,`lot_no_3`,`expiry_date_3`,`test_3_reactive`,`test_3_nonreactive`,`test_3_invalid`,`lot_no_4`,`expiry_date_4`,`test_4_kit_id`,`test_4_reactive`,`test_4_nonreactive`,`test_4_invalid`,`final_positive`,`final_negative`,`final_undetermined`,`total_high_vl`,`low_vl`,`total_vl_not_reported`,`recency_total_recent`,`recency_total_negative`,`recency_total_inconclusive`,`recency_total_longterm`,`positive_percentage`,`positive_agreement`,`overall_agreement`,`updated_by`,`updated_on`) VALUES
+-- ('','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','');
+-- INSERT INTO `site_types` (`st_id`,`site_type_name`,`site_type_status`) VALUES
+-- ('','','');
+-- INSERT INTO `test_sites` (`ts_id`,`site_id`,`site_name`,`site_latitude`,`site_longitude`,`site_address1`,`site_address2`,`site_postal_code`,`site_city`,`site_state`,`site_country`,`updated_by`,`updated_on`,`test_site_status`,`created_on`,`created_by`,`new field`) VALUES
+-- ('','','','','','','','','','','','','','','','','');
+-- INSERT INTO `users` (`user_id`,`first_name`,`last_name`,`password`,`email`,`phone`,`user_status`,`created_on`,`updated_on`,`created_by`,`updated_by`) VALUES
+-- ('','','','','','','','','','','');
+-- INSERT INTO `users_facility_map` (`ufm_id`,`user_id`,`facility_id`) VALUES
+-- ('','','');
+-- INSERT INTO `facilities` (`facility_id`,`facility_name`,`facility_latitude`,`facility_longitude`,`facility_address1`,`facility_address2`,`facility_city`,`facility_state`,`facility_postal_code`,`facility_country`,`facility_region`,`contact_name`,`contact_email`,`contact_phoneno`,`facility_status`,`updated_on`,`updated_by`,`created_on`,`created_by`) VALUES
+-- ('','','','','','','','','','','','','','','','','','','');
+-- INSERT INTO `test_kits` (`tk_id`,`test_kit_name_id`,`test_kit_name_id_1`,`test_kit_name_short`,`test_kit_name`,`test_kit_comments`,`test_kit_manufacturer`,`test_kit_expiry_date`,`Installation_id`,`test_kit_status`,`updated_on`,`updated_by`,`created_on`,`created_by`) VALUES
+-- ('','','','','','','','','','','','','','');
+-- INSERT INTO `global_config` (`config_id`,`display_name`,`global_name`,`global_value`) VALUES
+-- ('','','','');
+-- INSERT INTO `allowed_testkits` (`test_kit_no`,`testkit_id`) VALUES
+-- ('','');
