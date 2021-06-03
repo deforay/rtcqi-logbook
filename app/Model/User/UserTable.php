@@ -18,6 +18,7 @@ class UserTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        // dd($data);die;
         $commonservice = new CommonService();
         if ($request->input('firstName')!=null && trim($request->input('firstName')) != '') {
             $id = DB::table('users')->insertGetId(
@@ -31,6 +32,15 @@ class UserTable extends Model
                 'created_on' => $commonservice->getDateTime(),
                 ]
             );
+            for ($x = 0; $x < count($data['facilityId']); $x++){
+                // echo($data['facilityId'][$x]);
+            $userFacility = DB::table('users_facility_map')->insertGetId(
+                [
+                'user_id' => $id,
+                'facility_id' => $data['facilityId'][$x],
+                ]
+            );
+        }
         }
 
         return $id;
@@ -59,6 +69,7 @@ class UserTable extends Model
 
          $id = base64_decode($id);
          $data = DB::table('users')
+                ->join('users_facility_map', 'users_facility_map.user_id', '=', 'users.user_id')
                 ->where('users.user_id', '=',$id )
                 ->get();
          return $data;
@@ -85,6 +96,17 @@ class UserTable extends Model
                 ->update(
                         $user
                     );
+                    DB::delete('delete from users_facility_map where user_id = ?',[base64_decode($id)]);
+
+                    for ($x = 0; $x < count($data['facilityId']); $x++){
+                        // echo($data['facilityId'][$x]);
+                    $userFacility = DB::table('users_facility_map')->insertGetId(
+                        [
+                        'user_id' => base64_decode($id),
+                        'facility_id' => $data['facilityId'][$x],
+                        ]
+                    );
+                }
         return $response;
     }
 
