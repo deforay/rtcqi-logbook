@@ -137,3 +137,9 @@ Route::get('/allowedtestkit/add', 'AllowedTestKit\AllowedTestKitController@add')
 Route::get('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit');
 Route::post('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit');
 Route::post('/getAllAllowedTestKit', 'AllowedTestKit\AllowedTestKitController@getAllAllowedTestKit');
+
+//globalconfig module
+Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index');
+Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
+Route::post('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
+Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGlobalConfig');
