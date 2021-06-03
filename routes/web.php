@@ -128,3 +128,9 @@ Route::get('/userfacilitymap/add', 'UserFacilityMap\UserFacilityMapController@ad
 Route::get('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
 Route::post('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
 Route::post('/getAllUserFacility', 'UserFacilityMap\UserFacilityMapController@getAllUserFacility');
+
+//globalconfig module
+Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index');
+Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
+Route::post('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
+Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGlobalConfig');
