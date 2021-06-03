@@ -16,11 +16,28 @@ class MonthlyReportTable extends Model
     {
         //to get all request values
         $data = $request->all();
-        if ($request->input('provinceName')!=null && trim($request->input('provinceName')) != '') {
+        $commonservice = new CommonService();
+        $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
+        $reportingMon = $commonservice->dateFormat($data['reportingMon']);
+        if ($request->input('provinceId')!=null && trim($request->input('provinceId')) != '') {
             $id = DB::table('monthly_reports')->insertGetId(
                 [
-                'province_name' => $data['provinceName'],
-                'province_status' => $data['provinceStatus'],
+                'provincesss_id' => $data['provinceId'],
+                'site_unique_id' => $data['siteUniqueId'],
+                'ts_id' => $data['testsiteId'],
+                'st_id' => $data['sitetypeId'],
+                'site_manager' => $data['siteManager'],
+                'is_flc' => $data['isFlu'],
+                'is_recency' => $data['isRecency'],
+                'contact_no' => $data['contactNo'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'algorithm_type' => $data['algoType'],
+                'date_of_data_collection' => $DateOfCollect,
+                'reporting_month' => $reportingMon,
+                'book_no' => $data['bookNo'],
+                'name_of_data_collector' => $data['nameOfDataCollect'],
+                'signature' => $data['signature'],
                 ]
             );
         }
@@ -66,9 +83,26 @@ class MonthlyReportTable extends Model
     public function updateMonthlyReport($params,$id)
     {
         $data = $params->all();
+        $commonservice = new CommonService();
+        $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
+        $reportingMon = $commonservice->dateFormat($data['reportingMon']);
             $upData = array(
-                'province_name' => $data['provinceName'],
-                'province_status' => $data['provinceStatus'],
+                'provincesss_id' => $data['provinceId'],
+                'site_unique_id' => $data['siteUniqueId'],
+                'ts_id' => $data['testsiteId'],
+                'st_id' => $data['sitetypeId'],
+                'site_manager' => $data['siteManager'],
+                'is_flc' => $data['isFlu'],
+                'is_recency' => $data['isRecency'],
+                'contact_no' => $data['contactNo'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
+                'algorithm_type' => $data['algoType'],
+                'date_of_data_collection' => $DateOfCollect,
+                'reporting_month' => $reportingMon,
+                'book_no' => $data['bookNo'],
+                'name_of_data_collector' => $data['nameOfDataCollect'],
+                'signature' => $data['signature'],
             );
             $response = DB::table('monthly_reports')
                 ->where('mr_id', '=',base64_decode($id))
