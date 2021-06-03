@@ -129,6 +129,15 @@ Route::get('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapControl
 Route::post('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
 Route::post('/getAllUserFacility', 'UserFacilityMap\UserFacilityMapController@getAllUserFacility');
 
+
+//user facility map module
+Route::get('/allowedtestkit', 'AllowedTestKit\AllowedTestKitController@index')->name('allowedtestkit.index');
+Route::post('/allowedtestkit/add', 'AllowedTestKit\AllowedTestKitController@add');
+Route::get('/allowedtestkit/add', 'AllowedTestKit\AllowedTestKitController@add');
+Route::get('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit');
+Route::post('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit');
+Route::post('/getAllAllowedTestKit', 'AllowedTestKit\AllowedTestKitController@getAllAllowedTestKit');
+
 //globalconfig module
 Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index');
 Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
