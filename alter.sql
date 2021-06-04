@@ -357,3 +357,12 @@ ALTER TABLE `test_sites` ADD FOREIGN KEY (facility_id) REFERENCES `facilities` (
 -- Sakthivel P 4 June 2021
 ALTER TABLE users_facility_map
   RENAME TO users_testsite_map;
+--Prasath M 4 June 2021
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES
+(1, 'Instance Name', 'instance_name', 'Test'),
+(2, 'Institute/Organization Name', 'institute_name', 'Test org'),
+(3, 'Administrator Name', 'admin_name', 'Deforay'),
+(4, 'Administrator Email', 'admin_email', 'admin@gmail.com'),
+(5, 'Administrator Phone', 'admin_phone', '8798798789'),
+(6, 'Recency Tests', 'recency_test', 'disabled'),
+(7, 'Number of Tests', 'no_of_test', '3');
