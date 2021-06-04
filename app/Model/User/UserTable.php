@@ -33,7 +33,7 @@ class UserTable extends Model
                 ]
             );
             for ($x = 0; $x < count($data['testSiteId']); $x++){
-            $userFacility = DB::table('users_facility_map')->insertGetId(
+            $userFacility = DB::table('users_testsite_map')->insertGetId(
                 [
                 'user_id' => $id,
                 'ts_id' => $data['testSiteId'][$x],
@@ -68,7 +68,7 @@ class UserTable extends Model
 
          $id = base64_decode($id);
          $data = DB::table('users')
-                ->join('users_facility_map', 'users_facility_map.user_id', '=', 'users.user_id')
+                ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
                 ->where('users.user_id', '=',$id )
                 ->get();
          return $data;
@@ -95,10 +95,10 @@ class UserTable extends Model
                 ->update(
                         $user
                     );
-                    DB::delete('delete from users_facility_map where user_id = ?',[base64_decode($id)]);
+                    DB::delete('delete from users_testsite_map where user_id = ?',[base64_decode($id)]);
 
                     for ($x = 0; $x < count($data['testSiteId']); $x++){
-                    $userFacility = DB::table('users_facility_map')->insertGetId(
+                    $userFacility = DB::table('users_testsite_map')->insertGetId(
                         [
                         'user_id' => base64_decode($id),
                         'ts_id' => $data['testSiteId'][$x],

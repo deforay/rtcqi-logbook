@@ -353,3 +353,7 @@ ALTER TABLE `allowed_testkits` ADD FOREIGN KEY (testkit_id) REFERENCES `test_kit
 -- Sakthivel P 3 June 2021
 ALTER TABLE test_sites ADD facility_id int(11);
 ALTER TABLE `test_sites` ADD FOREIGN KEY (facility_id) REFERENCES `facilities` (`facility_id`);
+
+-- Sakthivel P 4 June 2021
+ALTER TABLE users_facility_map
+  RENAME TO users_testsite_map;
