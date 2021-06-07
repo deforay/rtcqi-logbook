@@ -60,7 +60,7 @@ class MonthlyReportTable extends Model
     public function fetchAllActiveMonthlyReport()
     {
         $data = DB::table('monthly_reports')
-                ->where('province_status','=','active')
+                // ->where('province_status','=','active')
                 ->get();
         return $data;
     }
@@ -112,5 +112,62 @@ class MonthlyReportTable extends Model
         return $response;
     }
 
+    public function fetchTrendMonthlyReport($params)
+ {
+  $start_date = $params['startDate'];
+  $end_date = $params['endDate'];
+  $facilityId = $params['facilityId'];
+  $algorithmType = $params['algorithmType'];
+  $testSiteId = $params['testSiteId'];
+  DB::enableQueryLog();
+    $query = DB::table('monthly_reports')               
+      ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+      ->join('facilities', 'facilities.facility_id', '=', 'monthly_reports.facility_id')
+      ->where('monthly_reports.facility_id', '=',$facilityId )
+      ->where('monthly_reports.sector_id', '=',$algorithmType )
+      ->where('monthly_reports.ts_id', '=',$testSiteId );
+     
+
+           if (trim($start_date) != "" && trim($end_date) != "") {
+               $query = $query->where('monthly_reports.reporting_month','>=',$start_date)->where('monthly_reports.reporting_month','<=',$end_date);         
+           }
+          if (isset($params['facilityId']) && $params['facilityId'] != '') {
+              $query = $query->whereIn('monthly_reports.facility_id',$params['facilityId']); 
+          }  
+          if (isset($params['algorithmType']) && $params['algorithmType'] != '') {            
+              $query = $query->whereIn('monthly_reports.algorithmType', $params['algorithmType']); 
+          }  
+         if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
+              $query = $query->whereIn('monthly_reports.ts_id', $params['ts_id']); 
+          }
+        //  if (isset($params['product_Id']) && $params['product_Id'] != '') {
+        //       $query = $query->where('products.product_id', $params['product_Id']); 
+        //   }
+
+    //  $salesResult=$query->get();
+    // //  dump(DB::getQueryLog());
+    //  foreach ($salesResult as $sRes) {
+    //   $monthResult[$sRes->monthyear] = $sRes->monthyear;
+    //     $m = $sRes->monthyear;
+    //       if (!isset($result[$sRes->grade_cat_id][$m])) {
+    //           $result[$sRes->grade_cat_id]['gradecatId'] = $sRes->grade_cat_id;
+    //           $result[$sRes->grade_cat_id]['gradeCatName'] = $sRes->grade_cat_name;
+    //           $result[$sRes->grade_cat_id][$m] = $sRes->qty;
+    //       }
+    //       else {
+    //           $result[$sRes->grade_cat_id][$m] += $sRes->qty;
+    //       }
+    //   }
+     
+    //  $res['salesMonth'] = $monthResult;
+    //  $res['result'] = $result;
+    //  $res['start_date'] = $start_date;
+    //  $res['end_date'] = $end_date;
+    //  $res['customerId'] = $customerId;
+    //  $res['sectorID'] = $sectorId;
+    //  $res['productId'] = $productsId;
+    //  $res['loopId'] = $params['loopId'];
+     return $query;
+}
     
 }
