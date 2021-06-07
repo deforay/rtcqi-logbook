@@ -213,6 +213,11 @@
 										</fieldset>
 									</div>
                                 </div>
+								<br/><br/>
+                                <div class="row ml-2">
+                                    <h4 style="font-weight: 600;">Test Details</h4>
+                                </div>
+                                <hr>
 								<div class="row">
 								<div class="col-xl-4 col-lg-12">
 										<fieldset>
@@ -242,217 +247,101 @@
 										</fieldset>
 									</div>
 								</div>
-							<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Test Kit Name1<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId1" name="testkitId1" title="Please select Test Kit Name1">
-                                                    @foreach($kittype as $row2)
-                                                    <option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
+								@for($i = 1; $i <= $global['no_of_test']; $i++)
+									<div class="row ml-2">
+										<h4 style="font-weight: 600;">Test Kit {{$i}}</h4>
 									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Lot No 1 
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="lotNO1" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO1" title="Please Enter Lot No1" >
-											</div>
-										</fieldset>
+									<div class="row">
+										<div class="col-xl-4 col-lg-12">
+											<fieldset>
+												<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+												</h5>
+												<div class="form-group">
+													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId[]" title="Please select Test Kit Name{{$i}}">
+														@foreach($kittype as $row2)
+														<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
+														@endforeach
+													</select>
+												</div>
+											</fieldset>
+										</div>
+										<div class="col-xl-4 col-lg-12">
+											<fieldset>
+												<h5>Lot No {{$i}} 
+												</h5>
+												<div class="form-group">
+													<input type="number" min="0" id="lotNO{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO[]" title="Please Enter Lot No{{$i}}" >
+												</div>
+											</fieldset>
+										</div>
+										<div class="col-xl-4 col-lg-12">
+											<fieldset>
+												<h5>Expiry Date {{$i}}
+												</h5>
+												<div class="form-group">
+													<input type="date" id="expiryDate{{$i}}" class="form-control  " autocomplete="off" name="expiryDate[]" title="Please Enter Expiry Date{{$i}}" >
+												</div>
+											</fieldset>
+										</div>
+									</div> 
+									
+									<div class="row">
+										<div class="col-xl-4 col-lg-12">
+											<fieldset>
+												<h5>Total Reactive - R - {{$i}}
+												</h5>
+												<div class="form-group">
+													<input type="number" min="0" id="totalReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$i}}" name="totalReactive[]" title="Please Enter Total Reactive - R - {{$i}}" >
+												</div>
+											</fieldset>
+										</div>
+										<div class="col-xl-4 col-lg-12">
+											<fieldset>
+												<h5>Total Non-Reactive - R - {{$i}}
+												</h5>
+												<div class="form-group">
+													<input type="number" min="0" id="totalNonReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$i}}" name="totalNonReactive[]" title="Please Enter Total Non-Reactive - R - {{$i}}" >
+												</div>
+											</fieldset>
+										</div>
+										<div class="col-xl-4 col-lg-12">
+											<fieldset>
+												<h5>Total Invalid - INV - {{$i}}
+												</h5>
+												<div class="form-group">
+													<input type="number" min="0" id="totalInvalid{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$i}}" name="totalInvalid[]" title="Please Enter Total Invalid - INV - {{$i}}" >
+												</div>
+											</fieldset>
+										</div>
 									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Expiry Date 1
-											</h5>
-											<div class="form-group">
-                                                <input type="date" id="expiryDate1" class="form-control  " autocomplete="off" name="expiryDate1" title="Please Enter Expiry Date1" >
-											</div>
-										</fieldset>
-									</div>
-							</div> 
-							<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Reactive - R - 1
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalReactive1" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - 1" name="totalReactive1" title="Please Enter Total Reactive - R - 1" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Non-Reactive - R - 1
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalNonReactive1" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - 1" name="totalNonReactive1" title="Please Enter Total Non-Reactive - R - 1" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Invalid - INV - 1
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalInvalid1" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - 1" name="totalInvalid1" title="Please Enter Total Invalid - INV - 1" >
-											</div>
-										</fieldset>
-									</div>
-									</div>
+									<br/>
+								@endfor
+								
 									<div class="row">
 							<div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Test Kit Name2<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId2" name="testkitId2" title="Please select Test Kit Name2">
-                                                    @foreach($kittype as $row2)
-                                                    <option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Lot No 2
+											<h5>Final Positive
 											</h5>
 											<div class="form-group">
-                                                <input type="number" min="0" id="lotNO2" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO2" title="Please Enter Lot No2" >
+                                                <input type="number" min="0" id="totalPositive" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive" title="Please Enter Final Positive" >
 											</div>
 										</fieldset>
 									</div>
 									<div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Expiry Date 2
+											<h5>Final Negative
 											</h5>
 											<div class="form-group">
-                                                <input type="date" id="expiryDate2" class="form-control  " autocomplete="off" name="expiryDate2" title="Please Enter Expiry Date2" >
-											</div>
-										</fieldset>
-									</div>
-							</div> 
-							<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Reactive - R - 2
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalReactive2" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - 2" name="totalReactive2" title="Please Enter Total Reactive - R - 2" >
+                                                <input type="number" min="0" id="totalNegative" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative" title="Please Enter Final Negative" >
 											</div>
 										</fieldset>
 									</div>
 									<div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Total Non-Reactive - R - 2
+											<h5>Final Undertermined
 											</h5>
 											<div class="form-group">
-                                                <input type="number" min="0" id="totalNonReactive2" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - 2" name="totalNonReactive2" title="Please Enter Total Non-Reactive - R - 2" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Invalid - INV - 2
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalInvalid2" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - 2" name="totalInvalid2" title="Please Enter Total Invalid - INV - 2" >
-											</div>
-										</fieldset>
-									</div>
-									</div>
-									<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Test Kit Name3<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId3" name="testkitId3" title="Please select Test Kit Name3">
-                                                    @foreach($kittype as $row2)
-                                                    <option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Lot No 3
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="lotNO3" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO3" title="Please Enter Lot No3" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Expiry Date 3
-											</h5>
-											<div class="form-group">
-                                                <input type="date" id="expiryDate3" class="form-control  " autocomplete="off" name="expiryDate3" title="Please Enter Expiry Date3" >
-											</div>
-										</fieldset>
-									</div>
-							</div> 
-							<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Reactive - R - 3
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalReactive3" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - 3" name="totalReactive3" title="Please Enter Total Reactive - R - 3" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Non-Reactive - R - 3
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalNonReactive3" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - 3" name="totalNonReactive3" title="Please Enter Total Non-Reactive - R - 3" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Invalid - INV - 3
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalInvalid3" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - 3" name="totalInvalid3" title="Please Enter Total Invalid - INV - 3" >
-											</div>
-										</fieldset>
-									</div>
-									</div>
-									<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Reactive - R
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalReactive" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R" name="totalReactive" title="Please Enter Total Reactive - R" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Non-Reactive - R
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalNonReactive" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R" name="totalNonReactive" title="Please Enter Total Non-Reactive - R" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Total Invalid - INV
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalInvalid" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV" name="totalInvalid" title="Please Enter Total Invalid - INV" >
+                                                <input type="number" min="0" id="finalUndetermined" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined" title="Please Enter Final Undertermined" >
 											</div>
 										</fieldset>
 									</div>

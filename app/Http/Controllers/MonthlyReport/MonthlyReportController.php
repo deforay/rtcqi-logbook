@@ -9,6 +9,7 @@ use App\Service\ProvinceService;
 use App\Service\SiteTypeService;
 use App\Service\TestKitService;
 use App\Service\TestSiteService;
+use App\Service\GlobalConfigService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -45,7 +46,14 @@ class MonthlyReportController extends Controller
             $sitetype = $SiteTypeService->getAllActiveSiteType(); 
             $KitTypeService = new TestKitService();
             $kittype = $KitTypeService->getAllActiveTestKit();   
-            return view('monthlyreport.add',array('province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'kittype'=>$kittype));
+            $GlobalConfigService = new GlobalConfigService();
+            $result = $GlobalConfigService->getAllGlobalConfig();
+            $arr = array();
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < sizeof($result); $i++) {
+                $arr[$result[$i]->global_name] = $result[$i]->global_value;
+            }
+            return view('monthlyreport.add',array('global'=>$arr, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'kittype'=>$kittype));
         }
     }
 

@@ -5,6 +5,7 @@ namespace App\Model\MonthlyReport;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
+use App\Service\GlobalConfigService;
 use Illuminate\Support\Facades\Session;
 
 class MonthlyReportTable extends Model
@@ -40,34 +41,46 @@ class MonthlyReportTable extends Model
                 'signature' => $data['signature'],
                 ]
             );
-            $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
-                [
+            $GlobalConfigService = new GlobalConfigService();
+            $result = $GlobalConfigService->getAllGlobalConfig();
+            $arr = array();
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < sizeof($result); $i++) {
+                $arr[$result[$i]->global_name] = $result[$i]->global_value;
+            }
+            // print_r($arr['no_of_test']);die;
+            $insMonthlyArr = array(
                 'mr_id' => $id,
                 'page_no' => $data['pageNO'],
                 'start_test_date' => $data['startDate'],
                 'end_test_date' => $data['endDate'],
-                'test_1_kit_id' => $data['testkitId1'],
-                'lot_no_1' => $data['lotNO1'],
-                'expiry_date_1' => $data['expiryDate1'],
-                'test_1_reactive' => $data['totalReactive1'],
-                'test_1_nonreactive' => $data['totalNonReactive1'],
-                'test_1_invalid' => $data['totalInvalid1'],
-                'test_2_kit_id' => $data['testkitId2'],
-                'lot_no_2' => $data['lotNO2'],
-                'expiry_date_2' => $data['expiryDate2'],
-                'test_2_reactive' => $data['totalReactive2'],
-                'test_2_nonreactive' => $data['totalNonReactive2'],
-                'test_2_invalid' => $data['totalInvalid2'],
-                'test_3_kit_id' => $data['testkitId3'],
-                'lot_no_3' => $data['lotNO3'],
-                'expiry_date_3' => $data['expiryDate3'],
-                'test_3_reactive' => $data['totalReactive3'],
-                'test_3_nonreactive' => $data['totalNonReactive3'],
-                'test_3_invalid' => $data['totalInvalid3'],
-                'final_positive' => $data['totalReactive'],
-                'final_negative' => $data['totalNonReactive'],
-                'final_undetermined' => $data['totalInvalid'],
-                ]
+                'final_positive' => $data['totalPositive'],
+                'final_negative' => $data['totalNegative'],
+                'final_undetermined' => $data['finalUndetermined'],
+            );
+            for($l = 0; $l < $arr['no_of_test']; $l++)
+            {
+                $m = $l+1;
+                $insMonthlyArr['test_'.$m.'_kit_id'] = $data['testkitId'][$l];
+                $insMonthlyArr['lot_no_'.$m] = $data['lotNO'][$l];
+                $insMonthlyArr['expiry_date_'.$m] = $data['expiryDate'][$l];
+                $insMonthlyArr['test_'.$m.'_reactive'] = $data['totalReactive'][$l];
+                $insMonthlyArr['test_'.$m.'_nonreactive'] = $data['totalNonReactive'][$l];
+                $insMonthlyArr['test_'.$m.'_invalid'] = $data['totalInvalid'][$l];
+            }
+            $totalPositive= $data['totalPositive'];						
+            $totalTested = $data['totalReactive'][0] + $data['totalNonReactive'][0];							
+            $positivePercentage = ($totalTested ==0) ? 'N.A' : number_format($totalPositive*100/$totalTested,2);
+            $posAgreement = 0;
+            if($data['totalReactive'][0] > 0)
+            $posAgreement = number_format(100*($data['totalReactive'][1] )/($data['totalReactive'][0]),2 );
+            $OverallAgreement = number_format(100* ($data['totalReactive'][1] + $data['totalNonReactive'][1])/($data['totalReactive'][0] + $data['totalNonReactive'][1]),2);
+            $insMonthlyArr['positive_percentage'] = $positivePercentage;
+            $insMonthlyArr['positive_agreement'] = $posAgreement;
+            $insMonthlyArr['overall_agreement'] = $OverallAgreement;
+            // print_r($insMonthlyArr);die;
+            $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
+                $insMonthlyArr
             );
         }
 
