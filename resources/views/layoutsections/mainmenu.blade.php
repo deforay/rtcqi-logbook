@@ -6,6 +6,8 @@ $role = session('role');
 // dd($role);
 $dashboard = '';
 $manage = '';
+$test = '';
+$report = '';
     $dashboard = '<li class=" nav-item" id="dashboard"><a href="/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a></li>';
 
     $manage .= '<li class=" nav-item" id="manage"><a href="javascript:void(0)"><i class="la la-toggle-down"></i><span class="menu-title">Manage</span></a>
@@ -20,10 +22,15 @@ $manage = '';
     $manage .= '<li id="li-globalconfig"><a class="menu-item" href="/globalconfig/">Global Config</a></li>';
     $manage .= '</ul></li>';
 
-    $manage .= '<li class=" nav-item" id="tests"><a href="javascript:void(0)"><i class="la la-file"></i><span class="menu-title">Tests</span></a>
+    $test .= '<li class=" nav-item" id="tests"><a href="javascript:void(0)"><i class="la la-file"></i><span class="menu-title">Tests</span></a>
                 <ul class="menu-content">';
-    $manage .= '<li id="li-monthlyreport"><a class="menu-item" href="/monthlyreport/">Monthly Report</a></li>';
-    $manage .= '</ul></li>';
+    $test .= '<li id="li-monthlyreport"><a class="menu-item" href="/monthlyreport/">Monthly Report</a></li>';
+    $test .= '</ul></li>';
+
+    $report .= '<li class=" nav-item" id="reports"><a href="javascript:void(0)"><i class="la la-file"></i><span class="menu-title">Reports</span></a>
+                <ul class="menu-content">';
+    $report .= '<li id="li-logbook"><a class="menu-item" href="/logbook/">Logbook Report</a></li>';
+    $report .= '</ul></li>';
 
 ?>
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow menu-border" data-scroll-to-active="true">
@@ -31,6 +38,8 @@ $manage = '';
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
         @php echo $dashboard; @endphp
         @php echo $manage; @endphp
+        @php echo $test; @endphp
+        @php echo $report; @endphp
       </ul>
     </div>
   </div>
