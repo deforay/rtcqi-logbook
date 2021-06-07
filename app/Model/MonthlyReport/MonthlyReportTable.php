@@ -40,6 +40,35 @@ class MonthlyReportTable extends Model
                 'signature' => $data['signature'],
                 ]
             );
+            $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
+                [
+                'mr_id' => $id,
+                'page_no' => $data['pageNO'],
+                'start_test_date' => $data['startDate'],
+                'end_test_date' => $data['endDate'],
+                'test_1_kit_id' => $data['testkitId1'],
+                'lot_no_1' => $data['lotNO1'],
+                'expiry_date_1' => $data['expiryDate1'],
+                'test_1_reactive' => $data['totalReactive1'],
+                'test_1_nonreactive' => $data['totalNonReactive1'],
+                'test_1_invalid' => $data['totalInvalid1'],
+                'test_2_kit_id' => $data['testkitId2'],
+                'lot_no_2' => $data['lotNO2'],
+                'expiry_date_2' => $data['expiryDate2'],
+                'test_2_reactive' => $data['totalReactive2'],
+                'test_2_nonreactive' => $data['totalNonReactive2'],
+                'test_2_invalid' => $data['totalInvalid2'],
+                'test_3_kit_id' => $data['testkitId3'],
+                'lot_no_3' => $data['lotNO3'],
+                'expiry_date_3' => $data['expiryDate3'],
+                'test_3_reactive' => $data['totalReactive3'],
+                'test_3_nonreactive' => $data['totalNonReactive3'],
+                'test_3_invalid' => $data['totalInvalid3'],
+                'final_positive' => $data['totalReactive'],
+                'final_negative' => $data['totalNonReactive'],
+                'final_undetermined' => $data['totalInvalid'],
+                ]
+            );
         }
 
         return $id;

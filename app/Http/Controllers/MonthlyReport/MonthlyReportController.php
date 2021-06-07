@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
 use App\Service\SiteTypeService;
+use App\Service\TestKitService;
 use App\Service\TestSiteService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -41,8 +42,10 @@ class MonthlyReportController extends Controller
             $TestSiteService = new TestSiteService();
             $testsite = $TestSiteService->getAllActiveTestSite();   
             $SiteTypeService = new SiteTypeService();
-            $sitetype = $SiteTypeService->getAllActiveSiteType();   
-            return view('monthlyreport.add',array('province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype));
+            $sitetype = $SiteTypeService->getAllActiveSiteType(); 
+            $KitTypeService = new TestKitService();
+            $kittype = $KitTypeService->getAllActiveTestKit();   
+            return view('monthlyreport.add',array('province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'kittype'=>$kittype));
         }
     }
 
