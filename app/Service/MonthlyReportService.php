@@ -74,6 +74,13 @@ class MonthlyReportService
 	    	$exc->getMessage();
 	    }
 	}
+
+	public function getTrendMonthlyReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchTrendMonthlyReport($params);
+		return $result;
+	}
 	
 }
 

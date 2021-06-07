@@ -143,3 +143,7 @@ Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('
 Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
 Route::post('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
 Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGlobalConfig');
+
+//Trend Report
+Route::post('/getTrendMonthlyReport', 'TrendReport\TrendReportController@getTrendMonthlyReport');
+Route::get('/trendreport', 'TrendReport\TrendReportController@index')->name('trendreport.index');
