@@ -48,40 +48,44 @@ class MonthlyReportTable extends Model
             for ($i = 0; $i < sizeof($result); $i++) {
                 $arr[$result[$i]->global_name] = $result[$i]->global_value;
             }
-            // print_r($arr['no_of_test']);die;
-            $insMonthlyArr = array(
-                'mr_id' => $id,
-                'page_no' => $data['pageNO'],
-                'start_test_date' => $data['startDate'],
-                'end_test_date' => $data['endDate'],
-                'final_positive' => $data['totalPositive'],
-                'final_negative' => $data['totalNegative'],
-                'final_undetermined' => $data['finalUndetermined'],
-            );
-            for($l = 0; $l < $arr['no_of_test']; $l++)
+            // print_r($data);die;
+            for($p =0; $p < count($data['pageNO']); $p++)
             {
-                $m = $l+1;
-                $insMonthlyArr['test_'.$m.'_kit_id'] = $data['testkitId'][$l];
-                $insMonthlyArr['lot_no_'.$m] = $data['lotNO'][$l];
-                $insMonthlyArr['expiry_date_'.$m] = $data['expiryDate'][$l];
-                $insMonthlyArr['test_'.$m.'_reactive'] = $data['totalReactive'][$l];
-                $insMonthlyArr['test_'.$m.'_nonreactive'] = $data['totalNonReactive'][$l];
-                $insMonthlyArr['test_'.$m.'_invalid'] = $data['totalInvalid'][$l];
+
+                $insMonthlyArr = array(
+                    'mr_id' => $id,
+                    'page_no' => $data['pageNO'][$p],
+                    'start_test_date' => $data['startDate'][$p],
+                    'end_test_date' => $data['endDate'][$p],
+                    'final_positive' => $data['totalPositive'][$p],
+                    'final_negative' => $data['totalNegative'][$p],
+                    'final_undetermined' => $data['finalUndetermined'][$p],
+                );
+                for($l = 1; $l <= $arr['no_of_test']; $l++)
+                {
+                    $m = $l;
+                    $insMonthlyArr['test_'.$m.'_kit_id'] = $data['testkitId'.$l][$p];
+                    $insMonthlyArr['lot_no_'.$m] = $data['lotNO'.$l][$p];
+                    $insMonthlyArr['expiry_date_'.$m] = $data['expiryDate'.$l][$p];
+                    $insMonthlyArr['test_'.$m.'_reactive'] = $data['totalReactive'.$l][$p];
+                    $insMonthlyArr['test_'.$m.'_nonreactive'] = $data['totalNonReactive'.$l][$p];
+                    $insMonthlyArr['test_'.$m.'_invalid'] = $data['totalInvalid'.$l][$p];
+                }
+                $totalPositive= $data['totalPositive'][$p];						
+                $totalTested = $data['totalReactive1'][$p] + $data['totalNonReactive1'][$p];							
+                $positivePercentage = ($totalTested ==0) ? 'N.A' : number_format($totalPositive*100/$totalTested,2);
+                $posAgreement = 0;
+                if($data['totalReactive1'][$p] > 0)
+                $posAgreement = number_format(100*($data['totalReactive2'][$p] )/($data['totalReactive1'][$p]),2 );
+                $OverallAgreement = number_format(100* ($data['totalReactive2'][$p] + $data['totalNonReactive1'][$p])/($data['totalReactive1'][$p] + $data['totalNonReactive1'][$p]),2);
+                $insMonthlyArr['positive_percentage'] = $positivePercentage;
+                $insMonthlyArr['positive_agreement'] = $posAgreement;
+                $insMonthlyArr['overall_agreement'] = $OverallAgreement;
+                // print_r($insMonthlyArr);die;
+                $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
+                    $insMonthlyArr
+                );
             }
-            $totalPositive= $data['totalPositive'];						
-            $totalTested = $data['totalReactive'][0] + $data['totalNonReactive'][0];							
-            $positivePercentage = ($totalTested ==0) ? 'N.A' : number_format($totalPositive*100/$totalTested,2);
-            $posAgreement = 0;
-            if($data['totalReactive'][0] > 0)
-            $posAgreement = number_format(100*($data['totalReactive'][1] )/($data['totalReactive'][0]),2 );
-            $OverallAgreement = number_format(100* ($data['totalReactive'][1] + $data['totalNonReactive'][1])/($data['totalReactive'][0] + $data['totalNonReactive'][1]),2);
-            $insMonthlyArr['positive_percentage'] = $positivePercentage;
-            $insMonthlyArr['positive_agreement'] = $posAgreement;
-            $insMonthlyArr['overall_agreement'] = $OverallAgreement;
-            // print_r($insMonthlyArr);die;
-            $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
-                $insMonthlyArr
-            );
         }
 
         return $id;

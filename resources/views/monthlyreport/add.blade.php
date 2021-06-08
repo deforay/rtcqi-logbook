@@ -160,10 +160,13 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Algorithm Type 
+											<h5>Algorithm Type <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="algoType" class="form-control" autocomplete="off" placeholder="Enter Algorithm Type" name="algoType" title="Please Enter Algorithm Type" >
+												<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
+                                                    <option value="serial" selected>Serial</option>
+                                                    <option value="parallel" >Parallel</option>
+                                                </select>
 											</div>
 										</fieldset>
 									</div>
@@ -224,7 +227,7 @@
 											<h5>Page No 
 											</h5>
 											<div class="form-group">
-                                                <input type="number" min="0" id="pageNO" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO" title="Please Enter Page No" >
+                                                <input type="number" min="0" id="pageNO0" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >
 											</div>
 										</fieldset>
 									</div>
@@ -233,7 +236,7 @@
 											<h5>Start Date
 											</h5>
 											<div class="form-group">
-                                                <input type="date" id="startDate" class="form-control  " autocomplete="off" name="startDate" title="Please Enter Start Date" >
+                                                <input type="date" id="startDate0" class="form-control  " autocomplete="off" name="startDate[]" title="Please Enter Start Date" >
 											</div>
 										</fieldset>
 									</div>
@@ -242,7 +245,7 @@
 											<h5>End Date
 											</h5>
 											<div class="form-group">
-                                                <input type="date" id="endDate" class="form-control  " autocomplete="off" name="endDate" title="Please Enter End Date" >
+                                                <input type="date" id="endDate0" class="form-control  " autocomplete="off" name="endDate[]" title="Please Enter End Date" >
 											</div>
 										</fieldset>
 									</div>
@@ -257,7 +260,7 @@
 												<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
 												</h5>
 												<div class="form-group">
-													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId[]" title="Please select Test Kit Name{{$i}}">
+													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
 														@foreach($kittype as $row2)
 														<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
 														@endforeach
@@ -270,7 +273,7 @@
 												<h5>Lot No {{$i}} 
 												</h5>
 												<div class="form-group">
-													<input type="number" min="0" id="lotNO{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO[]" title="Please Enter Lot No{{$i}}" >
+													<input type="number" min="0" id="lotNO{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$i}}[]" title="Please Enter Lot No{{$i}}" >
 												</div>
 											</fieldset>
 										</div>
@@ -279,7 +282,7 @@
 												<h5>Expiry Date {{$i}}
 												</h5>
 												<div class="form-group">
-													<input type="date" id="expiryDate{{$i}}" class="form-control  " autocomplete="off" name="expiryDate[]" title="Please Enter Expiry Date{{$i}}" >
+													<input type="date" id="expiryDate{{$i}}" class="form-control  " autocomplete="off" name="expiryDate{{$i}}[]" title="Please Enter Expiry Date{{$i}}" >
 												</div>
 											</fieldset>
 										</div>
@@ -291,7 +294,7 @@
 												<h5>Total Reactive - R - {{$i}}
 												</h5>
 												<div class="form-group">
-													<input type="number" min="0" id="totalReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$i}}" name="totalReactive[]" title="Please Enter Total Reactive - R - {{$i}}" >
+													<input type="number" min="0" id="totalReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$i}}" name="totalReactive{{$i}}[]" title="Please Enter Total Reactive - R - {{$i}}" >
 												</div>
 											</fieldset>
 										</div>
@@ -300,7 +303,7 @@
 												<h5>Total Non-Reactive - R - {{$i}}
 												</h5>
 												<div class="form-group">
-													<input type="number" min="0" id="totalNonReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$i}}" name="totalNonReactive[]" title="Please Enter Total Non-Reactive - R - {{$i}}" >
+													<input type="number" min="0" id="totalNonReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$i}}" name="totalNonReactive{{$i}}[]" title="Please Enter Total Non-Reactive - R - {{$i}}" >
 												</div>
 											</fieldset>
 										</div>
@@ -309,7 +312,7 @@
 												<h5>Total Invalid - INV - {{$i}}
 												</h5>
 												<div class="form-group">
-													<input type="number" min="0" id="totalInvalid{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$i}}" name="totalInvalid[]" title="Please Enter Total Invalid - INV - {{$i}}" >
+													<input type="number" min="0" id="totalInvalid{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$i}}" name="totalInvalid{{$i}}[]" title="Please Enter Total Invalid - INV - {{$i}}" >
 												</div>
 											</fieldset>
 										</div>
@@ -323,7 +326,7 @@
 											<h5>Final Positive
 											</h5>
 											<div class="form-group">
-                                                <input type="number" min="0" id="totalPositive" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive" title="Please Enter Final Positive" >
+                                                <input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
 											</div>
 										</fieldset>
 									</div>
@@ -332,7 +335,7 @@
 											<h5>Final Negative
 											</h5>
 											<div class="form-group">
-                                                <input type="number" min="0" id="totalNegative" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative" title="Please Enter Final Negative" >
+                                                <input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
 											</div>
 										</fieldset>
 									</div>
@@ -341,7 +344,7 @@
 											<h5>Final Undertermined
 											</h5>
 											<div class="form-group">
-                                                <input type="number" min="0" id="finalUndetermined" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined" title="Please Enter Final Undertermined" >
+                                                <input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
 											</div>
 										</fieldset>
 									</div>
