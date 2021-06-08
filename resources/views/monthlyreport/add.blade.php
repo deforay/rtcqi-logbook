@@ -14,7 +14,7 @@
 }
 </style>
 <?php
-$col = ['yellow', '#A3CC52' , '#CC7A52', '#47B2B2', '#ea7786']
+$col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786']
 ?>
 <div class="content-wrapper">
 <div class="content-header row">
