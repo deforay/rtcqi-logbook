@@ -14,7 +14,7 @@
 }
 </style>
 <?php
-$col = ['yellow', '#a9e067' , '#ef6d3c', '#35acf9', '#ea7786']
+$col = ['yellow', '#A3CC52' , '#CC7A52', '#47B2B2', '#ea7786']
 ?>
 <div class="content-wrapper">
 <div class="content-header row">
@@ -226,6 +226,7 @@ $col = ['yellow', '#a9e067' , '#ef6d3c', '#35acf9', '#ea7786']
 									</div>
                                 </div>
 								<br/>
+								<div id="test_row">
                                 <div class="row ml-2">
                                     <h4 style="font-weight: 600;">Test Details</h4>
                                 </div>
@@ -298,28 +299,28 @@ $col = ['yellow', '#a9e067' , '#ef6d3c', '#35acf9', '#ea7786']
 										<tr>
 											@for($k = 1; $k <= $global['no_of_test']; $k++)
 												<td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
-													<h4 style="font-weight: 600;">Test Kit {{$k}}</h4>
+													<h4 style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
 												</td>
 											@endfor
 										</tr>
 										<tr>
 										@for($l = 1; $l <= $global['no_of_test']; $l++)
 											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-												<h5> R
+												<h5 style="color: white; font-weight: 500;"> R
 												</h5>
 												<div class="form-group">
 													<input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$l}}" name="totalReactive{{$l}}[]" title="Please Enter Total Reactive - R - {{$l}}" >
 												</div>
 											</td>
 											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-													<h5>NR
+													<h5 style="color: white; font-weight: 500;">NR
 													</h5>
 													<div class="form-group">
 													<input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$l}}" name="totalNonReactive{{$l}}[]" title="Please Enter Total Non-Reactive - R - {{$l}}" >
 												</div>
 											</td>
 											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-													<h5>INV 
+													<h5 style="color: white; font-weight: 500;">INV 
 													</h5>
 													<div class="form-group">
 													<input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$l}}" name="totalInvalid{{$l}}[]" title="Please Enter Total Invalid - INV - {{$l}}" >
@@ -330,13 +331,11 @@ $col = ['yellow', '#a9e067' , '#ef6d3c', '#35acf9', '#ea7786']
 										</tr>
 									</table>
 									<br>
-									<table class="table1" style="width:70%;margin-left: 10%;">
+									<table class="table1" style="width:80%;margin-left: 10%;">
 										<tr>
-											<td colspan="3" style=" text-align: center;">
+											<td  style=" text-align: center;">
 											<h4 style="font-weight: 600;"> Final Result </h4>
 											</td>
-										</tr>
-										<tr>
 											<td style=" text-align: center;" >
 												<h5> Positive
 												</h5>
@@ -360,6 +359,8 @@ $col = ['yellow', '#a9e067' , '#ef6d3c', '#35acf9', '#ea7786']
 											</td>
 										</tr>
 									</table>
+
+								</div>
 								<div class="form-actions right">
                                     <a href="/monthlyreport" >
                                     <button type="button" class="btn btn-warning mr-1">
