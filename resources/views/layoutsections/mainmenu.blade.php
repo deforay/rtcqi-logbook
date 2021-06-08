@@ -39,7 +39,7 @@ $report = '';
         @php echo $dashboard; @endphp
         @php echo $manage; @endphp
         @php echo $test; @endphp
-        @php echo $report; @endphp
+        <!-- @php echo $report; @endphp -->
       </ul>
     </div>
   </div>

@@ -31,14 +31,14 @@ class MonthlyReportTable extends Model
                 'is_flc' => $data['isFlu'],
                 'is_recency' => $data['isRecency'],
                 'contact_no' => $data['contactNo'],
-                'latitude' => $data['latitude'],
-                'longitude' => $data['longitude'],
+                // 'latitude' => $data['latitude'],
+                // 'longitude' => $data['longitude'],
                 'algorithm_type' => $data['algoType'],
                 'date_of_data_collection' => $DateOfCollect,
                 'reporting_month' => $reportingMon,
                 'book_no' => $data['bookNo'],
                 'name_of_data_collector' => $data['nameOfDataCollect'],
-                'signature' => $data['signature'],
+                // 'signature' => $data['signature'],
                 ]
             );
             $GlobalConfigService = new GlobalConfigService();
