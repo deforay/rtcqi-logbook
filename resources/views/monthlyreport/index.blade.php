@@ -73,8 +73,8 @@
                                                 <th>Province Name</th>
                                                 <th>Site Type Name</th>
                                                 <th>Site Name</th>
-                                                <th>Latitude</th>
-                                                <th>Longitude</th>
+                                                <!-- <th>Latitude</th> -->
+                                                <!-- <th>Longitude</th> -->
                                                 <th>Book No</th>
                                                 <th>Action</th>
                                             </tr>
@@ -121,8 +121,8 @@
                     { data: 'province_name', name: 'province_name',className:'firstcaps' },
                     { data: 'site_type_name', name: 'site_type_name',className:'firstcaps' },
                     { data: 'site_name', name: 'site_name',className:'firstcaps' },
-                    { data: 'latitude', name: 'latitude' },
-                    { data: 'longitude', name: 'longitude' },
+                    // { data: 'latitude', name: 'latitude' },
+                    // { data: 'longitude', name: 'longitude' },
                     { data: 'book_no', name: 'book_no' },
                     {data: 'action', name: 'action', orderable: false},
                 ],
