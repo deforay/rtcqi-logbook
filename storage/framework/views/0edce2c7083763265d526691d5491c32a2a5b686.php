@@ -48,7 +48,7 @@
 <!-- END: Head-->
 <style>
   html body.bg-full-screen-image {
-      background: url(../../app-assets/images/backgrounds/bg-9.jpg)  !important;
+      background: #63bef9  !important;
       background-size: cover !important;
   }
 </style>
