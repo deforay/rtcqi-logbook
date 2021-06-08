@@ -8,6 +8,14 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+.table1 td{
+ padding: 0.95rem 0.5rem;; 
+}
+</style>
+<?php
+$col = ['yellow', '#a9e067' , '#ef6d3c', '#35acf9', '#ea7786']
+?>
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -50,7 +58,7 @@
                             <form class="form form-horizontal" role="form" name="addMonthlyReport" id="addMonthlyReport" method="post" action="/monthlyreport/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Province Name<span class="mandatory">*</span>
                                             </h5>
@@ -63,22 +71,9 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+									<div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Site Type Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please select Site type Name">
-                                                    @foreach($sitetype as $row1)
-                                                    <option value="{{$row1->st_id}}">{{$row1->site_type_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Test Site Name<span class="mandatory">*</span>
+											<h5>Site Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
@@ -89,7 +84,20 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
+										<fieldset>
+											<h5>Site Type<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please select Site type Name">
+                                                    @foreach($sitetype as $row1)
+                                                    <option value="{{$row1->st_id}}">{{$row1->site_type_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Site Unique Id <span class="mandatory">*</span>
 											</h5>
@@ -98,7 +106,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Site Manager 
 											</h5>
@@ -107,31 +115,31 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Is Flu<span class="mandatory">*</span>
+											<h5>Is FLC<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is Flu status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is FLC status">
                                                     <option value="yes" >Yes</option>
                                                     <option value="no" selected>No</option>
                                                 </select>
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Is Recency<span class="mandatory">*</span>
+											<h5>Does site do Recency Tests?<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Is Recency status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Does site do Recency Tests?">
                                                     <option value="yes" >Yes</option>
                                                     <option value="no" selected>No</option>
                                                 </select>
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Contact Number 
 											</h5>
@@ -140,7 +148,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <!-- <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
 											</h5>
@@ -149,7 +157,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Longitude <span class="mandatory">*</span>
 											</h5>
@@ -157,20 +165,21 @@
                                                 <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
 											</div>
 										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
+									</div> -->
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Algorithm Type <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
 												<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
-                                                    <option value="serial" selected>Serial</option>
+													<option >Select Algorith Type</option>
+													<option value="serial">Serial</option>
                                                     <option value="parallel" >Parallel</option>
                                                 </select>
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Date of data collection <span class="mandatory">*</span>
 											</h5>
@@ -179,7 +188,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Reporting Month <span class="mandatory">*</span>
 											</h5>
@@ -188,7 +197,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Book Number <span class="mandatory">*</span>
 											</h5>
@@ -197,7 +206,7 @@
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                    <!-- <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Signature 
 											</h5>
@@ -205,10 +214,10 @@
                                                 <input type="text" id="signature" class="form-control  " autocomplete="off" placeholder="Enter Signature" name="signature" title="Please Enter Signature" >
 											</div>
 										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
+									</div> -->
+                                    <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Name of Data Collected 
+											<h5>Name of Data Collector 
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="nameOfDataCollect" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected" >
@@ -216,7 +225,7 @@
 										</fieldset>
 									</div>
                                 </div>
-								<br/><br/>
+								<br/>
                                 <div class="row ml-2">
                                     <h4 style="font-weight: 600;">Test Details</h4>
                                 </div>
@@ -250,105 +259,107 @@
 										</fieldset>
 									</div>
 								</div>
-								@for($i = 1; $i <= $global['no_of_test']; $i++)
-									<div class="row ml-2">
-										<h4 style="font-weight: 600;">Test Kit {{$i}}</h4>
-									</div>
-									<div class="row">
-										<div class="col-xl-4 col-lg-12">
-											<fieldset>
-												<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+									<table class="table1" style="width:100%">
+										<tr>
+										@for($i = 1; $i <= $global['no_of_test']; $i++)
+											<td  style=" text-align: center;" colspan="3" >
+												<fieldset>
+													<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+													</h5>
+													<div class="form-group">
+														<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+															@foreach($kittype as $row2)
+															<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
+															@endforeach
+														</select>
+													</div>
+												</fieldset>
+											</td>
+										@endfor
+										</tr>
+										<tr>
+										@for($j = 1; $j <= $global['no_of_test']; $j++)
+											<td style=" text-align: center;">
+													<h5>Lot No {{$j}} 
+													</h5>
+													<div class="form-group">
+														<input type="number" min="0" id="lotNO{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" >
+													</div>
+											</td>
+											<td style=" text-align: center;" colspan="2">
+													<h5>Expiry Date {{$j}}
+													</h5>
+													<div class="form-group">
+														<input type="date" id="expiryDate{{$j}}" class="form-control  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" >
+													</div>
+											</td>
+										@endfor
+										</tr>
+										<tr>
+											@for($k = 1; $k <= $global['no_of_test']; $k++)
+												<td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
+													<h4 style="font-weight: 600;">Test Kit {{$k}}</h4>
+												</td>
+											@endfor
+										</tr>
+										<tr>
+										@for($l = 1; $l <= $global['no_of_test']; $l++)
+											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
+												<h5> R
 												</h5>
 												<div class="form-group">
-													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
-														@foreach($kittype as $row2)
-														<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
-														@endforeach
-													</select>
+													<input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$l}}" name="totalReactive{{$l}}[]" title="Please Enter Total Reactive - R - {{$l}}" >
 												</div>
-											</fieldset>
-										</div>
-										<div class="col-xl-4 col-lg-12">
-											<fieldset>
-												<h5>Lot No {{$i}} 
+											</td>
+											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
+													<h5>NR
+													</h5>
+													<div class="form-group">
+													<input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$l}}" name="totalNonReactive{{$l}}[]" title="Please Enter Total Non-Reactive - R - {{$l}}" >
+												</div>
+											</td>
+											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
+													<h5>INV 
+													</h5>
+													<div class="form-group">
+													<input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$l}}" name="totalInvalid{{$l}}[]" title="Please Enter Total Invalid - INV - {{$l}}" >
+												</div>
+											</td>
+											
+											@endfor
+										</tr>
+									</table>
+									<br>
+									<table class="table1" style="width:70%;margin-left: 10%;">
+										<tr>
+											<td colspan="3" style=" text-align: center;">
+											<h4 style="font-weight: 600;"> Final Result </h4>
+											</td>
+										</tr>
+										<tr>
+											<td style=" text-align: center;" >
+												<h5> Positive
 												</h5>
 												<div class="form-group">
-													<input type="number" min="0" id="lotNO{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$i}}[]" title="Please Enter Lot No{{$i}}" >
+													<input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
 												</div>
-											</fieldset>
-										</div>
-										<div class="col-xl-4 col-lg-12">
-											<fieldset>
-												<h5>Expiry Date {{$i}}
+											</td>
+											<td style=" text-align: center;" >
+												<h5> Negative
 												</h5>
 												<div class="form-group">
-													<input type="date" id="expiryDate{{$i}}" class="form-control  " autocomplete="off" name="expiryDate{{$i}}[]" title="Please Enter Expiry Date{{$i}}" >
+													<input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
 												</div>
-											</fieldset>
-										</div>
-									</div> 
-									
-									<div class="row">
-										<div class="col-xl-4 col-lg-12">
-											<fieldset>
-												<h5>Total Reactive - R - {{$i}}
+											</td>
+											<td style=" text-align: center;" >
+												<h5> Indeterminate
 												</h5>
 												<div class="form-group">
-													<input type="number" min="0" id="totalReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$i}}" name="totalReactive{{$i}}[]" title="Please Enter Total Reactive - R - {{$i}}" >
+													<input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
 												</div>
-											</fieldset>
-										</div>
-										<div class="col-xl-4 col-lg-12">
-											<fieldset>
-												<h5>Total Non-Reactive - R - {{$i}}
-												</h5>
-												<div class="form-group">
-													<input type="number" min="0" id="totalNonReactive{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$i}}" name="totalNonReactive{{$i}}[]" title="Please Enter Total Non-Reactive - R - {{$i}}" >
-												</div>
-											</fieldset>
-										</div>
-										<div class="col-xl-4 col-lg-12">
-											<fieldset>
-												<h5>Total Invalid - INV - {{$i}}
-												</h5>
-												<div class="form-group">
-													<input type="number" min="0" id="totalInvalid{{$i}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$i}}" name="totalInvalid{{$i}}[]" title="Please Enter Total Invalid - INV - {{$i}}" >
-												</div>
-											</fieldset>
-										</div>
-									</div>
-									<br/>
-								@endfor
-								
-									<div class="row">
-							<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Final Positive
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Final Negative
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Final Undertermined
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
-											</div>
-										</fieldset>
-									</div>
-									</div>
+											</td>
+										</tr>
+									</table>
 								<div class="form-actions right">
                                     <a href="/monthlyreport" >
                                     <button type="button" class="btn btn-warning mr-1">

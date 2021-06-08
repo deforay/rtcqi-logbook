@@ -65,7 +65,7 @@ class MonthlyReportController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
-                        $button .= '<a href="/monthlyreport/edit/'. base64_encode($data->mr_id).'" name="edit" id="'.$data->mr_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        // $button .= '<a href="/monthlyreport/edit/'. base64_encode($data->mr_id).'" name="edit" id="'.$data->mr_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         $button .= '</div>';
                         return $button;
                     })
