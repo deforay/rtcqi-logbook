@@ -68,7 +68,7 @@ class UserTable extends Model
 
          $id = base64_decode($id);
          $data = DB::table('users')
-                ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
+                ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
                 ->where('users.user_id', '=',$id )
                 ->get();
          return $data;
