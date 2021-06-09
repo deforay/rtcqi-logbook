@@ -161,59 +161,52 @@ class MonthlyReportTable extends Model
 
     public function fetchTrendMonthlyReport($params)
  {
-  $start_date = $params['startDate'];
-  $end_date = $params['endDate'];
-  $facilityId = $params['facilityId'];
-  $algorithmType = $params['algorithmType'];
-  $testSiteId = $params['testSiteId'];
+    $data = $params->all();
+    $commonservice = new CommonService();
+
+//   if (isset($data['endDate']) && $data['endDate'] != '') {
+//     $sDate = explode("to", $data['endDate']);
+//     if (isset($sDate[0]) && trim($sDate[0]) != "") {
+//         $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+//         $start_date = $commonservice->dateFormat(trim($monthYr));
+//     // dd($start_date);die;
+
+//     }
+//     if (isset($sDate[1]) && trim($sDate[1]) != "") {
+//         $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+//     dd($monthYr2);die;
+
+//         $end_date = $commonservice->dateFormat(trim($monthYr2));
+//     }
+// }
   DB::enableQueryLog();
-    $query = DB::table('monthly_reports')               
-      ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-      ->join('facilities', 'facilities.facility_id', '=', 'monthly_reports.facility_id')
-      ->where('monthly_reports.facility_id', '=',$facilityId )
-      ->where('monthly_reports.sector_id', '=',$algorithmType )
-      ->where('monthly_reports.ts_id', '=',$testSiteId );
+    $query = DB::table('monthly_reports')
+         ->select('monthly_reports.*','monthly_reports_pages.*','facilities.*','test_sites.*','site_types.*')
+         ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+         ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+         ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+         ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+         ->get();
+    //   ->where('monthly_reports.facility_id', '=',$facilityId )
+    //   ->where('monthly_reports.mr_id', '=',$algorithmType);
+    //   ->where('monthly_reports.ts_id', '=',$testSiteId );
      
+    //  dd(DB::getQueryLog($query));
 
-           if (trim($start_date) != "" && trim($end_date) != "") {
-               $query = $query->where('monthly_reports.reporting_month','>=',$start_date)->where('monthly_reports.reporting_month','<=',$end_date);         
-           }
-          if (isset($params['facilityId']) && $params['facilityId'] != '') {
-              $query = $query->whereIn('monthly_reports.facility_id',$params['facilityId']); 
-          }  
-          if (isset($params['algorithmType']) && $params['algorithmType'] != '') {            
-              $query = $query->whereIn('monthly_reports.algorithmType', $params['algorithmType']); 
-          }  
-         if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
-              $query = $query->whereIn('monthly_reports.ts_id', $params['ts_id']); 
-          }
-        //  if (isset($params['product_Id']) && $params['product_Id'] != '') {
-        //       $query = $query->where('products.product_id', $params['product_Id']); 
-        //   }
-
-    //  $salesResult=$query->get();
-    // //  dump(DB::getQueryLog());
-    //  foreach ($salesResult as $sRes) {
-    //   $monthResult[$sRes->monthyear] = $sRes->monthyear;
-    //     $m = $sRes->monthyear;
-    //       if (!isset($result[$sRes->grade_cat_id][$m])) {
-    //           $result[$sRes->grade_cat_id]['gradecatId'] = $sRes->grade_cat_id;
-    //           $result[$sRes->grade_cat_id]['gradeCatName'] = $sRes->grade_cat_name;
-    //           $result[$sRes->grade_cat_id][$m] = $sRes->qty;
-    //       }
-    //       else {
-    //           $result[$sRes->grade_cat_id][$m] += $sRes->qty;
-    //       }
-    //   }
-     
-    //  $res['salesMonth'] = $monthResult;
-    //  $res['result'] = $result;
-    //  $res['start_date'] = $start_date;
-    //  $res['end_date'] = $end_date;
-    //  $res['customerId'] = $customerId;
-    //  $res['sectorID'] = $sectorId;
-    //  $res['productId'] = $productsId;
-    //  $res['loopId'] = $params['loopId'];
+        //    if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
+        //        $query = $query->where('monthly_reports_pages.start_test_date','>=',$data['startDate'])->where('monthly_reports_pages.end_test_date','<=',$data['endDate']);         
+        //    }
+        //    if (isset($data['facilityId']) && $data['facilityId'] != '') {
+        //     $query = $query->where('facilities.facility_id','=',$data['facilityId']); 
+        // } 
+        // if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
+        //     $query = $query->where('monthly_reports.algorithm_type','=',$data['algorithmType']); 
+        // }
+        // if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
+        //     $query = $query->where('test_sites.ts_id','=',$data['testSiteId']); 
+        // }  
+    //  dump(DB::getQueryLog($query));die;
+// dd($query);die;
      return $query;
 }
     

@@ -145,8 +145,9 @@ Route::post('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
 Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGlobalConfig');
 
 //Trend Report
-Route::post('/getTrendMonthlyReport', 'TrendReport\TrendReportController@getTrendMonthlyReport');
-Route::get('/trendreport', 'TrendReport\TrendReportController@index')->name('trendreport.index');
+Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendreport.trendReport');
+Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyReport');
+// Route::get('/trendreport', 'TrendReport\TrendReportController@index')->name('trendreport.index');
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
 Route::get('/logbook', 'Report\ReportController@logbook')->name('logbook.index');
