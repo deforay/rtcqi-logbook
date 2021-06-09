@@ -421,6 +421,7 @@ $(document).ready(function() {
                 $(".infocus").focus();
             }
 	}
+	
 var rowCount = 0;
 var gCnt = '{{$global["no_of_test"]}}';
 var col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
