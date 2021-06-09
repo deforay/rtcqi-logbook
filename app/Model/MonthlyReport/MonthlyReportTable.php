@@ -123,6 +123,8 @@ class MonthlyReportTable extends Model
                 ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('monthly_reports.mr_id', '=',$id )
                 ->get();
+        $data['test_details'] = DB::table('monthly_reports_pages')
+                                ->where('monthly_reports_pages.mr_id', '=',$id )->get();
          return $data;
      }
 
@@ -142,21 +144,76 @@ class MonthlyReportTable extends Model
                 'is_flc' => $data['isFlu'],
                 'is_recency' => $data['isRecency'],
                 'contact_no' => $data['contactNo'],
-                'latitude' => $data['latitude'],
-                'longitude' => $data['longitude'],
+                // 'latitude' => $data['latitude'],
+                // 'longitude' => $data['longitude'],
                 'algorithm_type' => $data['algoType'],
                 'date_of_data_collection' => $DateOfCollect,
                 'reporting_month' => $reportingMon,
                 'book_no' => $data['bookNo'],
                 'name_of_data_collector' => $data['nameOfDataCollect'],
-                'signature' => $data['signature'],
+                // 'signature' => $data['signature'],
             );
             $response = DB::table('monthly_reports')
                 ->where('mr_id', '=',base64_decode($id))
                 ->update(
                         $upData
                     );
-        return $response;
+                    $GlobalConfigService = new GlobalConfigService();
+                    $result = $GlobalConfigService->getAllGlobalConfig();
+                    $arr = array();
+                    // now we create an associative array so that we can easily create view variables
+                    for ($i = 0; $i < sizeof($result); $i++) {
+                        $arr[$result[$i]->global_name] = $result[$i]->global_value;
+                    }
+                    for($p =0; $p < count($data['pageNO']); $p++)
+                    {
+        
+                        $insMonthlyArr = array(
+                            'mr_id' => base64_decode($id),
+                            'page_no' => $data['pageNO'][$p],
+                            'start_test_date' => $data['startDate'][$p],
+                            'end_test_date' => $data['endDate'][$p],
+                            'final_positive' => $data['totalPositive'][$p],
+                            'final_negative' => $data['totalNegative'][$p],
+                            'final_undetermined' => $data['finalUndetermined'][$p],
+                        );
+                        for($l = 1; $l <= $arr['no_of_test']; $l++)
+                        {
+                            $m = $l;
+                            $insMonthlyArr['test_'.$m.'_kit_id'] = $data['testkitId'.$l][$p];
+                            $insMonthlyArr['lot_no_'.$m] = $data['lotNO'.$l][$p];
+                            $insMonthlyArr['expiry_date_'.$m] = $data['expiryDate'.$l][$p];
+                            $insMonthlyArr['test_'.$m.'_reactive'] = $data['totalReactive'.$l][$p];
+                            $insMonthlyArr['test_'.$m.'_nonreactive'] = $data['totalNonReactive'.$l][$p];
+                            $insMonthlyArr['test_'.$m.'_invalid'] = $data['totalInvalid'.$l][$p];
+                        }
+                        $totalPositive= $data['totalPositive'][$p];						
+                        $totalTested = $data['totalReactive1'][$p] + $data['totalNonReactive1'][$p];							
+                        $positivePercentage = ($totalTested ==0) ? 'N.A' : number_format($totalPositive*100/$totalTested,2);
+                        $posAgreement = 0;
+                        if($data['totalReactive1'][$p] > 0)
+                        $posAgreement = number_format(100*($data['totalReactive2'][$p] )/($data['totalReactive1'][$p]),2 );
+                        $OverallAgreement = number_format(100* ($data['totalReactive2'][$p] + $data['totalNonReactive1'][$p])/($data['totalReactive1'][$p] + $data['totalNonReactive1'][$p]),2);
+                        $insMonthlyArr['positive_percentage'] = $positivePercentage;
+                        $insMonthlyArr['positive_agreement'] = $posAgreement;
+                        $insMonthlyArr['overall_agreement'] = $OverallAgreement;
+                        // print_r($insMonthlyArr);die;
+                        if(isset($data['mrp_id'][$p]) && $data['mrp_id'][$p] !='')
+                        {
+                            DB::table('monthly_reports_pages')
+                                ->where('mrp_id', '=',$data['mrp_id'][$p])
+                                ->update(
+                                    $insMonthlyArr
+                                    );
+                        }
+                        else
+                        {
+                            DB::table('monthly_reports_pages')->insertGetId(
+                                $insMonthlyArr
+                            );
+                        }
+                    }
+        return 1;
     }
 
     public function fetchTrendMonthlyReport($params)
