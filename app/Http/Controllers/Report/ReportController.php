@@ -9,12 +9,13 @@ use App\Service\FacilityService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
+use View;
 use Session;
 
 class ReportController extends Controller
 {
     //View Trend Report main screen
-    public function index()
+    public function trendReport()
     {
         if(session('login')==true)
         {
@@ -24,19 +25,20 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('trendreport.index',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
+            return view('report.trendReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
         }
         else
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
+    // Trend Report 
+
     public function getTrendMonthlyReport(Request $request)
     {
-        // dd($request);die;
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getTrendMonthlyReport($request);
-        return DataTables::of($data)
-                    ->make(true);
+        $view = View::make('report.getTrendReport', ['report'=>$data]);
+            return $view;
     }
 
     public function logbook()
@@ -54,5 +56,6 @@ class ReportController extends Controller
         else
             return Redirect::to('login')->with('status', 'Please Login');
     }
+
 }
 
