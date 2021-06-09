@@ -49,6 +49,7 @@ display: block;
             </tr>
         </thead>
         <tbody>
+        @if(count($report)>0)
         @foreach ($report as $trendrow)
         <?php
 $date = $trendrow->end_test_date;
@@ -71,6 +72,12 @@ $testingMonth= date('F - Y', strtotime($date)); //June, 2017
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->overall_agreement}}</td>
         </tr>
         @endforeach
+
+        @else
+            <tr>
+               <td class="frezz" style="text-align:center;width:94.6%;" colspan="11">No Data Available</td>
+          </tr>
+        @endif 
         
         </tbody> 
 </table>
