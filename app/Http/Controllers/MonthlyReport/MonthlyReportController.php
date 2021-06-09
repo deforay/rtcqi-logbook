@@ -65,7 +65,7 @@ class MonthlyReportController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
-                        // $button .= '<a href="/monthlyreport/edit/'. base64_encode($data->mr_id).'" name="edit" id="'.$data->mr_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        $button .= '<a href="/monthlyreport/edit/'. base64_encode($data->mr_id).'" name="edit" id="'.$data->mr_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         $button .= '</div>';
                         return $button;
                     })
@@ -92,7 +92,16 @@ class MonthlyReportController extends Controller
             $sitetype = $SiteTypeService->getAllActiveSiteType(); 
             $MonthlyReportService = new MonthlyReportService();
             $result = $MonthlyReportService->getMonthlyReportById($id);
-            return view('monthlyreport.edit',array('result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype));
+            $GlobalConfigService = new GlobalConfigService();
+            $glob = $GlobalConfigService->getAllGlobalConfig();
+            $KitTypeService = new TestKitService();
+            $kittype = $KitTypeService->getAllActiveTestKit(); 
+            $arr = array();
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < sizeof($glob); $i++) {
+                $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+            }
+            return view('monthlyreport.edit',array('global'=>$arr, 'result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype, 'kittype'=>$kittype));
         }
     }
 }
