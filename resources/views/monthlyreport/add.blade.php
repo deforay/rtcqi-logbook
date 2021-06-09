@@ -14,7 +14,7 @@
 }
 </style>
 <?php
-$col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786']
+$col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 ?>
 <div class="content-wrapper">
 <div class="content-header row">
@@ -227,139 +227,140 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786']
                                 </div>
 								<br/>
 								<div id="test_row">
-                                <div class="row ml-2">
-                                    <h4 style="font-weight: 600;">Test Details</h4>
-                                </div>
-                                <hr>
-								<div class="row">
-								<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Page No 
-											</h5>
-											<div class="form-group">
-                                                <input type="number" min="0" id="pageNO0" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >
-											</div>
-										</fieldset>
+									<div class="row ml-2">
+										<h4 style="font-weight: 600;">Test Details</h4>
 									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Start Date
-											</h5>
-											<div class="form-group">
-                                                <input type="date" id="startDate0" class="form-control  " autocomplete="off" name="startDate[]" title="Please Enter Start Date" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>End Date
-											</h5>
-											<div class="form-group">
-                                                <input type="date" id="endDate0" class="form-control  " autocomplete="off" name="endDate[]" title="Please Enter End Date" >
-											</div>
-										</fieldset>
-									</div>
-								</div>
-									<table class="table1" style="width:100%">
-										<tr>
-										@for($i = 1; $i <= $global['no_of_test']; $i++)
-											<td  style=" text-align: center;" colspan="3" >
+									<hr>
+									<div id="test_details0">
+										<div class="row">
+											<div class="col-xl-4 col-lg-12">
 												<fieldset>
-													<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+													<h5>Page No 
 													</h5>
 													<div class="form-group">
-														<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
-															@foreach($kittype as $row2)
-															<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
-															@endforeach
-														</select>
+														<input type="number" min="0" id="pageNO0" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >
 													</div>
 												</fieldset>
-											</td>
-										@endfor
-										</tr>
-										<tr>
-										@for($j = 1; $j <= $global['no_of_test']; $j++)
-											<td style=" text-align: center;">
-													<h5>Lot No {{$j}} 
+											</div>
+											<div class="col-xl-4 col-lg-12">
+												<fieldset>
+													<h5>Start Date
 													</h5>
 													<div class="form-group">
-														<input type="number" min="0" id="lotNO{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" >
+														<input type="date" id="startDate0" class="form-control  " autocomplete="off" name="startDate[]" title="Please Enter Start Date" >
 													</div>
-											</td>
-											<td style=" text-align: center;" colspan="2">
-													<h5>Expiry Date {{$j}}
+												</fieldset>
+											</div>
+											<div class="col-xl-4 col-lg-12">
+												<fieldset>
+													<h5>End Date
 													</h5>
 													<div class="form-group">
-														<input type="date" id="expiryDate{{$j}}" class="form-control  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" >
+														<input type="date" id="endDate0" class="form-control  " autocomplete="off" name="endDate[]" title="Please Enter End Date" >
 													</div>
-											</td>
-										@endfor
-										</tr>
-										<tr>
-											@for($k = 1; $k <= $global['no_of_test']; $k++)
-												<td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
-													<h4 style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
+												</fieldset>
+											</div>
+										</div>
+										<table class="table1" style="width:100%">
+											<tr>
+											@for($i = 1; $i <= $global['no_of_test']; $i++)
+												<td  style=" text-align: center;" colspan="3" >
+													<fieldset>
+														<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+														</h5>
+														<div class="form-group">
+															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+																@foreach($kittype as $row2)
+																<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
+																@endforeach
+															</select>
+														</div>
+													</fieldset>
 												</td>
 											@endfor
-										</tr>
-										<tr>
-										@for($l = 1; $l <= $global['no_of_test']; $l++)
-											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-												<h5 style="color: white; font-weight: 500;"> R
-												</h5>
-												<div class="form-group">
-													<input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$l}}" name="totalReactive{{$l}}[]" title="Please Enter Total Reactive - R - {{$l}}" >
-												</div>
-											</td>
-											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-													<h5 style="color: white; font-weight: 500;">NR
-													</h5>
-													<div class="form-group">
-													<input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$l}}" name="totalNonReactive{{$l}}[]" title="Please Enter Total Non-Reactive - R - {{$l}}" >
-												</div>
-											</td>
-											<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-													<h5 style="color: white; font-weight: 500;">INV 
-													</h5>
-													<div class="form-group">
-													<input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$l}}" name="totalInvalid{{$l}}[]" title="Please Enter Total Invalid - INV - {{$l}}" >
-												</div>
-											</td>
-											
+											</tr>
+											<tr>
+											@for($j = 1; $j <= $global['no_of_test']; $j++)
+												<td style=" text-align: center;">
+														<h5>Lot No {{$j}} 
+														</h5>
+														<div class="form-group">
+															<input type="number" min="0" id="lotNO{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" >
+														</div>
+												</td>
+												<td style=" text-align: center;" colspan="2">
+														<h5>Expiry Date {{$j}}
+														</h5>
+														<div class="form-group">
+															<input type="date" id="expiryDate{{$j}}" class="form-control  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" >
+														</div>
+												</td>
 											@endfor
-										</tr>
-									</table>
-									<br>
-									<table class="table1" style="width:80%;margin-left: 10%;">
-										<tr>
-											<td  style=" text-align: center;">
-											<h4 style="font-weight: 600;"> Final Result </h4>
-											</td>
-											<td style=" text-align: center;" >
-												<h5> Positive
-												</h5>
-												<div class="form-group">
-													<input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
-												</div>
-											</td>
-											<td style=" text-align: center;" >
-												<h5> Negative
-												</h5>
-												<div class="form-group">
-													<input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
-												</div>
-											</td>
-											<td style=" text-align: center;" >
-												<h5> Indeterminate
-												</h5>
-												<div class="form-group">
-													<input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
-												</div>
-											</td>
-										</tr>
-									</table>
-
+											</tr>
+											<tr>
+												@for($k = 1; $k <= $global['no_of_test']; $k++)
+													<td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
+														<h4 style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
+													</td>
+												@endfor
+											</tr>
+											<tr>
+											@for($l = 1; $l <= $global['no_of_test']; $l++)
+												<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
+													<h5 style="color: white; font-weight: 500;"> R
+													</h5>
+													<div class="form-group">
+														<input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$l}}" name="totalReactive{{$l}}[]" title="Please Enter Total Reactive - R - {{$l}}" >
+													</div>
+												</td>
+												<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
+														<h5 style="color: white; font-weight: 500;">NR
+														</h5>
+														<div class="form-group">
+														<input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$l}}" name="totalNonReactive{{$l}}[]" title="Please Enter Total Non-Reactive - R - {{$l}}" >
+													</div>
+												</td>
+												<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
+														<h5 style="color: white; font-weight: 500;">INV 
+														</h5>
+														<div class="form-group">
+														<input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$l}}" name="totalInvalid{{$l}}[]" title="Please Enter Total Invalid - INV - {{$l}}" >
+													</div>
+												</td>
+												
+												@endfor
+											</tr>
+										</table>
+										<br>
+										<table class="table1" style="width:80%;margin-left: 10%;">
+											<tr>
+												<td  style=" text-align: center;">
+												<h4 style="font-weight: 600;"> Final Result </h4>
+												</td>
+												<td style=" text-align: center;" >
+													<h5> Positive
+													</h5>
+													<div class="form-group">
+														<input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
+													</div>
+												</td>
+												<td style=" text-align: center;" >
+													<h5> Negative
+													</h5>
+													<div class="form-group">
+														<input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
+													</div>
+												</td>
+												<td style=" text-align: center;" >
+													<h5> Indeterminate
+													</h5>
+													<div class="form-group">
+														<input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
+													</div>
+												</td>
+											</tr>
+										</table>
+									</div>
 								</div>
 								<div class="form-actions right">
                                     <a href="/monthlyreport" >
@@ -372,6 +373,12 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786']
                                     </button>
 								</div>
 							</form>
+							<br>
+								<div class="row" style="margin-left:40%;">
+									<button  onclick="insert_row();" class="btn btn-info grey">
+                                    <i class="ft-plus icon-left"></i> Add New Test
+                                    </button>
+								</div>
 						</div>
 					</div>
 				</div>
@@ -414,5 +421,142 @@ $(document).ready(function() {
                 $(".infocus").focus();
             }
 	}
+var rowCount = 0;
+var gCnt = '{{$global["no_of_test"]}}';
+var col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
+function insert_row()
+{
+	rowCount++;
+	var div = '';
+
+	div+='<br><div id="test_details'+rowCount+'">\
+			<div class="row">\
+				<div class="col-xl-4 col-lg-12">\
+					<fieldset>\
+						<h5>Page No \
+						</h5>\
+						<div class="form-group">\
+							<input type="number" min="0" id="pageNO'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >\
+						</div>\
+					</fieldset>\
+				</div>\
+				<div class="col-xl-4 col-lg-12">\
+					<fieldset>\
+						<h5>Start Date\
+						</h5>\
+						<div class="form-group">\
+							<input type="date" id="startDate'+rowCount+'" class="form-control  " autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+						</div>\
+					</fieldset>\
+				</div>\
+				<div class="col-xl-4 col-lg-12">\
+					<fieldset>\
+						<h5>End Date\
+						</h5>\
+						<div class="form-group">\
+							<input type="date" id="endDate'+rowCount+'" class="form-control  " autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+						</div>\
+					</fieldset>\
+				</div>\
+			</div>\
+			<table class="table1" style="width:100%">\
+			<tr>';
+			for(var i=1; i<=gCnt;i++)
+			{
+				div+='<td  style=" text-align: center;" colspan="3" >\
+						<fieldset>\
+							<h5>Test Kit Name'+i+'<span class="mandatory">*</span>\
+								</h5>\
+								<div class="form-group">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId'+i+'" name="testkitId'+i+'[]" title="Please select Test Kit Name'+i+'">\
+										@foreach($kittype as $row2)\
+										<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>\
+										@endforeach\
+									</select>\
+								</div>\
+							</fieldset>\
+						</td>';
+			}
+			div+='</tr><tr>'
+			for(var j=1; j<=gCnt;j++)
+			{
+				div+='<td style=" text-align: center;">\
+							<h5>Lot No '+j+' \
+							</h5>\
+							<div class="form-group">\
+								<input type="number" min="0" id="lotNO'+j+'" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO'+j+'[]" title="Please Enter Lot No'+j+'" >\
+							</div>\
+					</td>\
+					<td style=" text-align: center;" colspan="2">\
+							<h5>Expiry Date '+j+'\
+							</h5>\
+							<div class="form-group">\
+								<input type="date" id="expiryDate'+j+'" class="form-control  " autocomplete="off" name="expiryDate'+j+'[]" title="Please Enter Expiry Date'+j+'" >\
+							</div>\
+					</td>';
+			}
+			div+='</tr><tr>'
+			for(var k=1; k<=gCnt;k++)
+			{
+				div+='<td colspan="3" style=" text-align: center;" bgcolor="'+col[k]+'">\
+						<h4 style="font-weight: 600;color: white;">Test Kit '+k+'</h4>\
+					</td>';
+			}
+			div+='</tr><tr>'
+			for(var l=1; l<=gCnt;l++)
+			{
+				div+='<td style=" text-align: center;" bgcolor="'+col[l]+'">\
+						<h5 style="color: white; font-weight: 500;"> R\
+						</h5>\
+						<div class="form-group">\
+							<input type="number" min="0" id="totalReactive'+l+'" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - '+l+'" name="totalReactive'+l+'[]" title="Please Enter Total Reactive - R - '+l+'" >\
+						</div>\
+					</td>\
+					<td style=" text-align: center;" bgcolor="'+col[l]+'">\
+							<h5 style="color: white; font-weight: 500;">NR\
+							</h5>\
+							<div class="form-group">\
+							<input type="number" min="0" id="totalNonReactive'+l+'" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - '+l+'" name="totalNonReactive'+l+'[]" title="Please Enter Total Non-Reactive - R - '+l+'" >\
+						</div>\
+					</td>\
+					<td style=" text-align: center;" bgcolor="'+col[l]+'">\
+						<h5 style="color: white; font-weight: 500;">INV </h5> ';
+			div+='		<div class="form-group">\
+							<input type="number" min="0" id="totalInvalid'+l+'" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - '+l+'" name="totalInvalid'+l+'[]" title="Please Enter Total Invalid - INV - '+l+'" >\
+						</div>\
+					</td>'
+			}
+			div+='</tr></table><br>\
+					<table class="table1" style="width:80%;margin-left: 10%;">\
+						<tr>\
+							<td  style=" text-align: center;">\
+							<h4 style="font-weight: 600;"> Final Result </h4>\
+							</td>\
+							<td style=" text-align: center;" >\
+								<h5> Positive\
+								</h5>\
+								<div class="form-group">\
+									<input type="number" min="0" id="totalPositive'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >\
+								</div>\
+							</td>\
+							<td style=" text-align: center;" >\
+								<h5> Negative\
+								</h5>\
+								<div class="form-group">\
+									<input type="number" min="0" id="totalNegative'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >\
+								</div>\
+							</td>\
+							<td style=" text-align: center;" >\
+								<h5> Indeterminate\
+								</h5>\
+								<div class="form-group">\
+									<input type="number" min="0" id="finalUndetermined'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >\
+								</div>\
+							</td>\
+						</tr>\
+					</table>\
+				</div>';
+	$("#test_row").append(div);
+}
 </script>
 @endsection

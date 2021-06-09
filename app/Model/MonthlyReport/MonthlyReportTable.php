@@ -17,6 +17,7 @@ class MonthlyReportTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        // print_r($data);die;
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = $commonservice->dateFormat($data['reportingMon']);
