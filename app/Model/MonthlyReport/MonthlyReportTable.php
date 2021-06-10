@@ -248,4 +248,38 @@ class MonthlyReportTable extends Model
         }
         return $salesResult;
     }
+
+
+    /// Logbook report display with filters
+
+    public function fetchLogbookReport($params)
+    {
+        $month = array();
+        $data = $params->all();
+        $commonservice = new CommonService();
+        // DB::enableQueryLog();
+        $query = DB::table('monthly_reports_pages')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports.mr_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+        // ->where('monthly_reports.mr_id', '=', $data['algorithmType']);
+        if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
+            $query = $query->where('monthly_reports_pages.end_test_date', '>=', $data['startDate'])
+                ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+        }
+        if (isset($data['facilityId']) && $data['facilityId'] != '') {
+            $query = $query->where('facilities.facility_id', '=', $data['facilityId']);
+        }
+        if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
+            $query = $query->where('monthly_reports.mr_id', '=', $data['algorithmType']);
+        }
+        if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
+            $query = $query->where('test_sites.ts_id', '=', $data['testSiteId']);
+        }
+        // dd($query->toSql());
+        $salesResult = $query->get();
+        return $salesResult;
+    }
 }
