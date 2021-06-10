@@ -214,14 +214,13 @@ class MonthlyReportTable extends Model
         $month = array();
         $data = $params->all();
         $commonservice = new CommonService();
-
-        DB::enableQueryLog();
-        $query = DB::table('monthly_reports')
+        // DB::enableQueryLog();
+        $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id');
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
         // ->where('monthly_reports.mr_id', '=', $data['algorithmType']);
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where('monthly_reports_pages.start_test_date', '>=', $data['endDate'])
@@ -238,7 +237,6 @@ class MonthlyReportTable extends Model
         }
         // dd($query->toSql());
         $salesResult = $query->get();
-        // dd(DB::getQueryLog($salesResult));
 
 
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {

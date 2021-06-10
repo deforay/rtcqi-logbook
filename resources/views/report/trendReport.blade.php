@@ -95,7 +95,7 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
-                                                <option value="0">Select Facility Name</option>
+                                                <option value="">Select Facility Name</option>
                                                     @foreach($facility as $row)
                                                     <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
                                                     @endforeach
@@ -111,7 +111,7 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType" title="Please select Facility Name">
-                                                <option value="0">Select Testing Algothrim</option>
+                                                <option value="">Select Testing Algothrim</option>
                                                     @foreach($monthlyReport as $row)
                                                     <option value="{{$row->mr_id}}">{{$row->algorithm_type}}</option>
                                                     @endforeach
@@ -125,7 +125,7 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId" title="Please select Test Site Name">
-                                                <option value="0">Select Test Site Name</option>
+                                                <option value="">Select Test Site Name</option>
                                                     @foreach($testSite as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach
@@ -139,7 +139,7 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="reportFrequency" name="reportFrequency" title="Please select Report Frequency">
-                                                <option value="0">Select Report Frequency</option>
+                                                <option value="">Select Report Frequency</option>
                                                 <option value="daily">Daily</option>
                                                 <option value="monthly">Monthly</option>
                                                 <option value="yearly">Yearly</option>
