@@ -9,6 +9,7 @@ use App\Service\FacilityService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
+use View;
 use Session;
 
 class TrendReportController extends Controller
@@ -35,8 +36,9 @@ class TrendReportController extends Controller
         // dd($request);die;
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getTrendMonthlyReport($request);
-        return DataTables::of($data)
-                    ->make(true);
+        // dd($data);die;
+        $view = View::make('trendreport.getTrendReport', ['report'=>$data]);
+            return $view;
     }
 }
 
