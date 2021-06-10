@@ -14,7 +14,18 @@ display: block;
 #th     { background:#eee; }
 
 </style>
+<?php 
+use App\Service\GlobalConfigService;
+$GlobalConfigService = new GlobalConfigService();
+$glob = $GlobalConfigService->getAllGlobalConfig();
+$arr = array();
+// now we create an associative array so that we can easily create view variables
+for ($i = 0; $i < sizeof($glob); $i++) {
+    $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+}
 
+
+?>
 <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
 <table class="table table-bordered "  id="trendTable" style="width:100%;">
      <thead>
@@ -25,8 +36,9 @@ display: block;
                 <th class = "th" style="width:10%;">Algo</th>
                 <th class = "th" style="width:10%;">Testing Month</th>
                 <th class = "th" style="width:5%;">Total Testing</th>
-                <th colspan="3" class = "th" style="width:10%; text-align: center">Test 1</th>
-                <th colspan="3" class = "th" style="width:10%; text-align: center">Test 2</th>
+                @for($i = 1; $i <= $arr['no_of_test']; $i++)
+                <th colspan="3" class = "th" style="width:10%; text-align: center">Test {{$i}}</th>
+                @endfor
                 <th class = "th" style="width:10%;">% Pos</th>
                 <th class = "th" style="width:10%;">Positive Agr</th>
                 <th class = "th" style="width:10%;">OverAll Agr</th>
@@ -37,12 +49,11 @@ display: block;
                 <th></th>
                 <th></th>
                 <th></th>
-                <th class = "th" style="width:5%;" >R</th>
-                <th class = "th" style="width:5%;" >NR</th>
-                <th class = "th" style="width:5%;" >INV</th>
-                <th class = "th" style="width:5%;" >R</th>
-                <th class = "th" style="width:5%;" >NR</th>
-                <th class = "th" style="width:5%;" >INV</th>
+                @for($j = 1; $j <= $arr['no_of_test']; $j++)
+                    <th class = "th" style="width:5%;" >R</th>
+                    <th class = "th" style="width:5%;" >NR</th>
+                    <th class = "th" style="width:5%;" >INV</th>
+                @endfor
                 <th></th>
                 <th></th>
                 <th></th>
@@ -61,12 +72,12 @@ $testingMonth= date('F - Y', strtotime($date)); //June, 2017
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->algorithm_type}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$testingMonth}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->final_positive}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->test_1_reactive}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->test_1_nonreactive}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->test_1_invalid}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->test_2_reactive}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->test_2_invalid}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->final_positive}}</td>
+        @for($l = 1; $l <= $arr['no_of_test']; $l++)
+        <?php $reactive = 'test_'.$l.'_reactive'; $nonreactive = 'test_'.$l.'_nonreactive'; $invalid = 'test_'.$l.'_invalid';   ?>
+            <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->$reactive}}</td>
+            <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->$nonreactive}}</td>
+            <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->$invalid}}</td>
+        @endfor
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->positive_percentage}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->positive_agreement}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->overall_agreement}}</td>
