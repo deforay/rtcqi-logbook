@@ -221,7 +221,6 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
-        // ->where('monthly_reports.mr_id', '=', $data['algorithmType']);
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where('monthly_reports_pages.start_test_date', '>=', $data['endDate'])
                 ->where('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
@@ -235,7 +234,6 @@ class MonthlyReportTable extends Model
         if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
             $query = $query->where('test_sites.ts_id', '=', $data['testSiteId']);
         }
-        // dd($query->toSql());
         $salesResult = $query->get();
 
 
