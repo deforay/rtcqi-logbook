@@ -68,7 +68,7 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                 <h4 class="card-title">Filter the data</h4><br>
-                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="" action="" autocomplete="off" onsubmit="validateNow();return false;">
+                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="" action="" autocomplete="off" onsubmit="getTrendReport();return false;">
                             @csrf
                 <div class="row">
                 <div class="col-xl-4 col-lg-12">
@@ -151,7 +151,7 @@
                         <div class="form-group row">
                             
                             <div class="col-md-8">
-                                <button type="submit" onclick="validateNow();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                <button type="submit" onclick="getTrendReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                 <button class="btn btn-danger btn-md"
                                     onclick='clearStatus();'><span>Reset</span></button>&nbsp;&nbsp;
 
@@ -173,10 +173,10 @@
 </div>
   <script>
   $(document).ready(function() {
-validateNow();
+    getTrendReport();
     });
-  duplicateName = true;
-    function validateNow() {
+//   duplicateName = true;
+    function getTrendReport() {
             // flag = deforayValidator.init({
             //     formId: 'trendReportFilter'
             // });
