@@ -79,6 +79,9 @@
     }
 
     .table tr td:last-child{
+        /* vertical-align: middle !important; */
+    }
+    .table td{
         vertical-align: middle !important;
     }
 

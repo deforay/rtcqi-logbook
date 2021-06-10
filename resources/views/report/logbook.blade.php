@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath P
-    Date               : 7 June 2021
+    Author             : Prasath M
+    Date               : 10 June 2021
     Description        : Logbook report
-    Last Modified Date : 7 June 2021
-    Last Modified Name : Prasath P
+    Last Modified Date : 10 June 2021
+    Last Modified Name : Prasath M
 -->
 
 @extends('layouts.main')
@@ -67,16 +67,14 @@
                         <div class="card-content collapse show">
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
-                <h4 class="card-title">Filter the data</h4><br>
-                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="" action="" autocomplete="off" onsubmit="validateNow();return false;">
-                            @csrf
-                <div class="row">
-                <div class="col-xl-4 col-lg-12">
+                            <h4 class="card-title">Filter the data</h4><br>
+                            <div class="row">
+                            <div class="col-xl-4 col-lg-12">
                                         <fieldset>
                                             <h5>Start Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="date" id="startDate" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
+                                                <input type="date" id="startDate" value="{{date('Y-m-d', strtotime('-30 days'))}}" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -85,7 +83,7 @@
                                             <h5>End Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="date" id="endDate" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
+                                                <input type="date" id="endDate" value="{{date('Y-m-d')}}" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -95,7 +93,7 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
-                                                <option value="0">Select Facility Name</option>
+                                                <option value="">Select Facility Name</option>
                                                     @foreach($facility as $row)
                                                     <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
                                                     @endforeach
@@ -111,21 +109,20 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType" title="Please select Facility Name">
-                                                <option value="0">Select Testing Algothrim</option>
-                                                    @foreach($monthlyReport as $row)
-                                                    <option value="{{$row->mr_id}}">{{$row->algorithm_type}}</option>
-                                                    @endforeach
+                                                <option value="">Select Testing Algothrim</option>
+                                                    <option value="serial">Serial</option>
+                                                    <option value="parallel">Parallel</option>
                                                 </select>
                                             </div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Test Site Name
+											<h5> Site Name
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId" title="Please select Test Site Name">
-                                                <option value="0">Select Test Site Name</option>
+                                                <option value="">Select Test Site Name</option>
                                                     @foreach($testSite as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach
@@ -133,62 +130,21 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Report Frequency
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="reportFrequency" name="reportFrequency" title="Please select Report Frequency">
-                                                <option value="0">Select Report Frequency</option>
-                                                <option value="daily">Daily</option>
-                                                <option value="monthly">Monthly</option>
-                                                <option value="yearly">Yearly</option>
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
+                                    
                                     <div class="col-md-7" style="color:#FFF;">
                         <div class="form-group row">
                             
                             <div class="col-md-8">
-                                <button type="submit" onclick="validateNow();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                 <a class="btn btn-danger btn-md"
-                                   href="/logbook"'><span>Reset</span></a>&nbsp;&nbsp;
-
-<a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
-        class="fa fa-download"></i>Export Execl</a>
+                                     href = "/logbook"><span>Reset</span></a>&nbsp;&nbsp;
                             </div>
                         </div>
-							</form>
                     </div>
                 </div></div></div>
-                        <div class="card-content collapse show">
-                            <div class="card-body card-dashboard">
-                                <p class="card-text"></p>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="trendReportFilter">
-                                        <thead>
-                                            <tr>
-                                                <th>Facility</th>
-                                                <th>Site</th>
-                                                <th>Algo</th>
-                                                <th>Testing Month</th>
-                                                <th>Total Tests</th>
-                                                <th colspan="3" style="center">Test 1</th>
-                                                <th colspan="3" style="center">Test 2</th>
-                                                <th>% Pos</th>
-                                                <th>Positive Agr</th>
-                                                <th>OverAll Agr</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="table-responsive p-t-10">
+                    <div id="logbookList"></div>
+                    </div>       
                     </div>
                 </div>
             </div>
@@ -196,12 +152,10 @@
     </div>
 </div>
   <script>
-//   $(document).ready(function() {
-//         $.blockUI();
-//         getLogbookReport();
-//         $.unblockUI();
-//     });
-function getLogbookReport(){
+  $(document).ready(function() {
+    getLogbookReport();
+    });
+    function getLogbookReport() {
       startDate = $('#startDate').val();
       endDate = $('#endDate').val();
       $.ajaxSetup({
@@ -209,17 +163,9 @@ function getLogbookReport(){
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#trendReportFilter').DataTable({
-            processing: true,
-            destroy : true,
-            serverSide: true,
-            scrollX: true,
-            autoWidth:false,
-            scrollY: "400px",
-            scrollCollapse: true,
-            ajax: {
-                url:'{{ url("getLogbookReport") }}',
-                type: 'POST',
+      $.ajax({
+                url: "{{ url('/getLogbookReport') }}",
+                method: 'post',
                 data: {
                     startDate:startDate,
                     endDate:endDate,
@@ -228,25 +174,11 @@ function getLogbookReport(){
                     testSiteId: $("#testSiteId").val(),
                     reportFrequency: $("#reportFrequency").val(),
                 },
-            },
-            columns: [
-                    
-                    { data: 'invoice_no', name: 'invoice_no' },
-                    { data: 'invoice_date', name: 'invoice_date' },
-                    { data: 'keyperson_name', name: 'keyperson_name',className:'firstcaps' },
-                    { data: 'customer_name', name: 'customer_name',className:'firstcaps' },
-                    { data: 'indent_no', name: 'indent_no' },
-                    { data: 'invoice_status', name: 'invoice_status', className:'firstcaps' },
-                    { data: 'state_name', name: 'state_name' },
-                    { data: 'location_name', name: 'location_name',className:'firstcaps' },
-                    { data: 'sector_name', name: 'sector_name',className:'firstcaps' },
-                    { data: 'grade_name', name: 'grade_name',className:'firstcaps' },
-                    { data: 'grade_quality', name: 'grade_quality' },
-                    { data: 'qty', name: 'qty' },
-                ],
-            order: [[0, 'desc']]
-        });
+                success: function(result){
+                   $("#logbookList").html(result);
+                }
+            });
 	}
-    </script>
+</script>
   
 @endsection

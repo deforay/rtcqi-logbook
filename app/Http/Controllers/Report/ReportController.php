@@ -58,5 +58,15 @@ class ReportController extends Controller
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
+    // Logbook Report 
+
+    public function getLogbookReport(Request $request)
+    {
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getLogbookReport($request);
+        $view = View::make('report.getLogbookReport', ['report'=>$data]);
+            return $view;
+    }
+
 }
 

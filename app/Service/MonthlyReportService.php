@@ -81,6 +81,13 @@ class MonthlyReportService
 		$result = $model->fetchTrendMonthlyReport($params);
 		return $result;
 	}
+
+	public function getLogbookReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchLogbookReport($params);
+		return $result;
+	}
 	
 }
 
