@@ -211,39 +211,54 @@ class MonthlyReportTable extends Model
 
     public function fetchTrendMonthlyReport($params)
     {
-        $month = array();
         $data = $params->all();
-        $commonservice = new CommonService();
-        // DB::enableQueryLog();
+        DB::enableQueryLog();
+        $mon = DB::raw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%b') as end_test_date");
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where('monthly_reports_pages.start_test_date', '>=', $data['endDate'])
                 ->where('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
         }
-        if (isset($data['facilityId']) && $data['facilityId'] != '') {
+        if (isset($data['facilityId']) && trim($data['facilityId']) != '') {
             $query = $query->where('facilities.facility_id', '=', $data['facilityId']);
         }
-        if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
+        if (isset($data['algorithmType']) && trim($data['algorithmType']) != '') {
             $query = $query->where('monthly_reports.mr_id', '=', $data['algorithmType']);
         }
-        if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
+        if (isset($data['testSiteId']) && trim($data['testSiteId']) != '') {
             $query = $query->where('test_sites.ts_id', '=', $data['testSiteId']);
         }
-        $salesResult = $query->get();
-
-
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {
-            foreach ($salesResult as $sRes) {
-                $month[$sRes->end_test_date] = $sRes->end_test_date;
-                $query = date('M', strtotime($sRes->end_test_date));
-                // dd($query);die;
-            }
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
+        if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)')); 
+        }
+        $salesResult = $query->get();
+        // dd($salesResult);die;
+        // dd(DB::getQueryLog($salesResult));die;
+
+
         return $salesResult;
     }
 
