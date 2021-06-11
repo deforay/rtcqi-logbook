@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Service\TestSiteService;
 use App\Service\MonthlyReportService;
 use App\Service\FacilityService;
+use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -65,6 +66,16 @@ class ReportController extends Controller
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getLogbookReport($request);
         $view = View::make('report.getLogbookReport', ['report'=>$data]);
+            return $view;
+    }
+
+    public function overallagreement(Request $request , $id)
+    {
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getPageSummary($id);
+        $KitTypeService = new TestKitService();
+        $kittype = $KitTypeService->getAllActiveTestKit();
+        $view = View::make('report.overallagreement', ['report'=>$data,'kittype'=>$kittype]);
             return $view;
     }
 
