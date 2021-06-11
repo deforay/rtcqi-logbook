@@ -150,4 +150,5 @@ Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyRe
 // Route::get('/trendreport', 'TrendReport\TrendReportController@index')->name('trendreport.index');
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
-Route::get('/logbook', 'Report\ReportController@logbook')->name('logbook.index');
+Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook');
+Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagreement');

@@ -30,7 +30,7 @@ $report = '';
     $report .= '<li class=" nav-item" id="reports"><a href="javascript:void(0)"><i class="la la-file"></i><span class="menu-title">Reports</span></a>
                 <ul class="menu-content">';
     $report .= '<li id="li-trendreport"><a class="menu-item" href="/trendreport/">Trend Report</a></li>';
-    $report .= '<li id="li-logbook"><a class="menu-item" href="/logbook/">Logbook Report</a></li>';
+    $report .= '<li id="li-logbook"><a class="menu-item" href="/report/logbook/">Logbook Report</a></li>';
     $report .= '</ul></li>';
 
 ?>
