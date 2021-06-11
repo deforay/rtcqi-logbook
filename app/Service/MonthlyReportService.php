@@ -88,6 +88,13 @@ class MonthlyReportService
 		$result = $model->fetchLogbookReport($params);
 		return $result;
 	}
+
+	public function getPageSummary($id)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchPageSummary($id);
+		return $result;
+	}
 	
 }
 

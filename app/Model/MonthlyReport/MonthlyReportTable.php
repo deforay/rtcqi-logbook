@@ -266,20 +266,34 @@ class MonthlyReportTable extends Model
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
         // ->where('monthly_reports.mr_id', '=', $data['algorithmType']);
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-            $query = $query->where('monthly_reports_pages.end_test_date', '>=', $data['startDate'])
-                ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+                $query = $query->where(function($query) use($data){
+                    $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
+                        ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+                });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
-            $query = $query->where('facilities.facility_id', '=', $data['facilityId']);
+            $query = $query->where('monthly_reports.facility_id', '=', $data['facilityId']);
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
-            $query = $query->where('monthly_reports.mr_id', '=', $data['algorithmType']);
+            $query = $query->where('monthly_reports.algorithm_type', '=', $data['algorithmType']);
         }
         if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
-            $query = $query->where('test_sites.ts_id', '=', $data['testSiteId']);
+            $query = $query->where('monthly_reports.ts_id', '=', $data['testSiteId']);
         }
         // dd($query->toSql());
         $salesResult = $query->get();
         return $salesResult;
+    }
+    /// Page summary for log data
+    public function fetchPageSummary($id)
+    {
+        $id = base64_decode($id);
+        $data = DB::table('monthly_reports_pages')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports.mr_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->where('monthly_reports_pages.mrp_id', '=', $id)->get();
+        return $data;
     }
 }
