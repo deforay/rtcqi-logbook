@@ -86,7 +86,7 @@ $testingMonth= date('F - Y', strtotime($date)); //June, 2017
 
         @else
             <tr>
-               <td class="frezz" style="text-align:center;width:94.6%;" colspan="11">No Data Available</td>
+               <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
           </tr>
         @endif 
         
