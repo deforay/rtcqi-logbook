@@ -76,7 +76,7 @@
                                             <h5>Start Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="date" id="startDate" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
+                                                <input type="text" id="startDate" value="<?php echo date('d-m-Y',strtotime('-30 days'));?>" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -85,7 +85,7 @@
                                             <h5>End Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="date" id="endDate" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
+                                                <input type="text" id="endDate" value="<?php echo date('d-m-Y');?>" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -139,9 +139,8 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="reportFrequency" name="reportFrequency" title="Please select Report Frequency">
-                                                <option value="">Select Report Frequency</option>
-                                                <option value="daily">Daily</option>
-                                                <option value="monthly">Monthly</option>
+                                                <option selected value="monthly">Monthly</option>
+                                                <option value="quaterly">Quaterly</option>
                                                 <option value="yearly">Yearly</option>
                                                 </select>
                                             </div>
@@ -220,13 +219,39 @@
         $("#startDate").val("");
         $("#endDate").val("");
         var dropDown = document.getElementById("facilityId");
-        dropDown.selectedIndex = 0;
+        dropDown.selectedIndex = "";
         var dropDown = document.getElementById("algorithmType");
-        dropDown.selectedIndex = 0;
+        dropDown.selectedIndex = "";
         var dropDown = document.getElementById("testSiteId");
-        dropDown.selectedIndex = 0;
+        dropDown.selectedIndex = "";
         var dropDown = document.getElementById("reportFrequency");
-        dropDown.selectedIndex = 0;
-    }</script>
+        dropDown.selectedIndex = "";
+    }
+
+    $(document).ready(function(){
+        var date1 = new Date();
+  var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+   $("#startDate").datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   }).on('changeDate', function (selected) {
+       var minDate = new Date(selected.date.valueOf());
+       $('#endDate').datepicker('setStartDate', minDate);
+   });
+
+   $("#endDate").datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   }).on('changeDate', function (selected) {
+           var minDate = new Date(selected.date.valueOf());
+           $('#startDate').datepicker('setEndDate', minDate);
+   });
+});
+    
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   
 @endsection
