@@ -8,7 +8,7 @@ display: block;
 }
 
 .tableFixHead          { overflow-y: auto; max-height: 500px;  }
-.tableFixHead thead th { position: sticky; top: 0;  background-color: lavender; z-index: 99; }
+.tableFixHead thead th { position: sticky; top: 0;   z-index: 99; }
 #table-bordered  { border-collapse: collapse; width: 100%; }
 #th, #td { padding: 8px 16px; }
 #th     { background:#eee; }
@@ -24,6 +24,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
     $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
 }
 
+$col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 
 ?>
 <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
@@ -37,7 +38,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                 <th class = "th" style="width:10%;">Testing Month</th>
                 <th class = "th" style="width:5%;">Total Testing</th>
                 @for($i = 1; $i <= $arr['no_of_test']; $i++)
-                <th colspan="3" class = "th" style="width:10%; text-align: center">Test {{$i}}</th>
+                <th colspan="3" class = "th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
                 @endfor
                 <th class = "th" style="width:10%;">% Pos</th>
                 <th class = "th" style="width:10%;">Positive Agr</th>
@@ -50,9 +51,9 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                 <th></th>
                 <th></th>
                 @for($j = 1; $j <= $arr['no_of_test']; $j++)
-                    <th class = "th" style="width:5%;" >R</th>
-                    <th class = "th" style="width:5%;" >NR</th>
-                    <th class = "th" style="width:5%;" >INV</th>
+                    <th class = "th" style="width:5%;" bgcolor="{{$col[$j]}}" >R</th>
+                    <th class = "th" style="width:5%;" bgcolor="{{$col[$j]}}" >NR</th>
+                    <th class = "th" style="width:5%;" bgcolor="{{$col[$j]}}" >INV</th>
                 @endfor
                 <th></th>
                 <th></th>
@@ -67,26 +68,26 @@ $date = $trendrow->end_test_date;
 $testingMonth= date('F - Y', strtotime($date)); //June, 2017
 ?>
         <tr style="text-align: right">
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->facility_name}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->site_type_name}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->algorithm_type}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$testingMonth}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->final_positive}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_1_reactive + $trendrow->test_1_nonreactive}}</td>
         @for($l = 1; $l <= $arr['no_of_test']; $l++)
         <?php $reactive = 'test_'.$l.'_reactive'; $nonreactive = 'test_'.$l.'_nonreactive'; $invalid = 'test_'.$l.'_invalid';   ?>
-            <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->$reactive}}</td>
-            <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->$nonreactive}}</td>
-            <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->$invalid}}</td>
+            <td class ="td"  bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive}}</td>
+            <td class ="td"  bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$nonreactive}}</td>
+            <td class ="td"  bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
         @endfor
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->positive_percentage}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->positive_agreement}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->overall_agreement}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->positive_percentage}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->positive_agreement}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a href="/report/overallagreementtrend/{{ base64_encode($trendrow->mrp_id)}}" name="overall_agreement" id="'.$data->mrp_id.'" class="" title="Overall Agreement">{{$trendrow->overall_agreement}}</a></td>
         </tr>
         @endforeach
 
         @else
             <tr>
-               <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
+               <td class="frezz" style="text-align:center;width:94.6%;" colspan="11">No Data Available</td>
           </tr>
         @endif 
         
