@@ -212,8 +212,9 @@ class MonthlyReportTable extends Model
     public function fetchTrendMonthlyReport($params)
     {
         $data = $params->all();
+        // dd($data['facilityId']);die;
         DB::enableQueryLog();
-        $mon = DB::raw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%b') as end_test_date");
+        // $mon = DB::raw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%b') as end_test_date");
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports.mr_id')
@@ -225,21 +226,26 @@ class MonthlyReportTable extends Model
             $query = $query->where('monthly_reports_pages.start_test_date', '>=', $data['endDate'])
                 ->where('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
         }
-        if (isset($data['facilityId']) && trim($data['facilityId']) != '') {
-            $query = $query->where('facilities.facility_id', '=', $data['facilityId']);
+        if (isset($data['facilityId']) && $data['facilityId'] != '') {
+            $query = $query->whereIn('test_sites.facility_id', $data['facilityId']);
+            $query = $query->groupBy(DB::raw('test_sites.facility_id'));
         }
-        if (isset($data['algorithmType']) && trim($data['algorithmType']) != '') {
-            $query = $query->where('monthly_reports.mr_id', '=', $data['algorithmType']);
+        if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
+            $query = $query->whereIn('monthly_reports.mr_id', $data['algorithmType']);
+            $query = $query->groupBy(DB::raw('monthly_reports.mr_id'));
         }
-        if (isset($data['testSiteId']) && trim($data['testSiteId']) != '') {
-            $query = $query->where('test_sites.ts_id', '=', $data['testSiteId']);
+        if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
+            $query = $query->whereIn('test_sites.ts_id', $data['testSiteId']);
+            $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {
             $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
             $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
@@ -247,9 +253,11 @@ class MonthlyReportTable extends Model
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');$query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)')); 
@@ -279,13 +287,13 @@ class MonthlyReportTable extends Model
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
         // ->where('monthly_reports.mr_id', '=', $data['algorithmType']);
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-                $query = $query->orWhere(function($query) use($data){
+                $query = $query->where(function($query) use($data){
                     $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                        ->where('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+                        ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
                 });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
-            $query = $query->where('test_sites.facility_id', '=', $data['facilityId']);
+            $query = $query->where('monthly_reports.facility_id', '=', $data['facilityId']);
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->where('monthly_reports.algorithm_type', '=', $data['algorithmType']);

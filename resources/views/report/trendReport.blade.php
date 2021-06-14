@@ -94,8 +94,7 @@
 											<h5>Facilty Name
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
-                                                <option value="">Select Facility Name</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId[]" title="Please select Facility Name">
                                                     @foreach($facility as $row)
                                                     <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
                                                     @endforeach
@@ -110,8 +109,7 @@
 											<h5>Testing Algothrim
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType" title="Please select Facility Name">
-                                                <option value="">Select Testing Algothrim</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Algorithm Type">
                                                     @foreach($monthlyReport as $row)
                                                     <option value="{{$row->mr_id}}">{{$row->algorithm_type}}</option>
                                                     @endforeach
@@ -124,8 +122,7 @@
 											<h5>Test Site Name
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId" title="Please select Test Site Name">
-                                                <option value="">Select Test Site Name</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
                                                     @foreach($testSite as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach
@@ -154,8 +151,8 @@
                                 <button class="btn btn-danger btn-md"
                                     onclick='clearStatus();'><span>Reset</span></button>&nbsp;&nbsp;
 
-<a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
-        class="fa fa-download"></i>Export Execl</a>
+<!-- <a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
+        class="fa fa-download"></i>Export Execl</a> -->
                             </div>
                         </div>
 							</form>
@@ -173,6 +170,19 @@
   <script>
   $(document).ready(function() {
     getTrendReport();
+    $('.js-example-basic-multiple').select2();
+    $selectElement = $('#facilityId').select2({
+    placeholder: "Select Facility Name",
+    allowClear: true
+  });
+  $selectElement = $('#algorithmType').select2({
+    placeholder: "Select Testing Algothrim",
+    allowClear: true
+  });
+  $selectElement = $('#testSiteId').select2({
+    placeholder: "Select Test Site Name",
+    allowClear: true
+  });
     });
 //   duplicateName = true;
     function getTrendReport() {
