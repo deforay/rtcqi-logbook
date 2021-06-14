@@ -279,13 +279,13 @@ class MonthlyReportTable extends Model
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
         // ->where('monthly_reports.mr_id', '=', $data['algorithmType']);
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-                $query = $query->where(function($query) use($data){
+                $query = $query->orWhere(function($query) use($data){
                     $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                        ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+                        ->where('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
                 });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
-            $query = $query->where('monthly_reports.facility_id', '=', $data['facilityId']);
+            $query = $query->where('test_sites.facility_id', '=', $data['facilityId']);
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->where('monthly_reports.algorithm_type', '=', $data['algorithmType']);
