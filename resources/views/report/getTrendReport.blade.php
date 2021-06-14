@@ -81,13 +81,13 @@ $testingMonth= date('F - Y', strtotime($date)); //June, 2017
         @endfor
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->positive_percentage}}</td>
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->positive_agreement}}</td>
-        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a href="/report/overallagreementtrend/{{ base64_encode($trendrow->mrp_id)}}" name="overall_agreement" id="'.$data->mrp_id.'" class="" title="Overall Agreement">{{$trendrow->overall_agreement}}</a></td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->overall_agreement}}</td>
         </tr>
         @endforeach
 
         @else
             <tr>
-               <td class="frezz" style="text-align:center;width:94.6%;" colspan="11">No Data Available</td>
+               <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
           </tr>
         @endif 
         

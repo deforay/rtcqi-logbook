@@ -152,5 +152,3 @@ Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyRe
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
 Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook');
 Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagreement');
-Route::get('/report/overallagreementtrend/{id}', 'Report\ReportController@overallagreementtrend');
-

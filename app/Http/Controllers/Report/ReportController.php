@@ -79,15 +79,5 @@ class ReportController extends Controller
             return $view;
     }
 
-    public function overallagreementtrend(Request $request , $id)
-    {
-        $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getPageSummary($id);
-        $KitTypeService = new TestKitService();
-        $kittype = $KitTypeService->getAllActiveTestKit();
-        $view = View::make('report.overallagreementtrend', ['report'=>$data,'kittype'=>$kittype]);
-            return $view;
-    }
-
 }
 
