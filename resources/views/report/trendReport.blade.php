@@ -110,9 +110,8 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Algorithm Type">
-                                                    @foreach($monthlyReport as $row)
-                                                    <option value="{{$row->mr_id}}">{{$row->algorithm_type}}</option>
-                                                    @endforeach
+                                                <option value="serial">Serial</option>
+                                                    <option value="parallel">Parallel</option>
                                                 </select>
                                             </div>
 										</fieldset>
