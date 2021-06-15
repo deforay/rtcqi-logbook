@@ -231,7 +231,7 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('test_sites.facility_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
-            $query = $query->whereIn('monthly_reports.mr_id', $data['algorithmType']);
+            $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
             $query = $query->groupBy(DB::raw('monthly_reports.mr_id'));
         }
         if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
@@ -261,6 +261,18 @@ class MonthlyReportTable extends Model
             $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
             $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)')); 
+        }
+        if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
+            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)')); 
         }
         $salesResult = $query->get();
         // dd($salesResult);die;
