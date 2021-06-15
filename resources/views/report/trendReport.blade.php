@@ -136,7 +136,7 @@
                                             <div class="form-group">
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="reportFrequency" name="reportFrequency" title="Please select Report Frequency">
                                                 <option selected value="monthly">Monthly</option>
-                                                <option value="quaterly">Quaterly</option>
+                                                <option value="quaterly">Quarterly</option>
                                                 <option value="yearly">Yearly</option>
                                                 </select>
                                             </div>

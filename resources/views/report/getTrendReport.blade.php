@@ -62,16 +62,27 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
         </thead>
         <tbody>
         @if(count($report)>0)
-        @foreach ($report as $trendrow)
+        @foreach ($report['res'] as $trendrow)
         <?php
-$date = $trendrow->end_test_date;
-$testingMonth= date('F - Y', strtotime($date)); //June, 2017
+        if($report['reportFrequency']=='quaterly'){
+            $quarterlyData = $trendrow->quarterly;
+            $year = $trendrow->quaYear;
+            $testingDate = $quarterlyData. '-' . $year;
+        }
+        else if($report['reportFrequency']=='monthly'){
+            $testingDate = $trendrow->month;
+        }else{
+            $testingDate = $trendrow->year;
+        }
+        
+// dd($trendrow->end_test_date);die;
+// $testingMonth= date('F - Y', strtotime($date)); //June, 2017
 ?>
         <tr style="text-align: right">
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
-        <td class = "td"style=" width: 10%; text-align: left">{{$testingMonth}}</td>
+        <td class = "td"style=" width: 10%; text-align: left">{{$testingDate}}</td>
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_1_reactive + $trendrow->test_1_nonreactive}}</td>
         @for($l = 1; $l <= $arr['no_of_test']; $l++)
         <?php $reactive = 'test_'.$l.'_reactive'; $nonreactive = 'test_'.$l.'_nonreactive'; $invalid = 'test_'.$l.'_invalid';   ?>
