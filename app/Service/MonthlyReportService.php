@@ -95,6 +95,14 @@ class MonthlyReportService
 		$result = $model->fetchPageSummary($id);
 		return $result;
 	}
+
+	public function importMonthlyReportData($request)
+    {
+		$data =  $request->all();
+		$model = new MonthlyReportTable();
+		$add = $model->importMonthlyReportData($request);
+		return $add;
+	}
 	
 }
 

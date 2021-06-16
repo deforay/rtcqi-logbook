@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Model\InventoryStock\InventoryStockTable;
+use App\Model\MonthlyReport\MonthlyReportTable;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class InventoryStockUpload implements ToModel
+class MonthlyReportDataUpload implements ToModel
 {
     /**
     * @param array $row
@@ -32,7 +32,7 @@ class InventoryStockUpload implements ToModel
     //         }
     //      $i++;  
     //     }
-        return new InventoryStockTable([
+        return new MonthlyReportTable([
             'item_category' => $row[0],
             'item_type'    => $row[1], 
             'unit'    => $row[2], 
