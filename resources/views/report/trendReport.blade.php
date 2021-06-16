@@ -225,16 +225,14 @@
 	}
 
   function clearStatus() {
+    $.blockUI();
+    getTrendReport();
+    $.unblockUI();
         $("#startDate").val("");
         $("#endDate").val("");
-        var dropDown = document.getElementById("facilityId");
-        dropDown.selectedIndex = "";
-        var dropDown = document.getElementById("algorithmType");
-        dropDown.selectedIndex = "";
-        var dropDown = document.getElementById("testSiteId");
-        dropDown.selectedIndex = "";
-        var dropDown = document.getElementById("reportFrequency");
-        dropDown.selectedIndex = "";
+        $("#facilityId").val('').trigger('change');
+        $("#algorithmType").val('').trigger('change');
+        $("#testSiteId").val('').trigger('change');
     }
 
     $(document).ready(function(){
