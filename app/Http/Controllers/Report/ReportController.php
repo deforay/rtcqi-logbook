@@ -78,6 +78,32 @@ class ReportController extends Controller
         $view = View::make('report.overallagreement', ['report'=>$data,'kittype'=>$kittype]);
             return $view;
     }
+ 
+// testKitReport
+    public function testKitReport()
+    {
+        if(session('login')==true)
+        {
+            $FacilityService = new FacilityService();
+            $facility = $FacilityService->getAllActiveFacility();
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllActiveTestSite();
+            $monthlyReportService = new MonthlyReportService();
+            $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
+            return view('report.testKitReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getTestKitMonthlyReport(Request $request)
+    {
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getTestKitMonthlyReport($request);
+        // dd($data);die;
+        $view = View::make('report.getTestKitReport', ['report'=>$data]);
+            return $view;
+    }
 
 }
 

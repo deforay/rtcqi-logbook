@@ -96,12 +96,11 @@ class MonthlyReportService
 		return $result;
 	}
 
-	public function importMonthlyReportData($request)
-    {
-		$data =  $request->all();
+	public function getTestKitMonthlyReport($params)
+	{
 		$model = new MonthlyReportTable();
-		$add = $model->importMonthlyReportData($request);
-		return $add;
+		$result = $model->fetchTestKitMonthlyReport($params);
+		return $result;
 	}
 	
 }
