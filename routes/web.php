@@ -156,3 +156,6 @@ Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagre
 //Test Kit Report
 Route::get('/testKitReport', 'Report\ReportController@testKitReport')->name('testKitReport.testKitReport');
 Route::post('/getTestKitMonthlyReport', 'Report\ReportController@getTestKitMonthlyReport');
+
+Route::get('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata')->name('monthlyreportdata.index');
+Route::post('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata');
