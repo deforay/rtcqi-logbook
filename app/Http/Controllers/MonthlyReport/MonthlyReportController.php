@@ -104,5 +104,31 @@ class MonthlyReportController extends Controller
             return view('monthlyreport.edit',array('global'=>$arr, 'result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype, 'kittype'=>$kittype));
         }
     }
+
+    public function monthlyreportdata(Request $request)
+    {
+        if(session('login')==true)
+        {
+            if ($request->isMethod('post')) 
+            {
+                $service = new MonthlyReportService();
+                $result = $service->importMonthlyReportData($request);
+                return view('monthlyreport.upload',array('status'=>$result));
+            }
+            else{
+                $GlobalConfigService = new GlobalConfigService();
+                $glob = $GlobalConfigService->getAllGlobalConfig();
+                $arr = array();
+                // now we create an associative array so that we can easily create view variables
+                for ($i = 0; $i < sizeof($glob); $i++) {
+                    $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+                }
+                return view('monthlyreport.upload',array('global'=>$arr));
+            }
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
 }
 
