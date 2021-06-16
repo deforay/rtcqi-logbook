@@ -95,6 +95,13 @@ class MonthlyReportService
 		$result = $model->fetchPageSummary($id);
 		return $result;
 	}
+
+	public function getTestKitMonthlyReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchTestKitMonthlyReport($params);
+		return $result;
+	}
 	
 }
 
