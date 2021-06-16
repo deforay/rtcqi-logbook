@@ -42,27 +42,13 @@
             
         </div>
     </div>
-    @if (session('status'))
+    @if (isset($status))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-            {{ session('status') }}</b></div>
+            {{ $status }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div> 
 
-    <div class="modal" tabindex="-1" role="dialog" id="show_alert_index" style="display:block">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header" style="border-bottom: none;">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                {!! session('status') !!}
-            </div>
-          </div>
-        </div>
-    </div>
     <script>
         // ses = "{{ session('status') }}"
         // $('#modalBody').html(ses)
