@@ -61,7 +61,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
             </tr>
         </thead>
         <tbody>
-        @if(count($report)>0)
+        @if(count($report['res'])>0)
         @foreach ($report['res'] as $trendrow)
         <?php
         if($report['reportFrequency']=='quaterly'){

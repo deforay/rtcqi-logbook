@@ -153,9 +153,6 @@ Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
 Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook');
 Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagreement');
 
-
-Route::get('/importExportView', 'MonthlyReport\MonthlyReportController@importExportView');
-Route::post('/import', 'MonthlyReport\MonthlyReportController@import')->name('import');
-
-Route::get('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata')->name('monthlyreportdata.index');
-Route::post('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata');
+//Test Kit Report
+Route::get('/testKitReport', 'Report\ReportController@testKitReport')->name('testKitReport.testKitReport');
+Route::post('/getTestKitMonthlyReport', 'Report\ReportController@getTestKitMonthlyReport');
