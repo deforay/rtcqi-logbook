@@ -99,6 +99,18 @@ ismob = true;
       $("#tests > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
+    else if(splitUrl[0]=="trendreport"  || splitUrl[1]=="logbook" )
+    {
+      $("#reports").addClass('active');
+      $("#reports > ul > li").removeClass('active');
+      $("#li-"+splitUrl[1]).addClass('active');
+    }
+    else if(splitUrl[0]=="monthlyreportdata"  )
+    {
+      $("#import").addClass('active');
+      $("#import > ul > li").removeClass('active');
+      $("#li-"+splitUrl[0]).addClass('active');
+    }
   });
 
 

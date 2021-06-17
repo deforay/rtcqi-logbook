@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Redirect;
 class Access
 {
     /**
@@ -15,18 +15,13 @@ class Access
      */
     public function handle($request, Closure $next)
     {
-        $role = session('role');
-        if(($role == null)){
-            return redirect('/login');
+        if(session('login')==true)
+        {
+            return $next($request);
         }
-        // print_r($role);
-        $routeInfo = $request->route()->getAction();
-        // print_r($routeInfo);die;
-        list($resource,$view) = explode("@",$routeInfo['controller']);
-        //    print_r($role[$resource]);die;
-        if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){
-           return redirect('/unauthorized');
+        else
+        {
+            return Redirect::to('login')->with('status', 'Please Login');
         }
-        return $next($request);
     }
 }

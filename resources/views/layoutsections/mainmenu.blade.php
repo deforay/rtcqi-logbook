@@ -34,7 +34,7 @@ $import = '';
     $report .= '<li id="li-logbook"><a class="menu-item" href="/report/logbook/">Logbook Report</a></li>';
     $report .= '</ul></li>';
 
-    $import .= '<li class=" nav-item" id="reports"><a href="javascript:void(0)"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
+    $import .= '<li class=" nav-item" id="import"><a href="javascript:void(0)"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
                 <ul class="menu-content">';
     $import .= '<li id="li-monthlyreportdata"><a class="menu-item" href="/monthlyreportdata/">Import Monthly Report</a></li>';
     $import .= '</ul></li>';
