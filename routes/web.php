@@ -33,13 +33,13 @@ Route::post('/addNewBranchType', 'Common\CommonController@addNewBranchType');
 Route::post('/checkItemNameValidation', 'Common\CommonController@checkItemNameValidation');
 
 //user module
-Route::get('/user', 'User\UserController@index')->name('user.index');
+Route::get('/user', 'User\UserController@index')->name('user.index')->middleware('access');
 Route::post('/user/add', 'User\UserController@add');
-Route::get('/user/add', 'User\UserController@add');
+Route::get('/user/add', 'User\UserController@add')->middleware('access');
 Route::post('/getAllUser', 'User\UserController@getAllUser');
-Route::get('/user/edit/{id}', 'User\UserController@edit');
+Route::get('/user/edit/{id}', 'User\UserController@edit')->middleware('access');
 Route::post('/user/edit/{id}', 'User\UserController@edit');
-Route::get('/user/profile/{id}', 'User\UserController@profile');
+Route::get('/user/profile/{id}', 'User\UserController@profile')->middleware('access');
 Route::post('/user/profile/{id}', 'User\UserController@profile');
 
 //login module
@@ -65,97 +65,97 @@ Route::get('/incorrectrequest', function()
 
 
 //test site module
-Route::get('/testsite', 'TestSite\TestSiteController@index')->name('testsite.index');
+Route::get('/testsite', 'TestSite\TestSiteController@index')->name('testsite.index')->middleware('access');
 Route::post('/testsite/add', 'TestSite\TestSiteController@add');
-Route::get('/testsite/add', 'TestSite\TestSiteController@add');
-Route::get('/testsite/edit/{id}', 'TestSite\TestSiteController@edit');
+Route::get('/testsite/add', 'TestSite\TestSiteController@add')->middleware('access');
+Route::get('/testsite/edit/{id}', 'TestSite\TestSiteController@edit')->middleware('access');
 Route::post('/testsite/edit/{id}', 'TestSite\TestSiteController@edit');
 Route::post('/getAllTestSite', 'TestSite\TestSiteController@getAllTestSite');
 
 //test kit module
-Route::get('/testkit', 'TestKit\TestKitController@index')->name('testkit.index');
+Route::get('/testkit', 'TestKit\TestKitController@index')->name('testkit.index')->middleware('access');
 Route::post('/testkit/add', 'TestKit\TestKitController@add');
-Route::get('/testkit/add', 'TestKit\TestKitController@add');
-Route::get('/testkit/edit/{id}', 'TestKit\TestKitController@edit');
+Route::get('/testkit/add', 'TestKit\TestKitController@add')->middleware('access');
+Route::get('/testkit/edit/{id}', 'TestKit\TestKitController@edit')->middleware('access');
 Route::post('/testkit/edit/{id}', 'TestKit\TestKitController@edit');
 Route::post('/getAllTestKit', 'TestKit\TestKitController@getAllTestKit');
 
 //Facility module
-Route::get('/facility', 'Facility\FacilityController@index')->name('facility.index');
+Route::get('/facility', 'Facility\FacilityController@index')->name('facility.index')->middleware('access');
 Route::post('/facility/add', 'Facility\FacilityController@add');
-Route::get('/facility/add', 'Facility\FacilityController@add');
-Route::get('/facility/edit/{id}', 'Facility\FacilityController@edit');
+Route::get('/facility/add', 'Facility\FacilityController@add')->middleware('access');
+Route::get('/facility/edit/{id}', 'Facility\FacilityController@edit')->middleware('access');
 Route::post('/facility/edit/{id}', 'Facility\FacilityController@edit');
 Route::post('/getAllFacility', 'Facility\FacilityController@getAllFacility');
 
 //Province module
-Route::get('/province', 'Province\ProvinceController@index')->name('province.index');
+Route::get('/province', 'Province\ProvinceController@index')->name('province.index')->middleware('access');
 Route::post('/province/add', 'Province\ProvinceController@add');
-Route::get('/province/add', 'Province\ProvinceController@add');
-Route::get('/province/edit/{id}', 'Province\ProvinceController@edit');
+Route::get('/province/add', 'Province\ProvinceController@add')->middleware('access');
+Route::get('/province/edit/{id}', 'Province\ProvinceController@edit')->middleware('access');
 Route::post('/province/edit/{id}', 'Province\ProvinceController@edit');
 Route::post('/getAllProvince', 'Province\ProvinceController@getAllProvince');
 
 //District module
-Route::get('/district', 'District\DistrictController@index')->name('district.index');
+Route::get('/district', 'District\DistrictController@index')->name('district.index')->middleware('access');
 Route::post('/district/add', 'District\DistrictController@add');
-Route::get('/district/add', 'District\DistrictController@add');
-Route::get('/district/edit/{id}', 'District\DistrictController@edit');
+Route::get('/district/add', 'District\DistrictController@add')->middleware('access');
+Route::get('/district/edit/{id}', 'District\DistrictController@edit')->middleware('access');
 Route::post('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/getAllDistrict', 'District\DistrictController@getAllDistrict');
 
 //monthlyreport module
-Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index');
+Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index')->middleware('access');
 Route::post('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
-Route::get('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
-Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
+Route::get('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add')->middleware('access');
+Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit')->middleware('access');
 Route::post('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
 Route::post('/getAllMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllMonthlyReport');
 
 //sitetype module
-Route::get('/sitetype', 'SiteType\SiteTypeController@index')->name('sitetype.index');
+Route::get('/sitetype', 'SiteType\SiteTypeController@index')->name('sitetype.index')->middleware('access');
 Route::post('/sitetype/add', 'SiteType\SiteTypeController@add');
-Route::get('/sitetype/add', 'SiteType\SiteTypeController@add');
-Route::get('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
+Route::get('/sitetype/add', 'SiteType\SiteTypeController@add')->middleware('access');
+Route::get('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit')->middleware('access');
 Route::post('/sitetype/edit/{id}', 'SiteType\SiteTypeController@edit');
 Route::post('/getAllSiteType', 'SiteType\SiteTypeController@getAllSiteType');
 
 
 //user facility map module
-Route::get('/userfacilitymap', 'UserFacilityMap\UserFacilityMapController@index')->name('userfacilitymap.index');
+Route::get('/userfacilitymap', 'UserFacilityMap\UserFacilityMapController@index')->name('userfacilitymap.index')->middleware('access');
 Route::post('/userfacilitymap/add', 'UserFacilityMap\UserFacilityMapController@add');
-Route::get('/userfacilitymap/add', 'UserFacilityMap\UserFacilityMapController@add');
-Route::get('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
+Route::get('/userfacilitymap/add', 'UserFacilityMap\UserFacilityMapController@add')->middleware('access');
+Route::get('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit')->middleware('access');
 Route::post('/userfacilitymap/edit/{id}', 'UserFacilityMap\UserFacilityMapController@edit');
 Route::post('/getAllUserFacility', 'UserFacilityMap\UserFacilityMapController@getAllUserFacility');
 
 
 //user facility map module
-Route::get('/allowedtestkit', 'AllowedTestKit\AllowedTestKitController@index')->name('allowedtestkit.index');
+Route::get('/allowedtestkit', 'AllowedTestKit\AllowedTestKitController@index')->name('allowedtestkit.index')->middleware('access');
 Route::post('/allowedtestkit/add', 'AllowedTestKit\AllowedTestKitController@add');
-Route::get('/allowedtestkit/add', 'AllowedTestKit\AllowedTestKitController@add');
-Route::get('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit');
+Route::get('/allowedtestkit/add', 'AllowedTestKit\AllowedTestKitController@add')->middleware('access');
+Route::get('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit')->middleware('access');
 Route::post('/allowedtestkit/edit/{id}', 'AllowedTestKit\AllowedTestKitController@edit');
 Route::post('/getAllAllowedTestKit', 'AllowedTestKit\AllowedTestKitController@getAllAllowedTestKit');
 
 //globalconfig module
-Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index');
-Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
+Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index')->middleware('access');
+Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit')->middleware('access');
 Route::post('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
 Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGlobalConfig');
 
 //Trend Report
-Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendreport.trendReport');
+Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendreport.trendReport')->middleware('access');
 Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyReport');
 // Route::get('/trendreport', 'TrendReport\TrendReportController@index')->name('trendreport.index');
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
-Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook');
-Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagreement');
+Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook')->middleware('access');
+Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagreement')->middleware('access');
 
 //Test Kit Report
-Route::get('/testKitReport', 'Report\ReportController@testKitReport')->name('testKitReport.testKitReport');
+Route::get('/testKitReport', 'Report\ReportController@testKitReport')->name('testKitReport.testKitReport')->middleware('access');
 Route::post('/getTestKitMonthlyReport', 'Report\ReportController@getTestKitMonthlyReport');
 
-Route::get('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata')->name('monthlyreportdata.index');
+Route::get('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata')->name('monthlyreportdata.index')->middleware('access');
 Route::post('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata');
