@@ -42,6 +42,9 @@ class MonthlyReportTable extends Model
                     'reporting_month' => $reportingMon,
                     'book_no' => $data['bookNo'],
                     'name_of_data_collector' => $data['nameOfDataCollect'],
+                    'source' => 'web-form',
+                    'added_on' => date('Y-m-d'),
+                    'added_by' => session('userId'),
                     // 'signature' => $data['signature'],
                 ]
             );
@@ -690,6 +693,9 @@ public function importMonthlyReportData($request)
                                         'reporting_month' => $report_months,
                                         'book_no' => $book_no,
                                         'name_of_data_collector' => $name_of_collector,
+                                        'source' => 'excel',
+                                        'added_on' => date('Y-m-d'),
+                                        'added_by' => session('userId')
                                     ]
                                 );
                             }
