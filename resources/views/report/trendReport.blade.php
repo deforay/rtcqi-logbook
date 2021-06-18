@@ -224,7 +224,7 @@
             });
 	}
 
-  function clearStatus() {
+function clearStatus() {
     $.blockUI();
     getTrendReport();
     $.unblockUI();
@@ -233,9 +233,9 @@
         $("#facilityId").val('').trigger('change');
         $("#algorithmType").val('').trigger('change');
         $("#testSiteId").val('').trigger('change');
-    }
+}
 
-    $(document).ready(function(){
+$(document).ready(function(){
         var date1 = new Date();
   var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
    $("#startDate").datepicker({
@@ -257,6 +257,17 @@
    });
 });
     
+function logData(siteId)
+{
+    startDate = $('#startDate').val();
+    endDate = $('#endDate').val();
+    localStorage.setItem('date1', startDate);
+    localStorage.setItem('date2', endDate);
+    localStorage.setItem('site', siteId);
+    window.open('/report/logbook');
+
+}
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

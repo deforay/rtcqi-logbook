@@ -64,6 +64,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
         @if(count($report['res'])>0)
         @foreach ($report['res'] as $trendrow)
         <?php
+    
         if($report['reportFrequency']=='quaterly'){
             $quarterlyData = $trendrow->quarterly;
             $year = $trendrow->quaYear;
@@ -80,7 +81,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 ?>
         <tr style="text-align: right">
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
-        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
+        <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a onclick="logData('{{$trendrow->ts_id}}')" href="javascript:void(0);" name="data" class="" title="Site Name">{{$trendrow->site_name}}</a></td>
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$testingDate}}</td>
         <td class = "td"style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_1_reactive + $trendrow->test_1_nonreactive}}</td>
@@ -103,5 +104,8 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
         @endif 
         
         </tbody> 
+
+    
+        
 </table>
 </div>
