@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/trendreport/">Test Kit Use Report</a>
+                        <li class="breadcrumb-item"><a href="/testKitReport/">Test Kit Use Report</a>
                         </li>
                     </ol>
                 </div>
@@ -68,7 +68,7 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                 <h4 class="card-title">Filter the data</h4><br>
-                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="" action="" autocomplete="off" onsubmit="getTrendReport();return false;">
+                <form class="form form-horizontal" role="form" name="testKitReportFilter" id="testKitReportFilter" method="" action="" autocomplete="off" onsubmit="getTestKitReport();return false;">
                             @csrf
                 <div class="row">
                 <div class="col-xl-4 col-lg-12">

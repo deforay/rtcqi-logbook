@@ -8,6 +8,8 @@ use App\Service\MonthlyReportService;
 use App\Service\FacilityService;
 use App\Service\TestKitService;
 use Illuminate\Http\Request;
+use App\Service\DistrictService;
+use App\Service\ProvinceService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -102,6 +104,36 @@ class ReportController extends Controller
         $data = $monthlyReportService->getTestKitMonthlyReport($request);
         // dd($data);die;
         $view = View::make('report.getTestKitReport', ['report'=>$data]);
+            return $view;
+    }
+
+// Custom Report
+    public function customReport()
+    {
+        if(session('login')==true)
+        {
+            $FacilityService = new FacilityService();
+            $facility = $FacilityService->getAllActiveFacility();
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllActiveTestSite();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();  
+            $monthlyReportService = new MonthlyReportService();
+            $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
+            return view('report.customReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport,'province'=>$province,'district'=>$district));
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getCustomMonthlyReport(Request $request)
+    {
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getCustomMonthlyReport($request);
+        // dd($data);die;
+        $view = View::make('report.getCustomReport', ['report'=>$data]);
             return $view;
     }
 

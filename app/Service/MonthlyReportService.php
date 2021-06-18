@@ -110,6 +110,13 @@ class MonthlyReportService
 		$add = $model->importMonthlyReportData($request);
 		return $add;
 	}
+
+	public function getCustomMonthlyReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchCustomMonthlyReport($params);
+		return $result;
+	}
 	
 }
 

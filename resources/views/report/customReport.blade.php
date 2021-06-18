@@ -1,8 +1,8 @@
 <!--
     Author             : Sakthivel P
-    Date               : 8 June 2021
-    Description        : Trend Report screen
-    Last Modified Date : 17 June 2021
+    Date               : 18 June 2021
+    Description        : Custom Report screen
+    Last Modified Date : 18 June 2021
     Last Modified Name : Sakthivel P
 -->
 
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/trendreport/">Trend Report</a>
+                        <li class="breadcrumb-item"><a href="/customreport/">Custom Report</a>
                         </li>
                     </ol>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Trend Report</h3>
+                            <h3 class="content-header-title mb-0">Custom Report</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -68,8 +68,6 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                 <h4 class="card-title">Filter the data</h4><br>
-                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="" action="" autocomplete="off" onsubmit="getTrendReport();return false;">
-                            @csrf
                 <div class="row">
                 <div class="col-xl-4 col-lg-12">
                                         <fieldset>
@@ -116,7 +114,21 @@
                                             </div>
 										</fieldset>
 									</div>
+
                                     <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Select Report
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="js-example-basic-single form-control" autocomplete="off" style="width:100%;" id="report" name="report" title="Please select Report">
+                                                <option value="district">District</option>
+                                                    <option value="province">Province</option>
+                                                    <option value="sitetype">Site Type</option>
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12" id="siteName" style="display:none;">
 										<fieldset>
 											<h5>Test Site Name
                                             </h5>
@@ -124,6 +136,32 @@
                                                 <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
                                                     @foreach($testSite as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12" id="districtName" style="display:none;">
+										<fieldset>
+											<h5>District Name
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+                                                    @foreach($district as $row)
+                                                    <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12" id="provinceName" style="display:none;">
+										<fieldset>
+											<h5>Province Name
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                    @foreach($province as $row)
+                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -142,23 +180,19 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-md-7" style="color:#FFF;">
+                                    <div class="col-md-10" >
                         <div class="form-group row">
                             
                             <div class="col-md-8">
-                                <button type="submit" onclick="getTrendReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                <button class="btn btn-danger btn-md"
-                                    onclick='clearStatus();'><span>Reset</span></button>&nbsp;&nbsp;
-
-<!-- <a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
-        class="fa fa-download"></i>Export Execl</a> -->
+                                <button type="submit" onclick="getCustomReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                <a class="btn btn-danger btn-md"
+                                href = "/customreport"><span>Reset</span></a>&nbsp;&nbsp;
                             </div>
                         </div>
-							</form>
                     </div>
                 </div></div></div>
                 <div class="table-responsive p-t-10">
-                    <div id="trendList"></div>
+                    <div id="customList"></div>
                     </div>       
                     </div>
                 </div>
@@ -168,7 +202,7 @@
 </div>
   <script>
   $(document).ready(function() {
-    getTrendReport();
+    getCustomReport();
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#facilityId').select2({
     placeholder: "Select Facility Name",
@@ -178,13 +212,14 @@
     placeholder: "Select Testing Algothrim",
     allowClear: true
   });
-  $selectElement = $('#testSiteId').select2({
-    placeholder: "Select Test Site Name",
-    allowClear: true
+  $('.js-example-basic-single').select2();
+    $selectElement = $('#report').prepend('<option selected></option>').select2({
+    placeholder: "Select Report"
   });
     });
+    
 //   duplicateName = true;
-    function getTrendReport() {
+    function getCustomReport() {
             // flag = deforayValidator.init({
             //     formId: 'trendReportFilter'
             // });
@@ -208,7 +243,7 @@
           }
       });
       $.ajax({
-                url: "{{ url('/getTrendMonthlyReport') }}",
+                url: "{{ url('/getCustomMonthlyReport') }}",
                 method: 'post',
                 data: {
                     startDate:startDate,
@@ -216,24 +251,16 @@
                     facilityId: $("#facilityId").val(),
                     algorithmType: $("#algorithmType").val(),
                     testSiteId: $("#testSiteId").val(),
+                    testSiteId: $("#provinceId").val(),
+                    testSiteId: $("#districtId").val(),
                     reportFrequency: $("#reportFrequency").val(),
                 },
                 success: function(result){
-                   $("#trendList").html(result);
+                   $("#customList").html(result);
                 }
             });
 	}
 
-function clearStatus() {
-    $.blockUI();
-    getTrendReport();
-    $.unblockUI();
-        $("#startDate").val("");
-        $("#endDate").val("");
-        $("#facilityId").val('').trigger('change');
-        $("#algorithmType").val('').trigger('change');
-        $("#testSiteId").val('').trigger('change');
-}
 
 $(document).ready(function(){
         var date1 = new Date();
@@ -267,6 +294,38 @@ function logData(siteId)
     window.open('/report/logbook');
 
 }
+
+$(document).ready(function() {
+  $('#report').on('change', function() {
+    if (this.value == 'sitetype') {
+      $("#siteName").show();
+      $("#provinceName").hide();
+      $("#districtName").hide();
+      $selectElement = $('#testSiteId').select2({
+    placeholder: "Select Test Site Name",
+    allowClear: true
+  });
+    }
+    if (this.value == 'province') {
+      $("#provinceName").show();
+      $("#districtName").hide();
+      $("#siteName").hide();
+      $selectElement = $('#provinceId').select2({
+    placeholder: "Select Province Name",
+    allowClear: true
+  });
+    }
+    if (this.value == 'district') {
+      $("#districtName").show();
+      $("#provinceName").hide();
+      $("#siteName").hide();
+      $selectElement = $('#districtId').select2({
+    placeholder: "Select District Name",
+    allowClear: true
+  });
+    }
+  });
+});
 
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
