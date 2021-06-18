@@ -366,3 +366,8 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 (5, 'Administrator Phone', 'admin_phone', '8798798789'),
 (6, 'Recency Tests', 'recency_test', 'disabled'),
 (7, 'Number of Tests', 'no_of_test', '3');
+
+
+ALTER TABLE monthly_reports ADD source Varchar(100) NULL;
+ALTER TABLE monthly_reports ADD added_by Varchar(100) NULL;
+ALTER TABLE monthly_reports ADD added_on DATE NULL;
