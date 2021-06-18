@@ -159,3 +159,7 @@ Route::post('/getTestKitMonthlyReport', 'Report\ReportController@getTestKitMonth
 
 Route::get('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata')->name('monthlyreportdata.index')->middleware('access');
 Route::post('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthlyreportdata');
+
+// Custom Report
+Route::get('/customreport', 'Report\ReportController@customReport')->name('customreport.customReport')->middleware('access');
+Route::post('/getCustomMonthlyReport', 'Report\ReportController@getCustomMonthlyReport');
