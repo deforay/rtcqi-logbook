@@ -2,13 +2,14 @@
     Author             : Prasath M
     Date               : 10 June 2021
     Description        : Logbook report
-    Last Modified Date : 10 June 2021
-    Last Modified Name : Prasath M
+    Last Modified Date : 17 June 2021
+    Last Modified Name : Sakthivel M
 -->
 
 @extends('layouts.main')
 
 @section('content')
+
 
 
 <div class="content-wrapper">
@@ -74,7 +75,7 @@
                                             <h5>Start Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="date" id="startDate" value="{{date('Y-m-d', strtotime('-30 days'))}}" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
+                                                <input type="text" id="startDate" value="<?php echo date('d-m-Y',strtotime('-30 days'));?>" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -83,7 +84,7 @@
                                             <h5>End Date <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="date" id="endDate" value="{{date('Y-m-d')}}" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
+                                                <input type="text" id="endDate" value="<?php echo date('d-m-Y');?>" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -92,8 +93,7 @@
 											<h5>Facilty Name
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
-                                                <option value="">Select Facility Name</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId[]" title="Please select Facility Name">
                                                     @foreach($facility as $row)
                                                     <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
                                                     @endforeach
@@ -108,8 +108,7 @@
 											<h5>Testing Algothrim
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType" title="Please select Facility Name">
-                                                <option value="">Select Testing Algothrim</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Alogrithm Type">
                                                     <option value="serial">Serial</option>
                                                     <option value="parallel">Parallel</option>
                                                 </select>
@@ -121,8 +120,7 @@
 											<h5> Site Name
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId" title="Please select Test Site Name">
-                                                <option value="">Select Test Site Name</option>
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
                                                     @foreach($testSite as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach
@@ -137,7 +135,7 @@
                             <div class="col-md-8">
                                 <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                 <a class="btn btn-danger btn-md"
-                                     href = "/logbook"><span>Reset</span></a>&nbsp;&nbsp;
+                                     href = "/report/logbook"><span>Reset</span></a>&nbsp;&nbsp;
                             </div>
                         </div>
                     </div>
@@ -154,7 +152,21 @@
   <script>
   $(document).ready(function() {
     getLogbookReport();
+    $('.js-example-basic-multiple').select2();
+    $selectElement = $('#facilityId').select2({
+    placeholder: "Select Facility Name",
+    allowClear: true
+  });
+  $selectElement = $('#algorithmType').select2({
+    placeholder: "Select Testing Algothrim",
+    allowClear: true
+  });
+  $selectElement = $('#testSiteId').select2({
+    placeholder: "Select Test Site Name",
+    allowClear: true
+  });
     });
+
     function getLogbookReport() {
       startDate = $('#startDate').val();
       endDate = $('#endDate').val();
@@ -172,13 +184,52 @@
                     facilityId: $("#facilityId").val(),
                     algorithmType: $("#algorithmType").val(),
                     testSiteId: $("#testSiteId").val(),
-                    reportFrequency: $("#reportFrequency").val(),
                 },
                 success: function(result){
                    $("#logbookList").html(result);
                 }
             });
 	}
+
+    $(document).ready(function(){
+        var date1 = new Date();
+  var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+   $("#startDate").datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   }).on('changeDate', function (selected) {
+       var minDate = new Date(selected.date.valueOf());
+       $('#endDate').datepicker('setStartDate', minDate);
+   });
+
+   $("#endDate").datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   }).on('changeDate', function (selected) {
+           var minDate = new Date(selected.date.valueOf());
+           $('#startDate').datepicker('setEndDate', minDate);
+   });
+});
+
+$(document).ready(function(){
+    var startDate = localStorage.getItem('date1');
+    var endDate = localStorage.getItem('date2');
+    var data = localStorage.getItem('site');
+    // alert(data);
+    if(startDate != null && endDate != null && data != null){
+    $("#startDate").val(startDate);
+    $("#endDate").val(endDate);
+    $("#testSiteId").val(data).trigger('change');
+    window.localStorage.removeItem('date1');
+    window.localStorage.removeItem('date2');
+    window.localStorage.removeItem('site');
+    }
+    
+});
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   
 @endsection
