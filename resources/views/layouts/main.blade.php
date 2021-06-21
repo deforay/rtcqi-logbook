@@ -37,7 +37,8 @@ background-color: #f2f3f5;
 } */
     </style>
 
-    <body class="vertical-layout vertical-overlay-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+    <body class="horizontal-layout horizontal-menu 2-columns   menu-expanded" data-open="hover"
+	data-menu="horizontal-menu" data-col="2-columns">
 
     <!-- navbar starts-->
 
@@ -84,6 +85,7 @@ ismob = true;
   $(document).ready(function() {
     var path = '<?php echo Request::path();?>';
     var splitUrl = path.split('/');
+    setTimeout(function(){ 
     if(splitUrl[0]=="dashboard")
     {
       $("#dashboard").addClass('active');
@@ -111,6 +113,7 @@ ismob = true;
       $("#import > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
+     }, 1000);
   });
 
 
