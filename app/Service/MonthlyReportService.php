@@ -117,6 +117,13 @@ class MonthlyReportService
 		$result = $model->fetchCustomMonthlyReport($params);
 		return $result;
 	}
+
+	public function getInvalidResultReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchInvalidResultReport($params);
+		return $result;
+	}
 	
 }
 

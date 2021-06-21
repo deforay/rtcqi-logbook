@@ -163,3 +163,8 @@ Route::post('/monthlyreportdata', 'MonthlyReport\MonthlyReportController@monthly
 // Custom Report
 Route::get('/customreport', 'Report\ReportController@customReport')->name('customreport.customReport')->middleware('access');
 Route::post('/getCustomMonthlyReport', 'Report\ReportController@getCustomMonthlyReport');
+
+// Invalid Results Report
+Route::get('/invalidresultreport', 'Report\ReportController@invalidresultReport')->name('invalidresultreport.invalidresultReport')->middleware('access');
+Route::post('/getInvalidResultReport', 'Report\ReportController@getInvalidResultReport');
+

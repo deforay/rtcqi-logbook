@@ -137,5 +137,31 @@ class ReportController extends Controller
             return $view;
     }
 
+    // invalidResultReport
+    public function invalidresultReport()
+    {
+        if(session('login')==true)
+        {
+            $FacilityService = new FacilityService();
+            $facility = $FacilityService->getAllActiveFacility();
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllActiveTestSite();
+            $monthlyReportService = new MonthlyReportService();
+            $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
+            return view('report.invalidresultReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getInvalidResultReport(Request $request)
+    {
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getInvalidResultReport($request);
+        // dd($data);die;
+        $view = View::make('report.getInvalidResultReport', ['report'=>$data]);
+            return $view;
+    }
+
 }
 

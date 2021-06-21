@@ -1,7 +1,7 @@
 <!--
-    Author             : Prasath M
-    Date               : 10 June 2021
-    Description        : Logbook report
+    Author             : Sakthivel P
+    Date               : 21 June 2021
+    Description        : Invalid Results report
     Last Modified Date : 17 June 2021
     Last Modified Name : Sakthivel M
 -->
@@ -20,7 +20,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/report/logbook/">Logbook Report</a>
+                        <li class="breadcrumb-item"><a href="/invalidresultreport/">Invalid Results Report</a>
                         </li>
                     </ol>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Logbook Report</h3>
+                            <h3 class="content-header-title mb-0">Invalid Results Report</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -133,15 +133,15 @@
                         <div class="form-group row">
                             
                             <div class="col-md-8">
-                                <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                <button type="submit" onclick="getInvalidResultReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                 <a class="btn btn-danger btn-md"
-                                     href = "/report/logbook"><span>Reset</span></a>&nbsp;&nbsp;
+                                     href = "/invalidresultreport"><span>Reset</span></a>&nbsp;&nbsp;
                             </div>
                         </div>
                     </div>
                 </div></div></div>
                 <div class="table-responsive p-t-10">
-                    <div id="logbookList"></div>
+                    <div id="invalidResultList"></div>
                     </div>       
                     </div>
                 </div>
@@ -151,7 +151,7 @@
 </div>
   <script>
   $(document).ready(function() {
-    getLogbookReport();
+    getInvalidResultReport();
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#facilityId').select2({
     placeholder: "Select Facility Name",
@@ -167,7 +167,7 @@
   });
     });
 
-    function getLogbookReport() {
+    function getInvalidResultReport() {
       startDate = $('#startDate').val();
       endDate = $('#endDate').val();
       $.ajaxSetup({
@@ -176,7 +176,7 @@
           }
       });
       $.ajax({
-                url: "{{ url('/getLogbookReport') }}",
+                url: "{{ url('/getInvalidResultReport') }}",
                 method: 'post',
                 data: {
                     startDate:startDate,
@@ -186,7 +186,7 @@
                     testSiteId: $("#testSiteId").val(),
                 },
                 success: function(result){
-                   $("#logbookList").html(result);
+                   $("#invalidResultList").html(result);
                 }
             });
 	}
@@ -213,21 +213,6 @@
    });
 });
 
-$(document).ready(function(){
-    var startDate = localStorage.getItem('date1');
-    var endDate = localStorage.getItem('date2');
-    var data = localStorage.getItem('site');
-    // alert(data);
-    if(startDate != null && endDate != null && data != null){
-    $("#startDate").val(startDate);
-    $("#endDate").val(endDate);
-    $("#testSiteId").val(data).trigger('change');
-    window.localStorage.removeItem('date1');
-    window.localStorage.removeItem('date2');
-    window.localStorage.removeItem('site');
-    }
-    
-});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
