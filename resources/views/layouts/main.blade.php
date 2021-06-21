@@ -37,7 +37,8 @@ background-color: #f2f3f5;
 } */
     </style>
 
-    <body class="vertical-layout vertical-overlay-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-overlay-menu" data-col="2-columns">
+    <body class="horizontal-layout horizontal-menu 2-columns   menu-expanded" data-open="hover"
+	data-menu="horizontal-menu" data-col="2-columns">
 
     <!-- navbar starts-->
 
