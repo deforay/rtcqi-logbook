@@ -85,6 +85,7 @@ ismob = true;
   $(document).ready(function() {
     var path = '<?php echo Request::path();?>';
     var splitUrl = path.split('/');
+    setTimeout(function(){ 
     if(splitUrl[0]=="dashboard")
     {
       $("#dashboard").addClass('active');
@@ -112,6 +113,7 @@ ismob = true;
       $("#import > ul > li").removeClass('active');
       $("#li-"+splitUrl[0]).addClass('active');
     }
+     }, 1000);
   });
 
 
