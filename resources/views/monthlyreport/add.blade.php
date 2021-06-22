@@ -64,7 +64,8 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
-                                                    @foreach($province as $row)
+													<option value="">---Select---</option>
+													@foreach($province as $row)
                                                     <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
                                                     @endforeach
                                                 </select>
@@ -77,6 +78,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
+													<option value="">---Select---</option>
                                                     @foreach($testsite as $row2)
                                                     <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
                                                     @endforeach
@@ -90,6 +92,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please select Site type Name">
+													<option value="">---Select---</option>
                                                     @foreach($sitetype as $row1)
                                                     <option value="{{$row1->st_id}}">{{$row1->site_type_name}}</option>
                                                     @endforeach
@@ -172,7 +175,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 											</h5>
 											<div class="form-group">
 												<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
-													<option >Select Algorith Type</option>
+													<option value="">---Select---</option>
 													<option value="serial">Serial</option>
                                                     <option value="parallel" >Parallel</option>
                                                 </select>
