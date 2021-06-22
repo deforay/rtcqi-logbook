@@ -365,6 +365,19 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 										</table>
 									</div>
 								</div>
+								<br>
+								<div class="row"  style="color:white;margin-left:40%;">
+									<div>
+										<a  onclick="insert_row();" class="btn btn-info grey">
+										<i class="ft-plus icon-left"></i> New Test
+										</a>
+									</div>
+									<div style="color:white;margin-left:10%;">
+										<a  onclick="delete_row();" class="btn btn-danger grey">
+										<i class="ft-minus icon-left"></i> Remove Test
+										</a>
+									</div>
+								</div>
 								<div class="form-actions right">
                                     <a href="/monthlyreport" >
                                     <button type="button" class="btn btn-warning mr-1">
@@ -376,12 +389,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                                     </button>
 								</div>
 							</form>
-							<br>
-								<div class="row" style="margin-left:40%;">
-									<button  onclick="insert_row();" class="btn btn-info grey">
-                                    <i class="ft-plus icon-left"></i> Add New Test
-                                    </button>
-								</div>
+							
 						</div>
 					</div>
 				</div>
@@ -561,6 +569,18 @@ function insert_row()
 					</table>\
 				</div>';
 	$("#test_row").append(div);
+}
+function delete_row()
+{
+	if(rowCount!=0)
+	{
+		$("#test_details"+rowCount).remove();
+		rowCount--;
+	}
+	else
+	{
+		alert("Atleast One Test page is Mandatory. Cannot remove the Test Page")
+	}
 }
 </script>
 @endsection
