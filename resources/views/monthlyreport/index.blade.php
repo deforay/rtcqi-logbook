@@ -28,11 +28,14 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="la la-upload"></i> Upload Monthly Report</b></a>
                 <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-plus icon-left"></i> Add Monthly Report</b></a>
             </div>
         </div>
     </div>
+    <br>
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>

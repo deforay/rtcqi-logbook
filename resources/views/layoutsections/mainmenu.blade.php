@@ -43,10 +43,10 @@ $import = '';
     $report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">Custom Report</a></li>';
     $report .= '</ul></li>';
 
-    $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
-                <ul class="dropdown-menu">';
-    $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
-    $import .= '</ul></li>';
+    // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
+    //             <ul class="dropdown-menu">';
+    // $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
+    // $import .= '</ul></li>';
 
 ?>
 <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-dark navbar-without-dd-arrow navbar-shadow"
@@ -57,7 +57,6 @@ $import = '';
         @php echo $manage; @endphp
         @php echo $test; @endphp
         @php echo $report; @endphp
-        @php echo $import; @endphp
       </ul>
     </div>
   </div>
