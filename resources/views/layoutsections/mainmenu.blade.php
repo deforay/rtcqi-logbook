@@ -32,6 +32,9 @@ $import = '';
                 <ul class="dropdown-menu">';
     $report .= '<li id="li-trendreport"><a class="dropdown-item" data-toggle="dropdown" href="/trendreport/">Trend Report</a></li>';
     $report .= '<li id="li-logbook"><a class="dropdown-item" data-toggle="dropdown" href="/report/logbook/">Logbook Report</a></li>';
+    $report .= '<li id="li-testKitReport"><a class="dropdown-item" data-toggle="dropdown" href="/testKitReport/">Test Kit Report</a></li>';
+    $report .= '<li id="li-invalidresultreport"><a class="dropdown-item" data-toggle="dropdown" href="/invalidresultreport/">Invalid Result Report</a></li>';
+    $report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">Custom Report</a></li>';
     $report .= '</ul></li>';
 
     $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>

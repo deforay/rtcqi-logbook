@@ -51,7 +51,7 @@ background-color: #f2f3f5;
     @include('layoutsections.mainmenu')
 
     <!-- Side ends -->
-
+<br>
     <div class="app-content container center-layout mt-2" style="min-height: 600px;">
         <div class="content-overlay"></div>
 
