@@ -1,3 +1,9 @@
+<style>
+.navbar{ 
+  padding: .1rem .1rem;
+}
+</style>
+
 <?php
 
 use Illuminate\Support\Facades\Request;
@@ -23,7 +29,7 @@ $import = '';
     $manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">Global Config</a></li>';
     $manage .= '</ul></li>';
 
-    $test .= '<li class="dropdown nav-item" ><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Tests</span></a>
+    $test .= '<li class="dropdown nav-item" ><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Audits</span></a>
                 <ul class="dropdown-menu">';
     $test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/">Monthly Report</a></li>';
     $test .= '</ul></li>';
