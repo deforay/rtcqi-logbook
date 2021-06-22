@@ -92,26 +92,14 @@ ismob = true;
     }else if(splitUrl[0]=="testsite"  || splitUrl[0]=="user" || splitUrl[0]=="testkit" || splitUrl[0]=="facility" || splitUrl[0]=="province" || splitUrl[0]=="district" || splitUrl[0]=="sitetype" || splitUrl[0]=="globalconfig" )
     {
       $("#manage").addClass('active');
-      $("#manage > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
     }
-    else if(splitUrl[0]=="monthlyreport"  || splitUrl[0]=="monthlyreportpages" )
+    else if(splitUrl[0]=="monthlyreport"  || splitUrl[0]=="monthlyreportpages" || splitUrl[0]=="monthlyreportdata" )
     {
       $("#tests").addClass('active');
-      $("#tests > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
     }
-    else if(splitUrl[0]=="trendreport"  || splitUrl[1]=="logbook" )
+    else if(splitUrl[0]=="trendreport"  || splitUrl[1]=="logbook" || splitUrl[0]=="testKitReport" || splitUrl[0]=="invalidresultreport" || splitUrl[0]=="customreport" )
     {
       $("#reports").addClass('active');
-      $("#reports > ul > li").removeClass('active');
-      $("#li-"+splitUrl[1]).addClass('active');
-    }
-    else if(splitUrl[0]=="monthlyreportdata"  )
-    {
-      $("#import").addClass('active');
-      $("#import > ul > li").removeClass('active');
-      $("#li-"+splitUrl[0]).addClass('active');
     }
      }, 1000);
   });
