@@ -335,46 +335,52 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 											</tr>
 										</table>
 										<br>
-										<table class="table1" style="width:80%;margin-left: 10%;">
-											<tr>
-												<td  style=" text-align: center;">
-												<h4 style="font-weight: 600;"> Final Result </h4>
-												</td>
-												<td style=" text-align: center;" >
-													<h5> Positive
-													</h5>
-													<div class="form-group">
-														<input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
-													</div>
-												</td>
-												<td style=" text-align: center;" >
-													<h5> Negative
-													</h5>
-													<div class="form-group">
-														<input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
-													</div>
-												</td>
-												<td style=" text-align: center;" >
-													<h5> Indeterminate
-													</h5>
-													<div class="form-group">
-														<input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
-													</div>
-												</td>
-											</tr>
-										</table>
+										<div class="row">
+											<div class="col-10">
+												<table class="table1" style="width:80%;margin-left: 10%;">
+													<tr>
+														<td  style=" text-align: center;">
+														<h4 style="font-weight: 600;"> Final Result </h4>
+														</td>
+														<td style=" text-align: center;" >
+															<h5> Positive
+															</h5>
+															<div class="form-group">
+																<input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >
+															</div>
+														</td>
+														<td style=" text-align: center;" >
+															<h5> Negative
+															</h5>
+															<div class="form-group">
+																<input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >
+															</div>
+														</td>
+														<td style=" text-align: center;" >
+															<h5> Indeterminate
+															</h5>
+															<div class="form-group">
+																<input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >
+															</div>
+														</td>
+													</tr>
+												</table>
+											</div>
+											<!-- <div class="col-2">
+												<div style="color:white;margin-left:10%;">
+													<a  onclick="delete_row();" class="btn btn-danger grey">
+													<i class="ft-minus icon-left"></i> Remove Page
+													</a>
+												</div>
+											</div> -->
+										</div>
 									</div>
 								</div>
 								<br>
 								<div class="row"  style="color:white;margin-left:40%;">
 									<div>
 										<a  onclick="insert_row();" class="btn btn-info grey">
-										<i class="ft-plus icon-left"></i> New Test
-										</a>
-									</div>
-									<div style="color:white;margin-left:10%;">
-										<a  onclick="delete_row();" class="btn btn-danger grey">
-										<i class="ft-minus icon-left"></i> Remove Test
+										<i class="ft-plus icon-left"></i> Add Page
 										</a>
 									</div>
 								</div>
@@ -539,47 +545,53 @@ function insert_row()
 					</td>'
 			}
 			div+='</tr></table><br>\
-					<table class="table1" style="width:80%;margin-left: 10%;">\
-						<tr>\
-							<td  style=" text-align: center;">\
-							<h4 style="font-weight: 600;"> Final Result </h4>\
-							</td>\
-							<td style=" text-align: center;" >\
-								<h5> Positive\
-								</h5>\
-								<div class="form-group">\
-									<input type="number" min="0" id="totalPositive'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >\
-								</div>\
-							</td>\
-							<td style=" text-align: center;" >\
-								<h5> Negative\
-								</h5>\
-								<div class="form-group">\
-									<input type="number" min="0" id="totalNegative'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >\
-								</div>\
-							</td>\
-							<td style=" text-align: center;" >\
-								<h5> Indeterminate\
-								</h5>\
-								<div class="form-group">\
-									<input type="number" min="0" id="finalUndetermined'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >\
-								</div>\
-							</td>\
-						</tr>\
-					</table>\
+						<div class="row">\
+							<div class="col-10">\
+								<table class="table1" style="width:80%;margin-left: 10%;">\
+									<tr>\
+										<td  style=" text-align: center;">\
+										<h4 style="font-weight: 600;"> Final Result </h4>\
+										</td>\
+										<td style=" text-align: center;" >\
+											<h5> Positive\
+											</h5>\
+											<div class="form-group">\
+												<input type="number" min="0" id="totalPositive'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >\
+											</div>\
+										</td>\
+										<td style=" text-align: center;" >\
+											<h5> Negative\
+											</h5>\
+											<div class="form-group">\
+												<input type="number" min="0" id="totalNegative'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >\
+											</div>\
+										</td>\
+										<td style=" text-align: center;" >\
+											<h5> Indeterminate\
+											</h5>\
+											<div class="form-group">\
+												<input type="number" min="0" id="finalUndetermined'+rowCount+'" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >\
+											</div>\
+										</td>\
+									</tr>\
+								</table>\
+							</div>\
+						<div class="col-2 mt-5">\
+							<div style="color:white;margin-left:5%;">\
+								<a  onclick="delete_row('+rowCount+');" class="btn btn-danger grey">\
+								<i class="ft-minus icon-left"></i> Remove Page\
+								</a>\
+							</div>\
+						</div>\
+					</div>\
 				</div>';
 	$("#test_row").append(div);
 }
-function delete_row()
+function delete_row(val)
 {
-	if(rowCount!=0)
+	if(val!=0)
 	{
-		$("#test_details"+rowCount).remove();
-		rowCount--;
-	}
-	else
-	{
-		alert("Atleast One Test page is Mandatory. Cannot remove the Test Page")
+		$("#test_details"+val).remove();
 	}
 }
 </script>
