@@ -9,6 +9,7 @@ use App\Service\ProvinceService;
 use App\Service\SiteTypeService;
 use App\Service\TestKitService;
 use App\Service\TestSiteService;
+use App\Service\AllowedTestKitService;
 use App\Service\GlobalConfigService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -38,6 +39,7 @@ class MonthlyReportController extends Controller
         }
         else
         {
+            $allowedTestKit = new AllowedTestKitService();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();   
             $TestSiteService = new TestSiteService();
@@ -47,13 +49,10 @@ class MonthlyReportController extends Controller
             $KitTypeService = new TestKitService();
             $kittype = $KitTypeService->getAllActiveTestKit();   
             $GlobalConfigService = new GlobalConfigService();
-            $result = $GlobalConfigService->getAllGlobalConfig();
-            $arr = array();
-            // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($result); $i++) {
-                $arr[$result[$i]->global_name] = $result[$i]->global_value;
-            }
-            return view('monthlyreport.add',array('global'=>$arr, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'kittype'=>$kittype));
+            $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
+            $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
+            
+            return view('monthlyreport.add',array('kittype'=>$kittype,'globalValue'=>$globalValue, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'allowedTestKitNo'=>$allowedTestKitNo));
         }
     }
 
@@ -84,6 +83,7 @@ class MonthlyReportController extends Controller
         }
         else
         {
+            $allowedTestKit = new AllowedTestKitService();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();   
             $TestSiteService = new TestSiteService();
@@ -93,15 +93,11 @@ class MonthlyReportController extends Controller
             $MonthlyReportService = new MonthlyReportService();
             $result = $MonthlyReportService->getMonthlyReportById($id);
             $GlobalConfigService = new GlobalConfigService();
-            $glob = $GlobalConfigService->getAllGlobalConfig();
+            $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
             $KitTypeService = new TestKitService();
             $kittype = $KitTypeService->getAllActiveTestKit(); 
-            $arr = array();
-            // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($glob); $i++) {
-                $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
-            }
-            return view('monthlyreport.edit',array('global'=>$arr, 'result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype, 'kittype'=>$kittype));
+            $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
+            return view('monthlyreport.edit',array('allowedTestKitNo'=>$allowedTestKitNo,'globalValue'=>$globalValue, 'result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype, 'kittype'=>$kittype));
         }
     }
 

@@ -267,7 +267,25 @@
 										</div>
 										<table class="table1" style="width:100%">
 											<tr>
-											@for($i = 1; $i <= $global['no_of_test']; $i++)
+											@if(count($allowedTestKitNo) > 0)
+											@for($i = 1; $i <= $globalValue; $i++)
+											<?php $test_id = 'test_'.$i.'_kit_id';    ?>
+												<td  style=" text-align: center;" colspan="3" >
+													<fieldset>
+														<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+														</h5>
+														<div class="form-group">
+															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+																@foreach($allowedTestKitNo[$i] as $value=>$option)
+																<option value="{{$value}}" {{ $list->$test_id == $value ?  'selected':''}}>{{$option}}</option>
+																@endforeach
+															</select>
+														</div>
+													</fieldset>
+												</td>
+											@endfor
+											@else
+											@for($i = 1; $i <= $globalValue; $i++)
 											<?php $test_id = 'test_'.$i.'_kit_id';    ?>
 												<td  style=" text-align: center;" colspan="3" >
 													<fieldset>
@@ -283,9 +301,10 @@
 													</fieldset>
 												</td>
 											@endfor
+											@endif
 											</tr>
 											<tr>
-											@for($j = 1; $j <= $global['no_of_test']; $j++)
+											@for($j = 1; $j <= $globalValue; $j++)
 											<?php $lot_no = 'lot_no_'.$j;  
 											$expiry_date = 'expiry_date_'.$j;    ?>
 												<td style=" text-align: center;">
@@ -305,14 +324,14 @@
 											@endfor
 											</tr>
 											<tr>
-												@for($k = 1; $k <= $global['no_of_test']; $k++)
+												@for($k = 1; $k <= $globalValue; $k++)
 													<td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
 														<h4 style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
 													</td>
 												@endfor
 											</tr>
 											<tr>
-											@for($l = 1; $l <= $global['no_of_test']; $l++)
+											@for($l = 1; $l <= $globalValue; $l++)
 											<?php $reactive = 'test_'.$l.'_reactive';   $nonreactive = 'test_'.$l.'_nonreactive';  $invalid = 'test_'.$l.'_invalid';    ?>
 												<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
 													<h5 style="color: white; font-weight: 500;"> R
@@ -433,7 +452,7 @@ $(document).ready(function() {
 	}
 		
 var rowCount = '{{$z - 1}}';
-var gCnt = '{{$global["no_of_test"]}}';
+var gCnt = '{{$globalValue}}';
 var col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 function insert_row()
 {

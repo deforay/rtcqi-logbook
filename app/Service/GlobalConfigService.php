@@ -40,6 +40,15 @@ class GlobalConfigService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//Fetch GlobalConfig 
+	public function getGlobalConfigValue($configName)
+    {
+		$model = new GlobalConfigTable();
+        $result = $model->fetchGlobalConfigValue($configName);
+        return $result;
+	}
+
 	
 }
 

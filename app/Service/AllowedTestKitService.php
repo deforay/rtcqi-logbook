@@ -67,6 +67,15 @@ class AllowedTestKitService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//Get All AllowedTestKit No Details
+	public function getAllKitNo($id)
+	{
+		
+		$model = new AllowedTestKitTable();
+        $result = $model->fetchAllAllowedKitTestByNo($id);
+        return $result;
+	}
 	
 }
 
