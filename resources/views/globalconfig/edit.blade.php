@@ -46,7 +46,7 @@
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-                            <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="post" action="/globalconfig/edit/" autocomplete="off" onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="post" action="/globalconfig/edit/" autocomplete="off" enctype="multipart/form-data" onsubmit="validateNow();return false;">
                             @csrf
                             <div class="row">
                                 <div class="col-xl-4 col-lg-12">
@@ -120,6 +120,17 @@
                                         </div>
                                     </fieldset>
                                 </div>
+                                <div class="col-xl-4 col-lg-12">
+                                        <fieldset class="form-group">
+                                        <h5>Logo
+                                        </h5>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="uploadFile" name="uploadFile[]" >
+                                                <label class="custom-file-label" for="uploadFile" aria-describedby="uploadFile">Choose file</label>
+                                                <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                            </div>
+                                        </fieldset>
+                                    </div>
                             </div>
                             <div class="form-actions right">
                                 <a href="/globalconfig" >

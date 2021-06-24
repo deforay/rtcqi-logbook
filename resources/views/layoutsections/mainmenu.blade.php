@@ -1,3 +1,9 @@
+<style>
+.navbar{ 
+  padding: .1rem .1rem;
+}
+</style>
+
 <?php
 
 use Illuminate\Support\Facades\Request;
@@ -23,7 +29,7 @@ $import = '';
     $manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">Global Config</a></li>';
     $manage .= '</ul></li>';
 
-    $test .= '<li class="dropdown nav-item" ><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Tests</span></a>
+    $test .= '<li class="dropdown nav-item" ><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Audits</span></a>
                 <ul class="dropdown-menu">';
     $test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/">Monthly Report</a></li>';
     $test .= '</ul></li>';
@@ -32,12 +38,15 @@ $import = '';
                 <ul class="dropdown-menu">';
     $report .= '<li id="li-trendreport"><a class="dropdown-item" data-toggle="dropdown" href="/trendreport/">Trend Report</a></li>';
     $report .= '<li id="li-logbook"><a class="dropdown-item" data-toggle="dropdown" href="/report/logbook/">Logbook Report</a></li>';
+    $report .= '<li id="li-testKitReport"><a class="dropdown-item" data-toggle="dropdown" href="/testKitReport/">Test Kit Report</a></li>';
+    $report .= '<li id="li-invalidresultreport"><a class="dropdown-item" data-toggle="dropdown" href="/invalidresultreport/">Invalid Result Report</a></li>';
+    $report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">Custom Report</a></li>';
     $report .= '</ul></li>';
 
-    $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
-                <ul class="dropdown-menu">';
-    $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
-    $import .= '</ul></li>';
+    // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
+    //             <ul class="dropdown-menu">';
+    // $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
+    // $import .= '</ul></li>';
 
 ?>
 <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-dark navbar-without-dd-arrow navbar-shadow"
@@ -48,7 +57,6 @@ $import = '';
         @php echo $manage; @endphp
         @php echo $test; @endphp
         @php echo $report; @endphp
-        @php echo $import; @endphp
       </ul>
     </div>
   </div>

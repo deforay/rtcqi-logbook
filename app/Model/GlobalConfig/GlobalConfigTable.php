@@ -23,7 +23,7 @@ class GlobalConfigTable extends Model
     public function updateGlobalConfig($params)
     {
         $data = $params->all();
-            if($data['instance_name'])
+           if($data['instance_name'])
             {
                 $upData = array(
                     'global_value' => $data['instance_name'],
@@ -85,6 +85,47 @@ class GlobalConfigTable extends Model
                 $response = DB::table('global_config')
                 ->where('global_name', '=','no_of_test')
                     ->update($upData);
+            }
+            
+            if(isset($data['uploadFile'])){
+            $filePathName='';
+            $fileName='';
+            $extension='';
+            if (isset($_FILES['uploadFile']['name']) && $_FILES['uploadFile']['name'] != '') {
+                if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                    mkdir(public_path('uploads'),0755,true);
+                    // chmod (getcwd() .public_path('uploads'), 0755 );
+                }
+                
+                if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "logo") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "logo")) {
+                    mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "logo", 0755);
+                }
+    
+                $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "logo" ;
+                $pathnameDb = DIRECTORY_SEPARATOR.'uploads'. DIRECTORY_SEPARATOR . "logo" ;
+                
+                if (!file_exists($pathname) && !is_dir($pathname)) {
+                    mkdir($pathname);
+                }
+                $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][0], PATHINFO_EXTENSION));
+                    $ext = '.'.$extension;
+                    $orgFileName = explode($ext,$_FILES['uploadFile']['name'][0]);
+                    $orgFileName = str_replace(' ','-',$orgFileName);
+                    $fileName = $orgFileName[0].'@@'.time(). "." . $extension;
+
+                    $filePath = $pathnameDb . DIRECTORY_SEPARATOR .$fileName;
+                move_uploaded_file($_FILES["uploadFile"]["tmp_name"][0], $pathname . DIRECTORY_SEPARATOR .$fileName);
+                $filePathName .=$filePath; 
+            }
+            if($filePathName)
+            {
+                $upData = array(
+                    'global_value' => $filePathName,
+                );
+                 DB::table('global_config')
+                ->where('global_name', '=','logo')
+                    ->update($upData);
+            }
             }
         return 1;
     }
