@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
 use Illuminate\Support\Facades\Session;
+use App\Model\TestKit\TestKitTable;
+
 
 class AllowedTestKitTable extends Model
 {
@@ -69,5 +71,33 @@ class AllowedTestKitTable extends Model
         }
 
         return $id;
-}
+    }
+
+    public function fetchAllAllowedKitTestByNo($kitNo)
+    {
+        // dd($kitNo);die;
+        $testKitList = array();
+        $model = new TestKitTable();
+        DB::enableQueryLog();
+        $data = DB::table('allowed_testkits')
+            ->select('allowed_testkits.*','test_kits.test_kit_name')
+            ->join('test_kits', 'test_kits.tk_id', '=', 'allowed_testkits.testkit_id')
+            ->where('allowed_testkits.test_kit_no' ,'<=',$kitNo)
+            ->where('test_kits.test_kit_status', '=' ,'active')
+            ->get();
+        // dd(DB::getQueryLog($data));die;
+        // dd($data);die;
+        foreach($data as $row)
+        {
+            $testKitList[$row->test_kit_no][$row->testkit_id] = $row->test_kit_name;
+            // $testKitList['name'][$row->test_kit_no] = $row->test_kit_name;?
+        }
+        // dd($testKitList);die;
+
+        // if(sizeof($data) == 0)
+        // {
+        //     $data=$model->fetchAllActiveTestKit();
+        // }
+        return $testKitList;
+    }
 }

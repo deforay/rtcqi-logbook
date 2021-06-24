@@ -89,5 +89,16 @@ class GlobalConfigTable extends Model
         return 1;
     }
 
+    public function fetchGlobalConfigValue($configName) {
+        //select global_value from global_config where global_name='no_of_test'
+        $data = DB::table('global_config')
+        ->select('global_value')
+        ->where('global_name', '=',$configName)
+        ->value('global_value');
+        // dd($data);die;
+        return $data;
+
+    }
+
     
 }
