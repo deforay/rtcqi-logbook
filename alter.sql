@@ -365,7 +365,8 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 (4, 'Administrator Email', 'admin_email', 'admin@gmail.com'),
 (5, 'Administrator Phone', 'admin_phone', '8798798789'),
 (6, 'Recency Tests', 'recency_test', 'disabled'),
-(7, 'Number of Tests', 'no_of_test', '3');
+(7, 'Number of Tests', 'no_of_test', '3'),
+(8, 'Logo', 'logo', '');
 
 
 ALTER TABLE monthly_reports ADD source Varchar(100) NULL;
