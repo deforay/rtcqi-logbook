@@ -25,7 +25,9 @@
             <div class="navbar-container container center-layout">
                 <div class="collapse navbar-collapse" id="navbar-mobile">
                     <ul class="nav navbar-nav mr-auto float-left">
-                        <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 70px;width: 170px;">
+                        <?php if($arr["logo"]): ?>
+                            <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 70px;width: 170px;">
+                        <?php endif; ?>
                         <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
                         <!-- <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li> -->
                     </ul>
