@@ -493,22 +493,39 @@ function insert_row()
 			</div>\
 			<table class="table1" style="width:100%">\
 			<tr>';
-			for(var i=1; i<=gCnt;i++)
-			{
-				div+='<td  style=" text-align: center;" colspan="3" >\
+			div+='@if(count($allowedTestKitNo) > 0)\
+				@for($i = 1; $i <= $globalValue; $i++)\
+				<td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>Test Kit Name'+i+'<span class="mandatory">*</span>\
+							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId'+i+'" name="testkitId'+i+'[]" title="Please select Test Kit Name'+i+'">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
+										@foreach($allowedTestKitNo[$i] as $value=>$option)\
+										<option value="{{$value}}">{{$option}}</option>\
+										@endforeach\
+									</select>\
+								</div>\
+							</fieldset>\
+						</td>\
+						@endfor\
+						@else\
+						@for($i = 1; $i <= $globalValue; $i++)\
+				        <td  style=" text-align: center;" colspan="3" >\
+						<fieldset>\
+							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
+								</h5>\
+								<div class="form-group">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
 										@foreach($kittype as $row2)\
 										<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>\
 										@endforeach\
 									</select>\
 								</div>\
 							</fieldset>\
-						</td>';
-			}
+						</td>\
+						@endfor\
+						@endif';
 			div+='</tr><tr>'
 			for(var j=1; j<=gCnt;j++)
 			{
