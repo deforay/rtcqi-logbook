@@ -11,7 +11,8 @@
     use App\Service\CommonService;
     $common = new CommonService();
     $date_of_data_collection = $common->humanDateFormat($result[0]->date_of_data_collection);
-    $reporting_month = $common->humanDateFormat($result[0]->reporting_month);
+    $reporting_month = ($result[0]->reporting_month);
+	// $reporting_month = 'Jun-2021';
 	$col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 ?>
 <div class="content-wrapper">
@@ -196,7 +197,7 @@
 											<h5>Reporting Month <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="reportingMon" value="{{$reporting_month}}" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+                                                <input type="text" id="reportingMon" value="{{$reporting_month}}" class="form-control isRequired month" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
 											</div>
 										</fieldset>
 									</div>
@@ -441,6 +442,18 @@ $(document).ready(function() {
         todayHighlight: true,
         clearBtn: true,
     });
+	$('.month').datepicker({
+        autoclose: true,
+        format: 'M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+		viewMode: "months", 
+    	minViewMode: "months",
+        // startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
+    });
 });
  duplicateName = true;
     function validateNow() {
@@ -509,9 +522,15 @@ function insert_row()
 								</h5>\
 								<div class="form-group">\
 									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
-										@foreach($allowedTestKitNo[$i] as $value=>$option)\
-										<option value="{{$value}}">{{$option}}</option>\
-										@endforeach\
+										@if(isset($allowedTestKitNo[$i]))\
+											@foreach($allowedTestKitNo[$i] as $value=>$option)\
+											<option value="{{$value}}">{{$option}}</option>\
+											@endforeach\
+										@else\
+											@foreach($kittype as $row2)\
+											<option value="{{$row2->tk_id}}" >{{$row2->test_kit_name}}</option>\
+											@endforeach\
+										@endif\
 									</select>\
 								</div>\
 							</fieldset>\

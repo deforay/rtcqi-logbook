@@ -210,7 +210,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 											<h5>Reporting Month <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="reportingMon" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+                                                <input type="text" id="reportingMon" class="form-control isRequired month" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
 											</div>
 										</fieldset>
 									</div>
@@ -457,6 +457,18 @@ $(document).ready(function() {
         changeMonth: true,
         changeYear: true,
         maxDate: 0,
+        // startDate:'today',
+        todayHighlight: true,
+        clearBtn: true,
+    });
+	$('.month').datepicker({
+        autoclose: true,
+        format: 'M-yyyy',
+        changeMonth: true,
+        changeYear: true,
+        maxDate: 0,
+		viewMode: "months", 
+    	minViewMode: "months",
         // startDate:'today',
         todayHighlight: true,
         clearBtn: true,
