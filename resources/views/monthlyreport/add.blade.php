@@ -69,20 +69,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                             <form class="form form-horizontal" role="form" name="addMonthlyReport" id="addMonthlyReport" method="post" action="/monthlyreport/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    <div class="col-xl-3 col-lg-12">
-										<fieldset>
-											<h5>Province Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
-													<option value="">---Select---</option>
-													@foreach($province as $row)
-                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
+                                    
 									<div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Site Name<span class="mandatory">*</span>
@@ -118,6 +105,20 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 											<div class="form-group">
                                                 <input type="text" id="siteUniqueId" class="form-control  isRequired" autocomplete="off" placeholder="Enter Site Unique Id" name="siteUniqueId" title="Please Enter Site Unique Id" >
 											</div>
+										</fieldset>
+									</div>
+									<div class="col-xl-3 col-lg-12">
+										<fieldset>
+											<h5>Province Name<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
+													<option value="">---Select---</option>
+													@foreach($province as $row)
+                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-3 col-lg-12">
