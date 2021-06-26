@@ -76,8 +76,7 @@ class ODKDataCron extends Command
         $xml = simplexml_load_string($response2);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
-        echo "<pre>";
-        print_r($array);
+        print_r($json);
         // DB::beginTransaction();
         //         \Log::info("Test cron");
         // DB::commit();
