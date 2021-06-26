@@ -372,3 +372,4 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 ALTER TABLE monthly_reports ADD source Varchar(100) NULL;
 ALTER TABLE monthly_reports ADD added_by Varchar(100) NULL;
 ALTER TABLE monthly_reports ADD added_on DATE NULL;
+ALTER TABLE `monthly_reports` CHANGE `reporting_month` `reporting_month` VARCHAR(100) NOT NULL;

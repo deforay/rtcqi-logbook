@@ -23,7 +23,7 @@ class MonthlyReportTable extends Model
         // print_r($data);die;
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
-        $reportingMon = $commonservice->dateFormat($data['reportingMon']);
+        $reportingMon = ($data['reportingMon']);
         $recency = '';
         if(isset($data['isRecency']))
             $recency = $data['isRecency'];
@@ -141,7 +141,7 @@ class MonthlyReportTable extends Model
         $data = $params->all();
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
-        $reportingMon = $commonservice->dateFormat($data['reportingMon']);
+        $reportingMon = ($data['reportingMon']);
         $recency = '';
         if(isset($data['isRecency']))
             $recency = $data['isRecency'];
