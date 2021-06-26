@@ -264,7 +264,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 													<h5>Start Date
 													</h5>
 													<div class="form-group">
-														<input type="text" id="startDate0" class="form-control dates " autocomplete="off" onchange="changeStartDate(0)" name="startDate[]" title="Please Enter Start Date" >
+														<input type="text" id="startDate0" class="form-control dates " autocomplete="off" onchange="changeStartDate(0)" placeholder="Start Date" name="startDate[]" title="Please Enter Start Date" >
 													</div>
 												</fieldset>
 											</div>
@@ -273,7 +273,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 													<h5>End Date
 													</h5>
 													<div class="form-group">
-														<input type="text" id="endDate0" class="form-control  dates" autocomplete="off" onchange="changeEndDate(0);" name="endDate[]" title="Please Enter End Date" >
+														<input type="text" id="endDate0" class="form-control  dates" autocomplete="off" onchange="changeEndDate(0);" placeholder="End date" name="endDate[]" title="Please Enter End Date" >
 													</div>
 												</fieldset>
 											</div>
@@ -549,7 +549,7 @@ function insert_row()
 						<h5>Start Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="startDate'+rowCount+'" class="form-control  dates" onchange="changeStartDate('+rowCount+')" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+							<input type="text" id="startDate'+rowCount+'" class="form-control  dates" onchange="changeStartDate('+rowCount+')" placeholder="Start date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -558,7 +558,7 @@ function insert_row()
 						<h5>End Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="endDate'+rowCount+'" class="form-control  dates" onchange="changeEndDate('+rowCount+')" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate'+rowCount+'" class="form-control  dates" onchange="changeEndDate('+rowCount+')" placeholder="End date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
