@@ -101,7 +101,7 @@
                                     
                                     <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Site Unique Id <span class="mandatory">*</span>
+											<h5>Site Id <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="siteUniqueId" value="{{$result[0]->site_unique_id}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter Site Unique Id" name="siteUniqueId" title="Please Enter Site Unique Id" >
