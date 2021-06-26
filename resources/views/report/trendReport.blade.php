@@ -147,8 +147,8 @@
                             
                             <div class="col-md-8">
                                 <button type="submit" onclick="getTrendReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                <button class="btn btn-danger btn-md"
-                                    onclick='clearStatus();'><span>Reset</span></button>&nbsp;&nbsp;
+                                <a class="btn btn-danger btn-md"
+                                    href ='/trendreport/'><span>Reset</span></a>&nbsp;&nbsp;
 
 <!-- <a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
         class="fa fa-download"></i>Export Execl</a> -->
