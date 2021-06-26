@@ -24,6 +24,9 @@ class MonthlyReportTable extends Model
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = $commonservice->dateFormat($data['reportingMon']);
+        $recency = '';
+        if(isset($data['isRecency']))
+            $recency = $data['isRecency'];
         if ($request->input('provinceId') != null && trim($request->input('provinceId')) != '') {
             $id = DB::table('monthly_reports')->insertGetId(
                 [
@@ -33,7 +36,7 @@ class MonthlyReportTable extends Model
                     'st_id' => $data['sitetypeId'],
                     'site_manager' => $data['siteManager'],
                     'is_flc' => $data['isFlu'],
-                    'is_recency' => $data['isRecency'],
+                    'is_recency' => $recency,
                     'contact_no' => $data['contactNo'],
                     // 'latitude' => $data['latitude'],
                     // 'longitude' => $data['longitude'],
@@ -139,6 +142,9 @@ class MonthlyReportTable extends Model
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = $commonservice->dateFormat($data['reportingMon']);
+        $recency = '';
+        if(isset($data['isRecency']))
+            $recency = $data['isRecency'];
         $upData = array(
             'provincesss_id' => $data['provinceId'],
             'site_unique_id' => $data['siteUniqueId'],
@@ -146,7 +152,7 @@ class MonthlyReportTable extends Model
             'st_id' => $data['sitetypeId'],
             'site_manager' => $data['siteManager'],
             'is_flc' => $data['isFlu'],
-            'is_recency' => $data['isRecency'],
+            'is_recency' => $recency,
             'contact_no' => $data['contactNo'],
             // 'latitude' => $data['latitude'],
             // 'longitude' => $data['longitude'],

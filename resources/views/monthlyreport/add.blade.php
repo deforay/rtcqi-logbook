@@ -25,7 +25,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 // $test_kit_name[] = $rows->test_kit_name;
 // }
 // dd($allowedTestKitNo);die;
-
+// print_r($global['recency_test']);die;
 ?>
 <div class="content-wrapper">
 <div class="content-header row">
@@ -142,18 +142,20 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-3 col-lg-12">
-										<fieldset>
-											<h5>Does site do Recency Tests?<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Does site do Recency Tests?">
-                                                    <option value="yes" >Yes</option>
-                                                    <option value="no" selected>No</option>
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
+									@if($global['recency_test']=='enabled')
+										<div class="col-xl-3 col-lg-12">
+											<fieldset>
+												<h5>Does site do Recency Tests?<span class="mandatory">*</span>
+												</h5>
+												<div class="form-group">
+													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Does site do Recency Tests?">
+														<option value="yes" >Yes</option>
+														<option value="no" selected>No</option>
+													</select>
+												</div>
+											</fieldset>
+										</div>
+									@endif
                                     <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Contact Number 
@@ -287,10 +289,16 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 														<div class="form-group">
 
 															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+															@if(isset($allowedTestKitNo[$i]))
 																@foreach($allowedTestKitNo[$i] as $value=>$option)
 																
 																<option value="{{$value}}">{{$option}}</option>
 																@endforeach
+															@else
+																@foreach($kittype as $row2)
+																<option value="{{$row2->tk_id}}" >{{$row2->test_kit_name}}</option>
+																@endforeach
+															@endif
 															</select>
 														</div>
 													</fieldset>
@@ -522,9 +530,15 @@ function insert_row()
 								</h5>\
 								<div class="form-group">\
 									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
-										@foreach($allowedTestKitNo[$i] as $value=>$option)\
-										<option value="{{$value}}">{{$option}}</option>\
-										@endforeach\
+										@if(isset($allowedTestKitNo[$i]))\
+											@foreach($allowedTestKitNo[$i] as $value=>$option)\
+												<option value="{{$value}}">{{$option}}</option>\
+											@endforeach\
+										@else\
+											@foreach($kittype as $row2)\
+												<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>\
+											@endforeach\
+										@endif\
 									</select>\
 								</div>\
 							</fieldset>\

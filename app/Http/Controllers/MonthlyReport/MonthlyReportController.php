@@ -51,8 +51,13 @@ class MonthlyReportController extends Controller
             $GlobalConfigService = new GlobalConfigService();
             $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
             $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
-            
-            return view('monthlyreport.add',array('kittype'=>$kittype,'globalValue'=>$globalValue, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'allowedTestKitNo'=>$allowedTestKitNo));
+            $glob = $GlobalConfigService->getAllGlobalConfig();
+            $arr = array();
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < sizeof($glob); $i++) {
+                $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+            }
+            return view('monthlyreport.add',array('kittype'=>$kittype, 'global'=>$arr,'globalValue'=>$globalValue, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'allowedTestKitNo'=>$allowedTestKitNo));
         }
     }
 
@@ -97,7 +102,13 @@ class MonthlyReportController extends Controller
             $KitTypeService = new TestKitService();
             $kittype = $KitTypeService->getAllActiveTestKit(); 
             $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
-            return view('monthlyreport.edit',array('allowedTestKitNo'=>$allowedTestKitNo,'globalValue'=>$globalValue, 'result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype, 'kittype'=>$kittype));
+            $glob = $GlobalConfigService->getAllGlobalConfig();
+            $arr = array();
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < sizeof($glob); $i++) {
+                $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+            }
+            return view('monthlyreport.edit',array('allowedTestKitNo'=>$allowedTestKitNo, 'global'=>$arr,'globalValue'=>$globalValue, 'result'=>$result,'id'=>$id, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype, 'kittype'=>$kittype));
         }
     }
 

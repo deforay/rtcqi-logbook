@@ -129,18 +129,20 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-3 col-lg-12">
-										<fieldset>
-											<h5>Does site do Recency Tests?<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Is Recency status">
-                                                    <option value="yes" {{ $result[0]->is_recency == 'yes' ?  'selected':''}}>Yes</option>
-                                                    <option value="no" {{ $result[0]->is_recency == 'no' ?  'selected':''}}>No</option>
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
+									@if($global['recency_test']=='enabled')
+										<div class="col-xl-3 col-lg-12">
+											<fieldset>
+												<h5>Does site do Recency Tests?<span class="mandatory">*</span>
+												</h5>
+												<div class="form-group">
+													<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Is Recency status">
+														<option value="yes" {{ $result[0]->is_recency == 'yes' ?  'selected':''}}>Yes</option>
+														<option value="no" {{ $result[0]->is_recency == 'no' ?  'selected':''}}>No</option>
+													</select>
+												</div>
+											</fieldset>
+										</div>
+									@endif
                                     <div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Contact Number 
@@ -276,9 +278,15 @@
 														</h5>
 														<div class="form-group">
 															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
-																@foreach($allowedTestKitNo[$i] as $value=>$option)
-																<option value="{{$value}}" {{ $list->$test_id == $value ?  'selected':''}}>{{$option}}</option>
-																@endforeach
+																@if(isset($allowedTestKitNo[$i]))
+																	@foreach($allowedTestKitNo[$i] as $value=>$option)
+																	<option value="{{$value}}" {{ $list->$test_id == $value ?  'selected':''}}>{{$option}}</option>
+																	@endforeach
+																@else
+																	@foreach($kittype as $row2)
+																	<option value="{{$row2->tk_id}}" {{ $list->$test_id == $row2->tk_id ?  'selected':''}}>{{$row2->test_kit_name}}</option>
+																	@endforeach
+																@endif
 															</select>
 														</div>
 													</fieldset>
