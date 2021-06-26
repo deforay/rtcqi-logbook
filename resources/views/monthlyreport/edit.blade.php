@@ -254,7 +254,7 @@
 													<h5>Start Date
 													</h5>
 													<div class="form-group">
-														<input type="date" id="startDate{{$z}}" value="{{$list->start_test_date}}" class="form-control  " autocomplete="off" name="startDate[]" title="Please Enter Start Date" >
+														<input type="text" id="startDate{{$z}}" value="{{date('d-m-Y', strtotime($list->start_test_date))}}" class="form-control dates " onchange="changeStartDate('{{$z}}')" placeholder="Start date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >
 													</div>
 												</fieldset>
 											</div>
@@ -263,7 +263,7 @@
 													<h5>End Date
 													</h5>
 													<div class="form-group">
-														<input type="date" id="endDate{{$z}}" value="{{$list->end_test_date}}" class="form-control  " autocomplete="off" name="endDate[]" title="Please Enter End Date" >
+														<input type="text" id="endDate{{$z}}" value="{{date('d-m-Y', strtotime($list->end_test_date))}}" class="form-control  dates" onchange="changeEndDate('{{$z}}')" placeholder="End date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >
 													</div>
 												</fieldset>
 											</div>
@@ -454,7 +454,38 @@ $(document).ready(function() {
         todayHighlight: true,
         clearBtn: true,
     });
+	$(".dates").datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   });
 });
+var date1 = new Date();
+  var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+function changeStartDate(id){
+	$("#startDate"+id).datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   }).on('changeDate', function (selected) {
+       var minDate = new Date(selected.date.valueOf());
+       $('#endDate'+id).datepicker('setStartDate', minDate);
+   });
+	// var minDate = new Date(selected.date.valueOf());
+    //    $('#endDate'+id).datepicker('setStartDate', minDate);
+}
+function changeEndDate(id){
+	$("#endDate"+id).datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   }).on('changeDate', function (selected) {
+           var minDate = new Date(selected.date.valueOf());
+           $('#startDate'+id).datepicker('setEndDate', minDate);
+   });
+	// var minDate = new Date(selected.date.valueOf());
+    //        $('#startDate'+id).datepicker('setEndDate', minDate);
+}
  duplicateName = true;
     function validateNow() {
         flag = deforayValidator.init({
@@ -498,7 +529,7 @@ function insert_row()
 						<h5>Start Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="date" id="startDate'+rowCount+'" class="form-control  " autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+							<input type="text" id="startDate'+rowCount+'" onchange="changeStartDate('+rowCount+')" class="form-control dates " placeholder="Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -507,7 +538,7 @@ function insert_row()
 						<h5>End Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="date" id="endDate'+rowCount+'" class="form-control  " autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate'+rowCount+'" onchange="changeEndDate('+rowCount+')" class="form-control  dates" placeholder="End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -644,6 +675,11 @@ function insert_row()
 					</div>\
 				</div>';
 	$("#test_row").append(div);
+	$(".dates").datepicker({
+       format: 'dd-mm-yyyy',
+       autoclose: true,
+       endDate: today,
+   });
 }
 function delete_row(val)
 {
