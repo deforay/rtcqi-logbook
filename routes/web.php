@@ -141,7 +141,7 @@ Route::post('/getAllAllowedTestKit', 'AllowedTestKit\AllowedTestKitController@ge
 //globalconfig module
 Route::get('/globalconfig', 'GlobalConfig\GlobalConfigController@index')->name('globalconfig.index')->middleware('access');
 Route::get('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit')->middleware('access');
-Route::post('/globalconfig/edit/', 'GlobalConfig\GlobalConfigController@edit');
+Route::post('/globalconfig/updateglobal', 'GlobalConfig\GlobalConfigController@updateglobal');
 Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGlobalConfig');
 
 //Trend Report
