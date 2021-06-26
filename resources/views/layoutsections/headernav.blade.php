@@ -26,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="navbar-mobile">
                     <ul class="nav navbar-nav mr-auto float-left">
                         @if($arr["logo"])
-                            <img class="brand-logo" alt="rtcqui logbook logo" src="{{ url($arr["logo"])}}"     style="height: 70px;width: 170px;">
+                            <img class="brand-logo" alt="rtcqui logbook logo" src="{{ url($arr["logo"])}}"     style="height: 70px;width: 100px;">
                         @else
                             <img class="brand-logo" alt="rtcqui logbook logo" src="{{ asset('assets/images/default-logo.png')}}"     style="height: 70px;width: 170px;">
                         @endif

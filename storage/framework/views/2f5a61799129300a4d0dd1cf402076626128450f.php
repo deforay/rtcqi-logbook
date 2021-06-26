@@ -26,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="navbar-mobile">
                     <ul class="nav navbar-nav mr-auto float-left">
                         <?php if($arr["logo"]): ?>
-                            <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 70px;width: 170px;">
+                            <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 70px;width: 100px;">
                         <?php else: ?>
                             <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(asset('assets/images/default-logo.png')); ?>"     style="height: 70px;width: 170px;">
                         <?php endif; ?>
