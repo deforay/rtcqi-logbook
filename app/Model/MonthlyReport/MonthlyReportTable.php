@@ -929,4 +929,35 @@ public function fetchInvalidResultReport($params)
             // dd($res);   
         return $res;
     }
+
+    public function CheckPreLot($params)
+    {
+        $input = $params->all();
+        $out = 0 ;
+        $expire = $input['expfield'];
+        $expireDate = $input['expiry'];
+        $outArr = array();
+        // print_r($input);die;
+        $res = DB::table('monthly_reports_pages')->latest('mrp_id')
+                ->where($input['field'], '=', $input['lot'])
+                ->first();
+        if(isset($res->$expire))
+        {
+            if($res->$expire == $expireDate)
+            {
+                $out = 1;
+            }
+            else
+            {
+                $outArr['expiry'] = date('d-m-Y', strtotime($res->$expire));
+            }
+        }
+        else
+        {
+            $out = 2;
+        }
+        $outArr['status'] = $out;
+
+        return $outArr;
+    }
 }

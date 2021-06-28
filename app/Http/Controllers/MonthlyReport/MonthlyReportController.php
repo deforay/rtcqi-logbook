@@ -139,5 +139,12 @@ class MonthlyReportController extends Controller
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
+        public function CheckPreLot(Request $request)
+        {
+            $service = new MonthlyReportService();
+            $data = $service->CheckPreLot($request);
+            return $data;
+        }
+
 }
 

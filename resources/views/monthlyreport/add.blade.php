@@ -335,14 +335,14 @@ $test = '';
 														<h5>Lot No {{$j}} 
 														</h5>
 														<div class="form-group">
-															<input type="number" min="0" id="lotNO{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" >
+															<input type="number" min="0" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput=checklotNo('0','{{$j}}')>
 														</div>
 												</td>
 												<td style=" text-align: center;" colspan="2">
 														<h5>Expiry Date {{$j}}
 														</h5>
 														<div class="form-group">
-															<input type="date" id="expiryDate{{$j}}" class="form-control  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" >
+															<input type="date" id="expiryDate0{{$j}}" class="form-control  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" onchange=checklotNo('0','{{$j}}')>
 														</div>
 												</td>
 											@endfor
@@ -618,14 +618,14 @@ function insert_row()
 							<h5>Lot No '+j+' \
 							</h5>\
 							<div class="form-group">\
-								<input type="number" min="0" id="lotNO'+j+'" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO'+j+'[]" title="Please Enter Lot No'+j+'" >\
+								<input type="number" min="0" id="lotNO'+rowCount+''+j+'" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO'+j+'[]" title="Please Enter Lot No'+j+'" oninput=checklotNo('+rowCount+','+j+')>\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\
 							<h5>Expiry Date '+j+'\
 							</h5>\
 							<div class="form-group">\
-								<input type="date" id="expiryDate'+j+'" class="form-control  " autocomplete="off" name="expiryDate'+j+'[]" title="Please Enter Expiry Date'+j+'" >\
+								<input type="date" id="expiryDate'+rowCount+''+j+'" class="form-control  " autocomplete="off" name="expiryDate'+j+'[]" title="Please Enter Expiry Date'+j+'" onchange=checklotNo('+rowCount+','+j+')>\
 							</div>\
 					</td>';
 			}
@@ -713,6 +713,38 @@ function delete_row(val)
 	if(val!=0)
 	{
 		$("#test_details"+val).remove();
+	}
+}
+
+function checklotNo(row, id){
+	var lot = $("#lotNO"+row+id).val();
+	var expiry = $("#expiryDate"+row+id).val();
+	var field = '	lot_no_'+id;
+	var expfield = '	expiry_date_'+id;
+	if(lot!='' && expiry!=''){
+		console.log(lot+' '+ expiry)
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: "{{ url('/CheckPreLot') }}",
+			method: 'post',
+			data: {
+				lot:lot,
+				expiry : expiry,
+				field : field,
+				expfield : expfield,
+			},
+			success: function(result){
+				console.log(result)
+				if(result['status'] == 0)
+				{
+					alert("The Expiry Date for the lot number "+lot+" was recorded as "+result['expiry	']+" previously")
+				}
+			}
+		});
 	}
 }
 </script>

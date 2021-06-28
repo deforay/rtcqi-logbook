@@ -111,6 +111,7 @@ Route::get('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add')->m
 Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit')->middleware('access');
 Route::post('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
 Route::post('/getAllMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllMonthlyReport');
+Route::post('/CheckPreLot', 'MonthlyReport\MonthlyReportController@CheckPreLot');
 
 //sitetype module
 Route::get('/sitetype', 'SiteType\SiteTypeController@index')->name('sitetype.index')->middleware('access');
