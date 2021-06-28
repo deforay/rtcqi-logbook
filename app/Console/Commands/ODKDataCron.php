@@ -55,16 +55,17 @@ class ODKDataCron extends Command
         $password = 'mko)(*&^';
         $token = base64_encode($email . ':' . $password);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/2/forms/SPIRT_COT_3031/submissions");
+        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report/submissions");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: Basic $token",
         ));
         $response1 = curl_exec($ch);
+        $submission = json_decode($response1,TRUE);
         curl_close($ch);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/2/forms/SPIRT_COT_3031/submissions/uuid:222e8739-cc54-4e58-b6df-7cc08a2c360d.xml");
+        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report/submissions/".$submission[0]['instanceId'].".xml");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -76,7 +77,7 @@ class ODKDataCron extends Command
         $xml = simplexml_load_string($response2);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
-        print_r($json);
+        print_r($array);
         // DB::beginTransaction();
         //         \Log::info("Test cron");
         // DB::commit();

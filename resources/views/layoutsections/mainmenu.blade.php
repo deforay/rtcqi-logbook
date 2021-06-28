@@ -15,9 +15,9 @@ $manage = '';
 $test = '';
 $report = '';
 $import = '';
-    $dashboard = '<li class="dropdown nav-item" ><a href="/dashboard" id="dashboard" class="dropdown-toggle nav-link" ><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a></li>';
+    $dashboard = '<li class="dropdown nav-item"   ><a href="/dashboard" id="dashboard" class=" nav-link" ><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a></li>';
 
-    $manage .= '<li class="dropdown nav-item" ><a  id="manage" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-toggle-down"></i><span class="menu-title">Manage</span></a>
+    $manage .= '<li class="dropdown nav-item" data-menu="dropdown"><a  id="manage" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-toggle-down"></i><span class="menu-title">Manage</span></a>
                 <ul class="dropdown-menu">';
     $manage .= '<li id="li-user"><a class="dropdown-item" data-toggle="dropdown" href="/user/">User</a></li>';
     $manage .= '<li id="li-testsite"><a class="dropdown-item" data-toggle="dropdown" href="/testsite/">Test Site</a></li>';
@@ -29,12 +29,12 @@ $import = '';
     $manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">Global Config</a></li>';
     $manage .= '</ul></li>';
 
-    $test .= '<li class="dropdown nav-item" ><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Audits</span></a>
+    $test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Audits</span></a>
                 <ul class="dropdown-menu">';
     $test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/">Monthly Report</a></li>';
     $test .= '</ul></li>';
 
-    $report .= '<li class="dropdown nav-item" ><a id="reports" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title">Reports</span></a>
+    $report .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="reports" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title">Reports</span></a>
                 <ul class="dropdown-menu">';
     $report .= '<li id="li-trendreport"><a class="dropdown-item" data-toggle="dropdown" href="/trendreport/">Trend Report</a></li>';
     $report .= '<li id="li-logbook"><a class="dropdown-item" data-toggle="dropdown" href="/report/logbook/">Logbook Report</a></li>';
@@ -60,3 +60,4 @@ $import = '';
       </ul>
     </div>
   </div>
+
