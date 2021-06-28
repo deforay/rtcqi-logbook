@@ -51,13 +51,15 @@ class MonthlyReportController extends Controller
             $GlobalConfigService = new GlobalConfigService();
             $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
             $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
+            $monthService = new MonthlyReportService();
+            $latest = $monthService->getLatestValue();
             $glob = $GlobalConfigService->getAllGlobalConfig();
             $arr = array();
             // now we create an associative array so that we can easily create view variables
             for ($i = 0; $i < sizeof($glob); $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.add',array('kittype'=>$kittype, 'global'=>$arr,'globalValue'=>$globalValue, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'allowedTestKitNo'=>$allowedTestKitNo));
+            return view('monthlyreport.add',array('latest'=>$latest,'kittype'=>$kittype, 'global'=>$arr,'globalValue'=>$globalValue, 'province'=>$province, 'testsite'=>$testsite, 'sitetype'=>$sitetype,'allowedTestKitNo'=>$allowedTestKitNo));
         }
     }
 
