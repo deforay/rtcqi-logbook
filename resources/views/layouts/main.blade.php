@@ -89,7 +89,7 @@ ismob = true;
     if(splitUrl[0]=="dashboard")
     {
       $("#dashboard").addClass('active');
-    }else if(splitUrl[0]=="testsite"  || splitUrl[0]=="user" || splitUrl[0]=="testkit" || splitUrl[0]=="facility" || splitUrl[0]=="province" || splitUrl[0]=="district" || splitUrl[0]=="sitetype" || splitUrl[0]=="globalconfig" )
+    }else if( splitUrl[0]=="allowedtestkit" || splitUrl[0]=="testsite"  || splitUrl[0]=="user" || splitUrl[0]=="testkit" || splitUrl[0]=="facility" || splitUrl[0]=="province" || splitUrl[0]=="district" || splitUrl[0]=="sitetype" || splitUrl[0]=="globalconfig" )
     {
       $("#manage").addClass('active');
     }
