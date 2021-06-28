@@ -289,6 +289,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 														<div class="form-group">
 
 															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+															<option value="">--Select--</option>
 															@if(isset($allowedTestKitNo[$i]))
 																@foreach($allowedTestKitNo[$i] as $value=>$option)
 																
@@ -313,6 +314,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 														<div class="form-group">
 
 															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+															<option value="">--Select--</option>
 																@foreach($kittype as $row2)
 																
 																<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
@@ -574,6 +576,7 @@ function insert_row()
 								</h5>\
 								<div class="form-group">\
 									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
+									<option value="">--Select--</option>\
 										@if(isset($allowedTestKitNo[$i]))\
 											@foreach($allowedTestKitNo[$i] as $value=>$option)\
 												<option value="{{$value}}">{{$option}}</option>\
