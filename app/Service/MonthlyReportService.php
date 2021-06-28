@@ -130,6 +130,13 @@ class MonthlyReportService
 		$result = $model->getLatestValue();
 		return $result;
 	}
+
+	public function CheckPreLot($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->CheckPreLot($params);
+		return $result;
+	}
 	
 }
 
