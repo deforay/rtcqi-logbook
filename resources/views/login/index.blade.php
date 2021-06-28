@@ -8,7 +8,17 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
-
+<?php
+    $profileURl="/user/profile/".base64_encode(session('userId'));
+    use App\Service\GlobalConfigService;
+    $GlobalConfigService = new GlobalConfigService();
+    $glob = $GlobalConfigService->getAllGlobalConfig();
+    $arr = array();
+    // now we create an associative array so that we can easily create view variables
+    for ($i = 0; $i < sizeof($glob); $i++) {
+        $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+    }
+?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,6 +81,11 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
                         <h3>RTCQI LOGBOOK</h3>
                     </div>
                   </div>
+                  @if($arr["logo"])
+                      <img class="brand-logo" alt="rtcqui logbook logo" src="{{ url($arr["logo"])}}"     style="height: 70px;width: 100px;    margin-left: 30%;">
+                  @else
+                      <img class="brand-logo" alt="rtcqui logbook logo" src="{{ asset('assets/images/default-logo.png')}}"     style="height: 70px;width: 100px;     margin-left: 30%;">
+                  @endif
                   <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
                     <span>Login</span>
                   </h6>
