@@ -923,4 +923,10 @@ public function fetchInvalidResultReport($params)
         // dd($salesResult);die;
         return $salesResult;
     }
+    public function getLatestValue()
+    {
+        $res = DB::table('monthly_reports_pages')->latest('mrp_id')->first();
+            // dd($res);   
+        return $res;
+    }
 }

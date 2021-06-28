@@ -124,6 +124,12 @@ class MonthlyReportService
 		$result = $model->fetchInvalidResultReport($params);
 		return $result;
 	}
+	public function getLatestValue()
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->getLatestValue();
+		return $result;
+	}
 	
 }
 

@@ -15,17 +15,8 @@
 </style>
 <?php
 $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
-// $data= array();
-// $testkit_id = array();
-// $test_kit_name = array();
-// foreach($allowedTestKitNo as $rows)
-// {
-// $data[] = $rows->test_kit_no;
-// $testkit_id[] = $rows->testkit_id;
-// $test_kit_name[] = $rows->test_kit_name;
-// }
-// dd($allowedTestKitNo);die;
-// print_r($global['recency_test']);die;
+// print_r($latest->test_1_kit_id);die;
+$test = '';
 ?>
 <div class="content-wrapper">
 <div class="content-header row">
@@ -282,6 +273,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 											<tr>
 											@if(count($allowedTestKitNo) > 0)
 											@for($i = 1; $i <= $globalValue; $i++)
+											<?php $test_id = 'test_'.$i.'_kit_id';  $test = ''  ?>
 												<td  style=" text-align: center;" colspan="3" >
 													<fieldset>
 														<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
@@ -292,12 +284,19 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 															<option value="">--Select--</option>
 															@if(isset($allowedTestKitNo[$i]))
 																@foreach($allowedTestKitNo[$i] as $value=>$option)
-																
-																<option value="{{$value}}">{{$option}}</option>
+																	@if($latest->$test_id !='')
+																		<option value="{{$value}}" {{ $latest->$test_id == $value ?  'selected':''}}>{{$option}}</option>
+																	@else
+																		<option value="{{$value}}" >{{$option}}</option>
+																	@endif
 																@endforeach
 															@else
 																@foreach($kittype as $row2)
-																<option value="{{$row2->tk_id}}" >{{$row2->test_kit_name}}</option>
+																	@if($latest->$test_id !='')
+																		<option value="{{$row2->tk_id}}" {{ $latest->$test_id == $row2->tk_id ?  'selected':''}}>{{$row2->test_kit_name}}</option>
+																	@else
+																		<option value="{{$row2->tk_id}}" >{{$row2->test_kit_name}}</option>
+																	@endif
 																@endforeach
 															@endif
 															</select>
@@ -307,6 +306,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 											@endfor
 											@else 
 											@for($i = 1; $i <= $globalValue; $i++)
+											<?php $test_id = 'test_'.$i.'_kit_id';  $test = ''  ?>
 												<td  style=" text-align: center;" colspan="3" >
 													<fieldset>
 														<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
@@ -316,8 +316,11 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
 															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
 															<option value="">--Select--</option>
 																@foreach($kittype as $row2)
-																
-																<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
+																	@if($latest->$test_id !='')
+																		<option value="{{$row2->tk_id}}" {{ $latest->$test_id == $row2->tk_id ?  'selected':''}}>{{$row2->test_kit_name}}</option>
+																	@else
+																		<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
+																	@endif
 																@endforeach
 															</select>
 														</div>
