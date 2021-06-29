@@ -734,7 +734,7 @@ class MonthlyReportTable extends Model
                                         ->where('site_name', '=', trim($test_site_name))
                                         ->get();
                         if(count($testsiteData) > 0){
-                            $testSiteId = $testsiteData[0]->facility_id;
+                            $testSiteId = $testsiteData[0]->ts_id;
                         }
                         else
                         {
