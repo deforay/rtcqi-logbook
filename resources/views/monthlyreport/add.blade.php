@@ -246,7 +246,7 @@ $test = '';
 													<h5>Page No 
 													</h5>
 													<div class="form-group">
-														<input type="number" min="0" id="pageNO0" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >
+														<input type="number" min="0" id="pageNO0" class="form-control isRequired  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >
 													</div>
 												</fieldset>
 											</div>
@@ -255,7 +255,7 @@ $test = '';
 													<h5>Start Date
 													</h5>
 													<div class="form-group">
-														<input type="text" id="startDate0" class="form-control dates " autocomplete="off" onchange="changeStartDate(0)" placeholder="Start Date" name="startDate[]" title="Please Enter Start Date" >
+														<input type="text" id="startDate0" class="form-control isRequired dates " autocomplete="off" onchange="changeStartDate(0)" placeholder="Start Date" name="startDate[]" title="Please Enter Start Date" >
 													</div>
 												</fieldset>
 											</div>
@@ -264,7 +264,7 @@ $test = '';
 													<h5>End Date
 													</h5>
 													<div class="form-group">
-														<input type="text" id="endDate0" class="form-control  dates" autocomplete="off" onchange="changeEndDate(0);" placeholder="End date" name="endDate[]" title="Please Enter End Date" >
+														<input type="text" id="endDate0" class="form-control isRequired  dates" autocomplete="off" onchange="changeEndDate(0);" placeholder="End date" name="endDate[]" title="Please Enter End Date" >
 													</div>
 												</fieldset>
 											</div>
@@ -335,14 +335,14 @@ $test = '';
 														<h5>Lot No {{$j}} 
 														</h5>
 														<div class="form-group">
-															<input type="number" min="0" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput="checklotNo('0','{{$j}}')">
+															<input type="number" min="0" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput="checklotNo('0','{{$j}}')">
 														</div>
 												</td>
 												<td style=" text-align: center;" colspan="2">
 														<h5>Expiry Date {{$j}}
 														</h5>
 														<div class="form-group">
-															<input type="date" id="expiryDate0{{$j}}" class="form-control  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" onchange=checklotNo('0','{{$j}}')>
+															<input type="date" id="expiryDate0{{$j}}" class="form-control isRequired  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" onchange=checklotNo('0','{{$j}}')>
 														</div>
 												</td>
 											@endfor
