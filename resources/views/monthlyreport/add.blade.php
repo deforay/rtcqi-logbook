@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Author             : Prasath M
     Date               : 02 Jun 2021
     Description        : Monthly report add screen
@@ -10,7 +10,7 @@
 @section('content')
 <style>
 .table1 td{
- padding: 0.95rem 0.5rem;; 
+ padding: 0.95rem 0.5rem;;
 }
 </style>
 <?php
@@ -60,7 +60,7 @@ $test = '';
                             <form class="form form-horizontal" role="form" name="addMonthlyReport" id="addMonthlyReport" method="post" action="/monthlyreport/add" autocomplete="off" onsubmit="validateNow();return false;">
                             @csrf
                                 <div class="row">
-                                    
+
 									<div class="col-xl-3 col-lg-12">
 										<fieldset>
 											<h5>Site Name<span class="mandatory">*</span>
@@ -114,7 +114,7 @@ $test = '';
 									</div>
                                     <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Site Manager 
+											<h5>Site Manager
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="siteManager" class="form-control" autocomplete="off" placeholder="Enter Site Manager" name="siteManager" title="Please Enter Site Manager" >
@@ -149,7 +149,7 @@ $test = '';
 									@endif
                                     <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Contact Number 
+											<h5>Contact Number
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="contactNo" class="form-control" autocomplete="off" placeholder="Enter Contact Number" name="contactNo" title="Please Enter Contact Number" >
@@ -216,7 +216,7 @@ $test = '';
 									</div>
                                     <!-- <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Signature 
+											<h5>Signature
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="signature" class="form-control  " autocomplete="off" placeholder="Enter Signature" name="signature" title="Please Enter Signature" >
@@ -225,7 +225,7 @@ $test = '';
 									</div> -->
                                     <div class="col-xl-3 col-lg-12">
 										<fieldset>
-											<h5>Name of Data Collector 
+											<h5>Name of Data Collector
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="nameOfDataCollect" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected" >
@@ -243,7 +243,7 @@ $test = '';
 										<div class="row">
 											<div class="col-xl-4 col-lg-12">
 												<fieldset>
-													<h5>Page No 
+													<h5>Page No
 													</h5>
 													<div class="form-group">
 														<input type="number" min="0" id="pageNO0" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >
@@ -284,7 +284,7 @@ $test = '';
 															<option value="">--Select--</option>
 															@if(isset($allowedTestKitNo[$i]))
 																@foreach($allowedTestKitNo[$i] as $value=>$option)
-																	@if($latest->$test_id !='')
+																	@if(isset($latest->$test_id) && $latest->$test_id !='')
 																		<option value="{{$value}}" {{ $latest->$test_id == $value ?  'selected':''}}>{{$option}}</option>
 																	@else
 																		<option value="{{$value}}" >{{$option}}</option>
@@ -292,7 +292,7 @@ $test = '';
 																@endforeach
 															@else
 																@foreach($kittype as $row2)
-																	@if($latest->$test_id !='')
+																	@if(isset($latest->$test_id) && $latest->$test_id !='')
 																		<option value="{{$row2->tk_id}}" {{ $latest->$test_id == $row2->tk_id ?  'selected':''}}>{{$row2->test_kit_name}}</option>
 																	@else
 																		<option value="{{$row2->tk_id}}" >{{$row2->test_kit_name}}</option>
@@ -304,7 +304,7 @@ $test = '';
 													</fieldset>
 												</td>
 											@endfor
-											@else 
+											@else
 											@for($i = 1; $i <= $globalValue; $i++)
 											<?php $test_id = 'test_'.$i.'_kit_id';  $test = ''  ?>
 												<td  style=" text-align: center;" colspan="3" >
@@ -316,7 +316,7 @@ $test = '';
 															<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
 															<option value="">--Select--</option>
 																@foreach($kittype as $row2)
-																	@if($latest->$test_id !='')
+																	@if(isset($latest->$test_id) && $latest->$test_id !='')
 																		<option value="{{$row2->tk_id}}" {{ $latest->$test_id == $row2->tk_id ?  'selected':''}}>{{$row2->test_kit_name}}</option>
 																	@else
 																		<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>
@@ -332,7 +332,7 @@ $test = '';
 											<tr>
 											@for($j = 1; $j <= $globalValue; $j++)
 												<td style=" text-align: center;">
-														<h5>Lot No {{$j}} 
+														<h5>Lot No {{$j}}
 														</h5>
 														<div class="form-group">
 															<input type="number" min="0" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput=checklotNo('0','{{$j}}')>
@@ -371,13 +371,13 @@ $test = '';
 													</div>
 												</td>
 												<td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-														<h5 style="color: white; font-weight: 500;">INV 
+														<h5 style="color: white; font-weight: 500;">INV
 														</h5>
 														<div class="form-group">
 														<input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$l}}" name="totalInvalid{{$l}}[]" title="Please Enter Total Invalid - INV - {{$l}}" >
 													</div>
 												</td>
-												
+
 												@endfor
 											</tr>
 										</table>
@@ -442,13 +442,13 @@ $test = '';
                                     </button>
 								</div>
 							</form>
-							
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	
+
 	<!-- horizontal grid end -->
 </section>
 </div>
@@ -472,13 +472,13 @@ $(document).ready(function() {
         changeMonth: true,
         changeYear: true,
         maxDate: 0,
-		viewMode: "months", 
+		viewMode: "months",
     	minViewMode: "months",
         // startDate:'today',
         todayHighlight: true,
         clearBtn: true,
     });
-	
+
    $(".dates").datepicker({
        format: 'dd-mm-yyyy',
        autoclose: true,
@@ -516,7 +516,7 @@ function changeEndDate(id){
             flag = deforayValidator.init({
                 formId: 'addMonthlyReport'
             });
-            
+
             if (flag == true) {
                 if (duplicateName) {
                     document.getElementById('addMonthlyReport').submit();
@@ -529,7 +529,7 @@ function changeEndDate(id){
                 $(".infocus").focus();
             }
 	}
-	
+
 var rowCount = 0;
 var gCnt = '{{$globalValue}}';
 var col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
@@ -570,7 +570,7 @@ function insert_row()
 			</div>\
 			<table class="table1" style="width:100%">\
 			<tr>';
-			
+
 				div+='@if(count($allowedTestKitNo) > 0)\
 				@for($i = 1; $i <= $globalValue; $i++)\
 				<td  style=" text-align: center;" colspan="3" >\
