@@ -37,6 +37,15 @@ class ODKDataCron extends Command
      */
     public function handle()
     {
+        $date = '2021-06-02';
+
+        $monthyData = DB::table('monthly_reports')
+                            ->where('source', '=', 'odk')
+                            ->latest('mr_id')->first();
+        if(isset($monthyData->date_of_data_collection)  && $monthyData->date_of_data_collection!= '')
+        {
+            $date = $monthyData->date_of_data_collection;
+        }
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/sessions");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -55,7 +64,7 @@ class ODKDataCron extends Command
         $password = 'mko)(*&^';
         $token = base64_encode($email . ':' . $password);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%202021-06-01");
+        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20".$date);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
