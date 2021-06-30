@@ -335,7 +335,7 @@ $test = '';
 														<h5>Lot No {{$j}} 
 														</h5>
 														<div class="form-group">
-															<input type="number" min="0" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput=checklotNo('0','{{$j}}')>
+															<input type="number" min="0" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput="checklotNo('0','{{$j}}')">
 														</div>
 												</td>
 												<td style=" text-align: center;" colspan="2">
@@ -741,7 +741,7 @@ function checklotNo(row, id){
 				console.log(result)
 				if(result['status'] == 0)
 				{
-					alert("The Expiry Date for the lot number "+lot+" was recorded as "+result['expiry	']+" previously")
+					alert("The Expiry Date for the lot number "+lot+" was recorded as "+result['expiry']+" previously")
 				}
 			}
 		});
