@@ -359,7 +359,7 @@ class MonthlyReportTable extends Model
     public function fetchTestKitMonthlyReport($params)
     {
         $result=array();
-        $data = $params->all();
+        $data = $params;
         // dd($data['facilityId']);die;
         DB::enableQueryLog();
         // $monyr = DB::raw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as end_test_date');

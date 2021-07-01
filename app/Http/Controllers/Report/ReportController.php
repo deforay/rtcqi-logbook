@@ -10,6 +10,8 @@ use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use App\Service\DistrictService;
 use App\Service\ProvinceService;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TestKitExport;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -100,8 +102,9 @@ class ReportController extends Controller
 
     public function getTestKitMonthlyReport(Request $request)
     {
+        $data =$request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getTestKitMonthlyReport($request);
+        $data = $monthlyReportService->getTestKitMonthlyReport($data);
         // dd($data);die;
         $view = View::make('report.getTestKitReport', ['report'=>$data]);
             return $view;
@@ -162,6 +165,13 @@ class ReportController extends Controller
         $view = View::make('report.getInvalidResultReport', ['report'=>$data]);
             return $view;
     }
+
+    public function testKitExport(Request $request)
+{
+    $data =$request->all();
+    return Excel::download(new TestKitExport($data), 'Test-Kit-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
+}
+
 
 }
 

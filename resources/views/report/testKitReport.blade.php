@@ -68,7 +68,7 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                 <h4 class="card-title">Filter the data</h4><br>
-                <form class="form form-horizontal" role="form" name="testKitReportFilter" id="testKitReportFilter" method="" action="" autocomplete="off" onsubmit="getTestKitReport();return false;">
+                <form class="form form-horizontal" role="form" name="testKitReportFilter" id="testKitReportFilter" method="post" action="/testkitexcelexport">
                             @csrf
                 <div class="row">
                 <div class="col-xl-4 col-lg-12">
@@ -150,8 +150,7 @@
                                 <a class="btn btn-danger btn-md"
                                     href='/testKitReport/'><span>Reset</span></a>&nbsp;&nbsp;
 
-<!-- <a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
-        class="fa fa-download"></i>Export Execl</a> -->
+<button type="submit" class="btn btn-primary">Export</button>
                             </div>
                         </div>
 							</form>
@@ -166,22 +165,73 @@
         </section>
     </div>
 </div>
+<style>
+  .select2-selection__clear{display:none;}
+</style>
   <script>
+//   function exportF(elem) {
+//     startDate = $('#startDate').val();
+//       endDate = $('#endDate').val();
+//         $.ajaxSetup({
+//           headers: {
+//               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//           }
+//       });
+//       $.ajax({
+//           url: "{{ url('/testpageexcel') }}",
+//           method: 'post',
+//           data : {
+//                     startDate:startDate,
+//                     endDate:endDate,
+//                     facilityId: $("#facilityId").val(),
+//                     algorithmType: $("#algorithmType").val(),
+//                     testSiteId: $("#testSiteId").val(),
+//                     reportFrequency: $("#reportFrequency").val(),
+//           },
+//           success: function(result){
+//           }
+//         });
+// 	}
+
+
   $(document).ready(function() {
     getTestKitReport();
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#facilityId').select2({
     placeholder: "Select Facility Name",
-    allowClear: true
+    allowClear: true,
   });
+  $('#facilityId').on('select2:select', function (e) {
+    getTestKitReport();
+  });
+
+$('#facilityId').on('select2:unselect', function (e) {
+    getTestKitReport();
+
+});
   $selectElement = $('#algorithmType').select2({
     placeholder: "Select Testing Algothrim",
     allowClear: true
   });
+  $('#algorithmType').on('select2:select', function (e) {
+    getTestKitReport();
+});
+$('#algorithmType').on('select2:unselect', function (e) {
+    getTestKitReport();
+});
   $selectElement = $('#testSiteId').select2({
     placeholder: "Select Test Site Name",
     allowClear: true
   });
+  $('#testSiteId').on('select2:select', function (e) {
+    getTestKitReport();
+});
+$('#testSiteId').on('select2:unselect', function (e) {
+    getTestKitReport();
+});
+$('#reportFrequency').on('change', function() {
+    getTestKitReport();
+});
     });
 //   duplicateName = true;
     function getTestKitReport() {
