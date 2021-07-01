@@ -106,7 +106,7 @@
                 <div class="row">
                 <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Testing Algothri
+											<h5>Testing Algothrim
                                             </h5>
                                             <div class="form-group">
                                                 <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Algorithm Type">

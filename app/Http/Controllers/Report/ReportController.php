@@ -12,6 +12,9 @@ use App\Service\DistrictService;
 use App\Service\ProvinceService;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TestKitExport;
+use App\Exports\TrendExport;
+use App\Exports\LogBookExport;
+use App\Exports\InvalidResultExport;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -40,8 +43,9 @@ class ReportController extends Controller
 
     public function getTrendMonthlyReport(Request $request)
     {
+        $datas =$request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getTrendMonthlyReport($request);
+        $data = $monthlyReportService->getTrendMonthlyReport($datas);
         // dd($data);die;
         $view = View::make('report.getTrendReport', ['report'=>$data]);
             return $view;
@@ -67,8 +71,9 @@ class ReportController extends Controller
 
     public function getLogbookReport(Request $request)
     {
+        $datas =$request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getLogbookReport($request);
+        $data = $monthlyReportService->getLogbookReport($datas);
         $view = View::make('report.getLogbookReport', ['report'=>$data]);
             return $view;
     }
@@ -159,8 +164,9 @@ class ReportController extends Controller
 
     public function getInvalidResultReport(Request $request)
     {
+        $datas =$request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getInvalidResultReport($request);
+        $data = $monthlyReportService->getInvalidResultReport($datas);
         // dd($data);die;
         $view = View::make('report.getInvalidResultReport', ['report'=>$data]);
             return $view;
@@ -172,6 +178,23 @@ class ReportController extends Controller
     return Excel::download(new TestKitExport($data), 'Test-Kit-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
 }
 
+public function trendExport(Request $request)
+{
+    $data =$request->all();
+    return Excel::download(new TrendExport($data), 'Trend-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
+}
+
+public function logBookExport(Request $request)
+{
+    $data =$request->all();
+    return Excel::download(new LogBookExport($data), 'Logbook-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
+}
+
+public function invalidResultExport(Request $request)
+{
+    $data =$request->all();
+    return Excel::download(new InvalidResultExport($data), 'Invalid-Result-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
+}
 
 }
 

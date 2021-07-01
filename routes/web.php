@@ -148,11 +148,12 @@ Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGl
 //Trend Report
 Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendreport.trendReport')->middleware('access');
 Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyReport');
-// Route::get('/trendreport', 'TrendReport\TrendReportController@index')->name('trendreport.index');
+Route::post('/trendexcelexport', 'Report\ReportController@trendExport');
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
 Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook')->middleware('access');
 Route::get('/report/overallagreement/{id}', 'Report\ReportController@overallagreement')->middleware('access');
+Route::post('/logbookexcelexport', 'Report\ReportController@logBookExport');
 
 //Test Kit Report
 Route::get('/testKitReport', 'Report\ReportController@testKitReport')->name('testKitReport.testKitReport')->middleware('access');
@@ -169,4 +170,6 @@ Route::post('/getCustomMonthlyReport', 'Report\ReportController@getCustomMonthly
 // Invalid Results Report
 Route::get('/invalidresultreport', 'Report\ReportController@invalidresultReport')->name('invalidresultreport.invalidresultReport')->middleware('access');
 Route::post('/getInvalidResultReport', 'Report\ReportController@getInvalidResultReport');
+Route::post('/invalidresultexcelexport', 'Report\ReportController@invalidResultExport');
+
 

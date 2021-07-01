@@ -69,6 +69,8 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                             <h4 class="card-title">Filter the data</h4><br>
+                            <form class="form form-horizontal" role="form" name="logBookReportFilter" id="logBookReportFilter" method="post" action="/logbookexcelexport">
+                            @csrf
                             <div class="row">
                             <div class="col-xl-4 col-lg-12">
                                         <fieldset>
@@ -136,8 +138,10 @@
                                 <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                 <a class="btn btn-danger btn-md"
                                      href = "/report/logbook"><span>Reset</span></a>&nbsp;&nbsp;
+                                     <button type="submit" class="btn btn-primary">Export</button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div></div></div>
                 <div class="table-responsive p-t-10">
@@ -149,22 +153,45 @@
         </section>
     </div>
 </div>
+<style>
+  .select2-selection__clear{display:none;}
+</style>
   <script>
   $(document).ready(function() {
     getLogbookReport();
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#facilityId').select2({
     placeholder: "Select Facility Name",
-    allowClear: true
+    allowClear: true,
   });
+  $('#facilityId').on('select2:select', function (e) {
+    getLogbookReport();
+  });
+
+$('#facilityId').on('select2:unselect', function (e) {
+    getLogbookReport();
+
+});
   $selectElement = $('#algorithmType').select2({
     placeholder: "Select Testing Algothrim",
     allowClear: true
   });
+  $('#algorithmType').on('select2:select', function (e) {
+    getLogbookReport();
+});
+$('#algorithmType').on('select2:unselect', function (e) {
+    getLogbookReport();
+});
   $selectElement = $('#testSiteId').select2({
     placeholder: "Select Test Site Name",
     allowClear: true
   });
+  $('#testSiteId').on('select2:select', function (e) {
+    getLogbookReport();
+});
+$('#testSiteId').on('select2:unselect', function (e) {
+    getLogbookReport();
+});
     });
 
     function getLogbookReport() {

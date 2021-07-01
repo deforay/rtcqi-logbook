@@ -69,6 +69,8 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                             <h4 class="card-title">Filter the data</h4><br>
+                            <form class="form form-horizontal" role="form" name="invalidResultReportFilter" id="invalidResultReportFilter" method="post" action="/invalidresultexcelexport">
+                            @csrf
                             <div class="row">
                             <div class="col-xl-4 col-lg-12">
                                         <fieldset>
@@ -135,7 +137,8 @@
                             <div class="col-md-8">
                                 <button type="submit" onclick="getInvalidResultReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                 <a class="btn btn-danger btn-md"
-                                     href = "/invalidresultreport"><span>Reset</span></a>&nbsp;&nbsp;
+                                     href = "/invalidresultreport/"><span>Reset</span></a>&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-primary">Export</button>
                             </div>
                         </div>
                     </div>
@@ -149,22 +152,45 @@
         </section>
     </div>
 </div>
+<style>
+  .select2-selection__clear{display:none;}
+</style>
   <script>
   $(document).ready(function() {
     getInvalidResultReport();
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#facilityId').select2({
     placeholder: "Select Facility Name",
-    allowClear: true
+    allowClear: true,
   });
+  $('#facilityId').on('select2:select', function (e) {
+    getInvalidResultReport();
+  });
+
+$('#facilityId').on('select2:unselect', function (e) {
+    getInvalidResultReport();
+
+});
   $selectElement = $('#algorithmType').select2({
     placeholder: "Select Testing Algothrim",
     allowClear: true
   });
+  $('#algorithmType').on('select2:select', function (e) {
+    getInvalidResultReport();
+});
+$('#algorithmType').on('select2:unselect', function (e) {
+    getInvalidResultReport();
+});
   $selectElement = $('#testSiteId').select2({
     placeholder: "Select Test Site Name",
     allowClear: true
   });
+  $('#testSiteId').on('select2:select', function (e) {
+    getInvalidResultReport();
+});
+$('#testSiteId').on('select2:unselect', function (e) {
+    getInvalidResultReport();
+});
     });
 
     function getInvalidResultReport() {
