@@ -68,7 +68,7 @@
 						<div class="card-body">
                         <div id="show_alert"  class="mt-1" style=""></div>
                 <h4 class="card-title">Filter the data</h4><br>
-                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="" action="" autocomplete="off" onsubmit="getTrendReport();return false;">
+                <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="post" action="/trendexcelexport">
                             @csrf
                 <div class="row">
                 <div class="col-xl-4 col-lg-12">
@@ -150,8 +150,7 @@
                                 <a class="btn btn-danger btn-md"
                                     href ='/trendreport/'><span>Reset</span></a>&nbsp;&nbsp;
 
-<!-- <a href="javascript:void(0);" onclick="exportExcel();" class="btn btn-success"><i
-        class="fa fa-download"></i>Export Execl</a> -->
+                                    <button type="submit" class="btn btn-primary">Export</button>
                             </div>
                         </div>
 							</form>
@@ -166,22 +165,48 @@
         </section>
     </div>
 </div>
+<style>
+  .select2-selection__clear{display:none;}
+</style>
   <script>
   $(document).ready(function() {
     getTrendReport();
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#facilityId').select2({
     placeholder: "Select Facility Name",
-    allowClear: true
+    allowClear: true,
   });
+  $('#facilityId').on('select2:select', function (e) {
+    getTrendReport();
+  });
+
+$('#facilityId').on('select2:unselect', function (e) {
+    getTrendReport();
+
+});
   $selectElement = $('#algorithmType').select2({
     placeholder: "Select Testing Algothrim",
     allowClear: true
   });
+  $('#algorithmType').on('select2:select', function (e) {
+    getTrendReport();
+});
+$('#algorithmType').on('select2:unselect', function (e) {
+    getTrendReport();
+});
   $selectElement = $('#testSiteId').select2({
     placeholder: "Select Test Site Name",
     allowClear: true
   });
+  $('#testSiteId').on('select2:select', function (e) {
+    getTrendReport();
+});
+$('#testSiteId').on('select2:unselect', function (e) {
+    getTrendReport();
+});
+$('#reportFrequency').on('change', function() {
+    getTrendReport();
+});
     });
 //   duplicateName = true;
     function getTrendReport() {

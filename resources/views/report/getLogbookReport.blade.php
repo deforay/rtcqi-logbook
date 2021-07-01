@@ -35,7 +35,7 @@ $col = ['yellow', '#b5d477' , '#d08662', '#76cece', '#ea7786'];
                 <th class = "th" style="width:10%;">Facility</th>
                 <th class = "th" style="width:10%;">Site</th>
                 <th class = "th" style="width:10%;">Algo</th>
-                <th class = "th" style="width:10%;">Star Date</th>
+                <th class = "th" style="width:10%;">Start Date</th>
                 <th class = "th" style="width:10%;">End Date</th>
                 <th class = "th" style="width:10%;">Total Tests</th>
                 @for($i = 1; $i <= $arr['no_of_test']; $i++)

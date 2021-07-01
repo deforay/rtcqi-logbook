@@ -224,7 +224,7 @@ class MonthlyReportTable extends Model
     public function fetchTrendMonthlyReport($params)
     {
         $result=array();
-        $data = $params->all();
+        $data = $params;
         // dd($data['facilityId']);die;
         DB::enableQueryLog();
         // $monyr = DB::raw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as end_test_date');
@@ -311,7 +311,7 @@ class MonthlyReportTable extends Model
 
     public function fetchLogbookReport($params)
     {
-        $data = $params->all();
+        $data = $params;
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
@@ -888,7 +888,7 @@ class MonthlyReportTable extends Model
 
 public function fetchInvalidResultReport($params)
     {
-        $data = $params->all();
+        $data = $params;
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*','tk1.test_kit_name as testKit_1_name','tk2.test_kit_name as testKit_2_name','tk3.test_kit_name as testKit_3_name')
