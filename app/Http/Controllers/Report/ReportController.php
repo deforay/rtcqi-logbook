@@ -15,6 +15,7 @@ use App\Exports\TestKitExport;
 use App\Exports\TrendExport;
 use App\Exports\LogBookExport;
 use App\Exports\InvalidResultExport;
+use App\Exports\CustomerExport;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -138,8 +139,9 @@ class ReportController extends Controller
 
     public function getCustomMonthlyReport(Request $request)
     {
+        $datas =$request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getCustomMonthlyReport($request);
+        $data = $monthlyReportService->getCustomMonthlyReport($datas);
         // dd($data);die;
         $view = View::make('report.getCustomReport', ['report'=>$data]);
             return $view;
@@ -194,6 +196,12 @@ public function invalidResultExport(Request $request)
 {
     $data =$request->all();
     return Excel::download(new InvalidResultExport($data), 'Invalid-Result-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
+}
+
+public function customerExport(Request $request)
+{
+    $data =$request->all();
+    return Excel::download(new CustomerExport($data), 'Customer-Report-' . date('d-M-Y-H-i-s') . '.xlsx');
 }
 
 }
