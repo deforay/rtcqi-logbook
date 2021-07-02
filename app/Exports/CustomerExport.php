@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use App\Service\GlobalConfigService;
 use Illuminate\Contracts\View\View;
 
-class InvalidResultExport implements FromView, ShouldAutoSize
+class CustomerExport implements FromView, ShouldAutoSize
 {
     protected $requestdata;
 
@@ -22,8 +22,8 @@ class InvalidResultExport implements FromView, ShouldAutoSize
         $GlobalConfigService = new GlobalConfigService();
         $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getInvalidResultReport($this->requestdata);
-        return view('exports.invalidresultexport', array('report'=>$data,'globalValue'=>$globalValue
+        $data = $monthlyReportService->getCustomMonthlyReport($this->requestdata);
+        return view('exports.customerexport', array('report'=>$data,'globalValue'=>$globalValue
         ));
     }
 }

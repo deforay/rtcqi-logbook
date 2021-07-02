@@ -141,6 +141,7 @@
                                 <button type="submit" class="btn btn-primary">Export</button>
                             </div>
                         </div>
+</form>
                     </div>
                 </div></div></div>
                 <div class="table-responsive p-t-10">
