@@ -49,6 +49,14 @@ class GlobalConfigService
         return $result;
 	}
 
+	//Fetch GlobalConfig 
+	public function getGlobalConfigData($configName)
+    {
+		$model = new GlobalConfigTable();
+        $result = $model->fetchGlobalConfigData($configName);
+        return $result;
+	}
+
 	
 }
 

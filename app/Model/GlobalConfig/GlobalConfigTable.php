@@ -141,5 +141,14 @@ class GlobalConfigTable extends Model
 
     }
 
+    public function fetchGlobalConfigData($configName) {
+        $data = DB::table('global_config')
+        ->select('display_name')
+        ->where('global_name', '=',$configName)
+        ->value('global_name');
+        return $data;
+
+    }
+
     
 }
