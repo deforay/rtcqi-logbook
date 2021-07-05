@@ -5,6 +5,8 @@ namespace App\Http\Controllers\TestSite;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\FacilityService;
+use App\Service\ProvinceService;
+use App\Service\DistrictService;
 use App\Service\TestSiteService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -36,7 +38,11 @@ class TestSiteController extends Controller
         {
             $FacilityService = new FacilityService();  
             $facility = $FacilityService->getAllActiveFacility();
-            return view('testsite.add',array('facility'=>$facility));
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            return view('testsite.add',array('facility'=>$facility,'province'=>$province,'district'=>$district));
         }
     }
 
@@ -67,12 +73,25 @@ class TestSiteController extends Controller
         }
         else
         {
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
             $FacilityService = new FacilityService();  
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $result = $TestSiteService->getTestSiteById($id);
-            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility));
+            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district));
         }
+    }
+
+    public function getDistrict($id){
+
+    	$DistrictService = new DistrictService();
+        $district = $DistrictService->getDistictName($id);
+  
+        return response()->json($district);
+     
     }
 }
 
