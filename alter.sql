@@ -366,7 +366,9 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 (5, 'Administrator Phone', 'admin_phone', '8798798789'),
 (6, 'Recency Tests', 'recency_test', 'disabled'),
 (7, 'Number of Tests', 'no_of_test', '3'),
-(8, 'Logo', 'logo', '');
+(8, 'Logo', 'logo', ''),
+(9, 'RTCQI LOGBOOK', 'title_name', '');
+
 
 
 ALTER TABLE monthly_reports ADD source Varchar(100) NULL;

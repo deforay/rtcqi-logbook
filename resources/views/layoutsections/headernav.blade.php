@@ -3,6 +3,8 @@
     use App\Service\GlobalConfigService;
     $GlobalConfigService = new GlobalConfigService();
     $glob = $GlobalConfigService->getAllGlobalConfig();
+    $globData = $GlobalConfigService->getGlobalConfigData('title_name');
+    // dd($globData);die;
     $arr = array();
     // now we create an associative array so that we can easily create view variables
     for ($i = 0; $i < sizeof($glob); $i++) {
@@ -17,7 +19,7 @@
                     <li class="nav-item"><a class="navbar-brand" href="/dashboard">
                     <!-- <h3 class="text-center ml-2"><b></b></h3> -->
                         <!-- <img class="brand-logo" alt="modern admin logo" src="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
-                            <h3 class="brand-text">RTCQI LOGBOOK</h3>
+                            <h3 class="brand-text">{{$globData}}</h3>
                         </a></li>
                     <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a></li>
                 </ul>

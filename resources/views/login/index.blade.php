@@ -13,6 +13,7 @@
     use App\Service\GlobalConfigService;
     $GlobalConfigService = new GlobalConfigService();
     $glob = $GlobalConfigService->getAllGlobalConfig();
+    $globData = $GlobalConfigService->getGlobalConfigData('title_name');
     $arr = array();
     // now we create an associative array so that we can easily create view variables
     for ($i = 0; $i < sizeof($glob); $i++) {
@@ -26,7 +27,7 @@
     <meta name="description" content="RTCQI LOGBOOK">
     <meta name="keywords" content="RTCQI LOGBOOK">
     <meta name="author" content="Deforay">
-    <title>RTCQI LOGBOOK</title>
+    <title>{{$globData}}</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
     <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -78,7 +79,7 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
                 <div class="card-header border-0">
                   <div class="card-title text-center">
                     <div class="p-1">
-                        <h3>RTCQI LOGBOOK</h3>
+                        <h3>{{$globData}}</h3>
                     </div>
                   </div>
                   @if($arr["logo"])
