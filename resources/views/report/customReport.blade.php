@@ -284,7 +284,9 @@
             if (this.value == 'sitetype') {
                 $("#siteName").show();
                 $('#districtId').val('');
+                getCustomReport();
                 $('#provinceId').val('');
+                getCustomReport();
                 $("#provinceName").hide();
                 $("#districtName").hide();
                 $selectElement = $('#testSiteId').select2({
@@ -301,7 +303,9 @@
             if (this.value == 'district') {
                 $("#districtName").show();
                 $('#testSiteId').val('');
+                getCustomReport();
                 $('#provinceId').val('');
+                getCustomReport();
                 $("#provinceName").hide();
                 $("#siteName").hide();
                 $selectElement = $('#districtId').select2({
@@ -318,7 +322,9 @@
             if (this.value == 'province') {
                 $("#provinceName").show();
                 $('#districtId').val('');
+                getCustomReport();
                 $('#testSiteId').val('');
+                getCustomReport();
                 $("#districtName").hide();
                 $("#siteName").hide();
                 $selectElement = $('#provinceId').select2({
