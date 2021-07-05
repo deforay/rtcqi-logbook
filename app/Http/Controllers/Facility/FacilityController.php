@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Facility;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\FacilityService;
+use App\Service\ProvinceService;
+use App\Service\DistrictService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -33,8 +35,11 @@ class FacilityController extends Controller
         }
         else
         {
-            
-            return view('facility.add');
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            return view('facility.add',array('province'=>$province,'district'=>$district));
         }
     }
 
@@ -65,9 +70,13 @@ class FacilityController extends Controller
         }
         else
         {
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
             $FacilityService = new FacilityService();
             $result = $FacilityService->getFacilityById($id);
-            return view('facility.edit',array('result'=>$result,'id'=>$id));
+            return view('facility.edit',array('result'=>$result,'id'=>$id,'province'=>$province,'district'=>$district));
         }
     }
 }

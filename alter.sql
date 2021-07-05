@@ -375,3 +375,19 @@ ALTER TABLE monthly_reports ADD source Varchar(100) NULL;
 ALTER TABLE monthly_reports ADD added_by Varchar(100) NULL;
 ALTER TABLE monthly_reports ADD added_on DATE NULL;
 ALTER TABLE `monthly_reports` CHANGE `reporting_month` `reporting_month` VARCHAR(100) NOT NULL;   
+
+-- Sakthivel P 5 July 2021
+ALTER TABLE test_sites ADD provincesss_id int(11);
+ALTER TABLE `test_sites` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
+
+-- Sakthivel P 5 July 2021
+ALTER TABLE test_sites ADD district_id int(11);
+ALTER TABLE `test_sites` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);
+
+
+ALTER TABLE facilities ADD provincesss_id int(11);
+ALTER TABLE `facilities` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces` (`provincesss_id`);
+
+ALTER TABLE facilities ADD district_id int(11);
+ALTER TABLE `facilities` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);
+

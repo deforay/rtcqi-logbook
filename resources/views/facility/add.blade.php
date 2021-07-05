@@ -180,6 +180,34 @@
                                             </div>
 										</fieldset>
 									</div>
+									<div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Province Name
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
+												<option value="">Select Province Name</option>
+												 @foreach($province as $row)
+                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+									<div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>District Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select class="form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
+												        <option value="">Select District Name</option>
+															@foreach($district as $row)
+                                                            <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/testsite" >
@@ -223,4 +251,38 @@
             }
 	}
 </script>
+
+<script type='text/javascript'>
+
+    $(document).ready(function(){
+
+      // Province Change
+      $('#provincesssId').change(function(){
+
+         // Province id
+         var id = $(this).val();
+
+         // Empty the dropdown
+         $('#districtId').find('option').not(':first').remove();
+
+         // AJAX request 
+         $.ajax({
+           url: "{{url('/getDistrict') }}/"+id,
+           type: 'get',
+           dataType: 'json',
+           success: function(response){
+
+			$.each(response,function(key, value) {
+                    // console.log(value.district_id);
+					$("#districtId").append('<option value="'+value.district_id+'">'+value.district_name+'</option>');
+                });
+
+           }
+        });
+      });
+
+    });
+
+    </script>
+
 @endsection

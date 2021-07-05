@@ -35,6 +35,8 @@ class FacilityTable extends Model
                 'contact_email' => $data['contactEmail'],
                 'contact_phoneno' => $data['contactPhone'],
                 'facility_status' => $data['facilityStatus'],
+                'provincesss_id' => $data['provincesssId'],
+                'district_id' => $data['districtId'],
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
                 ]
@@ -92,6 +94,8 @@ class FacilityTable extends Model
                 'contact_email' => $data['contactEmail'],
                 'contact_phoneno' => $data['contactPhone'],
                 'facility_status' => $data['facilityStatus'],
+                'provincesss_id' => $data['provincesssId'],
+                'district_id' => $data['districtId'],
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );

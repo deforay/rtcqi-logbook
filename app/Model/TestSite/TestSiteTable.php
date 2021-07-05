@@ -31,6 +31,8 @@ class TestSiteTable extends Model
                 'site_country' => $data['country'],
                 'test_site_status' => $data['testSiteStatus'],
                 'facility_id' => $data['facilityId'],
+                'provincesss_id' => $data['provincesssId'],
+                'district_id' => $data['districtId'],
                 'created_by' => session('userId'),
                 'created_on' => $commonservice->getDateTime(),
                 ]
@@ -87,6 +89,8 @@ class TestSiteTable extends Model
                 'site_country' => $data['country'],
                 'test_site_status' => $data['testSiteStatus'],
                 'facility_id' => $data['facilityId'],
+                'provincesss_id' => $data['provincesssId'],
+                'district_id' => $data['districtId'],
                 'updated_by' => session('userId'),
                 'updated_on' => $commonservice->getDateTime()
             );

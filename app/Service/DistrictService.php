@@ -67,7 +67,15 @@ class DistrictService
 	    	$exc->getMessage();
 	    }
 	}
-	
+
+
+	//Get Particular District Name
+	public function getDistictName($id)
+    {
+		$model = new DistrictTable();
+        $result = $model->fetchDistrictName($id);
+        return $result;
+	}
 }
 
 ?>
