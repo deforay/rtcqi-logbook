@@ -76,16 +76,16 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
           <div class="col-12 d-flex align-items-center justify-content-center">
             <div class="col-md-4 col-10 box-shadow-2 p-0">
               <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
-                <div class="card-header border-0">
+                <div class="card-header border-0 text-center">
                   <div class="card-title text-center">
                     <div class="p-1">
                         <h3><?php echo e($globData); ?></h3>
                     </div>
                   </div>
                   <?php if($arr["logo"]): ?>
-                      <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 70px;width: 100px;    margin-left: 30%;">
+                      <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 100px;width: 100px;">
                   <?php else: ?>
-                      <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(asset('assets/images/default-logo.png')); ?>"     style="height: 70px;width: 100px;     margin-left: 30%;">
+                      <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(asset('assets/images/default-logo.png')); ?>"     style="height: 100px;width: 100px;">
                   <?php endif; ?>
                   <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
                     <span>Login</span>
