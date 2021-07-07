@@ -57,6 +57,21 @@ class GlobalConfigService
         return $result;
 	}
 
+	//Fetch GlobalConfig 
+	public function getGlobalConfigLatitude($latitute)
+    {
+		$model = new GlobalConfigTable();
+        $result = $model->fetchGlobalConfigLatitide($latitute);
+        return $result;
+	}
+
+	public function getGlobalConfigLongitude($longitude)
+    {
+		$model = new GlobalConfigTable();
+        $result = $model->fetchGlobalConfigLongitude($longitude);
+        return $result;
+	}
+
 	
 }
 

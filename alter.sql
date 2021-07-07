@@ -391,3 +391,6 @@ ALTER TABLE `facilities` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces`
 ALTER TABLE facilities ADD district_id int(11);
 ALTER TABLE `facilities` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);
 
+--Sakthivel P 8 July 2021
+
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Latitude', 'latitude', '11.1271'), (NULL, 'Longitude', 'longitude', '78.6569');

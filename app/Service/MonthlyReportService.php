@@ -137,6 +137,13 @@ class MonthlyReportService
 		$result = $model->CheckPreLot($params);
 		return $result;
 	}
+
+	public function getDashboardData($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchDashboardData($params);
+		return $result;
+	}
 	
 }
 

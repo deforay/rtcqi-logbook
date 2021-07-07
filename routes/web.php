@@ -175,3 +175,5 @@ Route::post('/invalidresultexcelexport', 'Report\ReportController@invalidResultE
 
 
 Route::get('/getDistrict/{id}', 'TestSite\TestSiteController@getDistrict');
+
+Route::post('/getDashboardData', 'Dashboard\DashboardController@getDashboardData');
