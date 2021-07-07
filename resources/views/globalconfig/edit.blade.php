@@ -132,6 +132,24 @@
                                             </div>
                                         </fieldset>
                                     </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                    <fieldset>
+                                        <h5>Latitude<span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <input type="text" id="latitude" value="{{$result['latitude']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Latitude" name="latitude" title="Please enter Latitude" >
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-4 col-lg-12">
+                                    <fieldset>
+                                        <h5>Longitude<span class="mandatory">*</span>
+                                        </h5>
+                                        <div class="form-group">
+                                            <input type="text" id="longitude" value="{{$result['longitude']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please enter Longitude" >
+                                        </div>
+                                    </fieldset>
+                                </div>
                             </div>
                             <div class="form-actions right">
                                 <a href="/globalconfig" >
