@@ -65,7 +65,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     <!-- This is new -->
     <div class="btn-group">
         <div class="row">
-            <div class="col-xl-4 col-lg-12">
+            <div class="col-xl-6 col-lg-12">
                 <fieldset>
                     <h5>Date
                     </h5>
@@ -76,7 +76,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             </div>
 
 
-            <div class="col-xl-4 col-lg-12">
+            <div class="col-xl-6 col-lg-12">
                 <fieldset>
                     <h5>Province Name
                     </h5>
@@ -157,6 +157,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     var lat = '{{$latitude}}';
                     var log = '{{$longitude}}';
                     document.getElementById('weathermap').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
+                    var myIcon = L.icon({
+                        iconUrl: "{{ asset('assets/images/dark-green.png')}}"
+                    });
                     var map = L.map('map').setView([lat, log], 4);
                     mapLink =
                         '<a href="http://openstreetmap.org">OpenStreetMap</a>';
@@ -175,7 +178,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
                     //   // visualize the markers on the map
                     for (let i = 0; i < coordinates.length; i++) {
-                        L.marker(coordinates[i]).bindPopup(coordinates[i][2])
+                        L.marker(coordinates[i], {
+                                icon: myIcon
+                            }).bindPopup(coordinates[i][2])
                             .addTo(map);
                     };
                 }
