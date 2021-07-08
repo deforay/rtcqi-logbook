@@ -921,6 +921,7 @@ class MonthlyReportTable extends Model
     public function fetchDashboardData($params)
     {
         $commonservice = new CommonService();
+        $user_id = session('userId');
         $data = $params->all();
         if (isset($data['searchDate']) && $data['searchDate'] != '') {
             $sDate = explode("to", $data['searchDate']);
@@ -940,7 +941,9 @@ class MonthlyReportTable extends Model
         $query = DB::table('monthly_reports')
             ->select('test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_name')
             ->join('test_sites', 'test_sites.provincesss_id', '=', 'monthly_reports.provincesss_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id');
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->where('users_testsite_map.user_id', $user_id);
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);

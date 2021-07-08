@@ -42,10 +42,16 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css">
+   
+    <!--this is new-->
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
 
     <style type="text/css">
         #map {
@@ -99,6 +105,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     </div>
                 </div>
             </div>
+           
         </div>
     </div>
 
@@ -160,12 +167,19 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     var myIcon = L.icon({
                         iconUrl: "{{ asset('assets/images/dark-green.png')}}"
                     });
-                    var map = L.map('map').setView([lat, log], 4);
-                    mapLink =
-                        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-                    L.tileLayer(
-                        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; ' + mapLink + ' Contributors',
+                    var map = L.map('map',{            
+                        zoomControl: false,
+            scrollWheelZoom: true,
+            inertia:false,
+            zoomAnimation:false,
+            minZoom:3,
+            maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
+          }).setView([lat, log], 4);
+          new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
+map._onResize();
+    
+                        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>',
                             maxZoom: 17,
                         }).addTo(map);
 
