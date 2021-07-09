@@ -946,10 +946,10 @@ class MonthlyReportTable extends Model
             ->where('users_testsite_map.user_id', $user_id);
 
         if (trim($start_date) != "" && trim($end_date) != "") {
-            $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
+            $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->orWhere('monthly_reports.reporting_month', '<=', $end_date);
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
-            $query = $query->where('provinces.provincesss_id', '=', $data['provinceId']);
+            $query = $query->where('monthly_reports.provincesss_id', '=', $data['provinceId']);
         }
         $salesResult = $query->get();
         //  dd($salesResult);die;
