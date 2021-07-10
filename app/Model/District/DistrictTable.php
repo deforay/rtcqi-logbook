@@ -73,5 +73,14 @@ class DistrictTable extends Model
         return $data;
     }
 
+    public function fetchDistrictId($id)
+    {
+        $result = $id[0]->provincesss_id;
+        $data = DB::table('districts')
+               ->where('districts.provincesss_id', '=',$result )
+               ->get();
+        return $data;
+    }
+
     
 }

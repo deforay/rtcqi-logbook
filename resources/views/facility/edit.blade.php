@@ -184,10 +184,10 @@
 									</div>
 									<div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Province Name
+											<h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
 												<option value="">Select Province Name</option>
 												 @foreach($province as $row)
                                                     <option value="{{$row->provincesss_id}}"{{ $result[0]->provincesss_id == $row->provincesss_id ?  'selected':''}}>{{$row->province_name}}</option>
@@ -198,10 +198,10 @@
 									</div>
 									<div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>District Name
+                                                    <h5>District Name<span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select class="form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
+                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
 												        <option value="">Select District Name</option>
 															@foreach($district as $row)
                                                             <option value="{{$row->district_id}}" {{ $result[0]->district_id == $row->district_id ?  'selected':''}}>{{$row->district_name}}</option>

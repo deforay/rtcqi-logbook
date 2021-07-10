@@ -37,9 +37,7 @@ class FacilityController extends Controller
         {
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            $DistrictService = new DistrictService();
-            $district = $DistrictService->getAllDistrict();
-            return view('facility.add',array('province'=>$province,'district'=>$district));
+            return view('facility.add',array('province'=>$province));
         }
     }
 
@@ -73,9 +71,9 @@ class FacilityController extends Controller
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $DistrictService = new DistrictService();
-            $district = $DistrictService->getAllDistrict();
             $FacilityService = new FacilityService();
             $result = $FacilityService->getFacilityById($id);
+            $district = $DistrictService->getDistictById($result);
             return view('facility.edit',array('result'=>$result,'id'=>$id,'province'=>$province,'district'=>$district));
         }
     }
