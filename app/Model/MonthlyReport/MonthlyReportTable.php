@@ -102,10 +102,13 @@ class MonthlyReportTable extends Model
     // Fetch All MonthlyReport List
     public function fetchAllMonthlyReport()
     {
+        $user_id = session('userId');
         $data = DB::table('monthly_reports')
             ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id)
             ->get();
         return $data;
     }
