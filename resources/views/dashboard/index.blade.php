@@ -11,7 +11,6 @@
 use App\Service\GlobalConfigService;
 
 $GlobalConfigService = new GlobalConfigService();
-$GlobalConfigService = new GlobalConfigService();
 $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
 $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
 $enddate = date('d-M-Y');
@@ -34,176 +33,172 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     .nav.nav-tabs.nav-top-border .nav-item a {
         color: #1e9ff2;
     }
+    #map {
+        height: 100%;
+        width: 100%;
+    }
 </style>
 @extends('layouts.main')
 @section('content')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<div class="content-wrapper">
+    <div class="content-header row">
+      <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+        <h3 class="content-header-title mb-0 d-inline-block">Dashboard</h3>
+    </div>
 
-<html lang="en">
+    </div>
+    <div class="content-body">
+        <!-- Charts section start -->
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css">
-   
-    <!--this is new-->
+        <section id="vector-maps">
+            <div class="row">
+                <div class="col-12 mt-3 mb-1">
+                    <h4 class="text-uppercase">Monthly Reports</h4>
 
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-
-    <style type="text/css">
-        #map {
-            width: 1300px;
-            height: 400px;
-        }
-
-        /* This is new */
-
-        button {
-            width: 100px;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- This is new -->
-    <div class="btn-group">
-        <div class="row">
-            <div class="col-xl-6 col-lg-12">
-                <fieldset>
-                    <h5>Date
-                    </h5>
-                    <div class="form-group">
-                        <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
-                    </div>
-                </fieldset>
+                </div>
             </div>
 
+            <div class="row">
+                <div class="col-12">
+                    <div class="card box-shadow-0">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col-xl-9 col-lg-12">
+                                    <div id="monthly-report-map" class="height-500">
 
-            <div class="col-xl-6 col-lg-12">
-                <fieldset>
-                    <h5>Province Name
-                    </h5>
-                    <div class="form-group">
-                        <select class="form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
-                            <option value="">Select Province</option>
-                            @foreach($province as $row)
-                            <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </fieldset>
-            </div>
+                                        <div id="map">
 
-            <div class="col-md-10">
-                <div class="form-group row">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-12">
+                                    <div class="card-body">
+                                        <h4 class="card-title pt-1 text-center">Filter By</h4>
+                                        <div class="row">
+                                            <div class="col-xl-12 col-lg-4 col-sm-12 mb-4 pl-1">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <span class="text-bold-500">Date Range </span>
+                                                        <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12 col-lg-4 col-sm-12 mb-4 pl-1">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <span class="text-bold-500">Province </span>
+                                                        <select class="form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
+                                                            <option value="">Select Province</option>
+                                                            @foreach($province as $row)
+                                                            <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info mt-4"> Search</button>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                    <div class="col-md-8">
-                        <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info"> Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-           
-        </div>
+        </section>
+        <!--  Charts section end -->
     </div>
-
-    <div id="weathermap">
-        <div id="map"></div>
-    </div>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#searchDate').daterangepicker({
-                    format: 'DD-MMM-YYYY',
-                    autoUpdateInput: false,
-                    separator: ' to ',
-                    startDate: moment().subtract('days', 29),
-                    endDate: moment(),
-                    maxDate: moment(),
-                    ranges: {
-                        'Today': [moment(), moment()],
-                        'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-                        'Last 7 Days': [moment().subtract('days', 6), moment()],
-                        'Last 30 Days': [moment().subtract('days', 29), moment()],
-                        'Last 60 Days': [moment().subtract('days', 59), moment()],
-                        'Last 180 Days': [moment().subtract('days', 179), moment()],
-                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
-                        'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    }
-                },
-                function(start, end) {
-                    startDate = start.format('YYYY-MM-DD');
-                    endDate = end.format('YYYY-MM-DD');
-                    $('input[name="searchDate"]').on('apply.daterangepicker', function(ev, picker) {
-                        $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
-                    });
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#searchDate').daterangepicker({
+                format: 'DD-MMM-YYYY',
+                autoUpdateInput: false,
+                separator: ' to ',
+                startDate: moment().subtract('days', 29),
+                endDate: moment(),
+                maxDate: moment(),
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                    'Last 60 Days': [moment().subtract('days', 59), moment()],
+                    'Last 180 Days': [moment().subtract('days', 179), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                    'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                }
+            },
+            function(start, end) {
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+                $('input[name="searchDate"]').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
                 });
-            getDashboardData();
+            });
+        getDashboardData();
+    });
+
+    function getDashboardData() {
+        let searchDate = $('#searchDate').val() || '';
+        let provinceId = $('#provinceId').val() || '';
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
         });
-
-        function getDashboardData() {
-            let searchDate = $('#searchDate').val() || '';
-            let provinceId = $('#provinceId').val() || '';
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: "{{ url('/getDashboardData') }}",
-                method: 'post',
-                dataType: 'json',
-                data: {
-                    searchDate: searchDate,
-                    provinceId: provinceId,
-                },
-                success: function(result) {
-                    var lat = '{{$latitude}}';
-                    var log = '{{$longitude}}';
-                    document.getElementById('weathermap').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
-                    var myIcon = L.icon({
-                        iconUrl: "{{ asset('assets/images/dark-green.png')}}"
-                    });
-                    var map = L.map('map',{            
-                        zoomControl: false,
-            scrollWheelZoom: true,
-            inertia:false,
-            zoomAnimation:false,
-            minZoom:3,
-            maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
-          }).setView([lat, log], 4);
-          new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
+        $.ajax({
+            url: "{{ url('/getDashboardData') }}",
+            method: 'post',
+            dataType: 'json',
+            data: {
+                searchDate: searchDate,
+                provinceId: provinceId,
+            },
+            success: function(result) {
+                var lat = '{{$latitude}}';
+                var log = '{{$longitude}}';
+                document.getElementById('monthly-report-map').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
+                var myIcon = L.icon({
+                    iconUrl: "{{ asset('assets/images/dark-green.png')}}"
+                });
+                var map = L.map('map',{
+                    zoomControl: false,
+        scrollWheelZoom: true,
+        inertia:false,
+        zoomAnimation:false,
+        minZoom:3,
+        maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
+      }).setView([lat, log], 4);
+      new L.Control.Zoom({position: 'topleft'}).addTo(map);
 map._onResize();
-    
-                        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>',
-                            maxZoom: 17,
-                        }).addTo(map);
 
-                    let coordinates = [];
+                    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png', {
 
-                    //   // populate coordinates array with all the markers
-                    for (let i = 0; i < result.length; i++) {
-                        coordinates.push([(result[i].site_latitude), (result[i].site_longitude), (result[i].site_name)]);
-                    };
+                        maxZoom: 17,
+                    }).addTo(map);
 
-                    //   // visualize the markers on the map
-                    for (let i = 0; i < coordinates.length; i++) {
-                        L.marker(coordinates[i], {
-                                icon: myIcon
-                            }).bindPopup(coordinates[i][2])
-                            .addTo(map);
-                    };
-                }
-            });
-        }
-    </script>
+                let coordinates = [];
 
-</body>
+                //   // populate coordinates array with all the markers
+                for (let i = 0; i < result.length; i++) {
+                    //console.log(Object.values(result[i]));
+                    coordinates.push(Object.values(result[i]));
+                };
 
-</html>
-
+                //   // visualize the markers on the map
+                for (let i = 0; i < coordinates.length; i++) {
+                    L.marker(coordinates[i], {
+                            icon: myIcon
+                        }).bindPopup(coordinates[i][2])
+                        .addTo(map);
+                };
+            }
+        });
+    }
+</script>
 @endsection
