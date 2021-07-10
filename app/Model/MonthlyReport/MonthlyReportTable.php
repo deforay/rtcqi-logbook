@@ -926,6 +926,8 @@ class MonthlyReportTable extends Model
         $commonservice = new CommonService();
         $user_id = session('userId');
         $data = $params->all();
+        $start_date = '';
+        $end_date = '';
         if (isset($data['searchDate']) && $data['searchDate'] != '') {
             $sDate = explode("to", $data['searchDate']);
             if (isset($sDate[0]) && trim($sDate[0]) != "") {
@@ -936,26 +938,23 @@ class MonthlyReportTable extends Model
                 $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
                 $end_date = $commonservice->dateFormat(trim($monthYr2));
             }
-        } else {
-            $start_date = date('Y-m-d', strtotime('-29 days'));
-            $end_date = date('Y-m-d');
-        }
+        } 
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
-            ->select('test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_name')
+            ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
             ->join('test_sites', 'test_sites.provincesss_id', '=', 'monthly_reports.provincesss_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
-            ->where('users_testsite_map.user_id', '=', $user_id);
+            ->where('users_testsite_map.user_id', $user_id);
 
         if (trim($start_date) != "" && trim($end_date) != "") {
-            $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->orWhere('monthly_reports.reporting_month', '<=', $end_date);
+            $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
             $query = $query->where('monthly_reports.provincesss_id', '=', $data['provinceId']);
         }
         $salesResult = $query->get();
-        // dd(DB::getQueryLog($salesResult));die;
+        //dd(DB::getQueryLog());die;
 
         return $salesResult;
     }
