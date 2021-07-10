@@ -40,9 +40,7 @@ class TestSiteController extends Controller
             $facility = $FacilityService->getAllActiveFacility();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            $DistrictService = new DistrictService();
-            $district = $DistrictService->getAllDistrict();
-            return view('testsite.add',array('facility'=>$facility,'province'=>$province,'district'=>$district));
+            return view('testsite.add',array('facility'=>$facility,'province'=>$province));
         }
     }
 
@@ -76,11 +74,12 @@ class TestSiteController extends Controller
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $DistrictService = new DistrictService();
-            $district = $DistrictService->getAllDistrict();
             $FacilityService = new FacilityService();  
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $result = $TestSiteService->getTestSiteById($id);
+            $district = $DistrictService->getDistictById($result);
+
             return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district));
         }
     }
