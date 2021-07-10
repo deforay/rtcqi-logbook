@@ -74,6 +74,14 @@ class TestSiteService
 	    	$exc->getMessage();
 	    }
 	}
+
+	//Get Current User All TestSite List
+	public function getAllCurrentUserActiveTestSite()
+    {
+		$model = new TestSiteTable();
+        $result = $model->fetchAllCurrentUserActiveTestSite();
+        return $result;
+	}
 	
 }
 

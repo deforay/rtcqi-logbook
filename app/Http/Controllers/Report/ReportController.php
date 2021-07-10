@@ -31,7 +31,7 @@ class ReportController extends Controller
             $FacilityService = new FacilityService();
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
-            $testSite = $TestSiteService->getAllActiveTestSite();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
             return view('report.trendReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
@@ -59,7 +59,7 @@ class ReportController extends Controller
             $FacilityService = new FacilityService();
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
-            $testSite = $TestSiteService->getAllActiveTestSite();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
             return view('report.logbook',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
@@ -97,7 +97,7 @@ class ReportController extends Controller
             $FacilityService = new FacilityService();
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
-            $testSite = $TestSiteService->getAllActiveTestSite();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
             return view('report.testKitReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));
@@ -124,7 +124,7 @@ class ReportController extends Controller
             $FacilityService = new FacilityService();
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
-            $testSite = $TestSiteService->getAllActiveTestSite();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $ProvinceService = new ProvinceService();
@@ -155,7 +155,7 @@ class ReportController extends Controller
             $FacilityService = new FacilityService();
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
-            $testSite = $TestSiteService->getAllActiveTestSite();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
             return view('report.invalidresultReport',array('testSite'=>$testSite,'facility'=>$facility,'monthlyReport'=>$monthlyReport));

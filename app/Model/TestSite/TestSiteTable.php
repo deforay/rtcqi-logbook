@@ -17,24 +17,25 @@ class TestSiteTable extends Model
         //to get all request values
         $data = $request->all();
         $commonservice = new CommonService();
-        if ($request->input('siteName')!=null && trim($request->input('siteName')) != '') {
+        if ($request->input('siteName') != null && trim($request->input('siteName')) != '') {
             $id = DB::table('test_sites')->insertGetId(
-                ['site_ID' => $data['siteId'],
-                'site_name' => $data['siteName'],
-                'site_latitude' => $data['latitude'],
-                'site_longitude' => $data['longitude'],
-                'site_address1' => $data['address1'],
-                'site_address2' => $data['address2'],
-                'site_postal_code' => $data['postalCode'],
-                'site_city' => $data['city'],
-                'site_state' => $data['state'],
-                'site_country' => $data['country'],
-                'test_site_status' => $data['testSiteStatus'],
-                'facility_id' => $data['facilityId'],
-                'provincesss_id' => $data['provincesssId'],
-                'district_id' => $data['districtId'],
-                'created_by' => session('userId'),
-                'created_on' => $commonservice->getDateTime(),
+                [
+                    'site_ID' => $data['siteId'],
+                    'site_name' => $data['siteName'],
+                    'site_latitude' => $data['latitude'],
+                    'site_longitude' => $data['longitude'],
+                    'site_address1' => $data['address1'],
+                    'site_address2' => $data['address2'],
+                    'site_postal_code' => $data['postalCode'],
+                    'site_city' => $data['city'],
+                    'site_state' => $data['state'],
+                    'site_country' => $data['country'],
+                    'test_site_status' => $data['testSiteStatus'],
+                    'facility_id' => $data['facilityId'],
+                    'provincesss_id' => $data['provincesssId'],
+                    'district_id' => $data['districtId'],
+                    'created_by' => session('userId'),
+                    'created_on' => $commonservice->getDateTime(),
                 ]
             );
         }
@@ -46,8 +47,8 @@ class TestSiteTable extends Model
     public function fetchAllTestSite()
     {
         $data = DB::table('test_sites')
-                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-                ->get();
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->get();
         return $data;
     }
 
@@ -55,52 +56,62 @@ class TestSiteTable extends Model
     public function fetchAllActiveTestSite()
     {
         $data = DB::table('test_sites')
-                ->where('test_site_status','=','active')
-                ->get();
+            ->where('test_site_status', '=', 'active')
+            ->get();
         return $data;
     }
 
-     // fetch particular TestSite details
-     public function fetchTestSiteById($id)
-     {
+    // fetch particular TestSite details
+    public function fetchTestSiteById($id)
+    {
 
-         $id = base64_decode($id);
-         $data = DB::table('test_sites')
-                ->where('test_sites.ts_id', '=',$id )
-                ->get();
-         return $data;
-     }
+        $id = base64_decode($id);
+        $data = DB::table('test_sites')
+            ->where('test_sites.ts_id', '=', $id)
+            ->get();
+        return $data;
+    }
 
-     // Update particular TestSite details
-    public function updateTestSite($params,$id)
+    // Update particular TestSite details
+    public function updateTestSite($params, $id)
     {
         $commonservice = new CommonService();
         $data = $params->all();
-            $testData = array(
-                'site_ID' => $data['siteId'],
-                'site_name' => $data['siteName'],
-                'site_latitude' => $data['latitude'],
-                'site_longitude' => $data['longitude'],
-                'site_address1' => $data['address1'],
-                'site_address2' => $data['address2'],
-                'site_postal_code' => $data['postalCode'],
-                'site_city' => $data['city'],
-                'site_state' => $data['state'],
-                'site_country' => $data['country'],
-                'test_site_status' => $data['testSiteStatus'],
-                'facility_id' => $data['facilityId'],
-                'provincesss_id' => $data['provincesssId'],
-                'district_id' => $data['districtId'],
-                'updated_by' => session('userId'),
-                'updated_on' => $commonservice->getDateTime()
+        $testData = array(
+            'site_ID' => $data['siteId'],
+            'site_name' => $data['siteName'],
+            'site_latitude' => $data['latitude'],
+            'site_longitude' => $data['longitude'],
+            'site_address1' => $data['address1'],
+            'site_address2' => $data['address2'],
+            'site_postal_code' => $data['postalCode'],
+            'site_city' => $data['city'],
+            'site_state' => $data['state'],
+            'site_country' => $data['country'],
+            'test_site_status' => $data['testSiteStatus'],
+            'facility_id' => $data['facilityId'],
+            'provincesss_id' => $data['provincesssId'],
+            'district_id' => $data['districtId'],
+            'updated_by' => session('userId'),
+            'updated_on' => $commonservice->getDateTime()
+        );
+        $response = DB::table('test_sites')
+            ->where('ts_id', '=', base64_decode($id))
+            ->update(
+                $testData
             );
-            $response = DB::table('test_sites')
-                ->where('ts_id', '=',base64_decode($id))
-                ->update(
-                        $testData
-                    );
         return $response;
     }
 
-    
+    // Fetch Current User Active TestSite List
+    public function fetchAllCurrentUserActiveTestSite()
+    {
+        $user_id = session('userId');
+        $data = DB::table('test_sites')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'test_sites.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id)
+            ->where('test_site_status', '=', 'active')
+            ->get();
+        return $data;
+    }
 }
