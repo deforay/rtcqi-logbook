@@ -226,17 +226,18 @@ class MonthlyReportTable extends Model
 
     public function fetchTrendMonthlyReport($params)
     {
+        $user_id = session('userId');
         $result = array();
         $data = $params;
-        // dd($data['facilityId']);die;
         DB::enableQueryLog();
-        // $monyr = DB::raw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as end_test_date');
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
 
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where(function ($query) use ($data) {
@@ -300,11 +301,9 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         $salesResult = $query->get();
-        //  dd($salesResult);die;
         // dd(DB::getQueryLog($salesResult));die;
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
-        //  dd($result);die;
 
         return $result;
     }
@@ -314,6 +313,7 @@ class MonthlyReportTable extends Model
 
     public function fetchLogbookReport($params)
     {
+        $user_id = session('userId');
         $data = $params;
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
@@ -321,7 +321,9 @@ class MonthlyReportTable extends Model
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
 
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where(function ($query) use ($data) {
@@ -361,17 +363,18 @@ class MonthlyReportTable extends Model
     // Test Kit Use Data
     public function fetchTestKitMonthlyReport($params)
     {
+        $user_id = session('userId');
         $result = array();
         $data = $params;
-        // dd($data['facilityId']);die;
         DB::enableQueryLog();
-        // $monyr = DB::raw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as end_test_date');
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
 
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where(function ($query) use ($data) {
@@ -420,13 +423,10 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         $salesResult = $query->get();
-        //  dd($salesResult);die;
-        // dd(DB::getQueryLog($salesResult));die;
 
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
         // dd(DB::getQueryLog($salesResult));die;
-        //  dd($result);die;
 
         return $result;
     }
@@ -435,11 +435,10 @@ class MonthlyReportTable extends Model
 
     public function fetchCustomMonthlyReport($params)
     {
+        $user_id = session('userId');
         $result = array();
         $data = $params;
-        // dd($data['facilityId']);die;
         DB::enableQueryLog();
-        // $monyr = DB::raw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as end_test_date');
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
@@ -447,7 +446,9 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.provincesss_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id');
+            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
 
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where(function ($query) use ($data) {
@@ -519,11 +520,9 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         $salesResult = $query->get();
-        //  dd($salesResult);die;
         // dd(DB::getQueryLog($salesResult));die;
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
-        //  dd($result);die;
 
         return $result;
     }
@@ -854,6 +853,7 @@ class MonthlyReportTable extends Model
 
     public function fetchInvalidResultReport($params)
     {
+        $user_id = session('userId');
         $data = $params;
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
@@ -864,7 +864,9 @@ class MonthlyReportTable extends Model
             ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
             ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
             ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
 
         if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
             $query = $query->where(function ($query) use ($data) {
@@ -884,9 +886,7 @@ class MonthlyReportTable extends Model
             $query = $query->whereIn('test_sites.ts_id', $data['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
-        // dd($query->toSql());
         $salesResult = $query->get();
-        // dd($salesResult);die;
         return $salesResult;
     }
     public function getLatestValue()
@@ -942,11 +942,11 @@ class MonthlyReportTable extends Model
         }
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
-                ->select('test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_name')
-                ->join('test_sites', 'test_sites.provincesss_id', '=', 'monthly_reports.provincesss_id')
-                ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
-                ->where('users_testsite_map.user_id', '=', $user_id);
+            ->select('test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_name')
+            ->join('test_sites', 'test_sites.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->orWhere('monthly_reports.reporting_month', '<=', $end_date);
@@ -955,7 +955,6 @@ class MonthlyReportTable extends Model
             $query = $query->where('monthly_reports.provincesss_id', '=', $data['provinceId']);
         }
         $salesResult = $query->get();
-        //  dd($salesResult);die;
         // dd(DB::getQueryLog($salesResult));die;
 
         return $salesResult;
