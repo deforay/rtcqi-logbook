@@ -981,7 +981,7 @@ class MonthlyReportTable extends Model
         $data = DB::table('monthly_reports')
             ->select(DB::raw('count(mr_id) as monthlytotal'))
             ->whereDate('date_of_data_collection', '>=', now()->subMonths(12))
-            ->value('count(monthly_reports.mr_id) as monthlytotal');
+            ->value('count(monthly_reports.ts_id) as monthlytotal');
         return $data;
     }
 
