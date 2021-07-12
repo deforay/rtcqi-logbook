@@ -144,6 +144,38 @@ class MonthlyReportService
 		$result = $model->fetchDashboardData($params);
 		return $result;
 	}
+
+	//Get All TotalCountMonthlyReport List
+	public function getTotalCountOfMonthlyReport()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->fetchTotalCountOfMonthlyReport();
+        return $result;
+	}
+
+	//Get All CountMonthlyReport List
+	public function getCountOfMonthlyReport()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->fetchCountOfMonthlyReport();
+        return $result;
+	}
+
+	//Get All SiteCountMonthlyReport List
+	public function getSiteCountOfMonthlyReport()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->fetchSiteCountOfMonthlyReport();
+        return $result;
+	}
+
+	//Get All MonthlyData List
+	public function getMonthlyData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->fetchMonthlyData();
+        return $result;
+	}
 	
 }
 
