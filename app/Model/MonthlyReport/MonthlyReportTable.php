@@ -938,7 +938,7 @@ class MonthlyReportTable extends Model
                 $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
                 $end_date = $commonservice->dateFormat(trim($monthYr2));
             }
-        } 
+        }
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
             ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
@@ -957,5 +957,47 @@ class MonthlyReportTable extends Model
         //dd(DB::getQueryLog());die;
 
         return $salesResult;
+    }
+
+    // Fetch All MonthlyReport List
+    public function fetchTotalCountOfMonthlyReport()
+    {
+        $data = DB::table('monthly_reports')
+            ->selectRaw('count(monthly_reports.mr_id) as total')
+            ->value('count(monthly_reports.mr_id) as total');
+        return $data;
+    }
+    public function fetchCountOfMonthlyReport()
+    {
+        $data = DB::table('monthly_reports')
+            ->select(DB::raw('count(mr_id) as monthlytotal'))
+            ->whereDate('date_of_data_collection', '>=', now()->subMonths(12))
+            ->value('count(monthly_reports.mr_id) as monthlytotal');
+        return $data;
+    }
+
+    public function fetchSiteCountOfMonthlyReport()
+    {
+        $data = DB::table('monthly_reports')
+            ->select(DB::raw('count(mr_id) as monthlytotal'))
+            ->whereDate('date_of_data_collection', '>=', now()->subMonths(12))
+            ->value('count(monthly_reports.mr_id) as monthlytotal');
+        return $data;
+    }
+
+    // Fetch All MonthlyReport List
+    public function fetchMonthlyData()
+    {
+        $user_id = session('userId');
+        $data = DB::table('monthly_reports')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id)
+            ->limit(10)
+            ->orderBy('date_of_data_collection', 'desc')
+            ->get();
+        return $data;
     }
 }

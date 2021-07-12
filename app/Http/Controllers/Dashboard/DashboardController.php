@@ -15,9 +15,11 @@ class DashboardController extends Controller
     public function index()
     {
         if (session('login') == true) {
-            $ProvinceService = new ProvinceService();
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getMonthlyData();
+        $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('dashboard.index', array('province' => $province));
+            return view('dashboard.index', array('province' => $province,'data'=>$data));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
