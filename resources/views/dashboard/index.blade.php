@@ -204,7 +204,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                 <th class="border-top-0">Date Of Collection</th>
                                 <th class="border-top-0">Start Date</th>
                                 <th class="border-top-0">End Date</th>
-                                <th class="border-top-0">Total</th>
+                                <th class="border-top-0">Total Tests</th>
                             </tr>
                         </thead>
                         <tbody>
