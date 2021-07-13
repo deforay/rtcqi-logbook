@@ -65,7 +65,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <div class="media d-flex">
                         <div class="media-body text-left">
                             <h3 class="info">{{$total}}</h3>
-                            <h6>Total Audits</h6>
+                            <h6>Overall Audits</h6>
                         </div>
                         <div>
                             <i class="icon-basket-loaded info font-large-2 float-right"></i>
@@ -85,7 +85,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <div class="media d-flex">
                         <div class="media-body text-left">
                             <h3 class="warning">{{$monthly}}</h3>
-                            <h6>No. of Audits</h6>
+                            <h6>No. of Audits (Last 12 Months)</h6>
                         </div>
                         <div>
                             <i class="icon-pie-chart warning font-large-2 float-right"></i>
@@ -106,7 +106,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <div class="media d-flex">
                         <div class="media-body text-left">
                             <h3 class="success">{{$siteMonthly}}</h3>
-                            <h6>No. of Sites Audits</h6>
+                            <h6>No. of Sites Audits (Last 12 Months)</h6>
                         </div>
                         <div>
                             <i class="icon-user-follow success font-large-2 float-right"></i>
@@ -198,23 +198,35 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <table id="recent-orders" class="table table-hover table-xl mb-0">
                         <thead>
                             <tr>
-                                <th class="border-top-0">Province</th>                                
+                                <th class="border-top-0">Month/Year</th>                                
                                 <th class="border-top-0">Site Name</th>
                                 <th class="border-top-0">Site Type</th>
                                 <th class="border-top-0">Date Of Collection</th>
+                                <th class="border-top-0">Start Date</th>
+                                <th class="border-top-0">End Date</th>
+                                <th class="border-top-0">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($data as $row)
                             <?php
                             $date = $row->date_of_data_collection;
+                            $month = $row->reporting_month;
+                            $startDate = $row->start_test_date;
+                            $endDate = $row->end_test_date;
                             $date_of_collection= date('d - F - Y', strtotime($date));
+                            $start_date= date('d - F - Y', strtotime($startDate));
+                            $end_date= date('d - F - Y', strtotime($endDate));
+                            $report_month= date('F - Y', strtotime($month));
                             ?>
                             <tr>
-                                <td class="text-truncate">{{$row->province_name}}</td>
+                                <td class="text-truncate">{{$report_month}}</td>
                                 <td class="text-truncate">{{$row->site_name}}</td>
                                 <td class="text-truncate">{{$row->site_type_name}}</td>
                                 <td class="text-truncate">{{$date_of_collection}}</td>
+                                <td class="text-truncate">{{$start_date}}</td>
+                                <td class="text-truncate">{{$end_date}}</td>
+                                <td class="text-truncate">{{$row->total}}</td>
                                 </tr>
                                 @endforeach
                         </tbody>

@@ -999,9 +999,10 @@ class MonthlyReportTable extends Model
     {
         $user_id = session('userId');
         $data = DB::table('monthly_reports')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->select('monthly_reports.reporting_month','monthly_reports.date_of_data_collection', DB::raw('sum(monthly_reports_pages.test_1_reactive + monthly_reports_pages.test_1_nonreactive) as total'), 'test_sites.site_name', 'site_types.site_type_name','monthly_reports_pages.start_test_date','monthly_reports_pages.end_test_date')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id)
             ->limit(10)
