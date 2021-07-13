@@ -41,6 +41,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     #map {
         height: 100%;
         width: 100%;
+        z-index: 1;
     }
 </style>
 @extends('layouts.main')
@@ -183,8 +184,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         <div class="row">
     <div id="recent-transactions" class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Recent Transactions</h4>
+            <div class="card-headers">
+                <h4 class="card-title">Recent Monthly Logbook Entries</h4>
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">
