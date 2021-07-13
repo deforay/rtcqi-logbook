@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Imports\MonthlyReportDataUpload;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
+use Carbon\Carbon;
 
 class MonthlyReportTable extends Model
 {
@@ -969,19 +970,27 @@ class MonthlyReportTable extends Model
     }
     public function fetchCountOfMonthlyReport()
     {
+        $dateS = Carbon::now()->subMonth(12);
+        $dateE = Carbon::now();
+        DB::enableQueryLog();
         $data = DB::table('monthly_reports')
-            ->select(DB::raw('count(mr_id) as monthlytotal'))
-            ->whereDate('date_of_data_collection', '>=', now()->subMonths(12))
-            ->value('count(monthly_reports.mr_id) as monthlytotal');
+            ->select(DB::raw('count(mr_id) as total'))
+            ->whereBetween('date_of_data_collection', [$dateS, $dateE])
+            ->value('count(monthly_reports.mr_id) as total');
+        // dd(DB::getQueryLog());die;
         return $data;
     }
 
     public function fetchSiteCountOfMonthlyReport()
     {
+        $dateS = Carbon::now()->subMonth(12);
+        $dateE = Carbon::now();
+        DB::enableQueryLog();
         $data = DB::table('monthly_reports')
-            ->select(DB::raw('count(mr_id) as monthlytotal'))
-            ->whereDate('date_of_data_collection', '>=', now()->subMonths(12))
-            ->value('count(monthly_reports.ts_id) as monthlytotal');
+            ->select(DB::raw('count(distinct ts_id) as monthlytotal'))
+            ->whereBetween('date_of_data_collection', [$dateS, $dateE])
+            ->value('count(distinct monthly_reports.ts_id) as monthlytotal');
+        //dd(DB::getQueryLog());die;
         return $data;
     }
 

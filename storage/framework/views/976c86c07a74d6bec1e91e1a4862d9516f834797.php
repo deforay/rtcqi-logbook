@@ -126,6 +126,25 @@
         right: 20px;
     }
 
+    .card-headers {
+        padding: 1.0rem 2.5rem;
+        margin-bottom: 0;
+        background-color: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .card-headers:first-child {
+        border-radius: .45rem .45rem 0 0;
+        background-color: #ffffff;
+    }
+
+    .card-headers .heading-elements, .card-headers .heading-elements-toggle {
+        background-color: inherit;
+        position: absolute;
+        top: 14px;
+        right: 20px;
+    }
+
     #blue-grey-box-shadow{
         -webkit-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
         -moz-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;

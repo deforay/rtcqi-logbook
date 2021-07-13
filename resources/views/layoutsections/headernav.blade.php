@@ -11,7 +11,7 @@
         $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
     }
 ?>
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center" style="background-color: #b75858 !important;">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center" style="background-color: #3AB3AD !important;">
         <div class="navbar-wrapper">
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
