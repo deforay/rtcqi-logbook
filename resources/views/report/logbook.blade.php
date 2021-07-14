@@ -37,7 +37,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-            {{ session('status') }}</b></div>
+                {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -65,198 +65,201 @@
                             </div>
                         </div>
                         <div class="card">
-                        <div class="card-content collapse show">
-						<div class="card-body">
-                        <div id="show_alert"  class="mt-1" style=""></div>
-                            <h4 class="card-title">Filter the data</h4><br>
-                            <form class="form form-horizontal" role="form" name="logBookReportFilter" id="logBookReportFilter" method="post" action="/logbookexcelexport">
-                            @csrf
-                            <div class="row">
-                            <div class="col-xl-4 col-lg-12">
-                                        <fieldset>
-                                            <h5>Start Date <span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <input type="text" id="startDate" value="<?php echo date('d-m-Y',strtotime('-30 days'));?>" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date" >
+                            <div class="card-content collapse show">
+                                <div class="card-body">
+                                    <div id="show_alert" class="mt-1" style=""></div>
+                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <form class="form form-horizontal" role="form" name="logBookReportFilter" id="logBookReportFilter" method="post" action="/logbookexcelexport">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Start Date <span class="mandatory">*</span>
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <input type="text" id="startDate" value="<?php echo date('d-m-Y', strtotime('-30 days')); ?>" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date">
+                                                    </div>
+                                                </fieldset>
                                             </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-12">
-                                        <fieldset>
-                                            <h5>End Date <span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <input type="text" id="endDate" value="<?php echo date('d-m-Y');?>" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date" >
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>End Date <span class="mandatory">*</span>
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <input type="text" id="endDate" value="<?php echo date('d-m-Y'); ?>" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date">
+                                                    </div>
+                                                </fieldset>
                                             </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Facilty Name
-                                            </h5>
-                                            <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId[]" title="Please select Facility Name">
-                                                    @foreach($facility as $row)
-                                                    <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Facilty Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId[]" title="Please select Facility Name">
+                                                            @foreach($facility as $row)
+                                                            <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
                                             </div>
-										</fieldset>
-									</div>
-                </div>
-                <div class="row">
-                <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Testing Algothrim
-                                            </h5>
-                                            <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Alogrithm Type">
-                                                    <option value="serial">Serial</option>
-                                                    <option value="parallel">Parallel</option>
-                                                </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Testing Algothrim
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Alogrithm Type">
+                                                            <option value="serial">Serial</option>
+                                                            <option value="parallel">Parallel</option>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
                                             </div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5> Site Name
-                                            </h5>
-                                            <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
-                                                    @foreach($testSite as $row)
-                                                    <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5> Site Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                            @foreach($testSite as $row)
+                                                            <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
                                             </div>
-										</fieldset>
-									</div>
-                                    
-                                    <div class="col-md-7" style="color:#FFF;">
-                        <div class="form-group row">
-                            
-                            <div class="col-md-8">
-                                <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                <a class="btn btn-danger btn-md"
-                                     href = "/report/logbook"><span>Reset</span></a>&nbsp;&nbsp;
-                                     <button type="submit" class="btn btn-primary">Export</button>
+
+                                            <div class="col-md-7" style="color:#FFF;">
+                                                <div class="form-group row">
+
+                                                    <div class="col-md-8">
+                                                        <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/report/logbook"><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" class="btn btn-primary">Export</button>
+                                                    </div>
+                                                </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        </form>
                     </div>
-                </div></div></div>
-                <div class="table-responsive p-t-10">
-                    <div id="logbookList"></div>
-                    </div>       
+                    <div class="table-responsive p-t-10">
+                        <div id="logbookList"></div>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
+    </section>
+</div>
 </div>
 <style>
-  .select2-selection__clear{display:none;}
+    .select2-selection__clear {
+        display: none;
+    }
 </style>
-  <script>
-  $(document).ready(function() {
-    getLogbookReport();
-    $('.js-example-basic-multiple').select2();
-    $selectElement = $('#facilityId').select2({
-    placeholder: "Select Facility Name",
-    allowClear: true,
-  });
-  $('#facilityId').on('select2:select', function (e) {
-    getLogbookReport();
-  });
+<script>
+    $(document).ready(function() {
+        getLogbookReport();
+        $('.js-example-basic-multiple').select2();
+        $selectElement = $('#facilityId').select2({
+            placeholder: "Select Facility Name",
+            allowClear: true,
+        });
+        $('#facilityId').on('select2:select', function(e) {
+            getLogbookReport();
+        });
 
-$('#facilityId').on('select2:unselect', function (e) {
-    getLogbookReport();
+        $('#facilityId').on('select2:unselect', function(e) {
+            getLogbookReport();
 
-});
-  $selectElement = $('#algorithmType').select2({
-    placeholder: "Select Testing Algothrim",
-    allowClear: true
-  });
-  $('#algorithmType').on('select2:select', function (e) {
-    getLogbookReport();
-});
-$('#algorithmType').on('select2:unselect', function (e) {
-    getLogbookReport();
-});
-  $selectElement = $('#testSiteId').select2({
-    placeholder: "Select Test Site Name",
-    allowClear: true
-  });
-  $('#testSiteId').on('select2:select', function (e) {
-    getLogbookReport();
-});
-$('#testSiteId').on('select2:unselect', function (e) {
-    getLogbookReport();
-});
+        });
+        $selectElement = $('#algorithmType').select2({
+            placeholder: "Select Testing Algothrim",
+            allowClear: true
+        });
+        $('#algorithmType').on('select2:select', function(e) {
+            getLogbookReport();
+        });
+        $('#algorithmType').on('select2:unselect', function(e) {
+            getLogbookReport();
+        });
+        $selectElement = $('#testSiteId').select2({
+            placeholder: "Select Test Site Name",
+            allowClear: true
+        });
+        $('#testSiteId').on('select2:select', function(e) {
+            getLogbookReport();
+        });
+        $('#testSiteId').on('select2:unselect', function(e) {
+            getLogbookReport();
+        });
     });
 
     function getLogbookReport() {
-      startDate = $('#startDate').val();
-      endDate = $('#endDate').val();
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-      $.ajax({
-                url: "{{ url('/getLogbookReport') }}",
-                method: 'post',
-                data: {
-                    startDate:startDate,
-                    endDate:endDate,
-                    facilityId: $("#facilityId").val(),
-                    algorithmType: $("#algorithmType").val(),
-                    testSiteId: $("#testSiteId").val(),
-                },
-                success: function(result){
-                   $("#logbookList").html(result);
-                }
-            });
-	}
-
-    $(document).ready(function(){
-        var date1 = new Date();
-  var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
-   $("#startDate").datepicker({
-       format: 'dd-mm-yyyy',
-       autoclose: true,
-       endDate: today,
-   }).on('changeDate', function (selected) {
-       var minDate = new Date(selected.date.valueOf());
-       $('#endDate').datepicker('setStartDate', minDate);
-   });
-
-   $("#endDate").datepicker({
-       format: 'dd-mm-yyyy',
-       autoclose: true,
-       endDate: today,
-   }).on('changeDate', function (selected) {
-           var minDate = new Date(selected.date.valueOf());
-           $('#startDate').datepicker('setEndDate', minDate);
-   });
-});
-
-$(document).ready(function(){
-    var startDate = localStorage.getItem('date1');
-    var endDate = localStorage.getItem('date2');
-    var data = localStorage.getItem('site');
-    // alert(data);
-    if(startDate != null && endDate != null && data != null){
-    $("#startDate").val(startDate);
-    $("#endDate").val(endDate);
-    $("#testSiteId").val(data).trigger('change');
-    window.localStorage.removeItem('date1');
-    window.localStorage.removeItem('date2');
-    window.localStorage.removeItem('site');
+        startDate = $('#startDate').val();
+        endDate = $('#endDate').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getLogbookReport') }}",
+            method: 'post',
+            data: {
+                startDate: startDate,
+                endDate: endDate,
+                facilityId: $("#facilityId").val(),
+                algorithmType: $("#algorithmType").val(),
+                testSiteId: $("#testSiteId").val(),
+            },
+            success: function(result) {
+                $("#logbookList").html(result);
+            }
+        });
     }
-    
-});
+
+    $(document).ready(function() {
+        var date1 = new Date();
+        var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+        $("#startDate").datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            endDate: today,
+        }).on('changeDate', function(selected) {
+            var minDate = new Date(selected.date.valueOf());
+            $('#endDate').datepicker('setStartDate', minDate);
+        });
+
+        $("#endDate").datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true,
+            endDate: today,
+        }).on('changeDate', function(selected) {
+            var minDate = new Date(selected.date.valueOf());
+            $('#startDate').datepicker('setEndDate', minDate);
+        });
+    });
+
+    $(document).ready(function() {
+        var startDate = localStorage.getItem('date1');
+        var endDate = localStorage.getItem('date2');
+        var data = localStorage.getItem('site');
+        // alert(data);
+        if (startDate != null && endDate != null && data != null) {
+            $("#startDate").val(startDate);
+            $("#endDate").val(endDate);
+            $("#testSiteId").val(data).trigger('change');
+            window.localStorage.removeItem('date1');
+            window.localStorage.removeItem('date2');
+            window.localStorage.removeItem('site');
+        }
+
+    });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-  
+
 @endsection

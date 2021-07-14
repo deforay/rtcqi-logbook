@@ -15,15 +15,14 @@ class DashboardController extends Controller
     public function index()
     {
         if (session('login') == true) {
-        $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getMonthlyData();
-        $ProvinceService = new ProvinceService();
+            $monthlyReportService = new MonthlyReportService();
+            $data = $monthlyReportService->getMonthlyData();
+            $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('dashboard.index', array('province' => $province,'data'=>$data));
+            return view('dashboard.index', array('province' => $province, 'data' => $data));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
-
     }
 
     public function getDashboardData(Request $request)
@@ -31,6 +30,5 @@ class DashboardController extends Controller
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getDashboardData($request);
         return response()->json($data);
-
     }
 }
