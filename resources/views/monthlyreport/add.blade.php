@@ -61,13 +61,12 @@ $test = '';
                                                 <h5>Site Name<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
-                                                        <option value="">---Select---</option>
-                                                        @foreach($testsite as $row2)
-                                                        <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
+                                                <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
+                                                    @foreach($testsite as $row2)
+                                                    <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
@@ -75,8 +74,7 @@ $test = '';
                                                 <h5>Site Type<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please select Site type Name">
-                                                        <option value="">---Select---</option>
+                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please select Site type Name">
                                                         @foreach($sitetype as $row1)
                                                         <option value="{{$row1->st_id}}">{{$row1->site_type_name}}</option>
                                                         @endforeach
@@ -434,8 +432,19 @@ $test = '';
         </section>
     </div>
 </div>
-
+<link href="public/dist/css/select2.min.css" rel="stylesheet" />
+<script src="public/dist/js/select2.min.js"></script>
 <script>
+	$(document).ready(function() {
+		$('.js-example-basic-single').select2();
+        $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
+            placeholder: "Select Site Name"
+        });
+		$selectElement = $('#sitetypeId').prepend('<option selected></option>').select2({
+            placeholder: "Select Site Type"
+        });
+});
+
     $(document).ready(function() {
         $('.datepicker').datepicker({
             autoclose: true,
