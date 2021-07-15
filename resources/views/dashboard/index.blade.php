@@ -8,16 +8,8 @@
 
 <?php
 
-use App\Service\MonthlyReportService;
-use App\Service\GlobalConfigService;
 
-$GlobalConfigService = new GlobalConfigService();
-$latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
-$longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
-$service = new MonthlyReportService();
-$total = $service->getTotalCountOfMonthlyReport();
-$monthly = $service->getCountOfMonthlyReport();
-$siteMonthly = $service->getSiteCountOfMonthlyReport();
+
 $enddate = date('d-M-Y');
 $startdate = date('d-M-Y', strtotime('-29 days'));
 ?>

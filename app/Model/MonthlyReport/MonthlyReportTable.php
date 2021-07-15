@@ -432,7 +432,7 @@ class MonthlyReportTable extends Model
         return $result;
     }
 
-    // Custom Report 
+    // Custom Report
 
     public function fetchCustomMonthlyReport($params)
     {
@@ -850,7 +850,7 @@ class MonthlyReportTable extends Model
         return $rslt;
     }
 
-    // Invalid Result Report 
+    // Invalid Result Report
 
     public function fetchInvalidResultReport($params)
     {
@@ -893,7 +893,7 @@ class MonthlyReportTable extends Model
     public function getLatestValue()
     {
         $res = DB::table('monthly_reports_pages')->latest('mrp_id')->first();
-        // dd($res);   
+        // dd($res);
         return $res;
     }
 
@@ -963,9 +963,15 @@ class MonthlyReportTable extends Model
     // Fetch All MonthlyReport List
     public function fetchTotalCountOfMonthlyReport()
     {
+        //DB::enableQueryLog();
+
+        $user_id = session('userId');
         $data = DB::table('monthly_reports')
             ->selectRaw('count(monthly_reports.mr_id) as total')
-            ->value('count(monthly_reports.mr_id) as total');
+            //->value('count(monthly_reports.mr_id) as total')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id','=', $user_id)->value('total');
+            //dd(DB::getQueryLog());
         return $data;
     }
     public function fetchCountOfMonthlyReport()
@@ -973,10 +979,13 @@ class MonthlyReportTable extends Model
         $dateS = Carbon::now()->subMonth(12);
         $dateE = Carbon::now();
         DB::enableQueryLog();
+        $user_id = session('userId');
         $data = DB::table('monthly_reports')
             ->select(DB::raw('count(mr_id) as total'))
             ->whereBetween('date_of_data_collection', [$dateS, $dateE])
-            ->value('count(monthly_reports.mr_id) as total');
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id','=', $user_id)->value('total');
+            // ->value('count(monthly_reports.mr_id) as total');
         // dd(DB::getQueryLog());die;
         return $data;
     }

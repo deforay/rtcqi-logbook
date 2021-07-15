@@ -19,7 +19,23 @@ class DashboardController extends Controller
             $data = $monthlyReportService->getMonthlyData();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('dashboard.index', array('province' => $province, 'data' => $data));
+
+            $GlobalConfigService = new GlobalConfigService();
+            $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
+            $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
+
+            $total = $monthlyReportService->getTotalCountOfMonthlyReport();
+            $monthly = $monthlyReportService->getCountOfMonthlyReport();
+            $siteMonthly = $monthlyReportService->getSiteCountOfMonthlyReport();
+            return view('dashboard.index', array(
+                'province' => $province,
+                'data' => $data,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'total' => $total,
+                'monthly' => $monthly,
+                'siteMonthly' => $siteMonthly
+            ));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
