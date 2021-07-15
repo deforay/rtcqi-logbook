@@ -182,6 +182,15 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
+                                                <h5>Name of Data Collector
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="nameOfDataCollect" value="{{$result[0]->name_of_data_collector}}" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
                                                 <h5>Date of Data Collection <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
@@ -204,24 +213,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="bookNo" value="{{$result[0]->book_no}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <!-- <div class="form-group col-xl-3 col-lg-3">
-										<fieldset>
-											<h5>Signature
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="signature" value="{{$result[0]->signature}}" class="form-control  " autocomplete="off" placeholder="Enter Signature" name="signature" title="Please Enter Signature" >
-											</div>
-										</fieldset>
-									</div> -->
-                                        <div class="form-group col-xl-3 col-lg-3">
-                                            <fieldset>
-                                                <h5>Name of Data Collector
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="nameOfDataCollect" value="{{$result[0]->name_of_data_collector}}" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
                                                 </div>
                                             </fieldset>
                                         </div>
