@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreport/">Monthly Report</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreport/">Monthly Reports</a>
                         </li>
                     </ol>
                 </div>
@@ -28,10 +28,12 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="la la-upload"></i> Upload Monthly Report</b></a>
+                <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                    <b><i class="la la-upload"></i> Bulk Upload Monthly Reports</b>
+                </a>
                 <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-plus icon-left"></i> Add Monthly Report</b></a>
+                    <b><i class="ft-plus icon-left"></i> Add Monthly Report</b>
+                </a>
             </div>
         </div>
     </div>
@@ -39,7 +41,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-            {{ session('status') }}</b></div>
+                {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -85,52 +87,73 @@
                                         <tbody>
 
                                         </tbody>
-                                        </table>
-                                    </div>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
+    </section>
 </div>
-  <script>
+</div>
+<script>
     $(document).ready(function() {
         $.blockUI();
         getAllMonthlyReport();
         $.unblockUI();
     });
-    function getAllMonthlyReport()
-    {
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-      $('#mothlyreportList').DataTable({
+
+    function getAllMonthlyReport() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#mothlyreportList').DataTable({
             processing: true,
-            destroy : true,
+            destroy: true,
             serverSide: true,
             scrollX: false,
-            autoWidth:false,
+            autoWidth: false,
             ajax: {
-                url:'{{ url("getAllMonthlyReport") }}',
+                url: '{{ url("getAllMonthlyReport") }}',
                 type: 'POST',
             },
             columns: [
 
-                    { data: 'province_name', name: 'province_name',className:'firstcaps' },
-                    { data: 'site_type_name', name: 'site_type_name',className:'firstcaps' },
-                    { data: 'site_name', name: 'site_name',className:'firstcaps' },
-                    // { data: 'latitude', name: 'latitude' },
-                    // { data: 'longitude', name: 'longitude' },
-                    { data: 'book_no', name: 'book_no' },
-                    {data: 'action', name: 'action', orderable: false},
-                ],
-            order: [[0, 'desc']]
+                {
+                    data: 'province_name',
+                    name: 'province_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'site_type_name',
+                    name: 'site_type_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'site_name',
+                    name: 'site_name',
+                    className: 'firstcaps'
+                },
+                // { data: 'latitude', name: 'latitude' },
+                // { data: 'longitude', name: 'longitude' },
+                {
+                    data: 'book_no',
+                    name: 'book_no'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false
+                },
+            ],
+            order: [
+                [0, 'desc']
+            ]
         });
     }
-  </script>
+</script>
 @endsection
