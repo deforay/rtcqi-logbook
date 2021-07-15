@@ -214,10 +214,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                             $month = $row->reporting_month;
                             $startDate = $row->start_test_date;
                             $endDate = $row->end_test_date;
-                            $date_of_collection= date('d - F - Y', strtotime($date));
-                            $start_date= date('d - F - Y', strtotime($startDate));
-                            $end_date= date('d - F - Y', strtotime($endDate));
-                            $report_month= date('F - Y', strtotime($month));
+                            $date_of_collection= date('d-F-Y', strtotime($date));
+                            $start_date= date('d-F-Y', strtotime($startDate));
+                            $end_date= date('d-F-Y', strtotime($endDate));
+                            $report_month= date('F-Y', strtotime($month));
                             ?>
                             <tr>
                                 <td class="text-truncate">{{$report_month}}</td>
