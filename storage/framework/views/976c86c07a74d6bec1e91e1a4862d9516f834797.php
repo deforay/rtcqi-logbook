@@ -107,24 +107,11 @@
         padding-left: 40px;
     }
 
-    .card-header {
-        padding: 1.0rem 2.5rem;
-        margin-bottom: 0;
-        background-color: #fff;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
 
-    .card-header:first-child {
-        border-radius: .45rem .45rem 0 0;
-        background-color: #fba44a;
-    }
+    /* Action By Selvam: Uncommented this block
+       Reason: Dashboard Recent Transaction Table UI Affected
+    */
 
-    .card-header .heading-elements, .card-header .heading-elements-toggle {
-        background-color: inherit;
-        position: absolute;
-        top: 14px;
-        right: 20px;
-    }
 
     .card-headers {
         padding: 1.0rem 2.5rem;

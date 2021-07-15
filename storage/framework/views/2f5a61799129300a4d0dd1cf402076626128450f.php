@@ -11,7 +11,7 @@
         $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
     }
 ?>
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center" style="background-color: #3AB3AD !important;">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-dark bg-primary navbar-shadow navbar-brand-center" style="">
         <div class="navbar-wrapper">
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
@@ -28,9 +28,9 @@
                 <div class="collapse navbar-collapse" id="navbar-mobile">
                     <ul class="nav navbar-nav mr-auto float-left">
                         <?php if($arr["logo"]): ?>
-                            <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="height: 70px;width: 100px;">
+                            <img class="brand-logo" alt="rtcqi logbook logo" src="<?php echo e(url($arr["logo"])); ?>"     style="max-height: 70px;">
                         <?php else: ?>
-                            <img class="brand-logo" alt="rtcqui logbook logo" src="<?php echo e(asset('assets/images/default-logo.png')); ?>"     style="height: 70px;width: 170px;">
+                            <img class="brand-logo" alt="rtcqi logbook logo" src="<?php echo e(asset('assets/images/default-logo.png')); ?>"     style="max-height: 70px;">
                         <?php endif; ?>
                         <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
                         <!-- <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li> -->
