@@ -183,6 +183,16 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
+
+                                        <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
+                                                <h5>Name of Data Collector
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="nameOfDataCollect" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Date of Data Collection <span class="mandatory">*</span>
@@ -207,24 +217,6 @@ $test = '';
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="bookNo" class="form-control isRequired" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <!-- <div class="form-group col-xl-3 col-lg-3">
-										<fieldset>
-											<h5>Signature
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="signature" class="form-control  " autocomplete="off" placeholder="Enter Signature" name="signature" title="Please Enter Signature" >
-											</div>
-										</fieldset>
-									</div> -->
-                                        <div class="form-group col-xl-3 col-lg-3">
-                                            <fieldset>
-                                                <h5>Name of Data Collector
-                                                </h5>
-                                                <div class="form-group">
-                                                    <input type="text" id="nameOfDataCollect" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
                                                 </div>
                                             </fieldset>
                                         </div>
