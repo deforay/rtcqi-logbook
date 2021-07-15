@@ -107,7 +107,7 @@
         padding-left: 40px;
     }
 
-    .card-header {
+    /* .card-header {
         padding: 1.0rem 2.5rem;
         margin-bottom: 0;
         background-color: #fff;
@@ -143,7 +143,7 @@
         position: absolute;
         top: 14px;
         right: 20px;
-    }
+    } */
 
     #blue-grey-box-shadow{
         -webkit-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
