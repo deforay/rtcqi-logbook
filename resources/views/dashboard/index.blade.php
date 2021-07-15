@@ -68,7 +68,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                             <h6>Overall Audits</h6>
                         </div>
                         <div>
-                            <i class="icon-basket-loaded info font-large-2 float-right"></i>
+                            <i class="icon-list info font-large-2 float-right"></i>
                         </div>
                     </div>
                     <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -88,7 +88,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                             <h6>No. of Audits (Last 12 Months)</h6>
                         </div>
                         <div>
-                            <i class="icon-pie-chart warning font-large-2 float-right"></i>
+                            <i class="icon-list warning font-large-2 float-right"></i>
                         </div>
                     </div>
                     <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -109,7 +109,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                             <h6>No. of Sites Audits (Last 12 Months)</h6>
                         </div>
                         <div>
-                            <i class="icon-user-follow success font-large-2 float-right"></i>
+                            <i class="icon-map success font-large-2 float-right"></i>
                         </div>
                     </div>
                     <div class="progress progress-sm mt-1 mb-0 box-shadow-2">
@@ -120,7 +120,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         </div>
     </div>
     </div>
-    
+
 </div>
     </div>
         <section id="vector-maps">
@@ -192,13 +192,13 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                         <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="/monthlyreport" target="_blank">View More</a></li>
                     </ul>
                 </div>
-            </div>            
-            <div class="card-content">                
+            </div>
+            <div class="card-content">
                 <div class="table-responsive">
                     <table id="recent-orders" class="table table-hover table-xl mb-0">
                         <thead>
                             <tr>
-                                <th class="border-top-0">Month/Year</th>                                
+                                <th class="border-top-0">Month/Year</th>
                                 <th class="border-top-0">Site Name</th>
                                 <th class="border-top-0">Site Type</th>
                                 <th class="border-top-0">Date Of Collection</th>
