@@ -52,11 +52,11 @@ $test = '';
                         <div class="card-content collapse show">
                             <div class="card-body">
                                 <div id="show_alert" class="mt-1" style=""></div>
-                                <form class="form form-horizontal" role="form" name="addMonthlyReport" id="addMonthlyReport" method="post" action="/monthlyreport/add" autocomplete="off" onsubmit="validateNow();return false;">
+                                <form class="form" role="form" name="addMonthlyReport" id="addMonthlyReport" method="post" action="/monthlyreport/add" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
-                                    <div class="row">
+                                    <div class="form-body row">
 
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site Name<span class="mandatory">*</span>
                                                 </h5>
@@ -70,7 +70,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site Type<span class="mandatory">*</span>
                                                 </h5>
@@ -84,7 +84,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site ID <span class="mandatory">*</span>
                                                 </h5>
@@ -93,7 +93,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Province Name<span class="mandatory">*</span>
                                                 </h5>
@@ -107,7 +107,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site Manager
                                                 </h5>
@@ -116,7 +116,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Is FLC?<span class="mandatory">*</span>
                                                 </h5>
@@ -130,7 +130,7 @@ $test = '';
                                             </fieldset>
                                         </div>
                                         @if($global['recency_test']=='enabled')
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Does site do Recency Tests?<span class="mandatory">*</span>
                                                 </h5>
@@ -143,7 +143,7 @@ $test = '';
                                             </fieldset>
                                         </div>
                                         @endif
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Contact Number
                                                 </h5>
@@ -152,7 +152,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <!-- <div class="col-xl-3 col-lg-12">
+                                        <!-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
 											</h5>
@@ -161,7 +161,7 @@ $test = '';
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-3 col-lg-12">
+                                    <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Longitude <span class="mandatory">*</span>
 											</h5>
@@ -170,7 +170,7 @@ $test = '';
 											</div>
 										</fieldset>
 									</div> -->
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Algorithm Type <span class="mandatory">*</span>
                                                 </h5>
@@ -183,16 +183,16 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Date of data collection <span class="mandatory">*</span>
+                                                <h5>Date of Data Collection <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="DateOfCollect" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Reporting Month <span class="mandatory">*</span>
                                                 </h5>
@@ -201,7 +201,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Book Number <span class="mandatory">*</span>
                                                 </h5>
@@ -210,7 +210,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <!-- <div class="col-xl-3 col-lg-12">
+                                        <!-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Signature
 											</h5>
@@ -219,7 +219,7 @@ $test = '';
 											</div>
 										</fieldset>
 									</div> -->
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Name of Data Collector
                                                 </h5>
@@ -231,18 +231,16 @@ $test = '';
                                     </div>
                                     <br />
                                     <div id="test_row">
-                                        <div class="row ml-2">
-                                            <h4 style="font-weight: 600;">Test Details</h4>
-                                        </div>
-                                        <hr>
+
+                                        <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">Test Details</h4>
+
                                         <div id="test_details0">
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>Page No
-                                                        </h5>
+                                                        <h5>Page No.</h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" id="pageNO0" class="form-control isRequired  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No">
+                                                            <input type="number" min="0" id="pageNO0" class="form-control isRequired  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -251,7 +249,7 @@ $test = '';
                                                         <h5>Start Date
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="startDate0" class="form-control isRequired dates " autocomplete="off" onchange="changeStartDate(0)" placeholder="Start Date" name="startDate[]" title="Please Enter Start Date">
+                                                            <input type="text" id="startDate0" class="form-control isRequired dates " autocomplete="off" onchange="changeStartDate(0)" placeholder="Enter Start Date" name="startDate[]" title="Please Enter Start Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -260,7 +258,7 @@ $test = '';
                                                         <h5>End Date
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="endDate0" class="form-control isRequired  dates" autocomplete="off" onchange="changeEndDate(0);" placeholder="End date" name="endDate[]" title="Please Enter End Date">
+                                                            <input type="text" id="endDate0" class="form-control isRequired  dates" autocomplete="off" onchange="changeEndDate(0);" placeholder="Enter End Date" name="endDate[]" title="Please Enter End Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -535,10 +533,9 @@ $test = '';
 			<div class="row">\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>Page No \
-						</h5>\
+						<h5>Page No.</h5>\
 						<div class="form-group">\
-							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >\
+							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -547,7 +544,7 @@ $test = '';
 						<h5>Start Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="startDate' + rowCount + '" class="form-control  dates" onchange="changeStartDate(' + rowCount + ')" placeholder="Start date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+							<input type="text" id="startDate' + rowCount + '" class="form-control  dates" onchange="changeStartDate(' + rowCount + ')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -556,7 +553,7 @@ $test = '';
 						<h5>End Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="endDate' + rowCount + '" class="form-control  dates" onchange="changeEndDate(' + rowCount + ')" placeholder="End date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate' + rowCount + '" class="form-control  dates" onchange="changeEndDate(' + rowCount + ')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
 						</div>\
 					</fieldset>\
 				</div>\

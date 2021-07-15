@@ -55,8 +55,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                     @php
                                     $fnct = "mr_id##".($result[0]->mr_id);
                                     @endphp
-                                    <div class="row">
-                                        <div class="col-xl-3 col-lg-12">
+                                    <div class="form-body row">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site Name<span class="mandatory">*</span>
                                                 </h5>
@@ -69,7 +69,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site Type <span class="mandatory">*</span>
                                                 </h5>
@@ -83,7 +83,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                             </fieldset>
                                         </div>
 
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site ID <span class="mandatory">*</span>
                                                 </h5>
@@ -92,7 +92,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Province Name<span class="mandatory">*</span>
                                                 </h5>
@@ -105,7 +105,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Site Manager
                                                 </h5>
@@ -114,7 +114,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Is FLC?<span class="mandatory">*</span>
                                                 </h5>
@@ -128,7 +128,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                             </fieldset>
                                         </div>
                                         @if($global['recency_test']=='enabled')
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Does site do Recency Tests?<span class="mandatory">*</span>
                                                 </h5>
@@ -141,7 +141,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                             </fieldset>
                                         </div>
                                         @endif
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Contact Number
                                                 </h5>
@@ -150,7 +150,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <!-- <div class="col-xl-3 col-lg-12">
+                                        <!-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
 											</h5>
@@ -159,7 +159,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 											</div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-3 col-lg-12">
+                                    <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Longitude <span class="mandatory">*</span>
 											</h5>
@@ -168,7 +168,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 											</div>
 										</fieldset>
 									</div> -->
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Algorithm Type
                                                 </h5>
@@ -180,16 +180,16 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Date of data collection <span class="mandatory">*</span>
+                                                <h5>Date of Data Collection <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="DateOfCollect" value="{{$date_of_data_collection}}" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Reporting Month <span class="mandatory">*</span>
                                                 </h5>
@@ -198,7 +198,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Book Number <span class="mandatory">*</span>
                                                 </h5>
@@ -207,7 +207,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <!-- <div class="col-xl-3 col-lg-12">
+                                        <!-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Signature
 											</h5>
@@ -216,7 +216,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 											</div>
 										</fieldset>
 									</div> -->
-                                        <div class="col-xl-3 col-lg-12">
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Name of Data Collector
                                                 </h5>
@@ -228,10 +228,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                     </div>
                                     <br />
                                     <div id="test_row">
-                                        <div class="row ml-2">
-                                            <h4 style="font-weight: 600;">Test Details</h4>
-                                        </div>
-                                        <hr>
+                                        <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">Test Details</h4>
                                         <?php $z = 0;  ?>
                                         @foreach($result['test_details'] as $list)
                                         <input type="hidden" id="mrp_id{{$z}}" name=mrp_id[] value="{{$list->mrp_id}}">
@@ -239,10 +236,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>Page No
-                                                        </h5>
+                                                        <h5>Page No.</h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" value="{{$list->page_no}}" id="pageNO{{$z}}" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No">
+                                                            <input type="number" min="0" value="{{$list->page_no}}" id="pageNO{{$z}}" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -251,7 +247,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         <h5>Start Date
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="startDate{{$z}}" value="{{date('d-m-Y', strtotime($list->start_test_date))}}" class="form-control dates " onchange="changeStartDate('{{$z}}')" placeholder="Start date" autocomplete="off" name="startDate[]" title="Please Enter Start Date">
+                                                            <input type="text" id="startDate{{$z}}" value="{{date('d-m-Y', strtotime($list->start_test_date))}}" class="form-control dates " onchange="changeStartDate('{{$z}}')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -260,7 +256,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         <h5>End Date
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="endDate{{$z}}" value="{{date('d-m-Y', strtotime($list->end_test_date))}}" class="form-control  dates" onchange="changeEndDate('{{$z}}')" placeholder="End date" autocomplete="off" name="endDate[]" title="Please Enter End Date">
+                                                            <input type="text" id="endDate{{$z}}" value="{{date('d-m-Y', strtotime($list->end_test_date))}}" class="form-control  dates" onchange="changeEndDate('{{$z}}')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -509,10 +505,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 			<div class="row">\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>Page No \
-						</h5>\
+						<h5>Page No.</h5>\
 						<div class="form-group">\
-							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No" name="pageNO[]" title="Please Enter Page No" >\
+							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -521,7 +516,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 						<h5>Start Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="startDate' + rowCount + '" onchange="changeStartDate(' + rowCount + ')" class="form-control dates " placeholder="Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+							<input type="text" id="startDate' + rowCount + '" onchange="changeStartDate(' + rowCount + ')" class="form-control dates " placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -530,7 +525,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 						<h5>End Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="endDate' + rowCount + '" onchange="changeEndDate(' + rowCount + ')" class="form-control  dates" placeholder="End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate' + rowCount + '" onchange="changeEndDate(' + rowCount + ')" class="form-control  dates" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
