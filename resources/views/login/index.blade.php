@@ -59,7 +59,8 @@
 <!-- END: Head-->
 <style>
   html body.bg-full-screen-image {
-      background: #63bef9  !important;
+      /*background: #63bef9  !important;*/
+      background:url({{ asset('assets/images/1.jpg')}})  !important;
       background-size: cover !important;
   }
 </style>
