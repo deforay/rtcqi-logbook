@@ -8,6 +8,7 @@ $common = new CommonService();
 $date_of_data_collection = $common->humanDateFormat($result[0]->date_of_data_collection);
 $reporting_month = ($result[0]->reporting_month);
 // $reporting_month = 'Jun-2021';
+{{--  dd($result);  --}}
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 ?>
 <div class="content-wrapper">
@@ -223,7 +224,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         <?php $z = 0;  ?>
                                         @foreach($result['test_details'] as $list)
                                         <input type="hidden" id="mrp_id{{$z}}" name=mrp_id[] value="{{$list->mrp_id}}">
-                                        <div id="test_details{{$z}}">
+                                        <div class="testDetailsRow" id="test_details{{$z}}">
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
@@ -260,7 +261,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                             <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
                                                             </h5>
                                                             <div class="form-group">
-                                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+                                                                <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)">
                                                                     @if(isset($allowedTestKitNo[$i]))
                                                                     @foreach($allowedTestKitNo[$i] as $value=>$option)
                                                                     <option value="{{$value}}" {{ $list->$test_id == $value ?  'selected':''}}>{{$option}}</option>
@@ -281,7 +282,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                                 <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
                                                                 </h5>
                                                                 <div class="form-group">
-                                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">
+                                                                    <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)">
                                                                         @foreach($kittype as $row2)
                                                                         <option value="{{$row2->tk_id}}" {{ $list->$test_id == $row2->tk_id ?  'selected':''}}>{{$row2->test_kit_name}}</option>
                                                                         @endforeach
@@ -311,8 +312,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         @endfor
                                                 </tr>
                                                 <tr>
-                                                    @for($k = 1; $k <= $globalValue; $k++) <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
-                                                        <h4 style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
+                                                    @for($k = 1; $k <= $globalValue; $k++)
+                                                        <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
+                                                            <h4 id="testKitHeading{{$k}}_{{$z}}" style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
                                                         </td>
                                                         @endfor
                                                 </tr>
@@ -449,6 +451,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             autoclose: true,
             endDate: today,
         });
+        initSetTestkitHeadings();
     });
     var date1 = new Date();
     var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
@@ -497,7 +500,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         }
     }
 
-    var rowCount = '{{$z - 1}}';
+    //var rowCount = '{{$z - 1}}';
+    var rowCount = $(".testDetailsRow").length;
     var gCnt = '{{$globalValue}}';
     var col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 
@@ -505,7 +509,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         rowCount++;
         var div = '';
 
-        div += '<br><div id="test_details' + rowCount + '">\
+        div += '<br><div class="testDetailsRow" id="test_details' + rowCount + '">\
 			<div class="row">\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
@@ -543,7 +547,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_'+rowCount+'" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\''+rowCount+'\',this)">\
 										@if(isset($allowedTestKitNo[$i]))\
 											@foreach($allowedTestKitNo[$i] as $value=>$option)\
 											<option value="{{$value}}">{{$option}}</option>\
@@ -565,7 +569,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_'+rowCount+'" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}"  onchange="replaceTestKitHeadings(\'{{$i}}\',\''+rowCount+'\',this)">\
 										@foreach($kittype as $row2)\
 										<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>\
 										@endforeach\
@@ -595,7 +599,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         div += '</tr><tr>'
         for (var k = 1; k <= gCnt; k++) {
             div += '<td colspan="3" style=" text-align: center;" bgcolor="' + col[k] + '">\
-						<h4 style="font-weight: 600;color: white;">Test Kit ' + k + '</h4>\
+						<h4 id="testKitHeading' + k + '_'+rowCount+'" style="font-weight: 600;color: white;">Test Kit ' + k + '</h4>\
 					</td>';
         }
         div += '</tr><tr>'
@@ -674,6 +678,20 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         if (val != 0) {
             $("#test_details" + val).remove();
         }
+    }
+
+    function replaceTestKitHeadings(headingNo,rowNo,selectObj){
+        //console.log(headingNo,rowNo,$(selectObj).find(":selected").text());
+        let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text()) || `Test Kit ${headingNo}`;
+        $(`#testKitHeading${headingNo}_${rowNo}`).html(optionSelected);
+    }
+    function initSetTestkitHeadings(){
+        $(".selectTestKits").each(function(e){
+            let uniqueRowId = $(this).attr("data-id");
+            let headingId = (uniqueRowId).split('_')[0];
+            let headingText = ($(this).val() && $(this).find(":selected").text()) || `Test Kit ${headingId}`;
+            $(`#testKitHeading${uniqueRowId}`).html(headingText);
+        })
     }
 </script>
 @endsection

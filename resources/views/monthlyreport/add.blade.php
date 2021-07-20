@@ -266,7 +266,7 @@ $test = '';
                                                             <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
                                                             </h5>
                                                             <div class="form-group">
-                                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
+                                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
                                                                     <option value="">--Select--</option>
                                                                     @if(isset($allowedTestKitNo[$i]))
                                                                     @foreach($allowedTestKitNo[$i] as $value=>$option)
@@ -301,7 +301,7 @@ $test = '';
                                                                 </h5>
                                                                 <div class="form-group">
 
-                                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this.value)">
+                                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
                                                                         <option value="">--Select--</option>
                                                                         @foreach($kittype as $row2)
                                                                         @if(isset($latest->$test_id) && $latest->$test_id !='')
@@ -335,7 +335,8 @@ $test = '';
                                                         @endfor
                                                 </tr>
                                                 <tr>
-                                                    @for($k = 1; $k <= $globalValue; $k++) <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
+                                                    @for($k = 1; $k <= $globalValue; $k++)
+                                                    <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
                                                         <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
                                                         </td>
                                                         @endfor
@@ -494,7 +495,7 @@ $test = '';
             $('#endDate' + id).datepicker('setStartDate', minDate);
         });
         // var minDate = new Date(selected.date.valueOf());
-        //    $('#endDate'+id).datepicker('setStartDate', minDate);
+        // $('#endDate'+id).datepicker('setStartDate', minDate);
     }
 
     function changeEndDate(id) {
@@ -575,7 +576,7 @@ $test = '';
 							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}"  onchange="replaceTestKitHeadings(\'{{$i}}\',\''+rowCount+'\',this)">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_'+rowCount+'" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\''+rowCount+'\',this)">\
 									<option value="">--Select--</option>\
 										@if(isset($allowedTestKitNo[$i]))\
 											@foreach($allowedTestKitNo[$i] as $value=>$option)\
@@ -598,7 +599,7 @@ $test = '';
 							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}',\''+rowCount+'\',this)">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_'+rowCount+'" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}',\''+rowCount+'\',this)">\
 										@foreach($kittype as $row2)\
 										<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>\
 										@endforeach\
@@ -742,7 +743,7 @@ $test = '';
 
     function replaceTestKitHeadings(headingNo,rowNo,selectObj){
         //console.log(headingNo,rowNo,$(selectObj).find(":selected").text());
-        let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text())||`Test Kit ${headingNo}`;
+        let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text()) || `Test Kit ${headingNo}`;
         $(`#testKitHeading${headingNo}_${rowNo}`).html(optionSelected);
     }
 </script>
