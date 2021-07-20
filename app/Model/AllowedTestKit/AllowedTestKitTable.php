@@ -37,11 +37,13 @@ class AllowedTestKitTable extends Model
     // Fetch All AllowedKitTest List
     public function fetchAllAllowedKitTest()
     {
+        DB::enableQueryLog();
         $data = DB::table('allowed_testkits')
             ->select(DB::raw("group_concat(test_kits.test_kit_name) as test_kit_name, allowed_testkits.test_kit_no"))
             ->join('test_kits', 'test_kits.tk_id', '=', 'allowed_testkits.testkit_id')
-            ->groupBy('allowed_testkits.testkit_id')
+            ->groupBy('allowed_testkits.test_kit_no')
             ->get();
+        // dd(DB::getQueryLog($data));die;
         return $data;
     }
 
