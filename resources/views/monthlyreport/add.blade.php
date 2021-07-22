@@ -712,7 +712,7 @@ $test = '';
             let lotNoBlock2 = $(`#lotNO${rowCount}${headingNo}`).val(lotNoBlock1);
             let expiryDateBlock2 = $(`#expiryDate${rowCount}${headingNo}`).val(expiryDateBlock1);
             let tkBlock2 = $(`#testkitId${headingNo}_${rowCount}`).val(tkBlock1);
-            let optionSelected = $(`#testkitId${headingNo}_${defaultRow}`).find(":selected").text();
+            let optionSelected = ($(`#testkitId${headingNo}_${defaultRow}`).val() && $(`#testkitId${headingNo}_${defaultRow}`).find(":selected").text()) || `Test Kit ${headingNo}`;
             $(`#testKitHeading${headingNo}_${rowCount}`).html(optionSelected);
         }
     }

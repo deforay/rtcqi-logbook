@@ -33,6 +33,18 @@
         background: #eee;
     }
 </style>
+<?php
+
+use App\Service\GlobalConfigService;
+
+$GlobalConfigService = new GlobalConfigService();
+$glob = $GlobalConfigService->getAllGlobalConfig();
+$arr = array();
+// now we create an associative array so that we can easily create view variables
+for ($i = 0; $i < sizeof($glob); $i++) {
+    $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+}
+?>
 
 <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
     <table class="table table-bordered " id="testKitTable" style="width:100%;">
@@ -43,9 +55,9 @@
                 <th class="th" style="width:10%;">Site</th>
                 <th class="th" style="width:10%;">Algo</th>
                 <th class="th" style="width:10%;">Date</th>
-                <th class="th" style="width:5%;">Test 1 Used</th>
-                <th class="th" style="width:5%;">Test 2 Used</th>
-                <th class="th" style="width:5%;">Test 3 Used</th>
+                @for($i = 1; $i <= $arr['no_of_test']; $i++)
+                <th class="th" style="width:5%;">Test {{$i}} Used</th>
+                @endfor
                 <th class="th" style="width:5%;">Invalid Result</th>
 
             </tr>
@@ -72,9 +84,10 @@
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_1_kit_used}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_2_kit_used}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_3_kit_used}}</td>
+                @for($l = 1; $l <= $arr['no_of_test']; $l++) 
+                <?php $test_kit_used = 'test_' . $l . '_kit_used';   ?>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$test_kit_used}}</td>
+                @endfor
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->total_invalid}}</td>
             </tr>
             @endforeach
