@@ -227,9 +227,23 @@ class MonthlyReportTable extends Model
 
     public function fetchTrendMonthlyReport($params)
     {
+        $commonservice = new CommonService();
         $user_id = session('userId');
         $result = array();
         $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
         DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
@@ -240,10 +254,10 @@ class MonthlyReportTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
 
-        if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-            $query = $query->where(function ($query) use ($data) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -314,8 +328,22 @@ class MonthlyReportTable extends Model
 
     public function fetchLogbookReport($params)
     {
+        $commonservice = new CommonService();
         $user_id = session('userId');
         $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
@@ -326,10 +354,10 @@ class MonthlyReportTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
 
-        if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-            $query = $query->where(function ($query) use ($data) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -364,9 +392,23 @@ class MonthlyReportTable extends Model
     // Test Kit Use Data
     public function fetchTestKitMonthlyReport($params)
     {
+        $commonservice = new CommonService();
         $user_id = session('userId');
         $result = array();
         $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
         DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
@@ -377,10 +419,10 @@ class MonthlyReportTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
 
-        if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-            $query = $query->where(function ($query) use ($data) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -436,9 +478,23 @@ class MonthlyReportTable extends Model
 
     public function fetchCustomMonthlyReport($params)
     {
+        $commonservice = new CommonService();
         $user_id = session('userId');
         $result = array();
         $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
         DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
@@ -451,10 +507,10 @@ class MonthlyReportTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
 
-        if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-            $query = $query->where(function ($query) use ($data) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -854,8 +910,22 @@ class MonthlyReportTable extends Model
 
     public function fetchInvalidResultReport($params)
     {
+        $commonservice = new CommonService();
         $user_id = session('userId');
         $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
@@ -869,10 +939,10 @@ class MonthlyReportTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
 
-        if (trim($data['startDate']) != "" && trim($data['endDate']) != "") {
-            $query = $query->where(function ($query) use ($data) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $data['startDate'])
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $data['endDate']);
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -970,8 +1040,8 @@ class MonthlyReportTable extends Model
             ->selectRaw('count(monthly_reports.mr_id) as total')
             //->value('count(monthly_reports.mr_id) as total')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->where('users_testsite_map.user_id','=', $user_id)->value('total');
-            //dd(DB::getQueryLog());
+            ->where('users_testsite_map.user_id', '=', $user_id)->value('total');
+        //dd(DB::getQueryLog());
         return $data;
     }
     public function fetchCountOfMonthlyReport()
@@ -984,8 +1054,8 @@ class MonthlyReportTable extends Model
             ->select(DB::raw('count(mr_id) as total'))
             ->whereBetween('date_of_data_collection', [$dateS, $dateE])
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->where('users_testsite_map.user_id','=', $user_id)->value('total');
-            // ->value('count(monthly_reports.mr_id) as total');
+            ->where('users_testsite_map.user_id', '=', $user_id)->value('total');
+        // ->value('count(monthly_reports.mr_id) as total');
         // dd(DB::getQueryLog());die;
         return $data;
     }
