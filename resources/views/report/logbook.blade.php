@@ -10,7 +10,10 @@
 
 @section('content')
 
-
+<?php
+$enddate = date('d-M-Y');
+$startdate = date('d-M-Y', strtotime('-29 days'));
+?>
 
 <div class="content-wrapper">
     <div class="content-header row">
@@ -72,21 +75,12 @@
                                     <form class="form form-horizontal" role="form" name="logBookReportFilter" id="logBookReportFilter" method="post" action="/logbookexcelexport">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Start Date <span class="mandatory">*</span>
+                                                    <h5>Date Range <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                        <input type="text" id="startDate" value="<?php echo date('d-m-Y', strtotime('-30 days')); ?>" class="form-control isRequired" autocomplete="off" name="startDate" title="Please select Start Date">
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>End Date <span class="mandatory">*</span>
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <input type="text" id="endDate" value="<?php echo date('d-m-Y'); ?>" class="form-control isRequired" autocomplete="off" name="endDate" title="Please select End Date">
+                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -103,8 +97,6 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5>Testing Algothrim
@@ -117,6 +109,8 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5> Site Name
@@ -130,6 +124,7 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                        </div>
 
                                             <div class="col-md-7" style="color:#FFF;">
                                                 <div class="form-group row">
@@ -198,8 +193,7 @@
     });
 
     function getLogbookReport() {
-        startDate = $('#startDate').val();
-        endDate = $('#endDate').val();
+        let searchDate = $('#searchDate').val();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -209,8 +203,7 @@
             url: "{{ url('/getLogbookReport') }}",
             method: 'post',
             data: {
-                startDate: startDate,
-                endDate: endDate,
+                searchDate: searchDate,
                 facilityId: $("#facilityId").val(),
                 algorithmType: $("#algorithmType").val(),
                 testSiteId: $("#testSiteId").val(),
@@ -222,25 +215,32 @@
     }
 
     $(document).ready(function() {
-        var date1 = new Date();
-        var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
-        $("#startDate").datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            endDate: today,
-        }).on('changeDate', function(selected) {
-            var minDate = new Date(selected.date.valueOf());
-            $('#endDate').datepicker('setStartDate', minDate);
-        });
-
-        $("#endDate").datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            endDate: today,
-        }).on('changeDate', function(selected) {
-            var minDate = new Date(selected.date.valueOf());
-            $('#startDate').datepicker('setEndDate', minDate);
-        });
+        $('#searchDate').daterangepicker({
+                format: 'DD-MMM-YYYY',
+                autoUpdateInput: false,
+                separator: ' to ',
+                startDate: moment().subtract('days', 29),
+                endDate: moment(),
+                maxDate: moment(),
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                    'Last 60 Days': [moment().subtract('days', 59), moment()],
+                    'Last 180 Days': [moment().subtract('days', 179), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                    'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                }
+            },
+            function(start, end) {
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+                $('input[name="searchDate"]').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+                });
+            });
     });
 
     $(document).ready(function() {
