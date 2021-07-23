@@ -1,8 +1,26 @@
+<?php
+use App\Service\GlobalConfigService;
 
+$GlobalConfigService = new GlobalConfigService();
+$glob = $GlobalConfigService->getAllGlobalConfig();
+$arr = array();
+// now we create an associative array so that we can easily create view variables
+for ($i = 0; $i < sizeof($glob); $i++) {
+    $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+}
+?>
 <table style="border: 3px solid black">
     <thead style="border: 3px solid black">
     <tr>
+    @if($arr['no_of_test'] == 1)
+        <td colspan="11" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        @elseif($arr['no_of_test'] == 2)
+        <td colspan="14" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        @elseif($arr['no_of_test'] == 3)
         <td colspan="17" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        @else
+        <td colspan="20" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        @endif
       </tr>
     <tr style="border: 3px solid black">
         <th style="border: 3px solid black;font-weight:bold;">Facility</th>

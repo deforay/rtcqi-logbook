@@ -228,6 +228,13 @@ class MonthlyReportTable extends Model
     public function fetchTrendMonthlyReport($params)
     {
         $commonservice = new CommonService();
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
         $user_id = session('userId');
         $result = array();
         $data = $params;
@@ -273,41 +280,29 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
             $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
             $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
             $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
 
@@ -393,6 +388,13 @@ class MonthlyReportTable extends Model
     public function fetchTestKitMonthlyReport($params)
     {
         $commonservice = new CommonService();
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
         $user_id = session('userId');
         $result = array();
         $data = $params;
@@ -438,26 +440,50 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive + monthly_reports_pages.test_1_nonreactive + monthly_reports_pages.test_1_invalid) as test_1_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive + monthly_reports_pages.test_2_nonreactive + monthly_reports_pages.test_2_invalid) as test_2_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive + monthly_reports_pages.test_3_nonreactive + monthly_reports_pages.test_3_invalid) as test_3_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid) as total_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive + monthly_reports_pages.test_' . $l . '_nonreactive + monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_kit_used');
+            }
+            if ($arr['no_of_test'] == 1) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as total_invalid');
+            } elseif ($arr['no_of_test'] == 2) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid) as total_invalid');
+            } elseif ($arr['no_of_test'] == 3) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid) as total_invalid');
+            } else {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid + monthly_reports_pages.test_4_invalid) as total_invalid');
+            }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
             $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive + monthly_reports_pages.test_1_nonreactive + monthly_reports_pages.test_1_invalid) as test_1_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive + monthly_reports_pages.test_2_nonreactive + monthly_reports_pages.test_2_invalid) as test_2_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive + monthly_reports_pages.test_3_nonreactive + monthly_reports_pages.test_3_invalid) as test_3_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid) as total_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive + monthly_reports_pages.test_' . $l . '_nonreactive + monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_kit_used');
+            }
+            if ($arr['no_of_test'] == 1) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as total_invalid');
+            } elseif ($arr['no_of_test'] == 2) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid) as total_invalid');
+            } elseif ($arr['no_of_test'] == 3) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid) as total_invalid');
+            } else {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid + monthly_reports_pages.test_4_invalid) as total_invalid');
+            }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive + monthly_reports_pages.test_1_nonreactive + monthly_reports_pages.test_1_invalid) as test_1_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive + monthly_reports_pages.test_2_nonreactive + monthly_reports_pages.test_2_invalid) as test_2_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive + monthly_reports_pages.test_3_nonreactive + monthly_reports_pages.test_3_invalid) as test_3_kit_used');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid) as total_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive + monthly_reports_pages.test_' . $l . '_nonreactive + monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_kit_used');
+            }
+            if ($arr['no_of_test'] == 1) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as total_invalid');
+            } elseif ($arr['no_of_test'] == 2) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid) as total_invalid');
+            } elseif ($arr['no_of_test'] == 3) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid) as total_invalid');
+            } else {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid + monthly_reports_pages.test_4_invalid) as total_invalid');
+            }
             $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
             $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
 
@@ -479,6 +505,13 @@ class MonthlyReportTable extends Model
     public function fetchCustomMonthlyReport($params)
     {
         $commonservice = new CommonService();
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
         $user_id = session('userId');
         $result = array();
         $data = $params;
@@ -534,41 +567,29 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('districts.district_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
             $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_reactive) as test_1_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_nonreactive) as test_1_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid) as test_1_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_reactive) as test_2_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_nonreactive) as test_2_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_2_invalid) as test_2_invalid');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_reactive) as test_3_reactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_nonreactive) as test_3_nonreactive');
-            $query = $query->selectRaw('sum(monthly_reports_pages.test_3_invalid) as test_3_invalid');
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
             $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
             $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
 
@@ -911,6 +932,13 @@ class MonthlyReportTable extends Model
     public function fetchInvalidResultReport($params)
     {
         $commonservice = new CommonService();
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
         $user_id = session('userId');
         $data = $params;
         $start_date = '';
@@ -927,7 +955,31 @@ class MonthlyReportTable extends Model
             }
         }
         // DB::enableQueryLog();
+        if ($arr['no_of_test'] == 1) {
         $query = DB::table('monthly_reports_pages')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
+        }
+        elseif ($arr['no_of_test'] == 2) {
+            $query = DB::table('monthly_reports_pages')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+            ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
+        }
+        elseif ($arr['no_of_test'] == 3) {
+            $query = DB::table('monthly_reports_pages')
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
@@ -938,6 +990,21 @@ class MonthlyReportTable extends Model
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
+        }
+        else {
+            $query = DB::table('monthly_reports_pages')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name','tk4.test_kit_name as testKit_4_name')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+            ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
+            ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
+            ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
+            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->where('users_testsite_map.user_id', '=', $user_id);
+        }
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
