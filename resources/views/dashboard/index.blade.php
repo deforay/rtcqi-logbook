@@ -218,7 +218,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                 <td class="text-truncate">{{$date_of_collection}}</td>
                                 <td class="text-truncate">{{$start_date}}</td>
                                 <td class="text-truncate">{{$end_date}}</td>
-                                <td class="text-truncate">{{$row->total}}</td>
+                                <td class="text-truncate">{{$row->total_test}}</td>
                                 </tr>
                                 @endforeach
                         </tbody>
