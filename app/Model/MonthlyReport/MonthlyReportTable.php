@@ -1144,16 +1144,20 @@ class MonthlyReportTable extends Model
     public function fetchMonthlyData()
     {
         $user_id = session('userId');
+        DB::enableQueryLog();
         $data = DB::table('monthly_reports')
-            ->select('monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', DB::raw('sum(monthly_reports_pages.test_1_reactive + monthly_reports_pages.test_1_nonreactive) as total'), 'test_sites.site_name', 'site_types.site_type_name', 'monthly_reports_pages.start_test_date', 'monthly_reports_pages.end_test_date')
+            ->select('monthly_reports.mr_id','monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', DB::raw('sum(m1.test_1_reactive + m1.test_1_nonreactive) as total_test'), 'test_sites.site_name', 'site_types.site_type_name', DB::raw('MIN(m1.start_test_date) as start_test_date'), DB::raw('MAX(m1.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+            ->join('monthly_reports_pages as m1', 'm1.mr_id', '=', 'monthly_reports.mr_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id)
             ->limit(10)
             ->orderBy('date_of_data_collection', 'desc')
+            ->groupBy('monthly_reports.mr_id')
             ->get();
+            // dd($data);die;
+        // dd(DB::getQueryLog($data));die;    
         return $data;
     }
 }
