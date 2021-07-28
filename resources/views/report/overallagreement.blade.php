@@ -222,10 +222,15 @@ $row = ['Kit Name', 'Lot No', 'Expiry Date', 'Test Result', 'No of Tests'];
                                                     {{$report[0]->final_undetermined}}
                                                 </td>
                                                 <td style=" text-align: center;">
-                                                    {{$report[0]->overall_agreement}}
+                                                    <?php
+                                                    $OverallAgreement = number_format(100 * ($report[0]->test_2_reactive + $report[0]->test_1_nonreactive) / ($report[0]->test_1_reactive + $report[0]->test_1_nonreactive), 2);
+                                                    ?>
+                                                    {{$OverallAgreement}}
                                                 </td>
                                                 <td style=" text-align: center;">
-                                                    {{$report[0]->positive_agreement}}
+                                                    <?php $posAgreement = number_format(100 * ($report[0]->test_2_reactive) / ($report[0]->test_1_reactive), 2);
+                                                    ?>
+                                                    {{$posAgreement}}
                                                 </td>
                                             </tr>
                                         </table>
