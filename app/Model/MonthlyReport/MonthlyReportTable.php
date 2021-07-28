@@ -324,6 +324,13 @@ class MonthlyReportTable extends Model
     public function fetchLogbookReport($params)
     {
         $commonservice = new CommonService();
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
         $user_id = session('userId');
         $data = $params;
         $start_date = '';
@@ -340,19 +347,26 @@ class MonthlyReportTable extends Model
             }
         }
         // DB::enableQueryLog();
-        $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
-            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+        $query = DB::table('monthly_reports_pages as mrp')
+            ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->groupBy('monthly_reports.mr_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
+
+        for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+            $query = $query->selectRaw('sum(mrp.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+            $query = $query->selectRaw('sum(mrp.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+            $query = $query->selectRaw('sum(mrp.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+        }
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
+                $query->where('mrp.end_test_date',  '>=', $start_date)
+                    ->orWhere('mrp.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -374,14 +388,34 @@ class MonthlyReportTable extends Model
     /// Page summary for log data
     public function fetchPageSummary($id)
     {
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
         $id = base64_decode($id);
-        $data = DB::table('monthly_reports_pages')
-            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+        $data = DB::table('monthly_reports_pages as mrp')
+            ->select('monthly_reports.*', DB::raw('sum(mrp.final_undetermined) as final_undetermined'), DB::raw('sum(mrp.final_negative) as final_negative'), 'mrp.page_no as page_no', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->where('monthly_reports_pages.mrp_id', '=', $id)->get();
-        return $data;
+            ->groupBy('mrp.mr_id')
+            ->where('mrp.mr_id', '=', $id);
+
+        for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+            $data = $data->selectRaw('sum(mrp.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+            $data = $data->selectRaw('sum(mrp.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+            $data = $data->selectRaw('sum(mrp.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            $data = $data->selectRaw('mrp.test_' . $l . '_kit_id');
+            $data = $data->selectRaw('mrp.lot_no_' . $l . '');
+            $data = $data->selectRaw('mrp.expiry_date_' . $l . '');
+        }
+
+        $result = $data->get();
+        return $result;
     }
 
     // Test Kit Use Data
@@ -956,54 +990,51 @@ class MonthlyReportTable extends Model
         }
         // DB::enableQueryLog();
         if ($arr['no_of_test'] == 1) {
-        $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name')
-            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
-            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->where('users_testsite_map.user_id', '=', $user_id);
-        }
-        elseif ($arr['no_of_test'] == 2) {
             $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
-            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
-            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
-            ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->where('users_testsite_map.user_id', '=', $user_id);
-        }
-        elseif ($arr['no_of_test'] == 3) {
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name')
+                ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+                ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+                ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+                ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                ->where('users_testsite_map.user_id', '=', $user_id);
+        } elseif ($arr['no_of_test'] == 2) {
             $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
-            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
-            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
-            ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
-            ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->where('users_testsite_map.user_id', '=', $user_id);
-        }
-        else {
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
+                ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+                ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+                ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+                ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
+                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+                ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                ->where('users_testsite_map.user_id', '=', $user_id);
+        } elseif ($arr['no_of_test'] == 3) {
             $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name','tk4.test_kit_name as testKit_4_name')
-            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
-            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
-            ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
-            ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
-            ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->where('users_testsite_map.user_id', '=', $user_id);
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
+                ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+                ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+                ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+                ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
+                ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
+                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+                ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                ->where('users_testsite_map.user_id', '=', $user_id);
+        } else {
+            $query = DB::table('monthly_reports_pages')
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name', 'tk4.test_kit_name as testKit_4_name')
+                ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+                ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+                ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
+                ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
+                ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
+                ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
+                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+                ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                ->where('users_testsite_map.user_id', '=', $user_id);
         }
 
         if (trim($start_date) != "" && trim($end_date) != "") {
@@ -1146,7 +1177,7 @@ class MonthlyReportTable extends Model
         $user_id = session('userId');
         DB::enableQueryLog();
         $data = DB::table('monthly_reports')
-            ->select('monthly_reports.mr_id','monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', DB::raw('sum(m1.test_1_reactive + m1.test_1_nonreactive) as total_test'), 'test_sites.site_name', 'site_types.site_type_name', DB::raw('MIN(m1.start_test_date) as start_test_date'), DB::raw('MAX(m1.end_test_date) as end_test_date'))
+            ->select('monthly_reports.mr_id', 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', DB::raw('sum(m1.test_1_reactive + m1.test_1_nonreactive) as total_test'), 'test_sites.site_name', 'site_types.site_type_name', DB::raw('MIN(m1.start_test_date) as start_test_date'), DB::raw('MAX(m1.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('monthly_reports_pages as m1', 'm1.mr_id', '=', 'monthly_reports.mr_id')
@@ -1156,7 +1187,6 @@ class MonthlyReportTable extends Model
             ->orderBy('date_of_data_collection', 'desc')
             ->groupBy('monthly_reports.mr_id')
             ->get();
-            // dd($data);die;
         // dd(DB::getQueryLog($data));die;    
         return $data;
     }
