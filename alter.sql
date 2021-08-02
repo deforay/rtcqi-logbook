@@ -394,3 +394,15 @@ ALTER TABLE `facilities` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`
 --Sakthivel P 8 July 2021
 
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Latitude', 'latitude', '11.1271'), (NULL, 'Longitude', 'longitude', '78.6569');
+
+--Sakthivel P 29 July 2021
+CREATE TABLE `track` (
+`log_id` int NOT NULL ,
+`event_type` TEXT DEFAULT NULL,
+`action` mediumtext,
+`resource` TEXT DEFAULT NULL,
+`date_time` datetime DEFAULT NULL,
+`ip_address` TEXT DEFAULT NULL,
+PRIMARY KEY (`log_id`)
+);
+ALTER TABLE `track` CHANGE `log_id` `log_id` INT(11) NOT NULL AUTO_INCREMENT;

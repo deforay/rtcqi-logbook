@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use DateTime;
 use DateInterval;
 use DatePeriod;
+use DateTimeZone;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User\UserTable;
@@ -249,9 +250,9 @@ class CommonService
         return $eventResult;
     }
     
-    public function getDateTime($timezone = 'Asia/Calcutta')
+    public function getDateTime($timezone = 'Asia/Kolkata')
     {
-        $date = new \DateTime(date('Y-m-d H:i:s'), new \DateTimeZone($timezone));
+        $date = new \DateTime('now', new \DateTimeZone($timezone));
         return $date->format('Y-m-d H:i:s');
     }
     

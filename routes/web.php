@@ -45,7 +45,7 @@ Route::post('/user/profile/{id}', 'User\UserController@profile');
 //login module
 Route::get('/login', 'Login\LoginController@index')->name('login.index');
 Route::post('/login/validate', 'Login\LoginController@validateEmployee');
-Route::match(['get','post'],'/logout', 'Login\LoginController@logout');
+Route::match(['get','post'],'/logout/{name}', 'Login\LoginController@logout');
 
 // Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
 Route::get('/unauthorized', function()
