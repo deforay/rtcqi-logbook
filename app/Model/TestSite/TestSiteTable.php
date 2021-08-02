@@ -16,6 +16,7 @@ class TestSiteTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        $user_name = session('name');
         $commonservice = new CommonService();
         if ($request->input('siteName') != null && trim($request->input('siteName')) != '') {
             $id = DB::table('test_sites')->insertGetId(
@@ -36,6 +37,15 @@ class TestSiteTable extends Model
                     'district_id' => $data['districtId'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
+                ]
+            );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'add-test-site-request',
+                    'action' => $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name',
+                    'resource' => 'test-site',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
                 ]
             );
         }
@@ -75,6 +85,7 @@ class TestSiteTable extends Model
     // Update particular TestSite details
     public function updateTestSite($params, $id)
     {
+        $user_name = session('name');
         $commonservice = new CommonService();
         $data = $params->all();
         $testData = array(
@@ -92,14 +103,31 @@ class TestSiteTable extends Model
             'facility_id' => $data['facilityId'],
             'provincesss_id' => $data['provincesssId'],
             'district_id' => $data['districtId'],
-            'updated_by' => session('userId'),
-            'updated_on' => $commonservice->getDateTime()
+            'updated_by' => session('userId')
         );
         $response = DB::table('test_sites')
             ->where('ts_id', '=', base64_decode($id))
             ->update(
                 $testData
             );
+        if ($response == 1) {
+            $response = DB::table('test_sites')
+                ->where('ts_id', '=', base64_decode($id))
+                ->update(
+                    array(
+                        'updated_on' => $commonservice->getDateTime()
+                    )
+                );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'update-test-site-request',
+                    'action' => $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name',
+                    'resource' => 'test-site',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
+                ]
+            );
+        }
         return $response;
     }
 

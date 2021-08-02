@@ -16,12 +16,22 @@ class ProvinceTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        $user_name = session('name');
         $commonservice = new CommonService();
         if ($request->input('provinceName')!=null && trim($request->input('provinceName')) != '') {
             $id = DB::table('provinces')->insertGetId(
                 [
                 'province_name' => $data['provinceName'],
                 'province_status' => $data['provinceStatus'],
+                ]
+            );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'add-province-request',
+                    'action' => $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name',
+                    'resource' => 'province',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
                 ]
             );
         }
@@ -61,6 +71,8 @@ class ProvinceTable extends Model
     public function updateProvince($params,$id)
     {
         $data = $params->all();
+        $user_name = session('name');
+        $commonservice = new CommonService();
             $upData = array(
                 'province_name' => $data['provinceName'],
                 'province_status' => $data['provinceStatus'],
@@ -69,6 +81,15 @@ class ProvinceTable extends Model
                 ->where('provincesss_id', '=',base64_decode($id))
                 ->update(
                         $upData
+                    );
+                    $userTracking = DB::table('track')->insertGetId(
+                        [
+                            'event_type' => 'update-province-request',
+                            'action' => $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name',
+                            'resource' => 'province',
+                            'date_time' => $commonservice->getDateTime(),
+                            'ip_address' => request()->ip(),
+                        ]
                     );
         return $response;
     }

@@ -43,7 +43,7 @@
                                 <!-- <a class="dropdown-item" href="app-kanban.html"><i class="ft-clipboard"></i> Todo</a>
                                 <a class="dropdown-item" href="user-cards.html"><i class="ft-check-square"></i> Task</a> -->
                                 <div class="dropdown-divider"></div>
-                                <form action="/logout" name="logoutForm" id="logoutForm" method="POST">
+                                <form action="/logout/{{ base64_encode(session('name'))}}" name="logoutForm" id="logoutForm" method="POST">
                                     @csrf
                                     <button type="submit" class="dropdown-item"><i class="ft-power"></i> Logout</button>
                                 </form>

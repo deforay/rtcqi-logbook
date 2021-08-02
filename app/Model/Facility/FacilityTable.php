@@ -16,29 +16,39 @@ class FacilityTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        $user_name = session('name');
         $commonservice = new CommonService();
-       
-        if ($request->input('facilityName')!=null && trim($request->input('facilityName')) != '') {
+
+        if ($request->input('facilityName') != null && trim($request->input('facilityName')) != '') {
             $id = DB::table('facilities')->insertGetId(
                 [
-                'facility_name' => $data['facilityName'],
-                'facility_latitude' => $data['latitude'],
-                'facility_longitude' => $data['longitude'],
-                'facility_address1' => $data['address1'],
-                'facility_address2' => $data['address2'],
-                'facility_postal_code' => $data['postalCode'],
-                'facility_city' => $data['city'],
-                'facility_state' => $data['state'],
-                'facility_country' => $data['country'],
-                'facility_region' => $data['region'],
-                'contact_name' => $data['contactName'],
-                'contact_email' => $data['contactEmail'],
-                'contact_phoneno' => $data['contactPhone'],
-                'facility_status' => $data['facilityStatus'],
-                'provincesss_id' => $data['provincesssId'],
-                'district_id' => $data['districtId'],
-                'created_by' => session('userId'),
-                'created_on' => $commonservice->getDateTime(),
+                    'facility_name' => $data['facilityName'],
+                    'facility_latitude' => $data['latitude'],
+                    'facility_longitude' => $data['longitude'],
+                    'facility_address1' => $data['address1'],
+                    'facility_address2' => $data['address2'],
+                    'facility_postal_code' => $data['postalCode'],
+                    'facility_city' => $data['city'],
+                    'facility_state' => $data['state'],
+                    'facility_country' => $data['country'],
+                    'facility_region' => $data['region'],
+                    'contact_name' => $data['contactName'],
+                    'contact_email' => $data['contactEmail'],
+                    'contact_phoneno' => $data['contactPhone'],
+                    'facility_status' => $data['facilityStatus'],
+                    'provincesss_id' => $data['provincesssId'],
+                    'district_id' => $data['districtId'],
+                    'created_by' => session('userId'),
+                    'created_on' => $commonservice->getDateTime(),
+                ]
+            );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'add-facility-request',
+                    'action' => $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name',
+                    'resource' => 'facility',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
                 ]
             );
         }
@@ -50,7 +60,7 @@ class FacilityTable extends Model
     public function fetchAllFacility()
     {
         $data = DB::table('facilities')
-                ->get();
+            ->get();
         return $data;
     }
 
@@ -58,54 +68,70 @@ class FacilityTable extends Model
     public function fetchAllActiveFacility()
     {
         $data = DB::table('facilities')
-                ->where('facility_status','=','active')
-                ->get();
+            ->where('facility_status', '=', 'active')
+            ->get();
         return $data;
     }
 
-     // fetch particular Facility details
-     public function fetchFacilityById($id)
-     {
-
-         $id = base64_decode($id);
-         $data = DB::table('facilities')
-                ->where('facilities.facility_id', '=',$id )
-                ->get();
-         return $data;
-     }
-
-     // Update particular Facility details
-    public function updateFacility($params,$id)
+    // fetch particular Facility details
+    public function fetchFacilityById($id)
     {
-        $commonservice = new CommonService();
-        $data = $params->all();
-            $testData = array(
-                'facility_name' => $data['facilityName'],
-                'facility_latitude' => $data['latitude'],
-                'facility_longitude' => $data['longitude'],
-                'facility_address1' => $data['address1'],
-                'facility_address2' => $data['address2'],
-                'facility_postal_code' => $data['postalCode'],
-                'facility_city' => $data['city'],
-                'facility_state' => $data['state'],
-                'facility_country' => $data['country'],
-                'facility_region' => $data['region'],
-                'contact_name' => $data['contactName'],
-                'contact_email' => $data['contactEmail'],
-                'contact_phoneno' => $data['contactPhone'],
-                'facility_status' => $data['facilityStatus'],
-                'provincesss_id' => $data['provincesssId'],
-                'district_id' => $data['districtId'],
-                'updated_by' => session('userId'),
-                'updated_on' => $commonservice->getDateTime()
-            );
-            $response = DB::table('facilities')
-                ->where('facility_id', '=',base64_decode($id))
-                ->update(
-                        $testData
-                    );
-        return $response;
+
+        $id = base64_decode($id);
+        $data = DB::table('facilities')
+            ->where('facilities.facility_id', '=', $id)
+            ->get();
+        return $data;
     }
 
-    
+    // Update particular Facility details
+    public function updateFacility($params, $id)
+    {
+        $commonservice = new CommonService();
+        $user_name = session('name');
+        $data = $params->all();
+        $testData = array(
+            'facility_name' => $data['facilityName'],
+            'facility_latitude' => $data['latitude'],
+            'facility_longitude' => $data['longitude'],
+            'facility_address1' => $data['address1'],
+            'facility_address2' => $data['address2'],
+            'facility_postal_code' => $data['postalCode'],
+            'facility_city' => $data['city'],
+            'facility_state' => $data['state'],
+            'facility_country' => $data['country'],
+            'facility_region' => $data['region'],
+            'contact_name' => $data['contactName'],
+            'contact_email' => $data['contactEmail'],
+            'contact_phoneno' => $data['contactPhone'],
+            'facility_status' => $data['facilityStatus'],
+            'provincesss_id' => $data['provincesssId'],
+            'district_id' => $data['districtId'],
+            'updated_by' => session('userId')
+        );
+        $response = DB::table('facilities')
+            ->where('facility_id', '=', base64_decode($id))
+            ->update(
+                $testData
+            );
+        if ($response == 1) {
+            $response = DB::table('facilities')
+                ->where('facility_id', '=', base64_decode($id))
+                ->update(
+                    array(
+                        'updated_on' => $commonservice->getDateTime()
+                    )
+                );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'update-facility-request',
+                    'action' => $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name',
+                    'resource' => 'facility',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
+                ]
+            );
+        }
+        return $response;
+    }
 }

@@ -18,28 +18,39 @@ class UserTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        $user_name = session('name');
         // dd($data);die;
         $commonservice = new CommonService();
-        if ($request->input('firstName')!=null && trim($request->input('firstName')) != '') {
+        if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
             $id = DB::table('users')->insertGetId(
-                ['first_name' => $data['firstName'],
-                'last_name' => $data['lastName'],
-                'password' => Hash::make($data['password']), // Hashing passwords
-                'email' => $data['email'],
-                'phone' => $data['mobileNo'],
-                'user_status' => $data['userStatus'],
-                'created_by' => session('userId'),
-                'created_on' => $commonservice->getDateTime(),
-                ]
-            );
-            for ($x = 0; $x < count($data['testSiteId']); $x++){
-            $userFacility = DB::table('users_testsite_map')->insertGetId(
                 [
-                'user_id' => $id,
-                'ts_id' => $data['testSiteId'][$x],
+                    'first_name' => $data['firstName'],
+                    'last_name' => $data['lastName'],
+                    'password' => Hash::make($data['password']), // Hashing passwords
+                    'email' => $data['email'],
+                    'phone' => $data['mobileNo'],
+                    'user_status' => $data['userStatus'],
+                    'created_by' => session('userId'),
+                    'created_on' => $commonservice->getDateTime(),
                 ]
             );
-        }
+            for ($x = 0; $x < count($data['testSiteId']); $x++) {
+                $userFacility = DB::table('users_testsite_map')->insertGetId(
+                    [
+                        'user_id' => $id,
+                        'ts_id' => $data['testSiteId'][$x],
+                    ]
+                );
+            }
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'add-user-request',
+                    'action' => $user_name . ' added user ' . $data['firstName'] . ' User',
+                    'resource' => 'user',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
+                ]
+            );
         }
 
         return $id;
@@ -49,7 +60,7 @@ class UserTable extends Model
     public function fetchAllUser()
     {
         $data = DB::table('users')
-                ->get();
+            ->get();
         return $data;
     }
 
@@ -57,54 +68,72 @@ class UserTable extends Model
     public function fetchAllActiveUser()
     {
         $data = DB::table('users')
-                ->where('user_status','=','active')
-                ->get();
+            ->where('user_status', '=', 'active')
+            ->get();
         return $data;
     }
 
-     // fetch particular User details
-     public function fetchUserById($id)
-     {
+    // fetch particular User details
+    public function fetchUserById($id)
+    {
 
-         $id = base64_decode($id);
-         $data = DB::table('users')
-                ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
-                ->where('users.user_id', '=',$id )
-                ->get();
-         return $data;
-     }
+        $id = base64_decode($id);
+        $data = DB::table('users')
+            ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
+            ->where('users.user_id', '=', $id)
+            ->get();
+        return $data;
+    }
 
-     // Update particular User details
-    public function updateUser($params,$id)
+    // Update particular User details
+    public function updateUser($params, $id)
     {
         $commonservice = new CommonService();
+        $user_name = session('name');
         $data = $params->all();
-            $user = array(
-                'first_name' => $data['firstName'],
-                'last_name' => $data['lastName'],
-                'email' => $data['email'],
-                'phone' => $data['mobileNo'],
-                'user_status' => $data['userStatus'],
-                'updated_by' => session('userId'),
-                'updated_on' => $commonservice->getDateTime()
+        $user = array(
+            'first_name' => $data['firstName'],
+            'last_name' => $data['lastName'],
+            'email' => $data['email'],
+            'phone' => $data['mobileNo'],
+            'user_status' => $data['userStatus'],
+            'updated_by' => session('userId')
+        );
+        if (trim($data['password']))
+            $user['password'] = Hash::make($data['password']); // Hashing passwords
+        $response = DB::table('users')
+            ->where('user_id', '=', base64_decode($id))
+            ->update(
+                $user
             );
-            if(trim($data['password']))
-                $user['password'] = Hash::make($data['password']); // Hashing passwords
+        if ($response == 1) {
             $response = DB::table('users')
-                ->where('user_id', '=',base64_decode($id))
+                ->where('user_id', '=', base64_decode($id))
                 ->update(
-                        $user
-                    );
-                    DB::delete('delete from users_testsite_map where user_id = ?',[base64_decode($id)]);
+                    array(
+                        'updated_on' => $commonservice->getDateTime()
+                    )
+                );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'update-user-request',
+                    'action' => $user_name . ' has updated the user information for - ' . $data['firstName'],
+                    'resource' => 'user',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
+                ]
+            );
+        }
+        DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
 
-                    for ($x = 0; $x < count($data['testSiteId']); $x++){
-                    $userFacility = DB::table('users_testsite_map')->insertGetId(
-                        [
-                        'user_id' => base64_decode($id),
-                        'ts_id' => $data['testSiteId'][$x],
-                        ]
-                    );
-                }
+        for ($x = 0; $x < count($data['testSiteId']); $x++) {
+            $userFacility = DB::table('users_testsite_map')->insertGetId(
+                [
+                    'user_id' => base64_decode($id),
+                    'ts_id' => $data['testSiteId'][$x],
+                ]
+            );
+        }
         return $response;
     }
 
@@ -112,11 +141,13 @@ class UserTable extends Model
     public function validateLogin($params)
     {
         $data = $params->all();
+        $commonservice = new CommonService();
+        $data = $params->all();
         $result = json_decode(DB::table('users')
-        ->where('users.email', '=',$data['username'] )
-        ->where('user_status','=','active')->get(),true);
-        if(count($result)>0)
-        {
+            ->where('users.email', '=', $data['username'])
+            ->where('user_status', '=', 'active')->get(), true);
+        $user_name = $result[0]['first_name'];
+        if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {
                 session(['name' => $result[0]['first_name']]);
@@ -125,67 +156,70 @@ class UserTable extends Model
                 session(['phone' => $result[0]['phone']]);
                 session(['userId' => $result[0]['user_id']]);
                 session(['login' => true]);
+                $userTracking = DB::table('track')->insertGetId(
+                    [
+                        'event_type' => 'login',
+                        'action' => $user_name . ' logged in',
+                        'resource' => 'user',
+                        'date_time' => $commonservice->getDateTime(),
+                        'ip_address' => request()->ip(),
+                    ]
+                );
                 return 1;
             }
-        }
-        else
-        {
+        } else {
             return 0;
         }
     }
 
 
 
-     // Update particular User details
-     public function updateProfile($params,$id)
-     {
-         $commonservice = new CommonService();
-         $data = $params->all();
-         if ($params->input('firstName')!=null && trim($params->input('firstName')) != '') {
-             $user = array(
-                 'first_name' => $data['firstName'],
-                 'last_name' => $data['lastName'],
-                 'email' => $data['email'],
-                 'phone' => $data['mobileNo'],
-                 'updated_by' => session('userId'),
-                 'updated_on' => $commonservice->getDateTime()
-             );
+    // Update particular User details
+    public function updateProfile($params, $id)
+    {
+        $commonservice = new CommonService();
+        $data = $params->all();
+        if ($params->input('firstName') != null && trim($params->input('firstName')) != '') {
+            $user = array(
+                'first_name' => $data['firstName'],
+                'last_name' => $data['lastName'],
+                'email' => $data['email'],
+                'phone' => $data['mobileNo'],
+                'updated_by' => session('userId'),
+                'updated_on' => $commonservice->getDateTime()
+            );
 
-             $response = DB::table('users')
-                 ->where('user_id', '=',base64_decode($id))
-                 ->update(
-                         $user
-                     );
-         }
-         return $response;
-     }
+            $response = DB::table('users')
+                ->where('user_id', '=', base64_decode($id))
+                ->update(
+                    $user
+                );
+        }
+        return $response;
+    }
 
-     //Update Password
-    public function updatePassword($params,$id)
+    //Update Password
+    public function updatePassword($params, $id)
     {
         $data = $params->all();
-        $newPassword= Hash::make($data['newPassword']);
-        $result = json_decode(DB::table('users')->where('user_id', '=',base64_decode($id) )->get(),true);
-        if(count($result)>0)
-        {
+        $newPassword = Hash::make($data['newPassword']);
+        $result = json_decode(DB::table('users')->where('user_id', '=', base64_decode($id))->get(), true);
+        if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['currentPassword'], $hashedPassword)) {
                 $response = DB::table('users')
-                ->where('user_id', '=',base64_decode($id))
-                ->update([
-                    'password'=> $newPassword
-                    ]
-                );
+                    ->where('user_id', '=', base64_decode($id))
+                    ->update(
+                        [
+                            'password' => $newPassword
+                        ]
+                    );
                 return $response;
             }
             $commonservice = new CommonService();
-            $commonservice->eventLog(base64_decode($id),base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
-
-        }
-        else
-        {
+            $commonservice->eventLog(base64_decode($id), base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
+        } else {
             return 0;
         }
     }
-
 }

@@ -43,7 +43,7 @@
                                 <!-- <a class="dropdown-item" href="app-kanban.html"><i class="ft-clipboard"></i> Todo</a>
                                 <a class="dropdown-item" href="user-cards.html"><i class="ft-check-square"></i> Task</a> -->
                                 <div class="dropdown-divider"></div>
-                                <form action="/logout" name="logoutForm" id="logoutForm" method="POST">
+                                <form action="/logout/<?php echo e(base64_encode(session('name'))); ?>" name="logoutForm" id="logoutForm" method="POST">
                                     <?php echo csrf_field(); ?>
                                     <button type="submit" class="dropdown-item"><i class="ft-power"></i> Logout</button>
                                 </form>
