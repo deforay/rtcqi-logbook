@@ -18,6 +18,8 @@ class AllowedTestKitTable extends Model
     {
         //to get all request values
         $id = 0;
+        $user_name = session('name');
+        $commonservice = new CommonService();
         $data = $request->all();
 
         if ($request->input('testKitNo') != null && trim($request->input('testKitNo')) != '') {
@@ -30,6 +32,15 @@ class AllowedTestKitTable extends Model
                     ]
                 );
             }
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'add-allowed-testkits-request',
+                    'action' => $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No',
+                    'resource' => 'allowed-testkits',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
+                ]
+            );
         }
         return $id;
     }
@@ -62,7 +73,9 @@ class AllowedTestKitTable extends Model
     public function updateAllowedTestKit($params, $id)
     {
         $data = $params->all();
-        DB::delete('delete from allowed_testkits where test_kit_no = ?',[base64_decode($id)]);
+        $user_name = session('name');
+        $commonservice = new CommonService();
+        DB::delete('delete from allowed_testkits where test_kit_no = ?', [base64_decode($id)]);
         for ($x = 0; $x < count($data['testKitName']); $x++) {
             $id = DB::table('allowed_testkits')->insert(
                 [
@@ -71,6 +84,15 @@ class AllowedTestKitTable extends Model
                 ]
             );
         }
+        $userTracking = DB::table('track')->insertGetId(
+            [
+                'event_type' => 'update-allowed-testkits-request',
+                'action' => $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No',
+                'resource' => 'allowed-testkits',
+                'date_time' => $commonservice->getDateTime(),
+                'ip_address' => request()->ip(),
+            ]
+        );
 
         return $id;
     }
@@ -82,15 +104,14 @@ class AllowedTestKitTable extends Model
         $model = new TestKitTable();
         DB::enableQueryLog();
         $data = DB::table('allowed_testkits')
-            ->select('allowed_testkits.*','test_kits.test_kit_name')
+            ->select('allowed_testkits.*', 'test_kits.test_kit_name')
             ->join('test_kits', 'test_kits.tk_id', '=', 'allowed_testkits.testkit_id')
-            ->where('allowed_testkits.test_kit_no' ,'<=',$kitNo)
-            ->where('test_kits.test_kit_status', '=' ,'active')
+            ->where('allowed_testkits.test_kit_no', '<=', $kitNo)
+            ->where('test_kits.test_kit_status', '=', 'active')
             ->get();
         // dd(DB::getQueryLog($data));die;
         // dd($data);die;
-        foreach($data as $row)
-        {
+        foreach ($data as $row) {
             $testKitList[$row->test_kit_no][$row->testkit_id] = $row->test_kit_name;
             // $testKitList['name'][$row->test_kit_no] = $row->test_kit_name;?
         }

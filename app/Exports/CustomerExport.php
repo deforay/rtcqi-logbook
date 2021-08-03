@@ -22,6 +22,7 @@ class CustomerExport implements FromView, ShouldAutoSize
         $GlobalConfigService = new GlobalConfigService();
         $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
         $monthlyReportService = new MonthlyReportService();
+        $insertData = $monthlyReportService->customReportData();
         $data = $monthlyReportService->getCustomMonthlyReport($this->requestdata);
         return view('exports.customerexport', array('report'=>$data,'globalValue'=>$globalValue
         ));

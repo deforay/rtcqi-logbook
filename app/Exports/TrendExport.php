@@ -23,6 +23,7 @@ class TrendExport implements FromView, ShouldAutoSize
         $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getTrendMonthlyReport($this->requestdata);
+        $insertData = $monthlyReportService->insertTrendData();
         return view('exports.trendexport', array('report'=>$data,'globalValue'=>$globalValue
         ));
     }

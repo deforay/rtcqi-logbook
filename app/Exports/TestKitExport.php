@@ -21,6 +21,7 @@ class TestKitExport implements FromView, ShouldAutoSize
     public function view(): View
     {
         $monthlyReportService = new MonthlyReportService();
+        $insertData = $monthlyReportService->insertTestKitData();
         $data = $monthlyReportService->getTestKitMonthlyReport($this->requestdata);
         return view('exports.testkitexport', ['report'=>$data
         ]);

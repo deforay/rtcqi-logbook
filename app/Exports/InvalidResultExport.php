@@ -22,6 +22,7 @@ class InvalidResultExport implements FromView, ShouldAutoSize
         $GlobalConfigService = new GlobalConfigService();
         $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
         $monthlyReportService = new MonthlyReportService();
+        $insertData = $monthlyReportService->invalidReportData();
         $data = $monthlyReportService->getInvalidResultReport($this->requestdata);
         return view('exports.invalidresultexport', array('report'=>$data,'globalValue'=>$globalValue
         ));

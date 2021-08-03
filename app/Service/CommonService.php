@@ -255,6 +255,12 @@ class CommonService
         $date = new \DateTime('now', new \DateTimeZone($timezone));
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function getDateAndTime($timezone = 'Asia/Kolkata')
+    {
+        $date = new \DateTime('now', new \DateTimeZone($timezone));
+        return $date->format('d-M-Y-H-i-s');
+    }
     
     public function addNewField($request)
     {
@@ -441,7 +447,7 @@ class CommonService
     public function updatePassword($params,$id){
         DB::beginTransaction();
     	try {
-            if(session('loginType')=='users'){
+            // if(session('loginType')=='users'){
                 $model = new UserTable();
                 $addUser = $model->updatePassword($params,$id);
                 // dd($addUser);
@@ -454,8 +460,8 @@ class CommonService
                     $msg = '1';
                     return $msg;
                 }
-            }
-            else if(session('loginType')=='vendor'){
+            //}
+             if(session('loginType')=='vendor'){
                 $model = new VendorsTable();
                 $addVendors = $model->updatePassword($params,$id);
                 if($addVendors>0){

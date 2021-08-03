@@ -29,13 +29,13 @@
         <div class="content-header-right col-md-6 col-12 ">
             <div class="dropdown float-md-right ml-1">
                 @if($global['no_of_test'] == 1)
-                <a href="{{ asset('assets/MonthlyReportSample1test.xlsx') }}" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <a href="{{ asset('assets/MonthlyReportSample1test.xlsx') }}" onclick="insertData()" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                     @elseif($global['no_of_test'] == 2)
-                    <a href="{{ asset('assets/MonthlyReportSample2test.xlsx') }}" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                    <a href="{{ asset('assets/MonthlyReportSample2test.xlsx') }}" onclick="insertData()" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                         @elseif($global['no_of_test'] == 3)
-                        <a href="{{ asset('assets/MonthlyReportSample3test.xlsx') }}" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <a href="{{ asset('assets/MonthlyReportSample3test.xlsx') }}" onclick="insertData()" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                             @elseif($global['no_of_test'] == 4)
-                            <a href="{{ asset('assets/MonthlyReportSample4test.xlsx') }}" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                            <a href="{{ asset('assets/MonthlyReportSample4test.xlsx') }}" onclick="insertData()" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                                 @endif
                                 <b><i class="ft-download icon-left"></i> Download Sample Monthly Report Excel Sheet</b></a>
             </div>
@@ -123,6 +123,20 @@
             $('#show_alert').css("display", "block");
             $(".infocus").focus();
         }
+    }
+
+    function insertData(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/insertTrackTable') }}",
+            method: 'get',
+            success: function(result) {
+            }
+        });
     }
 </script>
 @endsection

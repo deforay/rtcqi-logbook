@@ -176,5 +176,53 @@ class MonthlyReportService
         $result = $model->fetchMonthlyData();
         return $result;
 	}
+
+	//Inserting Track Data
+	public function insertData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->insertTrackTable();
+        return $result;
+	}
+
+	//Inserting Trend Track Data
+	public function insertTrendData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->trendReportTrackTable();
+        return $result;
+	}
+	
+	//Inserting LogBook Track Data
+	public function insertLogBookData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->logBookReportTrackTable();
+        return $result;
+	}
+
+	//Inserting TestKit Track Data
+	public function insertTestKitData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->testKitReportTrackTable();
+        return $result;
+	}
+
+	//Inserting Invalid Results Track Data
+	public function invalidReportData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->invalidReportTrackTable();
+        return $result;
+	}
+	
+	//Inserting Custom Track Data
+	public function customReportData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->customReportTrackTable();
+        return $result;
+	}
 	
 }
