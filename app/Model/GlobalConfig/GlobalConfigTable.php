@@ -22,6 +22,8 @@ class GlobalConfigTable extends Model
     // Update particular GlobalConfig details
     public function updateGlobalConfig($params)
     {
+        $user_name = session('name');
+        $commonservice = new CommonService();
         $data = $params->all();
         if ($data['instance_name']) {
             $upData = array(
@@ -135,6 +137,15 @@ class GlobalConfigTable extends Model
                     ->update($upData);
             }
         }
+        $userTracking = DB::table('track')->insertGetId(
+            [
+                'event_type' => 'update-global-config-request',
+                'action' => $user_name . ' has updated the global config information',
+                'resource' => 'global-config',
+                'date_time' => $commonservice->getDateTime(),
+                'ip_address' => request()->ip(),
+            ]
+        );
         return 1;
     }
 

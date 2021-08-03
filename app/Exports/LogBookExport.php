@@ -23,6 +23,7 @@ class LogBookExport implements FromView, ShouldAutoSize
         $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getLogbookReport($this->requestdata);
+        $insertData = $monthlyReportService->insertLogBookData();
         return view('exports.logbookexport', array('report'=>$data,'globalValue'=>$globalValue
         ));
     }

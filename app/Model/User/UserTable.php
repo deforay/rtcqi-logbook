@@ -142,7 +142,6 @@ class UserTable extends Model
     {
         $data = $params->all();
         $commonservice = new CommonService();
-        $data = $params->all();
         $result = json_decode(DB::table('users')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')->get(), true);
@@ -178,6 +177,7 @@ class UserTable extends Model
     public function updateProfile($params, $id)
     {
         $commonservice = new CommonService();
+        $user_name = session('name');
         $data = $params->all();
         if ($params->input('firstName') != null && trim($params->input('firstName')) != '') {
             $user = array(
@@ -185,8 +185,7 @@ class UserTable extends Model
                 'last_name' => $data['lastName'],
                 'email' => $data['email'],
                 'phone' => $data['mobileNo'],
-                'updated_by' => session('userId'),
-                'updated_on' => $commonservice->getDateTime()
+                'updated_by' => session('userId')
             );
 
             $response = DB::table('users')
@@ -194,6 +193,24 @@ class UserTable extends Model
                 ->update(
                     $user
                 );
+            if ($response == 1) {
+                $response = DB::table('users')
+                    ->where('user_id', '=', base64_decode($id))
+                    ->update(
+                        array(
+                            'updated_on' => $commonservice->getDateTime()
+                        )
+                    );
+                $userTracking = DB::table('track')->insertGetId(
+                    [
+                        'event_type' => 'update-user-profile-request',
+                        'action' => $user_name . ' has updated the user profile information',
+                        'resource' => 'user-profile',
+                        'date_time' => $commonservice->getDateTime(),
+                        'ip_address' => request()->ip(),
+                    ]
+                );
+            }
         }
         return $response;
     }
@@ -201,6 +218,8 @@ class UserTable extends Model
     //Update Password
     public function updatePassword($params, $id)
     {
+        $commonservice = new CommonService();
+        $user_name = session('name');
         $data = $params->all();
         $newPassword = Hash::make($data['newPassword']);
         $result = json_decode(DB::table('users')->where('user_id', '=', base64_decode($id))->get(), true);
@@ -214,10 +233,19 @@ class UserTable extends Model
                             'password' => $newPassword
                         ]
                     );
+                $userTracking = DB::table('track')->insertGetId(
+                    [
+                        'event_type' => 'change-password-request',
+                        'action' => $user_name . ' has changed the password information',
+                        'resource' => 'change-password',
+                        'date_time' => $commonservice->getDateTime(),
+                        'ip_address' => request()->ip(),
+                    ]
+                );
                 return $response;
             }
-            $commonservice = new CommonService();
-            $commonservice->eventLog(base64_decode($id), base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
+            // $commonservice = new CommonService();
+            // $commonservice->eventLog(base64_decode($id), base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
         } else {
             return 0;
         }

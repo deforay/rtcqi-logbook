@@ -13,13 +13,13 @@ for ($i = 0; $i < sizeof($glob); $i++) {
     <thead style="border: 3px solid black">
     <tr>
     @if($arr['no_of_test'] == 1)
-        <td colspan="11" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        <td colspan="11" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
         @elseif($arr['no_of_test'] == 2)
-        <td colspan="14" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        <td colspan="14" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
         @elseif($arr['no_of_test'] == 3)
-        <td colspan="17" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        <td colspan="17" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
         @else
-        <td colspan="20" style="border: 3px solid black;font-weight:bold;">Customer Report</td>
+        <td colspan="20" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
         @endif
       </tr>
     <tr style="border: 3px solid black">

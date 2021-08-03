@@ -133,4 +133,11 @@ class MonthlyReportController extends Controller
         $data = $service->CheckPreLot($request);
         return $data;
     }
+
+    public function insertTrackTable()
+    {
+        $service = new MonthlyReportService();
+        $data = $service->insertData();
+        return $data;
+    }
 }

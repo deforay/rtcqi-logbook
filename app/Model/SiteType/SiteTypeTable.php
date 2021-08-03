@@ -15,6 +15,7 @@ class SiteTypeTable extends Model
     public function saveSiteType($request)
     {
         //to get all request values
+        $user_name = session('name');
         $data = $request->all();
         $commonservice = new CommonService();
         if ($request->input('siteTypeName')!=null && trim($request->input('siteTypeName')) != '') {
@@ -22,6 +23,15 @@ class SiteTypeTable extends Model
                 [
                 'site_type_name' => $data['siteTypeName'],
                 'site_type_status' => $data['siteTypeStatus'],
+                ]
+            );
+            $userTracking = DB::table('track')->insertGetId(
+                [
+                    'event_type' => 'add-site-type-request',
+                    'action' => $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name',
+                    'resource' => 'site-type',
+                    'date_time' => $commonservice->getDateTime(),
+                    'ip_address' => request()->ip(),
                 ]
             );
         }
@@ -60,6 +70,8 @@ class SiteTypeTable extends Model
      // Update particular SiteType details
     public function updateSiteType($params,$id)
     {
+        $commonservice = new CommonService();
+        $user_name = session('name');
         $data = $params->all();
             $upData = array(
                 'site_type_name' => $data['siteTypeName'],
@@ -69,6 +81,15 @@ class SiteTypeTable extends Model
                 ->where('st_id', '=',base64_decode($id))
                 ->update(
                         $upData
+                    );
+                    $userTracking = DB::table('track')->insertGetId(
+                        [
+                            'event_type' => 'update-site-type-request',
+                            'action' => $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name',
+                            'resource' => 'site-type',
+                            'date_time' => $commonservice->getDateTime(),
+                            'ip_address' => request()->ip(),
+                        ]
                     );
         return $response;
     }
