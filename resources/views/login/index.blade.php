@@ -65,7 +65,7 @@
   }
 </style>
 <!-- BEGIN: Body-->
-<body class="vertical-layout vertical-overlay-menu 1-column  bg-full-screen-image menu-expanded blank-page blank-page"
+<body class="vertical-layout vertical-overlay-menu 1-column menu-expanded blank-page blank-page"
 data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
   <!-- ////////////////////////////////////////////////////////////////////////////-->
   <div class="app-content content">
