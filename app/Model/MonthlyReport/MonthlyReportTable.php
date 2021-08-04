@@ -50,6 +50,7 @@ class MonthlyReportTable extends Model
                     'source' => 'web-form',
                     'added_on' => date('Y-m-d'),
                     'added_by' => session('userId'),
+                    'last_modified_on' => $commonservice->getDateTime(),
                     // 'signature' => $data['signature'],
                 ]
             );
@@ -120,6 +121,8 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id)
+            ->orderBy('last_modified_on', 'desc')
+            ->groupBy('monthly_reports.mr_id')
             ->get();
         return $data;
     }
@@ -176,7 +179,8 @@ class MonthlyReportTable extends Model
             'reporting_month' => $reportingMon,
             'book_no' => $data['bookNo'],
             'name_of_data_collector' => $data['nameOfDataCollect'],
-            // 'signature' => $data['signature'],
+            'last_modified_on' => $commonservice->getDateTime(),
+                    // 'signature' => $data['signature'],
         );
         $response = DB::table('monthly_reports')
             ->where('mr_id', '=', base64_decode($id))

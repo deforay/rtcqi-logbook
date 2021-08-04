@@ -78,9 +78,11 @@
                                                 <th>Province Name</th>
                                                 <th>Site Type Name</th>
                                                 <th>Site Name</th>
-                                                <!-- <th>Latitude</th> -->
-                                                <!-- <th>Longitude</th> -->
+                                                <th>Date of Data Collection</th>
+                                                <th>Name of Data Collector</th>
+                                                <th>Reporting Month</th>
                                                 <th>Book No</th>
+                                                <th>Last Modified Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -141,8 +143,24 @@
                 // { data: 'latitude', name: 'latitude' },
                 // { data: 'longitude', name: 'longitude' },
                 {
+                    data: 'date_of_data_collection',
+                    name: 'date_of_data_collection'
+                },
+                {
+                    data: 'name_of_data_collector',
+                    name: 'name_of_data_collector'
+                },
+                {
+                    data: 'reporting_month',
+                    name: 'reporting_month'
+                },
+                {
                     data: 'book_no',
                     name: 'book_no'
+                },
+                {
+                    data: 'last_modified_on',
+                    name: 'last_modified_on'
                 },
                 {
                     data: 'action',
