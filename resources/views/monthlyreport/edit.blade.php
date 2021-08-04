@@ -697,5 +697,35 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             $(`#testKitHeading${uniqueRowId}`).html(headingText);
         })
     }
+    $(document).ready(function() {
+
+// Site Name Change
+$('#testsiteId').change(function() {
+
+    // Site id
+    var id = $(this).val();
+    // Empty the dropdown
+    $('#provinceId').find('option').not(':first').remove();
+
+    // AJAX request 
+    $.ajax({
+        url: "{{url('/getProvince') }}/" + id,
+        type: 'get',
+        dataType: 'json',
+        success: function(response) {
+            if (response.length == 0) {
+                $("#siteUniqueId").val('');
+            } else {
+                $.each(response, function(key, value) {
+                    $("#siteUniqueId").val(value.site_id);
+                    $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
+                });
+            }
+
+        }
+    });
+});
+
+});
 </script>
 @endsection
