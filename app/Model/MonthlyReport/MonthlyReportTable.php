@@ -116,12 +116,12 @@ class MonthlyReportTable extends Model
     {
         $user_id = session('userId');
         $data = DB::table('monthly_reports')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+        ->select('monthly_reports.mr_id',DB::raw('count(monthly_reports_pages.page_no) as page_no'),'monthly_reports.reporting_month','monthly_reports.date_of_data_collection','monthly_reports.name_of_data_collector','monthly_reports.book_no','monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->where('users_testsite_map.user_id', '=', $user_id)
-            ->orderBy('last_modified_on', 'desc')
             ->groupBy('monthly_reports.mr_id')
             ->get();
         return $data;

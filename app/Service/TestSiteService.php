@@ -82,6 +82,14 @@ class TestSiteService
         $result = $model->fetchAllCurrentUserActiveTestSite();
         return $result;
 	}
+
+	//Get Particular TestSite
+	public function getTestSiteData($id)
+    {
+		$model = new TestSiteTable();
+        $result = $model->fetchTestSiteData($id);
+        return $result;
+	}
 	
 }
 

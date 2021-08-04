@@ -407,4 +407,5 @@ PRIMARY KEY (`log_id`)
 );
 ALTER TABLE `track` CHANGE `log_id` `log_id` INT(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE monthly_reports ADD last_modified_on Varchar(100) NULL;
+--Sakthivel P 04 Aug 2021
+ALTER TABLE monthly_reports ADD last_modified_on datetime DEFAULT NULL;

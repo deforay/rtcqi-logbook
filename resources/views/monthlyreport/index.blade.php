@@ -75,14 +75,14 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
                                         <thead>
                                             <tr>
-                                                <th>Province Name</th>
-                                                <th>Site Type Name</th>
                                                 <th>Site Name</th>
+                                                <th>Site Type</th>
+                                                <th>Reporting Month</th>
                                                 <th>Date of Data Collection</th>
                                                 <th>Name of Data Collector</th>
-                                                <th>Reporting Month</th>
                                                 <th>Book No</th>
-                                                <th>Last Modified Date</th>
+                                                <th>Total Number of Pages</th>
+                                                <th>Last Modified On</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -126,22 +126,22 @@
             columns: [
 
                 {
-                    data: 'province_name',
-                    name: 'province_name',
+                    data: 'site_name',
+                    name: 'site_name',
                     className: 'firstcaps'
                 },
+
                 {
                     data: 'site_type_name',
                     name: 'site_type_name',
                     className: 'firstcaps'
                 },
+
                 {
-                    data: 'site_name',
-                    name: 'site_name',
-                    className: 'firstcaps'
+                    data: 'reporting_month',
+                    name: 'reporting_month'
                 },
-                // { data: 'latitude', name: 'latitude' },
-                // { data: 'longitude', name: 'longitude' },
+    
                 {
                     data: 'date_of_data_collection',
                     name: 'date_of_data_collection'
@@ -150,13 +150,14 @@
                     data: 'name_of_data_collector',
                     name: 'name_of_data_collector'
                 },
-                {
-                    data: 'reporting_month',
-                    name: 'reporting_month'
-                },
+            
                 {
                     data: 'book_no',
                     name: 'book_no'
+                },
+                {
+                    data: 'page_no',
+                    name: 'page_no'
                 },
                 {
                     data: 'last_modified_on',
@@ -169,7 +170,7 @@
                 },
             ],
             order: [
-                [0, 'desc']
+                [7, 'desc']
             ]
         });
     }

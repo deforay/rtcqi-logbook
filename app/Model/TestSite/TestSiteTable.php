@@ -142,4 +142,16 @@ class TestSiteTable extends Model
             ->get();
         return $data;
     }
+
+    public function fetchTestSiteData($id)
+    {
+        // $result = $id[0]->provincesss_id;
+        $data = DB::table('test_sites')
+        ->select('test_sites.ts_id','test_sites.site_id','test_sites.provincesss_id','provinces.province_name')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
+            ->where('test_sites.ts_id', '=', $id)
+            ->get();
+            // dd($data);die;
+        return $data;
+    }
 }

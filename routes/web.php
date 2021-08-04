@@ -178,3 +178,4 @@ Route::get('/getDistrict/{id}', 'TestSite\TestSiteController@getDistrict');
 
 Route::post('/getDashboardData', 'Dashboard\DashboardController@getDashboardData');
 Route::get('/insertTrackTable', 'MonthlyReport\MonthlyReportController@insertTrackTable');
+Route::get('/getProvince/{id}', 'TestSite\TestSiteController@getProvince');

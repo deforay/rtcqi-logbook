@@ -61,12 +61,12 @@ $test = '';
                                                 <h5>Site Name<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
-                                                    @foreach($testsite as $row2)
-                                                    <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
+                                                        @foreach($testsite as $row2)
+                                                        <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
@@ -256,12 +256,10 @@ $test = '';
                                             <table class="table1" style="width:100%">
                                                 <tr>
                                                     @if(count($allowedTestKitNo) > 0)
-                                                    @for($i = 1; $i <= $globalValue; $i++)
-                                                    <?php
-                                                          $test_id = 'test_' . $i . '_kit_id';
-                                                          $test = '';
-                                                    ?>
-                                                    <td style="text-align:center;" colspan="3">
+                                                    @for($i = 1; $i <= $globalValue; $i++) <?php
+                                                                                            $test_id = 'test_' . $i . '_kit_id';
+                                                                                            $test = '';
+                                                                                            ?> <td style="text-align:center;" colspan="3">
                                                         <fieldset>
                                                             <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
                                                             </h5>
@@ -270,11 +268,11 @@ $test = '';
                                                                     <option value="">--Select--</option>
                                                                     @if(isset($allowedTestKitNo[$i]))
                                                                     @foreach($allowedTestKitNo[$i] as $value=>$option)
-                                                                        @if(isset($latest->$test_id) && $latest->$test_id !='')
-                                                                            <option value="{{$value}}" {{ $latest->$test_id == $value ?  'selected':''}}>{{$option}}</option>
-                                                                        @else
-                                                                            <option value="{{$value}}">{{$option}}</option>
-                                                                        @endif
+                                                                    @if(isset($latest->$test_id) && $latest->$test_id !='')
+                                                                    <option value="{{$value}}" {{ $latest->$test_id == $value ?  'selected':''}}>{{$option}}</option>
+                                                                    @else
+                                                                    <option value="{{$value}}">{{$option}}</option>
+                                                                    @endif
                                                                     @endforeach
                                                                     @else
                                                                     @foreach($kittype as $row2)
@@ -291,11 +289,10 @@ $test = '';
                                                         </td>
                                                         @endfor
                                                         @else
-                                                        @for($i = 1; $i <= $globalValue; $i++)
-                                                        <?php
-                                                            $test_id = 'test_' . $i . '_kit_id';
-                                                            $test = '';
-                                                        ?> <td style=" text-align: center;" colspan="3">
+                                                        @for($i = 1; $i <= $globalValue; $i++) <?php
+                                                                                                $test_id = 'test_' . $i . '_kit_id';
+                                                                                                $test = '';
+                                                                                                ?> <td style=" text-align: center;" colspan="3">
                                                             <fieldset>
                                                                 <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
                                                                 </h5>
@@ -335,8 +332,7 @@ $test = '';
                                                         @endfor
                                                 </tr>
                                                 <tr>
-                                                    @for($k = 1; $k <= $globalValue; $k++)
-                                                    <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
+                                                    @for($k = 1; $k <= $globalValue; $k++) <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
                                                         <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
                                                         </td>
                                                         @endfor
@@ -442,15 +438,15 @@ $test = '';
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />
 <script src="public/dist/js/select2.min.js"></script>
 <script>
-	$(document).ready(function() {
-		$('.js-example-basic-single').select2();
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
         $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
             placeholder: "Select Site Name"
         });
-		$selectElement = $('#sitetypeId').prepend('<option selected></option>').select2({
+        $selectElement = $('#sitetypeId').prepend('<option selected></option>').select2({
             placeholder: "Select Site Type"
         });
-});
+    });
 
     $(document).ready(function() {
         $('.datepicker').datepicker({
@@ -576,7 +572,7 @@ $test = '';
 							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_'+rowCount+'" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\''+rowCount+'\',this)">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
 									<option value="">--Select--</option>\
 										@if(isset($allowedTestKitNo[$i]))\
 											@foreach($allowedTestKitNo[$i] as $value=>$option)\
@@ -599,7 +595,12 @@ $test = '';
 							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_'+rowCount+'" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}',\''+rowCount+'\',this)">\
+									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(' {
+            {
+                $i
+            }
+        }
+        ',\'' + rowCount + '\',this)">\
 									<option value="">--Select--</option>\
 										@foreach($kittype as $row2)\
 										<option value="{{$row2->tk_id}}">{{$row2->test_kit_name}}</option>\
@@ -630,7 +631,7 @@ $test = '';
         div += '</tr><tr>'
         for (var k = 1; k <= gCnt; k++) {
             div += '<td colspan="3" style=" text-align: center;" bgcolor="' + col[k] + '">\
-						<h4 id="testKitHeading' + k + '_'+rowCount+'" style="font-weight: 600;color: white;">Test Kit ' + k + '</h4>\
+						<h4 id="testKitHeading' + k + '_' + rowCount + '" style="font-weight: 600;color: white;">Test Kit ' + k + '</h4>\
 					</td>';
         }
         div += '</tr><tr>'
@@ -754,10 +755,40 @@ $test = '';
         }
     }
 
-    function replaceTestKitHeadings(headingNo,rowNo,selectObj){
+    function replaceTestKitHeadings(headingNo, rowNo, selectObj) {
         //console.log(headingNo,rowNo,$(selectObj).find(":selected").text());
         let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text()) || `Test Kit ${headingNo}`;
         $(`#testKitHeading${headingNo}_${rowNo}`).html(optionSelected);
     }
+    $(document).ready(function() {
+
+        // Site Name Change
+        $('#testsiteId').change(function() {
+
+            // Site id
+            var id = $(this).val();
+            // Empty the dropdown
+            $('#provinceId').find('option').not(':first').remove();
+
+            // AJAX request 
+            $.ajax({
+                url: "{{url('/getProvince') }}/" + id,
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.length == 0) {
+                        $("#siteUniqueId").val('');
+                    } else {
+                        $.each(response, function(key, value) {
+                            $("#siteUniqueId").val(value.site_id);
+                            $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
+                        });
+                    }
+
+                }
+            });
+        });
+
+    });
 </script>
 @endsection

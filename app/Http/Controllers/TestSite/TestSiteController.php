@@ -92,5 +92,14 @@ class TestSiteController extends Controller
         return response()->json($district);
      
     }
+
+    public function getProvince($id){
+
+        $testSiteService = new TestSiteService();
+        $district = $testSiteService->getTestSiteData($id);
+  
+        return response()->json($district);
+     
+    }
 }
 
