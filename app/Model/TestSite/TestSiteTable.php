@@ -147,7 +147,7 @@ class TestSiteTable extends Model
     {
         // $result = $id[0]->provincesss_id;
         $data = DB::table('test_sites')
-        ->select('test_sites.ts_id','test_sites.site_id','test_sites.provincesss_id','provinces.province_name')
+        ->select('test_sites.ts_id','test_sites.site_id','test_sites.site_latitude','test_sites.site_longitude','test_sites.provincesss_id','provinces.province_name')
             ->join('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
             ->where('test_sites.ts_id', '=', $id)
             ->get();

@@ -47,7 +47,7 @@
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
                             <!-- <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="post" action="/globalconfig/edit/" autocomplete="off" enctype="multipart/form-data"  onsubmit="validateNow();return false;"> -->
-                            <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="POST" action="/globalconfig/updateglobal" autocomplete="off"  onsubmit="validateNow();return false;">
+                            <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="POST" action="/globalconfig/updateglobal" autocomplete="off" enctype="multipart/form-data"  onsubmit="validateNow();return false;">
                             @csrf
                             <div class="row">
                                 <div class="col-xl-4 col-lg-12">
