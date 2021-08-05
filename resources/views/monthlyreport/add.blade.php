@@ -150,7 +150,7 @@ $test = '';
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <!-- <div class="form-group col-xl-3 col-lg-3">
+                                        <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
 											</h5>
@@ -167,7 +167,7 @@ $test = '';
                                                 <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
 											</div>
 										</fieldset>
-									</div> -->
+									</div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Algorithm Type <span class="mandatory">*</span>
@@ -261,7 +261,7 @@ $test = '';
                                                                                             $test = '';
                                                                                             ?> <td style="text-align:center;" colspan="3">
                                                         <fieldset>
-                                                            <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+                                                            <h5>Test Kit Name {{$i}}<span class="mandatory">*</span>
                                                             </h5>
                                                             <div class="form-group">
                                                                 <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
@@ -569,7 +569,7 @@ $test = '';
 				@for($i = 1; $i <= $globalValue; $i++)\
 				<td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
+							<h5>Test Kit Name {{$i}}<span class="mandatory">*</span>\
 								</h5>\
 								<div class="form-group">\
 									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
@@ -778,9 +778,13 @@ $test = '';
                 success: function(response) {
                     if (response.length == 0) {
                         $("#siteUniqueId").val('');
+                        $("#latitude").val('');
+                        $("#longitude").val('');
                     } else {
                         $.each(response, function(key, value) {
                             $("#siteUniqueId").val(value.site_id);
+                            $("#latitude").val(value.site_latitude);
+                            $("#longitude").val(value.site_longitude);
                             $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
                         });
                     }

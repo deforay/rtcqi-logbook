@@ -40,8 +40,8 @@ class MonthlyReportTable extends Model
                     'is_flc' => $data['isFlu'],
                     'is_recency' => $recency,
                     'contact_no' => $data['contactNo'],
-                    // 'latitude' => $data['latitude'],
-                    // 'longitude' => $data['longitude'],
+                    'latitude' => $data['latitude'],
+                    'longitude' => $data['longitude'],
                     'algorithm_type' => $data['algoType'],
                     'date_of_data_collection' => $DateOfCollect,
                     'reporting_month' => $reportingMon,
@@ -172,8 +172,8 @@ class MonthlyReportTable extends Model
             'is_flc' => $data['isFlu'],
             'is_recency' => $recency,
             'contact_no' => $data['contactNo'],
-            // 'latitude' => $data['latitude'],
-            // 'longitude' => $data['longitude'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
             'algorithm_type' => $data['algoType'],
             'date_of_data_collection' => $DateOfCollect,
             'reporting_month' => $reportingMon,
@@ -288,7 +288,7 @@ class MonthlyReportTable extends Model
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
                 $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
-                    ->orWhere('monthly_reports_pages.end_test_date', '<=', $end_date);
+                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
         if (isset($data['facilityId']) && $data['facilityId'] != '') {
@@ -309,6 +309,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
             $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
@@ -318,6 +319,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
@@ -327,6 +329,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
             $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
 
@@ -335,10 +338,8 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         $salesResult = $query->get();
-        // dd(DB::getQueryLog($salesResult));die;
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
-
         return $result;
     }
 
