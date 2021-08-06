@@ -116,7 +116,7 @@ class MonthlyReportTable extends Model
     {
         $user_id = session('userId');
         $data = DB::table('monthly_reports')
-        ->select('monthly_reports.mr_id',DB::raw('count(monthly_reports_pages.page_no) as page_no'),'monthly_reports.reporting_month','monthly_reports.date_of_data_collection','monthly_reports.name_of_data_collector','monthly_reports.book_no','monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name')
+        ->select('monthly_reports.mr_id',DB::raw('count(monthly_reports_pages.page_no) as page_no'),'monthly_reports.reporting_month','monthly_reports.date_of_data_collection','monthly_reports.name_of_data_collector','monthly_reports.book_no','monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name',DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
@@ -280,6 +280,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
@@ -291,9 +292,9 @@ class MonthlyReportTable extends Model
                     ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
-        if (isset($data['facilityId']) && $data['facilityId'] != '') {
-            $query = $query->whereIn('test_sites.facility_id', $data['facilityId']);
-            $query = $query->groupBy(DB::raw('test_sites.facility_id'));
+        if (isset($data['provinceId']) && $data['provinceId'] != '') {
+            $query = $query->whereIn('provinces.provincesss_id', $data['provinceId']);
+            $query = $query->groupBy(DB::raw('provinces.provincesss_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);

@@ -30,11 +30,15 @@ class ReportController extends Controller
         if (session('login') == true) {
             $FacilityService = new FacilityService();
             $facility = $FacilityService->getAllActiveFacility();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.trendReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport));
+            return view('report.trendReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
