@@ -81,6 +81,8 @@
                                                 <th>Date of Data Collection</th>
                                                 <th>Name of Data Collector</th>
                                                 <th>Book No</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
                                                 <th>Total Number of Pages</th>
                                                 <th>Last Modified On</th>
                                                 <th>Action</th>
@@ -155,6 +157,17 @@
                     data: 'book_no',
                     name: 'book_no'
                 },
+
+                {
+                    data: 'start_test_date',
+                    name: 'start_test_date'
+                },
+
+                {
+                    data: 'end_test_date',
+                    name: 'end_test_date'
+                },
+
                 {
                     data: 'page_no',
                     name: 'page_no'
@@ -170,7 +183,7 @@
                 },
             ],
             order: [
-                [7, 'desc']
+                [9, 'desc']
             ]
         });
     }
