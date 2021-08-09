@@ -22,7 +22,6 @@ class MonthlyReportTable extends Model
     {
         //to get all request values
         $data = $request->all();
-        // dd($data['startDate']);die;
         $model = new TestSiteTable();
         $districtId = $model->fetchDistrictId($data['testsiteId']);
         $user_name = session('name');
@@ -30,7 +29,6 @@ class MonthlyReportTable extends Model
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = ($data['reportingMon']);
-        // dd($data['startDate']);die;
         $recency = '';
         if (isset($data['isRecency']))
             $recency = $data['isRecency'];
@@ -120,19 +118,55 @@ class MonthlyReportTable extends Model
     }
 
     // Fetch All MonthlyReport List
-    public function fetchAllMonthlyReport()
+    public function fetchAllMonthlyReport($params)
     {
+        $commonservice = new CommonService();
+        $start_date = '';
+        $end_date = '';
+        if (isset($params['searchDate']) && $params['searchDate'] != '') {
+            $sDate = explode("to", $params['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
         $user_id = session('userId');
-        $data = DB::table('monthly_reports')
+        $query = DB::table('monthly_reports')
             ->select('monthly_reports.mr_id', DB::raw('count(monthly_reports_pages.page_no) as page_no'), 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', 'monthly_reports.name_of_data_collector', 'monthly_reports.book_no', 'monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name', DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+            ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->where('users_testsite_map.user_id', '=', $user_id)
-            ->groupBy('monthly_reports.mr_id')
-            ->get();
-        return $data;
+            ->groupBy('monthly_reports.mr_id');
+            
+            if (trim($start_date) != "" && trim($end_date) != "") {
+                $query = $query->where(function ($query) use ($start_date, $end_date) {
+                    $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                        ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
+                });
+            }
+            if (isset($params['provinceId']) && $params['provinceId'] != '') {
+                $query = $query->whereIn('provinces.provincesss_id', $params['provinceId']);
+                $query = $query->groupBy(DB::raw('provinces.provincesss_id'));
+            }
+            if (isset($params['districtId']) && $params['districtId'] != '') {
+                $query = $query->whereIn('districts.district_id', $params['districtId']);
+                $query = $query->groupBy(DB::raw('districts.district_id'));
+            }
+            if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
+                $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
+                $query = $query->groupBy(DB::raw('test_sites.ts_id'));
+            }
+            
+            $salesResult = $query->get();
+            return $salesResult;
     }
 
     // Fetch All Active MonthlyReport List
