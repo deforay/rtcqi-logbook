@@ -10,6 +10,10 @@
 
 @section('content')
 
+<?php
+$enddate = date('d-M-Y');
+$startdate = date('d-M-Y', strtotime('-29 days'));
+?>
 
 <div class="content-wrapper">
     <div class="content-header row">
@@ -70,6 +74,68 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
+                            <div id="show_alert" class="mt-1"></div>
+                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Date Range <span class="mandatory">*</span>
+                                                    </h5>
+                                                    <div class="form-group">
+                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                <h5>Province Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                            @foreach($province as $row)
+                                                            <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>District Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+                                                            @foreach($district as $row)
+                                                            <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5> Site Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                            @foreach($testSite as $row)
+                                                            <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-7" style="color:#FFF;">
+                                                <div class="form-group row">
+
+                                                    <div class="col-md-8">
+                                                        <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/monthlyreport"><span>Reset</span></a>&nbsp;&nbsp;
+                                                    </div>
+                                                </div></div>
+                                        </div>
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
@@ -107,9 +173,45 @@
         $.blockUI();
         getAllMonthlyReport();
         $.unblockUI();
+        $('.js-example-basic-multiple').select2();
+        $selectElement = $('#provinceId').select2({
+            placeholder: "Select Province Name",
+            allowClear: true,
+        });
+        $('#provinceId').on('select2:select', function(e) {
+            getAllMonthlyReport();
+        });
+
+        $('#provinceId').on('select2:unselect', function(e) {
+            getAllMonthlyReport();
+
+        });
+        $selectElement = $('#districtId').select2({
+            placeholder: "Select District Name",
+            allowClear: true,
+        });
+        $('#districtId').on('select2:select', function(e) {
+            getAllMonthlyReport();
+        });
+
+        $('#districtId').on('select2:unselect', function(e) {
+            getAllMonthlyReport();
+
+        });
+        $selectElement = $('#testSiteId').select2({
+            placeholder: "Select Test Site Name",
+            allowClear: true
+        });
+        $('#testSiteId').on('select2:select', function(e) {
+            getAllMonthlyReport();
+        });
+        $('#testSiteId').on('select2:unselect', function(e) {
+            getAllMonthlyReport();
+        });
     });
 
     function getAllMonthlyReport() {
+        let searchDate = $('#searchDate').val();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -124,6 +226,12 @@
             ajax: {
                 url: '{{ url("getAllMonthlyReport") }}',
                 type: 'POST',
+                data: {
+                searchDate: searchDate,
+                provinceId: $("#provinceId").val(),
+                districtId: $("#districtId").val(),
+                testSiteId: $("#testSiteId").val(),
+                },
             },
             columns: [
 
@@ -187,5 +295,33 @@
             ]
         });
     }
+    $(document).ready(function() {
+        $('#searchDate').daterangepicker({
+                format: 'DD-MMM-YYYY',
+                autoUpdateInput: false,
+                separator: ' to ',
+                startDate: moment().subtract('days', 29),
+                endDate: moment(),
+                maxDate: moment(),
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                    'Last 60 Days': [moment().subtract('days', 59), moment()],
+                    'Last 180 Days': [moment().subtract('days', 179), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                    'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                }
+            },
+            function(start, end) {
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+                $('input[name="searchDate"]').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+                });
+            });
+    });
 </script>
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
 use App\Service\SiteTypeService;
+use App\Service\DistrictService;
 use App\Service\TestKitService;
 use App\Service\TestSiteService;
 use App\Service\AllowedTestKitService;
@@ -21,7 +22,13 @@ class MonthlyReportController extends Controller
     public function index()
     {
         if (session('login') == true) {
-            return view('monthlyreport.index');
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            return view('monthlyreport.index', array('testSite' => $testSite,'district' => $district,'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -61,8 +68,10 @@ class MonthlyReportController extends Controller
     // Get all the  MonthlyReport list
     public function getAllMonthlyReport(Request $request)
     {
+        $datas = $request->all();
+        // dd($datas);die;
         $service = new MonthlyReportService();
-        $data = $service->getAllMonthlyReport();
+        $data = $service->getAllMonthlyReport($datas);
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
                 $button = '<div>';

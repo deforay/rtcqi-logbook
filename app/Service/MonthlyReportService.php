@@ -34,10 +34,10 @@ class MonthlyReportService
 	}
 	
 	//Get All MonthlyReport List
-	public function getAllMonthlyReport()
+	public function getAllMonthlyReport($params)
     {
 		$model = new MonthlyReportTable();
-        $result = $model->fetchAllMonthlyReport();
+        $result = $model->fetchAllMonthlyReport($params);
         return $result;
 	}
 
