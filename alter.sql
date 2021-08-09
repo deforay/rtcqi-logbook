@@ -73,7 +73,7 @@ KEY (`provincesss_id`)
 DROP TABLE IF EXISTS `monthly_reports_pages`;
 		
 CREATE TABLE `monthly_reports_pages` (
-  `mrp_id` INT(11) NOT NULL,
+  `mrp_id` INT(11) NOT NULL AUTO_INCREMENT,
   `mr_id` INT(11) NOT NULL,
   `page_no` VARCHAR(50) NULL DEFAULT NULL,
   `start_test_date` DATE NULL DEFAULT NULL,
@@ -409,3 +409,7 @@ ALTER TABLE `track` CHANGE `log_id` `log_id` INT(11) NOT NULL AUTO_INCREMENT;
 
 --Sakthivel P 04 Aug 2021
 ALTER TABLE monthly_reports ADD last_modified_on datetime DEFAULT NULL;
+
+--Sakthivel P 09 Aug 2021
+ALTER TABLE monthly_reports ADD district_id int(11);
+ALTER TABLE `monthly_reports` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);

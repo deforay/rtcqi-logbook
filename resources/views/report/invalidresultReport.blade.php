@@ -86,17 +86,31 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Facilty Name
+                                                <h5>Province Name
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId[]" title="Please select Facility Name">
-                                                            @foreach($facility as $row)
-                                                            <option value="{{$row->facility_id}}">{{$row->facility_name}}</option>
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                            @foreach($province as $row)
+                                                            <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>District Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+                                                            @foreach($district as $row)
+                                                            <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div></div>
+                                            <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5>Testing Algothrim
@@ -109,8 +123,6 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5> Site Name
@@ -159,15 +171,27 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     $(document).ready(function() {
         getInvalidResultReport();
         $('.js-example-basic-multiple').select2();
-        $selectElement = $('#facilityId').select2({
-            placeholder: "Select Facility Name",
+        $selectElement = $('#provinceId').select2({
+            placeholder: "Select Province Name",
             allowClear: true,
         });
-        $('#facilityId').on('select2:select', function(e) {
+        $('#provinceId').on('select2:select', function(e) {
             getInvalidResultReport();
         });
 
-        $('#facilityId').on('select2:unselect', function(e) {
+        $('#provinceId').on('select2:unselect', function(e) {
+            getInvalidResultReport();
+
+        });
+        $selectElement = $('#districtId').select2({
+            placeholder: "Select District Name",
+            allowClear: true,
+        });
+        $('#districtId').on('select2:select', function(e) {
+            getInvalidResultReport();
+        });
+
+        $('#districtId').on('select2:unselect', function(e) {
             getInvalidResultReport();
 
         });
@@ -205,7 +229,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             method: 'post',
             data: {  
                 searchDate: searchDate,
-                facilityId: $("#facilityId").val(),
+                provinceId: $("#provinceId").val(),
+                districtId: $("#districtId").val(),
                 algorithmType: $("#algorithmType").val(),
                 testSiteId: $("#testSiteId").val(),
             },
