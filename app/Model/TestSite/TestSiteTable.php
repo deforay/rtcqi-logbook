@@ -154,4 +154,13 @@ class TestSiteTable extends Model
             // dd($data);die;
         return $data;
     }
+
+    public function fetchDistrictId($id)
+    {
+        $data = DB::table('test_sites')
+            ->select('district_id')
+            ->where('test_sites.ts_id', '=', $id)
+            ->value('district_id');
+        return $data;
+    }
 }
