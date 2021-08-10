@@ -101,6 +101,12 @@ class GlobalConfigTable extends Model
         }
         if ($data['removed'] != null) {
             unlink(public_path($data['removed']));
+            $upData = array(
+                'global_value' => $filePathName,
+            );
+            DB::table('global_config')
+                ->where('global_name', '=', 'logo')
+                ->update($upData);
         } else {
             if (isset($data['uploadFile'])) {
                 $filePathName = '';
@@ -142,12 +148,6 @@ class GlobalConfigTable extends Model
                 }
             }
         }
-        $upData = array(
-            'global_value' => $filePathName,
-        );
-        DB::table('global_config')
-            ->where('global_name', '=', 'logo')
-            ->update($upData);
 
         $userTracking = DB::table('track')->insertGetId(
             [
