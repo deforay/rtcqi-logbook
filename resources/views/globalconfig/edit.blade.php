@@ -5,6 +5,7 @@
     Last Modified Date : 03 Jun 2021
     Last Modified Name : Prasath M
 -->
+
 @extends('layouts.main')
 @section('content')
 <div class="content-wrapper">
@@ -48,6 +49,7 @@
                                 <div id="show_alert" class="mt-1" style=""></div>
                                 <!-- <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="post" action="/globalconfig/edit/" autocomplete="off" enctype="multipart/form-data"  onsubmit="validateNow();return false;"> -->
                                 <form class="form form-horizontal" role="form" name="editGlobalConfig" id="editGlobalConfig" method="POST" action="/globalconfig/updateglobal" autocomplete="off" enctype="multipart/form-data" onsubmit="validateNow();return false;">
+                                    <input type="hidden" id="removed" name="removed" value="">
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
@@ -144,12 +146,9 @@
                                                 <h5>Logo
                                                 </h5>
                                                 @if($result['logo'] == null)
-                                                <img src= "{{ url('/') }}{{ $result['logo'] }}" style="width:160px;height:100px" />
-                                                @else
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-                                                    <!-- <img src= "{{ url('/') }}{{ $result['logo'] }}" style="width:160px;height:100px" /> -->
-                                                </div>
+                                                    </div>
                                                     <div>
                                                         <span class="btn btn-outline-secondary btn-file">
                                                             <span class="fileinput-new">Select image</span>
@@ -158,6 +157,21 @@
                                                             <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
                                                         </span>
                                                         <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                    </div>
+                                                </div>
+                                                @else
+                                                <div class="fileinput fileinput-exists" data-provides="fileinput">
+                                                    <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                                        <img src="{{ url('/') }}{{ $result['logo'] }}" style="width:160px;height:100px" />
+                                                    </div>
+                                                    <div>
+                                                        <span class="btn btn-outline-secondary btn-file">
+                                                            <span class="fileinput-new">Select image</span>
+                                                            <span class="fileinput-exists">Change</span>
+                                                            <input type="file" name="uploadFile[]">
+                                                            <button type="submit" id="upload" class="btn btn-success" style="display:none;">Upload</button>
+                                                        </span>
+                                                        <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput" onclick="storeHiddenValue()">Remove</a>
                                                     </div>
                                                 </div>
                                                 @endif
@@ -205,6 +219,11 @@
             $('#show_alert').css("display", "block");
             $(".infocus").focus();
         }
+    }
+
+    function storeHiddenValue() {
+        var filePath = "{{ $result['logo'] }}";
+        $('#removed').val(filePath);
     }
 </script>
 @endsection
