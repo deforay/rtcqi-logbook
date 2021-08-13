@@ -94,6 +94,12 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 $testingDate = $trendrow->year;
             }
 
+            $totalPositive = $trendrow->final;
+            $total = $trendrow->test_1_reactive + $trendrow->test_1_nonreactive;
+            $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
+            $posAgreement = number_format(100 * ($trendrow->test_2_reactive) / ($trendrow->test_1_reactive), 2);
+            $OverallAgreement = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
+
             // dd($trendrow->end_test_date);die;
             // $testingMonth= date('F - Y', strtotime($date)); //June, 2017
             ?>
@@ -102,16 +108,16 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a onclick="logData('{{$trendrow->ts_id}}')" href="javascript:void(0);" name="data" class="" title="Site Name">{{$trendrow->site_name}}</a></td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->test_1_reactive + $trendrow->test_1_nonreactive}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$total}}</td>
                 @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive';
                                                                 $nonreactive = 'test_' . $l . '_nonreactive';
                                                                 $invalid = 'test_' . $l . '_invalid';   ?> <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive}}</td>
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$nonreactive}}</td>
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
                     @endfor
-                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->positive_percentage}}</td>
-                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->positive_agreement}}</td>
-                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->overall_agreement}}</td>
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$positivePercentage}}</td>
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$posAgreement}}</td>
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$OverallAgreement}}</td>
             </tr>
             @endforeach
 

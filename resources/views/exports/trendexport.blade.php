@@ -64,22 +64,27 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         }else{
             $testingDate = $trendrow->year;
         }
+        $totalPositive = $trendrow->final;
+            $total = $trendrow->test_1_reactive + $trendrow->test_1_nonreactive;
+            $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
+            $posAgreement = number_format(100 * ($trendrow->test_2_reactive) / ($trendrow->test_1_reactive), 2);
+            $OverallAgreement = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
 ?>
         <tr style="border: 3px solid black">
             <td style="border: 3px solid black">{{ $trendrow->facility_name }}</td>
             <td style="border: 3px solid black">{{ $trendrow->site_name }}</td>
             <td style="border: 3px solid black">{{ $trendrow->algorithm_type }}</td>
             <td style="border: 3px solid black">{{ $testingDate }}</td>
-            <td style="border: 3px solid black;;text-align: left;">{{ $trendrow->test_1_reactive + $trendrow->test_1_nonreactive }}</td>
+            <td style="border: 3px solid black;;text-align: left;">{{ $total }}</td>
             @for($l = 1; $l <= $globalValue; $l++)
             <?php $reactive = 'test_'.$l.'_reactive'; $nonreactive = 'test_'.$l.'_nonreactive'; $invalid = 'test_'.$l.'_invalid';   ?>
             <td style="border: 3px solid black;text-align: left;">{{ $trendrow->$reactive }}</td>
             <td style="border: 3px solid black;text-align: left;">{{ $trendrow->$nonreactive }}</td>
             <td style="border: 3px solid black;text-align: left;">{{ $trendrow->$invalid }}</td>
             @endfor
-            <td style="border: 3px solid black;text-align: left;">{{ $trendrow->positive_percentage }}</td>
-            <td style="border: 3px solid black;text-align: left;">{{ $trendrow->positive_agreement }}</td>
-            <td style="border: 3px solid black;text-align: left;">{{ $trendrow->overall_agreement }}</td>
+            <td style="border: 3px solid black;text-align: left;">{{ $positivePercentage }}</td>
+            <td style="border: 3px solid black;text-align: left;">{{ $posAgreement }}</td>
+            <td style="border: 3px solid black;text-align: left;">{{ $OverallAgreement }}</td>
         </tr>
     @endforeach
     </tbody>
