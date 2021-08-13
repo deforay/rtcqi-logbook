@@ -55,6 +55,7 @@ class MonthlyReportTable extends Model
                     'added_by' => session('userId'),
                     'last_modified_on' => $commonservice->getDateTime(),
                     'district_id' => $districtId,
+                    'tester_name' => $data['testername'],
                     // 'signature' => $data['signature'],
                 ]
             );
@@ -225,7 +226,8 @@ class MonthlyReportTable extends Model
             'name_of_data_collector' => $data['nameOfDataCollect'],
             'last_modified_on' => $commonservice->getDateTime(),
             'district_id' => $districtId,
-            // 'signature' => $data['signature'],
+            'tester_name' => $data['testername'],
+                    // 'signature' => $data['signature'],
         );
         $response = DB::table('monthly_reports')
             ->where('mr_id', '=', base64_decode($id))
@@ -769,117 +771,118 @@ class MonthlyReportTable extends Model
                             $province = $row[3];
                             $site_manager = $row[4];
                             $site_unique_id = $row[5];
-                            $if_flc = $row[6];
-                            $is_recency = $row[7];
-                            $contact_no = $row[8];
-                            $algo_type = $row[9];
-                            $date_of_collection = date('Y-m-d', strtotime($row[10]));
-                            $report_months = date('Y-m-d', strtotime($row[11]));
-                            $book_no = $row[12];
-                            $name_of_collector = $row[13];
-                            $page_no = $row[14];
-                            $start_date = date('Y-m-d', strtotime($row[15]));
-                            $end_date = date('Y-m-d', strtotime($row[16]));
+                            $tester_name = $row[6];
+                            $if_flc = $row[7];
+                            $is_recency = $row[8];
+                            $contact_no = $row[9];
+                            $algo_type = $row[10];
+                            $date_of_collection = date('Y-m-d', strtotime($row[11]));
+                            $report_months = date('Y-m-d', strtotime($row[12]));
+                            $book_no = $row[13];
+                            $name_of_collector = $row[14];
+                            $page_no = $row[15];
+                            $start_date = date('Y-m-d', strtotime($row[16]));
+                            $end_date = date('Y-m-d', strtotime($row[17]));
                             if ($arr['no_of_test'] >= 1) {
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[17]))
+                                    ->where('test_kit_name', '=', trim($row[18]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[17]),
+                                            'test_kit_name' => trim($row[18]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit1 = $testkitId;
-                                $lot_no1 = $row[18];
-                                $expiry_date1 = date('Y-m-d', strtotime($row[19]));
-                                $testkit1_reactive = $row[20];
-                                $testkit1_nonreactive = $row[21];
-                                $testkit1_invalid = $row[22];
+                                $lot_no1 = $row[19];
+                                $expiry_date1 = date('Y-m-d', strtotime($row[20]));
+                                $testkit1_reactive = $row[21];
+                                $testkit1_nonreactive = $row[22];
+                                $testkit1_invalid = $row[23];
                             }
                             if ($arr['no_of_test'] >= 2) {
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[23]))
+                                    ->where('test_kit_name', '=', trim($row[24]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[23]),
+                                            'test_kit_name' => trim($row[24]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit2 = $testkitId;
                                 $lot_no2 = $row[24];
-                                $expiry_date2 = date('Y-m-d', strtotime($row[25]));
-                                $testkit2_reactive = $row[26];
-                                $testkit2_nonreactive = $row[27];
-                                $testkit2_invalid = $row[28];
+                                $expiry_date2 = date('Y-m-d', strtotime($row[26]));
+                                $testkit2_reactive = $row[27];
+                                $testkit2_nonreactive = $row[28];
+                                $testkit2_invalid = $row[29];
                             }
                             if ($arr['no_of_test'] >= 3) {
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[29]))
+                                    ->where('test_kit_name', '=', trim($row[30]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[29]),
+                                            'test_kit_name' => trim($row[30]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit3 = $testkitId;
-                                $lot_no3 = $row[30];
-                                $expiry_date3 = date('Y-m-d', strtotime($row[31]));
-                                $testkit3_reactive = $row[32];
-                                $testkit3_nonreactive = $row[33];
-                                $testkit3_invalid = $row[34];
+                                $lot_no3 = $row[31];
+                                $expiry_date3 = date('Y-m-d', strtotime($row[32]));
+                                $testkit3_reactive = $row[33];
+                                $testkit3_nonreactive = $row[34];
+                                $testkit3_invalid = $row[35];
                             }
                             if ($arr['no_of_test'] >= 4) {
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[35]))
+                                    ->where('test_kit_name', '=', trim($row[36]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[35]),
+                                            'test_kit_name' => trim($row[36]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit4 = $testkitId;
-                                $lot_no4 = $row[36];
-                                $expiry_date4 = date('Y-m-d', strtotime($row[37]));
-                                $testkit4_reactive = $row[38];
-                                $testkit4_nonreactive = $row[39];
-                                $testkit4_invalid = $row[40];
+                                $lot_no4 = $row[37];
+                                $expiry_date4 = date('Y-m-d', strtotime($row[38]));
+                                $testkit4_reactive = $row[39];
+                                $testkit4_nonreactive = $row[40];
+                                $testkit4_invalid = $row[41];
                             }
                             if ($arr['no_of_test'] == 1) {
-                                $final_positive = $row[23];
-                                $final_negative = $row[24];
-                                $final_indeterminate = $row[25];
+                                $final_positive = $row[24];
+                                $final_negative = $row[25];
+                                $final_indeterminate = $row[26];
                             } else if ($arr['no_of_test'] == 2) {
-                                $final_positive = $row[29];
-                                $final_negative = $row[30];
-                                $final_indeterminate = $row[31];
+                                $final_positive = $row[30];
+                                $final_negative = $row[31];
+                                $final_indeterminate = $row[32];
                             } else if ($arr['no_of_test'] == 3) {
-                                $final_positive = $row[35];
-                                $final_negative = $row[36];
-                                $final_indeterminate = $row[37];
+                                $final_positive = $row[36];
+                                $final_negative = $row[37];
+                                $final_indeterminate = $row[38];
                             } else if ($arr['no_of_test'] == 4) {
-                                $final_positive = $row[41];
-                                $final_negative = $row[42];
-                                $final_indeterminate = $row[43];
+                                $final_positive = $row[42];
+                                $final_negative = $row[43];
+                                $final_indeterminate = $row[44];
                             }
 
                             $siteTypeData = DB::table('site_types')
@@ -973,6 +976,7 @@ class MonthlyReportTable extends Model
                                             'added_on' => date('Y-m-d'),
                                             'added_by' => session('userId'),
                                             'district_id' => $districtId,
+                                            'tester_name' => $tester_name,
                                         ]
                                     );
                                 }
