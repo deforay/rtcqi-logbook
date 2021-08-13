@@ -115,6 +115,15 @@ $test = '';
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
+										<fieldset>
+											<h5>Tester Name <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="testername" class="form-control isRequired " autocomplete="off" placeholder="Enter Tester Name" name="testername" title="Please Enter Tester Name" >
+											</div>
+										</fieldset>
+									</div>
+                                        <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Is FLC?<span class="mandatory">*</span>
                                                 </h5>
@@ -143,10 +152,10 @@ $test = '';
                                         @endif
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Contact Number
+                                                <h5>Tester Contact Number
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="contactNo" class="form-control" autocomplete="off" placeholder="Enter Contact Number" name="contactNo" title="Please Enter Contact Number">
+                                                <input type="tel" id="contactNo" maxlength="10" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Tester Contact Phone" name="contactNo" title="Please Enter Tester Contact Phone" >
                                                 </div>
                                             </fieldset>
                                         </div>

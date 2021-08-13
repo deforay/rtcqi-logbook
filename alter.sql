@@ -413,3 +413,7 @@ ALTER TABLE monthly_reports ADD last_modified_on datetime DEFAULT NULL;
 --Sakthivel P 09 Aug 2021
 ALTER TABLE monthly_reports ADD district_id int(11);
 ALTER TABLE `monthly_reports` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);
+
+--Sakthivel P 13 Aug 2021
+ALTER TABLE monthly_reports ADD tester_name Varchar(100) NULL;
+
