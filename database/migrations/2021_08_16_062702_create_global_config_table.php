@@ -14,10 +14,10 @@ class CreateGlobalConfigTable extends Migration
     public function up()
     {
         Schema::create('global_config', function (Blueprint $table) {
-            $table->integer('config_id')->autoIncrement();
-            $table->string('display_name')->nullable();
-            $table->string('global_name')->nullable();
-            $table->string('global_value')->nullable();
+            $table->integer('config_id', true);
+            $table->string('display_name', 200);
+            $table->string('global_name', 200);
+            $table->string('global_value');
         });
     }
 

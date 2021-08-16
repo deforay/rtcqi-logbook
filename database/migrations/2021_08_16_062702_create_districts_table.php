@@ -14,10 +14,9 @@ class CreateDistrictsTable extends Migration
     public function up()
     {
         Schema::create('districts', function (Blueprint $table) {
-            $table->integer('district_id')->autoIncrement();
-            $table->integer('provincesss_id')->nullable();
-            $table->string('district_name')->nullable();
-            $table->foreign('provincesss_id')->references('provincesss_id')->on('provinces');
+            $table->integer('district_id', true);
+            $table->integer('provincesss_id')->index('provincesss_id');
+            $table->string('district_name', 100);
         });
     }
 

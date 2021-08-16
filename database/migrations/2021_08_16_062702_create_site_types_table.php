@@ -14,9 +14,9 @@ class CreateSiteTypesTable extends Migration
     public function up()
     {
         Schema::create('site_types', function (Blueprint $table) {
-            $table->integer('st_id')->autoIncrement();
-            $table->string('site_type_name');
-            $table->string('site_type_status')->default('active');
+            $table->integer('st_id', true);
+            $table->string('site_type_name', 100);
+            $table->string('site_type_status', 10)->default('active');
         });
     }
 
