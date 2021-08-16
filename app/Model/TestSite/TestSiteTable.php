@@ -29,7 +29,6 @@ class TestSiteTable extends Model
                     'site_address2' => $data['address2'],
                     'site_postal_code' => $data['postalCode'],
                     'site_city' => $data['city'],
-                    'site_state' => $data['state'],
                     'site_country' => $data['country'],
                     'test_site_status' => $data['testSiteStatus'],
                     'facility_id' => $data['facilityId'],
@@ -58,6 +57,8 @@ class TestSiteTable extends Model
     {
         $data = DB::table('test_sites')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->join('districts', 'districts.district_id', '=', 'test_sites.district_id')
+            ->join('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
             ->get();
         return $data;
     }
@@ -97,7 +98,6 @@ class TestSiteTable extends Model
             'site_address2' => $data['address2'],
             'site_postal_code' => $data['postalCode'],
             'site_city' => $data['city'],
-            'site_state' => $data['state'],
             'site_country' => $data['country'],
             'test_site_status' => $data['testSiteStatus'],
             'facility_id' => $data['facilityId'],
@@ -145,13 +145,11 @@ class TestSiteTable extends Model
 
     public function fetchTestSiteData($id)
     {
-        // $result = $id[0]->provincesss_id;
         $data = DB::table('test_sites')
-        ->select('test_sites.ts_id','test_sites.site_id','test_sites.site_latitude','test_sites.site_longitude','test_sites.provincesss_id','provinces.province_name')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
+            ->select('test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.provincesss_id', 'provinces.province_name')
+            ->leftjoin('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
             ->where('test_sites.ts_id', '=', $id)
             ->get();
-            // dd($data);die;
         return $data;
     }
 

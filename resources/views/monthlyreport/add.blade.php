@@ -789,12 +789,16 @@ $test = '';
                         $("#siteUniqueId").val('');
                         $("#latitude").val('');
                         $("#longitude").val('');
+                        $("#provinceId").val('');
                     } else {
                         $.each(response, function(key, value) {
+                            console.log(value.provincesss_id);
                             $("#siteUniqueId").val(value.site_id);
                             $("#latitude").val(value.site_latitude);
                             $("#longitude").val(value.site_longitude);
+                            if(value.provincesss_id!=null) {
                             $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
+                            }
                         });
                     }
 

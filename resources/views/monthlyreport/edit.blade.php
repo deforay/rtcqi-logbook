@@ -731,7 +731,9 @@ $('#testsiteId').change(function() {
                     $("#siteUniqueId").val(value.site_id);
                     $("#latitude").val(value.site_latitude);
                     $("#longitude").val(value.site_longitude);
+                    if(value.provincesss_id!=null) {
                     $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
+                    }
                 });
             }
 

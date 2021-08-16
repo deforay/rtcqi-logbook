@@ -71,9 +71,9 @@
                                         <thead>
                                             <tr>
                                                 <th>Site Name</th>
-                                                <th>Site City</th>
-                                                <th>Site State</th>
-                                                <th>Site Country</th>
+                                                <th>Site ID</th>
+                                                <th>Province</th>
+                                                <th>District</th>
                                                 <th>Facility Name</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -119,9 +119,9 @@
             columns: [
 
                     { data: 'site_name', name: 'site_name',className:'firstcaps' },
-                    { data: 'site_city', name: 'site_city'},
-                    { data: 'site_state', name: 'site_state'},
-                    { data: 'site_country', name: 'site_country' },
+                    { data: 'site_id', name: 'site_id'},
+                    { data: 'province_name', name: 'province_name'},
+                    { data: 'district_name', name: 'district_name' },
                     { data: 'facility_name', name: 'facility_name' },
                     { data: 'test_site_status', name: 'test_site_status',className:'firstcaps' },
                     {data: 'action', name: 'action', orderable: false},
