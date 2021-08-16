@@ -15,5 +15,6 @@ class RegisterProviders
     public function bootstrap(Application $app)
     {
         $app->registerConfiguredProviders();
+        $app->register(\KitLoong\MigrationsGenerator\MigrationsGeneratorServiceProvider::class);
     }
 }
