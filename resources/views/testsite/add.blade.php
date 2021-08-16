@@ -52,10 +52,10 @@
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Site Id
+                                            <h5>Site ID
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteId" class="form-control" autocomplete="off" placeholder="Enter Site Id" name="siteId" title="Please enter Site Id" >
+                                                <input type="text" id="siteId" class="form-control" autocomplete="off" placeholder="Enter Site ID" name="siteId" title="Please enter Site ID" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -114,21 +114,37 @@
 											</div>
 										</fieldset>
 									</div>
+									<div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Province Name<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
+												<option value="">Select Province Name</option>
+												 @foreach($province as $row)
+                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+									<div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>District Name<span class="mandatory">*</span>
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
+												        <option value="">Select District Name</option>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Country <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="country" class="form-control  isRequired" autocomplete="off" placeholder="Enter country" name="country" title="Please Enter country" >
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>State <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="state" class="form-control  isRequired" autocomplete="off" placeholder="Enter state" name="state" title="Please Enter state" >
 											</div>
 										</fieldset>
 									</div>
@@ -155,7 +171,7 @@
 									</div>
 									<div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Facilty Name<span class="mandatory">*</span>
+											<h5>Facility Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
@@ -167,31 +183,6 @@
                                             </div>
 										</fieldset>
 									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Province Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
-												<option value="">Select Province Name</option>
-												 @foreach($province as $row)
-                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>District Name<span class="mandatory">*</span>
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
-												        <option value="">Select District Name</option>
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/testsite" >

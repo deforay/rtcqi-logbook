@@ -54,10 +54,10 @@
                             <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Site Id
+                                            <h5>Site ID
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteId" value="{{$result[0]->site_id}}" class="form-control" autocomplete="off" placeholder="Enter Site Id" name="siteId" title="Please enter Site Id" >
+                                                <input type="text" id="siteId" value="{{$result[0]->site_id}}" class="form-control" autocomplete="off" placeholder="Enter Site ID" name="siteId" title="Please enter Site ID" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -118,59 +118,6 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Country <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="country" value="{{$result[0]->site_country}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter country" name="country" title="Please Enter country" >
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>State <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="state" value="{{$result[0]->site_state}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter state" name="state" title="Please Enter state" >
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>City <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="city" value="{{$result[0]->site_city}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter city" name="city" title="Please Enter city" >
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Test Site Status<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteStatus" name="testSiteStatus" title="Please select Test site status">
-                                                    <option value="active" {{ $result[0]->test_site_status == 'active' ?  'selected':''}}>Active</option>
-                                                    <option value="inactive" {{ $result[0]->test_site_status == 'inactive' ?  'selected':''}}>Inactive</option>
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Facilty Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
-                                                <option>Select Facility Name</option>
-                                                    @foreach($facility as $row)
-                                                    <option value="{{$row->facility_id}}" {{ $result[0]->facility_id == $row->facility_id ?  'selected':''}}>{{$row->facility_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
 											<h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
@@ -197,6 +144,50 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Country <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="country" value="{{$result[0]->site_country}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter country" name="country" title="Please Enter country" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>City <span class="mandatory">*</span>
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="city" value="{{$result[0]->site_city}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter city" name="city" title="Please Enter city" >
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Test Site Status<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteStatus" name="testSiteStatus" title="Please select Test site status">
+                                                    <option value="active" {{ $result[0]->test_site_status == 'active' ?  'selected':''}}>Active</option>
+                                                    <option value="inactive" {{ $result[0]->test_site_status == 'inactive' ?  'selected':''}}>Inactive</option>
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+									<div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Facility Name<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
+                                                <option>Select Facility Name</option>
+                                                    @foreach($facility as $row)
+                                                    <option value="{{$row->facility_id}}" {{ $result[0]->facility_id == $row->facility_id ?  'selected':''}}>{{$row->facility_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/testsite" >
