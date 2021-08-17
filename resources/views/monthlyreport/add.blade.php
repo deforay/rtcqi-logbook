@@ -160,7 +160,7 @@ $test = '';
                                             </fieldset>
                                         </div>
                                         @endif
-                                        <div class="form-group col-xl-3 col-lg-3">
+                                        {{-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
 											</h5>
@@ -177,7 +177,7 @@ $test = '';
                                                 <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
 											</div>
 										</fieldset>
-									</div>
+									</div> --}}
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Algorithm Type <span class="mandatory">*</span>
@@ -789,13 +789,9 @@ $test = '';
                     if (response.length == 0) {
                         $("#siteUniqueId").val('');
                         $("#latitude").val('');
-                        $("#longitude").val('');
-                        $("#provinceId").val('');
                     } else {
                         $.each(response, function(key, value) {
                             $("#siteUniqueId").val(value.site_id);
-                            $("#latitude").val(value.site_latitude);
-                            $("#longitude").val(value.site_longitude);
                             if(value.provincesss_id!=null) {
                             $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
                             }
