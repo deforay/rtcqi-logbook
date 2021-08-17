@@ -36,7 +36,7 @@ class CreateMonthlyReportsTable extends Migration
             $table->date('added_on')->nullable();
             $table->dateTime('last_modified_on')->nullable();
             $table->integer('district_id')->nullable()->index('district_id');
-            $table->string('tester_name', 100)->nullable();
+            
         });
     }
 

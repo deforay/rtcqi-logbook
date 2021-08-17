@@ -11,6 +11,7 @@
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 // print_r($latest->test_1_kit_id);die;
 $test = '';
+
 ?>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -115,6 +116,19 @@ $test = '';
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
+                                                <h5>Is FLC?<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is FLC status">
+                                                        <option value="">-- Select --</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Tester Name <span class="mandatory">*</span>
 											</h5>
@@ -125,14 +139,10 @@ $test = '';
 									</div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Is FLC?<span class="mandatory">*</span>
+                                                <h5>Tester Contact Number
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is FLC status">
-                                                        <option value="">-- Select --</option>
-                                                        <option value="yes">Yes</option>
-                                                        <option value="no">No</option>
-                                                    </select>
+                                                <input type="tel" id="contactNo" maxlength="10" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Tester Contact Phone" name="contactNo" title="Please Enter Tester Contact Phone" >
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -150,15 +160,6 @@ $test = '';
                                             </fieldset>
                                         </div>
                                         @endif
-                                        <div class="form-group col-xl-3 col-lg-3">
-                                            <fieldset>
-                                                <h5>Tester Contact Number
-                                                </h5>
-                                                <div class="form-group">
-                                                <input type="tel" id="contactNo" maxlength="10" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Tester Contact Phone" name="contactNo" title="Please Enter Tester Contact Phone" >
-                                                </div>
-                                            </fieldset>
-                                        </div>
                                         <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
@@ -792,7 +793,6 @@ $test = '';
                         $("#provinceId").val('');
                     } else {
                         $.each(response, function(key, value) {
-                            console.log(value.provincesss_id);
                             $("#siteUniqueId").val(value.site_id);
                             $("#latitude").val(value.site_latitude);
                             $("#longitude").val(value.site_longitude);
