@@ -211,7 +211,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     });
 
     function getAllMonthlyReport() {
-        let searchDate = $('#searchDate').val();
+        let searchDate = $('#searchDate').val() || '';
+        let provinceId = $('#provinceId').val() || '';
+        let districtId = $('#districtId').val() || '';
+        let testSiteId = $('#testSiteId').val() || '';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -228,9 +231,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 type: 'POST',
                 data: {
                 searchDate: searchDate,
-                provinceId: $("#provinceId").val(),
-                districtId: $("#districtId").val(),
-                testSiteId: $("#testSiteId").val(),
+                provinceId: provinceId,
+                districtId: districtId,
+                testSiteId: testSiteId,
                 },
             },
             columns: [
