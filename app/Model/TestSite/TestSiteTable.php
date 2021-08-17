@@ -56,9 +56,9 @@ class TestSiteTable extends Model
     public function fetchAllTestSite()
     {
         $data = DB::table('test_sites')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->join('districts', 'districts.district_id', '=', 'test_sites.district_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
+            ->leftjoin('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
+            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.district_id')
+            ->leftjoin('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
             ->get();
         return $data;
     }
@@ -159,6 +159,23 @@ class TestSiteTable extends Model
             ->select('district_id')
             ->where('test_sites.ts_id', '=', $id)
             ->value('district_id');
+        return $data;
+    }
+
+    public function fetchLatitudeValue($id)
+    {
+        $data = DB::table('test_sites')
+            ->select('site_latitude')
+            ->where('test_sites.ts_id', '=', $id)
+            ->value('site_latitude');
+        return $data;
+    }
+    public function fetchLongitudeValue($id)
+    {
+        $data = DB::table('test_sites')
+            ->select('site_longitude')
+            ->where('test_sites.ts_id', '=', $id)
+            ->value('site_longitude');
         return $data;
     }
 }

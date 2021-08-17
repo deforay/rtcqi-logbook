@@ -24,6 +24,8 @@ class MonthlyReportTable extends Model
         $data = $request->all();
         $model = new TestSiteTable();
         $districtId = $model->fetchDistrictId($data['testsiteId']);
+        $latitude = $model->fetchLatitudeValue($data['testsiteId']);
+        $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $user_name = session('name');
         // print_r($data);die;
         $commonservice = new CommonService();
@@ -43,8 +45,8 @@ class MonthlyReportTable extends Model
                     'is_flc' => $data['isFlu'],
                     'is_recency' => $recency,
                     'contact_no' => $data['contactNo'],
-                    'latitude' => $data['latitude'],
-                    'longitude' => $data['longitude'],
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
                     'algorithm_type' => $data['algoType'],
                     'date_of_data_collection' => $DateOfCollect,
                     'reporting_month' => $reportingMon,
@@ -68,8 +70,8 @@ class MonthlyReportTable extends Model
             }
             // print_r($data);die;
             for ($p = 0; $p < count($data['pageNO']); $p++) {
-                $startDate = date("Y-m-d", strtotime($data['startDate'][$p]));  
-                $endDate = date("Y-m-d", strtotime($data['endDate'][$p]));  
+                $startDate = date("Y-m-d", strtotime($data['startDate'][$p]));
+                $endDate = date("Y-m-d", strtotime($data['endDate'][$p]));
 
                 $insMonthlyArr = array(
                     'mr_id' => $id,
@@ -146,28 +148,28 @@ class MonthlyReportTable extends Model
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->where('users_testsite_map.user_id', '=', $user_id)
             ->groupBy('monthly_reports.mr_id');
-            
-            if (trim($start_date) != "" && trim($end_date) != "") {
-                $query = $query->where(function ($query) use ($start_date, $end_date) {
-                    $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
-                        ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
-                });
-            }
-            if (isset($params['provinceId']) && $params['provinceId'] != '') {
-                $query = $query->whereIn('provinces.provincesss_id', $params['provinceId']);
-                $query = $query->groupBy(DB::raw('provinces.provincesss_id'));
-            }
-            if (isset($params['districtId']) && $params['districtId'] != '') {
-                $query = $query->whereIn('districts.district_id', $params['districtId']);
-                $query = $query->groupBy(DB::raw('districts.district_id'));
-            }
-            if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
-                $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
-                $query = $query->groupBy(DB::raw('test_sites.ts_id'));
-            }
-            
-            $salesResult = $query->get();
-            return $salesResult;
+
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
+            });
+        }
+        if (isset($params['provinceId']) && $params['provinceId'] != '') {
+            $query = $query->whereIn('provinces.provincesss_id', $params['provinceId']);
+            $query = $query->groupBy(DB::raw('provinces.provincesss_id'));
+        }
+        if (isset($params['districtId']) && $params['districtId'] != '') {
+            $query = $query->whereIn('districts.district_id', $params['districtId']);
+            $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
+            $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
+            $query = $query->groupBy(DB::raw('test_sites.ts_id'));
+        }
+
+        $salesResult = $query->get();
+        return $salesResult;
     }
 
     // Fetch All Active MonthlyReport List
@@ -202,6 +204,8 @@ class MonthlyReportTable extends Model
         $data = $params->all();
         $model = new TestSiteTable();
         $districtId = $model->fetchDistrictId($data['testsiteId']);
+        $latitude = $model->fetchLatitudeValue($data['testsiteId']);
+        $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $commonservice = new CommonService();
         $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = ($data['reportingMon']);
@@ -217,8 +221,8 @@ class MonthlyReportTable extends Model
             'is_flc' => $data['isFlu'],
             'is_recency' => $recency,
             'contact_no' => $data['contactNo'],
-            'latitude' => $data['latitude'],
-            'longitude' => $data['longitude'],
+            'latitude' => $latitude,
+            'longitude' => $longitude,
             'algorithm_type' => $data['algoType'],
             'date_of_data_collection' => $DateOfCollect,
             'reporting_month' => $reportingMon,
@@ -227,7 +231,7 @@ class MonthlyReportTable extends Model
             'last_modified_on' => $commonservice->getDateTime(),
             'district_id' => $districtId,
             'tester_name' => $data['testername'],
-                    // 'signature' => $data['signature'],
+            // 'signature' => $data['signature'],
         );
         $response = DB::table('monthly_reports')
             ->where('mr_id', '=', base64_decode($id))
@@ -243,8 +247,8 @@ class MonthlyReportTable extends Model
         }
         for ($p = 0; $p < count($data['pageNO']); $p++) {
 
-            $startDate = date("Y-m-d", strtotime($data['startDate'][$p]));  
-            $endDate = date("Y-m-d", strtotime($data['endDate'][$p])); 
+            $startDate = date("Y-m-d", strtotime($data['startDate'][$p]));
+            $endDate = date("Y-m-d", strtotime($data['endDate'][$p]));
             $insMonthlyArr = array(
                 'mr_id' => base64_decode($id),
                 'page_no' => $data['pageNO'][$p],
@@ -930,6 +934,8 @@ class MonthlyReportTable extends Model
                             }
 
                             $districtId = $model->fetchDistrictId($testSiteId);
+                            $latitude = $model->fetchLatitudeValue($testSiteId);
+                            $longitude = $model->fetchLongitudeValue($testSiteId);
 
                             $provinceData = DB::table('provinces')
                                 ->where('province_name', '=', trim($province))
@@ -980,6 +986,8 @@ class MonthlyReportTable extends Model
                                             'added_by' => session('userId'),
                                             'district_id' => $districtId,
                                             'tester_name' => $tester_name,
+                                            'latitude' => $latitude,
+                                            'longitude' => $longitude,
                                         ]
                                     );
                                 }
@@ -1107,7 +1115,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         } elseif ($arr['no_of_test'] == 2) {
@@ -1120,7 +1128,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         } elseif ($arr['no_of_test'] == 3) {
@@ -1134,7 +1142,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         } else {
@@ -1149,7 +1157,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.provincesss_id', '=', 'monthly_reports.provincesss_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         }
