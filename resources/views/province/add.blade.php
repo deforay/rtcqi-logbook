@@ -52,10 +52,10 @@
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Province Name
+                                            <h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="provinceName" class="form-control" autocomplete="off" placeholder="Enter province name" name="provinceName" title="Please enter province name" >
+                                                <input type="text" id="provinceName" class="form-control isRequired" autocomplete="off" placeholder="Enter province name" name="provinceName" title="Please enter province name" >
                                             </div>
                                         </fieldset>
                                     </div>

@@ -52,10 +52,10 @@
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>District Name
+                                            <h5>District Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="districtName" class="form-control" autocomplete="off" placeholder="Enter district name" name="districtName" title="Please enter district name" >
+                                                <input type="text" id="districtName" class="form-control isRequired" autocomplete="off" placeholder="Enter District Name" name="districtName" title="Please Enter District Name" >
                                             </div>
                                         </fieldset>
                                     </div>
