@@ -336,7 +336,7 @@ $test = '';
                                                             <h5>Expiry Date {{$j}}
                                                             </h5>
                                                             <div class="form-group">
-                                                                <input type="date" id="expiryDate0{{$j}}" class="form-control isRequired  " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}" onchange=checklotNo('0','{{$j}}')>
+                                                                <input type="text" id="expiryDate0{{$j}}" class="form-control isRequired dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="Enter Expiry Date" title="Please Enter Expiry Date{{$j}}" onchange="checklotNo('0','{{$j}}')">
                                                             </div>
                                                         </td>
                                                         @endfor
@@ -483,7 +483,7 @@ $test = '';
         });
 
         $(".dates").datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'dd-M-yyyy',
             autoclose: true,
             endDate: today,
         });
@@ -634,7 +634,7 @@ $test = '';
 							<h5>Expiry Date ' + j + '\
 							</h5>\
 							<div class="form-group">\
-								<input type="date" id="expiryDate' + rowCount + '' + j + '" class="form-control  " autocomplete="off" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" onchange=checklotNo(' + rowCount + ',' + j + ')>\
+								<input type="text" id="expiryDate' + rowCount + '' + j + '" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" onchange=checklotNo(' + rowCount + ',' + j + ')>\
 							</div>\
 					</td>';
         }
@@ -710,7 +710,7 @@ $test = '';
 				</div>';
         $("#test_row").append(div);
         $(".dates").datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'dd-M-yyyy',
             autoclose: true,
             endDate: today,
         });

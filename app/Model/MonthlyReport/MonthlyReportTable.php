@@ -70,8 +70,8 @@ class MonthlyReportTable extends Model
             }
             // print_r($data);die;
             for ($p = 0; $p < count($data['pageNO']); $p++) {
-                $startDate = date("Y-m-d", strtotime($data['startDate'][$p]));
-                $endDate = date("Y-m-d", strtotime($data['endDate'][$p]));
+                $startDate = $commonservice->dateFormat($data['startDate'][$p]);
+                $endDate = $commonservice->dateFormat($data['endDate'][$p]);
 
                 $insMonthlyArr = array(
                     'mr_id' => $id,
@@ -86,7 +86,7 @@ class MonthlyReportTable extends Model
                     $m = $l;
                     $insMonthlyArr['test_' . $m . '_kit_id'] = $data['testkitId' . $l][$p];
                     $insMonthlyArr['lot_no_' . $m] = $data['lotNO' . $l][$p];
-                    $insMonthlyArr['expiry_date_' . $m] = $data['expiryDate' . $l][$p];
+                    $insMonthlyArr['expiry_date_' . $m] = $commonservice->dateFormat($data['expiryDate' . $l][$p]);
                     $insMonthlyArr['test_' . $m . '_reactive'] = $data['totalReactive' . $l][$p];
                     $insMonthlyArr['test_' . $m . '_nonreactive'] = $data['totalNonReactive' . $l][$p];
                     $insMonthlyArr['test_' . $m . '_invalid'] = $data['totalInvalid' . $l][$p];
@@ -247,8 +247,8 @@ class MonthlyReportTable extends Model
         }
         for ($p = 0; $p < count($data['pageNO']); $p++) {
 
-            $startDate = date("Y-m-d", strtotime($data['startDate'][$p]));
-            $endDate = date("Y-m-d", strtotime($data['endDate'][$p]));
+            $startDate = $commonservice->dateFormat($data['startDate'][$p]);
+            $endDate = $commonservice->dateFormat($data['endDate'][$p]);
             $insMonthlyArr = array(
                 'mr_id' => base64_decode($id),
                 'page_no' => $data['pageNO'][$p],
@@ -262,7 +262,7 @@ class MonthlyReportTable extends Model
                 $m = $l;
                 $insMonthlyArr['test_' . $m . '_kit_id'] = $data['testkitId' . $l][$p];
                 $insMonthlyArr['lot_no_' . $m] = $data['lotNO' . $l][$p];
-                $insMonthlyArr['expiry_date_' . $m] = $data['expiryDate' . $l][$p];
+                $insMonthlyArr['expiry_date_' . $m] = $commonservice->dateFormat($data['expiryDate' . $l][$p]);
                 $insMonthlyArr['test_' . $m . '_reactive'] = $data['totalReactive' . $l][$p];
                 $insMonthlyArr['test_' . $m . '_nonreactive'] = $data['totalNonReactive' . $l][$p];
                 $insMonthlyArr['test_' . $m . '_invalid'] = $data['totalInvalid' . $l][$p];

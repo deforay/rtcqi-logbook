@@ -232,6 +232,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">Test Details</h4>
                                         <?php $z = 0;  ?>
                                         @foreach($result['test_details'] as $list)
+                                        <?php
+                                        $start_test_date = $common->humanDateFormat($list->start_test_date);
+                                        $end_test_date = $common->humanDateFormat($list->end_test_date);
+                                        ?>
                                         <input type="hidden" id="mrp_id{{$z}}" name=mrp_id[] value="{{$list->mrp_id}}">
                                         <div class="testDetailsRow" id="test_details{{$z}}">
                                             <div class="row">
@@ -248,7 +252,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         <h5>Start Date
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="startDate{{$z}}" value="{{date('d-m-Y', strtotime($list->start_test_date))}}" class="form-control dates " onchange="changeStartDate('{{$z}}')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date">
+                                                            <input type="text" id="startDate{{$z}}" value="{{$start_test_date}}" class="form-control dates " onchange="changeStartDate('{{$z}}')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -257,7 +261,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         <h5>End Date
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="endDate{{$z}}" value="{{date('d-m-Y', strtotime($list->end_test_date))}}" class="form-control  dates" onchange="changeEndDate('{{$z}}')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date">
+                                                            <input type="text" id="endDate{{$z}}" value="{{$end_test_date}}" class="form-control  dates" onchange="changeEndDate('{{$z}}')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -306,7 +310,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </tr>
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <?php $lot_no = 'lot_no_' . $j;
-                                                                                            $expiry_date = 'expiry_date_' . $j;    ?> <td style=" text-align: center;">
+                                                                                            $expiry_date = 'expiry_date_' . $j; 
+                                                                                            $expiryDate = $common->humanDateFormat($list->$expiry_date); ?> <td style=" text-align: center;">
                                                         <h5>Lot No {{$j}}
                                                         </h5>
                                                         <div class="form-group">
@@ -317,7 +322,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                             <h5>Expiry Date {{$j}}
                                                             </h5>
                                                             <div class="form-group">
-                                                                <input type="date" id="expiryDate{{$j}}" value="{{$list->$expiry_date}}" class="form-control   " autocomplete="off" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}">
+                                                                <input type="text" id="expiryDate{{$j}}" value="{{$expiryDate}}" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}">
                                                             </div>
                                                         </td>
                                                         @endfor
@@ -458,7 +463,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             clearBtn: true,
         });
         $(".dates").datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'dd-M-yyyy',
             autoclose: true,
             endDate: today,
         });
@@ -605,7 +610,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 							<h5>Expiry Date ' + j + '\
 							</h5>\
 							<div class="form-group">\
-								<input type="date" id="expiryDate' + j + '" class="form-control  " autocomplete="off" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" >\
+								<input type="date" id="expiryDate' + j + '" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" >\
 							</div>\
 					</td>';
         }
@@ -681,7 +686,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 				</div>';
         $("#test_row").append(div);
         $(".dates").datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'dd-M-yyyy',
             autoclose: true,
             endDate: today,
         });
