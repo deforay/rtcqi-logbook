@@ -160,15 +160,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                             </fieldset>
                                         </div>
                                         @endif
-                                        <div class="form-group col-xl-3 col-lg-3">
-                                            <fieldset>
-                                                <h5>Tester Contact Number
-                                                </h5>
-                                                <div class="form-group">
-                                                <input type="tel" id="contactNo" maxlength="10" value="{{$result[0]->contact_no}}" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Tester Contact Phone" name="contactNo" title="Please Enter Tester Contact Phone" >
-                                                </div>
-                                            </fieldset>
-                                        </div>
                                         {{--   <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
 											<h5>Latitude <span class="mandatory">*</span>
