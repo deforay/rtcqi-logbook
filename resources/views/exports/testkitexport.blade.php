@@ -26,7 +26,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         <th style="border: 3px solid black;font-weight:bold;">Facility</th>
         <th style="border: 3px solid black;font-weight:bold;">Site</th>
         <th style="border: 3px solid black;font-weight:bold;">Algothrim</th>
-        <th style="border: 3px solid black;font-weight:bold;">Date</th>
+        <th style="border: 3px solid black;font-weight:bold;">Testing Month</th>
         @for($i = 1; $i <= $arr['no_of_test']; $i++)
                 <th style="border: 3px solid black;font-weight:bold;">Test {{$i}} Used</th>
                 @endfor

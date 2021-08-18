@@ -85,8 +85,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             @if(count($report)>0)
             @foreach ($report as $trendrow)
             <?php
-            $date = $trendrow->end_test_date;
-            $testingMonth = date('F - Y', strtotime($date)); //June, 2017
+            $startDate = $trendrow->start_test_date;
+            $endDate = $trendrow->end_test_date;
+            $start_test_date = date('d-M-Y', strtotime($startDate));
+            $end_test_date = date('d-M-Y', strtotime($endDate));
             $totalPositive = $trendrow->final_positive;
             $total = $trendrow->total_test;
             $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
@@ -98,8 +100,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->start_test_date}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->end_test_date}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$start_test_date}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$end_test_date}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->total_test}}</td>
                 @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive';
                                                                 $nonreactive = 'test_' . $l . '_nonreactive';

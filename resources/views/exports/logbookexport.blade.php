@@ -55,6 +55,10 @@ for ($i = 0; $i < sizeof($glob); $i++) {
     <tbody style="border: 3px solid black">
         @foreach($report as $logbookdata)
         <?php
+        $startDate = $logbookdata->start_test_date;
+        $endDate = $logbookdata->end_test_date;
+        $start_test_date = date('d-M-Y', strtotime($startDate));
+        $end_test_date = date('d-M-Y', strtotime($endDate));
         $totalPositive = $logbookdata->final_positive;
         $total = $logbookdata->total_test;
         $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
@@ -65,8 +69,8 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             <td style="border: 3px solid black">{{ $logbookdata->facility_name }}</td>
             <td style="border: 3px solid black">{{ $logbookdata->site_name }}</td>
             <td style="border: 3px solid black">{{ $logbookdata->algorithm_type }}</td>
-            <td style="border: 3px solid black">{{ $logbookdata->start_test_date }}</td>
-            <td style="border: 3px solid black">{{ $logbookdata->end_test_date }}</td>
+            <td style="border: 3px solid black">{{ $start_test_date }}</td>
+            <td style="border: 3px solid black">{{ $end_test_date }}</td>
             <td style="border: 3px solid black;;text-align: left;">{{ $logbookdata->test_1_reactive + $logbookdata->test_1_nonreactive }}</td>
             @for($l = 1; $l <= $globalValue; $l++) <?php $reactive = 'test_' . $l . '_reactive';
                                                     $nonreactive = 'test_' . $l . '_nonreactive';
