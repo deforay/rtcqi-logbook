@@ -54,10 +54,10 @@
                             <div class="row">
 							<div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Province Name
+                                            <h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="provinceName" value="{{$result[0]->province_name}}" class="form-control" autocomplete="off" placeholder="Enter Province Name" name="provinceName" title="Please enter Province Name" >
+                                                <input type="text" id="provinceName" value="{{$result[0]->province_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Province Name" name="provinceName" title="Please enter Province Name" >
                                             </div>
                                         </fieldset>
                                     </div>

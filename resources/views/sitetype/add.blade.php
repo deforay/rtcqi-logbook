@@ -52,10 +52,10 @@
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Site Type Name
+                                            <h5>Site Type Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteTypeName" class="form-control" autocomplete="off" placeholder="Enter site type name" name="siteTypeName" title="Please enter site type name" >
+                                                <input type="text" id="siteTypeName" class="form-control isRequired" autocomplete="off" placeholder="Enter Site Type Name" name="siteTypeName" title="Please Enter Site Type Name" >
                                             </div>
                                         </fieldset>
                                     </div>
