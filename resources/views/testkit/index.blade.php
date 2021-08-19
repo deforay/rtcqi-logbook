@@ -72,8 +72,8 @@
                                             <tr>
                                                 <th>Kit Name</th>
                                                 <th>Manufacturer</th>
-                                                <th>Kit Name Id 1</th>
-                                                <th>Installation Id</th>
+                                                <th>Kit Name ID 1</th>
+                                                <th>Installation ID</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>

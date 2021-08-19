@@ -66,7 +66,7 @@
                                             <h5>Site Name  <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="site_name" value="{{$result[0]->site_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter site name" name="siteName" title="Please enter site name" onblur="checkNameValidation('test_sites','site_name', this.id,'{{$fnct}}','Entered Site Name is already exist.')">
+                                                <input type="text" id="site_name" value="{{$result[0]->site_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Site Name" name="siteName" title="Please Enter Site Name" onblur="checkNameValidation('test_sites','site_name', this.id,'{{$fnct}}','Entered Site Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -76,7 +76,7 @@
 											<h5>Latitude 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="latitude" value="{{$result[0]->site_latitude}}" class="form-control " autocomplete="off" placeholder="Enter latitude" name="latitude" title="Please Enter latitude" >
+                                                <input type="text" id="latitude" value="{{$result[0]->site_latitude}}" class="form-control " autocomplete="off" placeholder="Enter Latitude" name="latitude" title="Please Enter Latitude" >
 											</div>
 										</fieldset>
 									</div>
@@ -85,7 +85,7 @@
 											<h5>Longitude 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="longitude" value="{{$result[0]->site_longitude}}" class="form-control " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
+                                                <input type="text" id="longitude" value="{{$result[0]->site_longitude}}" class="form-control " autocomplete="off" placeholder="Enter Longitude" name="longitude" title="Please Enter Longitude" >
 											</div>
 										</fieldset>
 									</div>
@@ -94,7 +94,7 @@
 											<h5>Address1
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="address1" value="{{$result[0]->site_address1}}" class="form-control  " autocomplete="off" placeholder="Enter address1" name="address1" title="Please Enter address1" >
+                                                <input type="text" id="address1" value="{{$result[0]->site_address1}}" class="form-control  " autocomplete="off" placeholder="Enter Address1" name="address1" title="Please Enter Address1" >
 											</div>
 										</fieldset>
 									</div>
@@ -103,7 +103,7 @@
 											<h5>Address2
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="address2" value="{{$result[0]->site_address2}}" class="form-control  " autocomplete="off" placeholder="Enter address2" name="address2" title="Please Enter address2" >
+                                                <input type="text" id="address2" value="{{$result[0]->site_address2}}" class="form-control  " autocomplete="off" placeholder="Enter Address2" name="address2" title="Please Enter Address2" >
 											</div>
 										</fieldset>
 									</div>
@@ -121,7 +121,7 @@
 											<h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please Select Province Name">
 												<option value="">Select Province Name</option>
 												 @foreach($province as $row)
                                                     <option value="{{$row->provincesss_id}}"{{ $result[0]->provincesss_id == $row->provincesss_id ?  'selected':''}}>{{$row->province_name}}</option>
@@ -135,7 +135,7 @@
                                                     <h5>District Name<span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
+                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
 												        <option value="">Select District Name</option>
 															@foreach($district as $row)
                                                             <option value="{{$row->district_id}}" {{ $result[0]->district_id == $row->district_id ?  'selected':''}}>{{$row->district_name}}</option>
@@ -149,7 +149,7 @@
 											<h5>Country <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="country" value="{{$result[0]->site_country}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter country" name="country" title="Please Enter country" >
+                                                <input type="text" id="country" value="{{$result[0]->site_country}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter Country" name="country" title="Please Enter Country" >
 											</div>
 										</fieldset>
 									</div>
@@ -158,7 +158,7 @@
 											<h5>City <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="city" value="{{$result[0]->site_city}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter city" name="city" title="Please Enter city" >
+                                                <input type="text" id="city" value="{{$result[0]->site_city}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter City" name="city" title="Please Enter City" >
 											</div>
 										</fieldset>
 									</div>
@@ -167,7 +167,7 @@
 											<h5>Test Site Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteStatus" name="testSiteStatus" title="Please select Test site status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteStatus" name="testSiteStatus" title="Please Select Test Site Status">
                                                     <option value="active" {{ $result[0]->test_site_status == 'active' ?  'selected':''}}>Active</option>
                                                     <option value="inactive" {{ $result[0]->test_site_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                 </select>
@@ -179,7 +179,7 @@
 											<h5>Facility Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please select Facility Name">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please Select Facility Name">
                                                 <option>Select Facility Name</option>
                                                     @foreach($facility as $row)
                                                     <option value="{{$row->facility_id}}" {{ $result[0]->facility_id == $row->facility_id ?  'selected':''}}>{{$row->facility_name}}</option>

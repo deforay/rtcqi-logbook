@@ -100,7 +100,7 @@
 											<h5>Mobile Number<span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkMobileValidation('users','vendors','phone', this.id,'{{$fnct}}','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('users','phone', this.id,'{{$fnct}}','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -130,7 +130,7 @@
 											<h5>Test Site Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please Select Test Site Name">
                                                     @foreach($test as $row)
                                                     <option value="{{$row->ts_id}}" {{ in_array($row->ts_id, $testSiteId) ?  'selected':''}}>{{$row->site_name}}</option>
                                                     @endforeach
@@ -362,7 +362,7 @@ function isNumberKey(evt){
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#testSiteId').select2({
-    placeholder: "Please select an Site Name",
+    placeholder: "Select Test Site Name",
     allowClear: true
   });
 });

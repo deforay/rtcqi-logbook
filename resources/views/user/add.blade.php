@@ -55,7 +55,7 @@
                                             <h5>First Name <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="firstName" class="form-control isRequired" autocomplete="off" placeholder="Enter first name" name="firstName" title="Please enter first name" >
+                                                <input type="text" id="firstName" class="form-control isRequired" autocomplete="off" placeholder="Enter First Name" name="firstName" title="Please Enter First Name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -64,7 +64,7 @@
                                             <h5>Last Name 
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="lastName" class="form-control " autocomplete="off" placeholder="Enter last name" name="lastName" title="Please enter last name" >
+                                                <input type="text" id="lastName" class="form-control " autocomplete="off" placeholder="Enter Last Name" name="lastName" title="Please Enter Last Name" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -97,7 +97,7 @@
 											<h5>Mobile Number
 											</h5>
 											<div class="form-group">
-                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="mobileDuplicateValidation('users','vendors','phone', this.id,'','Entered mobile number is already exist.')">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('users','phone', this.id,'','Entered mobile number is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -115,7 +115,7 @@
 											<h5>User Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userStatus" name="userStatus" title="Please select User status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userStatus" name="userStatus" title="Please Select User Status">
                                                     <option value="active" selected>Active</option>
                                                     <option value="inactive">Inactive</option>
                                                 </select>
@@ -127,7 +127,7 @@
 											<h5>Test Site Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please Select Test Site Name">
                                                     @foreach($test as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach
@@ -356,7 +356,7 @@ function isNumberKey(evt){
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#testSiteId').select2({
-    placeholder: "Please select an Site Name",
+    placeholder: "Select Test Site Name",
     allowClear: true
   });
 });
