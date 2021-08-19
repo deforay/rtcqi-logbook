@@ -57,7 +57,7 @@
                                                 <h5>Instance Name<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="instance_name" value="{{$result['instance_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Instance Name" name="instance_name" title="Please enter Instance Name">
+                                                    <input type="text" id="instance_name" value="{{$result['instance_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Instance Name" name="instance_name" title="Please Enter Instance Name">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -66,7 +66,7 @@
                                                 <h5>Institute Name<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="institute_name" value="{{$result['institute_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Institute Name" name="institute_name" title="Please enter Institute Name">
+                                                    <input type="text" id="institute_name" value="{{$result['institute_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Institute Name" name="institute_name" title="Please Enter Institute Name">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -75,7 +75,7 @@
                                                 <h5>Admin Name<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="admin_name" value="{{$result['admin_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Admin Name" name="admin_name" title="Please enter Admin Name">
+                                                    <input type="text" id="admin_name" value="{{$result['admin_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Admin Name" name="admin_name" title="Please Enter Admin Name">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -84,7 +84,7 @@
                                                 <h5>Admin Email<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="admin_email" value="{{$result['admin_email']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Admin Email" name="admin_email" title="Please enter Admin Email">
+                                                    <input type="text" id="admin_email" value="{{$result['admin_email']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Admin Email" name="admin_email" title="Please Enter Admin Email">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -93,7 +93,7 @@
                                                 <h5>Admin Phone<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="admin_phone" value="{{$result['admin_phone']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Admin Phone" name="admin_phone" title="Please enter Admin Phone">
+                                                    <input type="text" id="admin_phone" value="{{$result['admin_phone']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Admin Phone" name="admin_phone" title="Please Enter Admin Phone">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -102,7 +102,7 @@
                                                 <h5>Recency Test<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="recency_test" name="recency_test" title="Please select Recency Test">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="recency_test" name="recency_test" title="Please Select Recency Test">
                                                         <option value="enabled" {{ $result['recency_test'] == 'enabled' ?  'selected':''}}>Enabled</option>
                                                         <option value="disabled" {{ $result['recency_test'] == 'disabled' ?  'selected':''}}>Disabled</option>
                                                     </select>
@@ -114,7 +114,7 @@
                                                 <h5>Number of Test<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="no_of_test" name="no_of_test" title="Please select Number of Test">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="no_of_test" name="no_of_test" title="Please Select Number of Test">
                                                         <option value="1" {{ $result['no_of_test'] == '1' ?  'selected':''}}>1</option>
                                                         <option value="2" {{ $result['no_of_test'] == '2' ?  'selected':''}}>2</option>
                                                         <option value="3" {{ $result['no_of_test'] == '3' ?  'selected':''}}>3</option>
@@ -128,7 +128,7 @@
                                                 <h5>Latitude<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="latitude" value="{{$result['latitude']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Latitude" name="latitude" title="Please enter Latitude">
+                                                    <input type="text" id="latitude" value="{{$result['latitude']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Latitude" name="latitude" title="Please Enter Latitude">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -137,7 +137,16 @@
                                                 <h5>Longitude<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="longitude" value="{{$result['longitude']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please enter Longitude">
+                                                    <input type="text" id="longitude" value="{{$result['longitude']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter Longitude">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Map Zoom Level<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="number" min="0" id="map_zoom_level" value="{{$result['map_zoom_level']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Map Zoom Level" name="map_zoom_level" title="Please Enter Map Zoom Level">
                                                 </div>
                                             </fieldset>
                                         </div>

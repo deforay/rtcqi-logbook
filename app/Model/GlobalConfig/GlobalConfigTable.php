@@ -99,6 +99,14 @@ class GlobalConfigTable extends Model
                 ->where('global_name', '=', 'longitude')
                 ->update($upData);
         }
+        if ($data['map_zoom_level']) {
+            $upData = array(
+                'global_value' => $data['map_zoom_level'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'map_zoom_level')
+                ->update($upData);
+        }
         if ($data['removed'] != null) {
             unlink(public_path($data['removed']));
             $upData = array(
