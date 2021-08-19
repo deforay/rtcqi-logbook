@@ -57,7 +57,7 @@
                                             <h5>Site ID
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteId" value="{{$result[0]->site_id}}" class="form-control" autocomplete="off" placeholder="Enter Site ID" name="siteId" title="Please enter Site ID" >
+                                                <input type="text" id="siteId" value="{{$result[0]->site_id}}" class="form-control" autocomplete="off" placeholder="Enter Site ID" name="siteId" title="Please enter Site ID" onblur="checkNameValidation('test_sites','site_ID', this.id,'{{$fnct}}','Entered Site Id is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -66,7 +66,7 @@
                                             <h5>Site Name  <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteName" value="{{$result[0]->site_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter site name" name="siteName" title="Please enter site name" >
+                                                <input type="text" id="site_name" value="{{$result[0]->site_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter site name" name="siteName" title="Please enter site name" onblur="checkNameValidation('test_sites','site_name', this.id,'{{$fnct}}','Entered Site Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -264,6 +264,41 @@
       });
 
     });
+    function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 
     </script>
 @endsection
