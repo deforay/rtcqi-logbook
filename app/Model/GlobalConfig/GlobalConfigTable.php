@@ -169,7 +169,6 @@ class GlobalConfigTable extends Model
             ->select('global_value')
             ->where('global_name', '=', $configName)
             ->value('global_value');
-        // dd($data);die;
         return $data;
     }
 
@@ -188,7 +187,6 @@ class GlobalConfigTable extends Model
             ->select('global_value')
             ->where('global_name', '=', $latitute)
             ->value('global_value');
-        // dd($data);die;
         return $data;
     }
 
@@ -198,7 +196,15 @@ class GlobalConfigTable extends Model
             ->select('global_value')
             ->where('global_name', '=', $longitude)
             ->value('global_value');
-        // dd($data);die;
+        return $data;
+    }
+
+    public function fetchGlobalConfigMapZoomLevel($mapZoomLevel)
+    {
+        $data = DB::table('global_config')
+            ->select('global_value')
+            ->where('global_name', '=', $mapZoomLevel)
+            ->value('global_value');
         return $data;
     }
 }

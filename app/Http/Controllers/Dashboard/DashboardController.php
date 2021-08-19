@@ -23,6 +23,7 @@ class DashboardController extends Controller
             $GlobalConfigService = new GlobalConfigService();
             $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
             $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
+            $mapZoomLevel = $GlobalConfigService->getGlobalConfigMapZoomLevel('map_zoom_level');
 
             $total = $monthlyReportService->getTotalCountOfMonthlyReport();
             $monthly = $monthlyReportService->getCountOfMonthlyReport();
@@ -34,7 +35,8 @@ class DashboardController extends Controller
                 'longitude' => $longitude,
                 'total' => $total,
                 'monthly' => $monthly,
-                'siteMonthly' => $siteMonthly
+                'siteMonthly' => $siteMonthly,
+                'mapZoomLevel' => $mapZoomLevel
             ));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');

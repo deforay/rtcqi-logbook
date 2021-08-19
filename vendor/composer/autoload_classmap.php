@@ -1365,6 +1365,7 @@ return array(
     'FontLib\\WOFF\\File' => $vendorDir . '/phenx/php-font-lib/src/FontLib/WOFF/File.php',
     'FontLib\\WOFF\\Header' => $vendorDir . '/phenx/php-font-lib/src/FontLib/WOFF/Header.php',
     'FontLib\\WOFF\\TableDirectoryEntry' => $vendorDir . '/phenx/php-font-lib/src/FontLib/WOFF/TableDirectoryEntry.php',
+    'GlobalConfigSeeder' => $baseDir . '/database/seeds/GlobalConfigSeeder.php',
     'GuzzleHttp\\Client' => $vendorDir . '/guzzlehttp/guzzle/src/Client.php',
     'GuzzleHttp\\ClientInterface' => $vendorDir . '/guzzlehttp/guzzle/src/ClientInterface.php',
     'GuzzleHttp\\Cookie\\CookieJar' => $vendorDir . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',

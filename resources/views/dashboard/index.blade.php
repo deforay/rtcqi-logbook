@@ -281,6 +281,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             success: function(result) {
                 var lat = '{{$latitude}}';
                 var log = '{{$longitude}}';
+                var zoomLevel = '{{$mapZoomLevel}}';
                 document.getElementById('monthly-report-map').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
                 var myIcon = L.icon({
                     iconUrl: "{{ asset('assets/images/dark-green.png')}}"
@@ -292,7 +293,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         zoomAnimation:false,
         minZoom:3,
         maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
-      }).setView([lat, log], 4);
+      }).setView([lat, log], zoomLevel);
       new L.Control.Zoom({position: 'topleft'}).addTo(map);
 map._onResize();
 
