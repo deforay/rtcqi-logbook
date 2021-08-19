@@ -55,7 +55,7 @@
                                             <h5>District Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="districtName" class="form-control isRequired" autocomplete="off" placeholder="Enter District Name" name="districtName" title="Please Enter District Name" >
+                                                <input type="text" id="districtName" class="form-control isRequired" autocomplete="off" placeholder="Enter District Name" name="districtName" title="Please Enter District Name" onblur="checkNameValidation('districts','district_name', this.id,'','Entered District Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -64,7 +64,7 @@
 											<h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please Select Province Name">
                                                     @foreach($province as $row)
                                                     <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
                                                     @endforeach
@@ -115,5 +115,40 @@
                 $(".infocus").focus();
             }
 	}
+    function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue, fnct:fnct
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection

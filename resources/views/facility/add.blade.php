@@ -55,7 +55,7 @@
                                             <h5>Facility Name  <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="facilityName" class="form-control isRequired" autocomplete="off" placeholder="Enter facility name" name="facilityName" title="Please enter facility name" >
+                                                <input type="text" id="facilityName" class="form-control isRequired" autocomplete="off" placeholder="Enter Facility Name" name="facilityName" title="Please Enter Facility Name" onblur="checkNameValidation('facilities','facility_name', this.id,'','Entered Facility Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -65,7 +65,7 @@
 											<h5>Latitude 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="latitude" class="form-control " autocomplete="off" placeholder="Enter latitude" name="latitude" title="Please Enter latitude" >
+                                                <input type="text" id="latitude" class="form-control " autocomplete="off" placeholder="Enter Latitude" name="latitude" title="Please Enter Latitude" >
 											</div>
 										</fieldset>
 									</div>
@@ -74,7 +74,7 @@
 											<h5>Longitude 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="longitude" class="form-control " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
+                                                <input type="text" id="longitude" class="form-control " autocomplete="off" placeholder="Enter Longitude" name="longitude" title="Please Enter Longitude" >
 											</div>
 										</fieldset>
 									</div>
@@ -83,7 +83,7 @@
 											<h5>Address1
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="address1" class="form-control  " autocomplete="off" placeholder="Enter address1" name="address1" title="Please Enter address1" >
+                                                <input type="text" id="address1" class="form-control  " autocomplete="off" placeholder="Enter Address1" name="address1" title="Please Enter Address1" >
 											</div>
 										</fieldset>
 									</div>
@@ -92,7 +92,7 @@
 											<h5>Address2
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="address2" class="form-control  " autocomplete="off" placeholder="Enter address2" name="address2" title="Please Enter address2" >
+                                                <input type="text" id="address2" class="form-control  " autocomplete="off" placeholder="Enter Address2" name="address2" title="Please Enter Address2" >
 											</div>
 										</fieldset>
 									</div>
@@ -110,7 +110,7 @@
 											<h5>Country <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="country" class="form-control  isRequired" autocomplete="off" placeholder="Enter country" name="country" title="Please Enter country" >
+                                                <input type="text" id="country" class="form-control  isRequired" autocomplete="off" placeholder="Enter Country" name="country" title="Please Enter Country" >
 											</div>
 										</fieldset>
 									</div>
@@ -119,7 +119,7 @@
 											<h5>State <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="state" class="form-control  isRequired" autocomplete="off" placeholder="Enter state" name="state" title="Please Enter state" >
+                                                <input type="text" id="state" class="form-control  isRequired" autocomplete="off" placeholder="Enter State" name="state" title="Please Enter State" >
 											</div>
 										</fieldset>
 									</div>
@@ -128,7 +128,7 @@
 											<h5>City <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="city" class="form-control  isRequired" autocomplete="off" placeholder="Enter city" name="city" title="Please Enter city" >
+                                                <input type="text" id="city" class="form-control  isRequired" autocomplete="off" placeholder="Enter City" name="city" title="Please Enter City" >
 											</div>
 										</fieldset>
 									</div>
@@ -137,7 +137,7 @@
 											<h5>Region 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="region" class="form-control " autocomplete="off" placeholder="Enter region" name="region" title="Please Enter region" >
+                                                <input type="text" id="region" class="form-control " autocomplete="off" placeholder="Enter Region" name="region" title="Please Enter Region" >
 											</div>
 										</fieldset>
 									</div>
@@ -146,7 +146,7 @@
 											<h5>Contact Name <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="contactName" class="form-control  isRequired" autocomplete="off" placeholder="Enter contact Name" name="contactName" title="Please Enter contact Name" >
+                                                <input type="text" id="contactName" class="form-control  isRequired" autocomplete="off" placeholder="Enter Contact Name" name="contactName" title="Please Enter Contact Name" >
 											</div>
 										</fieldset>
 									</div>
@@ -155,7 +155,7 @@
 											<h5>Contact Email <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="contactEmail" class="form-control isEmail  isRequired" autocomplete="off" placeholder="Enter contact Email" name="contactEmail" title="Please Enter contact Email" >
+                                                <input type="text" id="contactEmail" class="form-control isEmail  isRequired" autocomplete="off" placeholder="Enter Contact Email" name="contactEmail" title="Please Enter Contact Email" >
 											</div>
 										</fieldset>
 									</div>
@@ -173,7 +173,7 @@
 											<h5>Facility Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityStatus" name="facilityStatus" title="Please select Facility status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityStatus" name="facilityStatus" title="Please Select Facility Status">
                                                     <option value="active" selected>Active</option>
                                                     <option value="inactive">Inactive</option>
                                                 </select>
@@ -199,7 +199,7 @@
                                                     <h5>District Name<span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
+                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
 												        <option value="">Select District Name</option>
                                                         </select>
                                                     </div>
@@ -279,6 +279,42 @@
       });
 
     });
+
+	function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 
     </script>
 

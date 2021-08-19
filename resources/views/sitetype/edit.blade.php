@@ -57,7 +57,7 @@
                                             <h5>Site Type Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="siteTypeName" value="{{$result[0]->site_type_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Site Type Name" name="siteTypeName" title="Please Enter Site Type Name" >
+                                                <input type="text" id="siteTypeName" value="{{$result[0]->site_type_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Site Type Name" name="siteTypeName" title="Please Enter Site Type Name" onblur="checkNameValidation('site_types','site_type_name', this.id,'{{$fnct}}','Entered Site Type Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -66,7 +66,7 @@
 											<h5>Site Type Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="siteTypeStatus" name="siteTypeStatus" title="Please select Site Type status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="siteTypeStatus" name="siteTypeStatus" title="Please Select Site Type Status">
                                                     <option value="active" {{ $result[0]->site_type_status == 'active' ?  'selected':''}}>Active</option>
                                                     <option value="inactive" {{ $result[0]->site_type_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                 </select>
@@ -115,5 +115,40 @@
             $(".infocus").focus();
         }
 	}
+    function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue, fnct:fnct
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection

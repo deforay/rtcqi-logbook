@@ -52,19 +52,19 @@
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Kit Name Id
+                                            <h5>Kit Name ID
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="kit_name_id" class="form-control" autocomplete="off" placeholder="Enter Kit name Id" name="kit_name_id" title="Please enter Kit name Id" >
+                                                <input type="text" id="kit_name_id" class="form-control" autocomplete="off" placeholder="Enter Kit Name ID" name="kit_name_id" title="Please Enter Kit Name ID" >
                                             </div>
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
-                                            <h5>Kit Name Id1  <span class="mandatory">*</span>
+                                            <h5>Kit Name ID 1  <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="kit_name_id1" class="form-control isRequired" autocomplete="off" placeholder="Enter Kit name 1" name="kit_name_id1" title="Please enter Kit name 1" >
+                                                <input type="text" id="kit_name_id1" class="form-control isRequired" autocomplete="off" placeholder="Enter Kit Name ID 1" name="kit_name_id1" title="Please Enter Kit Name ID 1" >
                                             </div>
                                         </fieldset>
                                     </div>
@@ -74,7 +74,7 @@
 											<h5>Kit Name Short 
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="kit_name_short" class="form-control " autocomplete="off" placeholder="Enter kit name short" name="kit_name_short" title="Please Enter kit name short" >
+                                                <input type="text" id="kit_name_short" class="form-control " autocomplete="off" placeholder="Enter Kit Name Short" name="kit_name_short" title="Please Enter Kit Name Short" >
 											</div>
 										</fieldset>
 									</div>
@@ -83,7 +83,7 @@
 											<h5>Kit Name  <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="kit_name" class="form-control isRequired" autocomplete="off" placeholder="Enter kit name" name="kit_name" title="Please Enter kit name" >
+                                                <input type="text" id="kit_name" class="form-control isRequired" autocomplete="off" placeholder="Enter Kit Name" name="kit_name" title="Please Enter Kit Name" onblur="checkNameValidation('test_kits','test_kit_name', this.id,'','Entered Kit Name is already exist.')">
 											</div>
 										</fieldset>
 									</div>
@@ -92,16 +92,16 @@
 											<h5>Kit Manufacturer <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="kit_manufacturer" class="form-control  isRequired" autocomplete="off" placeholder="Enter kit manufacturer" name="kit_manufacturer" title="Please Enter kit manufacturer" >
+                                                <input type="text" id="kit_manufacturer" class="form-control  isRequired" autocomplete="off" placeholder="Enter Kit Manufacturer" name="kit_manufacturer" title="Please Enter Kit Manufacturer" >
 											</div>
 										</fieldset>
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Installation Id <span class="mandatory">*</span>
+											<h5>Installation ID <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="installation_id" class="form-control  isRequired" autocomplete="off" placeholder="Enter installation id" name="installation_id" title="Please Enter installation id" >
+                                                <input type="text" id="installation_id" class="form-control  isRequired" autocomplete="off" placeholder="Enter Installation ID" name="installation_id" title="Please Enter Installation ID" >
 											</div>
 										</fieldset>
 									</div>
@@ -110,7 +110,7 @@
 											<h5>Kit Expiry Date <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="kit_expiry_date" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Postal Code" name="kit_expiry_date" title="Please Enter Ki expiry date" >
+                                                <input type="text" id="kit_expiry_date" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Kit Expiry Date" name="kit_expiry_date" title="Please Enter Kit Expiry Date" >
 											</div>
 										</fieldset>
 									</div>
@@ -128,7 +128,7 @@
 											<h5>Test Kit Status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitStatus" name="testKitStatus" title="Please select Test Kit status">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitStatus" name="testKitStatus" title="Please Select Test Kit Status">
                                                     <option value="active" selected>Active</option>
                                                     <option value="inactive">Inactive</option>
                                                 </select>
@@ -190,5 +190,40 @@ $(document).ready(function() {
                 $(".infocus").focus();
             }
 	}
+	function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue,
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection

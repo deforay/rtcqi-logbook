@@ -57,7 +57,7 @@
                                             <h5>Province Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="provinceName" value="{{$result[0]->province_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Province Name" name="provinceName" title="Please enter Province Name" >
+                                                <input type="text" id="provinceName" value="{{$result[0]->province_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Province Name" name="provinceName" title="Please enter Province Name" onblur="checkNameValidation('provinces','province_name', this.id,'{{$fnct}}','Entered Province Name is already exist.')">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -115,5 +115,40 @@
             $(".infocus").focus();
         }
 	}
+    function checkNameValidation(tableName, fieldName, obj,fnct, msg)
+    {
+        checkValue = document.getElementById(obj).value;
+        if(checkValue!='')
+        {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/checkNameValidation') }}",
+                method: 'post',
+                data: {
+                    tableName: tableName, fieldName: fieldName, value: checkValue, fnct:fnct
+                },
+                success: function(result){
+                    // console.log(result)
+                    if (result > 0)
+                    {
+                        $("#showAlertIndex").text(msg);
+                        $('#showAlertdiv').show();
+                        duplicateName = false;
+                        document.getElementById(obj).value = "";
+                        $('#'+obj).focus();
+                        $('#'+obj).css('background-color', 'rgb(255, 255, 153)')
+                        $('#showAlertdiv').delay(3000).fadeOut();
+                    }
+                    else {
+                        duplicateName = true;
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection

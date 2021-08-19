@@ -57,8 +57,8 @@
 											<h5>Test Kit No<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitNo" name="testKitNo" title="Please select Test Kit">
-                                                <option>Select Test Kit No</option>
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitNo" name="testKitNo" title="Please Select Test Kit No">
+                                                <option value="">Select Test Kit No</option>
                                                 <option value="1" <?php if($result[0]->test_kit_no == '1') { ?> selected="selected"<?php } ?>>1</option>
                                                 <option value="2" <?php if($result[0]->test_kit_no == '2') { ?> selected="selected"<?php } ?>>2</option>
                                                 <option value="3" <?php if($result[0]->test_kit_no == '3') { ?> selected="selected"<?php } ?>>3</option>
@@ -73,7 +73,7 @@
 											<h5>Test Kit Name<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testKitName" name="testKitName[]" title="Please select Test Kit Name">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testKitName" name="testKitName[]" title="Please Select Test Kit Name">
                                                 @foreach($test as $row)
                                                     <option value="{{$row->tk_id}}" {{ in_array($row->tk_id, $testKitId) ?  'selected':''}}>{{$row->test_kit_name}}</option>
                                                     @endforeach
@@ -126,7 +126,7 @@
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#testKitName').select2({
-    placeholder: "Please select an Test Kit Name",
+    placeholder: "Select Test Kit Name",
     allowClear: true
   });
 });
