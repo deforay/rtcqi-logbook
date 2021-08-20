@@ -143,6 +143,15 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
+                                                <h5>Title Name<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="title_name" value="{{$result['title_name']}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Title Name" name="title_name" title="Please Enter Title Name">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
                                                 <h5>Map Zoom Level<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">

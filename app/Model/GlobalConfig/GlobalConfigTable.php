@@ -99,6 +99,14 @@ class GlobalConfigTable extends Model
                 ->where('global_name', '=', 'longitude')
                 ->update($upData);
         }
+        if ($data['title_name']) {
+            $upData = array(
+                'global_value' => $data['title_name'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'title_name')
+                ->update($upData);
+        }
         if ($data['map_zoom_level']) {
             $upData = array(
                 'global_value' => $data['map_zoom_level'],
@@ -183,7 +191,7 @@ class GlobalConfigTable extends Model
     public function fetchGlobalConfigData($configName)
     {
         $data = DB::table('global_config')
-            ->select('display_name')
+            ->select('global_value')
             ->where('global_name', '=', $configName)
             ->value('global_name');
         return $data;
