@@ -43,7 +43,7 @@ class DistrictTable extends Model
     public function fetchAllDistrict()
     {
         $data = DB::table('districts')
-            ->join('provinces', 'provinces.provincesss_id', '=', 'districts.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'districts.provincesss_id')
             ->get();
         return $data;
     }
@@ -96,6 +96,15 @@ class DistrictTable extends Model
     }
 
     public function fetchDistrictId($id)
+    {
+        $result = $id[0]->facility_province;
+        $data = DB::table('districts')
+            ->where('districts.provincesss_id', '=', $result)
+            ->get();
+        return $data;
+    }
+
+    public function fetchDistrictData($id)
     {
         $result = $id[0]->provincesss_id;
         $data = DB::table('districts')

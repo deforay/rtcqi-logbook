@@ -46,7 +46,7 @@ class ProvinceController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
-                        $button .= '<a href="/province/edit/'. base64_encode($data->provincesss_id).'" name="edit" id="'.$data->provincesss_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        $button .= '<a href="/province/edit/'. base64_encode($data->province_id).'" name="edit" id="'.$data->province_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
                         $button .= '</div>';
                         return $button;
                     })
