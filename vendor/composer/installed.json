@@ -8499,10 +8499,6 @@
     ],
     "dev": true,
     "dev-package-names": [
-        "doctrine/cache",
-        "doctrine/dbal",
-        "doctrine/deprecations",
-        "doctrine/event-manager",
         "doctrine/instantiator",
         "facade/flare-client-php",
         "facade/ignition",

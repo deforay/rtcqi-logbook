@@ -72,7 +72,6 @@
                                             <tr>
                                                 <th>Facility Name</th>
                                                 <th>Facility City</th>
-                                                <th>Facility State</th>
                                                 <th>Facility Country</th>
                                                 <th>Contact Name</th>
                                                 <th>Contact Email</th>
@@ -121,7 +120,6 @@
 
                     { data: 'facility_name', name: 'facility_name',className:'firstcaps' },
                     { data: 'facility_city', name: 'facility_city'},
-                    { data: 'facility_state', name: 'facility_state'},
                     { data: 'facility_country', name: 'facility_country' },
                     { data: 'contact_name', name: 'contact_name'},
                     { data: 'contact_email', name: 'contact_email' },

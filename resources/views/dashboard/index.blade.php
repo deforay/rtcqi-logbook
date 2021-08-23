@@ -155,7 +155,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                         <select class="form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
                                                             <option value="">Select Province</option>
                                                             @foreach($province as $row)
-                                                            <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
+                                                            <option value="{{$row->province_id}}">{{$row->province_name}}</option>
                                                             @endforeach
                                                         </select>
                                                         <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info mt-4"> Search</button>

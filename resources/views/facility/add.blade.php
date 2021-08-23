@@ -107,6 +107,31 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
+											<h5>Province Name<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
+												<option value="">Select Province Name</option>
+												 @foreach($province as $row)
+                                                    <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+									<div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>District Name<span class="mandatory">*</span>
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
+												        <option value="">Select District Name</option>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
 											<h5>Country <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
@@ -116,28 +141,10 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>State <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="state" class="form-control  isRequired" autocomplete="off" placeholder="Enter State" name="state" title="Please Enter State" >
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
 											<h5>City <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="city" class="form-control  isRequired" autocomplete="off" placeholder="Enter City" name="city" title="Please Enter City" >
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Region 
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="region" class="form-control " autocomplete="off" placeholder="Enter Region" name="region" title="Please Enter Region" >
 											</div>
 										</fieldset>
 									</div>
@@ -180,31 +187,6 @@
                                             </div>
 										</fieldset>
 									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Province Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please select Province Name">
-												<option value="">Select Province Name</option>
-												 @foreach($province as $row)
-                                                    <option value="{{$row->provincesss_id}}">{{$row->province_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
-									<div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>District Name<span class="mandatory">*</span>
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
-												        <option value="">Select District Name</option>
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/facility" >

@@ -62,7 +62,7 @@ class ProvinceTable extends Model
 
          $id = base64_decode($id);
          $data = DB::table('provinces')
-                ->where('provinces.provincesss_id', '=',$id )
+                ->where('provinces.province_id', '=',$id )
                 ->get();
          return $data;
      }
@@ -78,7 +78,7 @@ class ProvinceTable extends Model
                 'province_status' => $data['provinceStatus'],
             );
             $response = DB::table('provinces')
-                ->where('provincesss_id', '=',base64_decode($id))
+                ->where('province_id', '=',base64_decode($id))
                 ->update(
                         $upData
                     );

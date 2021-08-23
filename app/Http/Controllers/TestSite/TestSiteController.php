@@ -78,7 +78,7 @@ class TestSiteController extends Controller
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $result = $TestSiteService->getTestSiteById($id);
-            $district = $DistrictService->getDistictById($result);
+            $district = $DistrictService->getDistictByData($result);
 
             return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district));
         }

@@ -82,6 +82,13 @@ class DistrictService
         $result = $model->fetchDistrictId($id);
         return $result;
 	}
+
+	public function getDistictByData($id)
+    {
+		$model = new DistrictTable();
+        $result = $model->fetchDistrictData($id);
+        return $result;
+	}
 }
 
 ?>

@@ -58,7 +58,7 @@ class TestSiteTable extends Model
         $data = DB::table('test_sites')
             ->leftjoin('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.district_id')
-            ->leftjoin('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.provincesss_id')
             ->get();
         return $data;
     }
