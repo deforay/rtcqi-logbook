@@ -22,7 +22,7 @@ class DistrictTable extends Model
             $id = DB::table('districts')->insertGetId(
                 [
                     'district_name' => $data['districtName'],
-                    'provincesss_id' => $data['provinceId'],
+                    'province_id' => $data['provinceId'],
                 ]
             );
             $userTracking = DB::table('track')->insertGetId(
@@ -43,7 +43,7 @@ class DistrictTable extends Model
     public function fetchAllDistrict()
     {
         $data = DB::table('districts')
-            ->join('provinces', 'provinces.province_id', '=', 'districts.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'districts.province_id')
             ->get();
         return $data;
     }
@@ -67,7 +67,7 @@ class DistrictTable extends Model
         $commonservice = new CommonService();
         $upData = array(
             'district_name' => $data['districtName'],
-            'provincesss_id' => $data['provinceId'],
+            'province_id' => $data['provinceId'],
         );
         $response = DB::table('districts')
             ->where('district_id', '=', base64_decode($id))
@@ -90,7 +90,7 @@ class DistrictTable extends Model
     public function fetchDistrictName($id)
     {
         $data = DB::table('districts')
-            ->where('districts.provincesss_id', '=', $id)
+            ->where('districts.province_id', '=', $id)
             ->get();
         return $data;
     }
@@ -99,16 +99,16 @@ class DistrictTable extends Model
     {
         $result = $id[0]->facility_province;
         $data = DB::table('districts')
-            ->where('districts.provincesss_id', '=', $result)
+            ->where('districts.province_id', '=', $result)
             ->get();
         return $data;
     }
 
     public function fetchDistrictData($id)
     {
-        $result = $id[0]->provincesss_id;
+        $result = $id[0]->site_province;
         $data = DB::table('districts')
-            ->where('districts.provincesss_id', '=', $result)
+            ->where('districts.province_id', '=', $result)
             ->get();
         return $data;
     }

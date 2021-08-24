@@ -32,8 +32,8 @@ class TestSiteTable extends Model
                     'site_country' => $data['country'],
                     'test_site_status' => $data['testSiteStatus'],
                     'facility_id' => $data['facilityId'],
-                    'provincesss_id' => $data['provincesssId'],
-                    'district_id' => $data['districtId'],
+                    'site_province' => $data['provincesssId'],
+                    'site_district' => $data['districtId'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
                 ]
@@ -57,8 +57,8 @@ class TestSiteTable extends Model
     {
         $data = DB::table('test_sites')
             ->leftjoin('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
-            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.district_id')
-            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.provincesss_id')
+            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->get();
         return $data;
     }
@@ -101,8 +101,8 @@ class TestSiteTable extends Model
             'site_country' => $data['country'],
             'test_site_status' => $data['testSiteStatus'],
             'facility_id' => $data['facilityId'],
-            'provincesss_id' => $data['provincesssId'],
-            'district_id' => $data['districtId'],
+            'site_province' => $data['provincesssId'],
+            'site_district' => $data['districtId'],
             'updated_by' => session('userId')
         );
         $response = DB::table('test_sites')
@@ -147,7 +147,7 @@ class TestSiteTable extends Model
     {
         $data = DB::table('test_sites')
             ->select('test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.provincesss_id', 'provinces.province_name')
-            ->leftjoin('provinces', 'provinces.provincesss_id', '=', 'test_sites.provincesss_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->where('test_sites.ts_id', '=', $id)
             ->get();
         return $data;
@@ -156,9 +156,9 @@ class TestSiteTable extends Model
     public function fetchDistrictId($id)
     {
         $data = DB::table('test_sites')
-            ->select('district_id')
+            ->select('site_district')
             ->where('test_sites.ts_id', '=', $id)
-            ->value('district_id');
+            ->value('site_district');
         return $data;
     }
 
