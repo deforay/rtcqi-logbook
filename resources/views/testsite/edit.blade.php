@@ -124,7 +124,7 @@
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please Select Province Name">
 												<option value="">Select Province Name</option>
 												 @foreach($province as $row)
-                                                    <option value="{{$row->province_id}}"{{ $result[0]->provincesss_id == $row->province_id ?  'selected':''}}>{{$row->province_name}}</option>
+                                                    <option value="{{$row->province_id}}"{{ $result[0]->site_province == $row->province_id ?  'selected':''}}>{{$row->province_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -138,7 +138,7 @@
                                                         <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
 												        <option value="">Select District Name</option>
 															@foreach($district as $row)
-                                                            <option value="{{$row->district_id}}" {{ $result[0]->district_id == $row->district_id ?  'selected':''}}>{{$row->district_name}}</option>
+                                                            <option value="{{$row->district_id}}" {{ $result[0]->site_district == $row->district_id ?  'selected':''}}>{{$row->district_name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
