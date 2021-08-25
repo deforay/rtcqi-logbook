@@ -156,8 +156,8 @@ class MonthlyReportTable extends Model
             });
         }
         if (isset($params['provinceId']) && $params['provinceId'] != '') {
-            $query = $query->whereIn('provinces.provincesss_id', $params['provinceId']);
-            $query = $query->groupBy(DB::raw('provinces.provincesss_id'));
+            $query = $query->whereIn('provinces.province_id', $params['provinceId']);
+            $query = $query->groupBy(DB::raw('provinces.province_id'));
         }
         if (isset($params['districtId']) && $params['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $params['districtId']);
