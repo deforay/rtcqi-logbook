@@ -258,7 +258,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 {
                     data: 'date_of_data_collection',
                     name: 'date_of_data_collection',render: function(data, type, full) {
-     return moment(new Date(data)).format('D-MMMM-YYYY');
+     return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
                 {
@@ -274,14 +274,14 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 {
                     data: 'start_test_date',
                     name: 'start_test_date',render: function(data, type, full) {
-     return moment(new Date(data)).format('D-MMMM-YYYY');
+     return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
 
                 {
                     data: 'end_test_date',
                     name: 'end_test_date',render: function(data, type, full) {
-     return moment(new Date(data)).format('D-MMMM-YYYY');
+     return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
 
@@ -292,7 +292,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 {
                     data: 'last_modified_on',
                     name: 'last_modified_on',render: function(data, type, full) {
-     return moment(new Date(data)).format('D-MMMM-YYYY HH:mm:ss');
+     return moment(new Date(data)).format('DD-MMM-YYYY HH:mm:ss');
                     }
                 },
                 {
