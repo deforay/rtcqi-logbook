@@ -99,6 +99,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
+                                                        <option value="">---Select---</option>
                                                         @foreach($province as $row)
                                                         <option value="{{$row->province_id}}" {{ $result[0]->provincesss_id == $row->province_id ?  'selected':''}}>{{$row->province_name}}</option>
                                                         @endforeach
@@ -729,11 +730,17 @@ $('#testsiteId').change(function() {
         success: function(response) {
             if (response.length == 0) {
                 $("#siteUniqueId").val('');
+                $("#siteManager").val('');
+                $("#testername").val('');
+                $("#contactNo").val('');
             } else {
                 $.each(response, function(key, value) {
                     $("#siteUniqueId").val(value.site_id);
-                    if(value.provincesss_id!=null) {
-                    $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
+                    $("#siteManager").val(value.site_manager);
+                    $("#testername").val(value.tester_name);
+                    $("#contactNo").val(value.contact_no);
+                    if(value.province_id!=null) {
+                    $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
                     }
                 });
             }

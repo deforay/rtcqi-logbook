@@ -146,9 +146,13 @@ class TestSiteTable extends Model
     public function fetchTestSiteData($id)
     {
         $data = DB::table('test_sites')
-            ->select('test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.provincesss_id', 'provinces.province_name')
+            ->select('monthly_reports.site_manager', 'monthly_reports.tester_name', 'monthly_reports.contact_no','test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_province', 'provinces.province_name','provinces.province_id')
+            ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=', 'test_sites.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->where('test_sites.ts_id', '=', $id)
+            ->orWhere('monthly_reports.ts_id', '=', $id)
+            ->orderBy('mr_id', 'desc')
+            ->limit(1)
             ->get();
         return $data;
     }
