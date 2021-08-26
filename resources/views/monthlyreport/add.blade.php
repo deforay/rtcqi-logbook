@@ -788,12 +788,17 @@ $test = '';
                 success: function(response) {
                     if (response.length == 0) {
                         $("#siteUniqueId").val('');
-                        $("#latitude").val('');
+                        $("#siteManager").val('');
+                        $("#testername").val('');
+                        $("#contactNo").val('');
                     } else {
                         $.each(response, function(key, value) {
                             $("#siteUniqueId").val(value.site_id);
-                            if(value.provincesss_id!=null) {
-                            $("#provinceId").append('<option value="' + value.provincesss_id + '"selected>' + value.province_name + '</option>');
+                            $("#siteManager").val(value.site_manager);
+                            $("#testername").val(value.tester_name);
+                            $("#contactNo").val(value.contact_no);
+                            if(value.province_id!=null) {
+                            $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
                             }
                         });
                     }
