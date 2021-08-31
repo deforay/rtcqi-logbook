@@ -78,8 +78,4 @@ class GlobalConfigService
         $result = $model->fetchGlobalConfigMapZoomLevel($mapZoomLevel);
         return $result;
 	}
-
-	
 }
-
-?>

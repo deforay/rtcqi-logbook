@@ -174,13 +174,11 @@ class GlobalConfigTable extends Model
                 'ip_address' => request()->ip(),
             ]
         );
-        // dd($filePathName);die;
         return 1;
     }
 
     public function fetchGlobalConfigValue($configName)
     {
-        //select global_value from global_config where global_name='no_of_test'
         $data = DB::table('global_config')
             ->select('global_value')
             ->where('global_name', '=', $configName)

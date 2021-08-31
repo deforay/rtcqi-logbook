@@ -24,7 +24,6 @@ class DashboardController extends Controller
             $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
             $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
             $mapZoomLevel = $GlobalConfigService->getGlobalConfigMapZoomLevel('map_zoom_level');
-
             $total = $monthlyReportService->getTotalCountOfMonthlyReport();
             $monthly = $monthlyReportService->getCountOfMonthlyReport();
             $siteMonthly = $monthlyReportService->getSiteCountOfMonthlyReport();
