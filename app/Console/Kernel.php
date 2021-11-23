@@ -27,8 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('odkdata:cron')
-                ->timezone('Asia/Kolkata')
-                ->dailyAt('00:01');
+                ->everyMinute();
     }
 
     /**
