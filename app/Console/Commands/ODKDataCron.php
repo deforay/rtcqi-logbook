@@ -37,6 +37,10 @@ class ODKDataCron extends Command
      */
     public function handle()
     {
+        $spirrtURL = config('app.url');
+        $sessionUrl = config('app.authurl');
+        $email = config('app.email');
+        $password = config('app.password');
         $date = '2021-06-02';
 
         $monthyData = DB::table('monthly_reports')
@@ -47,24 +51,22 @@ class ODKDataCron extends Command
             $date = $monthyData->date_of_data_collection;
         }
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/sessions");
+        curl_setopt($ch, CURLOPT_URL, $sessionUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, "{
-        \"email\": \"support@deforay.com\",
-        \"password\": \"mko)(*&^\"
+        \"email\": \"$email\",
+        \"password\": \"$password\"
         }");
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Content-Type: application/json",
         ));
         $response = curl_exec($ch);
         curl_close($ch);
-        $email = 'support@deforay.com';
-        $password = 'mko)(*&^';
         $token = base64_encode($email . ':' . $password);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20".$date);
+        curl_setopt($ch, CURLOPT_URL, "$spirrtURL.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20".$date);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -77,7 +79,7 @@ class ODKDataCron extends Command
         {
            $uid = $submission['value'][$t]['__id'];
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report/submissions/".$uid.".xml");
+            curl_setopt($ch, CURLOPT_URL, "$spirrtURL/submissions/".$uid.".xml");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HEADER, false);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
