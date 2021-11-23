@@ -69,6 +69,14 @@ return [
 
     'timezone' => 'UTC',
 
+    /*  
+     ODK URL and Credentials
+     */
+    'url' => 'https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report',
+    'email' => 'support@deforay.com',
+    'password' => 'mko)(*&^',
+
+    'authurl' => 'https://odk-central.labsinformatics.com/v1/sessions',
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
