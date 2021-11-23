@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use DB;
+
 class ODKDataCron extends Command
 {
     /**
@@ -40,10 +41,9 @@ class ODKDataCron extends Command
         $date = '2021-06-02';
 
         $monthyData = DB::table('monthly_reports')
-                            ->where('source', '=', 'odk')
-                            ->latest('mr_id')->first();
-        if(isset($monthyData->date_of_data_collection)  && $monthyData->date_of_data_collection!= '')
-        {
+            ->where('source', '=', 'odk')
+            ->latest('mr_id')->first();
+        if (isset($monthyData->date_of_data_collection)  && $monthyData->date_of_data_collection != '') {
             $date = $monthyData->date_of_data_collection;
         }
         $ch = curl_init();
@@ -64,35 +64,34 @@ class ODKDataCron extends Command
         $password = 'mko)(*&^';
         $token = base64_encode($email . ':' . $password);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20".$date);
+        curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20" . $date);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Authorization: Basic $token",
         ));
         $response1 = curl_exec($ch);
-        $submission = json_decode($response1,TRUE);
+        $submission = json_decode($response1, TRUE);
         curl_close($ch);
-        for($t=0;$t<count($submission['value']);$t++)
-        {
-           $uid = $submission['value'][$t]['__id'];
+        for ($t = 0; $t < count($submission['value']); $t++) {
+            $uid = $submission['value'][$t]['__id'];
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report/submissions/".$uid.".xml");
+            curl_setopt($ch, CURLOPT_URL, "https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report/submissions/" . $uid . ".xml");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HEADER, false);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 "Authorization: Basic $token",
-                "Content-Type: application/xml"    
+                "Content-Type: application/xml"
             ));
             $response2 = curl_exec($ch);
             curl_close($ch);
             $xml = simplexml_load_string($response2);
             $json = json_encode($xml);
-            $array = json_decode($json,TRUE);
+            $array = json_decode($json, TRUE);
             // print_r($json);
             $test_site_name = $array['Section_1']['sitename'];
-            $site_type = $array['Section_1']['sitetype']; 
-            $province = $array['Section_1']['provincename']; 
+            $site_type = $array['Section_1']['sitetype'];
+            $province = $array['Section_1']['provincename'];
             $site_manager = $array['Section_1']['sitemanager'];
             $site_unique_id = $array['Section_1']['siteid'];
             $if_flc = $array['Section_1']['is_flc'];
@@ -106,64 +105,56 @@ class ODKDataCron extends Command
             // $provinceId
             // site Type
             $siteTypeData = DB::table('site_types')
-                            ->where('site_type_name', '=', trim($site_type))
-                            ->get();
-            if(count($siteTypeData) > 0){
+                ->where('site_type_name', '=', trim($site_type))
+                ->get();
+            if (count($siteTypeData) > 0) {
                 $siteTypeId = $siteTypeData[0]->st_id;
-            }
-            else
-            {
+            } else {
                 $siteTypeId = DB::table('site_types')->insertGetId(
                     [
-                    'site_type_name' => trim($site_type),
-                    'site_type_status' => 'active',
+                        'site_type_name' => trim($site_type),
+                        'site_type_status' => 'active',
                     ]
                 );
             }
             // Test Site
             $testsiteData = DB::table('test_sites')
-                            ->where('site_name', '=', trim($test_site_name))
-                            ->get();
-            if(count($testsiteData) > 0){
+                ->where('site_name', '=', trim($test_site_name))
+                ->get();
+            if (count($testsiteData) > 0) {
                 $testSiteId = $testsiteData[0]->ts_id;
-            }
-            else
-            {
+            } else {
                 $testSiteId = DB::table('test_sites')->insertGetId(
                     [
-                    'site_name' => trim($test_site_name),
-                    'test_site_status' => 'active',
+                        'site_name' => trim($test_site_name),
+                        'test_site_status' => 'active',
                     ]
                 );
             }
             // Province
             $provinceData = DB::table('provinces')
-                            ->where('province_name', '=', trim($province))
-                            ->get();
-            if(count($provinceData) > 0){
+                ->where('province_name', '=', trim($province))
+                ->get();
+            if (count($provinceData) > 0) {
                 $provinceId = $provinceData[0]->provincesss_id;
-            }
-            else
-            {
+            } else {
                 $provinceId = DB::table('provinces')->insertGetId(
                     [
-                    'province_name' => trim($province),
-                    'province_status' => 'active',
+                        'province_name' => trim($province),
+                        'province_status' => 'active',
                     ]
                 );
             }
 
-            
+
             $monthyReportVal = DB::table('monthly_reports')
-                            ->where('ts_id', '=', $testSiteId)
-                            ->where('reporting_month', '=', $report_months)
-                            ->where('book_no', '=', $book_no)
-                            ->get();
-            if(count($monthyReportVal) > 0){
+                ->where('ts_id', '=', $testSiteId)
+                ->where('reporting_month', '=', $report_months)
+                ->where('book_no', '=', $book_no)
+                ->get();
+            if (count($monthyReportVal) > 0) {
                 $mr_id = $monthyReportVal[0]->mr_id;
-            }
-            else
-            {
+            } else {
                 $mr_id = DB::table('monthly_reports')->insertGetId(
                     [
                         'provincesss_id' => $provinceId,
@@ -185,10 +176,8 @@ class ODKDataCron extends Command
                     ]
                 );
             }
-            if(count($array['HIV_TESTING_1']) > 1)
-            {
-                foreach($array['HIV_TESTING_1'] as $row)
-                {
+            if (count($array['HIV_TESTING_1']) > 1) {
+                foreach ($array['HIV_TESTING_1'] as $row) {
                     $page_no = $row['SECONDARY']['pageno'];
                     $start_date = date('Y-m-d', strtotime($row['SECONDARY']['startdate']));
                     $end_date = date('Y-m-d', strtotime($row['SECONDARY']['enddate']));
@@ -197,100 +186,92 @@ class ODKDataCron extends Command
                     $final_indeterminate = $row['SECONDARY']['TINV_INCL'];
                     // Test Kit 1
                     $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_1']))
-                                    ->get();
-                        if(count($testkitData) > 0){
-                            $testkitId1 = $testkitData[0]->tk_id;
-                        }
-                        else
-                        {
-                            $testkitId1 = DB::table('test_kits')->insertGetId(
-                                [
+                        ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_1']))
+                        ->get();
+                    if (count($testkitData) > 0) {
+                        $testkitId1 = $testkitData[0]->tk_id;
+                    } else {
+                        $testkitId1 = DB::table('test_kits')->insertGetId(
+                            [
                                 'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_1']),
                                 'test_kit_status' => 'active',
-                                ]
-                            );
-                        }
-                        $test_kit1 = $testkitId1;
-                        $lot_no1 = $row['SECONDARY']['LOT_NO_1'];
-                        $expiry_date1 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_1']));
-                        $testkit1_reactive = $row['SECONDARY']['REACTIVE_1'];
-                        $testkit1_nonreactive = $row['SECONDARY']['NON_REACTIVE_1'];
-                        $testkit1_invalid = $row['SECONDARY']['INVALID_1'];
-                        // Test Kit 2
-                        $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_2']))
-                                    ->get();
-                        if(count($testkitData) > 0){
-                            $testkitId2 = $testkitData[0]->tk_id;
-                        }
-                        else
-                        {
-                            $testkitId2 = DB::table('test_kits')->insertGetId(
-                                [
+                            ]
+                        );
+                    }
+                    $test_kit1 = $testkitId1;
+                    $lot_no1 = $row['SECONDARY']['LOT_NO_1'];
+                    $expiry_date1 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_1']));
+                    $testkit1_reactive = $row['SECONDARY']['REACTIVE_1'];
+                    $testkit1_nonreactive = $row['SECONDARY']['NON_REACTIVE_1'];
+                    $testkit1_invalid = $row['SECONDARY']['INVALID_1'];
+                    // Test Kit 2
+                    $testkitData = DB::table('test_kits')
+                        ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_2']))
+                        ->get();
+                    if (count($testkitData) > 0) {
+                        $testkitId2 = $testkitData[0]->tk_id;
+                    } else {
+                        $testkitId2 = DB::table('test_kits')->insertGetId(
+                            [
                                 'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_2']),
                                 'test_kit_status' => 'active',
-                                ]
-                            );
-                        }
-                        $test_kit2 = $testkitId2;
-                        $lot_no2 = $row['SECONDARY']['LOT_NO_2'];
-                        $expiry_date2 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_2']));
-                        $testkit2_reactive = $row['SECONDARY']['REACTIVE_2'];
-                        $testkit2_nonreactive = $row['SECONDARY']['NON_REACTIVE_2'];
-                        $testkit2_invalid = $row['SECONDARY']['INVALID_2'];
-                        // Test Kit 3
-                        $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_3']))
-                                    ->get();
-                        if(count($testkitData) > 0){
-                            $testkitId3 = $testkitData[0]->tk_id;
-                        }
-                        else
-                        {
-                            $testkitId3 = DB::table('test_kits')->insertGetId(
-                                [
+                            ]
+                        );
+                    }
+                    $test_kit2 = $testkitId2;
+                    $lot_no2 = $row['SECONDARY']['LOT_NO_2'];
+                    $expiry_date2 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_2']));
+                    $testkit2_reactive = $row['SECONDARY']['REACTIVE_2'];
+                    $testkit2_nonreactive = $row['SECONDARY']['NON_REACTIVE_2'];
+                    $testkit2_invalid = $row['SECONDARY']['INVALID_2'];
+                    // Test Kit 3
+                    $testkitData = DB::table('test_kits')
+                        ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_3']))
+                        ->get();
+                    if (count($testkitData) > 0) {
+                        $testkitId3 = $testkitData[0]->tk_id;
+                    } else {
+                        $testkitId3 = DB::table('test_kits')->insertGetId(
+                            [
                                 'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_3']),
                                 'test_kit_status' => 'active',
-                                ]
-                            );
-                        }
-                        $test_kit3 = $testkitId3;
-                        $lot_no3 = $row['SECONDARY']['LOT_NO_3'];
-                        $expiry_date3 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_3']));
-                        $testkit3_reactive = $row['SECONDARY']['REACTIVE_3'];
-                        $testkit3_nonreactive = $row['SECONDARY']['NON_REACTIVE_3'];
-                        $testkit3_invalid = $row['SECONDARY']['INVALID_3'];
-                        // Test Kit 4
-                        $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_4']))
-                                    ->get();
-                        if(count($testkitData) > 0){
-                            $testkitId4 = $testkitData[0]->tk_id;
-                        }
-                        else
-                        {
-                            $testkitId4 = DB::table('test_kits')->insertGetId(
-                                [
+                            ]
+                        );
+                    }
+                    $test_kit3 = $testkitId3;
+                    $lot_no3 = $row['SECONDARY']['LOT_NO_3'];
+                    $expiry_date3 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_3']));
+                    $testkit3_reactive = $row['SECONDARY']['REACTIVE_3'];
+                    $testkit3_nonreactive = $row['SECONDARY']['NON_REACTIVE_3'];
+                    $testkit3_invalid = $row['SECONDARY']['INVALID_3'];
+                    // Test Kit 4
+                    $testkitData = DB::table('test_kits')
+                        ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_4']))
+                        ->get();
+                    if (count($testkitData) > 0) {
+                        $testkitId4 = $testkitData[0]->tk_id;
+                    } else {
+                        $testkitId4 = DB::table('test_kits')->insertGetId(
+                            [
                                 'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_4']),
                                 'test_kit_status' => 'active',
-                                ]
-                            );
-                        }
-                        $test_kit4 = $testkitId4;
-                        $lot_no4 = $row['SECONDARY']['LOT_NO_4'];
-                        $expiry_date4 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_4']));
-                        $testkit4_reactive = $row['SECONDARY']['REACTIVE_4'];
-                        $testkit4_nonreactive = $row['SECONDARY']['NON_REACTIVE_4'];
-                        $testkit4_invalid = $row['SECONDARY']['INVALID_4'];
+                            ]
+                        );
+                    }
+                    $test_kit4 = $testkitId4;
+                    $lot_no4 = $row['SECONDARY']['LOT_NO_4'];
+                    $expiry_date4 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_4']));
+                    $testkit4_reactive = $row['SECONDARY']['REACTIVE_4'];
+                    $testkit4_nonreactive = $row['SECONDARY']['NON_REACTIVE_4'];
+                    $testkit4_invalid = $row['SECONDARY']['INVALID_4'];
                     $duplicateCheck = DB::table('monthly_reports')
-                                    ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
-                                    ->where('ts_id', '=', $testSiteId)
-                                    ->where('reporting_month', '=', $report_months)
-                                    ->where('book_no', '=', $book_no)
-                                    ->where('monthly_reports_pages.page_no', '=', $page_no)
-                                    ->get();
-                    if(count($duplicateCheck) == 0){
+                        ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+                        ->where('ts_id', '=', $testSiteId)
+                        ->where('reporting_month', '=', $report_months)
+                        ->where('book_no', '=', $book_no)
+                        ->where('monthly_reports_pages.page_no', '=', $page_no)
+                        ->get();
+                    if (count($duplicateCheck) == 0) {
                         $insMonthlyArr = array(
                             'mr_id' => $mr_id,
                             'page_no' => $page_no,
@@ -324,7 +305,7 @@ class ODKDataCron extends Command
                             'test_4_nonreactive' => $testkit4_nonreactive,
                             'test_4_invalid' => $testkit4_invalid,
                         );
-                        
+
                         $totalPositive = $final_positive;
                         $totalTested = (int)$testkit1_reactive + (int)$testkit1_nonreactive;
                         $positivePercentage = ((int)$totalTested == 0) ? 'N.A' : number_format((int)$totalPositive * 100 / (int)$totalTested, 2);
@@ -332,24 +313,20 @@ class ODKDataCron extends Command
                         $OverallAgreement = 0;
                         if ((int)$testkit1_reactive > 0)
                             $posAgreement = number_format(100 * ((int)$testkit2_reactive) / ((int)$testkit1_reactive), 2);
-                        if(((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
-                        $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
+                        if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
+                            $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
                         $insMonthlyArr['positive_percentage'] = $positivePercentage;
                         $insMonthlyArr['positive_agreement'] = $posAgreement;
                         $insMonthlyArr['overall_agreement'] = $OverallAgreement;
                         $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
                             $insMonthlyArr
                         );
-                        if($monthly_reports_pages > 0)
-                        {
-                            \Log::info("ODK Data Cron - Inserted Monthly Report Page for Page No - ".$page_no." and Book No - ".$book_no);
+                        if ($monthly_reports_pages > 0) {
+                            \Log::info("ODK Data Cron - Inserted Monthly Report Page for Page No - " . $page_no . " and Book No - " . $book_no);
                         }
-                        
                     }
                 }
-            }
-            else
-            {
+            } else {
                 $row = $array['HIV_TESTING_1'];
                 $page_no = $row['SECONDARY']['pageno'];
                 $start_date = date('Y-m-d', strtotime($row['SECONDARY']['startdate']));
@@ -359,100 +336,92 @@ class ODKDataCron extends Command
                 $final_indeterminate = $row['SECONDARY']['TINV_INCL'];
                 // Test Kit 1
                 $testkitData = DB::table('test_kits')
-                                ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_1']))
-                                ->get();
-                    if(count($testkitData) > 0){
-                        $testkitId1 = $testkitData[0]->tk_id;
-                    }
-                    else
-                    {
-                        $testkitId1 = DB::table('test_kits')->insertGetId(
-                            [
+                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_1']))
+                    ->get();
+                if (count($testkitData) > 0) {
+                    $testkitId1 = $testkitData[0]->tk_id;
+                } else {
+                    $testkitId1 = DB::table('test_kits')->insertGetId(
+                        [
                             'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_1']),
                             'test_kit_status' => 'active',
-                            ]
-                        );
-                    }
-                    $test_kit1 = $testkitId1;
-                    $lot_no1 = $row['SECONDARY']['LOT_NO_1'];
-                    $expiry_date1 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_1']));
-                    $testkit1_reactive = $row['SECONDARY']['REACTIVE_1'];
-                    $testkit1_nonreactive = $row['SECONDARY']['NON_REACTIVE_1'];
-                    $testkit1_invalid = $row['SECONDARY']['INVALID_1'];
-                    // Test Kit 2
-                    $testkitData = DB::table('test_kits')
-                                ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_2']))
-                                ->get();
-                    if(count($testkitData) > 0){
-                        $testkitId2 = $testkitData[0]->tk_id;
-                    }
-                    else
-                    {
-                        $testkitId2 = DB::table('test_kits')->insertGetId(
-                            [
+                        ]
+                    );
+                }
+                $test_kit1 = $testkitId1;
+                $lot_no1 = $row['SECONDARY']['LOT_NO_1'];
+                $expiry_date1 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_1']));
+                $testkit1_reactive = $row['SECONDARY']['REACTIVE_1'];
+                $testkit1_nonreactive = $row['SECONDARY']['NON_REACTIVE_1'];
+                $testkit1_invalid = $row['SECONDARY']['INVALID_1'];
+                // Test Kit 2
+                $testkitData = DB::table('test_kits')
+                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_2']))
+                    ->get();
+                if (count($testkitData) > 0) {
+                    $testkitId2 = $testkitData[0]->tk_id;
+                } else {
+                    $testkitId2 = DB::table('test_kits')->insertGetId(
+                        [
                             'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_2']),
                             'test_kit_status' => 'active',
-                            ]
-                        );
-                    }
-                    $test_kit2 = $testkitId2;
-                    $lot_no2 = $row['SECONDARY']['LOT_NO_2'];
-                    $expiry_date2 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_2']));
-                    $testkit2_reactive = $row['SECONDARY']['REACTIVE_2'];
-                    $testkit2_nonreactive = $row['SECONDARY']['NON_REACTIVE_2'];
-                    $testkit2_invalid = $row['SECONDARY']['INVALID_2'];
-                    // Test Kit 3
-                    $testkitData = DB::table('test_kits')
-                                ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_3']))
-                                ->get();
-                    if(count($testkitData) > 0){
-                        $testkitId3 = $testkitData[0]->tk_id;
-                    }
-                    else
-                    {
-                        $testkitId3 = DB::table('test_kits')->insertGetId(
-                            [
+                        ]
+                    );
+                }
+                $test_kit2 = $testkitId2;
+                $lot_no2 = $row['SECONDARY']['LOT_NO_2'];
+                $expiry_date2 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_2']));
+                $testkit2_reactive = $row['SECONDARY']['REACTIVE_2'];
+                $testkit2_nonreactive = $row['SECONDARY']['NON_REACTIVE_2'];
+                $testkit2_invalid = $row['SECONDARY']['INVALID_2'];
+                // Test Kit 3
+                $testkitData = DB::table('test_kits')
+                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_3']))
+                    ->get();
+                if (count($testkitData) > 0) {
+                    $testkitId3 = $testkitData[0]->tk_id;
+                } else {
+                    $testkitId3 = DB::table('test_kits')->insertGetId(
+                        [
                             'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_3']),
                             'test_kit_status' => 'active',
-                            ]
-                        );
-                    }
-                    $test_kit3 = $testkitId3;
-                    $lot_no3 = $row['SECONDARY']['LOT_NO_3'];
-                    $expiry_date3 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_3']));
-                    $testkit3_reactive = $row['SECONDARY']['REACTIVE_3'];
-                    $testkit3_nonreactive = $row['SECONDARY']['NON_REACTIVE_3'];
-                    $testkit3_invalid = $row['SECONDARY']['INVALID_3'];
-                    // Test Kit 4
-                    $testkitData = DB::table('test_kits')
-                                ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_4']))
-                                ->get();
-                    if(count($testkitData) > 0){
-                        $testkitId4 = $testkitData[0]->tk_id;
-                    }
-                    else
-                    {
-                        $testkitId4 = DB::table('test_kits')->insertGetId(
-                            [
+                        ]
+                    );
+                }
+                $test_kit3 = $testkitId3;
+                $lot_no3 = $row['SECONDARY']['LOT_NO_3'];
+                $expiry_date3 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_3']));
+                $testkit3_reactive = $row['SECONDARY']['REACTIVE_3'];
+                $testkit3_nonreactive = $row['SECONDARY']['NON_REACTIVE_3'];
+                $testkit3_invalid = $row['SECONDARY']['INVALID_3'];
+                // Test Kit 4
+                $testkitData = DB::table('test_kits')
+                    ->where('test_kit_name', '=', trim($row['SECONDARY']['TESTING_KIT_TEST_4']))
+                    ->get();
+                if (count($testkitData) > 0) {
+                    $testkitId4 = $testkitData[0]->tk_id;
+                } else {
+                    $testkitId4 = DB::table('test_kits')->insertGetId(
+                        [
                             'test_kit_name' => trim($row['SECONDARY']['TESTING_KIT_TEST_4']),
                             'test_kit_status' => 'active',
-                            ]
-                        );
-                    }
-                    $test_kit4 = $testkitId4;
-                    $lot_no4 = $row['SECONDARY']['LOT_NO_4'];
-                    $expiry_date4 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_4']));
-                    $testkit4_reactive = $row['SECONDARY']['REACTIVE_4'];
-                    $testkit4_nonreactive = $row['SECONDARY']['NON_REACTIVE_4'];
-                    $testkit4_invalid = $row['SECONDARY']['INVALID_4'];
+                        ]
+                    );
+                }
+                $test_kit4 = $testkitId4;
+                $lot_no4 = $row['SECONDARY']['LOT_NO_4'];
+                $expiry_date4 = date('Y-m-d', strtotime($row['SECONDARY']['EXPIRY_DATE_4']));
+                $testkit4_reactive = $row['SECONDARY']['REACTIVE_4'];
+                $testkit4_nonreactive = $row['SECONDARY']['NON_REACTIVE_4'];
+                $testkit4_invalid = $row['SECONDARY']['INVALID_4'];
                 $duplicateCheck = DB::table('monthly_reports')
-                                ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
-                                ->where('ts_id', '=', $testSiteId)
-                                ->where('reporting_month', '=', $report_months)
-                                ->where('book_no', '=', $book_no)
-                                ->where('monthly_reports_pages.page_no', '=', $page_no)
-                                ->get();
-                if(count($duplicateCheck) == 0){
+                    ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+                    ->where('ts_id', '=', $testSiteId)
+                    ->where('reporting_month', '=', $report_months)
+                    ->where('book_no', '=', $book_no)
+                    ->where('monthly_reports_pages.page_no', '=', $page_no)
+                    ->get();
+                if (count($duplicateCheck) == 0) {
                     $insMonthlyArr = array(
                         'mr_id' => $mr_id,
                         'page_no' => $page_no,
@@ -486,7 +455,7 @@ class ODKDataCron extends Command
                         'test_4_nonreactive' => $testkit4_nonreactive,
                         'test_4_invalid' => $testkit4_invalid,
                     );
-                    
+
                     $totalPositive = $final_positive;
                     $totalTested = (int)$testkit1_reactive + (int)$testkit1_nonreactive;
                     $positivePercentage = ((int)$totalTested == 0) ? 'N.A' : number_format((int)$totalPositive * 100 / (int)$totalTested, 2);
@@ -494,25 +463,23 @@ class ODKDataCron extends Command
                     $OverallAgreement = 0;
                     if ((int)$testkit1_reactive > 0)
                         $posAgreement = number_format(100 * ((int)$testkit2_reactive) / ((int)$testkit1_reactive), 2);
-                    if(((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
-                    $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
+                    if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
+                        $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
                     $insMonthlyArr['positive_percentage'] = $positivePercentage;
                     $insMonthlyArr['positive_agreement'] = $posAgreement;
                     $insMonthlyArr['overall_agreement'] = $OverallAgreement;
                     $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
                         $insMonthlyArr
                     );
-                    if($monthly_reports_pages > 0)
-                    {
-                        \Log::info("ODK Data Cron - Inserted Monthly Report Page for Page No - ".$page_no." and Book No - ".$book_no);
+                    if ($monthly_reports_pages > 0) {
+                        \Log::info("ODK Data Cron - Inserted Monthly Report Page for Page No - " . $page_no . " and Book No - " . $book_no);
                     }
-                    
                 }
             }
         }
         // DB::beginTransaction();
         //         \Log::info("Test cron");
         // DB::commit();
-        
+
     }
 }
