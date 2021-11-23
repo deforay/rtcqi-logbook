@@ -45,9 +45,10 @@ class ODKDataCron extends Command
         $date = '2021-06-02';
 
         $monthyData = DB::table('monthly_reports')
-            ->where('source', '=', 'odk')
-            ->latest('mr_id')->first();
-        if (isset($monthyData->date_of_data_collection)  && $monthyData->date_of_data_collection != '') {
+                            ->where('source', '=', 'odk')
+                            ->latest('mr_id')->first();
+        if(isset($monthyData->date_of_data_collection)  && $monthyData->date_of_data_collection!= '')
+        {
             $date = $monthyData->date_of_data_collection;
         }
         $ch = curl_init();
