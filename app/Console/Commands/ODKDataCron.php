@@ -140,7 +140,7 @@ class ODKDataCron extends Command
                 ->where('province_name', '=', trim($province))
                 ->get();
             if (count($provinceData) > 0) {
-                $provinceId = $provinceData[0]->provincesss_id;
+                $provinceId = $provinceData[0]->province_id;
             } else {
                 $provinceId = DB::table('provinces')->insertGetId(
                     [
