@@ -329,7 +329,7 @@ $test = '';
                                                         <h5>Lot No {{$j}}
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput="checklotNo('0','{{$j}}')">
+                                                            <input type="text" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput="checklotNo('0','{{$j}}')">
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" colspan="2">
@@ -579,10 +579,10 @@ $test = '';
 				@for($i = 1; $i <= $globalValue; $i++)\
 				<td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>Test Kit Name {{$i}}<span class="mandatory">*</span>\
+							<h5>Test Kit Name {{$i}}\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
+									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
 									<option value="">--Select--</option>\
 										@if(isset($allowedTestKitNo[$i]))\
 											@foreach($allowedTestKitNo[$i] as $value=>$option)\
@@ -602,10 +602,10 @@ $test = '';
 						@for($i = 1; $i <= $globalValue; $i++)\
 				        <td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>Test Kit Name{{$i}}<span class="mandatory">*</span>\
+							<h5>Test Kit Name{{$i}}\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(' {
+									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(' {
             {
                 $i
             }
@@ -627,7 +627,7 @@ $test = '';
 							<h5>Lot No ' + j + ' \
 							</h5>\
 							<div class="form-group">\
-								<input type="number" min="0" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO' + j + '[]" title="Please Enter Lot No' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
+								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO' + j + '[]" title="Please Enter Lot No' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\
