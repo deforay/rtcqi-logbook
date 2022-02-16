@@ -140,6 +140,11 @@ class TestSiteTable extends Model
             ->where('users_testsite_map.user_id', '=', $user_id)
             ->where('test_site_status', '=', 'active')
             ->get();
+            if(count($data) == 0 ) {
+                $data = DB::table('test_sites')
+            ->where('test_site_status', '=', 'active')
+            ->get();
+            }
         return $data;
     }
 
