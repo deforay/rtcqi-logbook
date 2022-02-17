@@ -271,10 +271,19 @@ $test = '';
                                                                                             $test = '';
                                                                                             ?> <td style="text-align:center;" colspan="3">
                                                         <fieldset>
+                                                            @if($i == 1)
                                                             <h5>Test Kit Name {{$i}}<span class="mandatory">*</span>
                                                             </h5>
+                                                            @else 
+                                                            <h5>Test Kit Name {{$i}}
+                                                            </h5>
+                                                            @endif
                                                             <div class="form-group">
+                                                            @if($i == 1)
                                                                 <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
+                                                                @else
+                                                                <select class="form-control selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
+                                                                @endif
                                                                     <option value="">--Select--</option>
                                                                     @if(isset($allowedTestKitNo[$i]))
                                                                     @foreach($allowedTestKitNo[$i] as $value=>$option)
