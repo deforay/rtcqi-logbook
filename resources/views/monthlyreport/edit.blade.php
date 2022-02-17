@@ -322,10 +322,14 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                     @for($j = 1; $j <= $globalValue; $j++) <?php $lot_no = 'lot_no_' . $j;
                                                                                             $expiry_date = 'expiry_date_' . $j; 
                                                                                             $expiryDate = $common->humanDateFormat($list->$expiry_date); ?> <td style=" text-align: center;">
-                                                        <h5>Lot No {{$j}}
+                                                        <h5>Lot No. {{$j}}
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="lotNO{{$j}}" value="{{$list->$lot_no}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}">
+                                                            @if($j == 1)
+                                                            <input type="text" id="lotNO{{$j}}" value="{{$list->$lot_no}}" class="form-control isRequired " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
+                                                            @else
+                                                            <input type="text" id="lotNO{{$j}}" value="{{$list->$lot_no}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
+                                                            @endif
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" colspan="2">
@@ -610,10 +614,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         div += '</tr><tr>'
         for (var j = 1; j <= gCnt; j++) {
             div += '<td style=" text-align: center;">\
-							<h5>Lot No ' + j + ' \
+							<h5>Lot No. ' + j + ' \
 							</h5>\
 							<div class="form-group">\
-								<input type="text" id="lotNO' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO' + j + '[]" title="Please Enter Lot No' + j + '" >\
+								<input type="text" id="lotNO' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO' + j + '[]" title="Please Enter Lot No.' + j + '" >\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\
