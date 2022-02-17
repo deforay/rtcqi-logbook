@@ -272,11 +272,20 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                     @if(count($allowedTestKitNo) > 0)
                                                     @for($i = 1; $i <= $globalValue; $i++) <?php $test_id = 'test_' . $i . '_kit_id';    ?> <td style=" text-align: center;" colspan="3">
                                                         <fieldset>
+                                                        @if($i == 1)
                                                             <h5>Test Kit Name {{$i}}<span class="mandatory">*</span>
                                                             </h5>
+                                                            @else 
+                                                            <h5>Test Kit Name {{$i}}
+                                                            </h5>
+                                                            @endif
                                                             <div class="form-group">
+                                                            @if($i == 1)
                                                                 <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)">
-									                                <option value="">--Select--</option>
+                                                                @else   
+                                                                <select class="form-control selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)"> 
+                                                            @endif
+                                                                   <option value="">--Select--</option>
                                                                     @if(isset($allowedTestKitNo[$i]))
                                                                     @foreach($allowedTestKitNo[$i] as $value=>$option)
                                                                     <option value="{{$value}}" {{ $list->$test_id == $value ?  'selected':''}}>{{$option}}</option>
