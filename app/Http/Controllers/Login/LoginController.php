@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (trim($login) == 1) {
             return Redirect::to('/dashboard');
         } else {
-            return Redirect::route('login.index')->with('status', 'Login Failed');
+            return Redirect::route('login.index')->with('status', 'Please check your login credentials');
         }
     }
 
