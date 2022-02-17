@@ -335,17 +335,25 @@ $test = '';
                                                 </tr>
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <td style=" text-align: center;">
-                                                        <h5>Lot No {{$j}}
+                                                        <h5>Lot No. {{$j}}
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="Enter Lot No" name="lotNO{{$j}}[]" title="Please Enter Lot No{{$j}}" oninput="checklotNo('0','{{$j}}')">
+                                                        @if($j == 1)
+                                                            <input type="text" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}" oninput="checklotNo('0','{{$j}}')">
+                                                        @else
+                                                            <input type="text" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}" oninput="checklotNo('0','{{$j}}')">
+                                                        @endif
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" colspan="2">
                                                             <h5>Expiry Date {{$j}}
                                                             </h5>
                                                             <div class="form-group">
+                                                            @if($j == 1)
                                                                 <input type="text" id="expiryDate0{{$j}}" class="form-control isRequired dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="Enter Expiry Date" title="Please Enter Expiry Date{{$j}}" onchange="checklotNo('0','{{$j}}')">
+                                                                @else 
+                                                                <input type="text" id="expiryDate0{{$j}}" class="form-control dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="Enter Expiry Date" title="Please Enter Expiry Date{{$j}}" onchange="checklotNo('0','{{$j}}')">
+                                                                @endif
                                                             </div>
                                                         </td>
                                                         @endfor
@@ -633,10 +641,10 @@ $test = '';
         div += '</tr><tr>'
         for (var j = 1; j <= gCnt; j++) {
             div += '<td style=" text-align: center;">\
-							<h5>Lot No ' + j + ' \
+							<h5>Lot No. ' + j + ' \
 							</h5>\
 							<div class="form-group">\
-								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No" name="lotNO' + j + '[]" title="Please Enter Lot No' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
+								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO' + j + '[]" title="Please Enter Lot No.' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\

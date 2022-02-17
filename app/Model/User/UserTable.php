@@ -145,7 +145,6 @@ class UserTable extends Model
         $result = json_decode(DB::table('users')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')->get(), true);
-        $user_name = $result[0]['first_name'];
         if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {
@@ -158,7 +157,7 @@ class UserTable extends Model
                 $userTracking = DB::table('track')->insertGetId(
                     [
                         'event_type' => 'login',
-                        'action' => $user_name . ' logged in',
+                        'action' => $result[0]['first_name'] . ' logged in',
                         'resource' => 'user',
                         'date_time' => $commonservice->getDateTime(),
                         'ip_address' => request()->ip(),
