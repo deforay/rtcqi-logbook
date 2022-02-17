@@ -322,8 +322,12 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                     @for($j = 1; $j <= $globalValue; $j++) <?php $lot_no = 'lot_no_' . $j;
                                                                                             $expiry_date = 'expiry_date_' . $j; 
                                                                                             $expiryDate = $common->humanDateFormat($list->$expiry_date); ?> <td style=" text-align: center;">
+                                                        <h5>Lot No. {{$j}}<span class="mandatory">*</span>
+                                                        </h5>
+                                                        @else 
                                                         <h5>Lot No. {{$j}}
                                                         </h5>
+                                                        @endif
                                                         <div class="form-group">
                                                             @if($j == 1)
                                                             <input type="text" id="lotNO{{$j}}" value="{{$list->$lot_no}}" class="form-control isRequired " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
@@ -333,8 +337,13 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" colspan="2">
+                                                        @if($j == 1)
+                                                            <h5>Expiry Date {{$j}}<span class="mandatory">*</span>
+                                                            </h5>
+                                                            @else 
                                                             <h5>Expiry Date {{$j}}
                                                             </h5>
+                                                            @endif
                                                             <div class="form-group">
                                                                 <input type="text" id="expiryDate{{$j}}" value="{{$expiryDate}}" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}">
                                                             </div>
