@@ -63,11 +63,10 @@ class CommonController extends Controller
         {
             $service = new CommonService();
             $pswd = $service->updatePassword($request,$id);
-            // dd($pswd);
-            if($pswd!=1){
+            if($pswd==1){
                 return Redirect::to('/dashboard')->with('status', 'Password Changed Succesfully');
             }else{
-                return view('login.changepassword',array('id'=>$id,'status'=>'Currently you entered incorrect password'));
+                return view('login.changepassword',array('id'=>$id,'status'=>'Your new password is too similar to your current password. Please try another password.'));
             }
         }
         else

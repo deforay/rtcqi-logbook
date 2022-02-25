@@ -488,7 +488,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
-            endDate: today,
         });
         initSetTestkitHeadings();
     });
@@ -711,7 +710,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
-            endDate: today,
         });
     }
 

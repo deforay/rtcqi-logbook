@@ -32,6 +32,7 @@ class UserTable extends Model
                     'user_status' => $data['userStatus'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
+                    'force_password_reset' => 1
                 ]
             );
             for ($x = 0; $x < count($data['testSiteId']); $x++) {
@@ -100,6 +101,7 @@ class UserTable extends Model
             'updated_by' => session('userId')
         );
         if (trim($data['password']))
+            $user['force_password_reset'] = 1;
             $user['password'] = Hash::make($data['password']); // Hashing passwords
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
@@ -224,6 +226,9 @@ class UserTable extends Model
         $user_name = session('name');
         $data = $params->all();
         $newPassword = Hash::make($data['newPassword']);
+        if(Hash::check($data['currentPassword'], $newPassword)) {
+            return 0;
+        } else {
         $result = json_decode(DB::table('users')->where('user_id', '=', base64_decode($id))->get(), true);
         if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
@@ -251,5 +256,6 @@ class UserTable extends Model
         } else {
             return 0;
         }
+    }
     }
 }
