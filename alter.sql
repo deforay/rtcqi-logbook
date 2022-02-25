@@ -417,3 +417,6 @@ ALTER TABLE `monthly_reports` ADD FOREIGN KEY (district_id) REFERENCES `district
 --Sakthivel P 13 Aug 2021
 ALTER TABLE monthly_reports ADD tester_name Varchar(100) NULL;
 
+--Sakthivel P 25 Feb 2022
+ALTER TABLE `users` ADD `force_password_reset` INT NULL DEFAULT NULL AFTER `user_status`
+

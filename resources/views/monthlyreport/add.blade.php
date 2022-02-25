@@ -512,7 +512,6 @@ $test = '';
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
-            endDate: today,
         });
     });
     var date1 = new Date();
@@ -739,7 +738,6 @@ $test = '';
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
-            endDate: today,
         });
         let defaultRow = 0;
         let defaultTestkit = $(".selectTestKits").length;

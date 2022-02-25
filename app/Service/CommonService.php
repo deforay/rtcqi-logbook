@@ -450,16 +450,9 @@ class CommonService
             // if(session('loginType')=='users'){
                 $model = new UserTable();
                 $addUser = $model->updatePassword($params,$id);
+                return $addUser;
                 // dd($addUser);
-                if($addUser>0){
-                    DB::commit();
-                    $msg = 'Password Updated Successfully';
-                    return $msg;
-                }else{
-                    // dd('addUser');
-                    $msg = '1';
-                    return $msg;
-                }
+                
             //}
              if(session('loginType')=='vendor'){
                 $model = new VendorsTable();
