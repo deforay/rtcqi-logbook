@@ -183,7 +183,7 @@ Route::get('/getProvince/{id}', 'TestSite\TestSiteController@getProvince');
 //Role module
 Route::get('/roles', 'Roles\RolesController@index')->name('roles.index');
 Route::post('/roles/add', 'Roles\RolesController@add');
-Route::get('/roles/add', 'Roles\RolesController@add');
+Route::get('/role/add', 'Roles\RolesController@add');
 Route::post('/getRole', 'Roles\RolesController@getRole');
 Route::get('/roles/edit/{id}', 'Roles\RolesController@edit');
 Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');

@@ -27,7 +27,7 @@
                 <div class="dropdown float-md-right">
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['add']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['add'] == "allow")) {?>
-                 <a href="/roles/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
+                 <a href="/role/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
                     <b><i class="ft-user-plus icon-left"></i> ADD</b></a>
                 <?php } ?>
                    

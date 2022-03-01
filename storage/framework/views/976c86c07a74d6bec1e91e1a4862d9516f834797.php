@@ -11,7 +11,6 @@
 <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 <title>RTCQI LOGBOOK</title>
 <link rel="apple-touch-icon" href="<?php echo e(asset('app-assets/images/ico/apple-icon-120.png')); ?>">
-<!-- <link rel="shortcut icon" type="image/x-icon" href="<?php echo e(asset('app-assets/images/logo/asm_logo.png')); ?>"> -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
 
 <!-- BEGIN: Vendor CSS-->
