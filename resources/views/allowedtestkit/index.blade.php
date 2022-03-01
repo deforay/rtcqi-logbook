@@ -91,9 +91,12 @@
 </div>
   <script>
     $(document).ready(function() {
-        $.blockUI();
-        getAllUserFacility();
-        $.unblockUI();
+      $('.zero-configuration').DataTable({
+        "dom": '<"toolbar">frtip'
+    });
+    $.blockUI();
+    getAllUserFacility();
+    $.unblockUI();
     });
     function getAllUserFacility()
     {

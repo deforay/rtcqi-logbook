@@ -7,8 +7,6 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>RTCQI LOGBOOK</title>
-<link rel="icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png') }}"/>
-<link rel="icon" href="{{ asset('app-assets/images/logo/asm_logo.png') }}" type="image/png" sizes="16x16">
 <!--vendors-->
 
 <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara:400,500,600" rel="stylesheet">

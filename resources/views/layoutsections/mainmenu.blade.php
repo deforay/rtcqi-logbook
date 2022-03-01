@@ -28,7 +28,7 @@ $import = '';
     $manage .= '<li id="li-sitetype"><a class="dropdown-item" data-toggle="dropdown" href="/sitetype/">Site Types</a></li>';
     $manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">Global Config</a></li>';
     $manage .= '<li id="li-allowedtestkit"><a class="dropdown-item" data-toggle="dropdown" href="/allowedtestkit/">Allowed Test kits</a></li>';
-    $manage .= '<li id="li-allowedtestkit"><a class="dropdown-item" data-toggle="dropdown" href="/roles/">Roles</a></li>';
+    $manage .= '<li id="li-roles"><a class="dropdown-item" data-toggle="dropdown" href="/roles/">Roles</a></li>';
     $manage .= '</ul></li>';
     
     $test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Audits</span></a>

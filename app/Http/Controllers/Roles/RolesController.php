@@ -1,7 +1,7 @@
 <?php
 /*
-Author : Sudarmathi M
-Date : 05 Feb 2020
+Author : Sakthi
+Date : 28 Feb 2022
 Desc : Controller for Roles screen
 */
 namespace App\Http\Controllers\Roles;
@@ -27,7 +27,7 @@ class RolesController extends Controller
         // return view('roles.index');
         if(session('login')==true)
         {
-            return view('roles.index');
+            return view('role.index');
         }
         else
             return Redirect::to('login')->with('status', 'Please Login');
@@ -46,7 +46,7 @@ class RolesController extends Controller
         {
             $RoleService = new RolesService();
             $resourceResult = $RoleService->getAllResource();
-            return view('roles.add',array('resourceResult'=>$resourceResult));
+            return view('role.add',array('resourceResult'=>$resourceResult));
         }
     }
  
@@ -104,7 +104,7 @@ class RolesController extends Controller
             $RoleService = new RolesService();
             $resourceResult = $RoleService->getAllResource();
             $result = $RoleService->getRolesById($id);
-            return view('roles.edit',array('role'=>$result,'resourceResult'=>$resourceResult,'resourcePrivilegeMap' => $config));
+            return view('role.edit',array('role'=>$result,'resourceResult'=>$resourceResult,'resourcePrivilegeMap' => $config));
         }
     }
 }

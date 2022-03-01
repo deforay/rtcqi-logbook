@@ -72,7 +72,6 @@ $commonservice = new CommonService();
     <meta name="author" content="PIXINVENT">
     <title>RTCQI LOGBOOK</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png')}}"> -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
@@ -121,7 +120,6 @@ $commonservice = new CommonService();
                             <div class="card border-grey border-lighten-3 m-0">
                                 <div class="card-header border-0">
                                     <div class="card-title text-center">
-                                        <!-- <div class="p-1"><img src="{{ asset('app-assets/images/logo/asm_logo.png')}}" alt="branding logo" style="width: 100px;"></div> -->
                                     </div>
                                     <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Vendor profile </span>
                                     </h6>
