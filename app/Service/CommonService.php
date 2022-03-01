@@ -224,10 +224,6 @@ class CommonService
                 DB::table($tableName)
                 ->where($fieldIdName, '=', $fieldIdValue)
                 ->update($updateData);
-                
-                //Event Log
-                $commonservice = new CommonService();
-                $commonservice->eventLog(session('userId'), $fieldIdValue, $tableName . '-' . $fieldValue, $tableName . ' changed to ' . $fieldValue, $tableName);
             }
         } catch (Exception $exc) {
             error_log($exc->getMessage());
@@ -235,6 +231,15 @@ class CommonService
         return $fieldIdValue;
     }
 
+    public function allowDisplay($resource,$view){
+        $role = session('role');
+        if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){
+        return redirect('/accessdenied');
+        }
+        
+        return true;
+        
+    }
     
     public function eventLog($userId, $subjectId, $event_type, $action, $resource_name)
     {

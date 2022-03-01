@@ -8,6 +8,7 @@ use App\Service\CommonService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Mail;
+use Illuminate\Support\Facades\File;
 
 class UserTable extends Model
 {
@@ -32,7 +33,8 @@ class UserTable extends Model
                     'user_status' => $data['userStatus'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
-                    'force_password_reset' => 1
+                    'force_password_reset' => 1,
+                    'role_id' => $data['roleId']
                 ]
             );
             for ($x = 0; $x < count($data['testSiteId']); $x++) {
@@ -80,6 +82,7 @@ class UserTable extends Model
 
         $id = base64_decode($id);
         $data = DB::table('users')
+            ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.user_id', '=', $id)
             ->get();
@@ -98,6 +101,7 @@ class UserTable extends Model
             'email' => $data['email'],
             'phone' => $data['mobileNo'],
             'user_status' => $data['userStatus'],
+            'role_id' => $data['roleId'],
             'updated_by' => session('userId')
         );
         if (trim($data['password']))
@@ -142,19 +146,25 @@ class UserTable extends Model
     // Validate Employee login
     public function validateLogin($params)
     {
+        $config='';
         $data = $params->all();
         $commonservice = new CommonService();
         $result = json_decode(DB::table('users')
+            ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')->get(), true);
         if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {
+                $configFile =  "acl.config.json";
+                if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
+                    $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
                 session(['name' => $result[0]['first_name']]);
                 session(['lastName' => $result[0]['last_name']]);
                 session(['email' => $result[0]['email']]);
                 session(['phone' => $result[0]['phone']]);
                 session(['userId' => $result[0]['user_id']]);
+                session(['role' => $config[$result[0]['role_code']]]);
                 session(['login' => true]);
                 $userTracking = DB::table('track')->insertGetId(
                     [
@@ -165,6 +175,9 @@ class UserTable extends Model
                         'ip_address' => request()->ip(),
                     ]
                 );
+            }else{
+                return 2;
+            }
                 return 1;
             }
             else {

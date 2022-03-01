@@ -7,25 +7,19 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>RTCQI LOGBOOK</title>
-<link rel="icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/asm_logo.png') }}"/>
-<link rel="icon" href="{{ asset('app-assets/images/logo/asm_logo.png') }}" type="image/png" sizes="16x16">
+<link rel="icon" type="image/x-icon" href="{{ asset('assets/images/default-logo.png') }}"/>
+<link rel="icon" href="{{ asset('assets/images/default-logo.png') }}" type="image/png" sizes="16x16">
 <!--vendors-->
 
 <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara:400,500,600" rel="stylesheet">
 <!--Material Icons-->
-<link rel="stylesheet" type="text/css" href="{{ asset('error/fonts/materialdesignicons/materialdesignicons.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/materialdesignicons.min.css') }}">
 <!--Bootstrap + atmos Admin CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('error/css/atmos.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/atmos.min.css') }}">
 <!-- Additional library for page -->
 
 </head>
-<style>
-.bg-pattern {
-    background-image: url("{{ asset('app-assets/images/backgrounds/bg-9.jpg')}}");
-}
-</style>
 <body class="jumbo-page">
-
 
 <main class="admin-main  bg-pattern">
     <div class="container">
@@ -35,7 +29,7 @@
                     <div class="card-body text-center">
                             
                         
-                        <img width="200" alt="image" src="{{ asset('error/img/503.svg') }}">
+                        <img width="200" alt="image" src="{{ asset('assets/images/503.svg') }}">
                         <h1 class="display-1 fw-600 font-secondary" style="color: #812720">403</h1>
                         <h5>Access Denied</h5>
                         <p class="opacity-75">
