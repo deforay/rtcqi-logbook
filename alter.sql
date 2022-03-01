@@ -420,3 +420,34 @@ ALTER TABLE monthly_reports ADD tester_name Varchar(100) NULL;
 --Sakthivel P 25 Feb 2022
 ALTER TABLE `users` ADD `force_password_reset` INT NULL DEFAULT NULL AFTER `user_status`
 
+--Sakthivel P 28 Feb 2022
+CREATE TABLE `roles` (
+ `role_id` tinyint(11) NOT NULL AUTO_INCREMENT,
+ `role_name` varchar(255) DEFAULT NULL,
+ `role_code` varchar(255) DEFAULT NULL,
+ `role_description` varchar(500) DEFAULT NULL,
+ `role_status` varchar(255) NOT NULL DEFAULT 'active',
+ PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `users` ADD `role_id` INT(11) NOT NULL AFTER `phone`;
+
+CREATE TABLE `resources` (
+ `resource_id` varchar(255) NOT NULL,
+ `display_name` varchar(255) DEFAULT NULL,
+ `status` varchar(255) DEFAULT NULL,
+ PRIMARY KEY (`resource_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `privileges` (
+ `resource_id` varchar(255) NOT NULL,
+ `privilege_name` varchar(255) NOT NULL,
+ `display_name` varchar(255) DEFAULT NULL,
+ PRIMARY KEY (`resource_id`,`privilege_name`),
+ CONSTRAINT `privileges_ibfk_1` FOREIGN KEY (`resource_id`) REFERENCES `resources` (`resource_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'Roles', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'add', 'Add'), ('App\\Http\\Controllers\\Roles\\RolesController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'index', 'Access');

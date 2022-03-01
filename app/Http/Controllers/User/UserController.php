@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\TestSiteService;
 use App\Service\UserService;
+use App\Service\RolesService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -35,8 +36,10 @@ class UserController extends Controller
         else
         {
             $TestSiteService = new TestSiteService();
+            $RoleService = new RolesService();
             $testSite = $TestSiteService->getAllActiveTestSite();     
-            return view('user.add',array('test'=>$testSite));
+            $resourceResult = $RoleService->getAllRole();
+            return view('user.add',array('test'=>$testSite,'roleId'=>$resourceResult));
         }
     }
 
@@ -69,14 +72,16 @@ class UserController extends Controller
         {
             $UserService = new UserService();
             $TestSiteService = new TestSiteService();
+            $RoleService = new RolesService();
             $testSite = $TestSiteService->getAllActiveTestSite();    
             $result = $UserService->getUserById($id);
+            $resourceResult = $RoleService->getAllRole();
             $testSiteId = array(); 
             foreach($result as $value) {
                 array_push($testSiteId,$value->ts_id);
             }
             // dd($result);die;
-            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId));
+            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult));
         }
     }
 
