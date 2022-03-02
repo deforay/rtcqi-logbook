@@ -28,8 +28,11 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['add']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['add'] == "allow")) {?>
                 <a href="/facility/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-plus icon-left"></i> Add Facility</b></a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -76,7 +79,10 @@
                                                 <th>Contact Name</th>
                                                 <th>Contact Email</th>
                                                 <th>Status</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -124,7 +130,10 @@
                     { data: 'contact_name', name: 'contact_name'},
                     { data: 'contact_email', name: 'contact_email' },
                     { data: 'facility_status', name: 'facility_status',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
+                    <?php } ?>
                 ],
                 columnDefs: [
                 {

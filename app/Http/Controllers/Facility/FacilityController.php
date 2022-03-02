@@ -13,6 +13,11 @@ use Session;
 
 class FacilityController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllFacility');        
+       
+    }
     //View Facility main screen
     public function index()
     {
@@ -49,7 +54,12 @@ class FacilityController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit'] == "allow")){
                         $button .= '<a href="/facility/edit/'. base64_encode($data->facility_id).'" name="edit" id="'.$data->facility_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })

@@ -12,6 +12,11 @@ use Session;
 
 class DistrictController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllDistrict');        
+       
+    }
     //View District main screen
     public function index()
     {
@@ -48,7 +53,12 @@ class DistrictController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['edit']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['edit'] == "allow")){
                         $button .= '<a href="/district/edit/'. base64_encode($data->district_id).'" name="edit" id="'.$data->district_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })

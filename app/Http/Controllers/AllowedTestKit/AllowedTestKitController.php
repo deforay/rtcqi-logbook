@@ -12,6 +12,11 @@ use Session;
 
 class AllowedTestKitController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllAllowedTestKit');        
+       
+    }
     //View User Allowed Test Kit main screen
     public function index()
     {
@@ -48,7 +53,12 @@ class AllowedTestKitController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['edit']) && ($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['edit'] == "allow")){
                         $button .= '<a href="/allowedtestkit/edit/'. base64_encode($data->test_kit_no).'" name="edit" id="'.$data->test_kit_no.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })

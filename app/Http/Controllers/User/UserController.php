@@ -13,6 +13,11 @@ use Session;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllUser');        
+       
+    }
     //View user main screen
     public function index()
     {
@@ -51,7 +56,12 @@ class UserController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")){
                         $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })
