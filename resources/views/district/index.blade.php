@@ -28,8 +28,11 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['add']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['add'] == "allow")) {?>
                 <a href="/district/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-plus icon-left"></i> Add District</b></a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -72,7 +75,10 @@
                                             <tr>
                                                 <th>District Name</th>
                                                 <th>Province Name</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['edit']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -116,7 +122,10 @@
 
                     { data: 'district_name', name: 'district_name',className:'firstcaps' },
                     { data: 'province_name', name: 'province_name',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['edit']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
+                    <?php } ?>
                 ],
             order: [[0, 'desc']]
         });

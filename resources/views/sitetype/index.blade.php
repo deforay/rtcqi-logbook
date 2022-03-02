@@ -28,8 +28,11 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['add']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['add'] == "allow")) {?>
                 <a href="/sitetype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-plus icon-left"></i> Add Site Type</b></a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -72,7 +75,10 @@
                                             <tr>
                                                 <th>Site Type Name</th>
                                                 <th>Status</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -116,7 +122,10 @@
 
                     { data: 'site_type_name', name: 'site_type_name',className:'firstcaps' },
                     { data: 'site_type_status', name: 'site_type_status',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
+                    <?php } ?>
                 ],
             order: [[0, 'desc']]
         });

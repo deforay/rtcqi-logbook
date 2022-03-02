@@ -14,6 +14,11 @@ use Session;
 
 class TestSiteController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllTestSite');        
+       
+    }
     //View TestSite main screen
     public function index()
     {
@@ -52,7 +57,12 @@ class TestSiteController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")){
                         $button .= '<a href="/testsite/edit/'. base64_encode($data->ts_id).'" name="edit" id="'.$data->ts_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })

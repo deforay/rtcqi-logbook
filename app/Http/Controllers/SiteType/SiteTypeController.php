@@ -11,6 +11,11 @@ use Session;
 
 class SiteTypeController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllSiteType');        
+       
+    }
     //View SiteType main screen
     public function index()
     {
@@ -46,7 +51,12 @@ class SiteTypeController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")){
                         $button .= '<a href="/sitetype/edit/'. base64_encode($data->st_id).'" name="edit" id="'.$data->st_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })

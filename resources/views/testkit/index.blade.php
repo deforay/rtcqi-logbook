@@ -28,8 +28,11 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['add']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['add'] == "allow")) {?>
                 <a href="/testkit/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-plus icon-left"></i> Add Test Kit</b></a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -75,7 +78,10 @@
                                                 <th>Kit Name ID 1</th>
                                                 <th>Installation ID</th>
                                                 <th>Status</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
+                                                  <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -122,7 +128,10 @@
                     { data: 'test_kit_name_id_1', name: 'test_kit_name_id_1'},
                     { data: 'Installation_id', name: 'Installation_id' },
                     { data: 'test_kit_status', name: 'test_kit_status',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
+                    <?php } ?>
                 ],
             order: [[0, 'desc']]
         });

@@ -11,6 +11,11 @@ use Session;
 
 class ProvinceController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllProvince');        
+       
+    }
     //View Province main screen
     public function index()
     {
@@ -46,7 +51,12 @@ class ProvinceController extends Controller
         return DataTables::of($data)
                     ->addColumn('action', function($data){
                         $button = '<div>';
+                        $role = session('role');
+                        if (isset($role['App\\Http\\Controllers\\Province\\ProvinceController']['edit']) && ($role['App\\Http\\Controllers\\Province\\ProvinceController']['edit'] == "allow")){
                         $button .= '<a href="/province/edit/'. base64_encode($data->province_id).'" name="edit" id="'.$data->province_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                    }else{
+                        $button .= '';
+                    }
                         $button .= '</div>';
                         return $button;
                     })

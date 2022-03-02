@@ -28,8 +28,11 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\User\\UserController']['add']) && ($role['App\\Http\\Controllers\\User\\UserController']['add'] == "allow")) {?>
                 <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -75,7 +78,10 @@
                                                 <th>Mobile No</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -122,7 +128,10 @@
                     { data: 'phone', name: 'phone'},
                     { data: 'email', name: 'email'},
                     { data: 'user_status', name: 'user_status',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
+                <?php } ?>
                 ],
                 columnDefs: [
                 {
