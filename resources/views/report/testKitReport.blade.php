@@ -154,8 +154,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     <div class="col-md-8">
                                                         <button type="submit" onclick="getTestKitReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                                         <a class="btn btn-danger btn-md" href='/testKitReport/'><span>Reset</span></a>&nbsp;&nbsp;
-
+                                                        <?php $role = session('role');
+                                                        if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['testkitexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['testkitexport'] == "allow")) {?>
                                                         <button type="submit" class="btn btn-primary">Export</button>
+                                                       <?php } ?>
                                                     </div>
                                                 </div>
                                             </div></div>

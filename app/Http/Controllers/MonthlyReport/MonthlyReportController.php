@@ -18,6 +18,11 @@ use Session;
 
 class MonthlyReportController extends Controller
 {
+    public function __construct()
+    {      
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport');        
+       
+    }
     //View MonthlyReport main screen
     public function index()
     {
@@ -75,7 +80,12 @@ class MonthlyReportController extends Controller
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
                 $button = '<div>';
+                $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")){
                 $button .= '<a href="/monthlyreport/edit/' . base64_encode($data->mr_id) . '" name="edit" id="' . $data->mr_id . '" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+            }else{
+                $button .= '';
+            }
                 $button .= '</div>';
                 return $button;
             })

@@ -63,6 +63,11 @@ Route::get('/incorrectrequest', function()
     return view('error.incorrect-request');
 });
 
+Route::get('/dashboarderror', function()
+{
+    return view('error.dashboard-error');
+});
+
 
 //test site module
 Route::get('/testsite', 'TestSite\TestSiteController@index')->name('testsite.index')->middleware('access');

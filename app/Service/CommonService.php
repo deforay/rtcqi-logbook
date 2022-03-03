@@ -234,7 +234,8 @@ class CommonService
     public function allowDisplay($resource,$view){
         $role = session('role');
         if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){
-        return redirect('/accessdenied');
+              
+           return false;
         }
         
         return true;

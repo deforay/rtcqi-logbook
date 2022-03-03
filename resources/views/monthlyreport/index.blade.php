@@ -32,11 +32,17 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) {?>
                 <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                     <b><i class="la la-upload"></i> Bulk Upload Monthly Reports</b>
+                <?php } ?>
                 </a>
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) {?>
                 <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                     <b><i class="ft-plus icon-left"></i> Add Monthly Report</b>
+                <?php } ?>
                 </a>
             </div>
         </div>
@@ -151,7 +157,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                 <th>End Date</th>
                                                 <th>Total Number of Pages</th>
                                                 <th>Last Modified On</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
