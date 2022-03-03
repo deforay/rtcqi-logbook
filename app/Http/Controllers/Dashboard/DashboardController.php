@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Service\GlobalConfigService;
 use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
+use App\Service\CommonService;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -27,6 +28,9 @@ class DashboardController extends Controller
             $total = $monthlyReportService->getTotalCountOfMonthlyReport();
             $monthly = $monthlyReportService->getCountOfMonthlyReport();
             $siteMonthly = $monthlyReportService->getSiteCountOfMonthlyReport();
+            $common=new CommonService();
+            $checkEdit = $common->allowDisplay('App\Http\Controllers\Dashboard\DashboardController','index');
+            if($checkEdit){
             return view('dashboard.index', array(
                 'province' => $province,
                 'data' => $data,
@@ -37,6 +41,10 @@ class DashboardController extends Controller
                 'siteMonthly' => $siteMonthly,
                 'mapZoomLevel' => $mapZoomLevel
             ));
+        } else {
+           return redirect('/dashboarderror');
+
+        }
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
