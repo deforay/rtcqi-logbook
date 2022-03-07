@@ -88,8 +88,8 @@ class RolesTable extends Model
         try {
             $roleCode = $params['roleCode'];
             $configFile =  "acl.config.json";
-            if (file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile))
-                $config = json_decode(File::get(getcwd() . DIRECTORY_SEPARATOR . $configFile), true);
+            if (file_exists(public_path('config' . DIRECTORY_SEPARATOR . $configFile)))
+                $config = json_decode(File::get(public_path('config' . DIRECTORY_SEPARATOR . $configFile)), true);
             else
                 $config = array();
             $config[$roleCode] = array();
@@ -99,9 +99,10 @@ class RolesTable extends Model
                     $config[$roleCode][$resourceName] = $privilege;
                 }
             }
-            if (!is_writable(getcwd() . DIRECTORY_SEPARATOR . $configFile))
-                chmod(getcwd() . DIRECTORY_SEPARATOR . $configFile, 0755);
-            File::put(getcwd() . DIRECTORY_SEPARATOR . $configFile, json_encode($config));
+            // dd(public_path('config' . DIRECTORY_SEPARATOR . $configFile));die;
+            if (!is_writable(public_path('config' . DIRECTORY_SEPARATOR . $configFile)))
+                chmod(public_path('config' . DIRECTORY_SEPARATOR . $configFile), 0755);
+            File::put(public_path('config' . DIRECTORY_SEPARATOR . $configFile), json_encode($config));
         } catch (Exception $exc) {
 
             error_log($exc->getMessage());

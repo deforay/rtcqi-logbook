@@ -28,8 +28,11 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['edit']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['edit'] == "allow")) {?>
                 <a href="/globalconfig/edit" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                 <b><i class="ft-edit icon-left"></i> Edit Global Config</b></a>
+                <?php } ?>
             </div>
         </div>
     </div>
