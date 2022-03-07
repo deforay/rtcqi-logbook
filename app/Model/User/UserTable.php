@@ -106,7 +106,7 @@ class UserTable extends Model
         );
         if (trim($data['password']))
             $user['force_password_reset'] = 1;
-            $user['password'] = Hash::make($data['password']); // Hashing passwords
+        $user['password'] = Hash::make($data['password']); // Hashing passwords
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
             ->update(
@@ -146,7 +146,7 @@ class UserTable extends Model
     // Validate Employee login
     public function validateLogin($params)
     {
-        $config='';
+        $config = '';
         $data = $params->all();
         $commonservice = new CommonService();
         $result = json_decode(DB::table('users')
@@ -157,30 +157,29 @@ class UserTable extends Model
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {
                 $configFile =  "acl.config.json";
-                if(file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)){
-                    $config = json_decode(File::get( getcwd() . DIRECTORY_SEPARATOR . $configFile),true);
-                session(['name' => $result[0]['first_name']]);
-                session(['lastName' => $result[0]['last_name']]);
-                session(['email' => $result[0]['email']]);
-                session(['phone' => $result[0]['phone']]);
-                session(['userId' => $result[0]['user_id']]);
-                session(['role' => $config[$result[0]['role_code']]]);
-                session(['login' => true]);
-                $userTracking = DB::table('track')->insertGetId(
-                    [
-                        'event_type' => 'login',
-                        'action' => $result[0]['first_name'] . ' logged in',
-                        'resource' => 'user',
-                        'date_time' => $commonservice->getDateTime(),
-                        'ip_address' => request()->ip(),
-                    ]
-                );
-            }else{
-                return 2;
-            }
+                if (file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)) {
+                    $config = json_decode(File::get(getcwd() . DIRECTORY_SEPARATOR . $configFile), true);
+                    session(['name' => $result[0]['first_name']]);
+                    session(['lastName' => $result[0]['last_name']]);
+                    session(['email' => $result[0]['email']]);
+                    session(['phone' => $result[0]['phone']]);
+                    session(['userId' => $result[0]['user_id']]);
+                    session(['role' => $config[$result[0]['role_code']]]);
+                    session(['login' => true]);
+                    $userTracking = DB::table('track')->insertGetId(
+                        [
+                            'event_type' => 'login',
+                            'action' => $result[0]['first_name'] . ' logged in',
+                            'resource' => 'user',
+                            'date_time' => $commonservice->getDateTime(),
+                            'ip_address' => request()->ip(),
+                        ]
+                    );
+                } else {
+                    return 2;
+                }
                 return 1;
-            }
-            else {
+            } else {
                 return 0;
             }
         } else {
@@ -239,36 +238,36 @@ class UserTable extends Model
         $user_name = session('name');
         $data = $params->all();
         $newPassword = Hash::make($data['newPassword']);
-        if(Hash::check($data['currentPassword'], $newPassword)) {
+        if (Hash::check($data['currentPassword'], $newPassword)) {
             return 0;
         } else {
-        $result = json_decode(DB::table('users')->where('user_id', '=', base64_decode($id))->get(), true);
-        if (count($result) > 0) {
-            $hashedPassword = $result[0]['password'];
-            if (Hash::check($data['currentPassword'], $hashedPassword)) {
-                $response = DB::table('users')
-                    ->where('user_id', '=', base64_decode($id))
-                    ->update(
+            $result = json_decode(DB::table('users')->where('user_id', '=', base64_decode($id))->get(), true);
+            if (count($result) > 0) {
+                $hashedPassword = $result[0]['password'];
+                if (Hash::check($data['currentPassword'], $hashedPassword)) {
+                    $response = DB::table('users')
+                        ->where('user_id', '=', base64_decode($id))
+                        ->update(
+                            [
+                                'password' => $newPassword
+                            ]
+                        );
+                    $userTracking = DB::table('track')->insertGetId(
                         [
-                            'password' => $newPassword
+                            'event_type' => 'change-password-request',
+                            'action' => $user_name . ' has changed the password information',
+                            'resource' => 'change-password',
+                            'date_time' => $commonservice->getDateTime(),
+                            'ip_address' => request()->ip(),
                         ]
                     );
-                $userTracking = DB::table('track')->insertGetId(
-                    [
-                        'event_type' => 'change-password-request',
-                        'action' => $user_name . ' has changed the password information',
-                        'resource' => 'change-password',
-                        'date_time' => $commonservice->getDateTime(),
-                        'ip_address' => request()->ip(),
-                    ]
-                );
-                return $response;
+                    return $response;
+                }
+                // $commonservice = new CommonService();
+                // $commonservice->eventLog(base64_decode($id), base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
+            } else {
+                return 0;
             }
-            // $commonservice = new CommonService();
-            // $commonservice->eventLog(base64_decode($id), base64_decode($id), 'Change Password', 'User Change Password', 'Change Password');
-        } else {
-            return 0;
         }
-    }
     }
 }
