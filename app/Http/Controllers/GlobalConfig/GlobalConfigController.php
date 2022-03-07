@@ -11,11 +11,6 @@ use Session;
 
 class GlobalConfigController extends Controller
 {
-    public function __construct()
-    {      
-        $this->middleware(['role-authorization'])->except('getAllGlobalConfig');        
-       
-    }
     //View GlobalConfig main screen
     public function index()
     {
