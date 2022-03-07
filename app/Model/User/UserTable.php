@@ -152,13 +152,14 @@ class UserTable extends Model
         $result = json_decode(DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->where('users.email', '=', $data['username'])
-            ->where('user_status', '=', 'active')->get(), true);
+            ->where('user_status', '=', 'active')
+            ->limit(1)->get(), true);
         if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {
                 $configFile =  "acl.config.json";
-                if (file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile)) {
-                    $config = json_decode(File::get(getcwd() . DIRECTORY_SEPARATOR . $configFile), true);
+                if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
+                    $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
                     session(['name' => $result[0]['first_name']]);
                     session(['lastName' => $result[0]['last_name']]);
                     session(['email' => $result[0]['email']]);
