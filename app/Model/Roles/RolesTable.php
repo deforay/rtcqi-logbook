@@ -105,8 +105,8 @@ class RolesTable extends Model
                 }
             }
             if (!is_writable(config_path() . DIRECTORY_SEPARATOR . $configFile))
-                // chmod(config_path() . DIRECTORY_SEPARATOR . $configFile, 0755);
-                File::put(config_path() . DIRECTORY_SEPARATOR . $configFile, json_encode($config));
+                chmod(config_path() . DIRECTORY_SEPARATOR . $configFile, 0755);
+            File::put(config_path() . DIRECTORY_SEPARATOR . $configFile, json_encode($config));
         } catch (Exception $exc) {
 
             error_log($exc->getMessage());
