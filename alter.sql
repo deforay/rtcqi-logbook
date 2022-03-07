@@ -7,11 +7,11 @@
 
 -- ---
 -- Table 'monthly_reports'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `monthly_reports`;
-		
+
 CREATE TABLE `monthly_reports` (
   `mr_id` INT(11) NOT NULL AUTO_INCREMENT,
   `ts_id` INT(11) NOT NULL COMMENT 'Site Name',
@@ -38,11 +38,11 @@ KEY (`st_id`)
 
 -- ---
 -- Table 'provinces'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `provinces`;
-		
+
 CREATE TABLE `provinces` (
   `provincesss_id` INT(11) NOT NULL AUTO_INCREMENT,
   `province_name` VARCHAR(100) NOT NULL,
@@ -52,11 +52,11 @@ CREATE TABLE `provinces` (
 
 -- ---
 -- Table 'districts'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `districts`;
-		
+
 CREATE TABLE `districts` (
   `district_id` INT(11) NOT NULL AUTO_INCREMENT,
   `provincesss_id` INT(11) NOT NULL,
@@ -67,11 +67,11 @@ KEY (`provincesss_id`)
 
 -- ---
 -- Table 'monthly_reports_pages'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `monthly_reports_pages`;
-		
+
 CREATE TABLE `monthly_reports_pages` (
   `mrp_id` INT(11) NOT NULL AUTO_INCREMENT,
   `mr_id` INT(11) NOT NULL,
@@ -126,11 +126,11 @@ KEY (`test_3_invalid`)
 
 -- ---
 -- Table 'site_types'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `site_types`;
-		
+
 CREATE TABLE `site_types` (
   `st_id` INT(10) NOT NULL AUTO_INCREMENT,
   `site_type_name` VARCHAR(100) NOT NULL,
@@ -140,11 +140,11 @@ CREATE TABLE `site_types` (
 
 -- ---
 -- Table 'test_sites'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `test_sites`;
-		
+
 CREATE TABLE `test_sites` (
   `ts_id` INT(11) NOT NULL AUTO_INCREMENT,
   `site_id` VARCHAR(100) NULL DEFAULT NULL,
@@ -170,11 +170,11 @@ KEY (`site_postal_code`)
 
 -- ---
 -- Table 'users'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `users`;
-		
+
 CREATE TABLE `users` (
   `user_id` INT(11) NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(255) NULL DEFAULT NULL,
@@ -192,25 +192,25 @@ CREATE TABLE `users` (
 
 -- ---
 -- Table 'users_facility_map'
--- 
+--
 -- ---
 -- Sakthivel P 3 June 2021
 
 DROP TABLE IF EXISTS `users_facility_map`;
-		
-CREATE TABLE `users_facility_map` ( 
+
+CREATE TABLE `users_facility_map` (
   `ufm_id` INT(11) NOT NULL AUTO_INCREMENT,
- `user_id` INT(11) NOT NULL, 
- `ts_id` INT(11) NOT NULL, KEY (`user_id`), 
+ `user_id` INT(11) NOT NULL,
+ `ts_id` INT(11) NOT NULL, KEY (`user_id`),
  PRIMARY KEY (`ufm_id`) );
 
 -- ---
 -- Table 'facilities'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `facilities`;
-		
+
 CREATE TABLE `facilities` (
   `facility_id` INT(11) NOT NULL AUTO_INCREMENT,
   `facility_name` VARCHAR(50) NULL DEFAULT NULL,
@@ -236,11 +236,11 @@ CREATE TABLE `facilities` (
 
 -- ---
 -- Table 'test_kits'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `test_kits`;
-		
+
 CREATE TABLE `test_kits` (
   `tk_id` INT(11) NOT NULL AUTO_INCREMENT,
   `test_kit_name_id` VARCHAR(50) NULL DEFAULT NULL,
@@ -262,11 +262,11 @@ KEY (`Installation_id`),
 
 -- ---
 -- Table 'global_config'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `global_config`;
-		
+
 CREATE TABLE `global_config` (
   `config_id` INT(11) NOT NULL AUTO_INCREMENT,
   `display_name` VARCHAR(200) NOT NULL,
@@ -277,11 +277,11 @@ CREATE TABLE `global_config` (
 
 -- ---
 -- Table 'allowed_testkits'
--- 
+--
 -- ---
 
 DROP TABLE IF EXISTS `allowed_testkits`;
-		
+
 CREATE TABLE `allowed_testkits` (
   `test_kit_no` INT(11) NOT NULL,
   `testkit_id` INT(11) NOT NULL,
@@ -289,7 +289,7 @@ CREATE TABLE `allowed_testkits` (
 );
 
 -- ---
--- Foreign Keys 
+-- Foreign Keys
 -- ---
 
 ALTER TABLE `monthly_reports` ADD FOREIGN KEY (ts_id) REFERENCES `test_sites` (`ts_id`);
@@ -374,7 +374,7 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 ALTER TABLE monthly_reports ADD source Varchar(100) NULL;
 ALTER TABLE monthly_reports ADD added_by Varchar(100) NULL;
 ALTER TABLE monthly_reports ADD added_on DATE NULL;
-ALTER TABLE `monthly_reports` CHANGE `reporting_month` `reporting_month` VARCHAR(100) NOT NULL;   
+ALTER TABLE `monthly_reports` CHANGE `reporting_month` `reporting_month` VARCHAR(100) NOT NULL;
 
 -- Sakthivel P 5 July 2021
 ALTER TABLE test_sites ADD provincesss_id int(11);
@@ -391,11 +391,11 @@ ALTER TABLE `facilities` ADD FOREIGN KEY (provincesss_id) REFERENCES `provinces`
 ALTER TABLE facilities ADD district_id int(11);
 ALTER TABLE `facilities` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);
 
---Sakthivel P 8 July 2021
+-- Sakthivel P 8 July 2021
 
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Latitude', 'latitude', '11.1271'), (NULL, 'Longitude', 'longitude', '78.6569');
 
---Sakthivel P 29 July 2021
+-- Sakthivel P 29 July 2021
 CREATE TABLE `track` (
 `log_id` int NOT NULL ,
 `event_type` TEXT DEFAULT NULL,
@@ -407,20 +407,20 @@ PRIMARY KEY (`log_id`)
 );
 ALTER TABLE `track` CHANGE `log_id` `log_id` INT(11) NOT NULL AUTO_INCREMENT;
 
---Sakthivel P 04 Aug 2021
+-- Sakthivel P 04 Aug 2021
 ALTER TABLE monthly_reports ADD last_modified_on datetime DEFAULT NULL;
 
---Sakthivel P 09 Aug 2021
+-- Sakthivel P 09 Aug 2021
 ALTER TABLE monthly_reports ADD district_id int(11);
 ALTER TABLE `monthly_reports` ADD FOREIGN KEY (district_id) REFERENCES `districts` (`district_id`);
 
---Sakthivel P 13 Aug 2021
+-- Sakthivel P 13 Aug 2021
 ALTER TABLE monthly_reports ADD tester_name Varchar(100) NULL;
 
---Sakthivel P 25 Feb 2022
-ALTER TABLE `users` ADD `force_password_reset` INT NULL DEFAULT NULL AFTER `user_status`
+-- Sakthivel P 25 Feb 2022
+ALTER TABLE `users` ADD `force_password_reset` INT NULL DEFAULT NULL AFTER `user_status`;
 
---Sakthivel P 28 Feb 2022
+-- Sakthivel P 28 Feb 2022
 CREATE TABLE `roles` (
  `role_id` tinyint(11) NOT NULL AUTO_INCREMENT,
  `role_name` varchar(255) DEFAULT NULL,
@@ -452,7 +452,7 @@ INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'add', 'Add'), ('App\\Http\\Controllers\\Roles\\RolesController', 'edit', 'Edit');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Roles\\RolesController', 'index', 'Access');
 
---Sakthivel P 01 Mar 2022
+-- Sakthivel P 01 Mar 2022
 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'User', 'active'), ('App\\Http\\Controllers\\TestSite\\TestSiteController', 'TestSite', 'active'), ('App\\Http\\Controllers\\TestKit\\TestKitController', 'TestKit', 'active'),('App\\Http\\Controllers\\Facility\\FacilityController', 'Facility', 'active'), ('App\\Http\\Controllers\\Province\\ProvinceController', 'Province', 'active'), ('App\\Http\\Controllers\\District\\DistrictController', 'District', 'active'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'SiteType', 'active'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'GlobalConfig', 'active'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'AllowedTestKit', 'active'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'MonthlyReport', 'active'),('App\\Http\\Controllers\\Report\\ReportController', 'Report', 'active'),('App\\Http\\Controllers\\Dashboard\\DashboardController', 'Dashboard', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'add', 'Add'),('App\\Http\\Controllers\\User\\UserController', 'edit', 'Edit'),('App\\Http\\Controllers\\User\\UserController', 'index', 'Access'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'add', 'Add'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'edit', 'Edit'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'index', 'Access'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'add', 'Add'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'edit', 'Edit'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'index', 'Access'),('App\\Http\\Controllers\\Facility\\FacilityController', 'add', 'Add'), ('App\\Http\\Controllers\\Facility\\FacilityController', 'edit', 'Edit'),('App\\Http\\Controllers\\Facility\\FacilityController', 'index', 'Access'),('App\\Http\\Controllers\\Province\\ProvinceController', 'add', 'Add'), ('App\\Http\\Controllers\\Province\\ProvinceController', 'edit', 'Edit'),('App\\Http\\Controllers\\Province\\ProvinceController', 'index', 'Access'),('App\\Http\\Controllers\\District\\DistrictController', 'add', 'Add'), ('App\\Http\\Controllers\\District\\DistrictController', 'edit', 'Edit'),('App\\Http\\Controllers\\District\\DistrictController', 'index', 'Access'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'add', 'Add'), ('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'edit', 'Edit'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'index', 'Access'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'edit', 'Edit'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'index', 'Access'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'add', 'Add'), ('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'edit', 'Edit'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'index', 'Access'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'add', 'Add'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'edit', 'Edit'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'index', 'Access'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'bulk', 'Bulk Upload'),('App\\Http\\Controllers\\Report\\ReportController', 'trendreport', 'Trend Report'),('App\\Http\\Controllers\\Report\\ReportController', 'logbookreport', 'Logbook Report'),('App\\Http\\Controllers\\Report\\ReportController', 'testkitreport', 'Test Kit Report'),('App\\Http\\Controllers\\Report\\ReportController', 'invalidresultreport', 'Invalid Result Report'),('App\\Http\\Controllers\\Report\\ReportController', 'customreport', 'Custom Report'),('App\\Http\\Controllers\\Report\\ReportController', 'trendexport', 'Trend Export'),('App\\Http\\Controllers\\Report\\ReportController', 'logbookexport', 'Logbook Export'),('App\\Http\\Controllers\\Report\\ReportController', 'testkitexport', 'Test Kit Export'),('App\\Http\\Controllers\\Report\\ReportController', 'invalidresultexport', 'Invalid Result Export'),('App\\Http\\Controllers\\Report\\ReportController', 'customexport', 'Custom Export'),('App\\Http\\Controllers\\User\\UserController', 'profile', 'Profile'),('App\\Http\\Controllers\\Dashboard\\DashboardController', 'index', 'Access');
