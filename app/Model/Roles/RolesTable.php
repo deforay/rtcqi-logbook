@@ -99,9 +99,9 @@ class RolesTable extends Model
                     $config[$roleCode][$resourceName] = $privilege;
                 }
             }
-            // dd(public_path('config' . DIRECTORY_SEPARATOR . $configFile));die;
+            dd(public_path('config' . DIRECTORY_SEPARATOR . $configFile));die;
             if (!is_writable(public_path('config' . DIRECTORY_SEPARATOR . $configFile)))
-                chmod(public_path('config' . DIRECTORY_SEPARATOR . $configFile), 0755);
+                // chmod(getcwd() . DIRECTORY_SEPARATOR . $configFile, 0755);
             File::put(public_path('config' . DIRECTORY_SEPARATOR . $configFile), json_encode($config));
         } catch (Exception $exc) {
 
