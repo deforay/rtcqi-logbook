@@ -322,6 +322,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                     @for($j = 1; $j <= $globalValue; $j++) <?php $lot_no = 'lot_no_' . $j;
                                                                                             $expiry_date = 'expiry_date_' . $j; 
                                                                                             $expiryDate = $common->humanDateFormat($list->$expiry_date); ?> <td style=" text-align: center;">
+                                                    @if($j == 1)    
                                                         <h5>Lot No. {{$j}}<span class="mandatory">*</span>
                                                         </h5>
                                                         @else 
