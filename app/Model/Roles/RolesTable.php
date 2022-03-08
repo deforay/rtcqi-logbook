@@ -87,21 +87,21 @@ class RolesTable extends Model
     }
 
     //Role Save in Acl File
-    public function mapRolePrivilege($params)
+    public function mapRolePrivilege($params,$id)
     {
+        // dd($id);die;
         try {
-            $roleCode = $params['roleCode'];
             $configFile =  "acl.config.json";
             // dd(config_path() . DIRECTORY_SEPARATOR . $configFile);die;
             if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile))
                 $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
             else
                 $config = array();
-            $config[$roleCode] = array();
+            $config[$id] = array();
 
             if (isset($params['resource']) && $params['resource'] != '' && $params['resource'] != null) {
                 foreach ($params['resource'] as $resourceName => $privilege) {
-                    $config[$roleCode][$resourceName] = $privilege;
+                    $config[$id][$resourceName] = $privilege;
                 }
             }
             if (!is_writable(config_path() . DIRECTORY_SEPARATOR . $configFile))
