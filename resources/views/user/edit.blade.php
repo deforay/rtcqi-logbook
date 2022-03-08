@@ -140,7 +140,7 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Roles<span class="mandatory">*</span>
+											<h5>Role<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <select class="select2 form-control isRequired" autocomplete="off" style="width:100%;" id="roleId" name="roleId" title="Please Select Role">
