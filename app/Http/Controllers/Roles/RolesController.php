@@ -89,8 +89,8 @@ class RolesController extends Controller
             return Redirect::route('roles.index')->with('status', $editRoles);
         } else {
             $configFile =  "acl.config.json";
-            if (file_exists(getcwd() . DIRECTORY_SEPARATOR . $configFile))
-                $config = json_decode(File::get(getcwd() . DIRECTORY_SEPARATOR . $configFile), true);
+            if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile))
+                $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
             else
                 $config = array();
             $RoleService = new RolesService();
