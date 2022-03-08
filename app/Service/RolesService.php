@@ -24,7 +24,7 @@ class RolesService
 			$Rolesmodel = new RolesTable();
         	$addRoles = $Rolesmodel->saveRoles($request);
 			if($addRoles>0){
-				$Rolesmodel->mapRolePrivilege($request);
+				$Rolesmodel->mapRolePrivilege($request,$addRoles);
 				DB::commit();
 				$msg = 'Roles Added Successfully';
 				return $msg;
@@ -66,7 +66,7 @@ class RolesService
 			$RolesModel = new RolesTable();
         	$addRoles = $RolesModel->updateRoles($params,$id);
 			if($addRoles>0){
-				$RolesModel->mapRolePrivilege($params);
+				$RolesModel->mapRolePrivilege($params,base64_decode($id));
 				DB::commit();
 				$msg = 'Roles Updated Successfully';
 				return $msg;
