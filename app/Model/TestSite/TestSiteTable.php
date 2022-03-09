@@ -38,15 +38,7 @@ class TestSiteTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-test-site-request',
-                    'action' => $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name',
-                    'resource' => 'test-site',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-test-site-request', $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name', 'test-site',session('userId'));
         }
 
         return $id;
@@ -118,15 +110,7 @@ class TestSiteTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'update-test-site-request',
-                    'action' => $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name',
-                    'resource' => 'test-site',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('update-test-site-request', $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name', 'test-site',session('userId'));
         }
         return $response;
     }

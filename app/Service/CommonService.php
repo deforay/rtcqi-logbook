@@ -242,17 +242,17 @@ class CommonService
         
     }
     
-    public function eventLog($userId, $subjectId, $event_type, $action, $resource_name)
+    public function eventLog($event_type, $action, $resource,$id)
     {
         $eventData = array(
-            'actor' => $userId,
-            'subject' => $subjectId,
             'event_type' => $event_type,
             'action' => $action,
-            'resource_name' => $resource_name,
-            'added_on' => date('Y-m-d H:i:s')
+            'resource' => $resource,
+            'user_id' => $id,
+            'date_time' => date('Y-m-d H:i:s'),
+            'ip_address' => request()->ip()
         );
-        $eventResult = DB::table('event_log')->insert($eventData);
+        $eventResult = DB::table('track')->insert($eventData);
         return $eventResult;
     }
     

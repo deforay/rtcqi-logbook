@@ -106,15 +106,7 @@ class MonthlyReportTable extends Model
                     $insMonthlyArr
                 );
             }
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-monthly-report-request',
-                    'action' => $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '',
-                    'resource' => 'monthly-report',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-monthly-report-request', $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report',session('userId'));
         }
 
         return $id;
@@ -321,15 +313,7 @@ class MonthlyReportTable extends Model
                 );
             }
         }
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'update-monthly-report-request',
-                'action' => $user_name . ' has updated the monthly report information for book no ' . $data['bookNo'] . '',
-                'resource' => 'monthly-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('update-monthly-report-request', $user_name . ' has updated the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report',session('userId'));
         return 1;
     }
 
@@ -1359,15 +1343,7 @@ class MonthlyReportTable extends Model
                     $rowCnt++;
                 }
                 if ($cnt > 0) {
-                    $userTracking = DB::table('track')->insertGetId(
-                        [
-                            'event_type' => 'import-monthly-report',
-                            'action' => $user_name . ' has imported a new monthly report',
-                            'resource' => 'monthly-report',
-                            'date_time' => $commonservice->getDateTime(),
-                            'ip_address' => request()->ip(),
-                        ]
-                    );
+                    $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report',session('userId'));
                 }
                 DB::commit();
                 $rslt = $cnt . " rows Updated";
@@ -1745,89 +1721,41 @@ class MonthlyReportTable extends Model
         }
         $user_name = session('name');
         $commonservice = new CommonService();
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'download-sample-monthly-excel-sheet',
-                'action' => $user_name . ' has downloaded the sample monthly excel sheet for ' . $arr['no_of_test'] . '',
-                'resource' => 'monthly-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('download-sample-monthly-excel-sheet', $user_name . ' has downloaded the sample monthly excel sheet for ' . $arr['no_of_test'] . '', 'monthly-report',session('userId'));
     }
 
     public function trendReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'export-trend-report',
-                'action' => $user_name . ' has exported the trend report',
-                'resource' => 'trend-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('export-trend-report', $user_name . ' has exported the trend report', 'trend-report',session('userId'));
     }
 
     public function logBookReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'export-logbook-report',
-                'action' => $user_name . ' has exported the logbook report',
-                'resource' => 'logbook-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('export-logbook-report', $user_name . ' has exported the logbook report', 'logbook-report',session('userId'));
     }
 
     public function testKitReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'export-testkit-report',
-                'action' => $user_name . ' has exported the testkit report',
-                'resource' => 'test-kit-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('export-testkit-report', $user_name . ' has exported the testkit report', 'test-kit-report',session('userId'));
     }
 
     public function invalidReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'export-invalid-results-report',
-                'action' => $user_name . ' has exported the invalid results report',
-                'resource' => 'invalid-results-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('export-invalid-results-report', $user_name . ' has exported the invalid results report', 'invalid-results-report',session('userId'));
     }
 
     public function customReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'export-custom-report',
-                'action' => $user_name . ' has exported the custom report',
-                'resource' => 'custom-report',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('export-custom-report', $user_name . ' has exported the custom report', 'custom-report',session('userId'));
     }
 }

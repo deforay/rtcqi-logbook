@@ -164,16 +164,7 @@ class GlobalConfigTable extends Model
                 }
             }
         }
-
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'update-global-config-request',
-                'action' => $user_name . ' has updated the global config information',
-                'resource' => 'global-config',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('update-global-config-request', $user_name . ' has updated the global config information', 'global-config',session('userId'));
         return 1;
     }
 

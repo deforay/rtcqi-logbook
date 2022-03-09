@@ -25,15 +25,7 @@ class SiteTypeTable extends Model
                 'site_type_status' => $data['siteTypeStatus'],
                 ]
             );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-site-type-request',
-                    'action' => $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name',
-                    'resource' => 'site-type',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-site-type-request', $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',session('userId'));
         }
 
         return $id;
@@ -82,15 +74,7 @@ class SiteTypeTable extends Model
                 ->update(
                         $upData
                     );
-                    $userTracking = DB::table('track')->insertGetId(
-                        [
-                            'event_type' => 'update-site-type-request',
-                            'action' => $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name',
-                            'resource' => 'site-type',
-                            'date_time' => $commonservice->getDateTime(),
-                            'ip_address' => request()->ip(),
-                        ]
-                    );
+            $commonservice->eventLog('update-site-type-request', $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',session('userId'));
         return $response;
     }
 

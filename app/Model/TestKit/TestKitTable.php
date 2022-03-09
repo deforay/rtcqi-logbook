@@ -35,15 +35,7 @@ class TestKitTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-test-kit-request',
-                    'action' => $user_name . ' has added the test kit information for ' . $data['kit_name'] . ' Name',
-                    'resource' => 'test-kit',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-test-kit-request', $user_name . ' has added the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',session('userId'));
         }
 
         return $id;
@@ -109,15 +101,7 @@ class TestKitTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'update-test-kit-request',
-                    'action' => $user_name . ' has updated the test kit information for ' . $data['kit_name'] . ' Name',
-                    'resource' => 'test-kit',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('update-test-kit-request', $user_name . ' has updated the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',session('userId'));
         }
         return $response;
     }

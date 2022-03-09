@@ -25,15 +25,7 @@ class ProvinceTable extends Model
                 'province_status' => $data['provinceStatus'],
                 ]
             );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-province-request',
-                    'action' => $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name',
-                    'resource' => 'province',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province',session('userId'));
         }
 
         return $id;
@@ -82,15 +74,7 @@ class ProvinceTable extends Model
                 ->update(
                         $upData
                     );
-                    $userTracking = DB::table('track')->insertGetId(
-                        [
-                            'event_type' => 'update-province-request',
-                            'action' => $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name',
-                            'resource' => 'province',
-                            'date_time' => $commonservice->getDateTime(),
-                            'ip_address' => request()->ip(),
-                        ]
-                    );
+            $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province',session('userId'));
         return $response;
     }
 
