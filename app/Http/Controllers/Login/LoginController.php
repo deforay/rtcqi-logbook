@@ -38,22 +38,12 @@ class LoginController extends Controller
     //Logout
     public function logout(Request $request, $name)
     {
-        $user_name = base64_decode($name);
+        $commonservice = new CommonService();
         if ($request->isMethod('post') && session('login') == true) {
+            $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user',session('userId'));
             $request->session()->flush();
             $request->session()->regenerate();
-            $commonservice = new CommonService();
-
-            Session::flush();
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'log-out',
-                    'action' => $user_name . ' logged out',
-                    'resource' => 'user',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            Session::flush(); 
             return Redirect::to('/login'); // redirect the user to the login screen
         } else {
             if (session('login') == null) {

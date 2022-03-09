@@ -32,15 +32,7 @@ class AllowedTestKitTable extends Model
                     ]
                 );
             }
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-allowed-testkits-request',
-                    'action' => $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No',
-                    'resource' => 'allowed-testkits',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-allowed-testkits-request', $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',session('userId'));
         }
         return $id;
     }
@@ -84,16 +76,7 @@ class AllowedTestKitTable extends Model
                 ]
             );
         }
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'update-allowed-testkits-request',
-                'action' => $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No',
-                'resource' => 'allowed-testkits',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
-
+        $commonservice->eventLog('update-allowed-testkits-request', $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',session('userId'));
         return $id;
     }
 

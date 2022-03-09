@@ -16,6 +16,8 @@ class RolesTable extends Model
     {
         //to get all request values
         $data = $request->all();
+        $commonservice = new CommonService();
+        $user_name = session('name');
         if ($request->input('roleName') != null && trim($request->input('roleName')) != '') {
             $id = DB::table('roles')->insertGetId(
                 [
@@ -25,6 +27,8 @@ class RolesTable extends Model
                     'role_status' => $data['rolesStatus'],
                 ]
             );
+            $commonservice->eventLog('add-role-request', $user_name . ' has added the role information for ' . $data['roleName'] . ' Name', 'role',session('userId'));
+
         }
         return $id;
     }
@@ -59,6 +63,8 @@ class RolesTable extends Model
     public function updateRoles($params, $id)
     {
         $data = $params->all();
+        $user_name = session('name');
+        $commonservice = new CommonService();
         if ($params->input('eroleName') != null && trim($params->input('eroleName')) != '') {
             $response = DB::table('roles')
                 ->where('role_id', '=', base64_decode($id))
@@ -70,6 +76,8 @@ class RolesTable extends Model
                         'role_status' => $data['erolesStatus'],
                     ]
                 );
+            $commonservice->eventLog('update-role-request', $user_name . ' has updated the role information for ' . $data['eroleName'] . ' Name', 'role',session('userId'));
+
         }
         return 1;
     }

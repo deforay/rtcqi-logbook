@@ -40,15 +40,7 @@ class FacilityTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-facility-request',
-                    'action' => $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name',
-                    'resource' => 'facility',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-facility-request', $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name', 'facility',session('userId'));
         }
 
         return $id;
@@ -118,15 +110,7 @@ class FacilityTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'update-facility-request',
-                    'action' => $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name',
-                    'resource' => 'facility',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('update-facility-request', $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name', 'facility',session('userId'));
         }
         return $response;
     }

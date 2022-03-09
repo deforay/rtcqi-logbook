@@ -45,15 +45,7 @@ class UserTable extends Model
                     ]
                 );
             }
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-user-request',
-                    'action' => $user_name . ' added user ' . $data['firstName'] . ' User',
-                    'resource' => 'user',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',session('userId'));
         }
 
         return $id;
@@ -120,15 +112,7 @@ class UserTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'update-user-request',
-                    'action' => $user_name . ' has updated the user information for - ' . $data['firstName'],
-                    'resource' => 'user',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',session('userId'));
         }
         DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
 
@@ -167,15 +151,7 @@ class UserTable extends Model
                     session(['userId' => $result[0]['user_id']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
-                    $userTracking = DB::table('track')->insertGetId(
-                        [
-                            'event_type' => 'login',
-                            'action' => $result[0]['first_name'] . ' logged in',
-                            'resource' => 'user',
-                            'date_time' => $commonservice->getDateTime(),
-                            'ip_address' => request()->ip(),
-                        ]
-                    );
+                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$result[0]['user_id']);
                 } else {
                     return 2;
                 }
@@ -218,15 +194,7 @@ class UserTable extends Model
                             'updated_on' => $commonservice->getDateTime()
                         )
                     );
-                $userTracking = DB::table('track')->insertGetId(
-                    [
-                        'event_type' => 'update-user-profile-request',
-                        'action' => $user_name . ' has updated the user profile information',
-                        'resource' => 'user-profile',
-                        'date_time' => $commonservice->getDateTime(),
-                        'ip_address' => request()->ip(),
-                    ]
-                );
+                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',session('userId'));
             }
         }
         return $response;
@@ -253,15 +221,7 @@ class UserTable extends Model
                                 'password' => $newPassword
                             ]
                         );
-                    $userTracking = DB::table('track')->insertGetId(
-                        [
-                            'event_type' => 'change-password-request',
-                            'action' => $user_name . ' has changed the password information',
-                            'resource' => 'change-password',
-                            'date_time' => $commonservice->getDateTime(),
-                            'ip_address' => request()->ip(),
-                        ]
-                    );
+                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',session('userId'));
                     return $response;
                 }
                 // $commonservice = new CommonService();

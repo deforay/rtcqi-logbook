@@ -25,15 +25,7 @@ class DistrictTable extends Model
                     'province_id' => $data['provinceId'],
                 ]
             );
-            $userTracking = DB::table('track')->insertGetId(
-                [
-                    'event_type' => 'add-district-request',
-                    'action' => $user_name . ' has added the district information for ' . $data['districtName'] . ' Name',
-                    'resource' => 'district',
-                    'date_time' => $commonservice->getDateTime(),
-                    'ip_address' => request()->ip(),
-                ]
-            );
+            $commonservice->eventLog('add-district-request', $user_name . ' has added the district information for ' . $data['districtName'] . ' Name', 'district',session('userId'));
         }
 
         return $id;
@@ -74,15 +66,7 @@ class DistrictTable extends Model
             ->update(
                 $upData
             );
-        $userTracking = DB::table('track')->insertGetId(
-            [
-                'event_type' => 'update-district-request',
-                'action' => $user_name . ' has updated the district information for ' . $data['districtName'] . ' Name',
-                'resource' => 'district',
-                'date_time' => $commonservice->getDateTime(),
-                'ip_address' => request()->ip(),
-            ]
-        );
+        $commonservice->eventLog('update-district-request', $user_name . ' has updated the district information for ' . $data['districtName'] . ' Name', 'district',session('userId'));
         return $response;
     }
 
