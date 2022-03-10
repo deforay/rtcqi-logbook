@@ -88,7 +88,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     <h5>Date Range <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
