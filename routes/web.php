@@ -193,3 +193,9 @@ Route::post('/getRole', 'Roles\RolesController@getRole');
 Route::get('/roles/edit/{id}', 'Roles\RolesController@edit');
 Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');
 
+
+//Audit Trail
+Route::get('/auditTrail', 'AuditTrail\AuditTrailController@index')->name('auditTrail.index');
+Route::post('/getAllAuditData', 'AuditTrail\AuditTrailController@getAllAuditData');
+
+

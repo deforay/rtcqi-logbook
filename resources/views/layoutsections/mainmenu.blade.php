@@ -40,6 +40,8 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 		$manage .= '<li id="li-allowedtestkit"><a class="dropdown-item" data-toggle="dropdown" href="/allowedtestkit/">Allowed Test kits</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['index'] == "allow"))
 		$manage .= '<li id="li-roles"><a class="dropdown-item" data-toggle="dropdown" href="/roles/">Roles</a></li>';
+	if (isset($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index']) && ($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index'] == "allow"))
+		$manage .= '<li id="li-roles"><a class="dropdown-item" data-toggle="dropdown" href="/auditTrail/">Audit Trail</a></li>';
 	$manage .= '</ul></li>';
 }
 $test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">Audits</span></a>

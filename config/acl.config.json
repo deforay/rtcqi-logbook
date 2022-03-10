@@ -5,6 +5,9 @@
             "add": "allow",
             "edit": "allow"
         },
+        "App\\Http\\Controllers\\AuditTrail\\AuditTrailController": {
+            "index": "allow"
+        },
         "App\\Http\\Controllers\\Dashboard\\DashboardController": {
             "index": "allow"
         },
