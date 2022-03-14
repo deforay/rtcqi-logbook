@@ -244,7 +244,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                     <fieldset>
                                                         <h5>Page No.</h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" value="{{$list->page_no}}" id="pageNO{{$z}}" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No">
+                                                            <input type="number" min="0" value="{{$list->page_no}}" id="pageNO{{$z}}" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos('{{$z}}')">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -558,7 +558,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 					<fieldset>\
 						<h5>Page No.</h5>\
 						<div class="form-group">\
-							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" >\
+							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos(\'' + rowCount + '\')" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -733,6 +733,25 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
     function delete_row(val) {
         if (val != 0) {
             $("#test_details" + val).remove();
+        }
+    }
+
+    function checkExistPageNos(rowId) {
+        var itemId = document.getElementById("pageNO" + rowId).value;
+        var itemCount = document.getElementsByName("pageNO[]");
+        var itemLength = itemCount.length - 1;
+        var k = 0;
+        for (i = 0; i <= itemLength; i++) {
+            if (itemId == itemCount[i].value) {
+                k++;
+            }
+        }
+        if (k > 1) {
+            alert("Page No. "+ itemId +" has already been added for this audit");
+            $("#pageNO" + rowId).val('');
+            $("#pageNO" + rowId).trigger('change');
+        } else {
+            // Do something
         }
     }
 
