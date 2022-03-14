@@ -331,9 +331,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                         @endif
                                                         <div class="form-group">
                                                             @if($j == 1)
-                                                            <input type="text" id="lotNO{{$j}}" value="{{$list->$lot_no}}" class="form-control isRequired " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
+                                                            <input type="text" id="lotNO{{$z}}{{$j}}" value="{{$list->$lot_no}}" class="form-control isRequired " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
                                                             @else
-                                                            <input type="text" id="lotNO{{$j}}" value="{{$list->$lot_no}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
+                                                            <input type="text" id="lotNO{{$z}}{{$j}}" value="{{$list->$lot_no}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}">
                                                             @endif
                                                         </div>
                                                         </td>
@@ -346,8 +346,12 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
-                                                                <input type="text" id="expiryDate{{$j}}" value="{{$expiryDate}}" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}">
-                                                            </div>
+                                                            @if($j == 1)
+                                                                <input type="text" id="expiryDate{{$z}}{{$j}}" value="{{$expiryDate}}" class="form-control isRequired dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}">
+                                                            @else
+                                                                <input type="text" id="expiryDate{{$z}}{{$j}}" value="{{$expiryDate}}" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate{{$j}}[]" title="Please Enter Expiry Date{{$j}}">
+                                                            @endif
+                                                        </div>
                                                         </td>
                                                         @endfor
                                                 </tr>
@@ -626,14 +630,14 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 							<h5>Lot No. ' + j + ' \
 							</h5>\
 							<div class="form-group">\
-								<input type="text" id="lotNO' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO' + j + '[]" title="Please Enter Lot No.' + j + '" >\
+								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO' + j + '[]" title="Please Enter Lot No.' + j + '" >\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\
 							<h5>Expiry Date ' + j + '\
 							</h5>\
 							<div class="form-group">\
-								<input type="date" id="expiryDate' + j + '" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" >\
+								<input type="text" id="expiryDate' + rowCount + '' + j + '" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" >\
 							</div>\
 					</td>';
         }
@@ -712,6 +716,18 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             format: 'dd-M-yyyy',
             autoclose: true,
         });
+        let defaultRow = 0;
+        let defaultTestkit = $(".selectTestKits").length;
+        for (var headingNo = 1; headingNo <= defaultTestkit; headingNo++) {
+            let tkBlock1 = $(`#testkitId${headingNo}_${defaultRow}`).val();
+            let lotNoBlock1 = $(`#lotNO${defaultRow}${headingNo}`).val();
+            let expiryDateBlock1 = $(`#expiryDate${defaultRow}${headingNo}`).val();
+            let lotNoBlock2 = $(`#lotNO${rowCount}${headingNo}`).val(lotNoBlock1);
+            let expiryDateBlock2 = $(`#expiryDate${rowCount}${headingNo}`).val(expiryDateBlock1);
+            let tkBlock2 = $(`#testkitId${headingNo}_${rowCount}`).val(tkBlock1);
+            let optionSelected = ($(`#testkitId${headingNo}_${defaultRow}`).val() && $(`#testkitId${headingNo}_${defaultRow}`).find(":selected").text()) || `Test Kit ${headingNo}`;
+            $(`#testKitHeading${headingNo}_${rowCount}`).html(optionSelected);
+        }
     }
 
     function delete_row(val) {
