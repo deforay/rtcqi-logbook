@@ -20,7 +20,7 @@ class MonthlyReportController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllMonthlyReport');        
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata');        
        
     }
     //View MonthlyReport main screen

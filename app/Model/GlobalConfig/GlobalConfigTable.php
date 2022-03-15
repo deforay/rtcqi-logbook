@@ -164,7 +164,7 @@ class GlobalConfigTable extends Model
                 }
             }
         }
-        $commonservice->eventLog('update-global-config-request', $user_name . ' has updated the global config information', 'global-config',session('userId'));
+        $commonservice->eventLog('update-global-config-request', $user_name . ' has updated the global config information', 'global-config',$id=null);
         return 1;
     }
 

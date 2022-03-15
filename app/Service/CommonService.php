@@ -248,7 +248,8 @@ class CommonService
             'event_type' => $event_type,
             'action' => $action,
             'resource' => $resource,
-            'user_id' => $id,
+            'user_id' => session('userId'),
+            'action_id' => $id,
             'date_time' => date('Y-m-d H:i:s'),
             'ip_address' => request()->ip()
         );

@@ -25,7 +25,7 @@ class SiteTypeTable extends Model
                 'site_type_status' => $data['siteTypeStatus'],
                 ]
             );
-            $commonservice->eventLog('add-site-type-request', $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',session('userId'));
+            $commonservice->eventLog('add-site-type-request', $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',$id=null);
         }
 
         return $id;
@@ -74,7 +74,7 @@ class SiteTypeTable extends Model
                 ->update(
                         $upData
                     );
-            $commonservice->eventLog('update-site-type-request', $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',session('userId'));
+            $commonservice->eventLog('update-site-type-request', $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',$id=null);
         return $response;
     }
 

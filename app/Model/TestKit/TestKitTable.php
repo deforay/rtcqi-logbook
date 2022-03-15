@@ -35,7 +35,7 @@ class TestKitTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $commonservice->eventLog('add-test-kit-request', $user_name . ' has added the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',session('userId'));
+            $commonservice->eventLog('add-test-kit-request', $user_name . ' has added the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',$id=null);
         }
 
         return $id;
@@ -101,7 +101,7 @@ class TestKitTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-test-kit-request', $user_name . ' has updated the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',session('userId'));
+            $commonservice->eventLog('update-test-kit-request', $user_name . ' has updated the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',$id=null);
         }
         return $response;
     }

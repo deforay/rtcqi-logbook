@@ -16,7 +16,7 @@ class TestSiteController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllTestSite');        
+        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince');        
        
     }
     //View TestSite main screen
