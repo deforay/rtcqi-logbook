@@ -106,7 +106,7 @@ class MonthlyReportTable extends Model
                     $insMonthlyArr
                 );
             }
-            $commonservice->eventLog('add-monthly-report-request', $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report',session('userId'));
+            $commonservice->eventLog('add-monthly-report-request', $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report',$id);
         }
 
         return $id;
@@ -313,7 +313,7 @@ class MonthlyReportTable extends Model
                 );
             }
         }
-        $commonservice->eventLog('update-monthly-report-request', $user_name . ' has updated the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report',session('userId'));
+        $commonservice->eventLog('update-monthly-report-request', $user_name . ' has updated the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report',base64_decode($id));
         return 1;
     }
 
@@ -1275,6 +1275,7 @@ class MonthlyReportTable extends Model
                                             'tester_name' => $tester_name,
                                             'latitude' => $latitude,
                                             'longitude' => $longitude,
+                                            'file_name' => $fileName,
                                         ]
                                     );
                                 }
@@ -1343,7 +1344,7 @@ class MonthlyReportTable extends Model
                     $rowCnt++;
                 }
                 if ($cnt > 0) {
-                    $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report',session('userId'));
+                    $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report',$mr_id);
                 }
                 DB::commit();
                 $rslt = $cnt . " rows Updated";
@@ -1721,41 +1722,41 @@ class MonthlyReportTable extends Model
         }
         $user_name = session('name');
         $commonservice = new CommonService();
-        $commonservice->eventLog('download-sample-monthly-excel-sheet', $user_name . ' has downloaded the sample monthly excel sheet for ' . $arr['no_of_test'] . '', 'monthly-report',session('userId'));
+        $commonservice->eventLog('download-sample-monthly-excel-sheet', $user_name . ' has downloaded the sample monthly excel sheet for ' . $arr['no_of_test'] . '', 'monthly-report',$id=null);
     }
 
     public function trendReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $commonservice->eventLog('export-trend-report', $user_name . ' has exported the trend report', 'trend-report',session('userId'));
+        $commonservice->eventLog('export-trend-report', $user_name . ' has exported the trend report', 'trend-report',$id=null);
     }
 
     public function logBookReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $commonservice->eventLog('export-logbook-report', $user_name . ' has exported the logbook report', 'logbook-report',session('userId'));
+        $commonservice->eventLog('export-logbook-report', $user_name . ' has exported the logbook report', 'logbook-report',$id=null);
     }
 
     public function testKitReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $commonservice->eventLog('export-testkit-report', $user_name . ' has exported the testkit report', 'test-kit-report',session('userId'));
+        $commonservice->eventLog('export-testkit-report', $user_name . ' has exported the testkit report', 'test-kit-report',$id=null);
     }
 
     public function invalidReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $commonservice->eventLog('export-invalid-results-report', $user_name . ' has exported the invalid results report', 'invalid-results-report',session('userId'));
+        $commonservice->eventLog('export-invalid-results-report', $user_name . ' has exported the invalid results report', 'invalid-results-report',$id=null);
     }
 
     public function customReportTrackTable()
     {
         $user_name = session('name');
         $commonservice = new CommonService();
-        $commonservice->eventLog('export-custom-report', $user_name . ' has exported the custom report', 'custom-report',session('userId'));
+        $commonservice->eventLog('export-custom-report', $user_name . ' has exported the custom report', 'custom-report',$id=null);
     }
 }

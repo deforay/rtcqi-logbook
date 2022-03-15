@@ -38,7 +38,7 @@ class TestSiteTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $commonservice->eventLog('add-test-site-request', $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name', 'test-site',session('userId'));
+            $commonservice->eventLog('add-test-site-request', $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name', 'test-site',$id=null);
         }
 
         return $id;
@@ -110,7 +110,7 @@ class TestSiteTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-test-site-request', $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name', 'test-site',session('userId'));
+            $commonservice->eventLog('update-test-site-request', $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name', 'test-site',$id=null);
         }
         return $response;
     }

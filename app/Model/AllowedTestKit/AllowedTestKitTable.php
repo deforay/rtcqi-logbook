@@ -32,7 +32,7 @@ class AllowedTestKitTable extends Model
                     ]
                 );
             }
-            $commonservice->eventLog('add-allowed-testkits-request', $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',session('userId'));
+            $commonservice->eventLog('add-allowed-testkits-request', $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$id=null);
         }
         return $id;
     }
@@ -76,7 +76,7 @@ class AllowedTestKitTable extends Model
                 ]
             );
         }
-        $commonservice->eventLog('update-allowed-testkits-request', $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',session('userId'));
+        $commonservice->eventLog('update-allowed-testkits-request', $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$id=null);
         return $id;
     }
 

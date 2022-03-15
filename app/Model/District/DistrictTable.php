@@ -25,7 +25,7 @@ class DistrictTable extends Model
                     'province_id' => $data['provinceId'],
                 ]
             );
-            $commonservice->eventLog('add-district-request', $user_name . ' has added the district information for ' . $data['districtName'] . ' Name', 'district',session('userId'));
+            $commonservice->eventLog('add-district-request', $user_name . ' has added the district information for ' . $data['districtName'] . ' Name', 'district',$id=null);
         }
 
         return $id;
@@ -66,7 +66,7 @@ class DistrictTable extends Model
             ->update(
                 $upData
             );
-        $commonservice->eventLog('update-district-request', $user_name . ' has updated the district information for ' . $data['districtName'] . ' Name', 'district',session('userId'));
+        $commonservice->eventLog('update-district-request', $user_name . ' has updated the district information for ' . $data['districtName'] . ' Name', 'district',$id=null);
         return $response;
     }
 

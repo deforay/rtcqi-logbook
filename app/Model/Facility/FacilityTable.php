@@ -40,7 +40,7 @@ class FacilityTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $commonservice->eventLog('add-facility-request', $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name', 'facility',session('userId'));
+            $commonservice->eventLog('add-facility-request', $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name', 'facility',$id=null);
         }
 
         return $id;
@@ -110,7 +110,7 @@ class FacilityTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-facility-request', $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name', 'facility',session('userId'));
+            $commonservice->eventLog('update-facility-request', $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name', 'facility',$id=null);
         }
         return $response;
     }

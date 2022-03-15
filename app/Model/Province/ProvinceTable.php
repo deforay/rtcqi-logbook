@@ -25,7 +25,7 @@ class ProvinceTable extends Model
                 'province_status' => $data['provinceStatus'],
                 ]
             );
-            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province',session('userId'));
+            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province',$id=null);
         }
 
         return $id;
@@ -74,7 +74,7 @@ class ProvinceTable extends Model
                 ->update(
                         $upData
                     );
-            $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province',session('userId'));
+            $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province',$id=null);
         return $response;
     }
 

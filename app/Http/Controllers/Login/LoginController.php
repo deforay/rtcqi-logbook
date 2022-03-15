@@ -40,7 +40,7 @@ class LoginController extends Controller
     {
         $commonservice = new CommonService();
         if ($request->isMethod('post') && session('login') == true) {
-            $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user',session('userId'));
+            $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user',$id=null);
             $request->session()->flush();
             $request->session()->regenerate();
             Session::flush(); 

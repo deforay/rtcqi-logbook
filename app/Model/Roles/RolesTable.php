@@ -27,7 +27,7 @@ class RolesTable extends Model
                     'role_status' => $data['rolesStatus'],
                 ]
             );
-            $commonservice->eventLog('add-role-request', $user_name . ' has added the role information for ' . $data['roleName'] . ' Name', 'role',session('userId'));
+            $commonservice->eventLog('add-role-request', $user_name . ' has added the role information for ' . $data['roleName'] . ' Name', 'role',$id=null);
 
         }
         return $id;
@@ -76,7 +76,7 @@ class RolesTable extends Model
                         'role_status' => $data['erolesStatus'],
                     ]
                 );
-            $commonservice->eventLog('update-role-request', $user_name . ' has updated the role information for ' . $data['eroleName'] . ' Name', 'role',session('userId'));
+            $commonservice->eventLog('update-role-request', $user_name . ' has updated the role information for ' . $data['eroleName'] . ' Name', 'role',$id=null);
 
         }
         return 1;

@@ -45,7 +45,7 @@ class UserTable extends Model
                     ]
                 );
             }
-             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',session('userId'));
+             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$id=null);
         }
 
         return $id;
@@ -112,7 +112,7 @@ class UserTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',session('userId'));
+                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$id=null);
         }
         DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
 
@@ -151,7 +151,7 @@ class UserTable extends Model
                     session(['userId' => $result[0]['user_id']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
-                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$result[0]['user_id']);
+                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$id=null);
                 } else {
                     return 2;
                 }
@@ -194,7 +194,7 @@ class UserTable extends Model
                             'updated_on' => $commonservice->getDateTime()
                         )
                     );
-                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',session('userId'));
+                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',$id=null);
             }
         }
         return $response;
@@ -221,7 +221,7 @@ class UserTable extends Model
                                 'password' => $newPassword
                             ]
                         );
-                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',session('userId'));
+                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',$id=null);
                     return $response;
                 }
                 // $commonservice = new CommonService();
