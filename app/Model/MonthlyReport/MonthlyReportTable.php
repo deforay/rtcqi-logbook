@@ -37,7 +37,7 @@ class MonthlyReportTable extends Model
         if ($request->input('provinceId') != null && trim($request->input('provinceId')) != '') {
             $id = DB::table('monthly_reports')->insertGetId(
                 [
-                    'provincesss_id' => $data['provinceId'],
+                    'province_id' => $data['provinceId'],
                     'site_unique_id' => $data['siteUniqueId'],
                     'ts_id' => $data['testsiteId'],
                     'st_id' => $data['sitetypeId'],
@@ -134,7 +134,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.mr_id', DB::raw('count(monthly_reports_pages.page_no) as page_no'), 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', 'monthly_reports.name_of_data_collector', 'monthly_reports.book_no', 'monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name', DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
@@ -166,7 +166,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.mr_id', DB::raw('count(monthly_reports_pages.page_no) as page_no'), 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', 'monthly_reports.name_of_data_collector', 'monthly_reports.book_no', 'monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name', DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->groupBy('monthly_reports.mr_id');
@@ -210,7 +210,7 @@ class MonthlyReportTable extends Model
 
         $id = base64_decode($id);
         $data = DB::table('monthly_reports')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->where('monthly_reports.mr_id', '=', $id)
@@ -236,7 +236,7 @@ class MonthlyReportTable extends Model
         if (isset($data['isRecency']))
             $recency = $data['isRecency'];
         $upData = array(
-            'provincesss_id' => $data['provinceId'],
+            'province_id' => $data['provinceId'],
             'site_unique_id' => $data['siteUniqueId'],
             'ts_id' => $data['testsiteId'],
             'st_id' => $data['sitetypeId'],
@@ -348,7 +348,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
@@ -419,7 +419,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
@@ -520,7 +520,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
@@ -563,7 +563,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
@@ -667,7 +667,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
@@ -758,7 +758,7 @@ class MonthlyReportTable extends Model
             ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
@@ -882,7 +882,7 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->where('users_testsite_map.user_id', '=', $user_id);
 
@@ -955,7 +955,7 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id');
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
@@ -1057,8 +1057,41 @@ class MonthlyReportTable extends Model
                 foreach ($array[0] as $row) {
                     if ($rowCnt > 1) {
                         if ($row[0] != '') {
-                            // print_r($row[0]);die;
-                            // dd($row);
+                            $reporting_date = '';
+                            if(is_numeric($row[12])) {
+                                $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('M-Y');
+                            }
+                            else if(is_string($row[12])) {
+                                $reporting_date = date('M-Y', strtotime($row[12]));
+                            }
+                            $dateOfCollection = '';
+                            if(is_numeric($row[11])) {
+                                $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
+                            }
+                            else if(is_string($row[11])) {
+                                $dateOfCollection = date('Y-m-d', strtotime($row[11]));
+                            }
+                            $startDate = '';
+                            if(is_numeric($row[16])) {
+                                $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                            }
+                            else if(is_string($row[16])) {
+                                $startDate = date('Y-m-d', strtotime($row[16]));
+                            }
+                            $endDate = '';
+                            if(is_numeric($row[17])) {
+                                $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
+                            }
+                            else if(is_string($row[17])) {
+                                $endDate = date('Y-m-d', strtotime($row[17]));
+                            }
+                            $expiryDate1 = '';
+                            if(is_numeric($row[20])) {
+                                $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
+                            }
+                            else if(is_string($row[20])) {
+                                $expiryDate1 = date('Y-m-d', strtotime($row[20]));
+                            }
                             $test_site_name = $row[0];
                             $site_type = $row[1];
                             $facility = $row[2];
@@ -1070,13 +1103,13 @@ class MonthlyReportTable extends Model
                             $is_recency = $row[8];
                             $contact_no = $row[9];
                             $algo_type = $row[10];
-                            $date_of_collection = date('Y-m-d', strtotime($row[11]));
-                            $report_months = date('Y-m-d', strtotime($row[12]));
+                            $date_of_collection = $dateOfCollection;
+                            $report_months = $reporting_date;
                             $book_no = $row[13];
                             $name_of_collector = $row[14];
                             $page_no = $row[15];
-                            $start_date = date('Y-m-d', strtotime($row[16]));
-                            $end_date = date('Y-m-d', strtotime($row[17]));
+                            $start_date = $startDate;
+                            $end_date = $endDate;
                             if ($arr['no_of_test'] >= 1) {
                                 $testkitData = DB::table('test_kits')
                                     ->where('test_kit_name', '=', trim($row[18]))
@@ -1093,12 +1126,19 @@ class MonthlyReportTable extends Model
                                 }
                                 $test_kit1 = $testkitId;
                                 $lot_no1 = $row[19];
-                                $expiry_date1 = date('Y-m-d', strtotime($row[20]));
+                                $expiry_date1 = $expiryDate1;
                                 $testkit1_reactive = $row[21];
                                 $testkit1_nonreactive = $row[22];
                                 $testkit1_invalid = $row[23];
                             }
                             if ($arr['no_of_test'] >= 2) {
+                                $expiryDate2 = '';
+                                if(is_numeric($row[26])) {
+                                $expiryDate2 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[26])->format('Y-m-d');
+                                }
+                                else if(is_string($row[26])) {
+                                $expiryDate2 = date('Y-m-d', strtotime($row[26]));
+                                }
                                 $testkitData = DB::table('test_kits')
                                     ->where('test_kit_name', '=', trim($row[24]))
                                     ->get();
@@ -1114,12 +1154,19 @@ class MonthlyReportTable extends Model
                                 }
                                 $test_kit2 = $testkitId;
                                 $lot_no2 = $row[24];
-                                $expiry_date2 = date('Y-m-d', strtotime($row[26]));
+                                $expiry_date2 = $expiryDate2;
                                 $testkit2_reactive = $row[27];
                                 $testkit2_nonreactive = $row[28];
                                 $testkit2_invalid = $row[29];
                             }
                             if ($arr['no_of_test'] >= 3) {
+                                $expiryDate3 = '';
+                                if(is_numeric($row[32])) {
+                                $expiryDate3 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[32])->format('Y-m-d');
+                                }
+                                else if(is_string($row[32])) {
+                                $expiryDate3 = date('Y-m-d', strtotime($row[32]));
+                                }
                                 $testkitData = DB::table('test_kits')
                                     ->where('test_kit_name', '=', trim($row[30]))
                                     ->get();
@@ -1135,12 +1182,19 @@ class MonthlyReportTable extends Model
                                 }
                                 $test_kit3 = $testkitId;
                                 $lot_no3 = $row[31];
-                                $expiry_date3 = date('Y-m-d', strtotime($row[32]));
+                                $expiry_date3 = $expiryDate3;
                                 $testkit3_reactive = $row[33];
                                 $testkit3_nonreactive = $row[34];
                                 $testkit3_invalid = $row[35];
                             }
                             if ($arr['no_of_test'] >= 4) {
+                                $expiryDate4 = '';
+                                if(is_numeric($row[38])) {
+                                $expiryDate4 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[38])->format('Y-m-d');
+                                }
+                                else if(is_string($row[38])) {
+                                $expiryDate4 = date('Y-m-d', strtotime($row[38]));
+                                }
                                 $testkitData = DB::table('test_kits')
                                     ->where('test_kit_name', '=', trim($row[36]))
                                     ->get();
@@ -1156,7 +1210,7 @@ class MonthlyReportTable extends Model
                                 }
                                 $test_kit4 = $testkitId;
                                 $lot_no4 = $row[37];
-                                $expiry_date4 = date('Y-m-d', strtotime($row[38]));
+                                $expiry_date4 = $expiryDate4;
                                 $testkit4_reactive = $row[39];
                                 $testkit4_nonreactive = $row[40];
                                 $testkit4_invalid = $row[41];
@@ -1395,7 +1449,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         } elseif ($arr['no_of_test'] == 2) {
@@ -1408,7 +1462,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         } elseif ($arr['no_of_test'] == 3) {
@@ -1422,7 +1476,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         } else {
@@ -1437,7 +1491,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         }
@@ -1475,7 +1529,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id');
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
         } elseif ($arr['no_of_test'] == 2) {
             $query = DB::table('monthly_reports_pages')
                 ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
@@ -1486,7 +1540,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id');
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
         } elseif ($arr['no_of_test'] == 3) {
             $query = DB::table('monthly_reports_pages')
                 ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
@@ -1498,7 +1552,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id');
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
         } else {
             $query = DB::table('monthly_reports_pages')
                 ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name', 'tk4.test_kit_name as testKit_4_name')
@@ -1511,7 +1565,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->join('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id');
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
         }
 
         if (trim($start_date) != "" && trim($end_date) != "") {
@@ -1595,29 +1649,29 @@ class MonthlyReportTable extends Model
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
             ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
-            ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.provincesss_id')
+            ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.province_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->where('users_testsite_map.user_id', $user_id);
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
-            $query = $query->where('monthly_reports.provincesss_id', '=', $data['provinceId']);
+            $query = $query->where('monthly_reports.province_id', '=', $data['provinceId']);
         }
         $salesResult = $query->get();
         if(count($salesResult) == 0) {
             $query = DB::table('monthly_reports')
             ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
-            ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.provincesss_id')
-            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.provincesss_id');
+            ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.province_id')
+            ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
-            $query = $query->where('monthly_reports.provincesss_id', '=', $data['provinceId']);
+            $query = $query->where('monthly_reports.province_id', '=', $data['provinceId']);
         }
         $salesResult = $query->get();
         }
