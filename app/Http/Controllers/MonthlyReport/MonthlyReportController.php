@@ -12,6 +12,7 @@ use App\Service\TestKitService;
 use App\Service\TestSiteService;
 use App\Service\AllowedTestKitService;
 use App\Service\GlobalConfigService;
+use App\Service\AuditTrailService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -114,6 +115,8 @@ class MonthlyReportController extends Controller
             $globalValue = $GlobalConfigService->getGlobalConfigValue('no_of_test');
             $KitTypeService = new TestKitService();
             $kittype = $KitTypeService->getAllActiveTestKit();
+            $AuditTrailService = new AuditTrailService();
+            $auditData = $AuditTrailService->getAllMonthlyAuditReportById($id);
             $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
             $glob = $GlobalConfigService->getAllGlobalConfig();
             $arr = array();
@@ -121,7 +124,7 @@ class MonthlyReportController extends Controller
             for ($i = 0; $i < sizeof($glob); $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype));
+            return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype,'auditData'=>$auditData));
         }
     }
 

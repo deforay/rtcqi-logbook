@@ -44,4 +44,13 @@ class AuditTrailTable extends Model
         $salesResult = $query->get();
         return $salesResult;
     }
+
+    // Fetch All MonthlyReport Audit
+    public function fetchMonthlyAuditReportById($id)
+    {
+        $data = DB::table('track')
+            ->where('action_id','=',base64_decode($id))
+            ->get();
+        return $data;
+    }
 }
