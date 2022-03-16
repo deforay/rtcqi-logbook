@@ -448,7 +448,15 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </button>
                                     </div>
                                 </form>
-                                
+                                @if($result[0]->file_name !='')
+                                <div class="content-header-right col-md-6 col-12 ">
+                                    <div class="dropdown float-md-left ml-1">
+                                        <a href="{{ url( '/uploads/' . $result[0]->file_name)  }}" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                                            <b><i class="ft-download icon-left"></i> Download Monthly Report Excel Sheet</b></a>
+            </div>
+
+        </div><br><br>
+        @endif
             @if(count($auditData)>0)
                                 <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
     <table class="table table-bordered " id="trendTable" style="width:100%;">
