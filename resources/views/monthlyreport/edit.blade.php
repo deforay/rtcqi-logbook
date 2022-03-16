@@ -7,10 +7,16 @@ use App\Service\CommonService;
 $common = new CommonService();
 $date_of_data_collection = $common->humanDateFormat($result[0]->date_of_data_collection);
 $reporting_month = ($result[0]->reporting_month);
+$path_name = public_path('uploads');
 // $reporting_month = 'Jun-2021';
 {{--  dd($result);  --}}
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 ?>
+<style>
+    .ml-1 {
+        margin-left: -0.75rem!important;
+    }
+</style>
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -442,6 +448,42 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </button>
                                     </div>
                                 </form>
+                                
+            @if(count($auditData)>0)
+                                <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
+    <table class="table table-bordered " id="trendTable" style="width:100%;">
+        <thead>
+
+            <tr>
+                <th>Event Type</th>
+                <th>Action</th>
+                <th>Resource</th>
+                <th>IP Address</th>
+                <th>Date Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($auditData as $row)
+            <?php 
+            $audit_date = date('d-M-Y h:i:s', strtotime($row->date_time));
+            ?>
+
+            <tr>
+                <td>{{$row->event_type}}</td>
+                <td>{{$row->action}}</td>
+                <td>{{$row->resource}}</td>
+                <td>{{$row->ip_address}}</td>
+                <td>{{$audit_date}}</td>
+            </tr>
+            @endforeach
+            @endif
+
+        </tbody>
+
+
+
+    </table>
+</div>
                             </div>
                         </div>
                     </div>

@@ -1255,7 +1255,7 @@ class MonthlyReportTable extends Model
                                 } else {
                                     $mr_id = DB::table('monthly_reports')->insertGetId(
                                         [
-                                            'provincesss_id' => $provinceId,
+                                            'province_id' => $provinceId,
                                             'site_unique_id' => $site_unique_id,
                                             'ts_id' => $testSiteId,
                                             'st_id' => $siteTypeId,

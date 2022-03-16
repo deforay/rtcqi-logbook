@@ -20,6 +20,13 @@ class AuditTrailService
         $result = $model->fetchAllAudit($params);
         return $result;
 	}
+	//Get All MonthlyAuditReportById
+	public function getAllMonthlyAuditReportById($id)
+    {
+		$model = new AuditTrailTable();
+        $result = $model->fetchMonthlyAuditReportById($id);
+        return $result;
+	}
 }
 
 ?>
