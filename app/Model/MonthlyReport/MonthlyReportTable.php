@@ -1153,7 +1153,7 @@ class MonthlyReportTable extends Model
                                     );
                                 }
                                 $test_kit2 = $testkitId;
-                                $lot_no2 = $row[24];
+                                $lot_no2 = $row[25];
                                 $expiry_date2 = $expiryDate2;
                                 $testkit2_reactive = $row[27];
                                 $testkit2_nonreactive = $row[28];
@@ -1330,6 +1330,8 @@ class MonthlyReportTable extends Model
                                             'latitude' => $latitude,
                                             'longitude' => $longitude,
                                             'file_name' => $fileName,
+                                            'last_modified_on' => $commonservice->getDateTime(),
+
                                         ]
                                     );
                                 }
