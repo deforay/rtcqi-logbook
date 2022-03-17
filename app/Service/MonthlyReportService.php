@@ -224,5 +224,12 @@ class MonthlyReportService
         $result = $model->customReportTrackTable();
         return $result;
 	}
+
+	public function getExistingReportingMonth($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchExistingReportingMonth($params);
+		return $result;
+	}
 	
 }

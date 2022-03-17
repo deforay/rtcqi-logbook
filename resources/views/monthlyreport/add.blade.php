@@ -215,7 +215,7 @@ $test = '';
                                                 <h5>Reporting Month <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="reportingMon" class="form-control isRequired month" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month">
+                                                    <input type="text" id="reportingMon" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -483,9 +483,6 @@ $test = '';
         $selectElement = $('#sitetypeId').prepend('<option selected></option>').select2({
             placeholder: "Select Site Type"
         });
-    });
-
-    $(document).ready(function() {
         $('.datepicker').datepicker({
             autoclose: true,
             format: 'dd-M-yyyy',
@@ -496,7 +493,7 @@ $test = '';
             todayHighlight: true,
             clearBtn: true,
         });
-        $('.month').datepicker({
+        $('#reportingMon').datepicker({
             autoclose: true,
             format: 'M-yyyy',
             changeMonth: true,
@@ -507,13 +504,51 @@ $test = '';
             // startDate:'today',
             todayHighlight: true,
             clearBtn: true,
-        });
+        })
+    .on('changeDate', checkExistingReportingMonth);
 
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
         });
-    });
+
+         // Site Name Change
+         $('#testsiteId').change(function() {
+            checkExistingReportingMonth();
+// Site id
+var id = $(this).val();
+// Empty the dropdown
+$('#provinceId').find('option').not(':first').remove();
+
+// AJAX request 
+$.ajax({
+    url: "{{url('/getProvince') }}/" + id,
+    type: 'get',
+    dataType: 'json',
+    success: function(response) {
+        if (response.length == 0) {
+            $("#siteUniqueId").val('');
+            $("#siteManager").val('');
+            $("#testername").val('');
+            $("#contactNo").val('');
+        } else {
+            $.each(response, function(key, value) {
+                $("#siteUniqueId").val(value.site_id);
+                $("#siteManager").val(value.site_manager);
+                $("#testername").val(value.tester_name);
+                $("#contactNo").val(value.contact_no);
+                if(value.province_id!=null) {
+                $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
+                }
+            });
+        }
+
+    }
+});
+});
+ });
+
+
     var date1 = new Date();
     var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 
@@ -814,43 +849,33 @@ $test = '';
         let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text()) || `Test Kit ${headingNo}`;
         $(`#testKitHeading${headingNo}_${rowNo}`).html(optionSelected);
     }
-    $(document).ready(function() {
-
-        // Site Name Change
-        $('#testsiteId').change(function() {
-
-            // Site id
-            var id = $(this).val();
-            // Empty the dropdown
-            $('#provinceId').find('option').not(':first').remove();
-
-            // AJAX request 
-            $.ajax({
-                url: "{{url('/getProvince') }}/" + id,
-                type: 'get',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.length == 0) {
-                        $("#siteUniqueId").val('');
-                        $("#siteManager").val('');
-                        $("#testername").val('');
-                        $("#contactNo").val('');
-                    } else {
-                        $.each(response, function(key, value) {
-                            $("#siteUniqueId").val(value.site_id);
-                            $("#siteManager").val(value.site_manager);
-                            $("#testername").val(value.tester_name);
-                            $("#contactNo").val(value.contact_no);
-                            if(value.province_id!=null) {
-                            $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
-                            }
-                        });
-                    }
-
+    function checkExistingReportingMonth() {
+        var reportingDate = document.getElementById("reportingMon").value;
+        var siteName= document.getElementById("testsiteId").value;
+        if(reportingDate!='')
+        {
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        });
-
-    });
+            $.ajax({
+                url: "{{ url('/getReportingMonth') }}",
+                method: 'post',
+                data: {
+                    reportingDate: reportingDate,
+                    siteName: siteName,
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result > 0)
+                    {
+                        alert("Reporting Period "+ reportingDate +" has already been added for this Site");
+                        $("#reportingMon").val('');
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection

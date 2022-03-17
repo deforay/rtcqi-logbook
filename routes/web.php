@@ -198,4 +198,4 @@ Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');
 Route::get('/auditTrail', 'AuditTrail\AuditTrailController@index')->name('auditTrail.index');
 Route::post('/getAllAuditData', 'AuditTrail\AuditTrailController@getAllAuditData');
 
-
+Route::post('/getReportingMonth', 'MonthlyReport\MonthlyReportController@getReportingMonth');

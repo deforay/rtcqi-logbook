@@ -15,6 +15,7 @@ class DistrictTable extends Model
     public function saveDistrict($request)
     {
         //to get all request values
+        $userId = null;
         $user_name = session('name');
         $commonservice = new CommonService();
         $data = $request->all();
@@ -25,7 +26,7 @@ class DistrictTable extends Model
                     'province_id' => $data['provinceId'],
                 ]
             );
-            $commonservice->eventLog('add-district-request', $user_name . ' has added the district information for ' . $data['districtName'] . ' Name', 'district',$id=null);
+            $commonservice->eventLog('add-district-request', $user_name . ' has added the district information for ' . $data['districtName'] . ' Name', 'district',$userId);
         }
 
         return $id;
@@ -54,6 +55,7 @@ class DistrictTable extends Model
     // Update particular District details
     public function updateDistrict($params, $id)
     {
+        $userId = null;
         $data = $params->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -66,7 +68,7 @@ class DistrictTable extends Model
             ->update(
                 $upData
             );
-        $commonservice->eventLog('update-district-request', $user_name . ' has updated the district information for ' . $data['districtName'] . ' Name', 'district',$id=null);
+        $commonservice->eventLog('update-district-request', $user_name . ' has updated the district information for ' . $data['districtName'] . ' Name', 'district',$userId);
         return $response;
     }
 

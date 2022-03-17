@@ -15,6 +15,7 @@ class TestSiteTable extends Model
     public function saveTestSite($request)
     {
         //to get all request values
+        $userId = null;
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -38,7 +39,7 @@ class TestSiteTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $commonservice->eventLog('add-test-site-request', $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name', 'test-site',$id=null);
+            $commonservice->eventLog('add-test-site-request', $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name', 'test-site',$userId);
         }
 
         return $id;
@@ -78,6 +79,7 @@ class TestSiteTable extends Model
     // Update particular TestSite details
     public function updateTestSite($params, $id)
     {
+        $userId = null;
         $user_name = session('name');
         $commonservice = new CommonService();
         $data = $params->all();
@@ -110,7 +112,7 @@ class TestSiteTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-test-site-request', $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name', 'test-site',$id=null);
+            $commonservice->eventLog('update-test-site-request', $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name', 'test-site',$userId);
         }
         return $response;
     }

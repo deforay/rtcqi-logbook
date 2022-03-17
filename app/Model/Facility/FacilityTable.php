@@ -15,6 +15,7 @@ class FacilityTable extends Model
     public function saveFacility($request)
     {
         //to get all request values
+        $userId = null;
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -40,7 +41,7 @@ class FacilityTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $commonservice->eventLog('add-facility-request', $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name', 'facility',$id=null);
+            $commonservice->eventLog('add-facility-request', $user_name . ' has added the facility information for ' . $data['facilityName'] . ' Name', 'facility',$userId);
         }
 
         return $id;
@@ -77,6 +78,7 @@ class FacilityTable extends Model
     // Update particular Facility details
     public function updateFacility($params, $id)
     {
+        $userId = null;
         $commonservice = new CommonService();
         $user_name = session('name');
         $data = $params->all();
@@ -110,7 +112,7 @@ class FacilityTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-facility-request', $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name', 'facility',$id=null);
+            $commonservice->eventLog('update-facility-request', $user_name . ' has updated the facility information for ' . $data['facilityName'] . ' Name', 'facility',$userId);
         }
         return $response;
     }

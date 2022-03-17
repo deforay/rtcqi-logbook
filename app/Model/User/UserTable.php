@@ -18,6 +18,7 @@ class UserTable extends Model
     public function saveUser($request)
     {
         //to get all request values
+        $userId = null;
         $data = $request->all();
         $user_name = session('name');
         // dd($data);die;
@@ -45,7 +46,7 @@ class UserTable extends Model
                     ]
                 );
             }
-             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$id=null);
+             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$userId);
         }
 
         return $id;
@@ -85,6 +86,7 @@ class UserTable extends Model
     public function updateUser($params, $id)
     {
         $commonservice = new CommonService();
+        $userId = null;
         $user_name = session('name');
         $data = $params->all();
         $user = array(
@@ -112,7 +114,7 @@ class UserTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$id=null);
+                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
         }
         DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
 
@@ -131,6 +133,7 @@ class UserTable extends Model
     public function validateLogin($params)
     {
         $config = '';
+        $userId = null;
         $data = $params->all();
         $commonservice = new CommonService();
         $result = json_decode(DB::table('users')
@@ -151,7 +154,7 @@ class UserTable extends Model
                     session(['userId' => $result[0]['user_id']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
-                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$id=null);
+                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
                 } else {
                     return 2;
                 }
@@ -170,6 +173,7 @@ class UserTable extends Model
     public function updateProfile($params, $id)
     {
         $commonservice = new CommonService();
+        $userId = null;
         $user_name = session('name');
         $data = $params->all();
         if ($params->input('firstName') != null && trim($params->input('firstName')) != '') {
@@ -194,7 +198,7 @@ class UserTable extends Model
                             'updated_on' => $commonservice->getDateTime()
                         )
                     );
-                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',$id=null);
+                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',$userId);
             }
         }
         return $response;
@@ -204,6 +208,7 @@ class UserTable extends Model
     public function updatePassword($params, $id)
     {
         $commonservice = new CommonService();
+        $userId = null;
         $user_name = session('name');
         $data = $params->all();
         $newPassword = Hash::make($data['newPassword']);
@@ -221,7 +226,7 @@ class UserTable extends Model
                                 'password' => $newPassword
                             ]
                         );
-                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',$id=null);
+                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',$userId);
                     return $response;
                 }
                 // $commonservice = new CommonService();

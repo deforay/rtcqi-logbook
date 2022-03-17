@@ -17,6 +17,7 @@ class AllowedTestKitTable extends Model
     public function saveAllowedTestKit($request)
     {
         //to get all request values
+        $userId = null;
         $id = 0;
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -32,7 +33,7 @@ class AllowedTestKitTable extends Model
                     ]
                 );
             }
-            $commonservice->eventLog('add-allowed-testkits-request', $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$id=null);
+            $commonservice->eventLog('add-allowed-testkits-request', $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$userId);
         }
         return $id;
     }
@@ -64,6 +65,7 @@ class AllowedTestKitTable extends Model
     // Update particular AllowedKitTest details
     public function updateAllowedTestKit($params, $id)
     {
+        $userId = null;
         $data = $params->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -76,7 +78,7 @@ class AllowedTestKitTable extends Model
                 ]
             );
         }
-        $commonservice->eventLog('update-allowed-testkits-request', $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$id=null);
+        $commonservice->eventLog('update-allowed-testkits-request', $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$userId);
         return $id;
     }
 
