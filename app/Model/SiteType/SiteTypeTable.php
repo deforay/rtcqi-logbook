@@ -15,6 +15,7 @@ class SiteTypeTable extends Model
     public function saveSiteType($request)
     {
         //to get all request values
+        $userId = null;
         $user_name = session('name');
         $data = $request->all();
         $commonservice = new CommonService();
@@ -25,7 +26,7 @@ class SiteTypeTable extends Model
                 'site_type_status' => $data['siteTypeStatus'],
                 ]
             );
-            $commonservice->eventLog('add-site-type-request', $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',$id=null);
+            $commonservice->eventLog('add-site-type-request', $user_name . ' has added the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',$userId);
         }
 
         return $id;
@@ -63,6 +64,7 @@ class SiteTypeTable extends Model
     public function updateSiteType($params,$id)
     {
         $commonservice = new CommonService();
+        $userId = null;
         $user_name = session('name');
         $data = $params->all();
             $upData = array(
@@ -74,7 +76,7 @@ class SiteTypeTable extends Model
                 ->update(
                         $upData
                     );
-            $commonservice->eventLog('update-site-type-request', $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',$id=null);
+            $commonservice->eventLog('update-site-type-request', $user_name . ' has updated the site type information for ' . $data['siteTypeName'] . ' Name', 'site-type',$userId);
         return $response;
     }
 

@@ -1815,4 +1815,13 @@ class MonthlyReportTable extends Model
         $commonservice = new CommonService();
         $commonservice->eventLog('export-custom-report', $user_name . ' has exported the custom report', 'custom-report',$id=null);
     }
+
+    public function fetchExistingReportingMonth($params)
+    {
+        $data = DB::table('monthly_reports')
+            ->where('reporting_month', '=', $params['reportingDate'])
+            ->where('ts_id', '=', $params['siteName'])
+            ->get();
+        return count($data);
+    }
 }

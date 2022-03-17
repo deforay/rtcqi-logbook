@@ -22,6 +22,7 @@ class GlobalConfigTable extends Model
     // Update particular GlobalConfig details
     public function updateGlobalConfig($params)
     {
+        $userId = null;
         $filePathName = '';
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -164,7 +165,7 @@ class GlobalConfigTable extends Model
                 }
             }
         }
-        $commonservice->eventLog('update-global-config-request', $user_name . ' has updated the global config information', 'global-config',$id=null);
+        $commonservice->eventLog('update-global-config-request', $user_name . ' has updated the global config information', 'global-config',$userId);
         return 1;
     }
 

@@ -15,6 +15,7 @@ class RolesTable extends Model
     public function saveRoles($request)
     {
         //to get all request values
+        $userId = null;
         $data = $request->all();
         $commonservice = new CommonService();
         $user_name = session('name');
@@ -27,7 +28,7 @@ class RolesTable extends Model
                     'role_status' => $data['rolesStatus'],
                 ]
             );
-            $commonservice->eventLog('add-role-request', $user_name . ' has added the role information for ' . $data['roleName'] . ' Name', 'role',$id=null);
+            $commonservice->eventLog('add-role-request', $user_name . ' has added the role information for ' . $data['roleName'] . ' Name', 'role',$userId);
 
         }
         return $id;
@@ -62,6 +63,7 @@ class RolesTable extends Model
     // Update particular roles details
     public function updateRoles($params, $id)
     {
+        $userId = null;
         $data = $params->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -76,7 +78,7 @@ class RolesTable extends Model
                         'role_status' => $data['erolesStatus'],
                     ]
                 );
-            $commonservice->eventLog('update-role-request', $user_name . ' has updated the role information for ' . $data['eroleName'] . ' Name', 'role',$id=null);
+            $commonservice->eventLog('update-role-request', $user_name . ' has updated the role information for ' . $data['eroleName'] . ' Name', 'role',$userId);
 
         }
         return 1;

@@ -15,6 +15,7 @@ class ProvinceTable extends Model
     public function saveProvince($request)
     {
         //to get all request values
+        $userId = null;
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -25,7 +26,8 @@ class ProvinceTable extends Model
                 'province_status' => $data['provinceStatus'],
                 ]
             );
-            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province',$id=null);
+        $userId = null;
+            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province',$userId);
         }
 
         return $id;
@@ -62,6 +64,7 @@ class ProvinceTable extends Model
      // Update particular Province details
     public function updateProvince($params,$id)
     {
+        $userId = null;
         $data = $params->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -74,7 +77,7 @@ class ProvinceTable extends Model
                 ->update(
                         $upData
                     );
-            $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province',$id=null);
+            $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province',$userId);
         return $response;
     }
 

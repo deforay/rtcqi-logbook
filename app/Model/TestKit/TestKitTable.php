@@ -15,6 +15,7 @@ class TestKitTable extends Model
     public function saveTestKit($request)
     {
         //to get all request values
+        $userId = null;
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -35,7 +36,7 @@ class TestKitTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            $commonservice->eventLog('add-test-kit-request', $user_name . ' has added the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',$id=null);
+            $commonservice->eventLog('add-test-kit-request', $user_name . ' has added the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',$userId);
         }
 
         return $id;
@@ -73,6 +74,7 @@ class TestKitTable extends Model
     public function updateTestKit($params, $id)
     {
         $commonservice = new CommonService();
+        $userId = null;
         $user_name = session('name');
         $data = $params->all();
         $expiry = $commonservice->dateFormat($data['kit_expiry_date']);
@@ -101,7 +103,7 @@ class TestKitTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-test-kit-request', $user_name . ' has updated the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',$id=null);
+            $commonservice->eventLog('update-test-kit-request', $user_name . ' has updated the test kit information for ' . $data['kit_name'] . ' Name', 'test-kit',$userId);
         }
         return $response;
     }
