@@ -859,6 +859,7 @@ $('#testsiteId').change(function() {
 });
 
 function checkExistingReportingMonth() {
+        var mr_id = <?php echo $result[0]->mr_id; ?>;
         var reportingDate = document.getElementById("reportingMon").value;
         var siteName= document.getElementById("testsiteId").value;
         if(reportingDate!='')
@@ -869,6 +870,18 @@ function checkExistingReportingMonth() {
                 }
             });
             $.ajax({
+                url: "{{ url('/getIdReportingMonth') }}",
+                method: 'post',
+                data: {
+                    mr_id:mr_id,
+                    reportingDate: reportingDate,
+                    siteName: siteName,
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result == 0)
+                    {
+                        $.ajax({
                 url: "{{ url('/getReportingMonth') }}",
                 method: 'post',
                 data: {
@@ -881,6 +894,9 @@ function checkExistingReportingMonth() {
                     {
                         alert("Reporting Period "+ reportingDate +" has already been added for this Site");
                         $("#reportingMon").val('');
+                    }
+                }
+            });
                     }
                 }
             });

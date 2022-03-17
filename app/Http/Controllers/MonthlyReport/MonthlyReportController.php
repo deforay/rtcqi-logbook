@@ -21,7 +21,7 @@ class MonthlyReportController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot');        
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth');        
        
     }
     //View MonthlyReport main screen
@@ -167,6 +167,12 @@ class MonthlyReportController extends Controller
     {
         $service = new MonthlyReportService();
         $data = $service->getExistingReportingMonth($request);
+        return $data;
+    }
+    public function getIdReportingMonth(Request $request)
+    {
+        $service = new MonthlyReportService();
+        $data = $service->getIdExistingReportingMonth($request);
         return $data;
     }
 }

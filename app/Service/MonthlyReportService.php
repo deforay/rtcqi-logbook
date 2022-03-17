@@ -231,5 +231,12 @@ class MonthlyReportService
 		$result = $model->fetchExistingReportingMonth($params);
 		return $result;
 	}
+
+	public function getIdExistingReportingMonth($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchIdExistingReportingMonth($params);
+		return $result;
+	}
 	
 }
