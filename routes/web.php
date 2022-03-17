@@ -199,3 +199,4 @@ Route::get('/auditTrail', 'AuditTrail\AuditTrailController@index')->name('auditT
 Route::post('/getAllAuditData', 'AuditTrail\AuditTrailController@getAllAuditData');
 
 Route::post('/getReportingMonth', 'MonthlyReport\MonthlyReportController@getReportingMonth');
+Route::post('/getIdReportingMonth', 'MonthlyReport\MonthlyReportController@getIdReportingMonth');
