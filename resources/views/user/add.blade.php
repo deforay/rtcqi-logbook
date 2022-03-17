@@ -124,10 +124,10 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Test Site Name<span class="mandatory">*</span>
+											<h5>Test Site Name
                                             </h5>
                                             <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please Select Test Site Name">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please Select Test Site Name">
                                                     @foreach($test as $row)
                                                     <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                     @endforeach

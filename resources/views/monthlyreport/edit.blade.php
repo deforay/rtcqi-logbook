@@ -220,7 +220,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 <h5>Reporting Month <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="reportingMon" value="{{$reporting_month}}" class="form-control isRequired month" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month">
+                                                    <input type="text" id="reportingMon" value="{{$reporting_month}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -528,7 +528,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             todayHighlight: true,
             clearBtn: true,
         });
-        $('.month').datepicker({
+        $('#reportingMon').datepicker({
             autoclose: true,
             format: 'M-yyyy',
             changeMonth: true,
@@ -539,7 +539,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             // startDate:'today',
             todayHighlight: true,
             clearBtn: true,
-        });
+        })
+    .on('changeDate', checkExistingReportingMonth);
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
@@ -822,7 +823,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 
 // Site Name Change
 $('#testsiteId').change(function() {
-
+    checkExistingReportingMonth();
     // Site id
     var id = $(this).val();
     // Empty the dropdown
@@ -856,5 +857,34 @@ $('#testsiteId').change(function() {
 });
 
 });
+
+function checkExistingReportingMonth() {
+        var reportingDate = document.getElementById("reportingMon").value;
+        var siteName= document.getElementById("testsiteId").value;
+        if(reportingDate!='')
+        {
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/getReportingMonth') }}",
+                method: 'post',
+                data: {
+                    reportingDate: reportingDate,
+                    siteName: siteName,
+                },
+                success: function(result){
+                    console.log(result)
+                    if (result > 0)
+                    {
+                        alert("Reporting Period "+ reportingDate +" has already been added for this Site");
+                        $("#reportingMon").val('');
+                    }
+                }
+            });
+        }
+    }
 </script>
 @endsection
