@@ -1,9 +1,3 @@
-<style>
-	.navbar {
-		padding: .1rem .1rem;
-	}
-</style>
-
 <?php
 
 use Illuminate\Support\Facades\Request;
@@ -21,8 +15,8 @@ if (isset($role['App\\Http\\Controllers\\Dashboard\\DashboardController']['index
 if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index']) && ($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\District\\DistrictController']['index']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['index']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Province\\ProvinceController']['index']) && ($role['App\\Http\\Controllers\\Province\\ProvinceController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\User\\UserController']['index']) && ($role['App\\Http\\Controllers\\User\\UserController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index']) && ($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index'] == "allow"))) {
 	$manage .= '<li class="dropdown nav-item" data-menu="dropdown"><a  id="manage" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-toggle-down"></i><span class="menu-title" >Manage</span></a>
                 <ul class="dropdown-menu">';
-	$manage .= '<li class="dropdown nav-item dropdown-item" data-menu="dropdown"><a id="accessControl" href="javascript:void(0)" data-toggle="dropdown"><span class="menu-title" style="color: #212529;">Access Control</span></a>';
-    $manage .= '<ul class="dropdown-menu">';
+	$manage .= '<li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><span data-i18n="Access Control">Access Control</span></a>
+	<ul class="dropdown-menu">';
 	if (isset($role['App\\Http\\Controllers\\User\\UserController']['index']) && ($role['App\\Http\\Controllers\\User\\UserController']['index'] == "allow"))
 	$manage .= '<li id="li-user"><a class="dropdown-item" data-toggle="dropdown" href="/user/">Users</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['index'] == "allow"))
@@ -30,8 +24,8 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 	$manage .= '</ul></li>';
 	if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index'] == "allow"))
 		$manage .= '<li id="li-testsite"><a class="dropdown-item" data-toggle="dropdown" href="/testsite/">Test Sites</a></li>';
-		$manage .= '<li class="dropdown nav-item dropdown-item" data-menu="dropdown"><a id="locations" href="javascript:void(0)" data-toggle="dropdown"><span class="menu-title" style="color: #212529;">Locations</span></a>';
-    $manage .= '<ul class="dropdown-menu">';
+		$manage .= '<li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><span data-i18n="Locations">Locations</span></a>
+		<ul class="dropdown-menu">';
 	if (isset($role['App\\Http\\Controllers\\Province\\ProvinceController']['index']) && ($role['App\\Http\\Controllers\\Province\\ProvinceController']['index'] == "allow"))
 		$manage .= '<li id="li-province"><a class="dropdown-item" data-toggle="dropdown" href="/province/">Provinces</a></li>';
 	if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['index']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['index'] == "allow"))
@@ -72,6 +66,7 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 		$report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">Custom Report</a></li>';
 	$report .= '</ul></li>';
 }
+
 // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
 //             <ul class="dropdown-menu">';
 // $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
