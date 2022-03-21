@@ -85,10 +85,10 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Site ID <span class="mandatory">*</span>
+                                                <h5>Site ID
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="siteUniqueId" class="form-control  isRequired" autocomplete="off" placeholder="Enter Site Unique Id" name="siteUniqueId" title="Please Enter Site Unique Id">
+                                                    <input type="text" id="siteUniqueId" class="form-control" autocomplete="off" placeholder="Enter Site Unique Id" name="siteUniqueId" title="Please Enter Site Unique Id">
                                                 </div>
                                             </fieldset>
                                         </div>
