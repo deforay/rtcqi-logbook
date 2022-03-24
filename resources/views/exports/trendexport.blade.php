@@ -67,8 +67,10 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         $totalPositive = $trendrow->final;
             $total = $trendrow->test_1_reactive + $trendrow->test_1_nonreactive;
             $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
-            $posAgreement = number_format(100 * ($trendrow->test_2_reactive) / ($trendrow->test_1_reactive), 2);
-            $OverallAgreement = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
+            if ($trendrow->test_2_reactive > 0) {
+                $posAgreement = number_format(100 * ($trendrow->test_2_reactive) / ($trendrow->test_1_reactive), 2);
+                $OverallAgreement = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
+            }
 ?>
         <tr style="border: 3px solid black">
             <td style="border: 3px solid black">{{ $trendrow->facility_name }}</td>
