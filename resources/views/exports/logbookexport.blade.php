@@ -62,8 +62,10 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         $totalPositive = $logbookdata->final_positive;
         $total = $logbookdata->total_test;
         $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
-        $posAgreement = number_format(100 * ($logbookdata->test_2_reactive) / ($logbookdata->test_1_reactive), 2);
-        $OverallAgreement = number_format(100 * ($logbookdata->test_2_reactive + $logbookdata->test_1_nonreactive) / ($logbookdata->test_1_reactive + $logbookdata->test_1_nonreactive), 2);
+        if ($logbookdata->test_2_reactive > 0) {
+            $posAgreement = number_format(100 * ($logbookdata->test_2_reactive) / ($logbookdata->test_1_reactive), 2);
+            $OverallAgreement = number_format(100 * ($logbookdata->test_2_reactive + $logbookdata->test_1_nonreactive) / ($logbookdata->test_1_reactive + $logbookdata->test_1_nonreactive), 2);
+        }
         ?>
         <tr style="border: 3px solid black">
             <td style="border: 3px solid black">{{ $logbookdata->facility_name }}</td>
