@@ -111,8 +111,14 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
                     @endfor
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$positivePercentage}}</td>
+                    @if ($trendrow->test_2_reactive > 0)
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$posAgreement}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a href="/report/overallagreement/{{ base64_encode($trendrow->mr_id)}}" name="overall_agreement" id="'.$data->mr_id.'" class="" title="Overall Agreement">{{$OverallAgreement}}</a></td>
+                    @else
+                        <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"></td>
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a href="" name="overall_agreement" class="" title="Overall Agreement"></a></td>
+                    @endif
+
             </tr>
             @endforeach
 

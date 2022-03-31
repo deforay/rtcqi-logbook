@@ -85,8 +85,13 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             <td style="border: 3px solid black;text-align: left;">{{ $trendrow->$invalid }}</td>
             @endfor
             <td style="border: 3px solid black;text-align: left;">{{ $positivePercentage }}</td>
+            @if ($trendrow->test_2_reactive > 0)
             <td style="border: 3px solid black;text-align: left;">{{ $posAgreement }}</td>
             <td style="border: 3px solid black;text-align: left;">{{ $OverallAgreement }}</td>
+            @else 
+            <td style="border: 3px solid black;text-align: left;"></td>
+            <td style="border: 3px solid black;text-align: left;"></td>
+            @endif
         </tr>
     @endforeach
     </tbody>

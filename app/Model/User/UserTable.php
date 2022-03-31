@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Mail;
 use Illuminate\Support\Facades\File;
+use LDAP\Result;
 
 class UserTable extends Model
 {
@@ -138,9 +139,22 @@ class UserTable extends Model
         $commonservice = new CommonService();
         $result = json_decode(DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
+            ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
-            ->limit(1)->get(), true);
+            ->get(), true);
+            if(count($result) !=0) {
+                foreach($result as $value) {                             
+                    Session::push('tsId',$value['ts_id']);
+                }
+            }
+            if(count($result) == 0) {
+                $result = json_decode(DB::table('users')
+                ->join('roles', 'roles.role_id', '=', 'users.role_id')
+                ->where('users.email', '=', $data['username'])
+                ->where('user_status', '=', 'active')
+                ->get(), true);
+            }
         if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
             if (Hash::check($data['password'], $hashedPassword)) {
