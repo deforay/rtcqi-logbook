@@ -107,14 +107,20 @@ class UserTable extends Model
             'role_id' => $data['roleId'],
             'updated_by' => session('userId')
         );
-        if (trim($data['password']))
-            $user['force_password_reset'] = 1;
-        $user['password'] = Hash::make($data['password']); // Hashing passwords
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
             ->update(
                 $user
             );
+        if (trim($data['password'])) {
+            $password['force_password_reset'] = 1;
+        $user['password'] = Hash::make($data['password']); // Hashing passwords
+        $response = DB::table('users')
+            ->where('user_id', '=', base64_decode($id))
+            ->update(
+                $password
+            );
+        }
         if ($response == 1) {
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
