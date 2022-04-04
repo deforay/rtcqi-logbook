@@ -67,6 +67,14 @@ class UserFacilityMapService
 	    	$exc->getMessage();
 	    }
 	}
+	//Get Particular UserFacilityMap Details
+	public function getUserSiteById($id)
+	{
+		
+		$model = new UserFacilityMapTable();
+        $result = $model->fetchUserSiteById($id);
+        return $result;
+	}
 	
 }
 

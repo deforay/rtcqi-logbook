@@ -39,14 +39,22 @@ class UserTable extends Model
                     'role_id' => $data['roleId']
                 ]
             );
-            for ($x = 0; $x < count($data['testSiteId']); $x++) {
+            if ($id > 0 && trim($data['testSiteName']) != '') {
+                if ($id > 0 && trim($data['testSiteName']) != '') {
+                    $selectedSiteName = explode(",", $data['testSiteName']);
+                    $uniqueSiteId = array_unique($selectedSiteName);
+            for ($x = 0; $x < count($selectedSiteName); $x++) {
+                if (isset($uniqueSiteId[$x])) {
                 $userFacility = DB::table('users_testsite_map')->insertGetId(
                     [
                         'user_id' => $id,
-                        'ts_id' => $data['testSiteId'][$x],
+                        'ts_id' => $selectedSiteName[$x],
                     ]
                 );
             }
+        }
+    }
+}
              $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$userId);
         }
 
@@ -118,15 +126,20 @@ class UserTable extends Model
                 $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
         }
         DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
-
-        for ($x = 0; $x < count($data['testSiteId']); $x++) {
+        if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
+            $selectedSiteName = explode(",", $data['testSiteName']);
+            $uniqueSiteId = array_unique($selectedSiteName);
+        for ($x = 0; $x < count($selectedSiteName); $x++) {
+            if (isset($uniqueSiteId[$x])) {
             $userFacility = DB::table('users_testsite_map')->insertGetId(
                 [
                     'user_id' => base64_decode($id),
-                    'ts_id' => $data['testSiteId'][$x],
+                    'ts_id' => $selectedSiteName[$x],
                 ]
             );
+            }
         }
+    }
         return $response;
     }
 
