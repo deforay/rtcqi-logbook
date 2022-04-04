@@ -122,7 +122,7 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
+                                   {{-- <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Test Site Name
                                             </h5>
@@ -134,7 +134,7 @@
                                                 </select>
                                             </div>
 										</fieldset>
-									</div>
+									</div> --}}
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Role<span class="mandatory">*</span>
@@ -149,12 +149,39 @@
 										</fieldset>
 									</div>
                                 </div>
+                                <div class="row">
+                                <div class="col-xl-5 col-lg-12">
+										<fieldset>
+											<h5>Test Site User Map Details
+                                            </h5>
+                                            <div class="form-group">
+                                            <select name="siteMap[]" id="search" class="form-control" size="8" multiple="multiple">
+                                                @foreach($test as $row)
+                                                    <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+
+                                   <div class="col-xl-1 col-lg-12"><br>
+                                        <button type="button" id="search_rightAll" class="btn btn-secondary"><i class="ft-fast-forward"></i></button><br><br>
+                                        <button type="button" id="search_rightSelected" class="btn btn-secondary"><i class="ft-chevron-right"></i></button><br><br>
+                                        <button type="button" id="search_leftSelected" class="btn btn-secondary"><i class="ft-chevron-left"></i></button><br><br>
+                                        <button type="button" id="search_leftAll" class="btn btn-secondary"><i class="ft-rewind"></i></button><br><br>
+                                   </div>
+
+                                   <div class="col-xl-5 col-lg-12"><br>
+                                        <select name="search_to[]" id="search_to" class="form-control" size="8" multiple="multiple"></select>
+                                   </div>
+                              </div>
 								<div class="form-actions right">
                                     <a href="/user" >
                                     <button type="button" class="btn btn-warning mr-1">
                                     <i class="ft-x"></i> Cancel
                                     </button>
                                     </a>
+                                    <input type="hidden" name="testSiteName" id="testSiteName" />
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
                                     <i class="la la-check-square-o"></i> Save
                                     </button>
@@ -170,14 +197,20 @@
 </section>
 </div>
 </div>
-
+<script src="{{ asset('assets/js/multiselect.min.js') }}"></script>
+<script src="{{ asset('assets/js/jasny-bootstrap.js') }}"></script>
 <script>
 $(document).ready(function() {
+    $('#search').multiselect({
+               search: {
+                    left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+                    right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+               },
+               fireSearch: function(value) {
+                    return value.length > 3;
+               }
+          });
     $(".select2").select2();
-    $("#branches").select2({
-        placeholder: "Select Locations",
-		allowClear: true
-    });
     $('#confirmPassword').keyup(function() {			
         var nPws=$('#password').val();
         var cPws=$('#confirmPassword').val();
@@ -267,7 +300,12 @@ function isNumberKey(evt){
 
  duplicateName = true;
     function validateNow() {
-        mobNum = $('#mobileNo').val();
+        var selVal = [];
+        var mobNum = $('#mobileNo').val();
+        $('#search_to option').each(function(i, selected) {
+               selVal[i] = $(selected).val();
+          });
+          $("#testSiteName").val(selVal);
 		// if(mobNum.length!=10){
 		// 	$("html, body").animate({ scrollTop: 0 }, "slow");
 		// 	$("#showAlertIndex").text('Please give 10  digit mobile number');

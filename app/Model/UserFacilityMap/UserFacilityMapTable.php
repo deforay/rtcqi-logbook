@@ -88,4 +88,12 @@ class UserFacilityMapTable extends Model
             );
         return $response;
     }
+    public function fetchUserSiteById($id)
+    {
+        $data = DB::table('users_testsite_map')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'users_testsite_map.ts_id')
+            ->where('users_testsite_map.user_id', '=', base64_decode($id))
+            ->get();
+        return $data;
+    }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\TestSiteService;
 use App\Service\UserService;
 use App\Service\RolesService;
+use App\Service\UserFacilityMapService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -83,15 +84,16 @@ class UserController extends Controller
             $UserService = new UserService();
             $TestSiteService = new TestSiteService();
             $RoleService = new RolesService();
-            $testSite = $TestSiteService->getAllActiveTestSite();    
+            $UserFacilityMapService = new UserFacilityMapService();
+            $testSite = $TestSiteService->getAllActiveTestSite();
             $result = $UserService->getUserById($id);
+            $selectedSiteId = $UserFacilityMapService->getUserSiteById($id);
             $resourceResult = $RoleService->getAllRole();
             $testSiteId = array(); 
-            foreach($result as $value) {
+            foreach($selectedSiteId as $value) {
                 array_push($testSiteId,$value->ts_id);
             }
-            // dd($result);die;
-            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult));
+            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult,'selectedSiteId'=>$selectedSiteId));
         }
     }
 
