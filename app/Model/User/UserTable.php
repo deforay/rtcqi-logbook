@@ -113,19 +113,25 @@ class UserTable extends Model
                 $user
             );
         if (trim($data['password'])) {
-            $password['force_password_reset'] = 1;
         $user['password'] = Hash::make($data['password']); // Hashing passwords
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
             ->update(
-                $password
+                $user
             );
         }
         if ($response == 1) {
+            if($data['password'] == '') {
+                $forcePassword = 0;
+            }
+            else {
+                $forcePassword = 1;
+            }
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
                 ->update(
                     array(
+                        'force_password_reset' => $forcePassword,
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
@@ -185,6 +191,7 @@ class UserTable extends Model
                     session(['email' => $result[0]['email']]);
                     session(['phone' => $result[0]['phone']]);
                     session(['userId' => $result[0]['user_id']]);
+                    session(['forcePasswordReset' => $result[0]['force_password_reset']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
@@ -252,11 +259,12 @@ class UserTable extends Model
             if (count($result) > 0) {
                 $hashedPassword = $result[0]['password'];
                 if (Hash::check($data['currentPassword'], $hashedPassword)) {
-                    $response = DB::table('users')
+                $response = DB::table('users')
                         ->where('user_id', '=', base64_decode($id))
                         ->update(
                             [
-                                'password' => $newPassword
+                                'password' => $newPassword,
+                                'force_password_reset' => 0
                             ]
                         );
                         $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',$userId);
