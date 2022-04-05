@@ -461,19 +461,19 @@ class CommonService
                 // dd($addUser);
                 
             //}
-             if(session('loginType')=='vendor'){
-                $model = new VendorsTable();
-                $addVendors = $model->updatePassword($params,$id);
-                if($addVendors>0){
-                    DB::commit();
-                    $msg = 'Password Updated Successfully';
-                    return $msg;
-                }else{
-                    // dd('addVendors');
-                    $msg = '1';
-                    return $msg;
-                }
-            }
+            //  if(session('loginType')=='vendor'){
+            //     $model = new VendorsTable();
+            //     $addVendors = $model->updatePassword($params,$id);
+            //     if($addVendors>0){
+            //         DB::commit();
+            //         $msg = 'Password Updated Successfully';
+            //         return $msg;
+            //     }else{
+            //         // dd('addVendors');
+            //         $msg = '1';
+            //         return $msg;
+            //     }
+            // }
 	    }
 	    catch (Exception $exc) {
             DB::rollBack();
