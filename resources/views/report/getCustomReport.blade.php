@@ -96,7 +96,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             $totalPositive = $trendrow->final;
             $total = $trendrow->test_1_reactive + $trendrow->test_1_nonreactive;
             $positivePercentage = ($total == 0) ? 'N.A' : number_format($totalPositive * 100 / $total);
-            if ($trendrow->test_2_reactive > 0) {
+            if (($trendrow->test_1_reactive && $trendrow->test_2_reactive && $trendrow->test_1_reactive && $trendrow->test_1_nonreactive) > 0) {
                 $posAgreement = number_format(100 * ($trendrow->test_2_reactive) / ($trendrow->test_1_reactive), 2);
                 $OverallAgreement = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
             }
@@ -116,10 +116,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
                     @endfor
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$positivePercentage}}</td>
-                    @if ($trendrow->test_2_reactive > 0)
+                    @if(($trendrow->test_1_reactive && $trendrow->test_2_reactive && $trendrow->test_1_reactive && $trendrow->test_1_nonreactive) > 0)
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$posAgreement}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$OverallAgreement}}</td>
-                    @else 
+                    @else
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"></td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"></td>
                     @endif
