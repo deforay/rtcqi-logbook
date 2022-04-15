@@ -134,6 +134,7 @@ class TestSiteTable extends Model
         return $data;
     }
 
+    //Fetch some particular test site values
     public function fetchTestSiteData($id)
     {
         $data = DB::table('test_sites')
@@ -148,6 +149,7 @@ class TestSiteTable extends Model
         return $data;
     }
 
+    //Fetch some particular site district values
     public function fetchDistrictId($id)
     {
         $data = DB::table('test_sites')
@@ -157,6 +159,7 @@ class TestSiteTable extends Model
         return $data;
     }
 
+    //Fetch some particular latitude values
     public function fetchLatitudeValue($id)
     {
         $data = DB::table('test_sites')
@@ -165,6 +168,7 @@ class TestSiteTable extends Model
             ->value('site_latitude');
         return $data;
     }
+    //Fetch some particular longitude values
     public function fetchLongitudeValue($id)
     {
         $data = DB::table('test_sites')

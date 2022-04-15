@@ -1626,6 +1626,7 @@ class MonthlyReportTable extends Model
         return $outArr;
     }
 
+    // Fetch All Dashboard Filter Data
     public function fetchDashboardData($params)
     {
         $commonservice = new CommonService();
@@ -1697,6 +1698,7 @@ class MonthlyReportTable extends Model
         //dd(DB::getQueryLog());
         return $data;
     }
+    // Fetch All Dashboard count value
     public function fetchCountOfMonthlyReport()
     {
         $dateS = Carbon::now()->subMonth(12);
@@ -1719,6 +1721,7 @@ class MonthlyReportTable extends Model
         return $data;
     }
 
+    // Fetch All Dashboard Site count value
     public function fetchSiteCountOfMonthlyReport()
     {
         $dateS = Carbon::now()->subMonth(12);
@@ -1732,7 +1735,7 @@ class MonthlyReportTable extends Model
         return $data;
     }
 
-    // Fetch All MonthlyReport List
+    // Fetch All Dashboard MonthlyReport List
     public function fetchMonthlyData()
     {
         $user_id = session('userId');

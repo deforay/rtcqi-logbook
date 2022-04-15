@@ -843,12 +843,13 @@ $.ajax({
             // Do something
         }
     }
-
+    //Replace Test Kit Heading No with Dropdown Name
     function replaceTestKitHeadings(headingNo, rowNo, selectObj) {
-        //console.log(headingNo,rowNo,$(selectObj).find(":selected").text());
         let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text()) || `Test Kit ${headingNo}`;
         $(`#testKitHeading${headingNo}_${rowNo}`).html(optionSelected);
     }
+
+    //To check for existing report month for same site name on monthly report table
     function checkExistingReportingMonth() {
         var reportingDate = document.getElementById("reportingMon").value;
         var siteName= document.getElementById("testsiteId").value;

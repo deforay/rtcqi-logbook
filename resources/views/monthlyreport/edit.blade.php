@@ -787,6 +787,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         }
     }
 
+// To check the existing page no value
     function checkExistPageNos(rowId) {
         var itemId = document.getElementById("pageNO" + rowId).value;
         var itemCount = document.getElementsByName("pageNO[]");
@@ -805,7 +806,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             // Do something
         }
     }
-
+    //Replace Test Kit Heading No with Dropdown Name
     function replaceTestKitHeadings(headingNo,rowNo,selectObj){
         //console.log(headingNo,rowNo,$(selectObj).find(":selected").text());
         let optionSelected = ($(selectObj).val() && $(selectObj).find(":selected").text()) || `Test Kit ${headingNo}`;
@@ -857,7 +858,7 @@ $('#testsiteId').change(function() {
 });
 
 });
-
+    //To check for existing report month for same site name on monthly report table
 function checkExistingReportingMonth() {
         var mr_id = <?php echo $result[0]->mr_id; ?>;
         var reportingDate = document.getElementById("reportingMon").value;

@@ -143,7 +143,7 @@ class UserTable extends Model
             $uniqueSiteId = array_unique($selectedSiteName);
         for ($x = 0; $x < count($selectedSiteName); $x++) {
             if (isset($uniqueSiteId[$x])) {
-            $userFacility = DB::table('users_testsite_map')->insertGetId(
+                $response = DB::table('users_testsite_map')->insertGetId(
                 [
                     'user_id' => base64_decode($id),
                     'ts_id' => $selectedSiteName[$x],
