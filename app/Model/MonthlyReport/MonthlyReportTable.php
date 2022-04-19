@@ -136,10 +136,13 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-            ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
-            ->where('users_testsite_map.user_id', '=', $user_id)
             ->groupBy('monthly_reports.mr_id');
+        
+        if(count(session('tsId'))>0){
+            $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                    ->where('users_testsite_map.user_id', '=', $user_id);
+        }
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
@@ -159,39 +162,9 @@ class MonthlyReportTable extends Model
             $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
-
+        //dd($query);die;
         $salesResult = $query->get();
-        if (count($salesResult) == 0) {
-            $query = DB::table('monthly_reports')
-                ->select('monthly_reports.mr_id', DB::raw('count(monthly_reports_pages.page_no) as page_no'), 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', 'monthly_reports.name_of_data_collector', 'monthly_reports.book_no', 'monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name', DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
-                ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
-                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-                ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
-                ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
-                ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
-                ->groupBy('monthly_reports.mr_id');
-
-            if (trim($start_date) != "" && trim($end_date) != "") {
-                $query = $query->where(function ($query) use ($start_date, $end_date) {
-                    $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
-                        ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
-                });
-            }
-            if (isset($params['provinceId']) && $params['provinceId'] != '') {
-                $query = $query->whereIn('provinces.province_id', $params['provinceId']);
-                $query = $query->groupBy(DB::raw('provinces.province_id'));
-            }
-            if (isset($params['districtId']) && $params['districtId'] != '') {
-                $query = $query->whereIn('districts.district_id', $params['districtId']);
-                $query = $query->groupBy(DB::raw('districts.district_id'));
-            }
-            if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
-                $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
-                $query = $query->groupBy(DB::raw('test_sites.ts_id'));
-            }
-
-            $salesResult = $query->get();
-        }
+        
         return $salesResult;
     }
 
