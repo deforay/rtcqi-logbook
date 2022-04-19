@@ -173,6 +173,8 @@ class UserTable extends Model
                 foreach($result as $value) {                             
                     Session::push('tsId',$value['ts_id']);
                 }
+            }else{
+                Session::push('tsId','');
             }
             if(count($result) == 0) {
                 $result = json_decode(DB::table('users')
