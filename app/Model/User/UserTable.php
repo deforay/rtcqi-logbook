@@ -22,7 +22,7 @@ class UserTable extends Model
         $userId = null;
         $data = $request->all();
         $user_name = session('name');
-        // dd($data);die;
+        //dd($data);die;
         $commonservice = new CommonService();
         if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
             $id = DB::table('users')->insertGetId(
@@ -43,19 +43,19 @@ class UserTable extends Model
                 if ($id > 0 && trim($data['testSiteName']) != '') {
                     $selectedSiteName = explode(",", $data['testSiteName']);
                     $uniqueSiteId = array_unique($selectedSiteName);
-            for ($x = 0; $x < count($selectedSiteName); $x++) {
-                if (isset($uniqueSiteId[$x])) {
-                $userFacility = DB::table('users_testsite_map')->insertGetId(
-                    [
-                        'user_id' => $id,
-                        'ts_id' => $selectedSiteName[$x],
-                    ]
-                );
+                    for ($x = 0; $x < count($selectedSiteName); $x++) {
+                        if (isset($uniqueSiteId[$x])) {
+                            $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                [
+                                    'user_id' => $id,
+                                    'ts_id' => $selectedSiteName[$x],
+                                ]
+                            );
+                        }
+                    }
+                }
             }
-        }
-    }
-}
-             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$userId);
+            $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$userId);
         }
 
         return $id;
@@ -98,6 +98,7 @@ class UserTable extends Model
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
+        //dd($data);die;
         $user = array(
             'first_name' => $data['firstName'],
             'last_name' => $data['lastName'],
@@ -141,17 +142,17 @@ class UserTable extends Model
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
-        for ($x = 0; $x < count($selectedSiteName); $x++) {
-            if (isset($uniqueSiteId[$x])) {
-                $response = DB::table('users_testsite_map')->insertGetId(
-                [
-                    'user_id' => base64_decode($id),
-                    'ts_id' => $selectedSiteName[$x],
-                ]
-            );
+            for ($x = 0; $x < count($selectedSiteName); $x++) {
+                if (isset($uniqueSiteId[$x])) {
+                    $response = DB::table('users_testsite_map')->insertGetId(
+                    [
+                        'user_id' => base64_decode($id),
+                        'ts_id' => $selectedSiteName[$x],
+                    ]
+                );
+                }
             }
         }
-    }
         return $response;
     }
 
