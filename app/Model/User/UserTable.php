@@ -138,7 +138,7 @@ class UserTable extends Model
                 );
                 $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
         }
-        DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
+        $response=DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
