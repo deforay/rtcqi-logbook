@@ -51,7 +51,8 @@ class MonthlyReportController extends Controller
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $TestSiteService = new TestSiteService();
-            $testsite = $TestSiteService->getAllActiveTestSite();
+            //$testsite = $TestSiteService->getAllActiveTestSite();
+            $testsite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $SiteTypeService = new SiteTypeService();
             $sitetype = $SiteTypeService->getAllActiveSiteType();
             $KitTypeService = new TestKitService();
