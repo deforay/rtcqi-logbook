@@ -162,7 +162,7 @@ class MonthlyReportTable extends Model
             $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
-        //dd($query);die;
+        // dd($query->toSql());
         $salesResult = $query->get();
         
         return $salesResult;
