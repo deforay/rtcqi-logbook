@@ -146,7 +146,7 @@ class MonthlyReportTable extends Model
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
                     ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
@@ -332,7 +332,7 @@ class MonthlyReportTable extends Model
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
                     ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
@@ -445,7 +445,7 @@ class MonthlyReportTable extends Model
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('mrp.end_test_date',  '>=', $start_date)
+                $query->where('mrp.start_test_date',  '>=', $start_date)
                     ->where('mrp.end_test_date', '<=', $end_date);
             });
         }
@@ -545,7 +545,7 @@ class MonthlyReportTable extends Model
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
                     ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
@@ -670,7 +670,7 @@ class MonthlyReportTable extends Model
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
                     ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
@@ -1219,7 +1219,7 @@ class MonthlyReportTable extends Model
 
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.end_test_date',  '>=', $start_date)
+                $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
                     ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             });
         }
