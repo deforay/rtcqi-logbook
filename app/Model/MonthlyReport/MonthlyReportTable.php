@@ -770,7 +770,7 @@ class MonthlyReportTable extends Model
                 }
                 foreach ($array as $row) {
                     if ($rowCnt > 1) {
-                        if ($row[0] != '') {
+                        if ($row[0] != '' && trim($row[13])!="") {
                             $reporting_date = '';
                             if (is_numeric($row[12])) {
                                 $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('M-Y');
