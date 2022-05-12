@@ -456,3 +456,69 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'User', 'active'), ('App\\Http\\Controllers\\TestSite\\TestSiteController', 'TestSite', 'active'), ('App\\Http\\Controllers\\TestKit\\TestKitController', 'TestKit', 'active'),('App\\Http\\Controllers\\Facility\\FacilityController', 'Facility', 'active'), ('App\\Http\\Controllers\\Province\\ProvinceController', 'Province', 'active'), ('App\\Http\\Controllers\\District\\DistrictController', 'District', 'active'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'SiteType', 'active'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'GlobalConfig', 'active'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'AllowedTestKit', 'active'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'MonthlyReport', 'active'),('App\\Http\\Controllers\\Report\\ReportController', 'Report', 'active'),('App\\Http\\Controllers\\Dashboard\\DashboardController', 'Dashboard', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'add', 'Add'),('App\\Http\\Controllers\\User\\UserController', 'edit', 'Edit'),('App\\Http\\Controllers\\User\\UserController', 'index', 'Access'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'add', 'Add'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'edit', 'Edit'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'index', 'Access'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'add', 'Add'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'edit', 'Edit'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'index', 'Access'),('App\\Http\\Controllers\\Facility\\FacilityController', 'add', 'Add'), ('App\\Http\\Controllers\\Facility\\FacilityController', 'edit', 'Edit'),('App\\Http\\Controllers\\Facility\\FacilityController', 'index', 'Access'),('App\\Http\\Controllers\\Province\\ProvinceController', 'add', 'Add'), ('App\\Http\\Controllers\\Province\\ProvinceController', 'edit', 'Edit'),('App\\Http\\Controllers\\Province\\ProvinceController', 'index', 'Access'),('App\\Http\\Controllers\\District\\DistrictController', 'add', 'Add'), ('App\\Http\\Controllers\\District\\DistrictController', 'edit', 'Edit'),('App\\Http\\Controllers\\District\\DistrictController', 'index', 'Access'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'add', 'Add'), ('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'edit', 'Edit'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'index', 'Access'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'edit', 'Edit'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'index', 'Access'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'add', 'Add'), ('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'edit', 'Edit'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'index', 'Access'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'add', 'Add'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'edit', 'Edit'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'index', 'Access'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'bulk', 'Bulk Upload'),('App\\Http\\Controllers\\Report\\ReportController', 'trendreport', 'Trend Report'),('App\\Http\\Controllers\\Report\\ReportController', 'logbookreport', 'Logbook Report'),('App\\Http\\Controllers\\Report\\ReportController', 'testkitreport', 'Test Kit Report'),('App\\Http\\Controllers\\Report\\ReportController', 'invalidresultreport', 'Invalid Result Report'),('App\\Http\\Controllers\\Report\\ReportController', 'customreport', 'Custom Report'),('App\\Http\\Controllers\\Report\\ReportController', 'trendexport', 'Trend Export'),('App\\Http\\Controllers\\Report\\ReportController', 'logbookexport', 'Logbook Export'),('App\\Http\\Controllers\\Report\\ReportController', 'testkitexport', 'Test Kit Export'),('App\\Http\\Controllers\\Report\\ReportController', 'invalidresultexport', 'Invalid Result Export'),('App\\Http\\Controllers\\Report\\ReportController', 'customexport', 'Custom Export'),('App\\Http\\Controllers\\User\\UserController', 'profile', 'Profile'),('App\\Http\\Controllers\\Dashboard\\DashboardController', 'index', 'Access');
+
+--ilahir 11-May-2022
+CREATE TABLE `not_uploaded_monthly_reports` (
+  `nu_mr_id` int(11) NOT NULL,
+  `test_site_name` varchar(255) DEFAULT NULL,
+  `site_type` varchar(255) DEFAULT NULL,
+  `facility` varchar(255) DEFAULT NULL,
+  `province_name` varchar(255) DEFAULT NULL,
+  `site_manager` varchar(255) DEFAULT NULL,
+  `site_unique_id` varchar(255) DEFAULT NULL,
+  `tester_name` varchar(255) DEFAULT NULL,
+  `is_flc` varchar(255) DEFAULT NULL,
+  `is_recency` varchar(255) DEFAULT NULL,
+  `contact_no` varchar(255) DEFAULT NULL,
+  `algorithm_type` varchar(255) DEFAULT NULL,
+  `date_of_data_collection` varchar(255) DEFAULT NULL,
+  `reporting_month` varchar(255) DEFAULT NULL,
+  `book_no` varchar(255) DEFAULT NULL,
+  `name_of_data_collector` varchar(255) DEFAULT NULL,
+  `source` varchar(100) DEFAULT NULL,
+  `page_no` varchar(255) DEFAULT NULL,
+  `start_test_date` varchar(255) DEFAULT NULL,
+  `end_test_date` varchar(255) DEFAULT NULL,
+  `test_kit_name1` varchar(255) DEFAULT NULL,
+  `lot_no_1` varchar(255) DEFAULT NULL,
+  `expiry_date_1` varchar(255) DEFAULT NULL,
+  `test_1_reactive` varchar(255) DEFAULT NULL,
+  `test_1_non_reactive` varchar(255) DEFAULT NULL,
+  `test_1_invalid` varchar(255) DEFAULT NULL,
+  `test_kit_name2` varchar(255) DEFAULT NULL,
+  `lot_no_2` varchar(255) DEFAULT NULL,
+  `expiry_date_2` varchar(255) DEFAULT NULL,
+  `test_2_reactive` varchar(255) DEFAULT NULL,
+  `test_2_non_reactive` varchar(255) DEFAULT NULL,
+  `test_2_invalid` varchar(255) DEFAULT NULL,
+  `test_kit_name3` varchar(255) DEFAULT NULL,
+  `lot_no_3` varchar(255) DEFAULT NULL,
+  `expiry_date_3` varchar(255) DEFAULT NULL,
+  `test_3_reactive` varchar(255) DEFAULT NULL,
+  `test_3_non_reactive` varchar(255) DEFAULT NULL,
+  `test_3_invalid` varchar(255) DEFAULT NULL,
+  `test_kit_name4` varchar(255) DEFAULT NULL,
+  `lot_no_4` varchar(255) DEFAULT NULL,
+  `expiry_date_4` varchar(255) DEFAULT NULL,
+  `test_4_reactive` varchar(255) DEFAULT NULL,
+  `test_4_non_reactive` varchar(255) DEFAULT NULL,
+  `test_4_invalid` varchar(255) DEFAULT NULL,
+  `final_positive` varchar(255) DEFAULT NULL,
+  `final_negative` varchar(255) DEFAULT NULL,
+  `final_undetermined` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `added_on` datetime DEFAULT NULL,
+  `added_by` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+ALTER TABLE `not_uploaded_monthly_reports`
+  ADD PRIMARY KEY (`nu_mr_id`);
+
+ALTER TABLE `not_uploaded_monthly_reports`
+  MODIFY `nu_mr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUpload', 'Not Upload Data');
