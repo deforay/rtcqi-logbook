@@ -21,7 +21,7 @@ class MonthlyReportController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth');        
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport');        
        
     }
     //View MonthlyReport main screen
@@ -175,5 +175,37 @@ class MonthlyReportController extends Controller
         $service = new MonthlyReportService();
         $data = $service->getIdExistingReportingMonth($request);
         return $data;
+    }
+
+    public function notUpload()
+    {
+        if (session('login') == true) {
+            $TestSiteService = new TestSiteService();
+            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            return view('monthlyreport.notUpload', array('testSite' => $testSite,'district' => $district,'province' => $province));
+        } else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getAllNotUploadMonthlyReport(Request $request)
+    {
+        $datas = $request->all();
+        // dd($datas);die;
+        $service = new MonthlyReportService();
+        $data = $service->getAllNotUploadMonthlyReport($datas);
+        return DataTables::of($data)
+            ->addColumn('action', function ($data) {
+                $button = '<div>';
+                $role = session('role');
+                $button .= '';
+                $button .= '</div>';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

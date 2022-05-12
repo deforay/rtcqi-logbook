@@ -9,6 +9,7 @@ Last Modified Name : Prasath M
 
 namespace App\Service;
 use App\Model\MonthlyReport\MonthlyReportTable;
+use App\Model\NotUploadMonthlyReport\NotUploadMonthlyReportTable;
 use DB;
 
 class MonthlyReportService
@@ -239,4 +240,11 @@ class MonthlyReportService
 		return $result;
 	}
 	
+	//Get All Not Upload MonthlyReport List
+	public function getAllNotUploadMonthlyReport($params)
+    {
+		$model = new NotUploadMonthlyReportTable();
+        $result = $model->fetchAllNotUploadMonthlyReport($params);
+        return $result;
+	}
 }

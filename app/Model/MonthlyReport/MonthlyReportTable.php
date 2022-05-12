@@ -761,6 +761,7 @@ class MonthlyReportTable extends Model
                 // $array =  Excel::toArray(new MonthlyReportDataUpload(), $savePath . $fileName);
                 $rowCnt = 1;
                 $cnt = 0;
+                $rslt="";
                 $GlobalConfigService = new GlobalConfigService();
                 $result = $GlobalConfigService->getAllGlobalConfig();
                 $arr = array();
@@ -768,6 +769,8 @@ class MonthlyReportTable extends Model
                 for ($i = 0; $i < sizeof($result); $i++) {
                     $arr[$result[$i]->global_name] = $result[$i]->global_value;
                 }
+                $notInsertRowArray=array();
+                $notInsertRow=0;
                 foreach ($array as $row) {
                     if ($rowCnt > 1) {
                         if ($row[0] != '' && trim($row[13])!="") {
@@ -1040,6 +1043,8 @@ class MonthlyReportTable extends Model
 
                                         ]
                                     );
+
+                                    
                                 }
                                 $insMonthlyArr = array(
                                     'mr_id' => $mr_id,
@@ -1099,8 +1104,227 @@ class MonthlyReportTable extends Model
                                 );
                                 if ($monthly_reports_pages) {
                                     $cnt++;
+                                }else{
+                                    //Not Upload monthly reports
+                                    /*
+                                    $test_site_name = $row[0];
+                                    $site_type = $row[1];
+                                    $facility = $row[2];
+                                    $province = $row[3];
+                                    $site_manager = $row[4];
+                                    $site_unique_id = $row[5];
+                                    $tester_name = $row[6];
+                                    $if_flc = $row[7];
+                                    $is_recency = $row[8];
+                                    $contact_no = $row[9];
+                                    $algo_type = $row[10];
+                                    */
+                                    $date_of_collection = $row[11];
+                                    $report_months = $reporting_date;
+                                    $book_no = $row[13];
+                                    $name_of_collector = $row[14];
+                                    $page_no = $row[15];
+                                    $start_date = $row[16];
+                                    $end_date = $row[17];
+                                    /*
+                                    if ($arr['no_of_test'] == 1) {
+                                        $final_positive = $row[24];
+                                        $final_negative = $row[25];
+                                        $final_indeterminate = $row[26];
+                                        
+                                    } else if ($arr['no_of_test'] == 2) {
+                                        $final_positive = $row[30];
+                                        $final_negative = $row[31];
+                                        $final_indeterminate = $row[32];
+                                    } else if ($arr['no_of_test'] == 3) {
+                                        $final_positive = $row[36];
+                                        $final_negative = $row[37];
+                                        $final_indeterminate = $row[38];
+                                    } else if ($arr['no_of_test'] == 4) {
+                                        $final_positive = $row[42];
+                                        $final_negative = $row[43];
+                                        $final_indeterminate = $row[44];
+                                    }
+                                    */
+                                    $unLoadData=array(
+                                        'test_site_name' => $test_site_name,
+                                        'site_type' => $site_type,
+                                        'facility' => $facility,
+                                        'province_name' => $province,
+                                        'site_manager' => $site_manager,
+                                        'site_unique_id' => $site_unique_id,
+                                        'tester_name' => $tester_name,
+                                        'is_flc' => $if_flc,
+                                        'is_recency' => $is_recency,
+                                        'contact_no' => $contact_no,
+                                        'algorithm_type' => $algo_type,
+                                        'date_of_data_collection' => $date_of_collection,
+                                        'reporting_month' => $report_months,
+                                        'book_no' => $book_no,
+                                        'name_of_data_collector' => $name_of_collector,
+                                        'source' => 'excel',
+                                        'page_no' => $page_no,
+                                        'start_test_date' => $start_date,
+                                        'end_test_date' => $end_date,
+                                        'final_positive' => $final_positive,
+                                        'final_negative' => $final_negative,
+                                        'final_undetermined' => $final_indeterminate,
+                                        'added_on' => date('Y-m-d'),
+                                        'added_by' => session('userId'),
+                                        'file_name' => $fileName,
+                                    );
+
+                                    if ($arr['no_of_test'] >= 1) {
+                                        $unLoadData['test_kit_name1'] = trim($row[18]);
+                                        $unLoadData['lot_no_1'] = $row[19];
+                                        $unLoadData['expiry_date_1'] = $row[20];
+                                        $unLoadData['test_1_reactive'] = $row[21];
+                                        $unLoadData['test_1_non_reactive'] = $row[22];
+                                        $unLoadData['test_1_invalid'] = $row[23];
+                                    }
+                                    if ($arr['no_of_test'] >= 2) {
+                                        $unLoadData['test_kit_name2'] = trim($row[24]);
+                                        $unLoadData['lot_no_2'] = $row[25];
+                                        $unLoadData['expiry_date_2'] = $row[26];
+                                        $unLoadData['test_2_reactive'] = $row[27];
+                                        $unLoadData['test_2_non_reactive'] = $row[28];
+                                        $unLoadData['test_2_invalid'] = $row[29];
+                                    }
+                                    if ($arr['no_of_test'] >= 3) {
+                                        $unLoadData['test_kit_name3'] = trim($row[30]);
+                                        $unLoadData['lot_no_3'] = $row[31];
+                                        $unLoadData['expiry_date_3'] = $row[32];
+                                        $unLoadData['test_3_reactive'] = $row[33];
+                                        $unLoadData['test_3_non_reactive'] = $row[34];
+                                        $unLoadData['test_3_invalid'] = $row[35];
+                                    }
+                                    if ($arr['no_of_test'] >= 4) {
+                                        $unLoadData['test_kit_name4'] = trim($row[36]);
+                                        $unLoadData['lot_no_4'] = $row[37];
+                                        $unLoadData['expiry_date_4'] = $row[38];
+                                        $unLoadData['test_4_reactive'] = $row[39];
+                                        $unLoadData['test_4_non_reactive'] = $row[40];
+                                        $unLoadData['test_4_invalid'] = $row[41];
+                                    }
+
+                                    $nu_mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
+                            
+                                    $notInsertRow++;
+                                    //array_push($notInsertRowArray,$rowCnt);
                                 }
                             }
+                        }
+                        else{
+                            //Not Upload monthly reports
+                            $reporting_date = '';
+                            if (is_numeric($row[12])) {
+                                $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('M-Y');
+                            } else if (is_string($row[12])) {
+                                $reporting_date = date('M-Y', strtotime($row[12]));
+                            }
+                            
+                            $test_site_name = $row[0];
+                            $site_type = $row[1];
+                            $facility = $row[2];
+                            $province = $row[3];
+                            $site_manager = $row[4];
+                            $site_unique_id = $row[5];
+                            $tester_name = $row[6];
+                            $if_flc = $row[7];
+                            $is_recency = $row[8];
+                            $contact_no = $row[9];
+                            $algo_type = $row[10];
+                            $date_of_collection = $row[11];
+                            $report_months = $reporting_date;
+                            $book_no = $row[13];
+                            $name_of_collector = $row[14];
+                            $page_no = $row[15];
+                            $start_date = $row[16];
+                            $end_date = $row[17];
+
+                            if ($arr['no_of_test'] == 1) {
+                                $final_positive = $row[24];
+                                $final_negative = $row[25];
+                                $final_indeterminate = $row[26];
+                                
+                            } else if ($arr['no_of_test'] == 2) {
+                                $final_positive = $row[30];
+                                $final_negative = $row[31];
+                                $final_indeterminate = $row[32];
+                            } else if ($arr['no_of_test'] == 3) {
+                                $final_positive = $row[36];
+                                $final_negative = $row[37];
+                                $final_indeterminate = $row[38];
+                            } else if ($arr['no_of_test'] == 4) {
+                                $final_positive = $row[42];
+                                $final_negative = $row[43];
+                                $final_indeterminate = $row[44];
+                            }
+
+                            $unLoadData=array(
+                                'test_site_name' => $test_site_name,
+                                'site_type' => $site_type,
+                                'facility' => $facility,
+                                'province_name' => $province,
+                                'site_manager' => $site_manager,
+                                'site_unique_id' => $site_unique_id,
+                                'tester_name' => $tester_name,
+                                'is_flc' => $if_flc,
+                                'is_recency' => $is_recency,
+                                'contact_no' => $contact_no,
+                                'algorithm_type' => $algo_type,
+                                'date_of_data_collection' => $date_of_collection,
+                                'reporting_month' => $report_months,
+                                'book_no' => $book_no,
+                                'name_of_data_collector' => $name_of_collector,
+                                'source' => 'excel',
+                                'page_no' => $page_no,
+                                'start_test_date' => $start_date,
+                                'end_test_date' => $end_date,
+                                'final_positive' => $final_positive,
+                                'final_negative' => $final_negative,
+                                'final_undetermined' => $final_indeterminate,
+                                'added_on' =>$commonservice->getDateTime(),
+                                'added_by' => session('userId'),
+                                'file_name' => $fileName,
+                            );
+
+                            if ($arr['no_of_test'] >= 1) {
+                                $unLoadData['test_kit_name1'] = trim($row[18]);
+                                $unLoadData['lot_no_1'] = $row[19];
+                                $unLoadData['expiry_date_1'] = $row[20];
+                                $unLoadData['test_1_reactive'] = $row[21];
+                                $unLoadData['test_1_non_reactive'] = $row[22];
+                                $unLoadData['test_1_invalid'] = $row[23];
+                            }
+                            if ($arr['no_of_test'] >= 2) {
+                                $unLoadData['test_kit_name2'] = trim($row[24]);
+                                $unLoadData['lot_no_2'] = $row[25];
+                                $unLoadData['expiry_date_2'] = $row[26];
+                                $unLoadData['test_2_reactive'] = $row[27];
+                                $unLoadData['test_2_non_reactive'] = $row[28];
+                                $unLoadData['test_2_invalid'] = $row[29];
+                            }
+                            if ($arr['no_of_test'] >= 3) {
+                                $unLoadData['test_kit_name3'] = trim($row[30]);
+                                $unLoadData['lot_no_3'] = $row[31];
+                                $unLoadData['expiry_date_3'] = $row[32];
+                                $unLoadData['test_3_reactive'] = $row[33];
+                                $unLoadData['test_3_non_reactive'] = $row[34];
+                                $unLoadData['test_3_invalid'] = $row[35];
+                            }
+                            if ($arr['no_of_test'] >= 4) {
+                                $unLoadData['test_kit_name4'] = trim($row[36]);
+                                $unLoadData['lot_no_4'] = $row[37];
+                                $unLoadData['expiry_date_4'] = $row[38];
+                                $unLoadData['test_4_reactive'] = $row[39];
+                                $unLoadData['test_4_non_reactive'] = $row[40];
+                                $unLoadData['test_4_invalid'] = $row[41];
+                            }
+
+                            $mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
+                            $notInsertRow++;
+                            //array_push($notInsertRowArray,$rowCnt);
                         }
                     }
                     $rowCnt++;
@@ -1108,8 +1332,11 @@ class MonthlyReportTable extends Model
                 if ($cnt > 0) {
                     $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report', $mr_id);
                 }
+                if($notInsertRow>0){
+                    $rslt.=$notInsertRow." Rows Not Inserted <br/>";
+                }
                 DB::commit();
-                $rslt = $cnt . " rows Updated";
+                $rslt .= $cnt . " rows Updated";
             } catch (Exception $exc) {
                 DB::rollBack();
                 $exc->getMessage();

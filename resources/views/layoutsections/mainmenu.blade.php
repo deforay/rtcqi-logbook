@@ -49,6 +49,7 @@ $test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href=
                 <ul class="dropdown-menu">';
 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['index']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['index'] == "allow"))
 	$test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/">Monthly Report</a></li>';
+	$test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/notUpload">Not Upload Monthly Report</a></li>';
 $test .= '</ul></li>';
 
 if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['trendreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['testkitreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['testkitreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['logbookreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['logbookreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['invalidresultreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['invalidresultreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['customreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['customreport'] == "allow"))) {
