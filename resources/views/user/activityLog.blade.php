@@ -23,7 +23,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/auditTrail/">Audit Trail</a>
+                        <li class="breadcrumb-item"><a href="userActivityLog/">User Activity Log</a>
                         </li>
                     </ol>
                 </div>
@@ -52,7 +52,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Audit Trail</h3>
+                            <h3 class="content-header-title mb-0">User Activity Log</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -66,28 +66,26 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                             <div class="card-body card-dashboard">
                             <div id="show_alert" class="mt-1"></div>
                                     <h4 class="card-title">Filter the data</h4><br>
-                                    <form class="form" role="form" name="auditFilter" id="auditFilter" method="post" action="/auditTrail" autocomplete="off" onsubmit="validateNow();return false;">
-                                    @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Site Name <span class="mandatory">*</span>
+                                                    <h5>Date Range <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
-                                                        @foreach($testSite ?? '' as $row2)
-                                                        <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input type="text" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>Reporting Month
+                                                <h5>User Name
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="reportingMon" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="userId" name="userId[]" title="Please select User Name">
+                                                            @foreach($userName as $row)
+                                                            <option value="{{$row->user_id}}">{{$row->first_name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -95,12 +93,11 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                 <div class="form-group row">
 
                                                     <div class="col-md-8">
-                                                        <button type="submit" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                                        <button type="submit" onclick="getAllAuditData();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                                         <a class="btn btn-danger btn-md" href="/auditTrail"><span>Reset</span></a>&nbsp;&nbsp;
                                                     </div>
                                                 </div></div>
                                         </div>
-</form>
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
@@ -127,58 +124,115 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     </section>
 </div>
 </div>
-<link href="public/dist/css/select2.min.css" rel="stylesheet" />
-<script src="public/dist/js/select2.min.js"></script>
 <script>
-    function validateNow() {
-        flag = deforayValidator.init({
-            formId: 'auditFilter'
-        });
-
-        if (flag == true) {
-            if (duplicateName) {
-                document.getElementById('auditFilter').submit();
-            }
-        } else {
-            // Swal.fire('Any fool can use a computer');
-            $('#show_alert').html(flag).delay(3000).fadeOut();
-            $('#show_alert').css("display", "block");
-            $(".infocus").focus();
-        }
-    }
     $(document).ready(function() {
-        $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
-            placeholder: "Select Site Name"
-        });
         $.blockUI();
+        getAllAuditData();
         $.unblockUI();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#userId').select2({
             placeholder: "Select User Name",
             allowClear: true,
         });
-       
-        $('#reportingMon').datepicker({
-            autoclose: true,
-            format: 'M-yyyy',
-            changeMonth: true,
-            changeYear: true,
-            maxDate: 0,
-            viewMode: "months",
-            minViewMode: "months",
-            // startDate:'today',
-            todayHighlight: true,
-            clearBtn: true,
-        })
-   /* .on('changeDate', checkExistingReportingMonth);
+        $('#userId').on('select2:select', function(e) {
+            getAllAuditData();
+        });
 
-        $(".dates").datepicker({
-            format: 'dd-M-yyyy',
-            autoclose: true,
-        });*/
+        $('#userId').on('select2:unselect', function(e) {
+            getAllAuditData();
+
+        });
 
     });
 
-   
+    function getAllAuditData() {
+        let searchDate = $('#searchDate').val() || '';
+        let userId = $('#userId').val() || '';
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#mothlyreportList').DataTable({
+            processing: true,
+            destroy: true,
+            serverSide: true,
+            scrollX: false,
+            autoWidth: false,
+            ajax: {
+                url: '{{ url("getAllAuditData") }}',
+                type: 'POST',
+                data: {
+                searchDate: searchDate,
+                userId: userId,
+                },
+            },
+            columns: [
+
+                {
+                    data: 'event_type',
+                    name: 'event_type',
+                    className: 'firstcaps'
+                },
+
+                {
+                    data: 'action',
+                    name: 'action',
+                    className: 'firstcaps'
+                },
+
+                {
+                    data: 'resource',
+                    name: 'resource'
+                },
+
+                {
+                    data: 'ip_address',
+                    name: 'ip_address'
+                },
+                {
+                    data: 'date_time',
+                    name: 'date_time',render: function(data, type, full) {
+     return moment(new Date(data)).format('DD-MMM-YYYY HH:mm:ss');
+                    }
+                },
+            ],
+            order: [
+                [4, 'desc']
+            ]
+        });
+    }
+    $(document).ready(function() {
+        $('#searchDate').daterangepicker({
+                format: 'DD-MMM-YYYY',
+                autoUpdateInput: false,
+                separator: ' to ',
+                startDate: moment().subtract('days', 29),
+                endDate: moment(),
+                maxDate: moment(),
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Last 7 Days': [moment().subtract('days', 6), moment()],
+                    'Last 30 Days': [moment().subtract('days', 29), moment()],
+                    'Last 60 Days': [moment().subtract('days', 59), moment()],
+                    'Last 180 Days': [moment().subtract('days', 179), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                    'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'Last 6 Months': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'Last 9 Months': [moment().subtract(9, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'Last 12 Months': [moment().subtract(12, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'Last 18 Months': [moment().subtract(18, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                }
+            },
+            function(start, end) {
+                startDate = start.format('YYYY-MM-DD');
+                endDate = end.format('YYYY-MM-DD');
+                $('input[name="searchDate"]').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+                });
+            });
+    });
 </script>
 @endsection

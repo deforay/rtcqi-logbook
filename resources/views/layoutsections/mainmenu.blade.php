@@ -21,7 +21,11 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 	$manage .= '<li id="li-user"><a class="dropdown-item" data-toggle="dropdown" href="/user/">Users</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['index'] == "allow"))
 		$manage .= '<li id="li-roles"><a class="dropdown-item" data-toggle="dropdown" href="/roles/">Roles</a></li>';
-	$manage .= '</ul></li>';
+	if (isset($role['App\\Http\\Controllers\\User\\UserController']['userloginhistory']) && ($role['App\\Http\\Controllers\\User\\UserController']['userloginhistory'] == "allow"))
+		$manage .= '<li id="li-loginHistory"><a class="dropdown-item" data-toggle="dropdown" href="/user/userloginhistory">User Login History</a></li>';
+		if (isset($role['App\\Http\\Controllers\\User\\UserController']['userActivityLog']) && ($role['App\\Http\\Controllers\\User\\UserController']['userActivityLog'] == "allow"))
+		$manage .= '<li id="li-activityLog"><a class="dropdown-item" data-toggle="dropdown" href="/user/userActivityLog">User Activity Log</a></li>';
+		$manage .= '</ul></li>';
 	if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index'] == "allow"))
 		$manage .= '<li id="li-testsite"><a class="dropdown-item" data-toggle="dropdown" href="/testsite/">Test Sites</a></li>';
 		$manage .= '<li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><span data-i18n="Locations">Locations</span></a>

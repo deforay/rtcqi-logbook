@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\AuditTrailService;
 use App\Service\UserService;
+use App\Service\TestSiteService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -18,16 +19,22 @@ class AuditTrailController extends Controller
        
     }
     //View Audit Trail main screen
-    public function index()
+    public function index(Request $request)
     {
-        if(session('login')==true)
-        {
-            $userService = new UserService();
-            $userData = $userService->getAllActiveUser();
-            return view('audittrail.index',array('userName' => $userData));
+        if ($request->isMethod('post')) {
+            //return Redirect::route('monthlyreport.index')->with('status', $result);
+            echo '<pre>'; print_r($request); die;
         }
         else
-            return Redirect::to('login')->with('status', 'Please Login');
+        {
+                $userService = new UserService();
+                $TestSiteService = new TestSiteService();
+                $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
+                $userData = $userService->getAllActiveUser();
+                return view('audittrail.index',array('userName' => $userData,'testSite' => $testSite));
+           
+               // return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // Get all the  Audit Trail list

@@ -108,11 +108,52 @@ class UserController extends Controller
         }
         else
         {
-            
             $UserService = new UserService();
             $result = $UserService->getUserById($id);
             return view('user.profile',array('result'=>$result));
         }
     }
-}
 
+    public function userloginhistory()
+    {
+        if(session('login')==true)
+        {
+            $userService = new UserService();
+            $userData = $userService->getAllActiveUser();
+            return view('user.userloginhistory',array('userName' => $userData));
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getUserLoginHistory(Request $request)
+    {
+        $datas = $request->all();
+        $service = new UserService();
+     //   echo "working";die;
+        $data = $service->getUserLoginHistory($datas);
+        return DataTables::of($data)->make(true);
+    }
+
+    public function userActivityLog()
+    {
+        if(session('login')==true)
+        {
+            $userService = new UserService();
+            $userData = $userService->getAllActiveUser();
+            return view('user.activityLog',array('userName' => $userData));
+        }
+        else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getAllActivityData(Request $request)
+    {
+        $datas = $request->all();
+        $service = new UserService();
+        $data = $service->getAllActivity($datas);
+        return DataTables::of($data)
+            ->make(true);
+    }
+
+}
