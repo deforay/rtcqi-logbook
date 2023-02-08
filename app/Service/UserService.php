@@ -9,6 +9,7 @@ Last Modified Name : Prasath M
 
 namespace App\Service;
 use App\Model\User\UserTable;
+use App\Model\User\UserLoginHistoryTable;
 use DB;
 
 class UserService
@@ -48,6 +49,13 @@ class UserService
         $result = $model->fetchAllActiveUser();
         return $result;
 	}
+
+	public function getUserLoginHistory($params)
+	{
+		$model = new UserLoginHistoryTable();
+        $result = $model->fetchUserLoginHistory($params);
+        return $result;
+	}
 	//Get Particular User Details
 	public function getUserById($id)
 	{
@@ -82,6 +90,13 @@ class UserService
         $result = $model->validateLogin($params);
         return $result;
 	}
+
+	public function loggedInHistory($data,$status)
+	{
+		$model = new UserLoginHistoryTable();
+        $result = $model->loggedInHistory($data,$status);
+        return $result;
+	}
 	
 	//Update Particular User Profile Details
 	public function updateProfile($params,$id)
@@ -100,6 +115,13 @@ class UserService
 			DB::rollBack();
 			$exc->getMessage();
 		}
+	}
+
+	public function getAllAudit($params)
+    {
+		$model = new TrackTable();
+        $result = $model->fetchAllActivity($params);
+        return $result;
 	}
 }
 

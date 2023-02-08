@@ -7,12 +7,12 @@ use DB;
 use App\Service\CommonService;
 use Illuminate\Support\Facades\Session;
 
-class AuditTrailTable extends Model
+class TrackTable extends Model
 {
-    protected $table = 'audit_monthly_report';
+    protected $table = 'track';
 
     // Fetch All Audit Trail List
-    public function fetchAllAudit($params)
+    public function fetchAllActivity($params)
     {
         // dd($params);die;
         $commonservice = new CommonService();

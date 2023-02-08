@@ -197,7 +197,7 @@ $test = '';
                                                 <h5>Name of Data Collector
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="nameOfDataCollect" class="form-control  " autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
+                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
                                                 </div>
                                             </fieldset>
                                         </div>
