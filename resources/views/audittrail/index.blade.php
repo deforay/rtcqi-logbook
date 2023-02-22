@@ -13,8 +13,25 @@
 <?php
 $enddate = date('d-M-Y');
 $startdate = date('d-M-Y', strtotime('-29 days'));
+if(isset($params))
+{
+    $siteId = $params['testsiteId'];
+    $month = $params['reportingMon'];
+}
+if(isset($result))
+{
+$auditInfo = json_decode(json_encode($result['auditValues']), true);
+$currentRecord = json_decode(json_encode($result['currentRecord']), true);
+}
+//echo '<pre>'; print_r($currentRecord); die;
 ?>
-
+<style>
+	#current, #auditTable {
+		display: block;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+</style>
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-6 col-12 mb-2">
@@ -76,7 +93,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     <div class="form-group">
                                                     <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
                                                         @foreach($testSite ?? '' as $row2)
-                                                        <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
+                                                        <option <?php if(isset($siteId) && $siteId==$row2->ts_id) echo "selected='selected'"; ?> value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
                                                         @endforeach
                                                     </select>
                                                     </div>
@@ -87,7 +104,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                 <h5>Reporting Month
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="reportingMon" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+                                                    <input type="text" id="reportingMon" value="<?php if(isset($month)) echo $month; ?>" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -102,21 +119,116 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                         </div>
 </form>
                                 <p class="card-text"></p>
+                                <?php  if(!empty($siteId))
+                                    { ?>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
+                                    <?php
+                                    if(!empty($auditInfo))
+                                    {
+                                    ?>
+                                     <select name="auditColumn[]" id="auditColumn" class="form-control" multiple="multiple">
+	<?php
+	$i=0;
+	foreach($result['auditColumns'] as $col)
+	{
+	?>
+	<option value="<?php echo $i; ?>"><?php echo $col; ?></option>
+	<?php
+	$i++;
+	}
+	?>
+	</select>
+    <table id="auditTable" class="table table-bordered table-striped table-vcenter" aria-hidden="true">
                                         <thead>
                                             <tr>
-                                                <th>Event Type</th>
-                                                <th>Action</th>
-                                                <th>Resource</th>
-                                                <th>IP Address</th>
-                                                <th>Date Time</th>
+                                            <?php
+                                        $colArr = array();
+										foreach ($result['auditColumns'] as $col) {
+											$colArr[] = $col;
+										?>
+											<th>
+												<?php
+												echo $col;
+												?>
+											</th>
+										<?php } ?>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php
+									//echo count($auditInfo).'  ---  '.count($colArr); die;
+                                    for ($i = 0; $i < count($auditInfo); $i++) {
+                                ?>
+                                        <tr>
+                                        <?php
+												for ($j = 0; $j < count($colArr); $j++) {
 
+													if (($j > 3) && ($i > 0) && $auditInfo[$i][$colArr[$j]] != $auditInfo[$i - 1][$colArr[$j]]) {
+														echo '<td style="background: orange; color:black;" >' . $auditInfo[$i][$colArr[$j]] . '</td>';
+													} else {
+
+														echo '<td>' . $auditInfo[$i][$colArr[$j]] . '</td>';
+													}
+												?>
+												<?php }
+												?>
+                                        </tr>
+                                <?php
+                                    }
+                                
+                                ?>
                                         </tbody>
                                     </table>
+                                    <br>
+                                    <h3> Current Record for Monthly Report</h3>
+                                        <table id="current" class="table table-striped table-hover table-bordered" aria-hidden="true">
+								<thead>
+									<tr>
+										<?php
+										$colValue=array();
+										foreach ($result['currentColumns'] as $col) {
+                                                       $colValue[] = $col;
+										?>
+											<th>
+												<?php
+												echo $col;
+												?>
+											</th>
+										<?php } ?>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									if (!empty($currentRecord)) {
+									?>
+											<tr>
+												<?php
+												for ($j = 3; $j < count($colValue); $j++) {
+												?>
+													<td>
+														<?php
+														echo $currentRecord[0][$colValue[$j]];
+														?>
+													</td>
+												<?php }
+												?>
+											</tr>
+									<?php
+										
+									} 
+									?>
+								</tbody>
+
+							</table>
+                                    <?php
+                                    }
+                                    else
+							{
+								echo '<h3 align="center">Records are not available for this sample code. Please enter  valid sample code</h3>';
+							}
+						}
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -127,8 +239,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
     </section>
 </div>
 </div>
-<link href="public/dist/css/select2.min.css" rel="stylesheet" />
-<script src="public/dist/js/select2.min.js"></script>
+
 <script>
     function validateNow() {
         flag = deforayValidator.init({
@@ -146,19 +257,35 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             $(".infocus").focus();
         }
     }
-    $(document).ready(function() {
-        $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
-            placeholder: "Select Site Name"
-        });
-        $.blockUI();
-        $.unblockUI();
-        $('.js-example-basic-multiple').select2();
-        $selectElement = $('#userId').select2({
-            placeholder: "Select User Name",
-            allowClear: true,
-        });
-       
-        $('#reportingMon').datepicker({
+
+function printString(columnNumber)
+{
+    // To store result (Excel column name)
+        let columnName = [];
+  
+        while (columnNumber > 0) {
+            // Find remainder
+            let rem = columnNumber % 26;
+  
+            // If remainder is 0, then a
+            // 'Z' must be there in output
+            if (rem == 0) {
+                columnName.push("Z");
+                columnNumber = Math.floor(columnNumber / 26) - 1;
+            }
+            else // If remainder is non-zero
+            {
+                columnName.push(String.fromCharCode((rem - 1) + 'A'.charCodeAt(0)));
+                columnNumber = Math.floor(columnNumber / 26);
+            }
+        }
+  
+        // Reverse the string and print result
+        return columnName.reverse().join("");
+}
+oTable = null;
+$(document).ready(function() {
+    $('#reportingMon').datepicker({
             autoclose: true,
             format: 'M-yyyy',
             changeMonth: true,
@@ -169,14 +296,96 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             // startDate:'today',
             todayHighlight: true,
             clearBtn: true,
-        })
-   /* .on('changeDate', checkExistingReportingMonth);
+        });
 
-        $(".dates").datepicker({
-            format: 'dd-M-yyyy',
-            autoclose: true,
-        });*/
+        $("#auditColumn").select2({
+      placeholder: 'Select Columns',
+      width: '100%'
+    });
 
+    $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
+            placeholder: "Select Site Name"
+        });
+        $("#testsiteId").val(<?php if(isset($siteId)) echo $siteId; ?>).trigger('change');
+
+		oTable = $('#auditTable').DataTable( {
+			dom: 'Bfrtip',
+    buttons: [ 
+	   {
+	            extend: 'excelHtml5',
+				exportOptions: {
+                    columns: ':visible'
+                },
+	            text: 'Export To Excel',
+	            title:'AuditTrailSample-<?php if(isset($month)) echo $month; ?>',
+	            extension:'.xlsx',
+				customize: function ( xlsx ) {
+        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+        // Map used to map column index to Excel index
+		
+		var excelMap = [];
+	b=0;
+	for(a=1;a<=27;a++)
+		{
+				excelMap[b] = printString(a);
+				b++;
+		}
+        var count = 0;
+        var skippedHeader = 0;
+		
+        $('row', sheet).each( function () {
+          var row = this;
+          if (skippedHeader==2) {
+//             var colour = $('tbody tr:eq('+parseInt(count)+') td:eq(2)').css('background-color');
+            
+            // Output first row
+            if (count === 0) {
+              console.log(this);
+            }
+            
+            for (td=0; td<27; td++) {
+              
+              // Output cell contents for first row
+              if (count === 0) {
+                console.log($('c[r^="' + excelMap[td] + '"]', row).text());
+              }
+              var colour = $(oTable.cell(':eq('+count+')',td).node()).css('background-color');            
+
+              if (colour === 'rgb(255, 165, 0)' || colour == 'orange') {
+                $('c[r^="' + excelMap[td] + '"]', row).attr( 's', '35' );
+              }
+             
+            }
+            count++;
+          }
+          else {
+            skippedHeader++;
+          }
+        });
+      }
+	        }
+    ],
+        // scrollY: '250vh',
+		//	scrollX: true,
+			scrollCollapse: true,
+			paging: false,
+			"aaSorting": [1, "asc"],
+		   } );
+
+        $('#auditColumn').on("select2:select select2:unselect", function(e) {
+		
+		var columns = $(this).val();
+
+		if(columns=="" || columns==null)
+		{
+			oTable.columns().visible(true);
+		}
+		else{
+			oTable.columns().visible(false);
+			oTable.columns(columns).visible(true);
+		}
+	
+		});
     });
 
    
