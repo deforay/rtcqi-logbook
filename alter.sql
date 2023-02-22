@@ -522,3 +522,8 @@ ALTER TABLE `not_uploaded_monthly_reports`
   MODIFY `nu_mr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUpload', 'Not Upload Data');
+
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('Application\\\\Controller\\\\AuditTrail', 'index', 'Audit Trail');
+
+INSERT INTO `resources` (`resource_id`, `display_name`) VALUES ('Application\\Controller\\AuditTrail', 'Audit Trail');
+
