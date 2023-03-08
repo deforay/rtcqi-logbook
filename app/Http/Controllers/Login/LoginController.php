@@ -28,10 +28,10 @@ class LoginController extends Controller
         $service = new UserService();
         $login = $service->validateLogin($request);
         if (trim($login) == 1) {
-            if(session('forcePasswordReset') == '') { 
+            if (session('forcePasswordReset') == '') {
                 $id = base64_encode(session("userId"));
-                return view('login.changepassword',array('id'=>$id));
-        }
+                return view('login.changepassword', array('id' => $id));
+            }
             return Redirect::to('/dashboard');
         } else {
             return Redirect::route('login.index')->with('status', 'Please check your login credentials');
@@ -44,10 +44,10 @@ class LoginController extends Controller
     {
         $commonservice = new CommonService();
         if ($request->isMethod('post') && session('login') == true) {
-            $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user',$id=null);
+            $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user', $id = null);
             $request->session()->flush();
             $request->session()->regenerate();
-            Session::flush(); 
+            Session::flush();
             return Redirect::to('/login'); // redirect the user to the login screen
         } else {
             if (session('login') == null) {

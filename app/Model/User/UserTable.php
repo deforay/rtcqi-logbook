@@ -55,7 +55,7 @@ class UserTable extends Model
                     }
                 }
             }
-            $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user',$userId);
+            $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user', $userId);
         }
 
         return $id;
@@ -114,18 +114,17 @@ class UserTable extends Model
                 $user
             );
         if (trim($data['password'])) {
-        $user['password'] = Hash::make($data['password']); // Hashing passwords
-        $response = DB::table('users')
-            ->where('user_id', '=', base64_decode($id))
-            ->update(
-                $user
-            );
+            $user['password'] = Hash::make($data['password']); // Hashing passwords
+            $response = DB::table('users')
+                ->where('user_id', '=', base64_decode($id))
+                ->update(
+                    $user
+                );
         }
         if ($response == 1) {
-            if($data['password'] == '') {
+            if ($data['password'] == '') {
                 $forcePassword = 0;
-            }
-            else {
+            } else {
                 $forcePassword = 1;
             }
             $response = DB::table('users')
@@ -136,20 +135,20 @@ class UserTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
+            $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user', $userId);
         }
-        $response=DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
+        $response = DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
             for ($x = 0; $x < count($selectedSiteName); $x++) {
                 if (isset($uniqueSiteId[$x])) {
                     $response = DB::table('users_testsite_map')->insertGetId(
-                    [
-                        'user_id' => base64_decode($id),
-                        'ts_id' => $selectedSiteName[$x],
-                    ]
-                );
+                        [
+                            'user_id' => base64_decode($id),
+                            'ts_id' => $selectedSiteName[$x],
+                        ]
+                    );
                 }
             }
         }
@@ -169,21 +168,26 @@ class UserTable extends Model
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
             ->get(), true);
-            if(count($result) !=0) {
-                foreach($result as $value) {                             
-                    Session::push('tsId',$value['ts_id']);
-                }
+
+
+        if (!empty($result)) {
+            foreach ($result as $value) {
+                Session::push('tsId', $value['ts_id']);
             }
-            
-            if(count($result) == 0) {
-                $result = json_decode(DB::table('users')
+
+            $result = json_decode(DB::table('users')
                 ->join('roles', 'roles.role_id', '=', 'users.role_id')
                 ->where('users.email', '=', $data['username'])
                 ->where('user_status', '=', 'active')
                 ->get(), true);
-            }
-        if (count($result) > 0) {
+        }
+
+        if (!empty($result)) {
             $hashedPassword = $result[0]['password'];
+            // var_dump(($data['password']));
+            // var_dump(Hash::make($data['password']));die;
+            // var_dump(Hash::check($data['password'], $hashedPassword));
+            //var_dump($hashedPassword);die;
             if (Hash::check($data['password'], $hashedPassword)) {
                 $configFile =  "acl.config.json";
                 if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
@@ -196,7 +200,7 @@ class UserTable extends Model
                     session(['forcePasswordReset' => $result[0]['force_password_reset']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
-                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
+                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user', $userId);
                 } else {
                     return 2;
                 }
@@ -240,7 +244,7 @@ class UserTable extends Model
                             'updated_on' => $commonservice->getDateTime()
                         )
                     );
-                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',$userId);
+                $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile', $userId);
             }
         }
         return $response;
@@ -261,7 +265,7 @@ class UserTable extends Model
             if (count($result) > 0) {
                 $hashedPassword = $result[0]['password'];
                 if (Hash::check($data['currentPassword'], $hashedPassword)) {
-                $response = DB::table('users')
+                    $response = DB::table('users')
                         ->where('user_id', '=', base64_decode($id))
                         ->update(
                             [
@@ -269,7 +273,7 @@ class UserTable extends Model
                                 'force_password_reset' => 0
                             ]
                         );
-                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',$userId);
+                    $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password', $userId);
                     return $response;
                 }
                 // $commonservice = new CommonService();
