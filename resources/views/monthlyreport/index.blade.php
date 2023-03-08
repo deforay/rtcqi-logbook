@@ -148,7 +148,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                         <thead>
                                             <tr>
                                                 <th>Site Name</th>
-                                                <th>Site Type</th>
+                                                <th>Entry Point</th>
                                                 <th>Reporting Month</th>
                                                 <th>Date of Data Collection</th>
                                                 <th>Name of Data Collector</th>

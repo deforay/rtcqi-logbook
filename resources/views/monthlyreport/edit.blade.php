@@ -9,7 +9,7 @@ $date_of_data_collection = $common->humanDateFormat($result[0]->date_of_data_col
 $reporting_month = ($result[0]->reporting_month);
 $path_name = public_path('uploads');
 // $reporting_month = 'Jun-2021';
-{{--  dd($result);  --}}
+// {{--  dd($result);  --}}
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 ?>
 <style>
@@ -78,10 +78,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Site Type <span class="mandatory">*</span>
+                                                <h5>Entry Point <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class=" js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please select Site type Name">
+                                                    <select class=" js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please Select Entry Point">
                                                         @foreach($sitetype as $row1)
                                                         <option value="{{$row1->st_id}}" {{ $result[0]->st_id == $row1->st_id ?  'selected':''}}>{{$row1->site_type_name}}</option>
                                                         @endforeach
@@ -127,7 +127,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 <h5>Is FLC?<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is Flu status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is Flc status">
                                                         <option value="">-- Select --</option>
                                                         <option value="yes" {{ $result[0]->is_flc == 'yes' ?  'selected':''}}>Yes</option>
                                                         <option value="no" {{ $result[0]->is_flc == 'no' ?  'selected':''}}>No</option>
@@ -137,19 +137,19 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>Tester Name <span class="mandatory">*</span>
+											<h5>Lab Manager Name <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="testername" class="form-control isRequired " value="{{$result[0]->tester_name}}" autocomplete="off" placeholder="Enter Tester Name" name="testername" title="Please Enter Tester Name" >
+                                                <input type="text" id="testername" class="form-control isRequired " value="{{$result[0]->tester_name}}" autocomplete="off" placeholder="Enter Lab Manager Name" name="testername" title="Please Enter Lab Manager Name" >
 											</div>
 										</fieldset>
 									</div>
                                     <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Tester Contact Number
+                                                <h5>Lab Manager Contact Number
                                                 </h5>
                                                 <div class="form-group">
-                                                <input type="tel" id="contactNo" maxlength="10" value="{{$result[0]->contact_no}}" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Tester Contact Phone" name="contactNo" title="Please Enter Tester Contact Phone" >
+                                                <input type="tel" id="contactNo" maxlength="10" value="{{$result[0]->contact_no}}" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Lab Manager Contact Number" name="contactNo" title="Please Enter Lab Manager Contact Number" >
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -185,6 +185,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 											</div>
 										</fieldset>
 									</div> --}}
+                                        <!--
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Algorithm Type
@@ -197,6 +198,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        -->
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>Name of Data Collector
