@@ -177,6 +177,16 @@ class MonthlyReportTable extends Model
         return $data;
     }
 
+    // Fetch All Active MonthlyReport List
+    public function fetchUniqueActiveMonthlyReport($siteId,$reportingMon)
+    {
+        $data = DB::table('monthly_reports')
+             ->where('ts_id','=',$siteId)
+             ->where('reporting_month','=',$reportingMon)
+            ->get();
+        return $data;
+    }
+
     // fetch particular MonthlyReport details
     public function fetchMonthlyReportById($id)
     {
