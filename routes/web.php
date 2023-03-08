@@ -37,10 +37,14 @@ Route::get('/user', 'User\UserController@index')->name('user.index')->middleware
 Route::post('/user/add', 'User\UserController@add');
 Route::get('/user/add', 'User\UserController@add')->middleware('access');
 Route::post('/getAllUser', 'User\UserController@getAllUser');
+Route::post('/getUserLoginHistory','User\UserController@getUserLoginHistory')->name('user.getUserLoginHistory')->middleware('access');
 Route::get('/user/edit/{id}', 'User\UserController@edit')->middleware('access');
 Route::post('/user/edit/{id}', 'User\UserController@edit');
 Route::get('/user/profile/{id}', 'User\UserController@profile')->middleware('access');
 Route::post('/user/profile/{id}', 'User\UserController@profile');
+Route::get('/user/userloginhistory', 'User\UserController@userloginhistory')->name('user.userloginhistory')->middleware('access');
+Route::get('/user/userActivityLog', 'User\UserController@userActivityLog')->name('user.userActivityLog')->middleware('access');
+
 
 //login module
 Route::get('/login', 'Login\LoginController@index')->name('login.index');
@@ -198,7 +202,11 @@ Route::post('/roles/edit/{id}', 'Roles\RolesController@edit');
 
 //Audit Trail
 Route::get('/auditTrail', 'AuditTrail\AuditTrailController@index')->name('auditTrail.index');
+Route::post('/auditTrail', 'AuditTrail\AuditTrailController@index');
+Route::get('/auditTrail', 'AuditTrail\AuditTrailController@index')->middleware('access');
 Route::post('/getAllAuditData', 'AuditTrail\AuditTrailController@getAllAuditData');
+Route::post('/getAuditTrail', 'AuditTrail\AuditTrailController@getAuditTrail')->middleware('access');
+
 
 Route::post('/getReportingMonth', 'MonthlyReport\MonthlyReportController@getReportingMonth');
 Route::post('/getIdReportingMonth', 'MonthlyReport\MonthlyReportController@getIdReportingMonth');

@@ -8,8 +8,8 @@ Last Modified Name : Prasath M
 */
 
 namespace App\Service;
-
 use App\Model\User\UserTable;
+use App\Model\User\UserLoginHistoryTable;
 use DB;
 
 class UserService
@@ -47,55 +47,81 @@ class UserService
         $model = new UserTable();
         $result = $model->fetchAllActiveUser();
         return $result;
-    }
-    //Get Particular User Details
-    public function getUserById($id)
-    {
+	}
 
-        $model = new UserTable();
+	public function getUserLoginHistory($params)
+	{
+		$model = new UserLoginHistoryTable();
+        $result = $model->fetchUserLoginHistory($params);
+        return $result;
+	}
+	//Get Particular User Details
+	public function getUserById($id)
+	{
+		
+		$model = new UserTable();
         $result = $model->fetchUserById($id);
         return $result;
-    }
-    //Update Particular User Details
-    public function updateUser($params, $id)
+	}
+	//Update Particular User Details
+	public function updateUser($params,$id)
     {
-        DB::beginTransaction();
-        try {
-            $model = new UserTable();
-            $add = $model->updateUser($params, $id);
-            if ($add > 0) {
+    	DB::beginTransaction();
+    	try {
+			$model = new UserTable();
+        	$add = $model->updateUser($params,$id);
+			if($add>0){
                 DB::commit();
-                $msg = 'User Updated Successfully';
-                return $msg;
-            }
-        } catch (Exception $exc) {
-            DB::rollBack();
-            $exc->getMessage();
-        }
-    }
+				$msg = 'User Updated Successfully';
+				return $msg;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
+	}
+	
+	//Validate User Login
+	public function validateLogin($params)
+	{
+		$model = new UserTable();
+        $result = $model->validateLogin($params);
+        return $result;
+	}
 
-    //Validate User Login
-    public function validateLogin($params)
-    {
-        $model = new UserTable();
-        return $model->validateLogin($params);
-    }
+	public function loggedInHistory($data,$status)
+	{
+		$model = new UserLoginHistoryTable();
+        $result = $model->loggedInHistory($data,$status);
+        return $result;
+	}
+	
+	//Update Particular User Profile Details
+	public function updateProfile($params,$id)
+	{
+		DB::beginTransaction();
+		try {
+			$model = new UserTable();
+			$add = $model->updateProfile($params,$id);
+			if($add>0){
+				DB::commit();
+				$msg = 'User Updated Successfully';
+				return $msg;
+			}
+		}
+		catch (Exception $exc) {
+			DB::rollBack();
+			$exc->getMessage();
+		}
+	}
 
-    //Update Particular User Profile Details
-    public function updateProfile($params, $id)
+	public function getAllAudit($params)
     {
-        DB::beginTransaction();
-        try {
-            $model = new UserTable();
-            $add = $model->updateProfile($params, $id);
-            if ($add > 0) {
-                DB::commit();
-                $msg = 'User Updated Successfully';
-                return $msg;
-            }
-        } catch (Exception $exc) {
-            DB::rollBack();
-            $exc->getMessage();
-        }
-    }
+		$model = new TrackTable();
+        $result = $model->fetchAllActivity($params);
+        return $result;
+	}
 }
+
+?>

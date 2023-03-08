@@ -5,63 +5,18 @@ namespace App\Model\User;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
-use App\Service\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Mail;
 use Illuminate\Support\Facades\File;
 use LDAP\Result;
 
-class UserTable extends Model
+class UserLoginHistoryTable extends Model
 {
-    protected $table = 'users';
+    protected $table = 'user_login_history';
 
     //add User
-    public function saveUser($request)
-    {
-        //to get all request values
-        $userId = null;
-        $data = $request->all();
-        $user_name = session('name');
-        //dd($data);die;
-        $commonservice = new CommonService();
-        if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
-            $id = DB::table('users')->insertGetId(
-                [
-                    'first_name' => $data['firstName'],
-                    'last_name' => $data['lastName'],
-                    'password' => Hash::make($data['password']), // Hashing passwords
-                    'email' => $data['email'],
-                    'phone' => $data['mobileNo'],
-                    'user_status' => $data['userStatus'],
-                    'created_by' => session('userId'),
-                    'created_on' => $commonservice->getDateTime(),
-                    'force_password_reset' => 1,
-                    'role_id' => $data['roleId']
-                ]
-            );
-            if ($id > 0 && trim($data['testSiteName']) != '') {
-                if ($id > 0 && trim($data['testSiteName']) != '') {
-                    $selectedSiteName = explode(",", $data['testSiteName']);
-                    $uniqueSiteId = array_unique($selectedSiteName);
-                    for ($x = 0; $x < count($selectedSiteName); $x++) {
-                        if (isset($uniqueSiteId[$x])) {
-                            $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                [
-                                    'user_id' => $id,
-                                    'ts_id' => $selectedSiteName[$x],
-                                ]
-                            );
-                        }
-                    }
-                }
-            }
-            $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user', $userId);
-        }
-
-        return $id;
-    }
-
+   
     // Fetch All User List
     public function fetchAllUser()
     {
@@ -77,6 +32,40 @@ class UserTable extends Model
             ->where('user_status', '=', 'active')
             ->get();
         return $data;
+    }
+
+    public function fetchUserLoginHistory($params)
+    {
+        // print_r($params);die;
+        $commonservice = new CommonService();
+        $start_date = '';
+        $end_date = '';
+        if (isset($params['searchDate']) && $params['searchDate'] != '') {
+            $sDate = explode("to", $params['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
+        $query = DB::table('user_login_history')
+                    ->join('users', 'users.user_id', '=', 'user_login_history.user_id');
+
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->where(DB::raw('date(user_login_history.login_attempted_datetime)'),  '>=', $start_date)
+                    ->where(DB::raw('date(user_login_history.login_attempted_datetime)'), '<=', $end_date);
+            });
+        }
+        if (isset($params['userId']) && $params['userId'] != '') {
+            $query = $query->whereIn('users.user_id', $params['userId']);
+        }
+
+        $salesResult = $query->get();
+        return $salesResult;
     }
 
     // fetch particular User details
@@ -115,17 +104,18 @@ class UserTable extends Model
                 $user
             );
         if (trim($data['password'])) {
-            $user['password'] = Hash::make($data['password']); // Hashing passwords
-            $response = DB::table('users')
-                ->where('user_id', '=', base64_decode($id))
-                ->update(
-                    $user
-                );
+        $user['password'] = Hash::make($data['password']); // Hashing passwords
+        $response = DB::table('users')
+            ->where('user_id', '=', base64_decode($id))
+            ->update(
+                $user
+            );
         }
         if ($response == 1) {
-            if ($data['password'] == '') {
+            if($data['password'] == '') {
                 $forcePassword = 0;
-            } else {
+            }
+            else {
                 $forcePassword = 1;
             }
             $response = DB::table('users')
@@ -136,20 +126,20 @@ class UserTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-            $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user', $userId);
+                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
         }
-        $response = DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
+        $response=DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
             for ($x = 0; $x < count($selectedSiteName); $x++) {
                 if (isset($uniqueSiteId[$x])) {
                     $response = DB::table('users_testsite_map')->insertGetId(
-                        [
-                            'user_id' => base64_decode($id),
-                            'ts_id' => $selectedSiteName[$x],
-                        ]
-                    );
+                    [
+                        'user_id' => base64_decode($id),
+                        'ts_id' => $selectedSiteName[$x],
+                    ]
+                );
                 }
             }
         }
@@ -163,33 +153,27 @@ class UserTable extends Model
         $userId = null;
         $data = $params->all();
         $commonservice = new CommonService();
-        $userservice = new UserService();
         $result = json_decode(DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
             ->get(), true);
-
-
-        if (!empty($result)) {
-            foreach ($result as $value) {
-                Session::push('tsId', $value['ts_id']);
+            if(count($result) !=0) {
+                foreach($result as $value) {                             
+                    Session::push('tsId',$value['ts_id']);
+                }
             }
-
-            $result = json_decode(DB::table('users')
+            
+            if(count($result) == 0) {
+                $result = json_decode(DB::table('users')
                 ->join('roles', 'roles.role_id', '=', 'users.role_id')
                 ->where('users.email', '=', $data['username'])
                 ->where('user_status', '=', 'active')
                 ->get(), true);
-        }
-
-        if (!empty($result)) {
+            }
+        if (count($result) > 0) {
             $hashedPassword = $result[0]['password'];
-            // var_dump(($data['password']));
-            // var_dump(Hash::make($data['password']));die;
-            // var_dump(Hash::check($data['password'], $hashedPassword));
-            //var_dump($hashedPassword);die;
             if (Hash::check($data['password'], $hashedPassword)) {
                 $configFile =  "acl.config.json";
                 if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
@@ -203,17 +187,14 @@ class UserTable extends Model
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
-                    $userservice->loggedInHistory($data,'success');
                 } else {
                     return 2;
                 }
                 return 1;
             } else {
-                $userservice->loggedInHistory($data,'failed');
                 return 0;
             }
         } else {
-            $userservice->loggedInHistory($data,'failed');
             return 0;
         }
     }
@@ -249,7 +230,7 @@ class UserTable extends Model
                             'updated_on' => $commonservice->getDateTime()
                         )
                     );
-                $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile', $userId);
+                    $commonservice->eventLog('update-user-profile-request', $user_name . ' has updated the user profile information', 'user-profile',$userId);
             }
         }
         return $response;
@@ -270,7 +251,7 @@ class UserTable extends Model
             if (count($result) > 0) {
                 $hashedPassword = $result[0]['password'];
                 if (Hash::check($data['currentPassword'], $hashedPassword)) {
-                    $response = DB::table('users')
+                $response = DB::table('users')
                         ->where('user_id', '=', base64_decode($id))
                         ->update(
                             [
@@ -278,7 +259,7 @@ class UserTable extends Model
                                 'force_password_reset' => 0
                             ]
                         );
-                    $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password', $userId);
+                        $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password',$userId);
                     return $response;
                 }
                 // $commonservice = new CommonService();
@@ -287,5 +268,25 @@ class UserTable extends Model
                 return 0;
             }
         }
+    }
+
+    public function loggedInHistory($data,$status)
+    {
+       
+        $browserAgent = $_SERVER['HTTP_USER_AGENT'];
+        $os = PHP_OS;
+        $common = new CommonService();
+        $currentDateTime=$common->getDateTime();
+        $loginData = array(
+            'user_id'=>session('userId'),
+            'login_id'=>$data['username'],
+            'login_attempted_datetime'=>date('Y-m-d H:i:s'),
+            'login_status'=>$status,
+            'ip_address'=>request()->ip(),
+            'browser'=>$browserAgent,
+            'operating_system'=>$os,
+        );
+        $historyResult = DB::table('user_login_history')->insert($loginData);
+        return $historyResult;
     }
 }
