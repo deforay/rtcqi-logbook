@@ -67,7 +67,8 @@ class CommonController extends Controller
             $pswd = $service->updatePassword($request,$id);
             //dd($pswd);
             if($pswd==1){
-                return Redirect::to('/dashboard')->with('status', 'Password Changed Succesfully');
+                return Redirect::to('/dashboard')->withErrors(['msg' => 'Password Changed Succesfully']);
+               
             }else{
                 return view('login.changepassword',array('id'=>$id,'status'=>'Your new password is too similar to your current password. Please try another password.'));
             }
