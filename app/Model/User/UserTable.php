@@ -262,22 +262,26 @@ class UserTable extends Model
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
+        //dd($data);
         $newPassword = Hash::make($data['newPassword']);
         if (Hash::check($data['currentPassword'], $newPassword)) {
             return 0;
         } else {
-            $result = json_decode(DB::table('users')->where('user_id', '=', base64_decode($id))->get(), true);
+            $result = json_decode(DB::table('users')->where('user_id', '=', $id)->get(), true);
+            //dd($result);
             if (count($result) > 0) {
                 $hashedPassword = $result[0]['password'];
+                //dd($hashedPassword,Hash::make($data['currentPassword']));
                 if (Hash::check($data['currentPassword'], $hashedPassword)) {
                     $response = DB::table('users')
-                        ->where('user_id', '=', base64_decode($id))
+                        ->where('user_id', '=', $id)
                         ->update(
                             [
                                 'password' => $newPassword,
                                 'force_password_reset' => 0
                             ]
                         );
+                       // dd($response);
                     $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password', $userId);
                     return $response;
                 }

@@ -74,7 +74,7 @@ font-size:larger;
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-            <form class="form form-horizontal" role="form" name="changepassword" id="changepassword" method="post" action="/changePassword/{{$id}}" autocomplete="off" onsubmit="validateNow();return false;">
+            <form class="form form-horizontal" role="form" name="changepassword" id="changepassword" method="post" action="/changePassword" autocomplete="off" onsubmit="validateNow();return false;">
             @csrf
 			@php
             if(session('loginType') == 'users'){

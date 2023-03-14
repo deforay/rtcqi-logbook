@@ -45,7 +45,13 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
       <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
         <h3 class="content-header-title mb-0 d-inline-block">Dashboard</h3>
     </div>
-
+    @if (isset($status))
+                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index" ><div class="text-center" style="font-size: 18px;"><b>
+                        {{ $status }}</b></div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <script>$('#show_alert_index').delay(3000).fadeOut();</script>
+                @endif
     </div>
     <div class="content-body">
         <!-- Charts section start -->
