@@ -453,11 +453,18 @@ class CommonService
     
     public function updatePassword($params,$id){
         DB::beginTransaction();
+        
     	try {
             // if(session('loginType')=='users'){
                 $model = new UserTable();
                 $addUser = $model->updatePassword($params,$id);
-                return $addUser;
+                DB::commit();
+               //dd($addUser);
+                if($addUser>0){
+                
+                            return $addUser; 
+                }
+                //return $addUser;
                 // dd($addUser);
                 
             //}

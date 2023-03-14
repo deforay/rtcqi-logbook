@@ -56,13 +56,16 @@ class CommonController extends Controller
         return $data;
     }
     
-    public function changePassword($id,Request $request)
+    public function changePassword(Request $request)
     {
+        $id = session('userId');
         // dd(session('loginType'));
         if ($request->isMethod('post')) 
         {
+            
             $service = new CommonService();
             $pswd = $service->updatePassword($request,$id);
+            //dd($pswd);
             if($pswd==1){
                 return Redirect::to('/dashboard')->with('status', 'Password Changed Succesfully');
             }else{
