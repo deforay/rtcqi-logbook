@@ -160,6 +160,8 @@ Route::post('/getAllGlobalConfig', 'GlobalConfig\GlobalConfigController@getAllGl
 Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendreport.trendReport')->middleware('access');
 Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyReport');
 Route::post('/trendexcelexport', 'Report\ReportController@trendExport');
+Route::post('/getDistrictByProvinceId', 'Report\ReportController@getDistrictByProvinceId');
+
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
 Route::get('/report/logbook', 'Report\ReportController@logbook')->name('report.logbook')->middleware('access');
