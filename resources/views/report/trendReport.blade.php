@@ -102,9 +102,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
-                                                            @foreach($district as $row)
-                                                            <option value="{{$row->district_id}}">{{$row->district_name}}</option>
-                                                            @endforeach
+
                                                         </select>
                                                     </div>
                                                 </fieldset>
@@ -182,6 +180,11 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 </style>
 <script>
     $(document).ready(function() {
+        $("#provinceId").change(function () {
+            var datas = $(this).val();
+            console.log(datas);
+            listDistrictForProvince();
+        });
         getTrendReport();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
@@ -232,6 +235,30 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             getTrendReport();
         });
     });
+
+    function listDistrictForProvince() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getDistrictByProvinceId') }}",
+            method: 'post',
+            data: {
+                provinceId: $("#provinceId").val(),
+            },
+            success: function(result) {
+                console.log('data results', result);
+                // console.log($('#districtId').html(''));
+                var districtsOption = '';
+                result.forEach((res)=>{
+                    districtsOption += '<option value="'+res.district_id+'">'+res.district_name+'</option>';
+                });
+                $('#districtId').html(districtsOption);
+            }
+        });
+    }
     //   duplicateName = true;
     function getTrendReport() {
         // flag = deforayValidator.init({

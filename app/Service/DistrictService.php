@@ -41,6 +41,13 @@ class DistrictService
         return $result;
 	}
 
+	public function getDistrictByProvinceId($id)
+	{
+		$model = new DistrictTable();
+        $result = $model->fetchDistrictNameByProvinceId($id);
+		return $result;
+	}
+
 	//Get Particular District Details
 	public function getDistrictById($id)
 	{

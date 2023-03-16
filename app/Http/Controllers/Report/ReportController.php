@@ -21,6 +21,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
 use Session;
+use Log;
 
 class ReportController extends Controller
 {
@@ -44,6 +45,15 @@ class ReportController extends Controller
     }
 
     // Trend Report 
+
+    public function getDistrictByProvinceId(Request $request)
+    {
+        $input = $request->all();
+        $districtService = new DistrictService();
+        $district = $districtService->getDistrictByProvinceId($input['provinceId']??[]);
+        log::info($district);
+        return $district;
+    }
 
     public function getTrendMonthlyReport(Request $request)
     {
