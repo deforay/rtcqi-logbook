@@ -63,6 +63,15 @@ class UserService
         $result = $model->fetchUserById($id);
         return $result;
 	}
+
+	public function getUserByEmail($email)
+	{
+		
+		$model = new UserTable();
+        $result = $model->fetchUserByEmail($email);
+        return $result;
+	}
+
 	//Update Particular User Details
 	public function updateUser($params,$id)
     {
@@ -121,6 +130,24 @@ class UserService
 		$model = new TrackTable();
         $result = $model->fetchAllActivity($params);
         return $result;
+	}
+
+	//Update Particular User Details
+	public function resetForgotPassword($email,$newpassword)
+    {
+    	DB::beginTransaction();
+    	try {
+			$model = new UserTable();
+        	$change = $model->resetForgotPassword($email,$newpassword);
+			if($change>0){
+                DB::commit();
+				return 1;
+			}
+	    }
+	    catch (Exception $exc) {
+	    	DB::rollBack();
+	    	$exc->getMessage();
+	    }
 	}
 }
 

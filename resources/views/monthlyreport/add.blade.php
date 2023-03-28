@@ -204,10 +204,10 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Date of Data Collection <span class="mandatory">*</span>
+                                                <h5>Date of Data Collection
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="DateOfCollect" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
+                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -222,10 +222,10 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Book Number <span class="mandatory">*</span>
+                                                <h5>Book Number
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="bookNo" class="form-control isRequired" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
+                                                    <input type="text" id="bookNo" class="form-control" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -241,25 +241,27 @@ $test = '';
                                                     <fieldset>
                                                         <h5>Page No.</h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" id="pageNO1" class="form-control isRequired  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos('1')">
+                                                            <input type="number" min="0" id="pageNO1" class="form-control isRequired" autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos('1')">
                                                         </div>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>Start Date
+                                                        <h5>Start Date <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="startDate0" class="form-control isRequired dates " autocomplete="off" onchange="changeStartDate(0)" placeholder="Enter Start Date" name="startDate[]" title="Please Enter Start Date">
+                                                            <input type="text" id="startDate0" class="form-control isRequired startDate" autocomplete="off" onchange="changeStartDate(0)" placeholder="Enter Start Date" name="startDate[]" title="Please Enter Start Date">
+                                                            <div id="show_error_date0" class="error-date" ></div>
                                                         </div>
+                                                        
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>End Date
+                                                        <h5>End Date <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="endDate0" class="form-control isRequired  dates" autocomplete="off" onchange="changeEndDate(0);" placeholder="Enter End Date" name="endDate[]" title="Please Enter End Date">
+                                                            <input type="text" id="endDate0" class="form-control isRequired  endDate" autocomplete="off" onchange="changeEndDate(0);" placeholder="Enter End Date" name="endDate[]" title="Please Enter End Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -513,6 +515,19 @@ $test = '';
             autoclose: true,
         });
 
+        $(".startDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+     endDate: new Date()
+        });
+        $(".endDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+     endDate: new Date()
+        });
+
          // Site Name Change
          $('#testsiteId').change(function() {
             checkExistingReportingMonth();
@@ -554,6 +569,7 @@ $.ajax({
     var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 
     function changeStartDate(id) {
+        $("#endDate" + id).val('');
         $("#startDate" + id).datepicker({
             format: 'dd-mm-yyyy',
             autoclose: true,
@@ -567,14 +583,25 @@ $.ajax({
     }
 
     function changeEndDate(id) {
-        $("#endDate" + id).datepicker({
+        
+        if($('#startDate' + id).val() === ''){
+            var errorMessage='<span style="color:red">Please select start date!</span>'
+            $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
+            $('#show_error_date'+id).css("display", "block"); 
+            $("#endDate" + id).val('');           
+            $(".error-date").focus();
+        }else{
+            $("#endDate" + id).datepicker({
             format: 'dd-mm-yyyy',
             autoclose: true,
             endDate: today,
+            maxDate:"now"
         }).on('changeDate', function(selected) {
             var minDate = new Date(selected.date.valueOf());
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
+        }
+        
         // var minDate = new Date(selected.date.valueOf());
         //        $('#startDate'+id).datepicker('setEndDate', minDate);
     }
@@ -584,12 +611,28 @@ $.ajax({
         flag = deforayValidator.init({
             formId: 'addMonthlyReport'
         });
-
+        
         if (flag == true) {
+            // var rowCount = $(".testDetailsRow").length;
+            // if(rowCount > 0){
+            //     alert('sss');
+            //     for(var i=0; $i<rowCount; $i++){
+            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){           
+            //             var errorMessage="please select start date first";
+            //             $('#endDate' + i).val('');
+            //             $('#show_error_date'+i).html(flag).delay(3000).fadeOut();
+            //             $('#show_error_date'+i).css("display", "block");
+            //             $(".error-date").focus();
+            //             return false;
+            //         }
+            //     }                
+            
+            // }
             if (duplicateName) {
                 document.getElementById('addMonthlyReport').submit();
             }
         } else {
+            //alert(flag);
             // Swal.fire('Any fool can use a computer');
             $('#show_alert').html(flag).delay(3000).fadeOut();
             $('#show_alert').css("display", "block");
@@ -611,25 +654,26 @@ $.ajax({
 					<fieldset>\
 						<h5>Page No.</h5>\
 						<div class="form-group">\
-							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos(\'' + rowCount + '\')" >\
+							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control" autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos(\'' + rowCount + '\')" >\
 						</div>\
 					</fieldset>\
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>Start Date\
+						<h5>Start Date <span class="mandatory">*</span>\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="startDate' + rowCount + '" class="form-control  dates" onchange="changeStartDate(' + rowCount + ')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+							<input type="text" id="startDate' + rowCount + '" class="form-control startDate" onchange="changeStartDate(' + rowCount + ')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+                            <div id="show_error_date' + rowCount + '" class="error-date" ></div>\
 						</div>\
 					</fieldset>\
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>End Date\
+						<h5>End Date <span class="mandatory">*</span>\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="endDate' + rowCount + '" class="form-control  dates" onchange="changeEndDate(' + rowCount + ')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate' + rowCount + '" class="form-control  endDate" onchange="changeEndDate(' + rowCount + ')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -774,6 +818,18 @@ $.ajax({
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
+        });
+        $(".startDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+     endDate: new Date()
+        });
+        $(".endDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+     endDate: new Date()
         });
         let defaultRow = 0;
         let defaultTestkit = $(".selectTestKits").length;

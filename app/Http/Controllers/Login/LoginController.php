@@ -69,7 +69,6 @@ class LoginController extends Controller
         return Redirect::route('login.index')->with('status', $pResult['message']);
     }
 
-
     //reset Password
     public function resetPassword(Request $request)
     {

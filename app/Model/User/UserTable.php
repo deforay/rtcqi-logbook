@@ -92,6 +92,16 @@ class UserTable extends Model
         return $data;
     }
 
+    public function fetchUserByEmail($email)
+    {
+        $data = DB::table('users')
+            // ->join('roles', 'roles.role_id', '=', 'users.role_id')
+            // ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
+            ->where('users.email', '=', $email)
+            ->get();
+        return $data;
+    }
+
     // Update particular User details
     public function updateUser($params, $id)
     {
@@ -291,5 +301,12 @@ class UserTable extends Model
                 return 0;
             }
         }
+    }
+
+    public function resetForgotPassword($email, $newpassword)
+    {
+        $changepassword = DB::table('users')->where('email', $email)
+        ->update(['password' => Hash::make($newpassword)]);
+        return $changepassword;
     }
 }

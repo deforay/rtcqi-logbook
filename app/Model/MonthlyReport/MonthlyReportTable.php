@@ -342,8 +342,9 @@ class MonthlyReportTable extends Model
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
-                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
+                $query->whereDate('monthly_reports_pages.start_test_date',  '>=', $start_date)
+                    ->whereDate('monthly_reports_pages.end_test_date', '<=', $end_date)
+                    ->whereDate('monthly_reports_pages.end_test_date', '>=', $start_date);
             });
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
@@ -379,7 +380,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
-            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
+            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
@@ -396,10 +397,11 @@ class MonthlyReportTable extends Model
 
             $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
+        // dd($query->toSql());
+        // dd($user_id);
         $salesResult = $query->get();
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
-        
         return $result;
     }
 
@@ -556,7 +558,8 @@ class MonthlyReportTable extends Model
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
                 $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
-                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
+                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date)
+                    ->whereDate('monthly_reports_pages.end_test_date', '>=', $start_date);
             });
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
@@ -604,7 +607,7 @@ class MonthlyReportTable extends Model
             } else {
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid + monthly_reports_pages.test_4_invalid) as total_invalid');
             }
-            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
+            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
@@ -681,7 +684,8 @@ class MonthlyReportTable extends Model
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
                 $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
-                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
+                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date)
+                    ->whereDate('monthly_reports_pages.end_test_date', '>=', $start_date);
             });
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
@@ -717,7 +721,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
-            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as year');
+            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
             $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
@@ -1623,6 +1627,7 @@ class MonthlyReportTable extends Model
     // Fetch All Dashboard MonthlyReport List
     public function fetchMonthlyData()
     {
+
         $user_id = session('userId');
         DB::enableQueryLog();
         $data = DB::table('monthly_reports')
