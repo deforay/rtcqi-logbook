@@ -27,6 +27,7 @@
     <meta name="description" content="RTCQI LOGBOOK">
     <meta name="keywords" content="RTCQI LOGBOOK">
     <meta name="author" content="Deforay">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{$globData}}</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -53,6 +54,9 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
     <!-- END: Custom CSS-->
+   
+    
+
 
 </head>
 <!-- END: Head-->
@@ -61,6 +65,15 @@
       /*background: #63bef9  !important;*/
       background:url({{ asset('assets/images/1.jpg')}})  !important;
       background-size: cover !important;
+  }
+  .bottomgap {
+    margin-bottom:5px;
+  }
+  .error-msg {
+    color:red;
+  }
+  .success-msg {
+    color:green;
   }
 </style>
 <!-- BEGIN: Body-->
@@ -103,6 +116,18 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
                         $('#show_alert_index').delay(3000).fadeOut();
                     </script>
                     @endif
+
+                    @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index_success">
+                        <div class="text-center" style="font-size: 18px;"><b>
+                                {{ session('success') }}</b></div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <script>
+                        $('#show_alert_index_success').delay(3000).fadeOut();
+                    </script>
+                    @endif
+                    <div id="alert-new" style="display:none;"></div>
                     <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
@@ -125,7 +150,42 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
                       </fieldset>
 
                       <button type="submit" class="btn btn-outline-info btn-block" onclick="validateNow()"><i class="ft-unlock"></i> Login</button>
+                      <button type="button" class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#myModal">Forgot Password</button>
                     </form>
+                    <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" role="form" class="form-horizontal" id="resetpwdmail">
+      @csrf
+        <div class="modal-header">
+          <h4>Reset password</h4>
+        </div>
+        <div class="modal-body">
+        <!-- <form id="resetpwdmail" action="pwdresetlink"> -->
+        <div class="form-group">
+
+            <label for="contact-email" class="col-lg-6 control-label">Enter your email</label>
+            <div class="col-lg-10">
+
+              <input type="email" class="form-control bottomgap" name="email" id="contact-email" placeholder="you@example.com">
+              <p id="reset-error" style="display:none;"></p>
+              <!-- <br> -->
+              
+              <button type="submit" class="btn btn-primary">send email</button>
+          
+            </div>
+            
+            <!-- </form> -->
+        </div>
+        <div class="modal-footer">
+          
+          <button class="btn btn-primary" type="button" data-dismiss="modal" aria-label="Close">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
                   </div>
 
 
@@ -153,6 +213,37 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
 <script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
 
 <script>
+    $(document).ready(function() {
+      $('#resetpwdmail').on('submit', function(e){
+        e.preventDefault();
+        console.log('this',this);
+        email = $('#contact-email').val();
+        if(email.length <= 0)
+        {
+          $("#reset-error").show();
+          $("#reset-error").addClass("error-msg");
+          $("#reset-error").removeClass("success-msg");
+          $("#reset-error").text("Please Enter Email address");
+          return false;
+        } else {
+          var EmailValidation = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            if (EmailValidation.test(email)) {
+              console.log('email is valid');
+              sendResetLink();
+            } else {
+              console.log('invalid email');
+              $("#reset-error").show();
+              $("#reset-error").addClass("error-msg");
+                  $("#reset-error").removeClass("success-msg");
+              $("#reset-error").text("Invalid Email address");
+              return false;
+            }
+        }
+
+
+      })
+    });
+
     duplicateName = true;
     ismob = true;
 
@@ -192,5 +283,42 @@ data-open="click" data-menu="vertical-overlay-menu" data-col="1-column">
         if (charCode > 31 && (charCode < 48 || charCode > 57))
             return false;
         return true;
+    }
+
+    function sendResetLink()
+    {
+      $("#reset-error").show();
+      $("#reset-error").addClass("success-msg");
+      $("#reset-error").removeClass("error-msg");
+      $("#reset-error").text("Loading...");
+      $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/forgot/sendemailresetlink') }}",
+            method: 'post',
+            data: {
+                email: $("#contact-email").val(),
+            },
+            success: function(result) {
+                console.log('data results', result);
+                result = JSON.parse(result);
+                if(result.status == 'error')
+                {
+                  $("#reset-error").show();
+                  $("#reset-error").addClass("error-msg");
+                  $("#reset-error").removeClass("success-msg");
+                  $("#reset-error").text(result.message);
+                } else {
+                  $("#reset-error").hide();
+                  $("#reset-error").text('');
+                  $('#myModal').modal('hide');
+                  $("#alert-new").show();$("#alert-new").html('<div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index_ok"><div class="text-center" style="font-size: 18px;"><b>'+result.message+'</b></div><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>');
+                }
+
+            }
+        });
     }
 </script>

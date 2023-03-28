@@ -51,7 +51,7 @@ class ReportController extends Controller
         $input = $request->all();
         $districtService = new DistrictService();
         $district = $districtService->getDistrictByProvinceId($input['provinceId']??[]);
-        log::info($district);
+        // log::info($district);
         return $district;
     }
 

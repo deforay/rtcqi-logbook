@@ -210,10 +210,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Date of Data Collection <span class="mandatory">*</span>
+                                                <h5>Date of Data Collection
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="DateOfCollect" value="{{$date_of_data_collection}}" class="form-control isRequired datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
+                                                    <input type="text" id="DateOfCollect" value="{{$date_of_data_collection}}" class="form-control datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -228,10 +228,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Book Number <span class="mandatory">*</span>
+                                                <h5>Book Number
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="bookNo" value="{{$result[0]->book_no}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
+                                                    <input type="text" id="bookNo" value="{{$result[0]->book_no}}" class="form-control" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -258,19 +258,20 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>Start Date
+                                                        <h5>Start Date<span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="startDate{{$z}}" value="{{$start_test_date}}" class="form-control dates " onchange="changeStartDate('{{$z}}')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date">
+                                                            <input type="text" id="startDate{{$z}}" value="{{$start_test_date}}" class="form-control isRequired startDate " onchange="changeStartDate('{{$z}}')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date">
+                                                            <div id="show_error_date{{$z}}" class="error-date" ></div>
                                                         </div>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>End Date
+                                                        <h5>End Date<span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="endDate{{$z}}" value="{{$end_test_date}}" class="form-control  dates" onchange="changeEndDate('{{$z}}')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date">
+                                                            <input type="text" id="endDate{{$z}}" value="{{$end_test_date}}" class="form-control  isRequired endDate" onchange="changeEndDate('{{$z}}')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -547,12 +548,25 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             format: 'dd-M-yyyy',
             autoclose: true,
         });
+        $(".startDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            endDate: new Date()
+        });
+        $(".endDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            endDate: new Date()
+        });
         initSetTestkitHeadings();
     });
     var date1 = new Date();
     var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 
     function changeStartDate(id) {
+        $('#endDate' + id).val('');
         $("#startDate" + id).datepicker({
             format: 'dd-mm-yyyy',
             autoclose: true,
@@ -562,21 +576,30 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             $('#endDate' + id).datepicker('setStartDate', minDate);
         });
         // var minDate = new Date(selected.date.valueOf());
-        //    $('#endDate'+id).datepicker('setStartDate', minDate);
+        // $('#endDate'+id).datepicker('setStartDate', minDate);
     }
 
     function changeEndDate(id) {
-        $("#endDate" + id).datepicker({
+
+        if($('#startDate' + id).val() === ''){
+            var errorMessage='<span style="color:red">Please select start date!</span>'
+            $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
+            $('#show_error_date'+id).css("display", "block"); 
+            $("#endDate" + id).val('');           
+            $(".error-date").focus();
+        }else{
+            $("#endDate" + id).datepicker({
             format: 'dd-mm-yyyy',
             autoclose: true,
             endDate: today,
+            maxDate:"now"
         }).on('changeDate', function(selected) {
             var minDate = new Date(selected.date.valueOf());
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
-        // var minDate = new Date(selected.date.valueOf());
-        //        $('#startDate'+id).datepicker('setEndDate', minDate);
+        }
     }
+        
     duplicateName = true;
 
     function validateNow() {
@@ -620,8 +643,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 						<h5>Start Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="startDate' + rowCount + '" onchange="changeStartDate(' + rowCount + ')" class="form-control dates " placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
-						</div>\
+							<input type="text" id="startDate' + rowCount + '" onchange="changeStartDate(' + rowCount + ')" class="form-control isRequired startDate " placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+                            <div id="show_error_date' + rowCount + '" class="error-date" ></div>\
+                            </div>\
 					</fieldset>\
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
@@ -629,7 +653,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 						<h5>End Date\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="endDate' + rowCount + '" onchange="changeEndDate(' + rowCount + ')" class="form-control  dates" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate' + rowCount + '" onchange="changeEndDate(' + rowCount + ')" class="form-control isRequired  endDate" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -768,6 +792,18 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         $(".dates").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
+        });
+        $(".startDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            endDate: new Date()
+        });
+        $(".endDate").datepicker({
+            format: 'dd-M-yyyy',
+            autoclose: true,
+            todayHighlight: true,
+            endDate: new Date()
         });
         let defaultRow = 0;
         let defaultTestkit = $(".selectTestKits").length;

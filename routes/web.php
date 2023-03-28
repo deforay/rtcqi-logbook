@@ -51,6 +51,11 @@ Route::get('/login', 'Login\LoginController@index')->name('login.index');
 Route::post('/login/validate', 'Login\LoginController@validateEmployee');
 Route::match(['get','post'],'/logout/{name}', 'Login\LoginController@logout');
 
+//password reset module
+Route::post('/forgot/sendemailresetlink', 'ForgotPassword\ForgotPasswordController@sendEmailWithResetLink');
+Route::get('/reset-password/{token}', 'ForgotPassword\ForgotPasswordController@showResetPasswordForm')->name('reset.password');
+Route::post('/reset-new-password', 'ForgotPassword\ForgotPasswordController@submitResetPasswordForm');
+
 // Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
 Route::get('/unauthorized', function()
 {
