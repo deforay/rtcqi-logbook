@@ -451,36 +451,15 @@ class CommonService
         return $data;
     }
     
-    public function updatePassword($params,$id){
+    public function updatePassword($params){
         DB::beginTransaction();
-        
     	try {
-            // if(session('loginType')=='users'){
                 $model = new UserTable();
-                $addUser = $model->updatePassword($params,$id);
+                $addUser = $model->updatePassword($params);
                 DB::commit();
-               //dd($addUser);
                 if($addUser>0){
-                
-                            return $addUser; 
+                    return $addUser; 
                 }
-                //return $addUser;
-                // dd($addUser);
-                
-            //}
-            //  if(session('loginType')=='vendor'){
-            //     $model = new VendorsTable();
-            //     $addVendors = $model->updatePassword($params,$id);
-            //     if($addVendors>0){
-            //         DB::commit();
-            //         $msg = 'Password Updated Successfully';
-            //         return $msg;
-            //     }else{
-            //         // dd('addVendors');
-            //         $msg = '1';
-            //         return $msg;
-            //     }
-            // }
 	    }
 	    catch (Exception $exc) {
             DB::rollBack();
