@@ -74,60 +74,51 @@ font-size:larger;
 					<div class="card-content collapse show">
 						<div class="card-body">
 						<div id="show_alert"  class="mt-1" style=""></div>
-            <form class="form form-horizontal" role="form" name="changepassword" id="changepassword" method="post" action="/changePassword" autocomplete="off" onsubmit="validateNow();return false;">
-            @csrf
-			@php
-            if(session('loginType') == 'users'){
-				$fnct = "user_id##".(session('userId'));
-                $tableName = 'users';
-            }
-            else{
-                $fnct = "vendor_id##".(session('userId'));
-                $tableName = 'vendors';
-            }
-			@endphp
-              <div class="row">
-									<div class="col-xl-6 col-lg-12">
-										<fieldset>
-											<h5>Current Password <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                      <input type="password" id="currentPassword" class="form-control isRequired" autocomplete="off" placeholder="Enter a Current Password" name="currentPassword" title="Please Enter Current Password">
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-6 col-lg-12">
-										<fieldset>
-											<h5>New Password <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                      <input type="password" id="newPassword" class="form-control isRequired" autocomplete="off" placeholder="Enter a New Password" name="newPassword" title="Please Enter New Password">
-
-					  <div class="invalid-feedback">
-														must contain atleast 8 characters, 1 number , 1 alphabet and 1 special character
-													</div>
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-xl-6 col-lg-12">
-										<fieldset>
-											<h5>Confirm Password <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                      <input type="password" id="confirmPassword" class="form-control isRequired"  autocomplete="off" placeholder="Enter a Confirm Password" name="confirmPassword" title="Please Enter Confirm Password">
-					  <span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
-                      <input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" title="Passwords do not match.">
-											</div>
-										</fieldset>
-									</div>
-
+						<form class="form form-horizontal" role="form" name="changepassword" id="changepassword" method="post" action="/changePassword" autocomplete="off" onsubmit="validateNow();return false;">
+						@csrf
+							<div class="row">
+								<div class="col-xl-6 col-lg-12">
+									<fieldset>
+										<h5>Current Password <span class="mandatory">*</span></h5>
+										<div class="form-group">
+											<input type="password" id="currentPassword" class="form-control isRequired" autocomplete="off" placeholder="Enter a Current Password" name="currentPassword" title="Please Enter Current Password">
+											@if ($errors->has('currentPassword'))
+												<span class="text-danger">{{ $errors->first('currentPassword') }}</span>
+											@endif
+										</div>
+									</fieldset>
 								</div>
-								<div class="form-actions right">
-                <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                  <i class="la la-check-square-o"></i> Save
-                </button>
+								<div class="col-xl-6 col-lg-12">
+									<fieldset>
+										<h5>New Password <span class="mandatory">*</span></h5>
+										<div class="form-group">
+											<input type="password" id="newPassword" class="form-control isRequired" autocomplete="off" placeholder="Enter a New Password" name="newPassword" title="Please Enter New Password">
+											<div class="invalid-feedback">
+												must contain atleast 8 characters, 1 number , 1 alphabet and 1 special character
+											</div>
+											@if ($errors->has('newPassword'))
+												<span class="text-danger">{{ $errors->first('newPassword') }}</span>
+											@endif
+										</div>
+									</fieldset>
 								</div>
-							</form>
+								<div class="col-xl-6 col-lg-12">
+									<fieldset>
+										<h5>Confirm Password <span class="mandatory">*</span></h5>
+										<div class="form-group">
+											<input type="password" id="confirmPassword" class="form-control isRequired"  autocomplete="off" placeholder="Enter a Confirm Password" name="newPassword_confirmation" title="Please Enter Confirm Password">
+											<span id="confirmresult" style="width: 100%;margin-top: 0.25rem;font-size: 80%;color: #FF4961;"></span>
+											<input type="hidden" id="passwordCheck" name="passwordCheck" class="isRequired" title="Passwords do not match.">
+										</div>
+									</fieldset>
+								</div>
+							</div>
+							<div class="form-actions right">
+								<button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
+								<i class="la la-check-square-o"></i> Save
+								</button>
+							</div>
+						</form>
 
 						</div>
 					</div>
@@ -160,17 +151,6 @@ font-size:larger;
         }
     }
 
-
-
-	// function passwordStrengthvalidation(passwordElementObject){
-    //     const validPasswordRegEx = new RegExp("^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})|(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})");
-    //     if(validPasswordRegEx.test(passwordElementObject.value) === false){
-    //         $("#"+passwordElementObject.id).val("");
-    //         $(".invalid-feedback").show();
-    //     }else{
-    //         $(".invalid-feedback").hide();
-    //     }
-    // }
 	$(document).ready(function() {
 		$('#confirmPassword').keyup(function() {			
 			var nPws=$('#newPassword').val();
