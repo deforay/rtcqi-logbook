@@ -53,8 +53,8 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             <tr class="frezz" style=" top: 37px; width:94.6%;">
                 <th class="th" style="width:10%;">Facility</th>
                 <th class="th" style="width:10%;">Site</th>
-                <th class="th" style="width:10%;">Algo</th>
-                <th class="th" style="width:10%;">Testing Month</th>
+                <th class="th" style="width:10%;">Algorithm</th>
+                <th class="th" style="width:10%;">Testing Period</th>
                 @for($i = 1; $i <= $arr['no_of_test']; $i++)
                 <th class="th" style="width:5%;">Test {{$i}} Used</th>
                 @endfor

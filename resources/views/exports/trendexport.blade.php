@@ -27,8 +27,8 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             <th style="border: 3px solid black;font-weight:bold;">Facility</th>
             <th style="border: 3px solid black;font-weight:bold;">Site</th>
             <th style="border: 3px solid black;font-weight:bold;">Algothrim</th>
-            <th style="border: 3px solid black;font-weight:bold;">Testing Month</th>
-            <th style="border: 3px solid black;font-weight:bold;">Total Testing</th>
+            <th style="border: 3px solid black;font-weight:bold;">Testing Period</th>
+            <th style="border: 3px solid black;font-weight:bold;">Total Tests</th>
             @for($i = 1; $i <= $globalValue; $i++) <th colspan="3" style="border: 3px solid black;font-weight:bold;text-align: center;">Test {{$i}}</th>
                 @endfor
                 <th style="border: 3px solid black;font-weight:bold;">% Pos</th>
@@ -51,6 +51,9 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         </tr>
     </thead>
     <tbody style="border: 3px solid black">
+    @php
+            print_r($report['res']);
+            @endphp
         @foreach($report['res'] as $trendrow)
         <?php
         if ($report['reportFrequency'] == 'quaterly') {

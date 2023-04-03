@@ -56,8 +56,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 <th class="th" style="width:10%;">Facility</th>
                 <th class="th" style="width:10%;">Site</th>
                 <th class="th" style="width:10%;">Algo</th>
-                <th class="th" style="width:10%;">Testing Month</th>
-                <th class="th" style="width:5%;">Total Testing</th>
+                <th class="th" style="width:10%;">Testing Period</th>
+                <th class="th" style="width:5%;">Total Tests</th>
                 @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="3" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
                     @endfor
                     <th class="th" style="width:10%;">% Pos</th>
