@@ -28,9 +28,8 @@ class LoginController extends Controller
         $service = new UserService();
         $login = $service->validateLogin($request);
         if (trim($login) == 1) {
-            if (session('forcePasswordReset') == '') {
-                $id = base64_encode(session("userId"));
-                return view('login.changepassword', array('id' => $id));
+            if (session('forcePasswordReset') == '1') {
+                return view('login.changepassword');
             }
             return Redirect::to('/dashboard');
         } else {

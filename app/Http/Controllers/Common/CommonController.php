@@ -58,24 +58,25 @@ class CommonController extends Controller
     
     public function changePassword(Request $request)
     {
-        $id = session('userId');
-        // dd(session('loginType'));
         if ($request->isMethod('post')) 
         {
-            
+            $request->validate([
+                'currentPassword' => 'required',
+                'newPassword' => 'required|confirmed',
+            ]);
+
             $service = new CommonService();
-            $pswd = $service->updatePassword($request,$id);
-            //dd($pswd);
+            $pswd = $service->updatePassword($request);
             if($pswd==1){
                 return Redirect::to('/dashboard')->withErrors(['msg' => 'Password Changed Succesfully']);
                
             }else{
-                return view('login.changepassword',array('id'=>$id,'status'=>'Your new password is too similar to your current password. Please try another password.'));
+                return view('login.changepassword',array('status'=>'Your new password is too similar to your current password. Please try another password.'));
             }
         }
         else
         {
-            return view('login.changepassword',array('id'=>$id));
+            return view('login.changepassword');
         }
     }
     
