@@ -62,7 +62,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             <thead>
                 <tr class="frezz" style=" top: 37px; width:94.6%;">
                     <th class="th" style="width:10%;">Facility</th>
-                    <th class="th" style="width:10%;">Algo</th>
+                    <th class="th" style="width:10%;">Algorithm</th>
                     <th class="th" style="width:10%;">Kit Name</th>
                     <th class="th" style="width:10%;">Test Used</th>
                     <th class="th" style="width:10%;">Invalid Results</th>

@@ -348,7 +348,10 @@ class MonthlyReportTable extends Model
             });
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
-            $query = $query->whereIn('provinces.province_id', $data['provinceId']);
+            $query = $query->
+            
+            
+            whereIn('provinces.province_id', $data['provinceId']);
             $query = $query->groupBy(DB::raw('provinces.province_id'));
         }
         if (isset($data['districtId']) && $data['districtId'] != '') {
@@ -371,7 +374,8 @@ class MonthlyReportTable extends Model
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
-            $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date'),DB::raw('monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -381,7 +385,7 @@ class MonthlyReportTable extends Model
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
-            $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -395,7 +399,8 @@ class MonthlyReportTable extends Model
 
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
 
-            $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)'), DB::raw('monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
         // dd($query->toSql());
         // dd($user_id);
@@ -592,7 +597,8 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid + monthly_reports_pages.test_4_invalid) as total_invalid');
             }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
-            $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -608,7 +614,8 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_1_invalid + monthly_reports_pages.test_2_invalid + monthly_reports_pages.test_3_invalid + monthly_reports_pages.test_4_invalid) as total_invalid');
             }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
-            $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -628,7 +635,8 @@ class MonthlyReportTable extends Model
 
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
 
-            $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
         $salesResult = $query->get();
 
@@ -712,7 +720,8 @@ class MonthlyReportTable extends Model
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
-            $query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -722,7 +731,8 @@ class MonthlyReportTable extends Model
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
-            $query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -736,7 +746,8 @@ class MonthlyReportTable extends Model
 
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
 
-            $query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
         $salesResult = $query->get();
         // dd(DB::getQueryLog($salesResult));die;
