@@ -562,6 +562,7 @@ $.ajax({
     }
 });
 });
+loadReplaceTestKitHeadings();
  });
 
 
@@ -934,6 +935,11 @@ $.ajax({
                 }
             });
         }
+    }
+
+    function loadReplaceTestKitHeadings(){
+        let optionSelected = ($(`#testkitId1_0`).val() && $(`#testkitId1_0`).find(":selected").text()) || `Test Kit 1`;
+        $(`#testKitHeading1_0`).html(optionSelected);
     }
 </script>
 @endsection
