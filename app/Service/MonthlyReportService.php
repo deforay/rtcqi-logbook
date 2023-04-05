@@ -22,6 +22,7 @@ class MonthlyReportService
     	try {
 			$model = new MonthlyReportTable();
         	$add = $model->saveMonthlyReport($request);
+			
 			if($add>0){
                 DB::commit();
 				$msg = 'Monthly Report Added Successfully';
