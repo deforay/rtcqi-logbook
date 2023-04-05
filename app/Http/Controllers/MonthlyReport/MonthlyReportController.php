@@ -45,6 +45,7 @@ class MonthlyReportController extends Controller
         if ($request->isMethod('post')) {
             $addMonthlyReport = new MonthlyReportService();
             $result = $addMonthlyReport->saveMonthlyReport($request);
+            //echo $result; exit();
             return Redirect::route('monthlyreport.index')->with('status', $result);
         } else {
             $allowedTestKit = new AllowedTestKitService();

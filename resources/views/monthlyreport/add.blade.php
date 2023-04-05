@@ -241,7 +241,7 @@ $test = '';
                                                     <fieldset>
                                                         <h5>Page No.</h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" id="pageNO1" class="form-control isRequired" autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos('1')">
+                                                            <input type="number" min="0" id="pageNO1" class="form-control" autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos('1')">
                                                         </div>
                                                     </fieldset>
                                                 </div>

@@ -29,7 +29,7 @@ class MonthlyReportTable extends Model
         $user_name = session('name');
         // print_r($data);die;
         $commonservice = new CommonService();
-        $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
+        $DateOfCollect = $data['DateOfCollect'] == "" ? date('Y-m-d') : $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = ($data['reportingMon']);
         $recency = '';
         if (isset($data['isRecency']))
@@ -51,7 +51,7 @@ class MonthlyReportTable extends Model
                     'date_of_data_collection' => $DateOfCollect,
                     'reporting_month' => $reportingMon,
                     'book_no' => $data['bookNo'],
-                    'name_of_data_collector' => $data['nameOfDataCollect'],
+                    'name_of_data_collector' => $data['nameOfDataCollect']=="" ? $user_name : $data['nameOfDataCollect'],
                     'source' => 'web-form',
                     'added_on' => date('Y-m-d'),
                     'added_by' => session('userId'),
@@ -105,10 +105,11 @@ class MonthlyReportTable extends Model
                 $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
                     $insMonthlyArr
                 );
+                 
             }
             $commonservice->eventLog('add-monthly-report-request', $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report', $id);
         }
-
+        
         return $id;
     }
 
@@ -206,6 +207,7 @@ class MonthlyReportTable extends Model
     // Update particular MonthlyReport details
     public function updateMonthlyReport($params, $id)
     {
+        //echo base64_decode($id); exit();
         $user_name = session('name');
         $data = $params->all();
         $model = new TestSiteTable();
@@ -213,7 +215,7 @@ class MonthlyReportTable extends Model
         $latitude = $model->fetchLatitudeValue($data['testsiteId']);
         $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $commonservice = new CommonService();
-        $DateOfCollect = $commonservice->dateFormat($data['DateOfCollect']);
+        $DateOfCollect = ($data['DateOfCollect'] == "" ? date('Y-m-d') : $commonservice->dateFormat($data['DateOfCollect']));
         $reportingMon = ($data['reportingMon']);
         $recency = '';
         if (isset($data['isRecency']))
@@ -233,17 +235,17 @@ class MonthlyReportTable extends Model
             'date_of_data_collection' => $DateOfCollect,
             'reporting_month' => $reportingMon,
             'book_no' => $data['bookNo'],
-            'name_of_data_collector' => $data['nameOfDataCollect'],
+            'name_of_data_collector' => $data['nameOfDataCollect'] == "" ? $user_name : $data['nameOfDataCollect'],
             'last_modified_on' => $commonservice->getDateTime(),
             'district_id' => $districtId,
             'tester_name' => $data['testername'],
             // 'signature' => $data['signature'],
         );
-        $response = DB::table('monthly_reports')
-            ->where('mr_id', '=', base64_decode($id))
-            ->update(
-                $upData
-            );
+        //$response = DB::table('monthly_reports')
+            //->where('mr_id', '=', base64_decode($id))
+            //->update(
+                //$upData
+            //);
         $GlobalConfigService = new GlobalConfigService();
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
@@ -252,7 +254,7 @@ class MonthlyReportTable extends Model
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         for ($p = 0; $p < count($data['pageNO']); $p++) {
-
+            //print_r($data['pageNO']); exit();
             $startDate = $commonservice->dateFormat($data['startDate'][$p]);
             $endDate = $commonservice->dateFormat($data['endDate'][$p]);
             $insMonthlyArr = array(
@@ -285,6 +287,7 @@ class MonthlyReportTable extends Model
             $insMonthlyArr['overall_agreement'] = $OverallAgreement;
             // print_r($insMonthlyArr);die;
             if (isset($data['mrp_id'][$p]) && $data['mrp_id'][$p] != '') {
+                //echo $data['mrp_id'][$p];exit();
                 DB::table('monthly_reports_pages')
                     ->where('mrp_id', '=', $data['mrp_id'][$p])
                     ->update(
