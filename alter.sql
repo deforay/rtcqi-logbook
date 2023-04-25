@@ -537,5 +537,9 @@ CREATE TABLE `password_resets` (
 ALTER TABLE `password_resets`
   ADD KEY `email` (`email`);
 
+--Sijulda 25-Apr-2023
+ALTER TABLE `not_uploaded_monthly_reports` 
+  ADD `comment` varchar(255) DEFAULT NULL;
+
 
 
