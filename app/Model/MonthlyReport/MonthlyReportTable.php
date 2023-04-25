@@ -81,6 +81,8 @@ class MonthlyReportTable extends Model
                     'final_positive' => $data['totalPositive'][$p],
                     'final_negative' => $data['totalNegative'][$p],
                     'final_undetermined' => $data['finalUndetermined'][$p],
+                    'created_on' => $commonservice->getDateTime(),
+                    'created_by' => session('userId')
                 );
                 for ($l = 1; $l <= $arr['no_of_test']; $l++) {
                     $m = $l;
@@ -210,6 +212,7 @@ class MonthlyReportTable extends Model
         //echo base64_decode($id); exit();
         $user_name = session('name');
         $data = $params->all();
+        
         $model = new TestSiteTable();
         $districtId = $model->fetchDistrictId($data['testsiteId']);
         $latitude = $model->fetchLatitudeValue($data['testsiteId']);
@@ -239,13 +242,14 @@ class MonthlyReportTable extends Model
             'last_modified_on' => $commonservice->getDateTime(),
             'district_id' => $districtId,
             'tester_name' => $data['testername'],
+            'updated_by' => session('userId')
             // 'signature' => $data['signature'],
         );
-        //$response = DB::table('monthly_reports')
-            //->where('mr_id', '=', base64_decode($id))
-            //->update(
-                //$upData
-            //);
+        $response = DB::table('monthly_reports')
+            ->where('mr_id', '=', base64_decode($id))
+            ->update(
+                $upData
+            );
         $GlobalConfigService = new GlobalConfigService();
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
@@ -265,6 +269,8 @@ class MonthlyReportTable extends Model
                 'final_positive' => $data['totalPositive'][$p],
                 'final_negative' => $data['totalNegative'][$p],
                 'final_undetermined' => $data['finalUndetermined'][$p],
+                'updated_on' => $commonservice->getDateTime(),
+                'updated_by' => session('userId')
             );
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
                 $m = $l;
@@ -799,9 +805,14 @@ class MonthlyReportTable extends Model
                 }
                 $notInsertRowArray=array();
                 $notInsertRow=0;
+                
                 foreach ($array as $row) {
                     if ($rowCnt > 1) {
-                        if ($row[0] != '' && trim($row[13])!="") {
+
+                        $isDataValid=$this->isValidData($row);
+                        $comment = !$isDataValid ? $this->getErrorComment($row) : '';                       
+
+                        if ($isDataValid) {
                             $reporting_date = '';
                             if (is_numeric($row[12])) {
                                 $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('M-Y');
@@ -846,8 +857,8 @@ class MonthlyReportTable extends Model
                             $date_of_collection = $dateOfCollection;
                             $report_months = $reporting_date;
                             $book_no = $row[13];
-                            $name_of_collector = $row[14];
-                            $page_no = $row[15];
+                            $name_of_collector = $row[14]=="" ? $user_name : $row[14];
+                            $page_no = $row[15]== "" ? 0 : $row[15];
                             $start_date = $startDate;
                             $end_date = $endDate;
                             if ($arr['no_of_test'] >= 1) {
@@ -996,6 +1007,7 @@ class MonthlyReportTable extends Model
                                     ]
                                 );
                             }
+                            
                             $testsiteData = DB::table('test_sites')
                                 ->where('site_name', '=', trim($test_site_name))
                                 ->get();
@@ -1035,14 +1047,15 @@ class MonthlyReportTable extends Model
                                 ->where('book_no', '=', $book_no)
                                 ->where('monthly_reports_pages.page_no', '=', $page_no)
                                 ->get();
-                            if (count($duplicateCheck) == 0) {
+                               
+                            if (count($duplicateCheck) == 0) {                                
                                 $monthyReportVal = DB::table('monthly_reports')
                                     ->where('ts_id', '=', $testSiteId)
                                     ->where('reporting_month', '=', $report_months)
                                     ->where('book_no', '=', $book_no)
                                     ->get();
                                 if (count($monthyReportVal) > 0) {
-                                    $mr_id = $monthyReportVal[0]->mr_id;
+                                    $mr_id = $monthyReportVal[0]->mr_id;                                    
                                 } else {
                                     $mr_id = DB::table('monthly_reports')->insertGetId(
                                         [
@@ -1082,6 +1095,8 @@ class MonthlyReportTable extends Model
                                     'final_positive' => $final_positive,
                                     'final_negative' => $final_negative,
                                     'final_undetermined' => $final_indeterminate,
+                                    'created_on' => $commonservice->getDateTime(),
+                                    'created_by' => session('userId'),                                    
                                 );
                                 if ($arr['no_of_test'] >= 1) {
                                     $insMonthlyArr['test_1_kit_id'] = $test_kit1;
@@ -1127,12 +1142,12 @@ class MonthlyReportTable extends Model
                                 $insMonthlyArr['positive_percentage'] = $positivePercentage;
                                 $insMonthlyArr['positive_agreement'] = $posAgreement;
                                 $insMonthlyArr['overall_agreement'] = $OverallAgreement;
-                                $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
-                                    $insMonthlyArr
-                                );
+                                
+                                $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId($insMonthlyArr);
                                 if ($monthly_reports_pages) {
                                     $cnt++;
                                 }else{
+                                    
                                     //Not Upload monthly reports
                                     /*
                                     $test_site_name = $row[0];
@@ -1147,11 +1162,12 @@ class MonthlyReportTable extends Model
                                     $contact_no = $row[9];
                                     $algo_type = $row[10];
                                     */
+                                    //$commentArray=array();
                                     $date_of_collection = $row[11];
                                     $report_months = $reporting_date;
                                     $book_no = $row[13];
                                     $name_of_collector = $row[14];
-                                    $page_no = $row[15];
+                                    $page_no = $row[15] == "" ? 0 : $row[15];
                                     $start_date = $row[16];
                                     $end_date = $row[17];
                                     /*
@@ -1174,6 +1190,9 @@ class MonthlyReportTable extends Model
                                         $final_indeterminate = $row[44];
                                     }
                                     */
+                                    if(trim($test_site_name)==''){
+                                        array_push($commentArray, 'Test Site');
+                                    }
                                     $unLoadData=array(
                                         'test_site_name' => $test_site_name,
                                         'site_type' => $site_type,
@@ -1200,6 +1219,7 @@ class MonthlyReportTable extends Model
                                         'added_on' => date('Y-m-d'),
                                         'added_by' => session('userId'),
                                         'file_name' => $fileName,
+                                        'comment' =>  $comment,
                                     );
 
                                     if ($arr['no_of_test'] >= 1) {
@@ -1266,7 +1286,7 @@ class MonthlyReportTable extends Model
                             $report_months = $reporting_date;
                             $book_no = $row[13];
                             $name_of_collector = $row[14];
-                            $page_no = $row[15];
+                            $page_no = $row[15] == "" ? 0 : $row[15];
                             $start_date = $row[16];
                             $end_date = $row[17];
 
@@ -1288,7 +1308,8 @@ class MonthlyReportTable extends Model
                                 $final_negative = $row[43];
                                 $final_indeterminate = $row[44];
                             }
-
+                            
+                            
                             $unLoadData=array(
                                 'test_site_name' => $test_site_name,
                                 'site_type' => $site_type,
@@ -1315,6 +1336,7 @@ class MonthlyReportTable extends Model
                                 'added_on' =>$commonservice->getDateTime(),
                                 'added_by' => session('userId'),
                                 'file_name' => $fileName,
+                                'comment' =>  $comment,
                             );
 
                             if ($arr['no_of_test'] >= 1) {
@@ -1360,11 +1382,13 @@ class MonthlyReportTable extends Model
                 if ($cnt > 0) {
                     $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report', $mr_id);
                 }
-                if($notInsertRow>0){
-                    $rslt.=$notInsertRow." Rows Not Inserted <br/>";
-                }
+                $rslt.="File Name: ".$fileName."<br/>";
+                $rslt.="No.of Records: ".($cnt + $notInsertRow)."<br/>";
+                $rslt.="No.of Records Uploaded Successfully: ".($cnt)."<br/>";
+                $rslt.="No.of Records not Uploaded: ". $notInsertRow."<br/>";
+                
                 DB::commit();
-                $rslt .= $cnt . " rows Updated";
+                
             } catch (Exception $exc) {
                 DB::rollBack();
                 $exc->getMessage();
@@ -1373,6 +1397,73 @@ class MonthlyReportTable extends Model
         }
         // print($invStkId);die;
         return $rslt;
+    }
+
+    public function isValidData($row){
+        
+        $validData=true;
+
+        if(trim($row[0])=='' || trim($row[1])=='' || trim($row[2])=='' || trim($row[3])=='' || trim($row[6])=='' || trim($row[7])=='' || trim($row[12])=='' || trim($row[16])=='' || trim($row[17])=='' || trim($row[18])=='' || trim($row[19])=='' || trim($row[20])==''){
+            $validData=false;
+        }        
+
+        return $validData;
+    }
+
+    public function getErrorComment($row){
+
+        $commentArray=array();
+
+        if(trim($row[0])==''){
+            array_push($commentArray, 'Test Site');
+        }
+
+        if(trim($row[1])==''){
+            array_push($commentArray, 'Entry Point');
+        }
+
+        if(trim($row[2])==''){
+            array_push($commentArray, 'Facility');
+        }
+
+        if(trim($row[3])==''){
+            array_push($commentArray, 'Province');
+        }
+
+        if(trim($row[6])==''){
+            array_push($commentArray, 'Lab Manager Name');
+        }
+
+        if(trim($row[7])==''){
+            array_push($commentArray, 'Is FLC');
+        }
+
+        if(trim($row[12])==''){
+            array_push($commentArray, 'Reporting Month');
+        }
+
+        if(trim($row[16])==''){
+            array_push($commentArray, 'Start Date');
+        }
+
+        if(trim($row[17])==''){
+            array_push($commentArray, 'End Date');
+        }
+
+        if(trim($row[18])==''){
+            array_push($commentArray, 'Test Kit Name 1');
+        }
+
+        if(trim($row[19])==''){
+            array_push($commentArray, 'Lot No.1');
+        }
+
+        if(trim($row[20])==''){
+            array_push($commentArray, 'Expiry Date 1');
+        }
+
+        return implode(", ", $commentArray).' field(s) are missing';
+        
     }
 
     // Invalid Result Report
