@@ -66,7 +66,8 @@ KEY (`provincesss_id`)
 );
 
 -- ---
--- Table 'monthly_reports_pages'
+-- Table '
+'
 --
 -- ---
 
