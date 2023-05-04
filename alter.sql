@@ -527,7 +527,7 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('Application\\\\Controller\\\\AuditTrail', 'index', 'Audit Trail');
 
 INSERT INTO `resources` (`resource_id`, `display_name`) VALUES ('Application\\Controller\\AuditTrail', 'Audit Trail');
---Sijulda 128-Mar-2023
+-- Sijulda 128-Mar-2023
 CREATE TABLE `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -537,9 +537,19 @@ CREATE TABLE `password_resets` (
 ALTER TABLE `password_resets`
   ADD KEY `email` (`email`);
 
---Sijulda 25-Apr-2023
+-- Sijulda 25-Apr-2023
 ALTER TABLE `not_uploaded_monthly_reports` 
   ADD `comment` varchar(255) DEFAULT NULL;
 
+-- Sijulda 04-May-2023
+ALTER TABLE `not_uploaded_monthly_reports` 
+  ADD `status` bit(10);
 
+-- Sijulda 04-May-2023
+ALTER TABLE `monthly_reports_pages` 
+ADD `created_by` INT NULL DEFAULT NULL AFTER `updated_on`;
+
+-- Sijulda 04-May-2023
+ALTER TABLE `monthly_reports_pages` 
+ADD `created_on` INT NULL DEFAULT NULL AFTER `updated_on`;
 

@@ -13,6 +13,7 @@ use App\Service\ProvinceService;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TestKitExport;
 use App\Exports\TrendExport;
+use App\Exports\NotUploadExport;
 use App\Exports\LogBookExport;
 use App\Exports\InvalidResultExport;
 use App\Service\CommonService;
@@ -204,6 +205,8 @@ class ReportController extends Controller
         $commonservice = new CommonService();
         $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
+        
+        
         return Excel::download(new TrendExport($data), 'Trend-Report-' . $dateTime . '.xlsx');
     }
 
@@ -213,6 +216,14 @@ class ReportController extends Controller
         $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
         return Excel::download(new LogBookExport($data), 'Logbook-Report-' . $dateTime . '.xlsx');
+    }
+
+    public function notUploadExport(Request $request)
+    {
+        $commonservice = new CommonService();
+        $dateTime = $commonservice->getDateAndTime();
+        $data = $request->all();     
+        return Excel::download(new NotUploadExport($data), 'Not-Upload-Report-' . $dateTime . '.xlsx');
     }
 
     public function invalidResultExport(Request $request)
