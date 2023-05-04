@@ -21,8 +21,10 @@ class CheckRoleAuthorization
         }
         
         $routeInfo = $request->route()->getAction();
+        
         //dd($routeInfo);
         list($resource,$view) = explode("@",$routeInfo['controller']);
+        
            
         if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){
            return redirect('/unauthorized');
