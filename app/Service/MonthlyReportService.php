@@ -242,10 +242,27 @@ class MonthlyReportService
 	}
 	
 	//Get All Not Upload MonthlyReport List
-	public function getAllNotUploadMonthlyReport($params)
+	public function getAllNotUploadMonthlyReport($params, $isExport=false)
+    {
+		
+		$model = new NotUploadMonthlyReportTable();
+        $result = $model->fetchAllNotUploadMonthlyReport($params, $isExport);
+        return $result;
+	}
+	
+	//Get All Not Upload Test Sites
+	public function getAllNotUploadActiveTestSite()
     {
 		$model = new NotUploadMonthlyReportTable();
-        $result = $model->fetchAllNotUploadMonthlyReport($params);
+		$result = $model->fetchAllNotUploadActiveTestSite();
+        return $result;
+	}
+
+	//Get All Not Upload Provinces
+	public function getAllNotUploadActiveProvince()
+    {
+		$model = new NotUploadMonthlyReportTable();
+		$result = $model->fetchAllNotUploadActiveProvince();
         return $result;
 	}
 }

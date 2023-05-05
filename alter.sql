@@ -541,5 +541,15 @@ ALTER TABLE `password_resets`
 ALTER TABLE `not_uploaded_monthly_reports`
   ADD `comment` varchar(255) DEFAULT NULL;
 
+-- Sijulda 04-May-2023
+ALTER TABLE `not_uploaded_monthly_reports` 
+  ADD `status` bit(10);
 
+-- Sijulda 04-May-2023
+ALTER TABLE `monthly_reports_pages` 
+ADD `created_by` INT NULL DEFAULT NULL AFTER `updated_on`;
+
+-- Sijulda 04-May-2023
+ALTER TABLE `monthly_reports_pages` 
+ADD `created_on` INT NULL DEFAULT NULL AFTER `updated_on`;
 
