@@ -129,6 +129,7 @@ Route::post('/CheckPreLot', 'MonthlyReport\MonthlyReportController@CheckPreLot')
 
 Route::get('/monthlyreport/notUpload', 'MonthlyReport\MonthlyReportController@notUpload')->name('monthlyreport.notUpload')->middleware('access');
 Route::post('/getAllNotUploadMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllNotUploadMonthlyReport');
+Route::post('/notuploadexcelexport', 'Report\ReportController@notUploadExport');
 //sitetype module
 Route::get('/sitetype', 'SiteType\SiteTypeController@index')->name('sitetype.index')->middleware('access');
 Route::post('/sitetype/add', 'SiteType\SiteTypeController@add');

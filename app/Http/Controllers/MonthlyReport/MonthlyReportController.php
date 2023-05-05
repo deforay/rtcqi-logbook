@@ -21,7 +21,7 @@ class MonthlyReportController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport');        
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport','notUpload');        
        
     }
     //View MonthlyReport main screen
@@ -179,14 +179,14 @@ class MonthlyReportController extends Controller
     }
 
     public function notUpload()
-    {
+    {        
         if (session('login') == true) {
-            $TestSiteService = new TestSiteService();
-            $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
+            $MonthlyReportService = new MonthlyReportService();
+            $testSite = $MonthlyReportService->getAllNotUploadActiveTestSite();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
-            $ProvinceService = new ProvinceService();
-            $province = $ProvinceService->getAllActiveProvince();
+            //$ProvinceService = new MonthlyReportService();
+            $province = $MonthlyReportService->getAllNotUploadActiveProvince();
             return view('monthlyreport.notUpload', array('testSite' => $testSite,'district' => $district,'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
@@ -209,4 +209,5 @@ class MonthlyReportController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+    
 }
