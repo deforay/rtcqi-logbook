@@ -11,8 +11,9 @@
 @section('content')
 
 <?php
-$enddate = date('d-M-Y');
-$startdate = date('d-M-Y', strtotime('-29 days'));
+$enddate = date('d-M-Y', strtotime('last day of previous month'));
+$startdate = date('01-M-Y', strtotime('-18 months'));
+
 ?>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -313,8 +314,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 format: 'DD-MMM-YYYY',
                 autoUpdateInput: false,
                 separator: ' to ',
-                startDate: moment().subtract('days', 29),
-                endDate: moment(),
+                startDate: moment().subtract(18, 'month').startOf('month'),
+                endDate: moment().subtract(1, 'month').endOf('month'),
                 maxDate: moment(),
                 ranges: {
                     'Today': [moment(), moment()],
