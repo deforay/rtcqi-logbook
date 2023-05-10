@@ -59,7 +59,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 <th class="th" style="width:10%;">Start Date</th>
                 <th class="th" style="width:10%;">End Date</th>
                 <th class="th" style="width:10%;">Total Tests</th>
-                @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="3" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
+                @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="4" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
                     @endfor
                     <th class="th" style="width:10%;">% Pos</th>
                     <th class="th" style="width:10%;">Positive Agr</th>
@@ -75,6 +75,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 @for($j = 1; $j <= $arr['no_of_test']; $j++) <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">R</th>
                     <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">NR</th>
                     <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">INV</th>
+                    <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">Total</th>
                     @endfor
                     <th></th>
                     <th></th>
@@ -109,6 +110,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                                                                 $invalid = 'test_' . $l . '_invalid';   ?> <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive}}</td>
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$nonreactive}}</td>
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
+                    <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive+$trendrow->$nonreactive+$trendrow->$invalid}}</td>
                     @endfor
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$positivePercentage}}</td>
                     @if (($trendrow->test_1_reactive && $trendrow->test_2_reactive && $trendrow->test_1_reactive && $trendrow->test_1_nonreactive) > 0)

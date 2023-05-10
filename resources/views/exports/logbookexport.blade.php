@@ -30,7 +30,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             <th style="border: 3px solid black;font-weight:bold;">Start Date</th>
             <th style="border: 3px solid black;font-weight:bold;">End Date</th>
             <th style="border: 3px solid black;font-weight:bold;">Total Tests</th>
-            @for($i = 1; $i <= $globalValue; $i++) <th colspan="3" style="border: 3px solid black;font-weight:bold;text-align: center;">Test {{$i}}</th>
+            @for($i = 1; $i <= $globalValue; $i++) <th colspan="4" style="border: 3px solid black;font-weight:bold;text-align: center;">Test {{$i}}</th>
                 @endfor
                 <th style="border: 3px solid black;font-weight:bold;">% Pos</th>
                 <th style="border: 3px solid black;font-weight:bold;">Positive Agr</th>
@@ -46,6 +46,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             @for($j = 1; $j <= $globalValue; $j++) <th style="border: 3px solid black;font-weight:bold;width:4px;">R</th>
                 <th style="border: 3px solid black;font-weight:bold;width:4px;">NR</th>
                 <th style="border: 3px solid black;font-weight:bold;width:4px;">INV</th>
+                <th style="border: 3px solid black;font-weight:bold;width:4px;">Total</th>
                 @endfor
                 <th style="border: 3px solid black;"></th>
                 <th style="border: 3px solid black;"></th>
@@ -79,6 +80,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                                                     $invalid = 'test_' . $l . '_invalid';   ?> <td style="border: 3px solid black;text-align: left;">{{ $logbookdata->$reactive }}</td>
                 <td style="border: 3px solid black;text-align: left;">{{ $logbookdata->$nonreactive }}</td>
                 <td style="border: 3px solid black;text-align: left;">{{ $logbookdata->$invalid }}</td>
+                <td style="border: 3px solid black;text-align: left;">{{ $logbookdata->$reactive+$logbookdata->$nonreactive+$logbookdata->$invalid }}</td>
                 @endfor
                 <td style="border: 3px solid black;text-align: left;">{{ $positivePercentage }}</td>
                 @if(($logbookdata->test_1_reactive && $logbookdata->test_2_reactive && $logbookdata->test_1_reactive && $logbookdata->test_1_nonreactive) > 0)

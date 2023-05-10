@@ -55,10 +55,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             <tr class="frezz" style=" top: 37px; width:94.6%;">
                 <th class="th" style="width:10%;">Facility</th>
                 <th class="th" style="width:10%;">Site</th>
-                <th class="th" style="width:10%;">Algo</th>
+                <th class="th" style="width:10%;">Algorithm</th>
                 <th class="th" style="width:10%;">Testing Period</th>
                 <th class="th" style="width:5%;">Total Tests</th>
-                @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="3" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
+                @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="4" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
                     @endfor
                     <th class="th" style="width:10%;">% Pos</th>
                     <th class="th" style="width:10%;">Positive Agr</th>
@@ -73,6 +73,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 @for($j = 1; $j <= $arr['no_of_test']; $j++) <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">R</th>
                     <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">NR</th>
                     <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">INV</th>
+                    <th class="th" style="width:5%;" bgcolor="{{$col[$j]}}">Total</th>
                     @endfor
                     <th></th>
                     <th></th>
@@ -110,11 +111,12 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$total}}</td>
-                @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive';
+                @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive'; 
                                                                 $nonreactive = 'test_' . $l . '_nonreactive';
                                                                 $invalid = 'test_' . $l . '_invalid';   ?> <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive}}</td>
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$nonreactive}}</td>
                     <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
+                    <td class="td" bgcolor="{{$col[$l]}}" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive+$trendrow->$nonreactive+$trendrow->$invalid}}</td>
                     @endfor
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$positivePercentage}}</td>
                     @if(($trendrow->test_1_reactive && $trendrow->test_2_reactive && $trendrow->test_1_reactive && $trendrow->test_1_nonreactive) > 0)
