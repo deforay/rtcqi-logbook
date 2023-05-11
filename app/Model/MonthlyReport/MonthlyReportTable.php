@@ -383,6 +383,8 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
             //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date'),DB::raw('monthly_reports.ts_id'));
             $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
@@ -394,6 +396,8 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
             $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
@@ -404,6 +408,8 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
             $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
 
@@ -450,7 +456,7 @@ class MonthlyReportTable extends Model
         }
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages as mrp')
-            ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), DB::raw('sum(mrp.final_negative) as final_negative'), DB::raw('sum(mrp.final_undetermined) as final_undetermined'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
@@ -494,6 +500,7 @@ class MonthlyReportTable extends Model
         }
         // dd($query->toSql());
         $salesResult = $query->get();
+        
         return $salesResult;
     }
     /// Page summary for log data

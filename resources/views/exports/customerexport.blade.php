@@ -44,7 +44,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             @for($j = 1; $j <= $globalValue; $j++) <th style="border: 3px solid black;font-weight:bold;width:4px;">R</th>
                 <th style="border: 3px solid black;font-weight:bold;width:4px;">NR</th>
                 <th style="border: 3px solid black;font-weight:bold;width:4px;">INV</th>
-                <th style="border: 3px solid black;font-weight:bold;width:4px;">Total</th>
+                <th style="border: 3px solid black;font-weight:bold;width:5px;">Total</th>
                 @endfor
                 <th style="border: 3px solid black;"></th>
                 <th style="border: 3px solid black;"></th>
