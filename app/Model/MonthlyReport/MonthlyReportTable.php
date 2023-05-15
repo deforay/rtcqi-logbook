@@ -147,7 +147,7 @@ class MonthlyReportTable extends Model
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
                     ->where('users_testsite_map.user_id', '=', $user_id);
         }
-
+    
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
                 $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
@@ -171,6 +171,39 @@ class MonthlyReportTable extends Model
         
         return $salesResult;
     }
+
+    //Fetch Selected Site Monthly Report
+    public function fetchSelectedSiteMonthlyReport($params)
+    {
+        $commonservice = new CommonService();     
+        
+        $user_id = session('userId');
+        $query = DB::table('monthly_reports')
+            ->select('monthly_reports.mr_id', DB::raw('count(monthly_reports_pages.page_no) as page_no'), 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', 'monthly_reports.name_of_data_collector', 'monthly_reports.book_no', 'monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name', DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
+            ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+            ->groupBy('monthly_reports.mr_id');
+        
+        if(Session::get('tsId')!='' && !isset($params['testSiteId'])) {
+            $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                    ->where('users_testsite_map.user_id', '=', $user_id);
+        }    
+        
+        if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
+            $query = $query->where('test_sites.ts_id', '=', $params['testSiteId']);
+            $query = $query->groupBy(DB::raw('test_sites.ts_id'));
+        }
+        
+        $query = $query->orderBy('monthly_reports.mr_id', 'DESC')->limit(5);
+        // dd($query->toSql());
+        $salesResult = $query->get();
+        
+        return $salesResult;
+    }
+
 
     // Fetch All Active MonthlyReport List
     public function fetchAllActiveMonthlyReport()

@@ -40,6 +40,31 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         <section class="horizontal-grid" id="horizontal-grid">
             <div class="row">
                 <div class="col-12">
+                <div class="table-responsive" id="monthlyReportListWrapper">
+                                    <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
+                                        <thead>
+                                            <tr>
+                                                <th>Site Name</th>
+                                                <th>Entry Point</th>
+                                                <th>Reporting Month</th>
+                                                <th>Date of Data Collection</th>
+                                                <th>Name of Data Collector</th>
+                                                <th>Book No</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Total Number of Pages</th>
+                                                <th>Last Modified On</th>
+                                                <?php $role = session('role');
+                                                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
+                                                <th>Action</th>
+                                                <?php } ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                     <div class="card">
                         <div class="card-header">
                             <h4 class="form-section"><i class="la la-plus-square"></i> Edit Monthly Report</h4>
@@ -562,6 +587,104 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         });
         initSetTestkitHeadings();
     });
+
+    function getAllMonthlyReport() {
+    var testSiteId = parseInt($('#testsiteId').val());   
+    //alert($('#testsiteId').val());
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#monthlyReportListWrapper').show();
+        $('#mothlyreportList').DataTable({
+            processing: true,
+            destroy: true,
+            serverSide: true,
+            scrollX: false,
+            autoWidth: false,
+            paging: false,
+            ajax: {
+                url: '{{ url("getSelectedSiteMonthlyReport") }}',
+                type: 'POST',
+                data: {
+                    testSiteId: testSiteId,               
+                },
+                
+            },
+
+            columns: [
+
+                {
+                    data: 'site_name',
+                    name: 'site_name',
+                    className: 'firstcaps'
+                },
+
+                {
+                    data: 'site_type_name',
+                    name: 'site_type_name',
+                    className: 'firstcaps'
+                },
+
+                {
+                    data: 'reporting_month',
+                    name: 'reporting_month'
+                },
+
+                {
+                    data: 'date_of_data_collection',
+                    name: 'date_of_data_collection',render: function(data, type, full) {
+     return moment(new Date(data)).format('DD-MMM-YYYY');
+                    }
+                },
+                {
+                    data: 'name_of_data_collector',
+                    name: 'name_of_data_collector'
+                },
+
+                {
+                    data: 'book_no',
+                    name: 'book_no'
+                },
+
+                {
+                    data: 'start_test_date',
+                    name: 'start_test_date',render: function(data, type, full) {
+     return moment(new Date(data)).format('DD-MMM-YYYY');
+                    }
+                },
+
+                {
+                    data: 'end_test_date',
+                    name: 'end_test_date',render: function(data, type, full) {
+     return moment(new Date(data)).format('DD-MMM-YYYY');
+                    }
+                },
+
+                {
+                    data: 'page_no',
+                    name: 'page_no'
+                },
+                {
+                    data: 'last_modified_on',
+                    name: 'last_modified_on',render: function(data, type, full) {
+     return moment(new Date(data)).format('DD-MMM-YYYY HH:mm:ss');
+                    }
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false
+                },
+            ],
+            order: [
+                [9, 'desc']
+            ],
+            limit:5
+        });
+    }
+
     var date1 = new Date();
     var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 
@@ -859,12 +982,17 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         })
     }
     $(document).ready(function() {
-
+        $("#monthlyReportListWrapper").hide();
+        if($('#testsiteId').val()!=''){
+            $("#monthlyReportListWrapper").show();
+            getAllMonthlyReport();
+        }
 // Site Name Change
 $('#testsiteId').change(function() {
     checkExistingReportingMonth();
     // Site id
     var id = $(this).val();
+    getAllMonthlyReport();
     // Empty the dropdown
     $('#provinceId').find('option').not(':first').remove();
 
