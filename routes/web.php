@@ -125,6 +125,8 @@ Route::get('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add')->m
 Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit')->middleware('access');
 Route::post('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
 Route::post('/getAllMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllMonthlyReport');
+Route::post('/getSelectedSiteMonthlyReport', 'MonthlyReport\MonthlyReportController@getSelectedSiteMonthlyReport');
+
 Route::post('/CheckPreLot', 'MonthlyReport\MonthlyReportController@CheckPreLot');
 
 Route::get('/monthlyreport/notUpload', 'MonthlyReport\MonthlyReportController@notUpload')->name('monthlyreport.notUpload')->middleware('access');

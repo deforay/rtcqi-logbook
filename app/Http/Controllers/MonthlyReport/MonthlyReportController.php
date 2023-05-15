@@ -21,7 +21,7 @@ class MonthlyReportController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport','notUpload');        
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','getSelectedSiteMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport','notUpload');        
        
     }
     //View MonthlyReport main screen
@@ -80,6 +80,29 @@ class MonthlyReportController extends Controller
         // dd($datas);die;
         $service = new MonthlyReportService();
         $data = $service->getAllMonthlyReport($datas);
+        return DataTables::of($data)
+            ->addColumn('action', function ($data) {
+                $button = '<div>';
+                $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")){
+                $button .= '<a href="/monthlyreport/edit/' . base64_encode($data->mr_id) . '" name="edit" id="' . $data->mr_id . '" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+            }else{
+                $button .= '';
+            }
+                $button .= '</div>';
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+    
+    public function getSelectedSiteMonthlyReport(Request $request)
+    {
+        
+        $datas = $request->all();
+        // dd($datas);die;
+        $service = new MonthlyReportService();
+        $data = $service->getSelectedSiteMonthlyReport($datas);
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
                 $button = '<div>';

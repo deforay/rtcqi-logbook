@@ -43,6 +43,14 @@ class MonthlyReportService
         return $result;
 	}
 
+	//Get Selected Site Monthly Report List
+	public function getSelectedSiteMonthlyReport($params)
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->fetchSelectedSiteMonthlyReport($params);
+        return $result;
+	}
+
 	//Get All MonthlyReport List
 	public function getAllActiveMonthlyReport()
     {
