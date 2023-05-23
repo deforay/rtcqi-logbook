@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\AuditTrail;
+namespace App\Model\track;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
@@ -11,10 +11,10 @@ class TrackTable extends Model
 {
     protected $table = 'track';
 
-    // Fetch All Audit Trail List
+    // Fetch All User Activity List
     public function fetchAllActivity($params)
     {
-        // dd($params);die;
+         //dd($params);die;
         $commonservice = new CommonService();
         $start_date = '';
         $end_date = '';
@@ -42,15 +42,17 @@ class TrackTable extends Model
         }
 
         $salesResult = $query->get();
+        
         return $salesResult;
     }
 
-    // Fetch All MonthlyReport Audit
-    public function fetchMonthlyAuditReportById($id)
+    // Fetch All Activity By ID
+    public function fetchAllActivityById($id)
     {
         $data = DB::table('track')
             ->where('action_id','=',base64_decode($id))
             ->get();
         return $data;
     }
+   
 }

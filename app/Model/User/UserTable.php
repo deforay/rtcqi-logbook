@@ -269,9 +269,11 @@ class UserTable extends Model
     public function updatePassword($params)
     {
         $commonservice = new CommonService();
+        $userservice = new UserService();
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
+        $data['username']=$user_name;
         $id = session('userId');
         $newPassword = Hash::make($data['newPassword']);
         if (Hash::check($data['currentPassword'], $newPassword)) {
@@ -292,6 +294,7 @@ class UserTable extends Model
                             ]
                         );
                     $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password', $userId);
+                    $userservice->loggedInHistory($data, $user_name . ' has changed the password information');
                     return $response;
                 }
             } else {
