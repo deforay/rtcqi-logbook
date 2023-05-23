@@ -550,6 +550,10 @@ ALTER TABLE `monthly_reports_pages`
 ADD `created_by` INT NULL DEFAULT NULL AFTER `updated_on`;
 
 -- Sijulda 04-May-2023
-ALTER TABLE `monthly_reports_pages` 
-ADD `created_on` INT NULL DEFAULT NULL AFTER `updated_on`;
+ALTER TABLE `monthly_reports_pages`
+ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `created_by`;
 
+
+-- Sijulda 16-May-2023
+ALTER TABLE `monthly_reports` 
+ADD `updated_by` VARCHAR(100) NOT NULL AFTER `added_on`;

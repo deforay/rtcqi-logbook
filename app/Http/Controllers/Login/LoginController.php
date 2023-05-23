@@ -42,8 +42,12 @@ class LoginController extends Controller
     public function logout(Request $request, $name)
     {
         $commonservice = new CommonService();
+        //$data=new Array();
+        $data['username']=$name;
+        $userservice = new UserService();
         if ($request->isMethod('post') && session('login') == true) {
             $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user', $id = null);
+            $userservice->loggedInHistory($data, base64_decode($name) . ' logged out');
             $request->session()->flush();
             $request->session()->regenerate();
             Session::flush();

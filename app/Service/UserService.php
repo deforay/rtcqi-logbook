@@ -10,6 +10,7 @@ Last Modified Name : Prasath M
 namespace App\Service;
 use App\Model\User\UserTable;
 use App\Model\User\UserLoginHistoryTable;
+use App\Model\track\TrackTable;
 use DB;
 
 class UserService
@@ -125,10 +126,18 @@ class UserService
 		}
 	}
 
-	public function getAllAudit($params)
+	public function getAllActivity($params)
     {
 		$model = new TrackTable();
-        $result = $model->fetchAllActivity($params);
+        $result = $model->fetchAllActivity($params);			
+        return $result;
+	}
+
+	//Get All ActivityById
+	public function getAllActivityById($id)
+    {
+		$model = new TrackTable();
+        $result = $model->fetchAllActivityById($id);
         return $result;
 	}
 

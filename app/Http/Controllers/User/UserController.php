@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllUser');        
+        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity');        
        
     }
     //View user main screen
@@ -147,7 +147,7 @@ class UserController extends Controller
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
-    public function getAllActivityData(Request $request)
+    public function getAllUserActivity(Request $request)
     {
         $datas = $request->all();
         $service = new UserService();

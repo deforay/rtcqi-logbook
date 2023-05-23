@@ -44,6 +44,7 @@ Route::get('/user/profile/{id}', 'User\UserController@profile')->middleware('acc
 Route::post('/user/profile/{id}', 'User\UserController@profile');
 Route::get('/user/userloginhistory', 'User\UserController@userloginhistory')->name('user.userloginhistory')->middleware('access');
 Route::get('/user/userActivityLog', 'User\UserController@userActivityLog')->name('user.userActivityLog')->middleware('access');
+Route::post('/getAllUserActivity', 'User\UserController@getAllUserActivity')->name('user.getAllUserActivity');
 
 
 //login module

@@ -100,7 +100,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                         </div>
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="userActivityLogList">
                                         <thead>
                                             <tr>
                                                 <th>Event Type</th>
@@ -127,7 +127,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllAuditData();
+        getAllActivity();
         $.unblockUI();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#userId').select2({
@@ -135,17 +135,17 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             allowClear: true,
         });
         $('#userId').on('select2:select', function(e) {
-            getAllAuditData();
+            getAllActivity();
         });
 
         $('#userId').on('select2:unselect', function(e) {
-            getAllAuditData();
+            getAllActivity();
 
         });
 
     });
 
-    function getAllAuditData() {
+    function getAllActivity() {
         let searchDate = $('#searchDate').val() || '';
         let userId = $('#userId').val() || '';
         $.ajaxSetup({
@@ -153,19 +153,24 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $('#mothlyreportList').DataTable({
+        $('#userActivityLogList').DataTable({
             processing: true,
             destroy: true,
             serverSide: true,
             scrollX: false,
             autoWidth: false,
             ajax: {
-                url: '{{ url("getAllAuditData") }}',
+                url: '{{ url("getAllUserActivity") }}',
                 type: 'POST',
                 data: {
                 searchDate: searchDate,
                 userId: userId,
                 },
+                error:function(e){
+                    
+                    console.log(e);
+                },
+                
             },
             columns: [
 
