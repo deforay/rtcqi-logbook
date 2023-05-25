@@ -244,13 +244,14 @@ class CommonService
     
     public function eventLog($event_type, $action, $resource,$id)
     {
+        $commonservice = new CommonService();
         $eventData = array(
             'event_type' => $event_type,
             'action' => $action,
             'resource' => $resource,
             'user_id' => session('userId'),
             'action_id' => $id,
-            'date_time' => date('Y-m-d H:i:s'),
+            'date_time' => $commonservice->getDateTime(),
             'ip_address' => request()->ip()
         );
         $eventResult = DB::table('track')->insert($eventData);
