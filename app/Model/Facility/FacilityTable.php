@@ -5,6 +5,8 @@ namespace App\Model\Facility;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
+use App\Service\ProvinceService;
+use App\Service\DistrictService;
 use Illuminate\Support\Facades\Session;
 
 class FacilityTable extends Model
@@ -19,13 +21,14 @@ class FacilityTable extends Model
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
+        $latLng=$this->getLatitudeLongitude($data);
 
         if ($request->input('facilityName') != null && trim($request->input('facilityName')) != '') {
             $id = DB::table('facilities')->insertGetId(
                 [
                     'facility_name' => $data['facilityName'],
-                    'facility_latitude' => $data['latitude'],
-                    'facility_longitude' => $data['longitude'],
+                    'facility_latitude' => $latLng['lat'],
+                    'facility_longitude' => $latLng['lng'],
                     'facility_address1' => $data['address1'],
                     'facility_address2' => $data['address2'],
                     'facility_postal_code' => $data['postalCode'],
@@ -46,6 +49,56 @@ class FacilityTable extends Model
 
         return $id;
     }
+
+    private function getLatitudeLongitude($data){
+
+        $commonservice = new CommonService();
+        $provinceservice = new ProvinceService();
+        $districtservice = new DistrictService();
+        $latLng=array();
+
+        $latLng['lat']=$data['latitude'];
+        $latLng['lng']=$data['longitude'];   
+        
+        if($latLng['lat']=='' || $latLng['lng']==''){
+            $address='';
+            
+                if(!empty($data["address1"])){
+                    $address.=$data["address1"].",";
+                }
+                if(!empty($data['address2'])){
+                    $address.=$data['address2'].',';
+                }
+                if(!empty($data['city'])){
+                    $address.=$data['city'].',';
+                }
+                if(!empty($data['provincesssId'])){
+                    $provinceId = base64_encode($data['provincesssId']);
+                    $address.=$provinceservice->getProvinceById($provinceId)[0]->province_name.',';
+                }
+                if(!empty($data['districtId'])){
+                    $districtid = base64_encode($data['districtId']);
+                    $address.=$districtservice->getDistrictById($districtid)[0]->district_name.',';
+                }
+                if(!empty($data['postalCode'])){
+                    $address.=$data['postalCode'];
+                }
+                if(!empty($data['country'])){
+                    $address.=$data['country'];
+                }
+                //echo 'formatted address '.$address.'<br>';
+                $formattedAddress=str_replace(' ', '+', $address);
+                
+                if($formattedAddress!=''){
+            
+                    $latLng=$commonservice->getSiteLatLon($formattedAddress);
+                }                
+                
+        }
+        return $latLng;
+        
+    }
+
 
     // Fetch All Facility List
     public function fetchAllFacility()
@@ -82,10 +135,11 @@ class FacilityTable extends Model
         $commonservice = new CommonService();
         $user_name = session('name');
         $data = $params->all();
+        $latLng=$this->getLatitudeLongitude($data);
         $testData = array(
             'facility_name' => $data['facilityName'],
-            'facility_latitude' => $data['latitude'],
-            'facility_longitude' => $data['longitude'],
+            'facility_latitude' => $latLng['lat'],
+            'facility_longitude' => $latLng['lng'],
             'facility_address1' => $data['address1'],
             'facility_address2' => $data['address2'],
             'facility_postal_code' => $data['postalCode'],

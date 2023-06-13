@@ -1885,13 +1885,15 @@ class MonthlyReportTable extends Model
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
             ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
-            ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.province_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
-            ->where('users_testsite_map.user_id', $user_id);
-
+            ->where('users_testsite_map.user_id', $user_id)
+            ->where('monthly_reports.latitude', '!=', null)->where('monthly_reports.longitude', '!=', null)
+            ->groupby('monthly_reports.mr_id');
         if (trim($start_date) != "" && trim($end_date) != "") {
-            $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
+            $query = $query->where('monthly_reports_pages.start_test_date', '>=', $start_date)->where('monthly_reports_pages.end_test_date', '<=', $end_date);
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
             $query = $query->where('monthly_reports.province_id', '=', $data['provinceId']);
@@ -1900,19 +1902,22 @@ class MonthlyReportTable extends Model
         if (count($salesResult) == 0) {
             $query = DB::table('monthly_reports')
                 ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
-                ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.province_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
+                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+                ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
+                ->where('monthly_reports.latitude', '!=', null)->where('monthly_reports.longitude', '!=', null)
+                ->groupby('monthly_reports.mr_id');
 
             if (trim($start_date) != "" && trim($end_date) != "") {
-                $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
+                $query = $query->where('monthly_reports_pages.start_test_date', '>=', $start_date)->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             }
             if (isset($data['provinceId']) && $data['provinceId'] != '') {
                 $query = $query->where('monthly_reports.province_id', '=', $data['provinceId']);
             }
+            //echo $query;
             $salesResult = $query->get();
         }
         //dd(DB::getQueryLog());die;
-
         return $salesResult;
     }
 

@@ -13,6 +13,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User\UserTable;
 use App\Model\Vendors\VendorsTable;
+use App\Service\GlobalConfigService;
 
 class CommonService
 {
@@ -548,5 +549,44 @@ class CommonService
             error_log($exc->getMessage());
         }
         return count($items);
+    }
+
+    public function getSiteLatLon($address)
+    {
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        $data=array();
+        $data['lat'] = '';
+        $data['lng'] = '';
+
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
+        
+        $apiKey=$arr["map_api_key"];
+        
+        $url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=".$apiKey;
+        
+        // send api request
+        try{
+                $geocode = file_get_contents($url);
+            
+                if($geocode){            
+                    $json = json_decode($geocode);        
+                    if(isset($json->results[0]->geometry) && isset($json->results[0]->geometry->location)){
+                        $data['lat'] = $json->results[0]->geometry->location->lat;
+                        $data['lng'] = $json->results[0]->geometry->location->lng;            
+                    }
+                }
+            }
+            catch(Exception $exc){
+                error_log($exc->getMessage());
+                //return $data;
+            }
+        
+        return $data;        
+        
     }
 }
