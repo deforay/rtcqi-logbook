@@ -5,6 +5,8 @@ namespace App\Model\TestSite;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
+use App\Service\ProvinceService;
+use App\Service\DistrictService;
 use Illuminate\Support\Facades\Session;
 
 class TestSiteTable extends Model
@@ -19,13 +21,14 @@ class TestSiteTable extends Model
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
+        $latLng=$this->getLatitudeLongitude($data);
         if ($request->input('siteName') != null && trim($request->input('siteName')) != '') {
             $id = DB::table('test_sites')->insertGetId(
                 [
                     'site_ID' => $data['siteId'],
                     'site_name' => $data['siteName'],
-                    'site_latitude' => $data['latitude'],
-                    'site_longitude' => $data['longitude'],
+                    'site_latitude' => $latLng['lat'],
+                    'site_longitude' => $latLng['lng'],
                     'site_address1' => $data['address1'],
                     'site_address2' => $data['address2'],
                     'site_postal_code' => $data['postalCode'],
@@ -43,6 +46,55 @@ class TestSiteTable extends Model
         }
 
         return $id;
+    }
+
+    private function getLatitudeLongitude($data){
+
+        $commonservice = new CommonService();
+        $provinceservice = new ProvinceService();
+        $districtservice = new DistrictService();
+        $latLng=array();
+
+        $latLng['lat']=$data['latitude'];
+        $latLng['lng']=$data['longitude'];   
+        
+        if($latLng['lat']=='' || $latLng['lng']==''){
+            $address='';
+            
+                if(!empty($data["address1"])){
+                    $address.=$data["address1"].",";
+                }
+                if(!empty($data['address2'])){
+                    $address.=$data['address2'].',';
+                }
+                if(!empty($data['city'])){
+                    $address.=$data['city'].',';
+                }
+                if(!empty($data['provincesssId'])){
+                    $provinceId = base64_encode($data['provincesssId']);
+                    $address.=$provinceservice->getProvinceById($provinceId)[0]->province_name.',';
+                }
+                if(!empty($data['districtId'])){
+                    $districtid = base64_encode($data['districtId']);
+                    $address.=$districtservice->getDistrictById($districtid)[0]->district_name.',';
+                }
+                if(!empty($data['postalCode'])){
+                    $address.=$data['postalCode'];
+                }
+                if(!empty($data['country'])){
+                    $address.=$data['country'];
+                }
+                //echo 'formatted address '.$address.'<br>';
+                $formattedAddress=str_replace(' ', '+', $address);
+                
+                if($formattedAddress!=''){
+            
+                    $latLng=$commonservice->getSiteLatLon($formattedAddress);
+                }                
+                
+        }
+        return $latLng;
+        
     }
 
     // Fetch All TestSite List
@@ -83,11 +135,12 @@ class TestSiteTable extends Model
         $user_name = session('name');
         $commonservice = new CommonService();
         $data = $params->all();
+        $latLng=$this->getLatitudeLongitude($data);
         $testData = array(
             'site_ID' => $data['siteId'],
             'site_name' => $data['siteName'],
-            'site_latitude' => $data['latitude'],
-            'site_longitude' => $data['longitude'],
+            'site_latitude' => $latLng['lat'],
+            'site_longitude' => $latLng['lng'],
             'site_address1' => $data['address1'],
             'site_address2' => $data['address2'],
             'site_postal_code' => $data['postalCode'],
