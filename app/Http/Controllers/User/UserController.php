@@ -52,15 +52,23 @@ class UserController extends Controller
     //Register user one time when users table empty (display add screen and add the user values)
     public function register(Request $request)
     {
+        $addUser = new UserService();
         if ($request->isMethod('post')) 
         {
-            $addUser = new UserService();
+            
             $result = $addUser->registerUser($request);
             return Redirect::to('login')->with('status', $result.' Please Login');
         }
         else
         {
-            return view('login.register');
+            
+        $activeUsers = $addUser->getAllActiveUser();
+        $activeUsersCount=$activeUsers->count();
+        if($activeUsersCount > 0){
+             return Redirect::to('login');
+            }else{
+                return view('login.register');
+            }
         }
     }
 
