@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity');        
+        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity', 'register');        
        
     }
     //View user main screen
@@ -46,6 +46,20 @@ class UserController extends Controller
             $testSite = $TestSiteService->getAllActiveTestSite();     
             $resourceResult = $RoleService->getAllRole();
             return view('user.add',array('test'=>$testSite,'roleId'=>$resourceResult));
+        }
+    }
+
+    //Register user one time when users table empty (display add screen and add the user values)
+    public function register(Request $request)
+    {
+        
+        if ($request->isMethod('post')) 
+        {
+            //todo save
+        }
+        else
+        {
+            return view('login.register');
         }
     }
 
