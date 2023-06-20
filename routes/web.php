@@ -31,7 +31,9 @@ Route::get('/changePassword', 'Common\CommonController@changePassword');
 Route::post('/changePassword', 'Common\CommonController@changePassword');
 Route::post('/addNewBranchType', 'Common\CommonController@addNewBranchType');
 Route::post('/checkItemNameValidation', 'Common\CommonController@checkItemNameValidation');
-
+//setup module
+Route::get('/setup', 'User\UserController@register');
+Route::post('/setup', 'User\UserController@register');
 //user module
 Route::get('/user', 'User\UserController@index')->name('user.index')->middleware('access');
 Route::post('/user/add', 'User\UserController@add');
