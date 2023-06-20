@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Model\User\UserTable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login.index');
+
+    $model = new UserTable();
+    $activeUsers = $model->fetchAllActiveUser();
+    $activeUsersCount=$activeUsers->count();
+    if($activeUsersCount > 0){
+        return view('login.index');
+    }else{
+        return view('login.register');
+    }
+
+    
+    
 });
 
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index');

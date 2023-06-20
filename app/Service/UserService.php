@@ -33,6 +33,25 @@ class UserService
             $exc->getMessage();
         }
     }
+	//Register User
+	public function registerUser($request)
+    {
+        $data =  $request->all();
+        DB::beginTransaction();
+        try {
+            $model = new UserTable();
+            $add = $model->saveNewUser($request);
+            if ($add > 0) {
+                DB::commit();
+                $msg = 'New User Added Successfully!!!';
+                return $msg;
+            }
+        } catch (Exception $exc) {
+            DB::rollBack();
+            $exc->getMessage();
+        }
+    }
+
 
     //Get All User List
     public function getAllUser()

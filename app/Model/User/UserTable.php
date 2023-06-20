@@ -62,6 +62,44 @@ class UserTable extends Model
         return $id;
     }
 
+    public function saveNewUser($data)
+    {
+        $id=0;
+        $commonservice = new CommonService();
+        if ($data['firstName']!= null && trim($data['firstName']) != '') {
+            $id = DB::table('users')->insertGetId(
+                [
+                    'first_name' => $data['firstName'],
+                    'last_name' => $data['lastName'],
+                    'password' => Hash::make($data['password']), // Hashing passwords
+                    'email' => $data['email'],                    
+                    'user_status' => 'active',
+                    'created_by' => null ,
+                    'created_on' => $commonservice->getDateTime(),
+                    'force_password_reset' => 1,
+                    'role_id' => 1
+                ]
+            );
+            $result=DB::table('test_sites')->take(1)->get();
+            if($result->count() > 0){
+                $ts_id=$result[0]->ts_id;
+                DB::table('users_testsite_map')->insert(
+                [
+                    'user_id' => $id,
+                    'ts_id' => $ts_id,
+                ]
+                );
+            }
+            
+
+            
+
+
+        }
+
+        return $id;
+    }
+
     // Fetch All User List
     public function fetchAllUser()
     {
@@ -179,7 +217,7 @@ class UserTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
-            ->get(), true);
+            ->get(), true);            
 
 
         if (!empty($result)) {

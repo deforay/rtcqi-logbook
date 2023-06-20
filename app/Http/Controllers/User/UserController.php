@@ -52,10 +52,11 @@ class UserController extends Controller
     //Register user one time when users table empty (display add screen and add the user values)
     public function register(Request $request)
     {
-        
         if ($request->isMethod('post')) 
         {
-            //todo save
+            $addUser = new UserService();
+            $result = $addUser->registerUser($request);
+            return Redirect::to('login')->with('status', $result.' Please Login');
         }
         else
         {
