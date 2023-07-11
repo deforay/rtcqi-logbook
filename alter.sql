@@ -66,10 +66,8 @@ KEY (`provincesss_id`)
 );
 
 -- ---
--- Table '
-'
+-- Table
 --
--- ---
 
 DROP TABLE IF EXISTS `monthly_reports_pages`;
 
@@ -358,7 +356,7 @@ ALTER TABLE `test_sites` ADD FOREIGN KEY (facility_id) REFERENCES `facilities` (
 -- Sakthivel P 4 June 2021
 ALTER TABLE users_facility_map
   RENAME TO users_testsite_map;
---Prasath M 4 June 2021
+-- Prasath M 4 June 2021
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES
 (1, 'Instance Name', 'instance_name', 'Test'),
 (2, 'Institute/Organization Name', 'institute_name', 'Test org'),
@@ -458,7 +456,7 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'User', 'active'), ('App\\Http\\Controllers\\TestSite\\TestSiteController', 'TestSite', 'active'), ('App\\Http\\Controllers\\TestKit\\TestKitController', 'TestKit', 'active'),('App\\Http\\Controllers\\Facility\\FacilityController', 'Facility', 'active'), ('App\\Http\\Controllers\\Province\\ProvinceController', 'Province', 'active'), ('App\\Http\\Controllers\\District\\DistrictController', 'District', 'active'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'SiteType', 'active'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'GlobalConfig', 'active'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'AllowedTestKit', 'active'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'MonthlyReport', 'active'),('App\\Http\\Controllers\\Report\\ReportController', 'Report', 'active'),('App\\Http\\Controllers\\Dashboard\\DashboardController', 'Dashboard', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'add', 'Add'),('App\\Http\\Controllers\\User\\UserController', 'edit', 'Edit'),('App\\Http\\Controllers\\User\\UserController', 'index', 'Access'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'add', 'Add'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'edit', 'Edit'),('App\\Http\\Controllers\\TestSite\\TestSiteController', 'index', 'Access'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'add', 'Add'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'edit', 'Edit'),('App\\Http\\Controllers\\TestKit\\TestKitController', 'index', 'Access'),('App\\Http\\Controllers\\Facility\\FacilityController', 'add', 'Add'), ('App\\Http\\Controllers\\Facility\\FacilityController', 'edit', 'Edit'),('App\\Http\\Controllers\\Facility\\FacilityController', 'index', 'Access'),('App\\Http\\Controllers\\Province\\ProvinceController', 'add', 'Add'), ('App\\Http\\Controllers\\Province\\ProvinceController', 'edit', 'Edit'),('App\\Http\\Controllers\\Province\\ProvinceController', 'index', 'Access'),('App\\Http\\Controllers\\District\\DistrictController', 'add', 'Add'), ('App\\Http\\Controllers\\District\\DistrictController', 'edit', 'Edit'),('App\\Http\\Controllers\\District\\DistrictController', 'index', 'Access'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'add', 'Add'), ('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'edit', 'Edit'),('App\\Http\\Controllers\\SiteType\\SiteTypeController', 'index', 'Access'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'edit', 'Edit'),('App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController', 'index', 'Access'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'add', 'Add'), ('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'edit', 'Edit'),('App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController', 'index', 'Access'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'add', 'Add'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'edit', 'Edit'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'index', 'Access'),('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'bulk', 'Bulk Upload'),('App\\Http\\Controllers\\Report\\ReportController', 'trendreport', 'Trend Report'),('App\\Http\\Controllers\\Report\\ReportController', 'logbookreport', 'Logbook Report'),('App\\Http\\Controllers\\Report\\ReportController', 'testkitreport', 'Test Kit Report'),('App\\Http\\Controllers\\Report\\ReportController', 'invalidresultreport', 'Invalid Result Report'),('App\\Http\\Controllers\\Report\\ReportController', 'customreport', 'Custom Report'),('App\\Http\\Controllers\\Report\\ReportController', 'trendexport', 'Trend Export'),('App\\Http\\Controllers\\Report\\ReportController', 'logbookexport', 'Logbook Export'),('App\\Http\\Controllers\\Report\\ReportController', 'testkitexport', 'Test Kit Export'),('App\\Http\\Controllers\\Report\\ReportController', 'invalidresultexport', 'Invalid Result Export'),('App\\Http\\Controllers\\Report\\ReportController', 'customexport', 'Custom Export'),('App\\Http\\Controllers\\User\\UserController', 'profile', 'Profile'),('App\\Http\\Controllers\\Dashboard\\DashboardController', 'index', 'Access');
 
---ilahir 11-May-2022
+-- ilahir 11-May-2022
 CREATE TABLE `not_uploaded_monthly_reports` (
   `nu_mr_id` int(11) NOT NULL,
   `test_site_name` varchar(255) DEFAULT NULL,
@@ -542,11 +540,11 @@ ALTER TABLE `not_uploaded_monthly_reports`
   ADD `comment` varchar(255) DEFAULT NULL;
 
 -- Sijulda 04-May-2023
-ALTER TABLE `not_uploaded_monthly_reports` 
+ALTER TABLE `not_uploaded_monthly_reports`
   ADD `status` bit(10);
 
 -- Sijulda 04-May-2023
-ALTER TABLE `monthly_reports_pages` 
+ALTER TABLE `monthly_reports_pages`
 ADD `created_by` INT NULL DEFAULT NULL AFTER `updated_on`;
 
 -- Sijulda 04-May-2023
@@ -555,5 +553,5 @@ ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `created_by`;
 
 
 -- Sijulda 16-May-2023
-ALTER TABLE `monthly_reports` 
+ALTER TABLE `monthly_reports`
 ADD `updated_by` VARCHAR(100) NOT NULL AFTER `added_on`;
