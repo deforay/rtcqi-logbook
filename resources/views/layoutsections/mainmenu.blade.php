@@ -18,17 +18,17 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 	$manage .= '<li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><span data-i18n="Access Control">Access Control</span></a>
 	<ul class="dropdown-menu">';
 	if (isset($role['App\\Http\\Controllers\\User\\UserController']['index']) && ($role['App\\Http\\Controllers\\User\\UserController']['index'] == "allow"))
-	$manage .= '<li id="li-user"><a class="dropdown-item" data-toggle="dropdown" href="/user/">Users</a></li>';
+		$manage .= '<li id="li-user"><a class="dropdown-item" data-toggle="dropdown" href="/user/">Users</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['index'] == "allow"))
 		$manage .= '<li id="li-roles"><a class="dropdown-item" data-toggle="dropdown" href="/roles/">Roles</a></li>';
 	if (isset($role['App\\Http\\Controllers\\User\\UserController']['userloginhistory']) && ($role['App\\Http\\Controllers\\User\\UserController']['userloginhistory'] == "allow"))
 		$manage .= '<li id="li-loginHistory"><a class="dropdown-item" data-toggle="dropdown" href="/user/userloginhistory">User Login History</a></li>';
-		if (isset($role['App\\Http\\Controllers\\User\\UserController']['userActivityLog']) && ($role['App\\Http\\Controllers\\User\\UserController']['userActivityLog'] == "allow"))
+	if (isset($role['App\\Http\\Controllers\\User\\UserController']['userActivityLog']) && ($role['App\\Http\\Controllers\\User\\UserController']['userActivityLog'] == "allow"))
 		$manage .= '<li id="li-activityLog"><a class="dropdown-item" data-toggle="dropdown" href="/user/userActivityLog">User Activity Log</a></li>';
-		$manage .= '</ul></li>';
+	$manage .= '</ul></li>';
 	if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index'] == "allow"))
 		$manage .= '<li id="li-testsite"><a class="dropdown-item" data-toggle="dropdown" href="/testsite/">Test Sites</a></li>';
-		$manage .= '<li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><span data-i18n="Locations">Locations</span></a>
+	$manage .= '<li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><span data-i18n="Locations">Locations</span></a>
 		<ul class="dropdown-menu">';
 	if (isset($role['App\\Http\\Controllers\\Province\\ProvinceController']['index']) && ($role['App\\Http\\Controllers\\Province\\ProvinceController']['index'] == "allow"))
 		$manage .= '<li id="li-province"><a class="dropdown-item" data-toggle="dropdown" href="/province/">Provinces</a></li>';
@@ -37,11 +37,11 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 	$manage .= '</ul></li>';
 	if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['index']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['index'] == "allow"))
 		$manage .= '<li id="li-facility"><a class="dropdown-item" data-toggle="dropdown" href="/facility/">Facilities</a></li>';
-		if (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow"))
+	if (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow"))
 		$manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">Global Config</a></li>';
-		if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index'] == "allow"))
+	if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index'] == "allow"))
 		$manage .= '<li id="li-sitetype"><a class="dropdown-item" data-toggle="dropdown" href="/sitetype/">Site Types</a></li>';
-		if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index'] == "allow"))
+	if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index'] == "allow"))
 		$manage .= '<li id="li-testkit"><a class="dropdown-item" data-toggle="dropdown" href="/testkit/">Test Kits</a></li>';
 	if (isset($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index']) && ($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index'] == "allow"))
 		$manage .= '<li id="li-allowedtestkit"><a class="dropdown-item" data-toggle="dropdown" href="/allowedtestkit/">Allowed Test kits</a></li>';
@@ -53,7 +53,7 @@ $test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href=
                 <ul class="dropdown-menu">';
 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['index']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['index'] == "allow"))
 	$test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/">Monthly Report</a></li>';
-	$test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/notUpload">Not Upload Monthly Report</a></li>';
+$test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/notUpload">Failed Imports - Excel Upload</a></li>';
 $test .= '</ul></li>';
 
 if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['trendreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['testkitreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['testkitreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['logbookreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['logbookreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['invalidresultreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['invalidresultreport'] == "allow")) || (isset($role['App\\Http\\Controllers\\Report\\ReportController']['customreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['customreport'] == "allow"))) {
