@@ -34,6 +34,9 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 		$manage .= '<li id="li-province"><a class="dropdown-item" data-toggle="dropdown" href="/province/">Provinces</a></li>';
 	if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['index']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['index'] == "allow"))
 		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/district/">Districts</a></li>';
+		
+	if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index'] == "allow"))
+		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/subdistrict/">Sub Districts</a></li>';
 	$manage .= '</ul></li>';
 	if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['index']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['index'] == "allow"))
 		$manage .= '<li id="li-facility"><a class="dropdown-item" data-toggle="dropdown" href="/facility/">Facilities</a></li>';

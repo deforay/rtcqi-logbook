@@ -132,6 +132,14 @@ Route::get('/district/edit/{id}', 'District\DistrictController@edit')->middlewar
 Route::post('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/getAllDistrict', 'District\DistrictController@getAllDistrict');
 
+//SubDistrict module
+Route::get('/subdistrict', 'SubDistrict\SubDistrictController@index')->name('subdistrict.index')->middleware('access');
+Route::post('/subdistrict/add', 'SubDistrict\SubDistrictController@add');
+Route::get('/subdistrict/add', 'SubDistrict\SubDistrictController@add')->middleware('access');
+Route::get('/subdistrict/edit/{id}', 'SubDistrict\SubDistrictController@edit')->middleware('access');
+Route::post('/subdistrict/edit/{id}', 'SubDistrict\SubDistrictController@edit');
+Route::post('/getAllSubDistrict', 'SubDistrict\SubDistrictController@getAllSubDistrict');
+
 //monthlyreport module
 Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index')->middleware('access');
 Route::post('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
@@ -183,6 +191,7 @@ Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendre
 Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyReport');
 Route::post('/trendexcelexport', 'Report\ReportController@trendExport');
 Route::post('/getDistrictByProvinceId', 'Report\ReportController@getDistrictByProvinceId');
+Route::post('/getSubDistrictByDistrictId', 'Report\ReportController@getSubDistrictByDistrictId');
 
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
@@ -210,6 +219,7 @@ Route::post('/invalidresultexcelexport', 'Report\ReportController@invalidResultE
 
 
 Route::get('/getDistrict/{id}', 'TestSite\TestSiteController@getDistrict');
+Route::get('/getSubDistrict/{id}', 'TestSite\TestSiteController@getSubDistrict');
 
 Route::post('/getDashboardData', 'Dashboard\DashboardController@getDashboardData');
 Route::get('/insertTrackTable', 'MonthlyReport\MonthlyReportController@insertTrackTable');

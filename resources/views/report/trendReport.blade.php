@@ -113,6 +113,17 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                         <div class ="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
+                                                    <h5>Sub District Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
                                                     <h5>Testing Algothrim
                                                     </h5>
                                                     <div class="form-group">
@@ -187,6 +198,11 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             console.log(datas);
             listDistrictForProvince();
         });
+        $("#districtId").change(function () {
+            var datas = $(this).val();
+            //console.log(datas);
+            listSubDistrictForDistrict();
+        });
         getTrendReport();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
@@ -210,6 +226,19 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
         });
 
         $('#districtId').on('select2:unselect', function(e) {
+            getTrendReport();
+
+        });
+
+        $selectElement = $('#subDistrictId').select2({
+            placeholder: "Select Sub District Name",
+            allowClear: true,
+        });
+        $('#subDistrictId').on('select2:select', function(e) {
+            getTrendReport();
+        });
+
+        $('#subDistrictId').on('select2:unselect', function(e) {
             getTrendReport();
 
         });
@@ -251,13 +280,35 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 provinceId: $("#provinceId").val(),
             },
             success: function(result) {
-                console.log('data results', result);
-                // console.log($('#districtId').html(''));
                 var districtsOption = '';
                 result.forEach((res)=>{
                     districtsOption += '<option value="'+res.district_id+'">'+res.district_name+'</option>';
                 });
                 $('#districtId').html(districtsOption);
+            }
+        });
+    }
+
+    function listSubDistrictForDistrict() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getSubDistrictByDistrictId') }}",
+            method: 'post',
+            data: {
+                districtId: $("#districtId").val(),
+            },
+            success: function(result) {
+                console.log('data results', result);
+                // console.log($('#districtId').html(''));
+                var subDistrictsOption = '';
+                result.forEach((res)=>{
+                    subDistrictsOption += '<option value="'+res.sub_district_id+'">'+res.sub_district_name+'</option>';
+                });
+                $('#subDistrictId').html(subDistrictsOption);
             }
         });
     }
@@ -291,6 +342,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 searchDate: searchDate,
                 provinceId: $("#provinceId").val(),
                 districtId: $("#districtId").val(),
+                subDistrictId: $("#subDistrictId").val(),
                 algorithmType: $("#algorithmType").val(),
                 testSiteId: $("#testSiteId").val(),
                 reportFrequency: $("#reportFrequency").val(),

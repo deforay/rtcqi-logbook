@@ -38,6 +38,7 @@ class TestSiteTable extends Model
                     'facility_id' => $data['facilityId'],
                     'site_province' => $data['provincesssId'],
                     'site_district' => $data['districtId'],
+                    'site_sub_district' => $data['subDistrictId'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
                 ]
@@ -104,6 +105,7 @@ class TestSiteTable extends Model
             ->leftjoin('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'test_sites.site_sub_district')
             ->get();
         return $data;
     }
@@ -150,6 +152,7 @@ class TestSiteTable extends Model
             'facility_id' => $data['facilityId'],
             'site_province' => $data['provincesssId'],
             'site_district' => $data['districtId'],
+            'site_sub_district' => $data['subDistrictId'],
             'updated_by' => session('userId')
         );
         $response = DB::table('test_sites')
@@ -190,15 +193,18 @@ class TestSiteTable extends Model
     //Fetch some particular test site values
     public function fetchTestSiteData($id)
     {
+         
         $data = DB::table('test_sites')
-            ->select('monthly_reports.site_manager', 'monthly_reports.tester_name', 'monthly_reports.contact_no','test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_province', 'provinces.province_name','provinces.province_id')
+            ->select('monthly_reports.site_manager', 'monthly_reports.tester_name', 'monthly_reports.contact_no','test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_province', 'provinces.province_name','provinces.province_id',  'districts.district_name','districts.district_id',  'sub_districts.sub_district_name','sub_districts.sub_district_id')
             ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=', 'test_sites.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
+            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'test_sites.site_sub_district')
             ->where('test_sites.ts_id', '=', $id)
             ->orWhere('monthly_reports.ts_id', '=', $id)
             ->orderBy('mr_id', 'desc')
             ->limit(1)
-            ->get();
+            ->get();            
         return $data;
     }
 
@@ -209,6 +215,15 @@ class TestSiteTable extends Model
             ->select('site_district')
             ->where('test_sites.ts_id', '=', $id)
             ->value('site_district');
+        return $data;
+    }
+    //Fetch some particular site sub district values
+    public function fetchSubDistrictId($id)
+    {
+        $data = DB::table('test_sites')
+            ->select('site_Sub_district')
+            ->where('test_sites.ts_id', '=', $id)
+            ->value('site_Sub_district');
         return $data;
     }
 

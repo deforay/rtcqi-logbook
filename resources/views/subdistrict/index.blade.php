@@ -1,8 +1,8 @@
 <!--
     Author             : Prasath M
-    Date               : 28 May 2021
-    Description        : Test site view screen
-    Last Modified Date : 28 May 2021
+    Date               : 31 May 2021
+    Description        : District view screen
+    Last Modified Date : 31 May 2021
     Last Modified Name : Prasath M
 -->
 
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/testsite/">Test Site</a>
+                        <li class="breadcrumb-item"><a href="/subdistrict/">Sub District</a>
                         </li>
                     </ol>
                 </div>
@@ -29,9 +29,9 @@
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
             <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['add']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['add'] == "allow")) {?>
-                <a href="/testsite/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-plus icon-left"></i> Add Test Site</b></a>
+                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add'] == "allow")) {?>
+                <a href="/subdistrict/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-plus icon-left"></i> Add Sub District</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Test Site</h3>
+                            <h3 class="content-header-title mb-0">Sub District</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -70,20 +70,15 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="testSiteList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="subDistrictList">
                                         <thead>
                                             <tr>
-                                                <th>Site Name</th>
-                                                <th>Site ID</th>
-                                                <th>Province</th>
-                                                <th>District</th>
-                                                <th>Sub District</th>
-                                                <th>Facility Name</th>
-                                                <th>Status</th>
+                                                <th>Sub District Name</th>
+                                                <th>District Name</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) {?>
+                                                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
-                                               <?php } ?>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -103,46 +98,36 @@
   <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllTestSite();
+        getAllDistrict();
         $.unblockUI();
     });
-    function getAllTestSite()
+    function getAllDistrict()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#testSiteList').DataTable({
+      $('#subDistrictList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllTestSite") }}',
+                url:'{{ url("getAllSubDistrict") }}',
                 type: 'POST',
             },
+
             columns: [
 
-                    { data: 'site_name', name: 'site_name',className:'firstcaps' },
-                    { data: 'site_id', name: 'site_id'},
-                    { data: 'province_name', name: 'province_name'},
-                    { data: 'district_name', name: 'district_name' },
-                    { data: 'sub_district_name', name: 'sub_district_name' },
-                    { data: 'facility_name', name: 'facility_name' },
-                    { data: 'test_site_status', name: 'test_site_status',className:'firstcaps' },
+                    { data: 'sub_district_name', name: 'sub_district_name',className:'firstcaps' },
+                    { data: 'district_name', name: 'district_name',className:'firstcaps' },
                     <?php $role = session('role');
-                     if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) {?>
+                    if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
-                <?php } ?>
+                    <?php } ?>
                 ],
-                columnDefs: [
-                {
-                        "targets": 2,
-                        "className": "text-right",
-                },
-                ], 
             order: [[0, 'desc']]
         });
     }
