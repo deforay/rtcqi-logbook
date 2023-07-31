@@ -144,6 +144,20 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Sub District Name<span class="mandatory">*</span>
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="Please Select Sub District Name">
+												        <option value="">Select Sub District Name</option>
+															@foreach($subdistrict as $row)
+                                                            <option value="{{$row->sub_district_id}}" {{ $result[0]->site_sub_district == $row->sub_district_id ?  'selected':''}}>{{$row->sub_district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Country <span class="mandatory">*</span>
@@ -246,6 +260,7 @@
 
          // Empty the dropdown
          $('#districtId').find('option').not(':first').remove();
+         $('#subDistrictId').find('option').not(':first').remove();
 
          // AJAX request 
          $.ajax({
@@ -263,7 +278,34 @@
         });
       });
 
+      
+      $('#districtId').change(function(){
+
+// District id
+var id = $(this).val();
+
+// Empty the dropdown
+$('#subDistrictId').find('option').not(':first').remove();                 
+
+// AJAX request 
+$.ajax({
+url: "{{url('/getSubDistrict') }}/"+id,
+type: 'get',
+dataType: 'json',
+success: function(response){
+
+$.each(response,function(key, value) {
+        // console.log(value.sub_district_id);
+        $("#subDistrictId").append('<option value="'+value.sub_district_id+'">'+value.sub_district_name+'</option>');
     });
+
+}
+});
+});
+
+});
+
+   
     function checkNameValidation(tableName, fieldName, obj,fnct, msg)
     {
         checkValue = document.getElementById(obj).value;

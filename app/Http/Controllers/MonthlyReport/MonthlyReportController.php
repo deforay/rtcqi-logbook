@@ -8,6 +8,7 @@ use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
 use App\Service\SiteTypeService;
 use App\Service\DistrictService;
+use App\Service\SubDistrictService;
 use App\Service\TestKitService;
 use App\Service\TestSiteService;
 use App\Service\AllowedTestKitService;
@@ -32,9 +33,11 @@ class MonthlyReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('monthlyreport.index', array('testSite' => $testSite,'district' => $district,'province' => $province));
+            return view('monthlyreport.index', array('testSite' => $testSite,'district' => $district, 'subdistrict' => $subDistrict,'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -51,6 +54,10 @@ class MonthlyReportController extends Controller
             $allowedTestKit = new AllowedTestKitService();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();
             $TestSiteService = new TestSiteService();
             //$testsite = $TestSiteService->getAllActiveTestSite();
             $testsite = $TestSiteService->getAllCurrentUserActiveTestSite();
@@ -69,7 +76,7 @@ class MonthlyReportController extends Controller
             for ($i = 0; $i < sizeof($glob); $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.add', array('latest' => $latest, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo));
+            return view('monthlyreport.add', array('latest' => $latest, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'district' => $district,  'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo));
         }
     }
 
@@ -130,6 +137,10 @@ class MonthlyReportController extends Controller
             $allowedTestKit = new AllowedTestKitService();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();            
             $TestSiteService = new TestSiteService();
             $testsite = $TestSiteService->getAllActiveTestSite();
             $SiteTypeService = new SiteTypeService();
@@ -149,7 +160,7 @@ class MonthlyReportController extends Controller
             for ($i = 0; $i < sizeof($glob); $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype,'auditData'=>$auditData));
+            return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'district' => $district, 'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype,'auditData'=>$auditData));
         }
     }
 

@@ -9,6 +9,7 @@ use App\Service\FacilityService;
 use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use App\Service\DistrictService;
+use App\Service\SubDistrictService;
 use App\Service\ProvinceService;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TestKitExport;
@@ -34,13 +35,15 @@ class ReportController extends Controller
             $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.trendReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'province' => $province));
+            return view('report.trendReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -54,6 +57,14 @@ class ReportController extends Controller
         $district = $districtService->getDistrictByProvinceId($input['provinceId']??[]);
         // log::info($district);
         return $district;
+    }
+    public function getSubDistrictByDistrictId(Request $request)
+    {
+        $input = $request->all();
+        $subDistrictService = new SubDistrictService();
+        $subDistrict = $subDistrictService->getSubDistrictByDistrictId($input['districtId']??[]);
+        // log::info($district);
+        return $subDistrict;
     }
 
     public function getTrendMonthlyReport(Request $request)
@@ -73,13 +84,15 @@ class ReportController extends Controller
             $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.logbook', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'province' => $province));
+            return view('report.logbook', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -113,13 +126,15 @@ class ReportController extends Controller
             $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.testKitReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport, 'district' => $district, 'province' => $province));
+            return view('report.testKitReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -173,11 +188,13 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subDistrict = $SubDistrictService->getAllSubDistrict();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.invalidresultReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district, 'province' => $province));
+            return view('report.invalidresultReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }

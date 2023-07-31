@@ -134,6 +134,34 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
+                                                <h5>District Name<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please select District Name">
+                                                        <option value="">---Select---</option>
+                                                        @foreach($district as $row)
+                                                        <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
+                                                <h5>Sub District Name<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="Please select Sub District Name">
+                                                        <option value="">---Select---</option>
+                                                        @foreach($subdistrict as $row)
+                                                        <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
                                                 <h5>Site Manager
                                                 </h5>
                                                 <div class="form-group">
@@ -564,6 +592,8 @@ var id = $(this).val();
 getAllMonthlyReport();
 // Empty the dropdown
 $('#provinceId').find('option').not(':first').remove();
+$('#districtId').find('option').not(':first').remove();
+$('#subDistrictId').find('option').not(':first').remove();
 
 // AJAX request 
 $.ajax({
@@ -578,12 +608,19 @@ $.ajax({
             $("#contactNo").val('');
         } else {
             $.each(response, function(key, value) {
+
                 $("#siteUniqueId").val(value.site_id);
                 $("#siteManager").val(value.site_manager);
                 $("#testername").val(value.tester_name);
                 $("#contactNo").val(value.contact_no);
                 if(value.province_id!=null) {
                 $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
+                }
+                if(value.district_id!=null) {
+                $("#districtId").append('<option value="' + value.district_id + '"selected>' + value.district_name + '</option>');
+                }
+                if(value.sub_district_id!=null) {
+                $("#subDistrictId").append('<option value="' + value.sub_district_id + '"selected>' + value.sub_district_name + '</option>');
                 }
             });
         }

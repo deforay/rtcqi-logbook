@@ -23,7 +23,8 @@ class MonthlyReportTable extends Model
         //to get all request values
         $data = $request->all();
         $model = new TestSiteTable();
-        $districtId = $model->fetchDistrictId($data['testsiteId']);
+        $districtId = $data['districtId'];
+        $subDistrictId = $data['subDistrictId'];
         $latitude = $model->fetchLatitudeValue($data['testsiteId']);
         $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $user_name = session('name');
@@ -57,6 +58,7 @@ class MonthlyReportTable extends Model
                     'added_by' => session('userId'),
                     'last_modified_on' => $commonservice->getDateTime(),
                     'district_id' => $districtId,
+                    'sub_district_id' => $subDistrictId,
                     'tester_name' => $data['testername'],
                     // 'signature' => $data['signature'],
                 ]
@@ -140,6 +142,7 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->groupBy('monthly_reports.mr_id');
         
@@ -161,6 +164,10 @@ class MonthlyReportTable extends Model
         if (isset($params['districtId']) && $params['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $params['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($params['subDistrictId']) && $params['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $params['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
             $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
@@ -248,7 +255,9 @@ class MonthlyReportTable extends Model
         $data = $params->all();
         
         $model = new TestSiteTable();
-        $districtId = $model->fetchDistrictId($data['testsiteId']);
+        $districtId = $data['districtId'];
+        $subDistrictId = $data['subDistrictId'];
+        //$districtId = $model->fetchDistrictId($data['testsiteId']);
         $latitude = $model->fetchLatitudeValue($data['testsiteId']);
         $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $commonservice = new CommonService();
@@ -259,6 +268,8 @@ class MonthlyReportTable extends Model
             $recency = $data['isRecency'];
         $upData = array(
             'province_id' => $data['provinceId'],
+            'district_id' => $districtId,
+            'sub_district_id' => $subDistrictId,
             'site_unique_id' => $data['siteUniqueId'],
             'ts_id' => $data['testsiteId'],
             'st_id' => $data['sitetypeId'],
@@ -376,6 +387,7 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
 
@@ -400,6 +412,10 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
@@ -494,6 +510,7 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->groupBy('monthly_reports.mr_id');
@@ -522,6 +539,10 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
@@ -603,6 +624,7 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
 
@@ -624,6 +646,10 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
@@ -1067,6 +1093,7 @@ class MonthlyReportTable extends Model
                             }
 
                             $districtId = $model->fetchDistrictId($testSiteId);
+                            $subDistrictId = $model->fetchSubDistrictId($testSiteId);
                             $latitude = $model->fetchLatitudeValue($testSiteId);
                             $longitude = $model->fetchLongitudeValue($testSiteId);
 
@@ -1119,6 +1146,7 @@ class MonthlyReportTable extends Model
                                             'added_on' => date('Y-m-d'),
                                             'added_by' => session('userId'),
                                             'district_id' => $districtId,
+                                            'sub_district_id' => $subDistrictId,
                                             'tester_name' => $tester_name,
                                             'latitude' => $latitude,
                                             'longitude' => $longitude,
@@ -1746,6 +1774,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
                 if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
@@ -1762,6 +1791,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
                 if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
@@ -1779,6 +1809,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
                 if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
@@ -1798,6 +1829,7 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
                 if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
@@ -1819,6 +1851,10 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);

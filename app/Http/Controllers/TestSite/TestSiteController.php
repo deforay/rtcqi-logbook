@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\FacilityService;
 use App\Service\ProvinceService;
 use App\Service\DistrictService;
+use App\Service\SubDistrictService;
 use App\Service\TestSiteService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -16,7 +17,7 @@ class TestSiteController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict');        
+        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict');        
        
     }
     //View TestSite main screen
@@ -84,13 +85,15 @@ class TestSiteController extends Controller
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             $DistrictService = new DistrictService();
+            $SubDistrictService = new SubDistrictService();
             $FacilityService = new FacilityService();  
             $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $result = $TestSiteService->getTestSiteById($id);
             $district = $DistrictService->getDistictByData($result);
+            $subDistrict = $SubDistrictService->getSubDistictByData($result);
 
-            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district));
+            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict));
         }
     }
 
@@ -100,6 +103,14 @@ class TestSiteController extends Controller
         $district = $DistrictService->getDistictName($id);
   
         return response()->json($district);
+     
+    }
+    public function getSubDistrict($id){
+
+    	$SubDistrictService = new SubDistrictService();
+        $subDistrict = $SubDistrictService->getSubDistictName($id);
+  
+        return response()->json($subDistrict);
      
     }
 

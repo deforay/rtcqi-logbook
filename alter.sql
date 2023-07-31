@@ -557,3 +557,23 @@ ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `created_by`;
 -- Sijulda 16-May-2023
 ALTER TABLE `monthly_reports` 
 ADD `updated_by` VARCHAR(100) NOT NULL AFTER `added_on`;
+
+--Sijulda 14-July-2023
+CREATE TABLE `sub_districts` (
+  `sub_district_id` int NOT NULL AUTO_INCREMENT,
+  `district_id` int NOT NULL,
+  `sub_district_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`sub_district_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--Sijulda 14-July-2023
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'SubDistrict', 'active');
+
+--Sijulda 14-July-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'add', 'Add');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'index', 'Access')
+
+--Sijulda 14-july-2023
+ALTER TABLE `test_sites` ADD `site_sub_district` INT NOT NULL AFTER `site_district`;
+ALTER TABLE `monthly_reports` ADD `sub_district_id` INT NULL DEFAULT NULL AFTER `district_id`;

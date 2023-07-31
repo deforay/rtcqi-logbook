@@ -118,8 +118,22 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                            
                                         </div>
                                         <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>Sub District Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+                                                            @foreach($subdistrict as $row)
+                                                            <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5> Site Name
@@ -207,6 +221,18 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             getAllMonthlyReport();
 
         });
+        $selectElement = $('#subDistrictId').select2({
+            placeholder: "Select Sub District Name",
+            allowClear: true,
+        });
+        $('#subDistrictId').on('select2:select', function(e) {
+            getAllMonthlyReport();
+        });
+
+        $('#subDistrictId').on('select2:unselect', function(e) {
+            getAllMonthlyReport();
+
+        });
         $selectElement = $('#testSiteId').select2({
             placeholder: "Select Test Site Name",
             allowClear: true
@@ -223,6 +249,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         let searchDate = $('#searchDate').val() || '';
         let provinceId = $('#provinceId').val() || '';
         let districtId = $('#districtId').val() || '';
+        let subDistrictId = $('#subDistrictId').val() || '';
         let testSiteId = $('#testSiteId').val() || '';
         $.ajaxSetup({
             headers: {
@@ -242,6 +269,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 searchDate: searchDate,
                 provinceId: provinceId,
                 districtId: districtId,
+                subDistrictId: subDistrictId,
                 testSiteId: testSiteId,
                 },
             },
