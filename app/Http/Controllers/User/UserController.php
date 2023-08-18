@@ -123,8 +123,13 @@ class UserController extends Controller
     //edit profile
     public function profile(Request $request,$id)
     {
+        $availableLocales=config('app.available_locales');        
+
         if ($request->isMethod('post')) 
         {
+            $data=$request->All();
+            app()->setLocale($data['locale']);
+            session()->put('locale', $data['locale']);
             $UserService = new UserService();
             $edit = $UserService->updateProfile($request,$id);
             return Redirect::to('/dashboard')->with('status', $edit);
@@ -133,7 +138,7 @@ class UserController extends Controller
         {
             $UserService = new UserService();
             $result = $UserService->getUserById($id);
-            return view('user.profile',array('result'=>$result));
+            return view('user.profile',array('result'=>$result, 'available_locales'=>$availableLocales));
         }
     }
 
