@@ -468,6 +468,22 @@ class CommonService
 	    	$exc->getMessage();
 	    }
     }
+
+    public function updateUserLanguage($params){
+        DB::beginTransaction();
+    	try {
+                $model = new UserTable();
+                $updateUserLanguage = $model->updateUserLanguage($params);
+                DB::commit();
+                if($updateUserLanguage>0){
+                    return $updateUserLanguage; 
+                }
+	    }
+	    catch (Exception $exc) {
+            DB::rollBack();
+	    	$exc->getMessage();
+	    }
+    }
     
 
     public function addNewBranchType($request)

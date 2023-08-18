@@ -575,3 +575,6 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 --Sijulda 14-july-2023
 ALTER TABLE `test_sites` ADD `site_sub_district` INT NOT NULL AFTER `site_district`;
 ALTER TABLE `monthly_reports` ADD `sub_district_id` INT NULL DEFAULT NULL AFTER `district_id`;
+
+--Sijulda 03-August-2023
+ALTER TABLE `users` ADD `language` VARCHAR(5) NULL DEFAULT NULL AFTER `role_id`;

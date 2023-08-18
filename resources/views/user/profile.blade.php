@@ -91,6 +91,20 @@
 											</div>
 										</fieldset>
 									</div>
+                                    <div class="col-xl-6 col-lg-12">
+									<fieldset>
+										<h5>Choose Language</h5>										
+										<div class="form-group">
+											<select class="form-control" autocomplete="off" style="width:100%;" id="locale" name="locale" title="Please Select Language">
+                                                <option value="">Select Language</option>   
+                                                @foreach($available_locales as $locale_name => $available_locale)
+												
+                                                    <option value="{{$available_locale}}" {{ $available_locale === $result[0]->language  ?  'selected':''}}>{{ $locale_name }}</option>
+                                                    @endforeach
+                                                </select>
+										</div>
+									</fieldset>
+								</div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/dashboard" >

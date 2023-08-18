@@ -140,6 +140,21 @@ class UserTable extends Model
         return $data;
     }
 
+    public function updateUserLanguage($locale){
+        $userid=session('userId');
+        $user = array(
+            'language' => $locale,            
+            'updated_by' => session('userId')
+        );
+        //print_r($user); exit();
+        $response = DB::table('users')
+            ->where('user_id', '=', $userid)
+            ->update(
+                $user
+            );
+            return $response;
+    }
+
     // Update particular User details
     public function updateUser($params, $id)
     {
@@ -250,6 +265,10 @@ class UserTable extends Model
                     session(['forcePasswordReset' => $result[0]['force_password_reset']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
+                    if($result[0]['language'] != NULL){
+                        app()->setLocale($result[0]['language']);
+                        session()->put('locale', $result[0]['language']);
+                    }                    
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
                     $userservice->loggedInHistory($data,'success');
                 } else {
@@ -281,6 +300,7 @@ class UserTable extends Model
                 'last_name' => $data['lastName'],
                 'email' => $data['email'],
                 'phone' => $data['mobileNo'],
+                'language' => $data['locale'],
                 'updated_by' => session('userId')
             );
 
