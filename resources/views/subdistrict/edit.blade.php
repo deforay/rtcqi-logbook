@@ -75,20 +75,7 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Sub District Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="Please Select Sub District Name">
-                                                <option value="">Select Sub District Name</option>   
-                                                @foreach($subdistrict as $row)
-                                                    <option value="{{$row->sub_district_id}}" {{ $result[0]->sub_district_id == $row->sub_district_id ?  'selected':''}}>{{$row->sub_district_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
+                                    
                                 </div>
 								<div class="form-actions right">
                                     <a href="/subdistrict" >
