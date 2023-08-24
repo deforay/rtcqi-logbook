@@ -578,3 +578,9 @@ ALTER TABLE `monthly_reports` ADD `sub_district_id` INT NULL DEFAULT NULL AFTER 
 
 --Sijulda 03-August-2023
 ALTER TABLE `users` ADD `language` VARCHAR(5) NULL DEFAULT NULL AFTER `role_id`;
+
+--Sijulda 24-August-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUpload', 'Not Upload')
+
+--Sijulda 24-August-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUploadExport', 'Not Upload Export')
