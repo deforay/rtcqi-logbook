@@ -119,7 +119,9 @@
 
 
                                 <div class="row">
-                                        <?php $counter = 0; ?>
+                                        <?php $counter = 0; 
+                                        
+                                        ?>
                                         <?php foreach ($resourceResult as $value) { ?>
                                         
                                         <div class="col-md-4 col-xs-12 col-sm-12">

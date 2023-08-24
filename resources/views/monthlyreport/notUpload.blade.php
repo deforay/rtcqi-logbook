@@ -155,7 +155,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                         <div class="display-inline ml-2">
 
                                                             <?php $role = session('role');
-                                                            if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['notuploadexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['notuploadexport'] == "allow")) { ?>
+                                                            if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['notUploadExport']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['notUploadExport'] == "allow")) { ?>
                                                                 <button type="submit" class="btn btn-primary">Export</button>
                                                             <?php } ?>
 
