@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity', 'register');        
+        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity', 'register', 'getUserLoginHistory');        
        
     }
     //View user main screen
