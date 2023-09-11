@@ -584,3 +584,7 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 
 --Sijulda 24-August-2023
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUploadExport', 'Not Upload Export')
+
+--Sijulda 11-Septmber-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'userActivityLog', 'User Activity Log')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'userloginhistory', 'User Login History')
