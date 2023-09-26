@@ -214,6 +214,11 @@ Route::get('/customreport', 'Report\ReportController@customReport')->name('custo
 Route::post('/getCustomMonthlyReport', 'Report\ReportController@getCustomMonthlyReport');
 Route::post('/customerexcelexport', 'Report\ReportController@customerExport');
 
+// Custom Report
+Route::get('/notreportedsites', 'Report\ReportController@notReportedSites')->name('notreportedsites.notReportedSites')->middleware('access');
+Route::post('/getNotReportedSites', 'Report\ReportController@getNotReportedSites');
+Route::post('/notreportedsitesexcelexport', 'Report\ReportController@notReportedSitesExport');
+
 // Invalid Results Report
 Route::get('/invalidresultreport', 'Report\ReportController@invalidresultReport')->name('invalidresultreport.invalidresultReport')->middleware('access');
 Route::post('/getInvalidResultReport', 'Report\ReportController@getInvalidResultReport');

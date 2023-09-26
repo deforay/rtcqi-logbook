@@ -19,6 +19,7 @@ use App\Exports\LogBookExport;
 use App\Exports\InvalidResultExport;
 use App\Service\CommonService;
 use App\Exports\CustomerExport;
+use App\Exports\NotReportedSitesExport;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -167,6 +168,32 @@ class ReportController extends Controller
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
+    
+    //Not Reported Sites Report
+    public function notReportedSites()
+    {
+        if (session('login') == true) {
+            $ProvinceService = new ProvinceService();
+            $province = $ProvinceService->getAllActiveProvince();
+            $DistrictService = new DistrictService();
+            $district = $DistrictService->getAllDistrict();
+            $SubDistrictService = new SubDistrictService();
+            $subdistrict = $SubDistrictService->getAllSubDistrict();
+            return view('report.notReportedSites', array('province' => $province, 'district' => $district, 'province' => $province, 'subdistrict' => $subdistrict));
+        } else
+            return Redirect::to('login')->with('status', 'Please Login');
+    }
+
+    public function getNotReportedSites(Request $request)
+    {
+        
+        $datas = $request->all();
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->getNotReportedSites($datas);
+        //dd($data);die;
+        $view = View::make('report.getNotReportedSites', ['report' => $data]);
+        return $view;
+    }
 
     public function getCustomMonthlyReport(Request $request)
     {
@@ -257,5 +284,12 @@ class ReportController extends Controller
         $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
         return Excel::download(new CustomerExport($data), 'Custom-Report-' . $dateTime . '.xlsx');
+    }
+    public function notReportedSitesExport(Request $request)
+    {
+        $commonservice = new CommonService();
+        $dateTime = $commonservice->getDateAndTime();
+        $data = $request->all();
+        return Excel::download(new NotReportedSitesExport($data), 'Not-Reported-Sites-Report-' . $dateTime . '.xlsx');
     }
 }
