@@ -828,6 +828,59 @@ class MonthlyReportTable extends Model
         return $result;
     }
 
+    //Not Reported Sites
+    public function fetchNotReportedSites($request)
+    {
+        $commonservice = new CommonService();
+        $start_date = '';
+        $end_date = '';
+        $data = $request;
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
+        
+        $query = DB::table('users_testsite_map')
+            ->select('test_sites.ts_id', 'test_sites.site_name', 'provinces.province_name', 'districts.district_name', 'sub_districts.sub_district_name', 'test_sites.updated_on')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'users_testsite_map.ts_id')
+            ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=','users_testsite_map.ts_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
+            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
+            ->leftjoin('sub_districts', 'sub_districts.district_id', '=', 'test_sites.site_sub_district')            
+            ->whereIn('users_testsite_map.ts_id', Session::get('tsId'))
+            ->Where('monthly_reports.ts_id',NULL)
+            ->GroupBy('test_sites.ts_id');
+
+            if (trim($start_date) != "" && trim($end_date) != "") {
+                $query = $query->where(function ($query) use ($start_date, $end_date) {
+                    $query->where('test_sites.created_on',  '>=', $start_date)
+                        ->where('test_sites.created_on', '<=', $end_date)
+                        ->whereDate('test_sites.created_on', '>=', $start_date);
+                });
+            }
+            if (isset($data['provinceId']) && $data['provinceId'] != '') {
+                $query = $query->whereIn('provinces.province_id', $data['provinceId']);
+                $query = $query->groupBy(DB::raw('provinces.province_id'));
+            }
+            if (isset($data['districtId']) && $data['districtId'] != '') {
+                $query = $query->whereIn('districts.district_id', $data['districtId']);
+                $query = $query->groupBy(DB::raw('districts.district_id'));
+            }
+            if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+                $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+                $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
+            }
+            $data=$query->get();
+            return $data;
+    }
+    
     public function importMonthlyReportData($request)
     {
         $user_name = session('name');

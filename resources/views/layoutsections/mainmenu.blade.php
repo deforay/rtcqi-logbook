@@ -73,7 +73,10 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 		$report .= '<li id="li-invalidresultreport"><a class="dropdown-item" data-toggle="dropdown" href="/invalidresultreport/">'.Lang::get('messages.invalid_result_report').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['customreport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['customreport'] == "allow"))
 		$report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">'.Lang::get('messages.custom_report').'</a></li>';
-	$report .= '</ul></li>';
+	if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsites']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsites'] == "allow"))
+		$report .= '<li id="li-notreportedsites"><a class="dropdown-item" data-toggle="dropdown" href="/notreportedsites/">'.Lang::get('messages.not_reported_sites_report').'</a></li>';
+	
+		$report .= '</ul></li>';
 }
 
 // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>

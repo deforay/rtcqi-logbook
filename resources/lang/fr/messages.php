@@ -35,6 +35,7 @@
 'test_kit_report'=>'Rapport du kit de test',
 'invalid_result_report'=>'Rapport de résultat non valide',
 'custom_report'=>'Rapport personnalisé',
+'not_reported_sites_report'=>'Sites non signalés',
 
 //Navigation
 'add'=>'Ajouter',
