@@ -36,7 +36,7 @@ $messages=Lang::get('messages');
         <section class="horizontal-grid" id="horizontal-grid">
             <div class="row">
                 <div class="col-12">
-                
+
                                 <div class="table-responsive" id="monthlyReportListWrapper">
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
                                         <thead>
@@ -307,7 +307,7 @@ $messages=Lang::get('messages');
                                                             <input type="text" id="startDate0" class="form-control isRequired startDate" autocomplete="off" onchange="changeStartDate(0)" placeholder="{{$messages['enter_start_date']}}" name="startDate[]" title="{{ $messages['please_enter_start_date']}}">
                                                             <div id="show_error_date0" class="error-date" ></div>
                                                         </div>
-                                                        
+
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
@@ -331,7 +331,7 @@ $messages=Lang::get('messages');
                                                             @if($i == 1)
                                                             <h5>{{ $messages['test_kit_name']}} {{$i}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else 
+                                                            @else
                                                             <h5>{{ $messages['test_kit_name']}} {{$i}}
                                                             </h5>
                                                             @endif
@@ -392,10 +392,10 @@ $messages=Lang::get('messages');
                                                 </tr>
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <td style=" text-align: center;">
-                                                    @if($j == 1)    
+                                                    @if($j == 1)
                                                        <h5>{{ $messages['lot_no']}} {{$j}}<span class="mandatory">*</span>
                                                         </h5>
-                                                        @else 
+                                                        @else
                                                         <h5>{{ $messages['lot_no']}} {{$j}}
                                                         </h5>
                                                         @endif
@@ -411,14 +411,14 @@ $messages=Lang::get('messages');
                                                         @if($j == 1)
                                                             <h5>{{ $messages['expiry_date']}} {{$j}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else 
+                                                            @else
                                                             <h5>{{ $messages['expiry_date']}} {{$j}}
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
                                                             @if($j == 1)
                                                                 <input type="text" id="expiryDate0{{$j}}" class="form-control isRequired dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="{{$messages['enter_expiry_date']}}" title="{{ $messages['please_enter_expiry_date']}}{{$j}}" onchange="checklotNo('0','{{$j}}')">
-                                                                @else 
+                                                                @else
                                                                 <input type="text" id="expiryDate0{{$j}}" class="form-control dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="{{$messages['enter_expiry_date']}}" title="{{ $messages['please_enter_expiry_date']}}{{$j}}" onchange="checklotNo('0','{{$j}}')">
                                                                 @endif
                                                             </div>
@@ -595,7 +595,7 @@ $('#provinceId').find('option').not(':first').remove();
 $('#districtId').find('option').not(':first').remove();
 $('#subDistrictId').find('option').not(':first').remove();
 
-// AJAX request 
+// AJAX request
 $.ajax({
     url: "{{url('/getProvince') }}/" + id,
     type: 'get',
@@ -632,7 +632,7 @@ loadReplaceTestKitHeadings();
  });
 
  function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());   
+    var testSiteId = parseInt($('#testsiteId').val());
     //alert($('#testsiteId').val());
         $.ajaxSetup({
             headers: {
@@ -647,14 +647,14 @@ loadReplaceTestKitHeadings();
             scrollX: false,
             autoWidth: false,
             paging: false,
-            
+
             ajax: {
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                    testSiteId: testSiteId,               
+                    testSiteId: testSiteId,
                 },
-                
+
             },
 
             columns: [
@@ -748,12 +748,12 @@ loadReplaceTestKitHeadings();
     }
 
     function changeEndDate(id) {
-        
+
         if($('#startDate' + id).val() === ''){
             var errorMessage='<span style="color:red">{{$messages['please_select_start_date']}}</span>'
             $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
-            $('#show_error_date'+id).css("display", "block"); 
-            $("#endDate" + id).val('');           
+            $('#show_error_date'+id).css("display", "block");
+            $("#endDate" + id).val('');
             $(".error-date").focus();
         }else{
             $("#endDate" + id).datepicker({
@@ -766,7 +766,7 @@ loadReplaceTestKitHeadings();
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
         }
-        
+
         // var minDate = new Date(selected.date.valueOf());
         //        $('#startDate'+id).datepicker('setEndDate', minDate);
     }
@@ -776,13 +776,13 @@ loadReplaceTestKitHeadings();
         flag = deforayValidator.init({
             formId: 'addMonthlyReport'
         });
-        
+
         if (flag == true) {
             // var rowCount = $(".testDetailsRow").length;
             // if(rowCount > 0){
             //     alert('sss');
             //     for(var i=0; $i<rowCount; $i++){
-            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){           
+            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){
             //             var errorMessage="please select start date first";
             //             $('#endDate' + i).val('');
             //             $('#show_error_date'+i).html(flag).delay(3000).fadeOut();
@@ -790,8 +790,8 @@ loadReplaceTestKitHeadings();
             //             $(".error-date").focus();
             //             return false;
             //         }
-            //     }                
-            
+            //     }
+
             // }
             if (duplicateName) {
                 document.getElementById('addMonthlyReport').submit();
@@ -1043,7 +1043,7 @@ loadReplaceTestKitHeadings();
                         var error='{{$messages['expiry_date_for_the_lot_no_was_recorded_as_previously']}}';
                         var errorMessageReplace=error.replace(':lotno', lot);
                         var errorMessage=error.replace(':expiry', result['expiry']);
-                        alert(errorMessage);                        
+                        alert(errorMessage);
                     }
                 }
             });
@@ -1061,7 +1061,7 @@ loadReplaceTestKitHeadings();
             }
         }
         if (k > 1) {
-            
+
             var error='{{$messages['page_no_has_already_been_added_for_this_product']}}';
             var errorMessage=error.replace(':pageno', itemId);
             alert(errorMessage);
