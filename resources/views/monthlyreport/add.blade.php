@@ -16,15 +16,15 @@ $messages=Lang::get('messages');
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">{{ $messages['monthly_report']}}</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ $messages["monthly_report"]}}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">{{ $messages['manage']}}
+                        <li class="breadcrumb-item">{{ $messages["manage"]}}
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreport/">{{ $messages['monthly_report']}}</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreport/">{{ $messages["monthly_report"]}}</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ $messages['add']}}</li>
+                        <li class="breadcrumb-item active">{{ $messages["add"]}}</li>
                     </ol>
                 </div>
             </div>
@@ -53,7 +53,7 @@ $messages=Lang::get('messages');
                                                 <th>{{ $messages['last_modified_on']}}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
-                                                <th>{{ $messages['action']}}</th>
+                                                <th>{{ $messages["action"]}}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
@@ -64,7 +64,7 @@ $messages=Lang::get('messages');
                                 </div>
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ $messages['add_new_report']}}</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ $messages["add_new_report"]}}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -85,7 +85,7 @@ $messages=Lang::get('messages');
 
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['site_name']}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["site_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="{{ $messages['please_select_test_site_name']}}">
@@ -98,7 +98,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['entry_point']}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["entry_point"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="{{ $messages['please_select_entry_point']}}">
@@ -111,7 +111,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['site_id']}}
+                                                <h5>{{ $messages["site_id"]}}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="siteUniqueId" class="form-control" autocomplete="off" placeholder="{{$messages['enter_site_unique_id']}}" name="siteUniqueId" title="{{ $messages['please_enter_site_unique_id']}}">
@@ -120,7 +120,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['province_name']}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["province_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="{{ $messages['please_select_province_name']}}">
@@ -134,7 +134,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['district_name']}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["district_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="{{ $messages['please_select_district_name']}}">
@@ -148,7 +148,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['sub_district_name']}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["sub_district_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
@@ -162,7 +162,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['site_manager']}}
+                                                <h5>{{ $messages["site_manager"]}}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="siteManager" class="form-control" autocomplete="off" placeholder="{{$messages['enter_site_manager']}}" name="siteManager" title="{{ $messages['please_enter_site_manager']}}">
@@ -171,7 +171,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['is_flc']}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["is_flc"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="{{ $messages['please_select_is_flc_status']}}">
@@ -184,7 +184,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>{{ $messages['lab_manager_name']}} <span class="mandatory">*</span>
+											<h5>{{ $messages["lab_manager_name"]}} <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="testername" class="form-control isRequired " autocomplete="off" placeholder="{{$messages['enter_lab_manager_name']}}" name="testername" title="{{ $messages['please_enter_lab_manager_name']}}" >
@@ -193,7 +193,7 @@ $messages=Lang::get('messages');
 									</div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['lab_manager_contact_number']}}
+                                                <h5>{{ $messages["lab_manager_contact_number"]}}
                                                 </h5>
                                                 <div class="form-group">
                                                 <input type="tel" id="contactNo" maxlength="10" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_tester_contact_phone']}}" name="contactNo" title="{{ $messages['please_enter_tester_contact_phone']}}" >
@@ -203,7 +203,7 @@ $messages=Lang::get('messages');
                                         @if($global['recency_test']=='enabled')
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['does_site_do_recency_tests']}} <span class="mandatory">*</span>
+                                                <h5>{{ $messages["does_site_do_recency_tests"]}} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="{{ $messages['please_select_does_site_do_recency_tests']}}?">
@@ -216,7 +216,7 @@ $messages=Lang::get('messages');
                                         @endif
                                         {{-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>{{ $messages['latitude']}} <span class="mandatory">*</span>
+											<h5>{{ $messages["latitude"]}} <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="latitude" class="form-control isRequired " autocomplete="off" placeholder="{{$messages['enter_latitude']}}" name="latitude" title="{{ $messages['please_enter_latitude']}}" >
@@ -225,7 +225,7 @@ $messages=Lang::get('messages');
 									</div>
                                     <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>{{ $messages['longitude']}} <span class="mandatory">*</span>
+											<h5>{{ $messages["longitude"]}} <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
                                                 <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="{{$messages['enter_longitude']}}" name="longitude" title="{{ $messages['please_enter_longitude']}}" >
@@ -249,7 +249,7 @@ $messages=Lang::get('messages');
                                         -->
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['name_of_data_collector']}}
+                                                <h5>{{ $messages["name_of_data_collector"]}}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_name_of_data_collected']}}" name="nameOfDataCollect" title="{{ $messages['please_enter_name_of_data_collected']}}">
@@ -258,7 +258,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['date_of_data_collection']}}
+                                                <h5>{{ $messages["date_of_data_collection"]}}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}">
@@ -267,7 +267,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['reporting_month']}} <span class="mandatory">*</span>
+                                                <h5>{{ $messages["reporting_month"]}} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="reportingMon" class="form-control isRequired" autocomplete="off" placeholder="{{$messages['enter_reporting_month']}}" name="reportingMon" title="{{ $messages['please_enter_reporting_month']}}" >
@@ -276,7 +276,7 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages['book_number']}}
+                                                <h5>{{ $messages["book_number"]}}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="bookNo" class="form-control" autocomplete="off" placeholder="{{$messages['enter_book_no']}}." name="bookNo" title="{{ $messages['please_enter_book_no']}}">
@@ -287,13 +287,13 @@ $messages=Lang::get('messages');
                                     <br />
                                     <div id="test_row">
 
-                                        <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">{{ $messages['test_details']}}</h4>
+                                        <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">{{ $messages["test_details"]}}</h4>
 
                                         <div class="testDetailsRow" id="test_details0">
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>{{ $messages['page_no']}}.</h5>
+                                                        <h5>{{ $messages["page_no"]}}.</h5>
                                                         <div class="form-group">
                                                             <input type="number" min="0" id="pageNO1" class="form-control" autocomplete="off" placeholder="{{$messages['enter_page_no']}}." name="pageNO[]" title="{{ $messages['please_enter_page_no']}}." onchange="checkExistPageNos('1')">
                                                         </div>
@@ -301,7 +301,7 @@ $messages=Lang::get('messages');
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>{{ $messages['start_date']}} <span class="mandatory">*</span>
+                                                        <h5>{{ $messages["start_date"]}} <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
                                                             <input type="text" id="startDate0" class="form-control isRequired startDate" autocomplete="off" onchange="changeStartDate(0)" placeholder="{{$messages['enter_start_date']}}" name="startDate[]" title="{{ $messages['please_enter_start_date']}}">
@@ -312,7 +312,7 @@ $messages=Lang::get('messages');
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>{{ $messages['end_date']}} <span class="mandatory">*</span>
+                                                        <h5>{{ $messages["end_date"]}} <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
                                                             <input type="text" id="endDate0" class="form-control isRequired  endDate" autocomplete="off" onchange="changeEndDate(0);" placeholder="{{$messages['enter_end_date']}}" name="endDate[]" title="{{ $messages['please_enter_end_date']}}">
@@ -329,10 +329,10 @@ $messages=Lang::get('messages');
                                                                                             ?> <td style="text-align:center;" colspan="3">
                                                         <fieldset>
                                                             @if($i == 1)
-                                                            <h5>{{ $messages['test_kit_name']}} {{$i}}<span class="mandatory">*</span>
+                                                            <h5>{{ $messages["test_kit_name"]}} {{$i}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else
-                                                            <h5>{{ $messages['test_kit_name']}} {{$i}}
+                                                            @else 
+                                                            <h5>{{ $messages["test_kit_name"]}} {{$i}}
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
@@ -370,7 +370,7 @@ $messages=Lang::get('messages');
                                                                                                 $test = '';
                                                                                                 ?> <td style=" text-align: center;" colspan="3">
                                                             <fieldset>
-                                                                <h5>{{ $messages['test_kit_name']}}{{$i}}<span class="mandatory">*</span>
+                                                                <h5>{{ $messages["test_kit_name"]}}{{$i}}<span class="mandatory">*</span>
                                                                 </h5>
                                                                 <div class="form-group">
 
@@ -392,11 +392,11 @@ $messages=Lang::get('messages');
                                                 </tr>
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <td style=" text-align: center;">
-                                                    @if($j == 1)
-                                                       <h5>{{ $messages['lot_no']}} {{$j}}<span class="mandatory">*</span>
+                                                    @if($j == 1)    
+                                                       <h5>{{ $messages["lot_no"]}} {{$j}}<span class="mandatory">*</span>
                                                         </h5>
-                                                        @else
-                                                        <h5>{{ $messages['lot_no']}} {{$j}}
+                                                        @else 
+                                                        <h5>{{ $messages["lot_no"]}} {{$j}}
                                                         </h5>
                                                         @endif
                                                         <div class="form-group">
@@ -409,10 +409,10 @@ $messages=Lang::get('messages');
                                                         </td>
                                                         <td style=" text-align: center;" colspan="2">
                                                         @if($j == 1)
-                                                            <h5>{{ $messages['expiry_date']}} {{$j}}<span class="mandatory">*</span>
+                                                            <h5>{{ $messages["expiry_date"]}} {{$j}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else
-                                                            <h5>{{ $messages['expiry_date']}} {{$j}}
+                                                            @else 
+                                                            <h5>{{ $messages["expiry_date"]}} {{$j}}
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
@@ -427,27 +427,27 @@ $messages=Lang::get('messages');
                                                 </tr>
                                                 <tr>
                                                     @for($k = 1; $k <= $globalValue; $k++) <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
-                                                        <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">{{ $messages['test_kit']}} {{$k}}</h4>
+                                                        <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">{{ $messages["test_kit"]}} {{$k}}</h4>
                                                         </td>
                                                         @endfor
                                                 </tr>
                                                 <tr>
                                                     @for($l = 1; $l <= $globalValue; $l++) <td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-                                                        <h5 style="color: white; font-weight: 500;"> {{ $messages['reactive']}}
+                                                        <h5 style="color: white; font-weight: 500;"> {{ $messages["reactive"]}}
                                                         </h5>
                                                         <div class="form-group">
                                                             <input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_reactive_r']}} {{$l}}" name="totalReactive{{$l}}[]" title="{{ $messages['please_enter_total_reactive_r']}} {{$l}}">
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-                                                            <h5 style="color: white; font-weight: 500;">{{ $messages['non_reactive']}}
+                                                            <h5 style="color: white; font-weight: 500;">{{ $messages["non_reactive"]}}
                                                             </h5>
                                                             <div class="form-group">
                                                                 <input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_non_reactive_nr']}} {{$l}}" name="totalNonReactive{{$l}}[]" title="{{ $messages['please_enter_total_non_reactive_nr']}} {{$l}}">
                                                             </div>
                                                         </td>
                                                         <td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-                                                            <h5 style="color: white; font-weight: 500;">{{ $messages['invalid']}}
+                                                            <h5 style="color: white; font-weight: 500;">{{ $messages["invalid"]}}
                                                             </h5>
                                                             <div class="form-group">
                                                                 <input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_invalid_inv']}} {{$l}}" name="totalInvalid{{$l}}[]" title="{{ $messages['please_enter_total_invalid_inv']}} {{$l}}">
@@ -463,24 +463,24 @@ $messages=Lang::get('messages');
                                                     <table class="table1" style="width:80%;margin-left: 10%;">
                                                         <tr>
                                                             <td style=" text-align: center;">
-                                                                <h4 style="font-weight: 600;"> {{ $messages['final_result']}} </h4>
+                                                                <h4 style="font-weight: 600;"> {{ $messages["final_result"]}} </h4>
                                                             </td>
                                                             <td style=" text-align: center;">
-                                                                <h5> {{ $messages['positive']}}
+                                                                <h5> {{ $messages["positive"]}}
                                                                 </h5>
                                                                 <div class="form-group">
                                                                     <input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_positive']}}" name="totalPositive[]" title="{{ $messages['please_enter_final_positive']}}">
                                                                 </div>
                                                             </td>
                                                             <td style=" text-align: center;">
-                                                                <h5> {{ $messages['negative']}}
+                                                                <h5> {{ $messages["negative"]}}
                                                                 </h5>
                                                                 <div class="form-group">
                                                                     <input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_negative']}}" name="totalNegative[]" title="{{ $messages['please_enter_final_negative']}}">
                                                                 </div>
                                                             </td>
                                                             <td style=" text-align: center;">
-                                                                <h5> {{ $messages['indeterminate']}}
+                                                                <h5> {{ $messages["indeterminate"]}}
                                                                 </h5>
                                                                 <div class="form-group">
                                                                     <input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_undetermined']}}" name="finalUndetermined[]" title="{{ $messages['please_enter_final_undetermined']}}">
@@ -503,18 +503,18 @@ $messages=Lang::get('messages');
                                     <div class="row" style="color:white;margin-left:40%;">
                                         <div>
                                             <a onclick="insert_row();" class="btn btn-info grey">
-                                                <i class="ft-plus icon-left"></i> {{ $messages['add_page']}}
+                                                <i class="ft-plus icon-left"></i> {{ $messages["add_page"]}}
                                             </a>
                                         </div>
                                     </div>
                                     <div class="form-actions right">
                                         <a href="/monthlyreport">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> {{ $messages['cancel']}}
+                                                <i class="ft-x"></i> {{ $messages["cancel"]}}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> {{ $messages['save']}}
+                                            <i class="la la-check-square-o"></i> {{ $messages["save"]}}
                                         </button>
                                     </div>
                                 </form>
@@ -748,12 +748,12 @@ loadReplaceTestKitHeadings();
     }
 
     function changeEndDate(id) {
-
+        
         if($('#startDate' + id).val() === ''){
-            var errorMessage='<span style="color:red">{{$messages['please_select_start_date']}}</span>'
+            var errorMessage='<span style="color:red">{{$messages["please_select_start_date"]}}</span>'
             $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
-            $('#show_error_date'+id).css("display", "block");
-            $("#endDate" + id).val('');
+            $('#show_error_date'+id).css("display", "block"); 
+            $("#endDate" + id).val('');           
             $(".error-date").focus();
         }else{
             $("#endDate" + id).datepicker({
@@ -817,7 +817,7 @@ loadReplaceTestKitHeadings();
 			<div class="row">\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>{{ $messages['page_no']}}.</h5>\
+						<h5>{{ $messages["page_no"]}}.</h5>\
 						<div class="form-group">\
 							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control" autocomplete="off" placeholder="{{$messages['enter_page_no']}}." name="pageNO[]" title="{{$messages['please_enter_page_no']}}." onchange="checkExistPageNos(\'' + rowCount + '\')" >\
 						</div>\
@@ -825,7 +825,7 @@ loadReplaceTestKitHeadings();
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>{{ $messages['start_date']}} <span class="mandatory">*</span>\
+						<h5>{{ $messages["start_date"]}} <span class="mandatory">*</span>\
 						</h5>\
 						<div class="form-group">\
 							<input type="text" id="startDate' + rowCount + '" class="form-control startDate" onchange="changeStartDate(' + rowCount + ')" placeholder="{{$messages['enter_start_date']}}" autocomplete="off" name="startDate[]" title="{{ $messages['please_enter_start_date']}}" >\
@@ -835,7 +835,7 @@ loadReplaceTestKitHeadings();
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>{{ $messages['end_date']}} <span class="mandatory">*</span>\
+						<h5>{{ $messages["end_date"]}} <span class="mandatory">*</span>\
 						</h5>\
 						<div class="form-group">\
 							<input type="text" id="endDate' + rowCount + '" class="form-control  endDate" onchange="changeEndDate(' + rowCount + ')" placeholder="{{$messages['enter_end_date']}}" autocomplete="off" name="endDate[]" title="{{$messages['please_enter_end_date']}}" >\
@@ -850,7 +850,7 @@ loadReplaceTestKitHeadings();
 				@for($i = 1; $i <= $globalValue; $i++)\
 				<td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>{{ $messages['test_kit_name']}} {{$i}}\
+							<h5>{{ $messages["test_kit_name"]}} {{$i}}\
 								</h5>\
 								<div class="form-group">\
 									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="{{$messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
@@ -873,7 +873,7 @@ loadReplaceTestKitHeadings();
 						@for($i = 1; $i <= $globalValue; $i++)\
 				        <td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>{{ $messages['test_kit_name']}}{{$i}}\
+							<h5>{{ $messages["test_kit_name"]}}{{$i}}\
 								</h5>\
 								<div class="form-group">\
 									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="{{$messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings(' {
@@ -895,14 +895,14 @@ loadReplaceTestKitHeadings();
         div += '</tr><tr>'
         for (var j = 1; j <= gCnt; j++) {
             div += '<td style=" text-align: center;">\
-							<h5>{{ $messages['lot_no']}}. ' + j + ' \
+							<h5>{{ $messages["lot_no"]}}. ' + j + ' \
 							</h5>\
 							<div class="form-group">\
 								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_lot_no']}}." name="lotNO' + j + '[]" title="{{$messages['please_enter_lot_no']}}.' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\
-							<h5>{{ $messages['expiry_date']}} ' + j + '\
+							<h5>{{ $messages["expiry_date"]}} ' + j + '\
 							</h5>\
 							<div class="form-group">\
 								<input type="text" id="expiryDate' + rowCount + '' + j + '" class="form-control dates " autocomplete="off" placeholder="{{$messages['enter_expiry_date']}}" name="expiryDate' + j + '[]" title="{{$messages['please_enter_expiry_date']}}' + j + '" onchange=checklotNo(' + rowCount + ',' + j + ')>\
@@ -918,21 +918,21 @@ loadReplaceTestKitHeadings();
         div += '</tr><tr>'
         for (var l = 1; l <= gCnt; l++) {
             div += '<td style=" text-align: center;" bgcolor="' + col[l] + '">\
-						<h5 style="color: white; font-weight: 500;"> {{ $messages['reactive']}}\
+						<h5 style="color: white; font-weight: 500;"> {{ $messages["reactive"]}}\
 						</h5>\
 						<div class="form-group">\
 							<input type="number" min="0" id="totalReactive' + l + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_reactive_r']}} ' + l + '" name="totalReactive' + l + '[]" title="{{ $messages['please_enter_total_reactive_r']}} ' + l + '" >\
 						</div>\
 					</td>\
 					<td style=" text-align: center;" bgcolor="' + col[l] + '">\
-							<h5 style="color: white; font-weight: 500;">{{ $messages['non_reactive']}}\
+							<h5 style="color: white; font-weight: 500;">{{ $messages["non_reactive"]}}\
 							</h5>\
 							<div class="form-group">\
 							<input type="number" min="0" id="totalNonReactive' + l + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_non_reactive_nr']}} ' + l + '" name="totalNonReactive' + l + '[]" title="{{ $messages['please_enter_total_non_reactive_nr']}} ' + l + '" >\
 						</div>\
 					</td>\
 					<td style=" text-align: center;" bgcolor="' + col[l] + '">\
-						<h5 style="color: white; font-weight: 500;">{{ $messages['invalid']}} </h5> ';
+						<h5 style="color: white; font-weight: 500;">{{ $messages["invalid"]}} </h5> ';
             div += '		<div class="form-group">\
 							<input type="number" min="0" id="totalInvalid' + l + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_invalid_inv']}} ' + l + '" name="totalInvalid' + l + '[]" title="{{ $messages['please_enter_total_invalid_inv']}} ' + l + '" >\
 						</div>\
@@ -944,24 +944,24 @@ loadReplaceTestKitHeadings();
 								<table class="table1" style="width:80%;margin-left: 10%;">\
 									<tr>\
 										<td  style=" text-align: center;">\
-										<h4 style="font-weight: 600;"> {{ $messages['final_result']}} </h4>\
+										<h4 style="font-weight: 600;"> {{ $messages["final_result"]}} </h4>\
 										</td>\
 										<td style=" text-align: center;" >\
-											<h5> {{ $messages['positive']}}\
+											<h5> {{ $messages["positive"]}}\
 											</h5>\
 											<div class="form-group">\
 												<input type="number" min="0" id="totalPositive' + rowCount + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_positive']}}" name="totalPositive[]" title="{{ $messages['please_enter_final_positive']}}" >\
 											</div>\
 										</td>\
 										<td style=" text-align: center;" >\
-											<h5> {{ $messages['negative']}}\
+											<h5> {{ $messages["negative"]}}\
 											</h5>\
 											<div class="form-group">\
 												<input type="number" min="0" id="totalNegative' + rowCount + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_negative']}}" name="totalNegative[]" title="{{ $messages['please_enter_final_negative']}}" >\
 											</div>\
 										</td>\
 										<td style=" text-align: center;" >\
-											<h5> {{ $messages['indeterminate']}}\
+											<h5> {{ $messages["indeterminate"]}}\
 											</h5>\
 											<div class="form-group">\
 												<input type="number" min="0" id="finalUndetermined' + rowCount + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_undetermined']}}" name="finalUndetermined[]" title="{{ $messages['please_enter_final_undetermined']}}" >\
@@ -973,7 +973,7 @@ loadReplaceTestKitHeadings();
 						<div class="col-2 mt-5">\
 							<div style="color:white;margin-left:5%;">\
 								<a  onclick="delete_row(' + rowCount + ');" class="btn btn-danger grey">\
-								<i class="ft-minus icon-left"></i> {{ $messages['remove_page']}}\
+								<i class="ft-minus icon-left"></i> {{ $messages["remove_page"]}}\
 								</a>\
 							</div>\
 						</div>\
