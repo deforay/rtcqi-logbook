@@ -148,10 +148,10 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages["sub_district_name"]}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["sub_district_name"]}}<span class="mandatory"></span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
+                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
                                                         <option value="">---Select---</option>
                                                         @foreach($subdistrict as $row)
                                                         <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
