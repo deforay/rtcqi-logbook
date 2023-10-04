@@ -195,7 +195,7 @@ class TestSiteTable extends Model
     {
          
         $data = DB::table('test_sites')
-            ->select('monthly_reports.site_manager', 'monthly_reports.tester_name', 'monthly_reports.contact_no','test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_province', 'provinces.province_name','provinces.province_id',  'districts.district_name','districts.district_id',  'sub_districts.sub_district_name','sub_districts.sub_district_id')
+            ->select('monthly_reports.site_manager', 'monthly_reports.tester_name', 'monthly_reports.contact_no', 'monthly_reports.book_no', 'test_sites.ts_id', 'test_sites.site_id', 'test_sites.site_latitude', 'test_sites.site_longitude', 'test_sites.site_province', 'provinces.province_name','provinces.province_id',  'districts.district_name','districts.district_id',  'sub_districts.sub_district_name','sub_districts.sub_district_id')
             ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=', 'test_sites.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')

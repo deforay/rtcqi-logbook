@@ -8,6 +8,8 @@
     }
 </style>
 <?php
+$todays_date = date('d-M-Y');
+$name_of_collector = session('name');
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 // print_r($latest->test_1_kit_id);die;
 $test = '';
@@ -36,21 +38,21 @@ $messages=Lang::get('messages');
         <section class="horizontal-grid" id="horizontal-grid">
             <div class="row">
                 <div class="col-12">
-                
+
                                 <div class="table-responsive" id="monthlyReportListWrapper">
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
                                         <thead>
                                             <tr>
-                                                <th>{{ $messages["site_name"]}}</th>
-                                                <th>{{ $messages["entry_point"]}}</th>
-                                                <th>{{ $messages["reporting_month"]}}</th>
-                                                <th>{{ $messages["date_of_data_collection"]}}</th>
-                                                <th>{{ $messages["name_of_data_collector"]}}</th>
-                                                <th>{{ $messages["book_number"]}}</th>
-                                                <th>{{ $messages["start_date"]}}</th>
-                                                <th>{{ $messages["end_date"]}}</th>
-                                                <th>{{ $messages["total_number_of_pages"]}}</th>
-                                                <th>{{ $messages["last_modified_on"]}}</th>
+                                                <th>{{ $messages['site_name']}}</th>
+                                                <th>{{ $messages['entry_point']}}</th>
+                                                <th>{{ $messages['reporting_month']}}</th>
+                                                <th>{{ $messages['date_of_data_collection']}}</th>
+                                                <th>{{ $messages['name_of_data_collector']}}</th>
+                                                <th>{{ $messages['book_number']}}</th>
+                                                <th>{{ $messages['start_date']}}</th>
+                                                <th>{{ $messages['end_date']}}</th>
+                                                <th>{{ $messages['total_number_of_pages']}}</th>
+                                                <th>{{ $messages['last_modified_on']}}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
                                                 <th>{{ $messages["action"]}}</th>
@@ -252,7 +254,7 @@ $messages=Lang::get('messages');
                                                 <h5>{{ $messages["name_of_data_collector"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_name_of_data_collected']}}" name="nameOfDataCollect" title="{{ $messages['please_enter_name_of_data_collected']}}">
+                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_name_of_data_collected']}}" name="nameOfDataCollect" title="{{ $messages['please_enter_name_of_data_collected']}}" value="{{$name_of_collector}}">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -261,7 +263,7 @@ $messages=Lang::get('messages');
                                                 <h5>{{ $messages["date_of_data_collection"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}">
+                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}" value="{{$todays_date}}">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -307,7 +309,7 @@ $messages=Lang::get('messages');
                                                             <input type="text" id="startDate0" class="form-control isRequired startDate" autocomplete="off" onchange="changeStartDate(0)" placeholder="{{$messages['enter_start_date']}}" name="startDate[]" title="{{ $messages['please_enter_start_date']}}">
                                                             <div id="show_error_date0" class="error-date" ></div>
                                                         </div>
-                                                        
+
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
@@ -418,7 +420,7 @@ $messages=Lang::get('messages');
                                                             <div class="form-group">
                                                             @if($j == 1)
                                                                 <input type="text" id="expiryDate0{{$j}}" class="form-control isRequired dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="{{$messages['enter_expiry_date']}}" title="{{ $messages['please_enter_expiry_date']}}{{$j}}" onchange="checklotNo('0','{{$j}}')">
-                                                                @else 
+                                                                @else
                                                                 <input type="text" id="expiryDate0{{$j}}" class="form-control dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="{{$messages['enter_expiry_date']}}" title="{{ $messages['please_enter_expiry_date']}}{{$j}}" onchange="checklotNo('0','{{$j}}')">
                                                                 @endif
                                                             </div>
@@ -594,8 +596,9 @@ getAllMonthlyReport();
 $('#provinceId').find('option').not(':first').remove();
 $('#districtId').find('option').not(':first').remove();
 $('#subDistrictId').find('option').not(':first').remove();
+$('#bookNo').val('');
 
-// AJAX request 
+// AJAX request
 $.ajax({
     url: "{{url('/getProvince') }}/" + id,
     type: 'get',
@@ -606,6 +609,7 @@ $.ajax({
             $("#siteManager").val('');
             $("#testername").val('');
             $("#contactNo").val('');
+            $("#bookNo").val('');
         } else {
             $.each(response, function(key, value) {
 
@@ -613,6 +617,7 @@ $.ajax({
                 $("#siteManager").val(value.site_manager);
                 $("#testername").val(value.tester_name);
                 $("#contactNo").val(value.contact_no);
+                $("#bookNo").val(value.book_no);
                 if(value.province_id!=null) {
                 $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
                 }
@@ -632,7 +637,7 @@ loadReplaceTestKitHeadings();
  });
 
  function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());   
+    var testSiteId = parseInt($('#testsiteId').val());
     //alert($('#testsiteId').val());
         $.ajaxSetup({
             headers: {
@@ -647,14 +652,14 @@ loadReplaceTestKitHeadings();
             scrollX: false,
             autoWidth: false,
             paging: false,
-            
+
             ajax: {
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                    testSiteId: testSiteId,               
+                    testSiteId: testSiteId,
                 },
-                
+
             },
 
             columns: [
@@ -766,7 +771,7 @@ loadReplaceTestKitHeadings();
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
         }
-        
+
         // var minDate = new Date(selected.date.valueOf());
         //        $('#startDate'+id).datepicker('setEndDate', minDate);
     }
@@ -776,13 +781,13 @@ loadReplaceTestKitHeadings();
         flag = deforayValidator.init({
             formId: 'addMonthlyReport'
         });
-        
+
         if (flag == true) {
             // var rowCount = $(".testDetailsRow").length;
             // if(rowCount > 0){
             //     alert('sss');
             //     for(var i=0; $i<rowCount; $i++){
-            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){           
+            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){
             //             var errorMessage="please select start date first";
             //             $('#endDate' + i).val('');
             //             $('#show_error_date'+i).html(flag).delay(3000).fadeOut();
@@ -790,8 +795,8 @@ loadReplaceTestKitHeadings();
             //             $(".error-date").focus();
             //             return false;
             //         }
-            //     }                
-            
+            //     }
+
             // }
             if (duplicateName) {
                 document.getElementById('addMonthlyReport').submit();
@@ -1043,7 +1048,7 @@ loadReplaceTestKitHeadings();
                         var error='{{$messages['expiry_date_for_the_lot_no_was_recorded_as_previously']}}';
                         var errorMessageReplace=error.replace(':lotno', lot);
                         var errorMessage=error.replace(':expiry', result['expiry']);
-                        alert(errorMessage);                        
+                        alert(errorMessage);
                     }
                 }
             });
@@ -1061,7 +1066,7 @@ loadReplaceTestKitHeadings();
             }
         }
         if (k > 1) {
-            
+
             var error='{{$messages['page_no_has_already_been_added_for_this_product']}}';
             var errorMessage=error.replace(':pageno', itemId);
             alert(errorMessage);
