@@ -65,12 +65,6 @@ CREATE TABLE `districts` (
 KEY (`provincesss_id`)
 );
 
--- ---
--- Table '
-'
---
--- ---
-
 DROP TABLE IF EXISTS `monthly_reports_pages`;
 
 CREATE TABLE `monthly_reports_pages` (
@@ -358,7 +352,7 @@ ALTER TABLE `test_sites` ADD FOREIGN KEY (facility_id) REFERENCES `facilities` (
 -- Sakthivel P 4 June 2021
 ALTER TABLE users_facility_map
   RENAME TO users_testsite_map;
---Prasath M 4 June 2021
+-- Prasath M 4 June 2021
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES
 (1, 'Instance Name', 'instance_name', 'Test'),
 (2, 'Institute/Organization Name', 'institute_name', 'Test org'),
@@ -542,14 +536,16 @@ ALTER TABLE `not_uploaded_monthly_reports`
   ADD `comment` varchar(255) DEFAULT NULL;
 
 -- Sijulda 04-May-2023
-ALTER TABLE `not_uploaded_monthly_reports` 
+ALTER TABLE `not_uploaded_monthly_reports`
   ADD `status` bit(10);
 
 -- Sijulda 04-May-2023
-ALTER TABLE `monthly_reports_pages` 
+ALTER TABLE `monthly_reports_pages`
 ADD `created_by` INT NULL DEFAULT NULL AFTER `updated_on`;
 
 -- Sijulda 04-May-2023
-ALTER TABLE `monthly_reports_pages` 
-ADD `created_on` INT NULL DEFAULT NULL AFTER `updated_on`;
+ALTER TABLE `monthly_reports_pages`
+ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `created_by`;
 
+-- Amit 16-May-2023
+ALTER TABLE `monthly_reports` ADD `updated_by` INT NULL DEFAULT NULL AFTER `added_on`;
