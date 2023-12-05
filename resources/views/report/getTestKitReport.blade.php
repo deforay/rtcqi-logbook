@@ -51,7 +51,6 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         <thead>
 
             <tr class="frezz" style=" top: 37px; width:94.6%;">
-                <th class="th" style="width:10%;">Facility</th>
                 <th class="th" style="width:10%;">Site</th>
                 <th class="th" style="width:10%;">Algorithm</th>
                 <th class="th" style="width:10%;">Testing Period</th>
@@ -80,7 +79,6 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             // $testingMonth= date('F - Y', strtotime($date)); //June, 2017
             ?>
             <tr style="text-align: right">
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
@@ -94,7 +92,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
 
             @else
             <tr>
-                <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
+                <td class="frezz" style="text-align:center;width:94.6%;" colspan="16">No Data Available</td>
             </tr>
             @endif
 

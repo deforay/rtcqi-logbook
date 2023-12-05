@@ -61,7 +61,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         <table class="table table-bordered " id="trendTable" style="width:100%;">
             <thead>
                 <tr class="frezz" style=" top: 37px; width:94.6%;">
-                    <th class="th" style="width:10%;">Facility</th>
                     <th class="th" style="width:10%;">Algorithm</th>
                     <th class="th" style="width:10%;">Kit Name</th>
                     <th class="th" style="width:10%;">Test Used</th>
@@ -77,7 +76,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 $testKitName = 'testKit_' . $i . '_name';
                 ?>
                 <tr style="text-align: right">
-                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$testKitName}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive + $trendrow->$nonreactive}}</td>

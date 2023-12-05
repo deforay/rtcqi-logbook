@@ -381,14 +381,13 @@ class MonthlyReportTable extends Model
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id');
 
         if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
@@ -501,14 +500,13 @@ class MonthlyReportTable extends Model
         }
         // DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages as mrp')
-            ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), DB::raw('sum(mrp.final_negative) as final_negative'), DB::raw('sum(mrp.final_undetermined) as final_undetermined'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->select('monthly_reports.*', 'mrp.mr_id', DB::raw('sum(mrp.final_positive) as final_positive'), DB::raw('sum(mrp.final_negative) as final_negative'), DB::raw('sum(mrp.final_undetermined) as final_undetermined'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'),  'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->groupBy('monthly_reports.mr_id');
 
         if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
@@ -565,11 +563,10 @@ class MonthlyReportTable extends Model
         }
         $id = base64_decode($id);
         $data = DB::table('monthly_reports_pages as mrp')
-            ->select('monthly_reports.*', DB::raw('sum(mrp.final_undetermined) as final_undetermined'), DB::raw('sum(mrp.final_negative) as final_negative'), 'mrp.page_no as page_no', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->select('monthly_reports.*', DB::raw('sum(mrp.final_undetermined) as final_undetermined'), DB::raw('sum(mrp.final_negative) as final_negative'), 'mrp.page_no as page_no', DB::raw('sum(mrp.final_positive) as final_positive'), 'mrp.mrp_id', 'mrp.overall_agreement', 'mrp.positive_agreement', 'mrp.positive_percentage', DB::raw('MIN(mrp.start_test_date) as start_test_date'), DB::raw('MAX(mrp.end_test_date) as end_test_date'), DB::raw('sum(mrp.test_1_reactive + mrp.test_1_nonreactive) as total_test'), 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'mrp.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->groupBy('mrp.mr_id')
             ->where('mrp.mr_id', '=', $id);
 
@@ -615,14 +612,13 @@ class MonthlyReportTable extends Model
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->leftjoin('sub_districts', 'sub_districts.district_id', '=', 'monthly_reports.sub_district_id')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id');
 
         if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
@@ -749,11 +745,10 @@ class MonthlyReportTable extends Model
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
-            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*')
+            ->select('monthly_reports.*', 'monthly_reports_pages.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
-            ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
@@ -930,53 +925,53 @@ class MonthlyReportTable extends Model
 
                         if ($isDataValid) {
                             $reporting_date = '';
-                            if (is_numeric($row[12])) {
-                                $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('M-Y');
-                            } else if (is_string($row[12])) {
-                                $reporting_date = date('M-Y', strtotime($row[12]));
+                            if (is_numeric($row[11])) {
+                                $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('M-Y');
+                            } else if (is_string($row[11])) {
+                                $reporting_date = date('M-Y', strtotime($row[11]));
                             }
                             $dateOfCollection = '';
-                            if (is_numeric($row[11])) {
-                                $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
-                            } else if (is_string($row[11])) {
-                                $dateOfCollection = date('Y-m-d', strtotime($row[11]));
+                            if (is_numeric($row[10])) {
+                                $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
+                            } else if (is_string($row[10])) {
+                                $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                             }
                             $startDate = '';
-                            if (is_numeric($row[16])) {
-                                $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                            } else if (is_string($row[16])) {
-                                $startDate = date('Y-m-d', strtotime($row[16]));
+                            if (is_numeric($row[15])) {
+                                $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
+                            } else if (is_string($row[15])) {
+                                $startDate = date('Y-m-d', strtotime($row[15]));
                             }
 
 
                             $endDate = '';
-                            if (is_numeric($row[17])) {
-                                $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
-                            } else if (is_string($row[17])) {
-                                $endDate = date('Y-m-d', strtotime($row[17]));
+                            if (is_numeric($row[16])) {
+                                $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                            } else if (is_string($row[16])) {
+                                $endDate = date('Y-m-d', strtotime($row[16]));
                             }
                             $expiryDate1 = '';
-                            if (is_numeric($row[20])) {
-                                $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
-                            } else if (is_string($row[20])) {
-                                $expiryDate1 = date('Y-m-d', strtotime($row[20]));
+                            if (is_numeric($row[19])) {
+                                $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
+                            } else if (is_string($row[19])) {
+                                $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                             }
                             $test_site_name = $row[0];
                             $site_type = $row[1];
-                            $facility = $row[2];
-                            $province = $row[3];
-                            $site_manager = $row[4];
-                            $site_unique_id = $row[5];
-                            $tester_name = $row[6];
-                            $if_flc = $row[7];
-                            $is_recency = $row[8];
-                            $contact_no = $row[9];
-                            $algo_type = $row[10];
+                            
+                            $province = $row[2];
+                            $site_manager = $row[3];
+                            $site_unique_id = $row[4];
+                            $tester_name = $row[5];
+                            $if_flc = $row[6];
+                            $is_recency = $row[7];
+                            $contact_no = $row[8];
+                            $algo_type = $row[9];
                             $date_of_collection = $dateOfCollection;
                             $report_months = $reporting_date;
-                            $book_no = $row[13];
-                            $name_of_collector = $row[14] == "" ? $user_name : $row[14];
-                            $page_no = $row[15] == "" ? 0 : $row[15];
+                            $book_no = $row[12];
+                            $name_of_collector = $row[13] == "" ? $user_name : $row[13];
+                            $page_no = $row[14] == "" ? 0 : $row[14];
                             $start_date = $startDate;
                             $end_date = $endDate;
                             if ($arr['no_of_test'] >= 1) {
@@ -994,109 +989,109 @@ class MonthlyReportTable extends Model
                                     );
                                 }
                                 $test_kit1 = $testkitId;
-                                $lot_no1 = $row[19];
+                                $lot_no1 = $row[18];
                                 $expiry_date1 = $expiryDate1;
-                                $testkit1_reactive = $row[21];
-                                $testkit1_nonreactive = $row[22];
-                                $testkit1_invalid = $row[23];
+                                $testkit1_reactive = $row[20];
+                                $testkit1_nonreactive = $row[21];
+                                $testkit1_invalid = $row[22];
                             }
                             if ($arr['no_of_test'] >= 2) {
                                 $expiryDate2 = '';
-                                if (is_numeric($row[26])) {
-                                    $expiryDate2 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[26])->format('Y-m-d');
-                                } else if (is_string($row[26])) {
-                                    $expiryDate2 = date('Y-m-d', strtotime($row[26]));
+                                if (is_numeric($row[25])) {
+                                    $expiryDate2 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[25])->format('Y-m-d');
+                                } else if (is_string($row[25])) {
+                                    $expiryDate2 = date('Y-m-d', strtotime($row[25]));
                                 }
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[24]))
+                                    ->where('test_kit_name', '=', trim($row[23]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[24]),
+                                            'test_kit_name' => trim($row[23]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit2 = $testkitId;
-                                $lot_no2 = $row[25];
+                                $lot_no2 = $row[24];
                                 $expiry_date2 = $expiryDate2;
-                                $testkit2_reactive = $row[27];
-                                $testkit2_nonreactive = $row[28];
-                                $testkit2_invalid = $row[29];
+                                $testkit2_reactive = $row[26];
+                                $testkit2_nonreactive = $row[27];
+                                $testkit2_invalid = $row[28];
                             }
                             if ($arr['no_of_test'] >= 3) {
                                 $expiryDate3 = '';
-                                if (is_numeric($row[32])) {
-                                    $expiryDate3 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[32])->format('Y-m-d');
-                                } else if (is_string($row[32])) {
-                                    $expiryDate3 = date('Y-m-d', strtotime($row[32]));
+                                if (is_numeric($row[31])) {
+                                    $expiryDate3 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[31])->format('Y-m-d');
+                                } else if (is_string($row[31])) {
+                                    $expiryDate3 = date('Y-m-d', strtotime($row[31]));
                                 }
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[30]))
+                                    ->where('test_kit_name', '=', trim($row[29]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[30]),
+                                            'test_kit_name' => trim($row[29]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit3 = $testkitId;
-                                $lot_no3 = $row[31];
+                                $lot_no3 = $row[30];
                                 $expiry_date3 = $expiryDate3;
-                                $testkit3_reactive = $row[33];
-                                $testkit3_nonreactive = $row[34];
-                                $testkit3_invalid = $row[35];
+                                $testkit3_reactive = $row[32];
+                                $testkit3_nonreactive = $row[33];
+                                $testkit3_invalid = $row[34];
                             }
                             if ($arr['no_of_test'] >= 4) {
                                 $expiryDate4 = '';
-                                if (is_numeric($row[38])) {
-                                    $expiryDate4 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[38])->format('Y-m-d');
-                                } else if (is_string($row[38])) {
-                                    $expiryDate4 = date('Y-m-d', strtotime($row[38]));
+                                if (is_numeric($row[37])) {
+                                    $expiryDate4 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[37])->format('Y-m-d');
+                                } else if (is_string($row[37])) {
+                                    $expiryDate4 = date('Y-m-d', strtotime($row[37]));
                                 }
                                 $testkitData = DB::table('test_kits')
-                                    ->where('test_kit_name', '=', trim($row[36]))
+                                    ->where('test_kit_name', '=', trim($row[35]))
                                     ->get();
                                 if (count($testkitData) > 0) {
                                     $testkitId = $testkitData[0]->tk_id;
                                 } else {
                                     $testkitId = DB::table('test_kits')->insertGetId(
                                         [
-                                            'test_kit_name' => trim($row[36]),
+                                            'test_kit_name' => trim($row[35]),
                                             'test_kit_status' => 'active',
                                         ]
                                     );
                                 }
                                 $test_kit4 = $testkitId;
-                                $lot_no4 = $row[37];
+                                $lot_no4 = $row[36];
                                 $expiry_date4 = $expiryDate4;
-                                $testkit4_reactive = $row[39];
-                                $testkit4_nonreactive = $row[40];
-                                $testkit4_invalid = $row[41];
+                                $testkit4_reactive = $row[38];
+                                $testkit4_nonreactive = $row[39];
+                                $testkit4_invalid = $row[40];
                             }
                             if ($arr['no_of_test'] == 1) {
-                                $final_positive = $row[24];
-                                $final_negative = $row[25];
-                                $final_indeterminate = $row[26];
+                                $final_positive = $row[23];
+                                $final_negative = $row[24];
+                                $final_indeterminate = $row[25];
                             } else if ($arr['no_of_test'] == 2) {
-                                $final_positive = $row[30];
-                                $final_negative = $row[31];
-                                $final_indeterminate = $row[32];
+                                $final_positive = $row[29];
+                                $final_negative = $row[30];
+                                $final_indeterminate = $row[31];
                             } else if ($arr['no_of_test'] == 3) {
-                                $final_positive = $row[36];
-                                $final_negative = $row[37];
-                                $final_indeterminate = $row[38];
+                                $final_positive = $row[35];
+                                $final_negative = $row[36];
+                                $final_indeterminate = $row[37];
                             } else if ($arr['no_of_test'] == 4) {
-                                $final_positive = $row[42];
-                                $final_negative = $row[43];
-                                $final_indeterminate = $row[44];
+                                $final_positive = $row[41];
+                                $final_negative = $row[42];
+                                $final_indeterminate = $row[43];
                             }
 
                             $siteTypeData = DB::table('site_types')
@@ -1112,20 +1107,7 @@ class MonthlyReportTable extends Model
                                     ]
                                 );
                             }
-                            $facilitiesData = DB::table('facilities')
-                                ->where('facility_name', '=', trim($facility))
-                                ->get();
-                            if (count($facilitiesData) > 0) {
-                                $facilityId = $facilitiesData[0]->facility_id;
-                            } else {
-                                $facilityId = DB::table('facilities')->insertGetId(
-                                    [
-                                        'facility_name' => trim($facility),
-                                        'facility_status' => 'active',
-                                    ]
-                                );
-                            }
-
+                            
                             $testsiteData = DB::table('test_sites')
                                 ->where('site_name', '=', trim($test_site_name))
                                 ->get();
@@ -1135,8 +1117,7 @@ class MonthlyReportTable extends Model
                                 $testSiteId = DB::table('test_sites')->insertGetId(
                                     [
                                         'site_name' => trim($test_site_name),
-                                        'test_site_status' => 'active',
-                                        'facility_id' => $facilityId,
+                                        'test_site_status' => 'active',                                        
                                     ]
                                 );
                             }
@@ -1270,80 +1251,79 @@ class MonthlyReportTable extends Model
                                     /*
                                     $test_site_name = $row[0];
                                     $site_type = $row[1];
-                                    $facility = $row[2];
-                                    $province = $row[3];
-                                    $site_manager = $row[4];
-                                    $site_unique_id = $row[5];
-                                    $tester_name = $row[6];
-                                    $if_flc = $row[7];
-                                    $is_recency = $row[8];
-                                    $contact_no = $row[9];
-                                    $algo_type = $row[10];
+                                    
+                                    $province = $row[2];
+                                    $site_manager = $row[3];
+                                    $site_unique_id = $row[4];
+                                    $tester_name = $row[5];
+                                    $if_flc = $row[6];
+                                    $is_recency = $row[7];
+                                    $contact_no = $row[8];
+                                    $algo_type = $row[9];
                                     */
                                     //$commentArray=array();
                                     $startDate = '';
-                                    if (is_numeric($row[16])) {
-                                        $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                                    } else if (is_string($row[16])) {
-                                        $startDate = date('Y-m-d', strtotime($row[16]));
+                                    if (is_numeric($row[15])) {
+                                        $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
+                                    } else if (is_string($row[15])) {
+                                        $startDate = date('Y-m-d', strtotime($row[15]));
                                     }
 
                                     $endDate = '';
-                                    if (is_numeric($row[17])) {
-                                        $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
-                                    } else if (is_string($row[17])) {
-                                        $endDate = date('Y-m-d', strtotime($row[17]));
+                                    if (is_numeric($row[16])) {
+                                        $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                                    } else if (is_string($row[16])) {
+                                        $endDate = date('Y-m-d', strtotime($row[16]));
                                     }
 
                                     $expiryDate1 = '';
-                                    if (is_numeric($row[20])) {
-                                        $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
-                                    } else if (is_string($row[20])) {
-                                        $expiryDate1 = date('Y-m-d', strtotime($row[20]));
+                                    if (is_numeric($row[19])) {
+                                        $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
+                                    } else if (is_string($row[19])) {
+                                        $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                                     }
 
                                     $dateOfCollection = '';
-                                    if (is_numeric($row[11])) {
-                                        $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
-                                    } else if (is_string($row[11])) {
-                                        $dateOfCollection = date('Y-m-d', strtotime($row[11]));
+                                    if (is_numeric($row[10])) {
+                                        $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
+                                    } else if (is_string($row[10])) {
+                                        $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                                     }
 
                                     $date_of_collection = $dateOfCollection;
                                     $report_months = $reporting_date;
-                                    $book_no = $row[13];
-                                    $name_of_collector = $row[14] == "" ? $user_name : $row[14];;
-                                    $page_no = $row[15] == "" ? 0 : $row[15];
+                                    $book_no = $row[12];
+                                    $name_of_collector = $row[13] == "" ? $user_name : $row[13];;
+                                    $page_no = $row[14] == "" ? 0 : $row[14];
                                     $start_date = $startDate;
                                     $end_date = $endDate;
                                     $expiry_date1 = $expiryDate1;
-                                    // $start_date = $row[16];
-                                    // $end_date = $row[17];
+                                    // $start_date = $row[15];
+                                    // $end_date = $row[16];
                                     /*
                                     if ($arr['no_of_test'] == 1) {
-                                        $final_positive = $row[24];
-                                        $final_negative = $row[25];
-                                        $final_indeterminate = $row[26];
+                                        $final_positive = $row[23];
+                                        $final_negative = $row[24];
+                                        $final_indeterminate = $row[25];
 
                                     } else if ($arr['no_of_test'] == 2) {
-                                        $final_positive = $row[30];
-                                        $final_negative = $row[31];
-                                        $final_indeterminate = $row[32];
+                                        $final_positive = $row[29];
+                                        $final_negative = $row[30];
+                                        $final_indeterminate = $row[31];
                                     } else if ($arr['no_of_test'] == 3) {
-                                        $final_positive = $row[36];
-                                        $final_negative = $row[37];
-                                        $final_indeterminate = $row[38];
+                                        $final_positive = $row[35];
+                                        $final_negative = $row[36];
+                                        $final_indeterminate = $row[37];
                                     } else if ($arr['no_of_test'] == 4) {
-                                        $final_positive = $row[42];
-                                        $final_negative = $row[43];
-                                        $final_indeterminate = $row[44];
+                                        $final_positive = $row[41];
+                                        $final_negative = $row[42];
+                                        $final_indeterminate = $row[43];
                                     }
                                     */
 
                                     $unLoadData = array(
                                         'test_site_name' => $test_site_name,
                                         'site_type' => $site_type,
-                                        'facility' => $facility,
                                         'province_name' => $province,
                                         'site_manager' => $site_manager,
                                         'site_unique_id' => $site_unique_id,
@@ -1370,36 +1350,36 @@ class MonthlyReportTable extends Model
                                     );
 
                                     if ($arr['no_of_test'] >= 1) {
-                                        $unLoadData['test_kit_name1'] = trim($row[18]);
-                                        $unLoadData['lot_no_1'] = $row[19];
+                                        $unLoadData['test_kit_name1'] = trim($row[17]);
+                                        $unLoadData['lot_no_1'] = $row[18];
                                         $unLoadData['expiry_date_1'] = $expiry_date1;
-                                        $unLoadData['test_1_reactive'] = $row[21];
-                                        $unLoadData['test_1_non_reactive'] = $row[22];
-                                        $unLoadData['test_1_invalid'] = $row[23];
+                                        $unLoadData['test_1_reactive'] = $row[20];
+                                        $unLoadData['test_1_non_reactive'] = $row[21];
+                                        $unLoadData['test_1_invalid'] = $row[22];
                                     }
                                     if ($arr['no_of_test'] >= 2) {
-                                        $unLoadData['test_kit_name2'] = trim($row[24]);
-                                        $unLoadData['lot_no_2'] = $row[25];
-                                        $unLoadData['expiry_date_2'] = $row[26];
-                                        $unLoadData['test_2_reactive'] = $row[27];
-                                        $unLoadData['test_2_non_reactive'] = $row[28];
-                                        $unLoadData['test_2_invalid'] = $row[29];
+                                        $unLoadData['test_kit_name2'] = trim($row[23]);
+                                        $unLoadData['lot_no_2'] = $row[24];
+                                        $unLoadData['expiry_date_2'] = $row[25];
+                                        $unLoadData['test_2_reactive'] = $row[26];
+                                        $unLoadData['test_2_non_reactive'] = $row[27];
+                                        $unLoadData['test_2_invalid'] = $row[28];
                                     }
                                     if ($arr['no_of_test'] >= 3) {
-                                        $unLoadData['test_kit_name3'] = trim($row[30]);
-                                        $unLoadData['lot_no_3'] = $row[31];
-                                        $unLoadData['expiry_date_3'] = $row[32];
-                                        $unLoadData['test_3_reactive'] = $row[33];
-                                        $unLoadData['test_3_non_reactive'] = $row[34];
-                                        $unLoadData['test_3_invalid'] = $row[35];
+                                        $unLoadData['test_kit_name3'] = trim($row[29]);
+                                        $unLoadData['lot_no_3'] = $row[30];
+                                        $unLoadData['expiry_date_3'] = $row[31];
+                                        $unLoadData['test_3_reactive'] = $row[32];
+                                        $unLoadData['test_3_non_reactive'] = $row[33];
+                                        $unLoadData['test_3_invalid'] = $row[34];
                                     }
                                     if ($arr['no_of_test'] >= 4) {
-                                        $unLoadData['test_kit_name4'] = trim($row[36]);
-                                        $unLoadData['lot_no_4'] = $row[37];
-                                        $unLoadData['expiry_date_4'] = $row[38];
-                                        $unLoadData['test_4_reactive'] = $row[39];
-                                        $unLoadData['test_4_non_reactive'] = $row[40];
-                                        $unLoadData['test_4_invalid'] = $row[41];
+                                        $unLoadData['test_kit_name4'] = trim($row[35]);
+                                        $unLoadData['lot_no_4'] = $row[36];
+                                        $unLoadData['expiry_date_4'] = $row[37];
+                                        $unLoadData['test_4_reactive'] = $row[38];
+                                        $unLoadData['test_4_non_reactive'] = $row[39];
+                                        $unLoadData['test_4_invalid'] = $row[40];
                                     }
 
                                     $nu_mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
@@ -1412,80 +1392,79 @@ class MonthlyReportTable extends Model
                                 /*
                                     $test_site_name = $row[0];
                                     $site_type = $row[1];
-                                    $facility = $row[2];
-                                    $province = $row[3];
-                                    $site_manager = $row[4];
-                                    $site_unique_id = $row[5];
-                                    $tester_name = $row[6];
-                                    $if_flc = $row[7];
-                                    $is_recency = $row[8];
-                                    $contact_no = $row[9];
-                                    $algo_type = $row[10];
+                                    
+                                    $province = $row[2];
+                                    $site_manager = $row[3];
+                                    $site_unique_id = $row[4];
+                                    $tester_name = $row[5];
+                                    $if_flc = $row[6];
+                                    $is_recency = $row[7];
+                                    $contact_no = $row[8];
+                                    $algo_type = $row[9];
                                     */
                                 //$commentArray=array();
                                 $startDate = '';
-                                if (is_numeric($row[16])) {
-                                    $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                                } else if (is_string($row[16])) {
-                                    $startDate = date('Y-m-d', strtotime($row[16]));
+                                if (is_numeric($row[15])) {
+                                    $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
+                                } else if (is_string($row[15])) {
+                                    $startDate = date('Y-m-d', strtotime($row[15]));
                                 }
 
                                 $endDate = '';
-                                if (is_numeric($row[17])) {
-                                    $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
-                                } else if (is_string($row[17])) {
-                                    $endDate = date('Y-m-d', strtotime($row[17]));
+                                if (is_numeric($row[16])) {
+                                    $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                                } else if (is_string($row[16])) {
+                                    $endDate = date('Y-m-d', strtotime($row[16]));
                                 }
 
                                 $expiryDate1 = '';
-                                if (is_numeric($row[20])) {
-                                    $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
-                                } else if (is_string($row[20])) {
-                                    $expiryDate1 = date('Y-m-d', strtotime($row[20]));
+                                if (is_numeric($row[19])) {
+                                    $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
+                                } else if (is_string($row[19])) {
+                                    $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                                 }
 
                                 $dateOfCollection = '';
-                                if (is_numeric($row[11])) {
-                                    $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
-                                } else if (is_string($row[11])) {
-                                    $dateOfCollection = date('Y-m-d', strtotime($row[11]));
+                                if (is_numeric($row[10])) {
+                                    $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
+                                } else if (is_string($row[10])) {
+                                    $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                                 }
 
                                 $date_of_collection = $dateOfCollection;
                                 $report_months = $reporting_date;
-                                $book_no = $row[13];
-                                $name_of_collector = $row[14] == "" ? $user_name : $row[14];;
-                                $page_no = $row[15] == "" ? 0 : $row[15];
+                                $book_no = $row[12];
+                                $name_of_collector = $row[13] == "" ? $user_name : $row[13];;
+                                $page_no = $row[14] == "" ? 0 : $row[14];
                                 $start_date = $startDate;
                                 $end_date = $endDate;
                                 $expiry_date1 = $expiryDate1;
-                                // $start_date = $row[16];
-                                // $end_date = $row[17];
+                                // $start_date = $row[15];
+                                // $end_date = $row[16];
                                 /*
                                     if ($arr['no_of_test'] == 1) {
-                                        $final_positive = $row[24];
-                                        $final_negative = $row[25];
-                                        $final_indeterminate = $row[26];
+                                        $final_positive = $row[23];
+                                        $final_negative = $row[24];
+                                        $final_indeterminate = $row[25];
 
                                     } else if ($arr['no_of_test'] == 2) {
-                                        $final_positive = $row[30];
-                                        $final_negative = $row[31];
-                                        $final_indeterminate = $row[32];
+                                        $final_positive = $row[29];
+                                        $final_negative = $row[30];
+                                        $final_indeterminate = $row[31];
                                     } else if ($arr['no_of_test'] == 3) {
-                                        $final_positive = $row[36];
-                                        $final_negative = $row[37];
-                                        $final_indeterminate = $row[38];
+                                        $final_positive = $row[35];
+                                        $final_negative = $row[36];
+                                        $final_indeterminate = $row[37];
                                     } else if ($arr['no_of_test'] == 4) {
-                                        $final_positive = $row[42];
-                                        $final_negative = $row[43];
-                                        $final_indeterminate = $row[44];
+                                        $final_positive = $row[41];
+                                        $final_negative = $row[42];
+                                        $final_indeterminate = $row[43];
                                     }
                                     */
 
                                 $unLoadData = array(
                                     'test_site_name' => $test_site_name,
                                     'site_type' => $site_type,
-                                    'facility' => $facility,
                                     'province_name' => $province,
                                     'site_manager' => $site_manager,
                                     'site_unique_id' => $site_unique_id,
@@ -1512,36 +1491,36 @@ class MonthlyReportTable extends Model
                                 );
 
                                 if ($arr['no_of_test'] >= 1) {
-                                    $unLoadData['test_kit_name1'] = trim($row[18]);
-                                    $unLoadData['lot_no_1'] = $row[19];
+                                    $unLoadData['test_kit_name1'] = trim($row[17]);
+                                    $unLoadData['lot_no_1'] = $row[18];
                                     $unLoadData['expiry_date_1'] = $expiry_date1;
-                                    $unLoadData['test_1_reactive'] = $row[21];
-                                    $unLoadData['test_1_non_reactive'] = $row[22];
-                                    $unLoadData['test_1_invalid'] = $row[23];
+                                    $unLoadData['test_1_reactive'] = $row[20];
+                                    $unLoadData['test_1_non_reactive'] = $row[21];
+                                    $unLoadData['test_1_invalid'] = $row[22];
                                 }
                                 if ($arr['no_of_test'] >= 2) {
-                                    $unLoadData['test_kit_name2'] = trim($row[24]);
-                                    $unLoadData['lot_no_2'] = $row[25];
-                                    $unLoadData['expiry_date_2'] = $row[26];
-                                    $unLoadData['test_2_reactive'] = $row[27];
-                                    $unLoadData['test_2_non_reactive'] = $row[28];
-                                    $unLoadData['test_2_invalid'] = $row[29];
+                                    $unLoadData['test_kit_name2'] = trim($row[23]);
+                                    $unLoadData['lot_no_2'] = $row[24];
+                                    $unLoadData['expiry_date_2'] = $row[25];
+                                    $unLoadData['test_2_reactive'] = $row[26];
+                                    $unLoadData['test_2_non_reactive'] = $row[27];
+                                    $unLoadData['test_2_invalid'] = $row[28];
                                 }
                                 if ($arr['no_of_test'] >= 3) {
-                                    $unLoadData['test_kit_name3'] = trim($row[30]);
-                                    $unLoadData['lot_no_3'] = $row[31];
-                                    $unLoadData['expiry_date_3'] = $row[32];
-                                    $unLoadData['test_3_reactive'] = $row[33];
-                                    $unLoadData['test_3_non_reactive'] = $row[34];
-                                    $unLoadData['test_3_invalid'] = $row[35];
+                                    $unLoadData['test_kit_name3'] = trim($row[29]);
+                                    $unLoadData['lot_no_3'] = $row[30];
+                                    $unLoadData['expiry_date_3'] = $row[31];
+                                    $unLoadData['test_3_reactive'] = $row[32];
+                                    $unLoadData['test_3_non_reactive'] = $row[33];
+                                    $unLoadData['test_3_invalid'] = $row[34];
                                 }
                                 if ($arr['no_of_test'] >= 4) {
-                                    $unLoadData['test_kit_name4'] = trim($row[36]);
-                                    $unLoadData['lot_no_4'] = $row[37];
-                                    $unLoadData['expiry_date_4'] = $row[38];
-                                    $unLoadData['test_4_reactive'] = $row[39];
-                                    $unLoadData['test_4_non_reactive'] = $row[40];
-                                    $unLoadData['test_4_invalid'] = $row[41];
+                                    $unLoadData['test_kit_name4'] = trim($row[35]);
+                                    $unLoadData['lot_no_4'] = $row[36];
+                                    $unLoadData['expiry_date_4'] = $row[37];
+                                    $unLoadData['test_4_reactive'] = $row[38];
+                                    $unLoadData['test_4_non_reactive'] = $row[39];
+                                    $unLoadData['test_4_invalid'] = $row[40];
                                 }
 
                                 $nu_mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
@@ -1552,84 +1531,83 @@ class MonthlyReportTable extends Model
                         } else {
                             //Failed Imports - Excel Uploads
                             $startDate = '';
-                            if (is_numeric($row[16])) {
-                                $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                            } else if (is_string($row[16])) {
-                                $startDate = date('Y-m-d', strtotime($row[16]));
+                            if (is_numeric($row[15])) {
+                                $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
+                            } else if (is_string($row[15])) {
+                                $startDate = date('Y-m-d', strtotime($row[15]));
                             }
 
                             $endDate = '';
-                            if (is_numeric($row[17])) {
-                                $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
-                            } else if (is_string($row[17])) {
-                                $endDate = date('Y-m-d', strtotime($row[17]));
+                            if (is_numeric($row[16])) {
+                                $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                            } else if (is_string($row[16])) {
+                                $endDate = date('Y-m-d', strtotime($row[16]));
                             }
 
                             $expiryDate1 = '';
-                            if (is_numeric($row[20])) {
-                                $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
-                            } else if (is_string($row[20])) {
-                                $expiryDate1 = date('Y-m-d', strtotime($row[20]));
+                            if (is_numeric($row[19])) {
+                                $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
+                            } else if (is_string($row[19])) {
+                                $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                             }
 
                             $reporting_date = '';
-                            if (is_numeric($row[12])) {
-                                $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[12])->format('M-Y');
-                            } else if (is_string($row[12])) {
-                                $reporting_date = date('M-Y', strtotime($row[12]));
+                            if (is_numeric($row[11])) {
+                                $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('M-Y');
+                            } else if (is_string($row[11])) {
+                                $reporting_date = date('M-Y', strtotime($row[11]));
                             }
 
                             $dateOfCollection = '';
-                            if (is_numeric($row[11])) {
-                                $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
-                            } else if (is_string($row[11])) {
-                                $dateOfCollection = date('Y-m-d', strtotime($row[11]));
+                            if (is_numeric($row[10])) {
+                                $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
+                            } else if (is_string($row[10])) {
+                                $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                             }
 
                             $test_site_name = $row[0];
                             $site_type = $row[1];
-                            $facility = $row[2];
-                            $province = $row[3];
-                            $site_manager = $row[4];
-                            $site_unique_id = $row[5];
-                            $tester_name = $row[6];
-                            $if_flc = $row[7];
-                            $is_recency = $row[8];
-                            $contact_no = $row[9];
-                            $algo_type = $row[10];
+                            
+                            $province = $row[2];
+                            $site_manager = $row[3];
+                            $site_unique_id = $row[4];
+                            $tester_name = $row[5];
+                            $if_flc = $row[6];
+                            $is_recency = $row[7];
+                            $contact_no = $row[8];
+                            $algo_type = $row[9];
                             $date_of_collection = $dateOfCollection;
                             $report_months = $reporting_date;
-                            $book_no = $row[13];
-                            $name_of_collector = $row[14] == "" ? $user_name : $row[14];
-                            $page_no = $row[15] == "" ? 0 : $row[15];
+                            $book_no = $row[12];
+                            $name_of_collector = $row[13] == "" ? $user_name : $row[13];
+                            $page_no = $row[14] == "" ? 0 : $row[14];
                             $start_date = $startDate;
                             $end_date = $endDate;
                             $expiry_date1 = $expiryDate1;
 
 
                             if ($arr['no_of_test'] == 1) {
-                                $final_positive = $row[24];
-                                $final_negative = $row[25];
-                                $final_indeterminate = $row[26];
+                                $final_positive = $row[23];
+                                $final_negative = $row[24];
+                                $final_indeterminate = $row[25];
                             } else if ($arr['no_of_test'] == 2) {
-                                $final_positive = $row[30];
-                                $final_negative = $row[31];
-                                $final_indeterminate = $row[32];
+                                $final_positive = $row[29];
+                                $final_negative = $row[30];
+                                $final_indeterminate = $row[31];
                             } else if ($arr['no_of_test'] == 3) {
-                                $final_positive = $row[36];
-                                $final_negative = $row[37];
-                                $final_indeterminate = $row[38];
+                                $final_positive = $row[35];
+                                $final_negative = $row[36];
+                                $final_indeterminate = $row[37];
                             } else if ($arr['no_of_test'] == 4) {
-                                $final_positive = $row[42];
-                                $final_negative = $row[43];
-                                $final_indeterminate = $row[44];
+                                $final_positive = $row[41];
+                                $final_negative = $row[42];
+                                $final_indeterminate = $row[43];
                             }
 
 
                             $unLoadData = array(
                                 'test_site_name' => $test_site_name,
                                 'site_type' => $site_type,
-                                'facility' => $facility,
                                 'province_name' => $province,
                                 'site_manager' => $site_manager,
                                 'site_unique_id' => $site_unique_id,
@@ -1656,36 +1634,36 @@ class MonthlyReportTable extends Model
                             );
 
                             if ($arr['no_of_test'] >= 1) {
-                                $unLoadData['test_kit_name1'] = trim($row[18]);
-                                $unLoadData['lot_no_1'] = $row[19];
+                                $unLoadData['test_kit_name1'] = trim($row[17]);
+                                $unLoadData['lot_no_1'] = $row[18];
                                 $unLoadData['expiry_date_1'] = $expiry_date1;
-                                $unLoadData['test_1_reactive'] = $row[21];
-                                $unLoadData['test_1_non_reactive'] = $row[22];
-                                $unLoadData['test_1_invalid'] = $row[23];
+                                $unLoadData['test_1_reactive'] = $row[20];
+                                $unLoadData['test_1_non_reactive'] = $row[21];
+                                $unLoadData['test_1_invalid'] = $row[22];
                             }
                             if ($arr['no_of_test'] >= 2) {
-                                $unLoadData['test_kit_name2'] = trim($row[24]);
-                                $unLoadData['lot_no_2'] = $row[25];
-                                $unLoadData['expiry_date_2'] = $row[26];
-                                $unLoadData['test_2_reactive'] = $row[27];
-                                $unLoadData['test_2_non_reactive'] = $row[28];
-                                $unLoadData['test_2_invalid'] = $row[29];
+                                $unLoadData['test_kit_name2'] = trim($row[23]);
+                                $unLoadData['lot_no_2'] = $row[24];
+                                $unLoadData['expiry_date_2'] = $row[25];
+                                $unLoadData['test_2_reactive'] = $row[26];
+                                $unLoadData['test_2_non_reactive'] = $row[27];
+                                $unLoadData['test_2_invalid'] = $row[28];
                             }
                             if ($arr['no_of_test'] >= 3) {
-                                $unLoadData['test_kit_name3'] = trim($row[30]);
-                                $unLoadData['lot_no_3'] = $row[31];
-                                $unLoadData['expiry_date_3'] = $row[32];
-                                $unLoadData['test_3_reactive'] = $row[33];
-                                $unLoadData['test_3_non_reactive'] = $row[34];
-                                $unLoadData['test_3_invalid'] = $row[35];
+                                $unLoadData['test_kit_name3'] = trim($row[29]);
+                                $unLoadData['lot_no_3'] = $row[30];
+                                $unLoadData['expiry_date_3'] = $row[31];
+                                $unLoadData['test_3_reactive'] = $row[32];
+                                $unLoadData['test_3_non_reactive'] = $row[33];
+                                $unLoadData['test_3_invalid'] = $row[34];
                             }
                             if ($arr['no_of_test'] >= 4) {
-                                $unLoadData['test_kit_name4'] = trim($row[36]);
-                                $unLoadData['lot_no_4'] = $row[37];
-                                $unLoadData['expiry_date_4'] = $row[38];
-                                $unLoadData['test_4_reactive'] = $row[39];
-                                $unLoadData['test_4_non_reactive'] = $row[40];
-                                $unLoadData['test_4_invalid'] = $row[41];
+                                $unLoadData['test_kit_name4'] = trim($row[35]);
+                                $unLoadData['lot_no_4'] = $row[36];
+                                $unLoadData['expiry_date_4'] = $row[37];
+                                $unLoadData['test_4_reactive'] = $row[38];
+                                $unLoadData['test_4_non_reactive'] = $row[39];
+                                $unLoadData['test_4_invalid'] = $row[40];
                             }
 
                             $mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
@@ -1719,7 +1697,7 @@ class MonthlyReportTable extends Model
 
         $validData = true;
 
-        if (trim($row[0]) == '' || trim($row[1]) == '' || trim($row[2]) == '' || trim($row[3]) == '' || trim($row[6]) == '' || trim($row[7]) == '' || trim($row[12]) == '' || trim($row[16]) == '' || trim($row[17]) == '' || trim($row[18]) == '' || trim($row[19]) == '' || trim($row[20]) == '') {
+        if (trim($row[0]) == '' || trim($row[1]) == '' || trim($row[2]) == '' || trim($row[5]) == '' || trim($row[6]) == '' || trim($row[11]) == '' || trim($row[15]) == '' || trim($row[16]) == '' || trim($row[17]) == '' || trim($row[18]) == '' || trim($row[19]) == '') {
             $validData = false;
         }
 
@@ -1740,42 +1718,38 @@ class MonthlyReportTable extends Model
         }
 
         if (trim($row[2]) == '') {
-            array_push($commentArray, 'Facility');
-        }
-
-        if (trim($row[3]) == '') {
             array_push($commentArray, 'Province');
         }
 
-        if (trim($row[6]) == '') {
+        if (trim($row[5]) == '') {
             array_push($commentArray, 'Lab Manager Name');
         }
 
-        if (trim($row[7]) == '') {
+        if (trim($row[6]) == '') {
             array_push($commentArray, 'Is FLC');
         }
 
-        if (trim($row[12]) == '') {
+        if (trim($row[11]) == '') {
             array_push($commentArray, 'Reporting Month');
         }
 
-        if (trim($row[16]) == '') {
+        if (trim($row[15]) == '') {
             array_push($commentArray, 'Start Date');
         }
 
-        if (trim($row[17]) == '') {
+        if (trim($row[16]) == '') {
             array_push($commentArray, 'End Date');
         }
 
-        if (trim($row[18]) == '') {
+        if (trim($row[17]) == '') {
             array_push($commentArray, 'Test Kit Name 1');
         }
 
-        if (trim($row[19]) == '') {
+        if (trim($row[18]) == '') {
             array_push($commentArray, 'Lot No.1');
         }
 
-        if (trim($row[20]) == '') {
+        if (trim($row[19]) == '') {
             array_push($commentArray, 'Expiry Date 1');
         }
 
@@ -1812,12 +1786,11 @@ class MonthlyReportTable extends Model
         // DB::enableQueryLog();
         if ($arr['no_of_test'] == 1) {
             $query = DB::table('monthly_reports_pages')
-                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name')
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name')
                 ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
                 ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
                 ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
-                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
                 ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
@@ -1828,13 +1801,12 @@ class MonthlyReportTable extends Model
             }
         } elseif ($arr['no_of_test'] == 2) {
             $query = DB::table('monthly_reports_pages')
-                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
                 ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
                 ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
                 ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
-                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
                 ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
@@ -1845,14 +1817,13 @@ class MonthlyReportTable extends Model
             }
         } elseif ($arr['no_of_test'] == 3) {
             $query = DB::table('monthly_reports_pages')
-                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
+                ->select('monthly_reports.*', 'monthly_reports_pages.*',  'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
                 ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
                 ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
                 ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
-                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
                 ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
@@ -1863,7 +1834,7 @@ class MonthlyReportTable extends Model
             }
         } else {
             $query = DB::table('monthly_reports_pages')
-                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name', 'tk4.test_kit_name as testKit_4_name')
+                ->select('monthly_reports.*', 'monthly_reports_pages.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name', 'tk4.test_kit_name as testKit_4_name')
                 ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
                 ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
                 ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
@@ -1871,7 +1842,6 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
                 ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
-                ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
                 ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');

@@ -38,8 +38,6 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 	if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index'] == "allow"))
 		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/subdistrict/">'.Lang::get('messages.sub_districts').'</a></li>';
 	$manage .= '</ul></li>';
-	if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['index']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['index'] == "allow"))
-		$manage .= '<li id="li-facility"><a class="dropdown-item" data-toggle="dropdown" href="/facility/">'.Lang::get('messages.facilities').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow"))
 		$manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">'.Lang::get('messages.global_config').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index'] == "allow"))

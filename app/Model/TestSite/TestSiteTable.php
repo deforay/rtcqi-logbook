@@ -35,7 +35,6 @@ class TestSiteTable extends Model
                     'site_city' => $data['city'],
                     'site_country' => $data['country'],
                     'test_site_status' => $data['testSiteStatus'],
-                    'facility_id' => $data['facilityId'],
                     'site_province' => $data['provincesssId'],
                     'site_district' => $data['districtId'],
                     'site_sub_district' => $data['subDistrictId'],
@@ -102,7 +101,6 @@ class TestSiteTable extends Model
     public function fetchAllTestSite()
     {
         $data = DB::table('test_sites')
-            ->leftjoin('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'test_sites.site_sub_district')
@@ -149,7 +147,6 @@ class TestSiteTable extends Model
             'site_city' => $data['city'],
             'site_country' => $data['country'],
             'test_site_status' => $data['testSiteStatus'],
-            'facility_id' => $data['facilityId'],
             'site_province' => $data['provincesssId'],
             'site_district' => $data['districtId'],
             'site_sub_district' => $data['subDistrictId'],

@@ -13,17 +13,16 @@ for ($i = 0; $i < sizeof($glob); $i++) {
     <thead style="border: 3px solid black">
     <tr>
         @if($arr['no_of_test'] == 1)
-        <td colspan="6" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
+        <td colspan="5" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
         @elseif($arr['no_of_test'] == 2)
-        <td colspan="7" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
+        <td colspan="6" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
         @elseif($arr['no_of_test'] == 3)
-        <td colspan="8" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
+        <td colspan="7" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
         @else
-        <td colspan="9" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
+        <td colspan="8" style="border: 3px solid black;font-weight:bold;">Test Kit Use Report</td>
         @endif
       </tr>
     <tr style="border: 3px solid black">
-        <th style="border: 3px solid black;font-weight:bold;">Facility</th>
         <th style="border: 3px solid black;font-weight:bold;">Site</th>
         <th style="border: 3px solid black;font-weight:bold;">Algothrim</th>
         <th style="border: 3px solid black;font-weight:bold;">Testing Period</th>
@@ -48,7 +47,6 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         }
 ?>
         <tr style="border: 3px solid black">
-            <td style="border: 3px solid black">{{ $testkit->facility_name }}</td>
             <td style="border: 3px solid black">{{ $testkit->site_name }}</td>
             <td style="border: 3px solid black">{{ $testkit->algorithm_type }}</td>
             <td style="border: 3px solid black">{{ $testingDate }}</td>

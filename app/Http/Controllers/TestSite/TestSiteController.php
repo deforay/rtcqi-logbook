@@ -4,7 +4,6 @@ namespace App\Http\Controllers\TestSite;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Service\FacilityService;
 use App\Service\ProvinceService;
 use App\Service\DistrictService;
 use App\Service\SubDistrictService;
@@ -42,11 +41,9 @@ class TestSiteController extends Controller
         }
         else
         {
-            $FacilityService = new FacilityService();  
-            $facility = $FacilityService->getAllActiveFacility();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('testsite.add',array('facility'=>$facility,'province'=>$province));
+            return view('testsite.add',array('province'=>$province));
         }
     }
 
@@ -86,14 +83,12 @@ class TestSiteController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $DistrictService = new DistrictService();
             $SubDistrictService = new SubDistrictService();
-            $FacilityService = new FacilityService();  
-            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $result = $TestSiteService->getTestSiteById($id);
             $district = $DistrictService->getDistictByData($result);
             $subDistrict = $SubDistrictService->getSubDistictByData($result);
 
-            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict));
+            return view('testsite.edit',array('result'=>$result,'id'=>$id,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict));
         }
     }
 
