@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use App\Service\TestSiteService;
 use App\Service\MonthlyReportService;
-use App\Service\FacilityService;
 use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use App\Service\DistrictService;
@@ -32,8 +31,6 @@ class ReportController extends Controller
     public function trendReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $SubDistrictService = new SubDistrictService();
@@ -44,7 +41,7 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.trendReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province));
+            return view('report.trendReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -81,8 +78,6 @@ class ReportController extends Controller
     public function logbook()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $SubDistrictService = new SubDistrictService();
@@ -93,7 +88,7 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.logbook', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province));
+            return view('report.logbook', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -123,8 +118,6 @@ class ReportController extends Controller
     public function testKitReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $SubDistrictService = new SubDistrictService();
@@ -135,7 +128,7 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.testKitReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
+            return view('report.testKitReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -154,8 +147,6 @@ class ReportController extends Controller
     public function customReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
@@ -164,7 +155,7 @@ class ReportController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.customReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport, 'province' => $province, 'district' => $district));
+            return view('report.customReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'province' => $province, 'district' => $district));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -209,8 +200,6 @@ class ReportController extends Controller
     public function invalidresultReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
@@ -221,7 +210,7 @@ class ReportController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.invalidresultReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
+            return view('report.invalidresultReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }

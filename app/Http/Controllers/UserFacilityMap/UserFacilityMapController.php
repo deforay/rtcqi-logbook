@@ -5,7 +5,6 @@ namespace App\Http\Controllers\UserFacilityMap;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\UserService;
-use App\Service\FacilityService;
 use App\Service\UserFacilityMapService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -36,10 +35,9 @@ class UserFacilityMapController extends Controller
         else
         {
             $UserService = new UserService();
-            $FacilityService = new FacilityService();
             $user = $UserService->getAllActiveUser();   
-            $facility = $FacilityService->getAllActiveFacility();   
-            return view('userfacilitymap.add',array('user'=>$user,'facility'=>$facility));
+             
+            return view('userfacilitymap.add',array('user'=>$user));
         }
     }
 
@@ -71,13 +69,13 @@ class UserFacilityMapController extends Controller
         else
         {
             $UserService = new UserService();
-            $FacilityService = new FacilityService();
+            //$FacilityService = new FacilityService();
             $user = $UserService->getAllActiveUser();   
-            $facility = $FacilityService->getAllActiveFacility(); 
+            //$facility = $FacilityService->getAllActiveFacility(); 
             $UserFacilityService = new UserFacilityMapService();
             $result = $UserFacilityService->getUserFacilityById($id);
-            dd($result);die;
-            return view('userfacilitymap.edit',array('result'=>$result,'user'=>$user,'facility'=>$facility,'id'=>$id));
+            //dd($result);die;
+            return view('userfacilitymap.edit',array('result'=>$result,'user'=>$user,'id'=>$id));
         }
     }
 }

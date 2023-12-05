@@ -53,7 +53,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         <thead>
 
             <tr class="frezz" style=" top: 37px; width:94.6%;">
-                <th class="th" style="width:10%;">Facility</th>
                 <th class="th" style="width:10%;">Site</th>
                 <th class="th" style="width:10%;">Algorithm</th>
                 <th class="th" style="width:10%;">Start Date</th>
@@ -67,7 +66,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <th class="th" style="width:10%;">OverAll Agr</th>
             </tr>
             <tr>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -103,7 +101,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             } // dd($posAgreement);die;
             ?>
             <tr style="text-align: right">
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$start_test_date}}</td>
