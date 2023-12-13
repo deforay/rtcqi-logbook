@@ -22,6 +22,7 @@
 'provinces'=>'Provinces',
 'districts'=>'Districts',
 'sub_districts'=>'Sous-districts',
+'implementing_partners'=>'Partenaires de mise en œuvre',
 'facilities'=>'Équipement',
 'global_config'=>'Configuration globale',
 'site_types'=>'Types de sites',

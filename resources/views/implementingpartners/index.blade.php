@@ -1,7 +1,7 @@
 <!--
     Author             : Prasath M
     Date               : 31 May 2021
-    Description        : sitetype view screen
+    Description        : Province view screen
     Last Modified Date : 31 May 2021
     Last Modified Name : Prasath M
 -->
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/sitetype/">Entry Point/Site Type</a>
+                        <li class="breadcrumb-item"><a href="/implementingpartners/">Implementing Partners</a>
                         </li>
                     </ol>
                 </div>
@@ -28,10 +28,10 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-                <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['add']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['add'] == "allow")) { ?>
-                    <a href="/sitetype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Add Entry Point/Site Type</b></a>
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add'] == "allow")) {?>
+                <a href="/implementingpartners/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-plus icon-left"></i> Add Implementing Partners</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -39,7 +39,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-                {{ session('status') }}</b></div>
+            {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -56,7 +56,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Entry Point/Site Type</h3>
+                            <h3 class="content-header-title mb-0">Implementing Partners</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -70,78 +70,67 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="sitetypeList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="implementingPartnersList">
                                         <thead>
                                             <tr>
-                                                <th>Entry Point Name</th>
+                                                <th>Implementing Partner Name</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")) { ?>
-                                                    <th>Action</th>
-                                                <?php } ?>
+                                                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) {?>
+                                                <th>Action</th>
+                                                 <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
     </div>
-    </section>
 </div>
-</div>
-<script>
+  <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllSiteType();
+        getAllImplementingPartners();
         $.unblockUI();
     });
-
-    function getAllSiteType() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#sitetypeList').DataTable({
+    function getAllImplementingPartners()
+    {
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $('#implementingPartnersList').DataTable({
             processing: true,
-            destroy: true,
+            destroy : true,
             serverSide: true,
             scrollX: false,
-            autoWidth: false,
+            autoWidth:false,
             ajax: {
-                url: '{{ url("getAllSiteType") }}',
+                url:'{{ url("getAllImplementingPartners") }}',
                 type: 'POST',
+            },error:function(e){
+                console.log(e);
             },
             columns: [
 
-                {
-                    data: 'site_type_name',
-                    name: 'site_type_name',
-                    className: 'firstcaps'
-                },
-                {
-                    data: 'site_type_status',
-                    name: 'site_type_status',
-                    className: 'firstcaps'
-                },
-                <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")) { ?> {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
-                <?php } ?>
-            ],
-            order: [
-                [0, 'desc']
-            ]
+                    { data: 'implementing_partner_name', name: 'implementing_partner_name',className:'firstcaps' },
+                    { data: 'implementing_partner_status', name: 'implementing_partner_status',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) {?>
+                    {data: 'action', name: 'action', orderable: false},
+                    <?php } ?>
+                ],
+            order: [[0, 'desc']]
         });
     }
-</script>
+  </script>
 @endsection
