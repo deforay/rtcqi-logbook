@@ -592,3 +592,10 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 -- Sijulda 14-September-2023
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Report\\ReportController', 'notreportedsites', 'Not Reported Sites ');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Report\\ReportController', 'notreportedsitesexport', 'Not Reported Sites Export');
+
+-- Sijulda 11-December-2023
+CREATE TABLE `implementing_partners` (`implementing_partner_id` int NOT NULL AUTO_INCREMENT,`implementing_partner_name` varchar(100) NOT NULL,`implementing_partner_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'active' COMMENT '1 = Implementing Person is active, 0 deleted but present in database as som',PRIMARY KEY (`implementing_partner_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'ImplementingPartners', 'active')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'add', 'Add')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'edit', 'Edit')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'index', 'Access')

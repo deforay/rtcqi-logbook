@@ -22,6 +22,7 @@
     'provinces' => 'Provinces',
     'districts' => 'Districts',
     'sub_districts' => 'Sub Districts',
+    'implementing_partners' => 'Implementing Partners',
     'facilities' => 'Facilities',
     'global_config' => 'Global Config',
     'site_types' => 'Entry Points',
