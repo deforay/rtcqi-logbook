@@ -55,7 +55,7 @@
 
 
 'site_name'=>'Nom du site',
-'entry_point'=>'Point d’entrée',
+'entry_point'=>'Point d’entrée / type de site',
 'site_id'=>'Site ID',
 'province_name'=>'Nom de la province',
 'district_name'=>'Nom du district',
