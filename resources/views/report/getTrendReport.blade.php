@@ -111,7 +111,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             ?>
             <tr style="text-align: right">
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a onclick="logData('{{$trendrow->ts_id}}')" href="javascript:void(0);" name="data" class="" title="Site Name">{{$trendrow->site_name}}</a></td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{ ucwords($trendrow->algorithm_type) }}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$total}}</td>
                 @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive'; 
