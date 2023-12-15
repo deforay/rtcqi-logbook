@@ -23,9 +23,16 @@ class TestSiteTable extends Model
         $commonservice = new CommonService();
         $latLng=$this->getLatitudeLongitude($data);
         if ($request->input('siteName') != null && trim($request->input('siteName')) != '') {
+            $site_type="";
+        
+           if(count($data['sitetypeId']) > 0) {
+            
+               $site_type = implode(",",$data['sitetypeId']);
+            }
             $id = DB::table('test_sites')->insertGetId(
                 [
                     'site_ID' => $data['siteId'],
+                    'external_site_id' => $data['externalSiteID'],
                     'site_name' => $data['siteName'],
                     'site_latitude' => $latLng['lat'],
                     'site_longitude' => $latLng['lng'],
@@ -38,6 +45,8 @@ class TestSiteTable extends Model
                     'site_province' => $data['provincesssId'],
                     'site_district' => $data['districtId'],
                     'site_sub_district' => $data['subDistrictId'],
+                    'site_type' => $site_type,
+                    'site_implementing_partner_id' => $data['implementingPartnerId'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
                 ]
@@ -136,8 +145,16 @@ class TestSiteTable extends Model
         $commonservice = new CommonService();
         $data = $params->all();
         $latLng=$this->getLatitudeLongitude($data);
+        $site_type="";
+        
+           if(count($data['sitetypeId']) > 0) {
+            
+               $site_type = implode(",",$data['sitetypeId']);
+            }
+            
         $testData = array(
             'site_ID' => $data['siteId'],
+            'external_site_id' => $data['externalSiteID'],
             'site_name' => $data['siteName'],
             'site_latitude' => $latLng['lat'],
             'site_longitude' => $latLng['lng'],
@@ -150,6 +167,9 @@ class TestSiteTable extends Model
             'site_province' => $data['provincesssId'],
             'site_district' => $data['districtId'],
             'site_sub_district' => $data['subDistrictId'],
+            'site_type' => $site_type,
+            'site_implementing_partner_id' => $data['implementingPartnerId'],
+                    
             'updated_by' => session('userId')
         );
         $response = DB::table('test_sites')

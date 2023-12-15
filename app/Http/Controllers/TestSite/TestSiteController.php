@@ -8,6 +8,8 @@ use App\Service\ProvinceService;
 use App\Service\DistrictService;
 use App\Service\SubDistrictService;
 use App\Service\TestSiteService;
+use App\Service\SiteTypeService;
+use App\Service\ImplementingPartnersService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -43,7 +45,11 @@ class TestSiteController extends Controller
         {
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('testsite.add',array('province'=>$province));
+            $SiteTypeService = new SiteTypeService();
+            $sitetype = $SiteTypeService->getAllActiveSiteType();  
+            $ImplementingPartnersService = new ImplementingPartnersService();
+            $implementingpartners = $ImplementingPartnersService->getAllActiveImplementingPartners();  
+            return view('testsite.add',array('province'=>$province, 'sitetype'=>$sitetype, 'implementingpartners'=>$implementingpartners));
         }
     }
 
@@ -84,11 +90,18 @@ class TestSiteController extends Controller
             $DistrictService = new DistrictService();
             $SubDistrictService = new SubDistrictService();
             $TestSiteService = new TestSiteService();
+            $SiteTypeService = new SiteTypeService();
+            $sitetype = $SiteTypeService->getAllActiveSiteType();            
             $result = $TestSiteService->getTestSiteById($id);
+            $resultsitetype=explode(',', $result[0]->site_type);
+            
+            
             $district = $DistrictService->getDistictByData($result);
             $subDistrict = $SubDistrictService->getSubDistictByData($result);
-
-            return view('testsite.edit',array('result'=>$result,'id'=>$id,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict));
+            $ImplementingPartnersService = new ImplementingPartnersService();
+            $implementingpartners = $ImplementingPartnersService->getAllActiveImplementingPartners();  
+            
+            return view('testsite.edit',array('result'=>$result,'id'=>$id,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict,'sitetype'=>$sitetype, 'resultsitetype'=>$resultsitetype, 'implementingpartners'=>$implementingpartners));
         }
     }
 

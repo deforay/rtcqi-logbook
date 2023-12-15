@@ -599,3 +599,9 @@ INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'add', 'Add')
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'edit', 'Edit')
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'index', 'Access')
+
+-- Sijulda 14-December-2023
+ALTER TABLE `test_sites` ADD `external_site_id` VARCHAR(100) NOT NULL AFTER `site_id`;
+ALTER TABLE `test_sites` ADD `site_type` TEXT NOT NULL AFTER `site_country`;
+ALTER TABLE `test_sites` ADD `site_implementing_partner_id` INT NOT NULL AFTER `site_type`;
+

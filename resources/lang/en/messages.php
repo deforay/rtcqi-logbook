@@ -55,7 +55,7 @@
 
 
     'site_name' => 'Site Name',
-    'entry_point' => 'Entry Point',
+    'entry_point' => 'Entry Point / Site Type',
     'site_id' => 'Site ID',
     'province_name' => 'Province Name',
     'district_name' => 'District Name',
