@@ -116,6 +116,16 @@ class GlobalConfigTable extends Model
                 ->where('global_name', '=', 'map_zoom_level')
                 ->update($upData);
         }
+
+        if ($data['testing_algorithm']) {
+            $upData = array(
+                'global_value' => $data['testing_algorithm'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'testing_algorithm')
+                ->update($upData);
+        }
+        
         if ($data['removed'] != null) {
             unlink(public_path($data['removed']));
             $upData = array(

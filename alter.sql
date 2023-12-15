@@ -605,3 +605,6 @@ ALTER TABLE `test_sites` ADD `external_site_id` VARCHAR(100) NOT NULL AFTER `sit
 ALTER TABLE `test_sites` ADD `site_type` TEXT NOT NULL AFTER `site_country`;
 ALTER TABLE `test_sites` ADD `site_implementing_partner_id` INT NOT NULL AFTER `site_type`;
 
+-- ilahir 15-Dec-2023
+
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Testing Algorithm', 'testing_algorithm', '');

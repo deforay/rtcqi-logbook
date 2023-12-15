@@ -102,7 +102,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             ?>
             <tr style="text-align: right">
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{ ucwords($trendrow->algorithm_type) }}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$start_test_date}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$end_test_date}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->total_test}}</td>

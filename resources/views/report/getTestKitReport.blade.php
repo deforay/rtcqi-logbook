@@ -80,7 +80,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
             ?>
             <tr style="text-align: right">
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->site_name}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{ ucwords($trendrow->algorithm_type) }}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
                 @for($l = 1; $l <= $arr['no_of_test']; $l++) 
                 <?php $test_kit_used = 'test_' . $l . '_kit_used';   ?>

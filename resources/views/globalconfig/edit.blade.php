@@ -160,6 +160,20 @@
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Testing Algorithm <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testing_algorithm" name="testing_algorithm" title="Please Select Testing Algorithm">
+                                                        <option value="serial" {{ $result['testing_algorithm'] == 'serial' ?  'selected':''}}>Serial</option>
+                                                        <option value="parallel" {{ $result['testing_algorithm'] == 'parallel' ?  'selected':''}}>Parallel</option>
+                                                        <option value="who3" {{ $result['testing_algorithm'] == 'who3' ?  'selected':''}}>WHO 3</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset class="form-group">
                                                 <h5>Logo
                                                 </h5>
