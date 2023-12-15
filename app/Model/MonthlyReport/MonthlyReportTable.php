@@ -1143,8 +1143,9 @@ class MonthlyReportTable extends Model
                             $duplicateCheck = DB::table('monthly_reports')
                                 ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
                                 ->where('ts_id', '=', $testSiteId)
+                                ->where('st_id', '=', $siteTypeId)
                                 ->where('reporting_month', '=', $report_months)
-                                ->where('book_no', '=', $book_no)
+                                //->where('book_no', '=', $book_no)
                                 ->where('monthly_reports_pages.page_no', '=', $page_no)
                                 ->get();
 
