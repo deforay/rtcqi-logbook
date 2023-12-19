@@ -76,7 +76,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 $testKitName = 'testKit_' . $i . '_name';
                 ?>
                 <tr style="text-align: right">
-                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{ ucwords($trendrow->algorithm_type) }}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$testKitName}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$reactive + $trendrow->$nonreactive}}</td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->$invalid}}</td>
