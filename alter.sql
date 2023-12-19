@@ -605,3 +605,8 @@ ALTER TABLE `test_sites` ADD `external_site_id` VARCHAR(100) NOT NULL AFTER `sit
 ALTER TABLE `test_sites` ADD `site_type` TEXT NOT NULL AFTER `site_country`;
 ALTER TABLE `test_sites` ADD `site_implementing_partner_id` INT NOT NULL AFTER `site_type`;
 
+-- Sijulda 18-December- 2023
+ALTER TABLE `provinces` ADD `province_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `province_id`;
+ALTER TABLE `sub_districts` ADD `sub_district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `sub_district_id`;
+ALTER TABLE `districts` ADD `district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `district_id`;
+
