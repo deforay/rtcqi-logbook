@@ -2127,4 +2127,93 @@ class MonthlyReportTable extends Model
             ->get();
         return count($data);
     }
+
+    public function fetchSiteWiseReport($params)
+    {
+        $commonservice = new CommonService();
+        //$GlobalConfigService = new GlobalConfigService();
+        //$result = $GlobalConfigService->getAllGlobalConfig();
+        
+        $user_id = session('userId');
+        $result = array();
+        $monthResult = array();
+        $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
+        //DB::enableQueryLog();
+        $query = DB::table('monthly_reports_pages as mrp')
+            ->select('mrp.start_test_date','mrp.end_test_date','mr.mr_id','mr.reporting_month','ts.site_name', 'st.site_type_name')
+            ->join('monthly_reports as mr', 'mr.mr_id', '=', 'mrp.mr_id')
+            ->join('site_types as st', 'st.st_id', '=', 'mr.st_id')
+            ->leftjoin('provinces as p', 'p.province_id', '=', 'mr.province_id')
+            ->leftjoin('districts as d', 'd.district_id', '=', 'mr.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'mr.sub_district_id')
+            ->join('test_sites as ts', 'ts.ts_id', '=', 'mr.ts_id');
+
+        if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
+            $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'mr.ts_id')
+                ->where('users_testsite_map.user_id', '=', $user_id);
+        }
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->whereDate('mrp.start_test_date',  '>=', $start_date)
+                    ->whereDate('mrp.end_test_date', '<=', $end_date)
+                    ->whereDate('mrp.end_test_date', '>=', $start_date);
+            });
+        }
+        if (isset($data['provinceId']) && $data['provinceId'] != '') {
+            $query = $query->whereIn('p.province_id', $data['provinceId']);
+        }
+        if (isset($data['districtId']) && $data['districtId'] != '') {
+            $query = $query->whereIn('d.district_id', $data['districtId']);
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+        }
+        if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
+            $query = $query->whereIn('ts.ts_id', $data['testSiteId']);
+        }
+       
+        $query = $query->selectRaw('DATE_FORMAT(mrp.end_test_date,"%b-%Y") as month');
+        $query=$query->orderBy('site_name','asc');
+        
+        $siteResult = $query->get()->toArray();
+        if (sizeof($siteResult) > 0) {
+            foreach ($siteResult as $sRes) {
+                $reportingMonth = date('M-Y', strtotime($sRes->reporting_month));
+                $monthResult[$sRes->month] = $sRes->month;
+                $m = $sRes->month;
+                if (!isset($result[$sRes->site_name]['count'][$reportingMonth])) {
+                    $result[$sRes->site_name]['count'][$reportingMonth] = 1;
+                } else {
+                    $result[$sRes->site_name]['count'][$reportingMonth] += 1;
+                }
+            }
+        }
+        $monthResult=$this->sortMonthYear($monthResult);
+        $sResult = array('sitewise' => $result, 'period' => $monthResult);
+        //dd($sResult);
+        return $sResult;
+    }
+
+    public function sortMonthYear($monthYearArray){
+        uksort($monthYearArray,function($a1,$a2){
+            $time1=strtotime($a1);
+            $time2=strtotime($a2);
+            return $time1 - $time2;
+        });
+
+        return $monthYearArray;
+    }
 }
