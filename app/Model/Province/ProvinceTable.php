@@ -23,6 +23,7 @@ class ProvinceTable extends Model
             $id = DB::table('provinces')->insertGetId(
                 [
                 'province_name' => $data['provinceName'],
+                'province_external_id' => $data['externalId'],
                 'province_status' => $data['provinceStatus'],
                 ]
             );
@@ -70,6 +71,7 @@ class ProvinceTable extends Model
         $commonservice = new CommonService();
             $upData = array(
                 'province_name' => $data['provinceName'],
+                'province_external_id' => $data['externalId'],
                 'province_status' => $data['provinceStatus'],
             );
             $response = DB::table('provinces')

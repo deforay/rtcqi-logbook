@@ -23,6 +23,7 @@ class SubDistrictTable extends Model
             $id = DB::table('sub_districts')->insertGetId(
                 [
                     'sub_district_name' => $data['subDistrictName'],
+                    'sub_district_external_id' => $data['externalId'],
                     'district_id' => $data['districtId'],
                 ]
             );
@@ -61,6 +62,7 @@ class SubDistrictTable extends Model
         $commonservice = new CommonService();
         $upData = array(
             'sub_district_name' => $data['subDistrictName'],
+            'sub_district_external_id' => $data['externalId'],
             'district_id' => $data['districtId'],
         );
         $response = DB::table('sub_districts')
