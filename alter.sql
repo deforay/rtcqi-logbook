@@ -606,7 +606,12 @@ ALTER TABLE `test_sites` ADD `site_type` TEXT NOT NULL AFTER `site_country`;
 ALTER TABLE `test_sites` ADD `site_implementing_partner_id` INT NOT NULL AFTER `site_type`;
 
 -- ilahir 15-Dec-2023
+
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Testing Algorithm', 'testing_algorithm', '');
+-- Sijulda 18-December- 2023
+ALTER TABLE `provinces` ADD `province_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `province_id`;
+ALTER TABLE `sub_districts` ADD `sub_district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `sub_district_id`;
+ALTER TABLE `districts` ADD `district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `district_id`;
 
 --ilahir 20-Dec-2023
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'Monitoring Report', 'active');

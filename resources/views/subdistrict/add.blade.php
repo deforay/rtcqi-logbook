@@ -60,6 +60,15 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>External ID
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="externalId" class="form-control" autocomplete="off" placeholder="Enter External ID" name="externalId" title="Please Enter External ID">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>District Name<span class="mandatory">*</span>
                                             </h5>
