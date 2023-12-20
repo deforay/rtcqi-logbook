@@ -606,5 +606,8 @@ ALTER TABLE `test_sites` ADD `site_type` TEXT NOT NULL AFTER `site_country`;
 ALTER TABLE `test_sites` ADD `site_implementing_partner_id` INT NOT NULL AFTER `site_type`;
 
 -- ilahir 15-Dec-2023
-
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Testing Algorithm', 'testing_algorithm', '');
+
+--ilahir 20-Dec-2023
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'Monitoring Report', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'sitewisereport', 'Sitewise Report');
