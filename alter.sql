@@ -1,4 +1,5 @@
 -- ---
+-- ---
 -- Globals
 -- ---
 
@@ -616,4 +617,8 @@ ALTER TABLE `districts` ADD `district_external_id` VARCHAR(100) NULL DEFAULT NUL
 --Sijulda 19-December-2023
 ALTER TABLE `districts` ADD `district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `district_name`;
 ALTER TABLE `sub_districts` ADD `sub_district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `sub_district_name`;
+
+--ilahir 20-Dec-2023
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'Monitoring Report', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'sitewisereport', 'Sitewise Report');
 
