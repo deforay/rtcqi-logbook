@@ -76,10 +76,15 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 		$report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">'.Lang::get('messages.custom_report').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsites']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsites'] == "allow"))
 		$report .= '<li id="li-notreportedsites"><a class="dropdown-item" data-toggle="dropdown" href="/notreportedsites/">'.Lang::get('messages.not_reported_sites_report').'</a></li>';
-	
+
 		$report .= '</ul></li>';
 }
 
+$monitoringReport='';
+
+if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController']['sitewisereport']) && ($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController']['sitewisereport'] == "allow")){
+	$monitoringReport .= '<li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="'.url('sitewisereport').'">'.Lang::get('Site-Wise Report').'</a></li>';
+}
 // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
 //             <ul class="dropdown-menu">';
 // $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
@@ -93,6 +98,14 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 			@php echo $manage; @endphp
 			@php echo $test; @endphp
 			@php echo $report; @endphp
+			
+			<?php if(trim($monitoringReport)!=""){ ?>
+				<li class="dropdown nav-item" data-menu="dropdown"><a id="monitoringReport" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title"><?php echo Lang::get('Monitoring Reports') ?> </span></a>
+					<ul class="dropdown-menu">
+						<?php echo $monitoringReport; ?>
+					</ul>
+				</li>		
+			<?php } ?>
 		</ul>
 	</div>
 	

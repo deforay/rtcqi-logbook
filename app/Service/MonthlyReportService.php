@@ -280,4 +280,11 @@ class MonthlyReportService
 		$result = $model->fetchAllNotUploadActiveProvince();
         return $result;
 	}
+
+	public function getSiteWiseReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchSiteWiseReport($params);
+		return $result;
+	}
 }

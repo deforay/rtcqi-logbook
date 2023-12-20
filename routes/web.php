@@ -259,3 +259,7 @@ Route::post('/getAuditTrail', 'AuditTrail\AuditTrailController@getAuditTrail')->
 
 Route::post('/getReportingMonth', 'MonthlyReport\MonthlyReportController@getReportingMonth');
 Route::post('/getIdReportingMonth', 'MonthlyReport\MonthlyReportController@getIdReportingMonth');
+
+//Monitoring Report
+Route::get('/sitewisereport','MonitoringReport\MonitoringReportController@sitewiseReport')->name('sitewisereport.sitewiseReport');
+Route::post('/getSiteWiseReport', 'MonitoringReport\MonitoringReportController@getSiteWiseReport');
