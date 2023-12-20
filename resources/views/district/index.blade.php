@@ -75,6 +75,9 @@
                                             <tr>
                                                 <th>District Name</th>
                                                 <th>Province Name</th>
+                                                <th>Province ID</th>
+                                                <th>External ID</th>
+                                                <th>Status</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['edit']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
@@ -122,6 +125,10 @@
 
                     { data: 'district_name', name: 'district_name',className:'firstcaps' },
                     { data: 'province_name', name: 'province_name',className:'firstcaps' },
+                    { data: 'province_id', name: 'province_id',className:'firstcaps' },
+                    { data: 'district_external_id', name: 'district_external_id',className:'firstcaps' },
+                    { data: 'district_status', name: 'district_status',className:'firstcaps' },
+
                     <?php $role = session('role');
                     if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['edit']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},

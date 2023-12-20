@@ -66,7 +66,7 @@
                                             <h5>External ID
                                             </h5>
                                             <div class="form-group">
-                                                <input type="text" id="externalId" value="{{$result[0]->sub_district_external_id}}" class="form-control" autocomplete="off" placeholder="Enter External ID" name="externalId" title="Please Enter ExternalId">
+                                                <input type="text" id="externalId" value="{{$result[0]->sub_district_external_id}}" class="form-control" autocomplete="off" placeholder="Enter External ID" name="externalId" title="Please Enter External ID">
                                             </div>
                                         </fieldset>
                                     </div>
@@ -84,7 +84,18 @@
                                             </div>
 										</fieldset>
 									</div>
-                                    
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Sub District Status<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictStatus" name="subDistrictStatus" title="Please select Sub District status">
+                                                    <option value="active" {{ $result[0]->sub_district_status == 'active' ?  'selected':''}}>Active</option>
+                                                    <option value="inactive" {{ $result[0]->sub_district_status == 'inactive' ?  'selected':''}}>Inactive</option>
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
                                 </div>
 								<div class="form-actions right">
                                     <a href="/subdistrict" >

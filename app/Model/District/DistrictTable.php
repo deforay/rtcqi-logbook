@@ -24,6 +24,7 @@ class DistrictTable extends Model
                 [
                     'district_name' => $data['districtName'],
                     'district_external_id' => $data['externalId'],
+                    'district_status' => $data['districtStatus'],
                     'province_id' => $data['provinceId'],
                 ]
             );
@@ -63,6 +64,7 @@ class DistrictTable extends Model
         $upData = array(
             'district_name' => $data['districtName'],
             'district_external_id' => $data['externalId'],
+            'district_status' => $data['districtStatus'],
             'province_id' => $data['provinceId'],
         );
         $response = DB::table('districts')

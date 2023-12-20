@@ -613,3 +613,7 @@ ALTER TABLE `provinces` ADD `province_external_id` VARCHAR(100) NULL DEFAULT NUL
 ALTER TABLE `sub_districts` ADD `sub_district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `sub_district_id`;
 ALTER TABLE `districts` ADD `district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `district_id`;
 
+--Sijulda 19-December-2023
+ALTER TABLE `districts` ADD `district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `district_name`;
+ALTER TABLE `sub_districts` ADD `sub_district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `sub_district_name`;
+
