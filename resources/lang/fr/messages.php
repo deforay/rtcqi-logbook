@@ -29,7 +29,7 @@
 'test_kits'=>'Test Kits',
 'allowed_test_kits'=>'Kits de test autorisés',
 'audit_trail'=>'Piste d’audit',
-'monthly_report'=>'Rapport mensuel',
+'monthly_report'=>'Rapport mensuel (saisie de données)',
 'failed_imports_excel_upload'=>'Échec des importations - Téléchargement Excel',
 'trend_report'=>'Rapport sur les tendances',
 'logbook_report'=>'Rapport du journal de bord',
