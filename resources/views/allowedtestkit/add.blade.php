@@ -56,7 +56,7 @@
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitNo" name="testKitNo"
-                                                    title="Please Select Test Kit No">
+                                                    title="Please Select Test Kit">
                                                     <option value="">Select Test Kit</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
