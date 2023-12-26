@@ -622,3 +622,6 @@ ALTER TABLE `sub_districts` ADD `sub_district_status` VARCHAR(100) NOT NULL DEFA
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'Monitoring Report', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'sitewisereport', 'Sitewise Report');
 
+--Sijulda 26-December-2023
+ALTER TABLE `test_kits` DROP COLUMN Installation_id;
+
