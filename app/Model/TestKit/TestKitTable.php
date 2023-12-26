@@ -30,7 +30,6 @@ class TestKitTable extends Model
                     'test_kit_comments' => $data['kit_name_comments'],
                     'test_kit_manufacturer' => $data['kit_manufacturer'],
                     'test_kit_expiry_date' => $expiry,
-                    'Installation_id' => $data['installation_id'],
                     'test_kit_status' => $data['testKitStatus'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
@@ -86,7 +85,6 @@ class TestKitTable extends Model
             'test_kit_comments' => $data['kit_name_comments'],
             'test_kit_manufacturer' => $data['kit_manufacturer'],
             'test_kit_expiry_date' => $expiry,
-            'Installation_id' => $data['installation_id'],
             'test_kit_status' => $data['testKitStatus'],
             'updated_by' => session('userId')
         );
