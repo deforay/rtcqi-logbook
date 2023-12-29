@@ -203,7 +203,7 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
 
-        $query = $query->orderBy('monthly_reports.mr_id', 'DESC')->limit(5);
+        $query = $query->orderBy('monthly_reports.mr_id', 'DESC');
         // dd($query->toSql());
         $salesResult = $query->get();
 

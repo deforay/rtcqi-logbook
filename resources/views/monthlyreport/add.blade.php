@@ -651,8 +651,7 @@ loadReplaceTestKitHeadings();
             serverSide: true,
             scrollX: false,
             autoWidth: false,
-            paging: false,
-
+            "aLengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
             ajax: {
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
