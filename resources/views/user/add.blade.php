@@ -139,7 +139,7 @@
 									</div>
                                 </div>
                                 <div class="form-actions left">
-                                    <input type="button" id="showBtn" class="btn btn-success" value="Show"/>
+                                    <input type="button" id="showBtn" class="btn btn-success" value="Show Filter"/>
                                 </div>
                                 <div class="row filterDiv" style="display:none;">
                                     <div class="col-xl-4 col-lg-12">
@@ -292,7 +292,7 @@ $(document).ready(function() {
     });
 
     $('#showBtn').click(function() {
-       $(this).val() == "Show" ? showFilter() : hideFilter();
+       $(this).val() == "Show Filter" ? showFilter() : hideFilter();
     });
     
 });
@@ -475,13 +475,13 @@ function isNumberKey(evt){
     }
     
     function showFilter() {
-        $('#showBtn').val("Hide");
+        $('#showBtn').val("Hide Filter");
         $("#showBtn").removeClass("btn-success");
         $("#showBtn").addClass("btn-secondary");
     }
 
     function hideFilter() {
-        $('#showBtn').val("Show");
+        $('#showBtn').val("Show Filter");
         $("#showBtn").removeClass("btn-secondary");
         $("#showBtn").addClass("btn-success");
     }

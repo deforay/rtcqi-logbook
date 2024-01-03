@@ -631,3 +631,7 @@ ALTER TABLE `test_sites` ADD `site_secondary_email` VARCHAR(255) NULL DEFAULT NU
 ALTER TABLE `test_sites` ADD `site_primary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_secondary_email`;
 ALTER TABLE `test_sites` ADD `site_secondary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_mobile_no`;
 
+--ilahir 03-Jan-2024
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User', 'disable_inactive_user', '');
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User No.of Months', 'disable_user_no_of_months', '6');
+ALTER TABLE `users` ADD `last_login_datetime` DATETIME NULL DEFAULT NULL AFTER `updated_by`;
