@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Service\TestSiteService;
 use App\Service\UserService;
 use App\Service\RolesService;
+use App\Service\ProvinceService;
 use App\Service\UserFacilityMapService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -43,9 +44,11 @@ class UserController extends Controller
         {
             $TestSiteService = new TestSiteService();
             $RoleService = new RolesService();
+            $ProvinceService = new ProvinceService();
             $testSite = $TestSiteService->getAllActiveTestSite();     
             $resourceResult = $RoleService->getAllRole();
-            return view('user.add',array('test'=>$testSite,'roleId'=>$resourceResult));
+            $province = $ProvinceService->getAllActiveProvince();
+            return view('user.add',array('test'=>$testSite,'roleId'=>$resourceResult,'province' => $province));
         }
     }
 
@@ -108,15 +111,17 @@ class UserController extends Controller
             $TestSiteService = new TestSiteService();
             $RoleService = new RolesService();
             $UserFacilityMapService = new UserFacilityMapService();
+            $ProvinceService = new ProvinceService();
             $testSite = $TestSiteService->getAllActiveTestSite();
             $result = $UserService->getUserById($id);
             $selectedSiteId = $UserFacilityMapService->getUserSiteById($id);
             $resourceResult = $RoleService->getAllRole();
+            $province = $ProvinceService->getAllActiveProvince();
             $testSiteId = array(); 
             foreach($selectedSiteId as $value) {
                 array_push($testSiteId,$value->ts_id);
             }
-            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult,'selectedSiteId'=>$selectedSiteId));
+            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult,'selectedSiteId'=>$selectedSiteId,'province' => $province));
         }
     }
 

@@ -18,7 +18,7 @@ class TestSiteController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict');        
+        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict','getAllTestSiteList');        
        
     }
     //View TestSite main screen
@@ -123,12 +123,18 @@ class TestSiteController extends Controller
     }
 
     public function getProvince($id){
-
         $testSiteService = new TestSiteService();
         $district = $testSiteService->getTestSiteData($id);
-  
         return response()->json($district);
-     
+    }
+
+    public function getAllTestSiteList(Request $request)
+    {
+        $params = $request->all();
+        $testSiteService = new TestSiteService();
+        return $testSiteService->getAllTestSiteList($params);
+        // log::info($district);
+        // return $subDistrict;
     }
 }
 
