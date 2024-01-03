@@ -284,7 +284,6 @@ class MonthlyReportTable extends Model
             'book_no' => $data['bookNo'],
             'name_of_data_collector' => $data['nameOfDataCollect'] == "" ? $user_name : $data['nameOfDataCollect'],
             'last_modified_on' => $commonservice->getDateTime(),
-            'district_id' => $districtId,
             'tester_name' => $data['testername'],
             'updated_by' => session('userId')
             // 'signature' => $data['signature'],
