@@ -625,3 +625,9 @@ INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUE
 --Sijulda 26-December-2023
 ALTER TABLE `test_kits` DROP COLUMN Installation_id;
 
+--Sijulda 02-January-2024
+ALTER TABLE `test_sites` ADD `site_primary_email` VARCHAR(255) NULL DEFAULT NULL AFTER `site_longitude`;
+ALTER TABLE `test_sites` ADD `site_secondary_email` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_email`;
+ALTER TABLE `test_sites` ADD `site_primary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_secondary_email`;
+ALTER TABLE `test_sites` ADD `site_secondary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_mobile_no`;
+

@@ -127,6 +127,43 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
+											<h5>Primary Email
+											</h5>
+											<div class="form-group">
+                                            <input type="text" id="primaryEmail" value="{{$result[0]->site_primary_email}}" class="form-control isEmail" autocomplete="off" placeholder="Enter Primary Email" name="primaryEmail" title="Please Enter Primary Email">
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Secondary Email 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="secondaryEmail" value="{{$result[0]->site_secondary_email}}" class="form-control isEmail" autocomplete="off" placeholder="Enter Secondary Email" name="secondaryEmail" title="Please Enter Secodary Email">
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Primary Mobile Number 
+											</h5>
+											<div class="form-group">
+                                            <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="primaryMobileNo" value="{{$result[0]->site_primary_mobile_no}}" class="form-control" autocomplete="off" placeholder="Enter Primary Mobile Number" name="primaryMobileNo" title="Please Enter Primary Mobile Number">
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Secondary Mobile Number 
+											</h5>
+											<div class="form-group">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="secondaryMobileNo"  value="{{$result[0]->site_secondary_mobile_no}}" class="form-control" autocomplete="off" placeholder="Enter Secondary Mobile Number" name="secondaryMobileNo" title="Please Enter Secondary Mobile Number">
+											</div>
+										</fieldset>
+									</div>
+                                    
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
 											<h5>Address1
 											</h5>
 											<div class="form-group">
@@ -333,7 +370,12 @@ $.each(response,function(key, value) {
 });
 
 });
-
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
    
     function checkNameValidation(tableName, fieldName, obj,fnct, msg)
     {
