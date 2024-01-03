@@ -164,7 +164,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
     $(document).ready(function() {
         $("#provinceId").change(function () {
             var datas = $(this).val();
-            console.log(datas);
+            //console.log(datas);
             listDistrictForProvince();
         });
         $("#districtId").change(function () {
