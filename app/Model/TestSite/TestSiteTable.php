@@ -270,4 +270,33 @@ class TestSiteTable extends Model
             ->value('site_longitude');
         return $data;
     }
+
+    public function fetchAllTestSiteList($params)
+    {
+        
+        $query = DB::table('test_sites')
+            ->select('test_sites.ts_id','test_sites.site_name')
+            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'test_sites.site_sub_district');
+        
+        if(isset($params['provinceId']) && sizeof($params['provinceId'])>0){
+            $query=$query->whereIn('test_sites.site_province',$params['provinceId']);
+        }
+        if(isset($params['districtId']) && sizeof($params['districtId'])>0){
+            $query=$query->whereIn('test_sites.site_district',$params['districtId']);
+        }
+        if(isset($params['subDistrictId']) && sizeof($params['subDistrictId'])>0){
+            $query=$query->whereIn('test_sites.site_sub_district',$params['subDistrictId']);
+        }
+        if(isset($params['searchTo']) && sizeof($params['searchTo'])>0){
+            $query=$query->whereNotIn('test_sites.ts_id',$params['searchTo']);
+        }
+        $query=$query->orderBy('site_name','asc');
+        
+        $siteResult = $query->get()->toArray();
+        return $siteResult;
+
+        
+    }
 }

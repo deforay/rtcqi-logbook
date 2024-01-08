@@ -126,6 +126,40 @@ class GlobalConfigTable extends Model
                 ->update($upData);
         }
         
+        if ($data['disable_inactive_user']) {
+            $upData = array(
+                'global_value' => $data['disable_inactive_user'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'disable_inactive_user')
+                ->update($upData);
+        }
+
+        if ($data['disable_user_no_of_months']) {
+            $upData = array(
+                'global_value' => $data['disable_user_no_of_months'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'disable_user_no_of_months')
+                ->update($upData);
+        }else{
+            if($data['disable_inactive_user']=='yes' && trim($data['disable_user_no_of_months'])==""){
+                $upData = array(
+                    'global_value' => '6',
+                );
+                $response = DB::table('global_config')
+                ->where('global_name', '=', 'disable_user_no_of_months')
+                ->update($upData);
+            }else{
+                $upData = array(
+                    'global_value' => NULL,
+                );
+                $response = DB::table('global_config')
+                ->where('global_name', '=', 'disable_user_no_of_months')
+                ->update($upData);
+            }
+        }
+        
         if ($data['removed'] != null) {
             unlink(public_path($data['removed']));
             $upData = array(

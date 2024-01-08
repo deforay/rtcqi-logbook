@@ -174,6 +174,27 @@
                                         </div>
 
                                         <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5> Disable Inactive Users<span class="mandatory">*</span></h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" style="width:100%;" id="disable_inactive_user" name="disable_inactive_user" title="Please Select Disable Inactive User" onchange="checkDisableInactiveUser();">
+                                                        <option value="yes" {{ $result['disable_inactive_user'] == 'yes' ?  'selected':''}}>Yes</option>
+                                                        <option value="no" {{ $result['disable_inactive_user'] == 'no' ?  'selected':''}}>No</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-xl-4 col-lg-12" id="noOfMonthDiv">
+                                            <fieldset>
+                                                <h5> No. of months</h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="disable_user_no_of_months" value="{{$result['disable_user_no_of_months']}}" class="form-control" autocomplete="off" placeholder="Enter No. of months" name="disable_user_no_of_months" title="Please enter number of month">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-xl-4 col-lg-12">
                                             <fieldset class="form-group">
                                                 <h5>Logo
                                                 </h5>
@@ -236,7 +257,9 @@
 <script src="{{ asset('assets/js/jasny-bootstrap.js') }}" type="text/javascript"></script>
 <script>
     duplicateName = true;
-
+    $(document).ready(function() {
+        checkDisableInactiveUser();
+    });
     function validateNow() {
         flag = deforayValidator.init({
             formId: 'editGlobalConfig'
@@ -256,6 +279,16 @@
     function storeHiddenValue() {
         var filePath = "{{ $result['logo'] }}";
         $('#removed').val(filePath);
+    }
+
+    function checkDisableInactiveUser(){
+        inactiveUser=$("#disable_inactive_user").val();
+        if(inactiveUser=='yes'){
+            $("#noOfMonthDiv").show();
+        }else{
+            $("#noOfMonthDiv").hide();
+            $("#disable_user_no_of_months").val('');
+        }   
     }
 </script>
 @endsection
