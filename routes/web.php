@@ -263,3 +263,5 @@ Route::post('/getIdReportingMonth', 'MonthlyReport\MonthlyReportController@getId
 //Monitoring Report
 Route::get('/sitewisereport','MonitoringReport\MonitoringReportController@sitewiseReport')->name('sitewisereport.sitewiseReport');
 Route::post('/getSiteWiseReport', 'MonitoringReport\MonitoringReportController@getSiteWiseReport');
+
+Route::post('/getAllTestSiteList', 'TestSite\TestSiteController@getAllTestSiteList');

@@ -84,7 +84,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <div class="media d-flex">
                         <div class="media-body text-left">
                             <h3 class="warning">{{$monthly}}</h3>
-                            <h6>No. of Audits (Last 12 Months)</h6>
+                            <h6>No. of Page Summaries (Last 12 Months)</h6>
                         </div>
                         <div>
                             <i class="icon-list warning font-large-2 float-right"></i>
