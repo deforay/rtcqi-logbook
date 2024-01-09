@@ -636,6 +636,35 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User No.of Months', 'disable_user_no_of_months', '6');
 ALTER TABLE `users` ADD `last_login_datetime` DATETIME NULL DEFAULT NULL AFTER `updated_by`;
 
+--Sijulda 05-January-2024
+DROP TABLE IF EXISTS `audit_monthly_reports`;
+
+CREATE TABLE `audit_monthly_reports` SELECT * from `monthly_reports` WHERE 1=0;
+
+ALTER TABLE `audit_monthly_reports`
+   MODIFY COLUMN `mr_id` int(11) NOT NULL,
+   ENGINE = MyISAM,
+   ADD `action` VARCHAR(8) DEFAULT 'insert' FIRST,
+   ADD `revision` INT(6) NOT NULL AUTO_INCREMENT AFTER `action`,
+   ADD `dt_datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `revision`,
+   ADD PRIMARY KEY (`mr_id`, `revision`);
+
+DROP TRIGGER IF EXISTS monthly_reports_data__ai;
+DROP TRIGGER IF EXISTS monthly_reports_data__au;
+DROP TRIGGER IF EXISTS monthly_reports_data__bd;
+
+CREATE TRIGGER monthly_reports_data__ai AFTER INSERT ON `monthly_reports` FOR EACH ROW
+    INSERT INTO `audit_monthly_reports` SELECT 'insert', NULL, NOW(), d.*
+    FROM `monthly_reports` AS d WHERE d.mr_id = NEW.mr_id;
+
+CREATE TRIGGER monthly_reports_data__au AFTER UPDATE ON `monthly_reports` FOR EACH ROW
+    INSERT INTO `audit_monthly_reports` SELECT 'update', NULL, NOW(), d.*
+    FROM `monthly_reports` AS d WHERE d.mr_id = NEW.mr_id;
+
+CREATE TRIGGER monthly_reports_data__bd BEFORE DELETE ON `monthly_reports` FOR EACH ROW
+    INSERT INTO `audit_monthly_reports` SELECT 'delete', NULL, NOW(), d.*
+    FROM `monthly_reports` AS d WHERE d.mr_id = OLD.mr_id;
+
 --ilahir 08-Jan-2024
 CREATE TABLE `temp_mail` (
   `temp_id` int NOT NULL,
