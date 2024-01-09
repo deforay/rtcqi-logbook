@@ -59,7 +59,7 @@ class UserLoginExpireCron extends Command
                 ->where('user_status', '=', 'active')
                 ->get();
             $subject="[Important] Your ".$host." login will expire soon";
-            $expiryDate = date('Y-m-01', strtotime('+1 month'));
+            $expiryDate = date('01-M-Y', strtotime('+1 month'));
             foreach($userData as $val){
                 if(isset($val->last_login_datetime) && trim($val->last_login_datetime)!=""){
                     $lastLoginDatetime=$val->last_login_datetime;
