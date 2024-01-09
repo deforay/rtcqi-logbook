@@ -45,9 +45,8 @@ class UserLoginExpireCron extends Command
         $disableInactiveUser = $globalConfigService->getGlobalConfigValue('disable_inactive_user');
         
         if($disableInactiveUser=='yes'){
-
+            //Get host name
             $host = request()->getHttpHost();
-            
             $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
             $currentDate=Date("d-M-Y");
             if(trim($noOfMonths)==""){
@@ -59,7 +58,7 @@ class UserLoginExpireCron extends Command
                 ->select('user_id','first_name','last_name','email','phone','last_login_datetime')
                 ->where('user_status', '=', 'active')
                 ->get();
-            $subject="Your ".$host." login will expire soon";
+            $subject="[Important] Your ".$host." login will expire soon";
             $expiryDate = date('Y-m-01', strtotime('+1 month'));
             foreach($userData as $val){
                 if(isset($val->last_login_datetime) && trim($val->last_login_datetime)!=""){
@@ -74,7 +73,7 @@ class UserLoginExpireCron extends Command
                         $fromName=$val->first_name;
                         $to=$val->email;
                         $msg="Dear ".$val->first_name.' '.$val->last_name.',<br/><br/>';
-                        $msg.="Your ".$host." login will expire on ".$expiryDate." Please click on <a href='".$host."'  target='_blank'>".$host."</a> to login and ensure it does not expire.<br/><br/><br/><br/><br/><br/>";
+                        $msg.="Your ".$host." login will expire on ".$expiryDate." Please click on <a href='".$host."'  target='_blank'>".$host."</a> to login and ensure it does not expire.<br/><br/><br/>";
                         $msg.="Thanks <br/><small>Please note this is a system generated email</small>";
                         $fromMail="";
                         $commonservice->insertTempMail($to,$subject,$msg,$fromMail,$fromName);
