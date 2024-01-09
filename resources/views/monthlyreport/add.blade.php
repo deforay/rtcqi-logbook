@@ -234,21 +234,28 @@ $messages=Lang::get('messages');
 											</div>
 										</fieldset>
 									</div> --}}
-                                        <!--
+                                        
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Algorithm Type <span class="mandatory">*</span>
-                                                </h5>
+                                                <?php
+                                                $testingAlgorithmType=explode(',',$testingAlgorithmType);
+                                                ?>
+                                                <h5>Algorithm Type <span class="mandatory">*</span></h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
                                                         <option value="">---Select---</option>
-                                                        <option value="serial">Serial</option>
-                                                        <option value="parallel">Parallel</option>
+                                                        @if(in_array("serial",$testingAlgorithmType))
+                                                            <option value="serial">Serial</option>
+                                                        @elseif(in_array("parallel",$testingAlgorithmType))
+                                                            <option value="parallel">Parallel</option>
+                                                        @elseif(in_array("who3",$testingAlgorithmType))
+                                                            <option value="who3">WHO 3</option>
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        -->
+                                        
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>{{ $messages["name_of_data_collector"]}}
