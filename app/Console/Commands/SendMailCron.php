@@ -43,8 +43,9 @@ class SendMailCron extends Command
         $commonservice = new CommonService();
         $tempMail = DB::table('temp_mail')
                     ->where('status','=', 'pending')
-                    ->get();
-        $tempMail = $tempMail->toArray();
+                    ->offset(0) // Starting position of records
+                    ->limit(10)
+                    ->get()->toArray();
         if (count($tempMail) > 0) {
             foreach($tempMail as $mail){
                 //Update mail status
