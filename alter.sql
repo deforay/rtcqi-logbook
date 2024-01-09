@@ -635,3 +635,19 @@ ALTER TABLE `test_sites` ADD `site_secondary_mobile_no` VARCHAR(255) NULL DEFAUL
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User', 'disable_inactive_user', '');
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User No.of Months', 'disable_user_no_of_months', '6');
 ALTER TABLE `users` ADD `last_login_datetime` DATETIME NULL DEFAULT NULL AFTER `updated_by`;
+
+--ilahir 08-Jan-2024
+CREATE TABLE `temp_mail` (
+  `temp_id` int NOT NULL,
+  `message` mediumtext,
+  `from_mail` varchar(255) DEFAULT NULL,
+  `to_email` varchar(255) NOT NULL,
+  `subject` mediumtext,
+  `from_full_name` varchar(255) DEFAULT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `status` varchar(100) NOT NULL DEFAULT 'pending',
+  `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `temp_mail` ADD PRIMARY KEY (`temp_id`);
+ALTER TABLE `temp_mail` MODIFY `temp_id` int NOT NULL AUTO_INCREMENT;
