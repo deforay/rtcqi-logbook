@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Model\User\UserTable;
 use App\Model\Vendors\VendorsTable;
 use App\Service\GlobalConfigService;
+use App\Model\TempMail\TempMailTable;
 
 class CommonService
 {
@@ -602,7 +603,26 @@ class CommonService
                 //return $data;
             }
         
-        return $data;        
-        
+        return $data;
+    }
+
+    public function insertTempMail($to,$subject,$msg,$fromMail,$fromName){
+    	try {
+            $tempMailDb = new TempMailTable();
+            $tempMailDb->insertTempMailDetails($to,$subject,$msg,$fromMail,$fromName);  
+	    }
+	    catch (Exception $exc) {
+	    	$exc->getMessage();
+	    }
+    }
+
+    public function updateTempMailStatus($id,$status){
+        $tempMailDb = new TempMailTable();
+        $tempMailDb->updateTempMailStatus($id,$status);
+    }
+
+    public function deleteTempMail($id){
+        $tempMailDb = new TempMailTable();
+        $tempMailDb->deleteTempMail($id);
     }
 }
