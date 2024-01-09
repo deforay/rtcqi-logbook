@@ -118,6 +118,7 @@ class GlobalConfigTable extends Model
         }
 
         if ($data['testing_algorithm']) {
+            $data['testing_algorithm']=implode(",",$data['testing_algorithm']);
             $upData = array(
                 'global_value' => $data['testing_algorithm'],
             );
