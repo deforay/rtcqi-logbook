@@ -664,3 +664,19 @@ CREATE TRIGGER monthly_reports_data__au AFTER UPDATE ON `monthly_reports` FOR EA
 CREATE TRIGGER monthly_reports_data__bd BEFORE DELETE ON `monthly_reports` FOR EACH ROW
     INSERT INTO `audit_monthly_reports` SELECT 'delete', NULL, NOW(), d.*
     FROM `monthly_reports` AS d WHERE d.mr_id = OLD.mr_id;
+
+--ilahir 08-Jan-2024
+CREATE TABLE `temp_mail` (
+  `temp_id` int NOT NULL,
+  `message` mediumtext,
+  `from_mail` varchar(255) DEFAULT NULL,
+  `to_email` varchar(255) NOT NULL,
+  `subject` mediumtext,
+  `from_full_name` varchar(255) DEFAULT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `status` varchar(100) NOT NULL DEFAULT 'pending',
+  `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `temp_mail` ADD PRIMARY KEY (`temp_id`);
+ALTER TABLE `temp_mail` MODIFY `temp_id` int NOT NULL AUTO_INCREMENT;
