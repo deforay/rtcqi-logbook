@@ -618,7 +618,9 @@ $messages=Lang::get('messages');
     });
 
     function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());   
+    var siteTypeId = $('#sitetypeId').val() == '' ? "":parseInt($('#sitetypeId').val());
+    var testSiteId = $('#testsiteId').val() == '' ? "" : parseInt($('#testsiteId').val());
+    
     //alert($('#testsiteId').val());
         $.ajaxSetup({
             headers: {
@@ -637,7 +639,8 @@ $messages=Lang::get('messages');
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                    testSiteId: testSiteId,               
+                    testSiteId: testSiteId,
+                    siteTypeId: siteTypeId
                 },
                 
             },
@@ -1018,6 +1021,10 @@ $messages=Lang::get('messages');
             $("#monthlyReportListWrapper").show();
             getAllMonthlyReport();
         }
+        // Entry Point / Site Type Change
+        $('#sitetypeId').change(function() {
+            getAllMonthlyReport();
+        });
 // Site Name Change
 $('#testsiteId').change(function() {
     checkExistingReportingMonth();

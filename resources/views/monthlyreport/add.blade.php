@@ -585,50 +585,55 @@ $messages=Lang::get('messages');
      endDate: new Date()
         });
 
+        // Entry Point / Site Type Change
+        $('#sitetypeId').change(function() {
+            getAllMonthlyReport();
+        });
+
          // Site Name Change
          $('#testsiteId').change(function() {
             checkExistingReportingMonth();
-// Site id
-var id = $(this).val();
-//get Site name last 5 records
-getAllMonthlyReport();
-// Empty the dropdown
-$('#provinceId').find('option').not(':first').remove();
-$('#districtId').find('option').not(':first').remove();
-$('#subDistrictId').find('option').not(':first').remove();
-$('#bookNo').val('');
+            // Site id
+            var id = $(this).val();
+            //get Site name last 5 records
+            getAllMonthlyReport();
+            // Empty the dropdown
+            $('#provinceId').find('option').not(':first').remove();
+            $('#districtId').find('option').not(':first').remove();
+            $('#subDistrictId').find('option').not(':first').remove();
+            $('#bookNo').val('');
 
-// AJAX request
-$.ajax({
-    url: "{{url('/getProvince') }}/" + id,
-    type: 'get',
-    dataType: 'json',
-    success: function(response) {
-        if (response.length == 0) {
-            $("#siteUniqueId").val('');
-            $("#siteManager").val('');
-            $("#testername").val('');
-            $("#contactNo").val('');
-            $("#bookNo").val('');
-        } else {
-            $.each(response, function(key, value) {
+            // AJAX request
+            $.ajax({
+                url: "{{url('/getProvince') }}/" + id,
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.length == 0) {
+                        $("#siteUniqueId").val('');
+                        $("#siteManager").val('');
+                        $("#testername").val('');
+                        $("#contactNo").val('');
+                        $("#bookNo").val('');
+                    } else {
+                        $.each(response, function(key, value) {
 
-                $("#siteUniqueId").val(value.site_id);
-                $("#siteManager").val(value.site_manager);
-                $("#testername").val(value.tester_name);
-                $("#contactNo").val(value.contact_no);
-                $("#bookNo").val(value.book_no);
-                if(value.province_id!=null) {
-                $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
-                }
-                if(value.district_id!=null) {
-                $("#districtId").append('<option value="' + value.district_id + '"selected>' + value.district_name + '</option>');
-                }
-                if(value.sub_district_id!=null) {
-                $("#subDistrictId").append('<option value="' + value.sub_district_id + '"selected>' + value.sub_district_name + '</option>');
-                }
-            });
-        }
+                            $("#siteUniqueId").val(value.site_id);
+                            $("#siteManager").val(value.site_manager);
+                            $("#testername").val(value.tester_name);
+                            $("#contactNo").val(value.contact_no);
+                            $("#bookNo").val(value.book_no);
+                            if(value.province_id!=null) {
+                            $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
+                            }
+                            if(value.district_id!=null) {
+                            $("#districtId").append('<option value="' + value.district_id + '"selected>' + value.district_name + '</option>');
+                            }
+                            if(value.sub_district_id!=null) {
+                            $("#subDistrictId").append('<option value="' + value.sub_district_id + '"selected>' + value.sub_district_name + '</option>');
+                            }
+                        });
+            }
 
     }
 });
@@ -637,8 +642,9 @@ loadReplaceTestKitHeadings();
  });
 
  function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());
-    //alert($('#testsiteId').val());
+    var siteTypeId = $('#sitetypeId').val() == '' ? "":parseInt($('#sitetypeId').val());
+    var testSiteId = $('#testsiteId').val() == '' ? "" : parseInt($('#testsiteId').val());
+    
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -657,6 +663,7 @@ loadReplaceTestKitHeadings();
                 type: 'POST',
                 data: {
                     testSiteId: testSiteId,
+                    siteTypeId: siteTypeId
                 },
 
             },
