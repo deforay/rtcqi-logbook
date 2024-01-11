@@ -1167,7 +1167,7 @@ class MonthlyReportTable extends Model
                                             'is_flc' => $if_flc,
                                             'is_recency' => $is_recency,
                                             'contact_no' => $contact_no,
-                                            //'algorithm_type' => $algo_type,
+                                            'algorithm_type' => $algo_type,
                                             'date_of_data_collection' => $date_of_collection,
                                             'reporting_month' => $report_months,
                                             'book_no' => $book_no,
@@ -1995,7 +1995,7 @@ class MonthlyReportTable extends Model
     {
         $dateS = Carbon::now()->subMonth(12);
         $dateE = Carbon::now();
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $user_id = session('userId');
         $data = DB::table('monthly_reports')
             ->select(DB::raw('count(mr_id) as total'))
@@ -2018,7 +2018,7 @@ class MonthlyReportTable extends Model
     {
         $dateS = Carbon::now()->subMonth(12);
         $dateE = Carbon::now();
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $data = DB::table('monthly_reports')
             ->select(DB::raw('count(distinct ts_id) as monthlytotal'))
             ->whereBetween('date_of_data_collection', [$dateS, $dateE])
@@ -2032,7 +2032,7 @@ class MonthlyReportTable extends Model
     {
 
         $user_id = session('userId');
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $data = DB::table('monthly_reports')
             ->select('monthly_reports.mr_id', 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', DB::raw('sum(m1.test_1_reactive + m1.test_1_nonreactive) as total_test'), 'test_sites.site_name', 'site_types.site_type_name', DB::raw('MIN(m1.start_test_date) as start_test_date'), DB::raw('MAX(m1.end_test_date) as end_test_date'))
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
@@ -2212,7 +2212,43 @@ class MonthlyReportTable extends Model
             $time2=strtotime($a2);
             return $time1 - $time2;
         });
-
         return $monthYearArray;
+    }
+
+    public function fetchMonthlyWiseReportCount()
+    {
+        $dateS = Carbon::now()->subMonth(12);
+        $dateE = Carbon::now();
+        //DB::enableQueryLog();
+        $sQuery = DB::table('monthly_reports AS mr')
+            ->select('mr.mr_id','mr.reporting_month',DB::raw('DATE_FORMAT(mr.date_of_data_collection, "%b-%Y") as monthyear'))
+            ->whereBetween('date_of_data_collection', [$dateS, $dateE])
+            ->orderBy('date_of_data_collection','asc');
+        $sResult= $sQuery->get()->toArray();
+        $monthResult = array();
+        $result = array();
+        $period = array();
+        for ($i = 12; $i >= 0; $i--) {
+            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
+            //$year = Carbon::today()->subMonth($i)->format('Y');
+            //$monthYear=$month.'-'.$year;
+            $period[$monthYear]=$monthYear;
+        }
+
+        //print_r($result);die;
+        $totalCount=0;
+        foreach ($sResult as $sRes) {
+            $totalCount+=1;
+            $monthResult[$sRes->monthyear]=$sRes->monthyear;
+            if(isset($result[$sRes->monthyear])){
+                $result[$sRes->monthyear]+=1;
+            }else{
+                $result[$sRes->monthyear]=1;
+            }
+        }
+        
+        $fResult = array('data' => $result,'period' => $monthResult,'totalCount'=>$totalCount);
+        //print_r($fResult);die;
+        return $fResult;
     }
 }
