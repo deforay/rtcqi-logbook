@@ -203,6 +203,11 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
 
+        if (isset($params['siteTypeId']) && $params['siteTypeId'] != '') {
+            $query = $query->where('site_types.st_id', '=', $params['siteTypeId']);
+            $query = $query->groupBy(DB::raw('site_types.st_id'));    
+        }
+
         $query = $query->orderBy('monthly_reports.mr_id', 'DESC');
         // dd($query->toSql());
         $salesResult = $query->get();
