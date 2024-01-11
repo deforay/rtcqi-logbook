@@ -8,6 +8,9 @@
 
 @extends('layouts.main')
 @section('content')
+<?php
+$result['testing_algorithm']=explode(',',$result['testing_algorithm']);
+?>
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
@@ -161,13 +164,12 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Testing Algorithm <span class="mandatory">*</span>
-                                                </h5>
+                                                <h5>Testing Algorithm <span class="mandatory">*</span></h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testing_algorithm" name="testing_algorithm" title="Please Select Testing Algorithm">
-                                                        <option value="serial" {{ $result['testing_algorithm'] == 'serial' ?  'selected':''}}>Serial</option>
-                                                        <option value="parallel" {{ $result['testing_algorithm'] == 'parallel' ?  'selected':''}}>Parallel</option>
-                                                        <option value="who3" {{ $result['testing_algorithm'] == 'who3' ?  'selected':''}}>WHO 3</option>
+                                                    <select multiple="multiple" class="form-control isRequired select2" autocomplete="off" style="width:100%;" id="testing_algorithm" name="testing_algorithm[]" title="Please Select Testing Algorithm">
+                                                        <option value="serial" {{ in_array("serial",$result['testing_algorithm']) ?  'selected':''}}>Serial</option>
+                                                        <option value="parallel" {{ in_array("parallel",$result['testing_algorithm']) ?  'selected':''}}>Parallel</option>
+                                                        <option value="who3" {{ in_array("who3",$result['testing_algorithm']) ?  'selected':''}}>WHO 3</option>
                                                     </select>
                                                 </div>
                                             </fieldset>

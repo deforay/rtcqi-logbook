@@ -268,6 +268,9 @@ class UserTable extends Model
                     $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
 
                     $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
+                    if(trim($noOfMonths)==""){
+                        $noOfMonths=6;
+                    }
                     if($months>=$noOfMonths){
                         $response = DB::table('users')
                         ->where('user_id', '=',$result[0]['user_id'])
