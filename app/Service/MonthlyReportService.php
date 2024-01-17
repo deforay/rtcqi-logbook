@@ -287,4 +287,11 @@ class MonthlyReportService
 		$result = $model->fetchSiteWiseReport($params);
 		return $result;
 	}
+
+	//Get Month Wise Report Count List
+	public function getMonthlyWiseReportCount()
+    {
+		$model = new MonthlyReportTable();
+        return $result = $model->fetchMonthlyWiseReportCount();
+	}
 }
