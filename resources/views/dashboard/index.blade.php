@@ -181,63 +181,70 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         </section>
         <!--  Charts section end -->
         <div class="row">
-    <div id="recent-transactions" class="col-12">
-        <div class="card">
-            <div class="card-headers">
-                <h4 class="card-title">Recent Monthly Logbook Entries</h4>
-                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                        <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="/monthlyreport" target="_blank">View More</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-content">
-                <div class="table-responsive">
-                    <table id="recent-orders" class="table table-hover table-xl mb-0">
-                        <thead>
-                            <tr>
-                                <th class="border-top-0">Month/Year</th>
-                                <th class="border-top-0">Site Name</th>
-                                <th class="border-top-0">Site Type</th>
-                                <th class="border-top-0">Date Of Collection</th>
-                                <th class="border-top-0">Start Date</th>
-                                <th class="border-top-0">End Date</th>
-                                <th class="border-top-0">Total Tests</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($data as $row)
-                            <?php
-                            $date = $row->date_of_data_collection;
-                            $month = $row->reporting_month;
-                            $startDate = $row->start_test_date;
-                            $endDate = $row->end_test_date;
-                            $date_of_collection= date('d-F-Y', strtotime($date));
-                            $start_date= date('d-F-Y', strtotime($startDate));
-                            $end_date= date('d-F-Y', strtotime($endDate));
-                            $report_month= date('F-Y', strtotime($month));
-                            ?>
-                            <tr>
-                                <td class="text-truncate">{{$report_month}}</td>
-                                <td class="text-truncate">{{$row->site_name}}</td>
-                                <td class="text-truncate">{{$row->site_type_name}}</td>
-                                <td class="text-truncate">{{$date_of_collection}}</td>
-                                <td class="text-truncate">{{$start_date}}</td>
-                                <td class="text-truncate">{{$end_date}}</td>
-                                <td class="text-truncate">{{$row->total_test}}</td>
-                                </tr>
-                                @endforeach
-                        </tbody>
-                    </table>
+            <div id="recent-transactions" class="col-12">
+                <div class="card">
+                    <div class="card-headers">
+                        <h4 class="card-title">Recent Monthly Logbook Entries</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="/monthlyreport" target="_blank">View More</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive">
+                            <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">Month/Year</th>
+                                        <th class="border-top-0">Site Name</th>
+                                        <th class="border-top-0">Site Type</th>
+                                        <th class="border-top-0">Date Of Collection</th>
+                                        <th class="border-top-0">Start Date</th>
+                                        <th class="border-top-0">End Date</th>
+                                        <th class="border-top-0">Total Tests</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data as $row)
+                                    <?php
+                                    $date = $row->date_of_data_collection;
+                                    $month = $row->reporting_month;
+                                    $startDate = $row->start_test_date;
+                                    $endDate = $row->end_test_date;
+                                    $date_of_collection= date('d-F-Y', strtotime($date));
+                                    $start_date= date('d-F-Y', strtotime($startDate));
+                                    $end_date= date('d-F-Y', strtotime($endDate));
+                                    $report_month= date('F-Y', strtotime($month));
+                                    ?>
+                                    <tr>
+                                        <td class="text-truncate">{{$report_month}}</td>
+                                        <td class="text-truncate">{{$row->site_name}}</td>
+                                        <td class="text-truncate">{{$row->site_type_name}}</td>
+                                        <td class="text-truncate">{{$date_of_collection}}</td>
+                                        <td class="text-truncate">{{$start_date}}</td>
+                                        <td class="text-truncate">{{$end_date}}</td>
+                                        <td class="text-truncate">{{$row->total_test}}</td>
+                                        </tr>
+                                        @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
+        <div class="row">
+            <div class="col-12" >
+                <h4 class="text-uppercase">Monthly Reports - Last 12 months (N = <?php echo $monthWiseCount['totalCount']; ?>)</h4>
+                <div id="lastTwelveMonthlyChart"></div>
+            </div>
+        </div>
     </div>
   </div>
+  
+  <script src="{{ asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js')}}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
         $('#searchDate').daterangepicker({
@@ -319,7 +326,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 let coordinates = [];
 
                  // populate coordinates array with all the markers
-                console.log(result.length);
+                //console.log(result.length);
                 for (let i = 0; i < result.length; i++) {
                     coordinates.push(Object.values(result[i]));
                 };
@@ -334,5 +341,54 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             }
         });
     }
+
+    var options = {
+          series: [
+            {
+                name: 'Count',
+                data: [<?php
+                  foreach($monthWiseCount['period'] as $date){
+                    $callCount=(isset($monthWiseCount['data'][$date]) && trim($monthWiseCount['data'][$date])!= '') ? $monthWiseCount['data'][$date] :0;
+                    echo $callCount.",";
+                  }
+              ?>]
+            }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+          }
+        },
+        dataLabels: {
+          enabled: true
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+            categories: [
+            <?php  foreach($monthWiseCount['period'] as $res){?>
+                    '<?php echo $res; ?>',
+            <?php } ?>
+            ]
+        },
+        yaxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+
+        };
+
+        var chart = new ApexCharts(document.querySelector("#lastTwelveMonthlyChart"), options);
+        chart.render();
 </script>
 @endsection
