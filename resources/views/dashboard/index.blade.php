@@ -241,6 +241,12 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div id="lastTwelveMonthlyChart"></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12" >
+                <h4 class="text-uppercase">Sitewise Monthly Reports - Last 12 months (N = <?php echo $siteWiseMonthlyCount['totalCount']; ?>)</h4>
+                <div id="sitewiseMonthlyChart"></div>
+            </div>
+        </div>
     </div>
   </div>
   
@@ -389,6 +395,55 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         };
 
         var chart = new ApexCharts(document.querySelector("#lastTwelveMonthlyChart"), options);
+        chart.render();
+
+        var options = {
+          series: [
+            {
+                name: 'Count',
+                data: [<?php
+                  foreach($siteWiseMonthlyCount['period'] as $date){
+                    $callCount=(isset($siteWiseMonthlyCount['data'][$date]) && trim($siteWiseMonthlyCount['data'][$date])!= '') ? $siteWiseMonthlyCount['data'][$date] :0;
+                    echo $callCount.",";
+                  }
+              ?>]
+            }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+          }
+        },
+        dataLabels: {
+          enabled: true
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+            categories: [
+            <?php  foreach($siteWiseMonthlyCount['period'] as $res){?>
+                    '<?php echo $res; ?>',
+            <?php } ?>
+            ]
+        },
+        yaxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+
+        };
+
+        var chart = new ApexCharts(document.querySelector("#sitewiseMonthlyChart"), options);
         chart.render();
 </script>
 @endsection

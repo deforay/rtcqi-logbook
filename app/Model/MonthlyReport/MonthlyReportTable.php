@@ -2222,37 +2222,76 @@ class MonthlyReportTable extends Model
 
     public function fetchMonthlyWiseReportCount()
     {
-        $dateS = Carbon::now()->subMonth(12);
-        $dateE = Carbon::now();
+        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
+        $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
         //DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
-            ->select('mr.mr_id','mr.reporting_month',DB::raw('DATE_FORMAT(mr.date_of_data_collection, "%b-%Y") as monthyear'))
-            ->whereBetween('date_of_data_collection', [$dateS, $dateE])
-            ->orderBy('date_of_data_collection','asc');
+            ->select(DB::raw('count(mr_id) as total'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $dateS)
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE);
+        
+        $sQuery->groupBy(DB::raw('monthyear'));
+        //dd($sQuery->toSql());
         $sResult= $sQuery->get()->toArray();
+        //print_r($sResult);die;
         $monthResult = array();
         $result = array();
         $period = array();
-        for ($i = 12; $i >= 0; $i--) {
+        for ($i = 12; $i > 0; $i--) {
             $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
             //$year = Carbon::today()->subMonth($i)->format('Y');
-            //$monthYear=$month.'-'.$year;
             $period[$monthYear]=$monthYear;
         }
+        
+        $totalCount=0;
+        foreach ($sResult as $sRes) {
+            $totalCount+=$sRes->total;
+            $result[$sRes->reporting_month]=$sRes->total;
+        }
+        
+        $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
+        //print_r($fResult);die;
+        return $fResult;
+    }
 
-        //print_r($result);die;
+    public function fetchSiteWiseMonthlyReportCount()
+    {
+        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
+        $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
+        //DB::enableQueryLog();
+        $sQuery = DB::table('monthly_reports AS mr')
+            ->join('test_sites AS ts', 'mr.ts_id', '=', 'ts.ts_id')
+            ->select(DB::raw('count(mr_id) as total'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $dateS)
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE);
+        
+        $sQuery->groupBy('mr.ts_id','reporting_month');
+        $sResult= $sQuery->get()->toArray();
+        //dd($sQuery->toSql());
+        //print_r($sResult);die;
+        $monthResult = array();
+        $result = array();
+        $period = array();
+        for ($i = 12; $i > 0; $i--) {
+            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
+            //$year = Carbon::today()->subMonth($i)->format('Y');
+            $period[$monthYear]=$monthYear;
+        }
+        
         $totalCount=0;
         foreach ($sResult as $sRes) {
             $totalCount+=1;
-            $monthResult[$sRes->monthyear]=$sRes->monthyear;
-            if(isset($result[$sRes->monthyear])){
-                $result[$sRes->monthyear]+=1;
-            }else{
-                $result[$sRes->monthyear]=1;
+            //echo $sRes->site_name;die;
+            if (!isset($result[$sRes->reporting_month])) {
+                $result[$sRes->reporting_month] = 1;
+            } else {
+                $result[$sRes->reporting_month] += 1;
             }
+            //$monthResult[$sRes->monthyear]=$sRes->monthyear;
+            
         }
         
-        $fResult = array('data' => $result,'period' => $monthResult,'totalCount'=>$totalCount);
+        $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
         //print_r($fResult);die;
         return $fResult;
     }
