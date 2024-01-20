@@ -31,6 +31,7 @@ class DashboardController extends Controller
             $common=new CommonService();
             $checkEdit = $common->allowDisplay('App\Http\Controllers\Dashboard\DashboardController','index');
             $reportCount=$monthlyReportService->getMonthlyWiseReportCount();
+            $sitewiseReportCount=$monthlyReportService->getSiteWiseMonthlyReportCount();
 
             if($checkEdit){
             return view('dashboard.index', array(
@@ -43,6 +44,7 @@ class DashboardController extends Controller
                 'siteMonthly' => $siteMonthly,
                 'mapZoomLevel' => $mapZoomLevel,
                 'monthWiseCount' => $reportCount,
+                'siteWiseMonthlyCount' => $sitewiseReportCount,
             ));
         } else {
            return redirect('/dashboarderror');
