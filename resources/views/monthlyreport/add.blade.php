@@ -1127,8 +1127,11 @@ loadReplaceTestKitHeadings();
     }
 
     function loadReplaceTestKitHeadings(){
-        let optionSelected = ($(`#testkitId1_0`).val() && $(`#testkitId1_0`).find(":selected").text()) || `Test Kit 1`;
-        $(`#testKitHeading1_0`).html(optionSelected);
+        let defaultTestkit = $(".selectTestKits").length;
+        for (var headingNo = 1; headingNo <= defaultTestkit; headingNo++) {
+        let optionSelected = ($(`#testkitId`+headingNo+`_0`).val() && $(`#testkitId`+headingNo+`_0`).find(":selected").text()) || `Test Kit 1`;
+        $(`#testKitHeading`+headingNo+`_0`).html(optionSelected);
+        }
     }
 </script>
 @endsection
