@@ -243,10 +243,18 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         </div>
         <div class="row">
             <div class="col-12" >
-                <h4 class="text-uppercase">Sitewise Monthly Reports - Last 12 months (N = <?php echo $siteWiseMonthlyCount['totalCount']; ?>)</h4>
+                <h4 class="text-uppercase">Site Wise Monthly Reports - Last 12 months (N = <?php echo $siteWiseMonthlyCount['totalCount']; ?>)</h4>
                 <div id="sitewiseMonthlyChart"></div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-12" >
+                <h4 class="text-uppercase">Test Wise Monthly Reports - Last 12 months (N = <?php echo $testWiseMonthlyCount['totalCount']; ?>)</h4>
+                <div id="testwiseMonthlyChart"></div>
+            </div>
+        </div>
+
     </div>
   </div>
   
@@ -444,6 +452,55 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         };
 
         var chart = new ApexCharts(document.querySelector("#sitewiseMonthlyChart"), options);
+        chart.render();
+
+        var options = {
+          series: [
+            {
+                name: 'Count',
+                data: [<?php
+                  foreach($testWiseMonthlyCount['period'] as $date){
+                    $callCount=(isset($testWiseMonthlyCount['data'][$date]) && trim($testWiseMonthlyCount['data'][$date])!= '') ? $testWiseMonthlyCount['data'][$date] :0;
+                    echo $callCount.",";
+                  }
+              ?>]
+            }
+        ],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+          }
+        },
+        dataLabels: {
+          enabled: true
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+            categories: [
+            <?php  foreach($testWiseMonthlyCount['period'] as $res){?>
+                    '<?php echo $res; ?>',
+            <?php } ?>
+            ]
+        },
+        yaxis: {
+            min: 0,
+            title: {
+                text: 'Total'
+            }
+        },
+
+        };
+
+        var chart = new ApexCharts(document.querySelector("#testwiseMonthlyChart"), options);
         chart.render();
 </script>
 @endsection

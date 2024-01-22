@@ -2258,37 +2258,83 @@ class MonthlyReportTable extends Model
     {
         $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
         $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
-        //DB::enableQueryLog();
+        DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
             ->join('test_sites AS ts', 'mr.ts_id', '=', 'ts.ts_id')
-            ->select(DB::raw('count(mr_id) as total'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
+            ->select(DB::raw('COUNT(DISTINCT mr.ts_id) as reporting_sites'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
             ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $dateS)
             ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE);
-        
-        $sQuery->groupBy('mr.ts_id','reporting_month');
+
+        $sQuery->groupBy('reporting_month');
         $sResult= $sQuery->get()->toArray();
         //dd($sQuery->toSql());
-        //print_r($sResult);die;
         $monthResult = array();
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
             $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
-            //$year = Carbon::today()->subMonth($i)->format('Y');
             $period[$monthYear]=$monthYear;
         }
         
         $totalCount=0;
         foreach ($sResult as $sRes) {
-            $totalCount+=1;
-            //echo $sRes->site_name;die;
-            if (!isset($result[$sRes->reporting_month])) {
-                $result[$sRes->reporting_month] = 1;
-            } else {
-                $result[$sRes->reporting_month] += 1;
+            $totalCount+=$sRes->reporting_sites;
+            $result[$sRes->reporting_month] = $sRes->reporting_sites;
+        }
+        
+        $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
+        //print_r($fResult);die;
+        return $fResult;
+    }
+
+    public function fetchTestWiseMonthlyReportCount()
+    {
+        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
+        $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
+
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
+        //DB::enableQueryLog();
+        $sQuery = DB::table('monthly_reports AS mr')
+            ->join('monthly_reports_pages AS mrp', 'mrp.mr_id', '=', 'mr.mr_id')
+            ->select('mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $dateS)
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE);
+        for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+            $sQuery = $sQuery->selectRaw('sum(mrp.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+            $sQuery = $sQuery->selectRaw('sum(mrp.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+            $sQuery = $sQuery->selectRaw('sum(mrp.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+        }
+        $sQuery->groupBy('reporting_month');
+        $sResult= $sQuery->get()->toArray();
+        //dd($sQuery->toSql());
+        $monthResult = array();
+        $result = array();
+        $period = array();
+        for ($i = 12; $i > 0; $i--) {
+            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
+            $period[$monthYear]=$monthYear;
+        }
+        
+        $totalCount=0;
+        foreach ($sResult as $sRes) {
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $reactive='test_'.$l.'_reactive';
+                $nonreactive='test_'.$l.'_nonreactive';
+                $invalid='test_'.$l.'_invalid';
+                if (!isset($result[$sRes->reporting_month])) {
+                    $totalCount+=$sRes->$reactive+$sRes->$nonreactive+$sRes->$invalid;
+                    $result[$sRes->reporting_month] = $sRes->$reactive+$sRes->$nonreactive+$sRes->$invalid;
+                } else {
+                    $totalCount+=$sRes->$reactive+$sRes->$nonreactive+$sRes->$invalid;
+                    $result[$sRes->reporting_month] += $sRes->$reactive+$sRes->$nonreactive+$sRes->$invalid;
+                }
             }
-            //$monthResult[$sRes->monthyear]=$sRes->monthyear;
-            
         }
         
         $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
