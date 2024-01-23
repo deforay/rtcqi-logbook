@@ -2304,7 +2304,7 @@ class MonthlyReportTable extends Model
             ->join('monthly_reports_pages AS mrp', 'mrp.mr_id', '=', 'mr.mr_id')
             ->select('mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
             ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $dateS)
-            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE);
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")  '), '<=', $dateE);
         for ($l = 1; $l <= $arr['no_of_test']; $l++) {
             $sQuery = $sQuery->selectRaw('sum(mrp.test_' . $l . '_reactive) as test_' . $l . '_reactive');
             $sQuery = $sQuery->selectRaw('sum(mrp.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
