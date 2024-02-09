@@ -319,6 +319,9 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 testSiteId: $("#testSiteId").val(),
                 reportFrequency: $("#reportFrequency").val(),
             },
+            // error:function(e){
+            //     console.log(e)
+            // },
             success: function(result) {
                 $("#testKitList").html(result);
             }
