@@ -541,6 +541,7 @@ $messages=Lang::get('messages');
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />
 <script src="public/dist/js/select2.min.js"></script>
 <script>
+    var selectedEndDate="";
     $(document).ready(function() {
         $("#monthlyReportListWrapper").hide();
         $('.js-example-basic-single').select2();
@@ -583,13 +584,13 @@ $messages=Lang::get('messages');
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
         $(".endDate").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
 
         // Entry Point / Site Type Change
@@ -646,6 +647,14 @@ $messages=Lang::get('messages');
 });
 });
 loadReplaceTestKitHeadings();
+    $("#endDate0").on("changeDate", function() { 
+        endDate=$("#endDate0").val();
+        if(endDate!=""){
+            splitEndDate=endDate.split("-");
+            selectedEndDate=splitEndDate[1]+'-'+splitEndDate[2];
+            checkReportingMonth();
+        }        
+    });
  });
 
  function getAllMonthlyReport() {
@@ -783,6 +792,7 @@ loadReplaceTestKitHeadings();
             var minDate = new Date(selected.date.valueOf());
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
+        
         }
 
         // var minDate = new Date(selected.date.valueOf());
@@ -811,6 +821,7 @@ loadReplaceTestKitHeadings();
             //     }
 
             // }
+            checkReportingMonth();
             if (duplicateName) {
                 document.getElementById('addMonthlyReport').submit();
             }
@@ -1006,13 +1017,13 @@ loadReplaceTestKitHeadings();
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
         $(".endDate").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
         let defaultRow = 0;
         let defaultTestkit = $(".selectTestKits").length;
@@ -1026,6 +1037,16 @@ loadReplaceTestKitHeadings();
             let optionSelected = ($(`#testkitId${headingNo}_${defaultRow}`).val() && $(`#testkitId${headingNo}_${defaultRow}`).find(":selected").text()) || `Test Kit ${headingNo}`;
             $(`#testKitHeading${headingNo}_${rowCount}`).html(optionSelected);
         }
+        
+        $("#endDate"+rowCount).on("changeDate", function() { 
+            endDate=$("#endDate"+rowCount).val();
+            if(endDate!=""){
+                splitEndDate=endDate.split("-");
+                selectedEndDate=splitEndDate[1]+'-'+splitEndDate[2];
+                checkReportingMonth();
+            }
+            
+        });
     }
 
     function delete_row(val) {
@@ -1133,5 +1154,17 @@ loadReplaceTestKitHeadings();
         $(`#testKitHeading`+headingNo+`_0`).html(optionSelected);
         }
     }
+
+    function checkReportingMonth(){
+        reportingMon=$("#reportingMon").val();
+        if(reportingMon!=selectedEndDate && selectedEndDate!="" && reportingMon!=""){
+            duplicateName=false;
+            alert("Please select the valid reporting month");
+        }else if(reportingMon==selectedEndDate){
+            duplicateName=true;
+        }
+    }
+
+    
 </script>
 @endsection
