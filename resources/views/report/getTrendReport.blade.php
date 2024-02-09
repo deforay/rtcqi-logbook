@@ -58,12 +58,17 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 <th class="th" style="width:10%;">Algorithm</th>
                 <th class="th" style="width:10%;">Testing Period</th>
                 <th class="th" style="width:5%;">Total Tests</th>
-                @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="4" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
+                @for($i = 1; $i <= $arr['no_of_test']; $i++) 
+                    <th colspan="4" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
                     @endfor
                     <th colspan="3" class="th" style="width:10%; text-align: center">Final Result</th>
                     <th class="th" style="width:10%;">% Pos</th>
-                    <th class="th" style="width:10%;">Positive Agr</th>
-                    <th class="th" style="width:10%;">OverAll Agr</th>
+                    <th class="th" style="width:10%;">Positive Agr <br/> (Test 1 & 2)</th>
+                    <th class="th" style="width:10%;">OverAll Agr <br/> (Test 1 & 2)</th>
+                    @if($arr['no_of_test']==3)
+                    <th class="th" style="width:10%;">Positive Agr <br/> (Test 2 & 3)</th>
+                    <th class="th" style="width:10%;">OverAll Agr <br/> (Test 2 & 3)</th>
+                    @endif
             </tr>
             <tr>
                 <th></th>
@@ -82,6 +87,10 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <th></th>
                     <th></th>
                     <th></th>
+                    @if($arr['no_of_test']==3)
+                    <th></th>
+                    <th></th>
+                    @endif
             </tr>
         </thead>
         <tbody>
@@ -105,6 +114,12 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             if (($trendrow->test_1_reactive && $trendrow->test_2_reactive && $trendrow->test_1_reactive && $trendrow->test_1_nonreactive) > 0) {
                 $posAgreement = number_format(100 * ($trendrow->test_2_reactive) / ($trendrow->test_1_reactive), 2);
                 $OverallAgreement = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
+            }
+            $posAgreementTest2_3="";
+            $OverallAgreement2_3="";
+            if (($trendrow->test_2_reactive && $trendrow->test_3_reactive && $trendrow->test_2_reactive && $trendrow->test_2_nonreactive) > 0) {
+                $posAgreementTest2_3 = number_format(100 * ($trendrow->test_3_reactive) / ($trendrow->test_2_reactive), 2);
+                $OverallAgreement2_3 = number_format(100 * ($trendrow->test_3_reactive + $trendrow->test_2_nonreactive) / ($trendrow->test_2_reactive + $trendrow->test_2_nonreactive), 2);
             }
             // dd($trendrow->end_test_date);die;
             // $testingMonth= date('F - Y', strtotime($date)); //June, 2017
@@ -132,12 +147,16 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"></td>
                     <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"></td>
                     @endif
+                    @if($arr['no_of_test']==3)
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$posAgreementTest2_3}}</td>
+                    <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$OverallAgreement2_3}}</td>
+                    @endif
             </tr>
             @endforeach
 
             @else
             <tr>
-                <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
+                <td class="frezz" style="text-align:center;width:94.6%;" colspan="19">No Data Available</td>
             </tr>
             @endif
 
