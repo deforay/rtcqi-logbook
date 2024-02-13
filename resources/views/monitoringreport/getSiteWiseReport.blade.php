@@ -42,7 +42,7 @@
                 
                 <th class="th" style="width:15%;">Site Name</th>
                 @foreach ($report['period'] as $period)
-                <th class="th" style="width:10%;">{{$period}}</th>
+                <th class="th" style="width:7% !important;">{{$period}}</th>
                 @endforeach
             </tr>
 
@@ -50,9 +50,9 @@
         <tbody>
             @foreach ($report['sitewise'] as $key => $val)
             <tr style="">
-                <td class="td"> {{ $key }} </td>
+                <td class="td"> <input type="checkbox" id="{{ $val['site_id'] }}" name="testId[]" value="{{ $key }}" onclick="handleSiteName(this)"> {{ $key }} </td>
                 @foreach ($report['period'] as $period)
-                <td class="td" style="text-align:center;">
+                <td style="text-align:center;padding:0 !important;">
                 <?php
                  if(isset($val['count'][$period])){
                 ?>
