@@ -9,9 +9,13 @@ use App\Service\GlobalConfigService;
 use Illuminate\Support\Facades\Session;
 use App\Imports\MonthlyReportDataUpload;
 use App\Model\TestSite\TestSiteTable;
+use App\Model\TempMail\TempMailTable;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Carbon\Carbon;
+use DateTime;
+use DateInterval;
+use DatePeriod;
 
 class MonthlyReportTable extends Model
 {
@@ -2141,47 +2145,54 @@ class MonthlyReportTable extends Model
 
     public function fetchSiteWiseReport($params)
     {
-        $commonservice = new CommonService();
-        //$GlobalConfigService = new GlobalConfigService();
-        //$result = $GlobalConfigService->getAllGlobalConfig();
-        
+       
         $user_id = session('userId');
         $result = array();
         $monthResult = array();
         $data = $params;
         $start_date = '';
         $end_date = '';
+        
+        
         if (isset($data['searchDate']) && $data['searchDate'] != '') {
             $sDate = explode("to", $data['searchDate']);
             if (isset($sDate[0]) && trim($sDate[0]) != "") {
-                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
-                $start_date = $commonservice->dateFormat(trim($monthYr));
+               $start_date = Date("Y-m-01", strtotime("$sDate[0]"));
             }
             if (isset($sDate[1]) && trim($sDate[1]) != "") {
-                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
-                $end_date = $commonservice->dateFormat(trim($monthYr2));
+                $end_date = Date("Y-m-d", strtotime("$sDate[1]"));
+                $filter_end_date = Date("Y-m-01", strtotime("$sDate[1]"));
             }
+            $start    = (new DateTime($start_date));
+            $end      = (new DateTime($end_date));
+            $interval = DateInterval::createFromDateString('1 month');
+            $period   = new DatePeriod($start, $interval, $end);
+            
+            $months = array();
+            
+            foreach ($period as $dt) {
+                $months[] = $dt->format("M-Y");
+            }
+            //print_r($months);die;
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages as mrp')
-            ->select('mrp.start_test_date','mrp.end_test_date','mr.mr_id','mr.reporting_month','ts.site_name', 'st.site_type_name')
+            ->select(DB::raw('count(mr.ts_id) as total'),'mr.ts_id','mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'),'ts.site_name','st.site_type_name')
             ->join('monthly_reports as mr', 'mr.mr_id', '=', 'mrp.mr_id')
             ->join('site_types as st', 'st.st_id', '=', 'mr.st_id')
             ->leftjoin('provinces as p', 'p.province_id', '=', 'mr.province_id')
             ->leftjoin('districts as d', 'd.district_id', '=', 'mr.district_id')
             ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'mr.sub_district_id')
             ->join('test_sites as ts', 'ts.ts_id', '=', 'mr.ts_id');
-
+        
         if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'mr.ts_id')
                 ->where('users_testsite_map.user_id', '=', $user_id);
         }
+        
         if (trim($start_date) != "" && trim($end_date) != "") {
-            $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->whereDate('mrp.start_test_date',  '>=', $start_date)
-                    ->whereDate('mrp.end_test_date', '<=', $end_date)
-                    ->whereDate('mrp.end_test_date', '>=', $start_date);
-            });
+            $query->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $start_date)
+                ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $filter_end_date);    
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
             $query = $query->whereIn('p.province_id', $data['provinceId']);
@@ -2195,25 +2206,27 @@ class MonthlyReportTable extends Model
         if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
             $query = $query->whereIn('ts.ts_id', $data['testSiteId']);
         }
-       
-        $query = $query->selectRaw('DATE_FORMAT(mrp.end_test_date,"%b-%Y") as month');
-        $query=$query->orderBy('site_name','asc');
         
+        $query->groupBy(DB::raw('monthyear'),'mr.ts_id');
+        $query=$query->orderBy('site_name','asc');
+        //dd($query->toSql());
         $siteResult = $query->get()->toArray();
+        //print_r($siteResult);die;
         if (sizeof($siteResult) > 0) {
             foreach ($siteResult as $sRes) {
-                $reportingMonth = date('M-Y', strtotime($sRes->reporting_month));
-                $monthResult[$sRes->month] = $sRes->month;
-                $m = $sRes->month;
-                if (!isset($result[$sRes->site_name]['count'][$reportingMonth])) {
-                    $result[$sRes->site_name]['count'][$reportingMonth] = 1;
+                
+                if (!isset($result[$sRes->site_name]['site_id'])) {
+                    $result[$sRes->site_name]['site_id'] = $sRes->ts_id;
+                }
+                if (!isset($result[$sRes->site_name]['count'][$sRes->reporting_month])) {
+                    $result[$sRes->site_name]['count'][$sRes->reporting_month] = $sRes->total;
                 } else {
-                    $result[$sRes->site_name]['count'][$reportingMonth] += 1;
+                    $result[$sRes->site_name]['count'][$sRes->reporting_month] += $sRes->total;
                 }
             }
         }
-        $monthResult=$this->sortMonthYear($monthResult);
-        $sResult = array('sitewise' => $result, 'period' => $monthResult);
+        //$monthResult=$this->sortMonthYear($monthResult);
+        $sResult = array('sitewise' => $result, 'period' => $months);
         //dd($sResult);
         return $sResult;
     }
@@ -2347,5 +2360,37 @@ class MonthlyReportTable extends Model
         $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
         //print_r($fResult);die;
         return $fResult;
+    }
+
+    public function sendSiteWiseReminderEmail($params){
+        $toEmail="";
+        $testSiteModel = new TestSiteTable();
+        $tempModel = new TempMailTable();
+        if(isset($params['subject']) && trim($params['testSiteId'])!=""){
+            $expTestSiteId=explode(",",$params['testSiteId']);
+            foreach($expTestSiteId as $val){
+                $testResult=$testSiteModel->getTestsiteEmail($val);
+                if($toEmail!=""){
+                    if(trim($testResult->site_primary_email)!=""){
+                        $toEmail.=trim($testResult->site_primary_email).",";
+                    }
+                    if(trim($testResult->site_secondary_email)!=""){
+                        $toEmail.=trim($testResult->site_secondary_email).",";
+                    }
+                }else{
+                    if(trim($testResult->site_primary_email)!=""){
+                        $toEmail=trim($testResult->site_primary_email);
+                    }
+                    if(trim($testResult->site_secondary_email)!=""){
+                        if($toEmail!=""){
+                            $toEmail.=trim($testResult->site_secondary_email).",";
+                        }else{
+                            $toEmail.=trim($testResult->site_secondary_email);
+                        }
+                    }
+                }
+            }
+            $tempModel->insertTempMailDetails($toEmail,$params['subject'],$params['message'],$fromMail=NULL,$fromName=NULL);
+        }
     }
 }

@@ -205,11 +205,13 @@ class TestSiteTable extends Model
         $data = DB::table('test_sites')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'test_sites.ts_id')
             ->whereIn('users_testsite_map.ts_id', Session::get('tsId'))
+            ->groupBy('test_sites.ts_id')
             ->get();
         }
             else {
                 $data = DB::table('test_sites')
             ->where('test_site_status', '=', 'active')
+            ->groupBy('ts_id')
             ->get();
             }
         return $data;
@@ -273,7 +275,6 @@ class TestSiteTable extends Model
 
     public function fetchAllTestSiteList($params)
     {
-        
         $query = DB::table('test_sites')
             ->select('test_sites.ts_id','test_sites.site_name')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
@@ -296,7 +297,12 @@ class TestSiteTable extends Model
         
         $siteResult = $query->get()->toArray();
         return $siteResult;
+    }
 
-        
+    public function getTestsiteEmail($tsId){
+        $query = DB::table('test_sites')
+            ->select('ts_id','site_primary_email','site_secondary_email')
+            ->where('ts_id', '=', $tsId);
+        return $query->first();
     }
 }
