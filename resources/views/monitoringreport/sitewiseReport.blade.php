@@ -11,8 +11,6 @@
 @section('content')
 
 <?php
-// $enddate = date('d-M-Y');
-// $startdate = date('d-M-Y', strtotime('-29 days'));
 $enddate = date('d-M-Y', strtotime('last day of previous month'));
 $startdate = date('01-M-Y', strtotime('-18 months'));
 ?>
@@ -68,7 +66,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                 <div class="card-body">
                                     <div id="show_alert" class="mt-1" style=""></div>
                                     <h4 class="card-title">Filter the data</h4><br>
-                                    <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="post" action="/trendexcelexport">
+                                    <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="post">
                                         @csrf
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-12">
@@ -132,20 +130,58 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                 </fieldset>
                                             </div>
                                            
-                                            <div class="col-md-7" style="color:#FFF;">
+                                            <div class="col-md-12" style="color:#FFF;">
                                                 <div class="form-group row">
 
                                                     <div class="col-md-8">
                                                         <button type="submit" onclick="getSitewiseReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href='/trendreport/'><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href=''><span>Reset</span></a>&nbsp;&nbsp;
                                                         
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
                                     </form>
-                                </div>
+                                    <div class="row" id="mailDiv">
+                                        <div class="col-xl-12 col-lg-12" >
+                                            <fieldset>
+                                                <h5>Subject <span class="mandatory">*</span></h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="mailSubject" name="mailSubject" class="form-control isRequired" title="Please enter the mail subject" placeholder="Please enter the subject" />
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-12 col-lg-12">
+                                            <fieldset>
+                                                <h5>Message <span class="mandatory">*</span></h5>
+                                                <div class="form-group">
+                                                    <textarea class="form-control isRequired" id="message" name="message" title="Please enter the message"  placeholder="Please enter the message"></textarea>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    
+                                        <div class="col-lg-12" id="siteNameList">
+                                            
+                                                <fieldset>
+                                                    <h5>Selected Test Site Name</h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="selectedTestSiteId" name="selectedTestSiteId[]" title="Please select Test Site Name">
+                                                            
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input type="hidden" id="checkedTestSiteId" class="isRequired" title="Please select the test site name"/>
+                                            <a class="btn btn-warning btn-md" href='javascript:void(0);' onclick="sendMail()"><span>Send Mail</span></a>
+                                        </div>
+                                    </div>
+                                    
                             </div>
                         </div>
                     </div>
+                    
                     <div class="table-responsive p-t-10">
                         <div id="trendList"></div>
                     </div>
@@ -160,7 +196,10 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
         display: none;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/deforayModal.css')}}">
+<script src="{{ asset('assets/js/deforayModal.js') }}"></script>
 <script>
+    checkedTestSiteId = [];
     $(document).ready(function() {
         $("#provinceId").change(function () {
             var datas = $(this).val();
@@ -223,6 +262,13 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             getSitewiseReport();
         });
         
+        $('#selectedTestSiteId').on("select2:unselect", function (e) {
+            var data = e.params.data;
+            //$('#selectedTestSiteId').select2('destroy').html('')
+            //$(e).remove();
+            
+            removeSitenameLable(data.id);
+        });
     });
 
     function listDistrictForProvince() {
@@ -273,6 +319,8 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
     //   duplicateName = true;
     function getSitewiseReport() {
         $.blockUI();
+        //$("#siteNameList").empty();
+        $("#mailDiv").hide();
         let searchDate = $('#searchDate').val();
         $.ajaxSetup({
             headers: {
@@ -348,6 +396,78 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
         window.open('/report/logbook');
 
     }
+
+    function handleSiteName(obj){
+        //console.log(obj.id);
+        if(obj.checked){
+            //btn=' <a href="javascript:void(0);" id="btn_'+obj.id+'" class="btn btn-outline-primary btn-sm" title="Delete" onclick="removeSitenameLable(this,\''+obj.id+'\')"> '+obj.value+' <i class="ft-x"></i></a> ';
+            opt='<option value="'+obj.id+'" selected="selected">'+obj.value+'</option>'
+            $("#selectedTestSiteId").append(opt);
+            checkedTestSiteId.push(obj.id);
+            document.getElementById("checkedTestSiteId").value=checkedTestSiteId;
+        }else{
+            //$("#btn_"+obj.id).remove();
+            //index=checkedTestSiteId.indexOf(obj.id);
+            removeSitenameLable(obj.id);
+            //checkedTestSiteId.splice(index, 1);
+            //document.getElementById("checkedTestSiteId").value=checkedTestSiteId;
+        }
+        if(checkedTestSiteId.length>0){
+            $("#mailDiv").show()
+        }else{
+            $("#mailDiv").hide()
+        }
+    }
+
+    function removeSitenameLable(chkId){
+        //$(obj).remove();
+        $("#selectedTestSiteId option[value="+chkId+"]").remove();
+        $("#"+chkId).prop("checked", false);
+        index=checkedTestSiteId.indexOf(chkId);
+        checkedTestSiteId.splice(index, 1);
+        document.getElementById("checkedTestSiteId").value=checkedTestSiteId;
+        if(checkedTestSiteId.length>0){
+            $("#mailDiv").show()
+        }else{
+            $("#mailDiv").hide()
+        }
+    }
+
+    function sendMail(){
+        flag = deforayValidator.init({
+            formId: 'mailDiv'
+        });
+        if (flag == true) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }   
+            });
+            $.ajax({
+                url: "{{ url('/sendMail') }}",
+                method: 'post',
+                data: {
+                    subject: $("#mailSubject").val(),
+                    message: $("#message").val(),
+                    testSiteId: $("#checkedTestSiteId").val(),
+                },
+                success: function(result) {
+                    alert(result.success);
+                    location.reload();
+                }
+            });
+        }
+        else{
+            // Swal.fire('Any fool can use a computer');
+            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $('#show_alert').css("display","block");
+            $(".infocus").focus();
+        }
+        //siteId=$("#checkedTestSiteId").val();
+        //showModal('sendMail/'+siteId,600,300);
+    }
+
+    
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

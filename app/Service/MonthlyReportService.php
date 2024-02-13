@@ -306,4 +306,10 @@ class MonthlyReportService
 		$model = new MonthlyReportTable();
         return $result = $model->fetchTestWiseMonthlyReportCount();
 	}
+
+	public function sendSiteWiseReminderEmail($params)
+    {
+		$model = new MonthlyReportTable();
+        return $result = $model->sendSiteWiseReminderEmail($params);
+	}
 }
