@@ -232,7 +232,8 @@ class ReportController extends Controller
 
     public function testKitExport(Request $request)
     {
-        if($request->submit == "exportReport"){
+        
+        if(isset($_POST['exportReport'])){
             $commonservice = new CommonService();
         $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
