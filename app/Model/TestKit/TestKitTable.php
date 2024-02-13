@@ -61,52 +61,63 @@ class TestKitTable extends Model
     }
 
     // Fetch All Active TestKit List
-    public function fetchAllTestKitSummary($params)
-    {
-        $commonservice = new CommonService();
-        $start_date = '';
-        $end_date = '';
+        public function fetchAllTestKitSummary($params)
+        {
+            $commonservice = new CommonService();
+            $start_date = '';
+            $end_date = '';
 
-        if (isset($params['searchDate']) && $params['searchDate'] != '') {
-            $sDate = explode("to", $params['searchDate']);
-            if (isset($sDate[0]) && trim($sDate[0]) != "") {
-                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
-                $start_date = $commonservice->dateFormat(trim($monthYr));
+            if (isset($params['searchDate']) && $params['searchDate'] != '') {
+                $sDate = explode("to", $params['searchDate']);
+                if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                    $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                    $start_date = $commonservice->dateFormat(trim($monthYr));
+                }
+                if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                    $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                    $end_date = $commonservice->dateFormat(trim($monthYr2));
+                }
             }
-            if (isset($sDate[1]) && trim($sDate[1]) != "") {
-                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
-                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            $GlobalConfigService = new GlobalConfigService();
+            $kitNo = $GlobalConfigService->getGlobalConfigValue('no_of_test');
+
+            $data = DB::table('test_kits')->where('test_kit_status', '=', 'active')->get();
+            $summary = array();
+            $query = DB::table('monthly_reports_pages');
+            if (trim($start_date) != "" && trim($end_date) != "") {
+                $query = $query->where(function ($query) use ($start_date, $end_date) {
+                    $query->where('monthly_reports_pages.start_test_date', '>=', $start_date)
+                        ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
+                });
             }
-        }
-        $GlobalConfigService = new GlobalConfigService();
-        $kitNo = $GlobalConfigService->getGlobalConfigValue('no_of_test');
+            $records = $query->get();
 
-        $data = DB::table('test_kits')->where('test_kit_status', '=', 'active')->get();
-        $summary = array();
-        $query = DB::table('monthly_reports_pages');
-        if (trim($start_date) != "" && trim($end_date) != "") {
-            $query = $query->where(function ($query) use ($start_date, $end_date) {
-                $query->where('monthly_reports_pages.start_test_date', '>=', $start_date)
-                    ->where('monthly_reports_pages.end_test_date', '<=', $end_date);
-            });
-        }
-        $records = $query->get();
+            for ($i = 0; $i < sizeof($data); $i++) {
+                //print_r($data);exit();
+                $summary[$i]['test_kit_id'] = $data[$i]->tk_id;
+                $summary[$i]['test_kit_name'] = $data[$i]->test_kit_name;
 
-        for ($i = 0; $i < sizeof($data); $i++) {
-            //print_r($data);exit();
-            $summary[$i]['test_kit_id'] = $data[$i]->tk_id;
-            $summary[$i]['test_kit_name'] = $data[$i]->test_kit_name;
+                $summary[$i]['test_kit_total'] = 0;
 
-            $summary[$i]['test_kit_total'] = 0;
+                for ($j = 1; $j <= $kitNo; $j++) {
+                    $summary[$i]['test_kit_'.$j.'_total']=$records->where('test_' . $j . '_kit_id', (int) $data[$i]->tk_id)->count();
+                    $summary[$i]['test_kit_total'] += $records->where('test_' . $j . '_kit_id', (int) $data[$i]->tk_id)->count();
+                }
 
-            for ($j = 1; $j <= $kitNo; $j++) {
-                $summary[$i]['test_kit_total'] += $records->where('test_' . $j . '_kit_id', (int) $data[$i]->tk_id)->count();
             }
+            array_multisort(
+                array_map(
+                    static function ($element) {
+                        return $element['test_kit_total'];
+                    },
+                    $summary
+                ),
+                SORT_DESC,
+                $summary
+            );
+            return $summary;
 
         }
-        return $summary;
-
-    }
 
 
     // fetch particular TestKit details

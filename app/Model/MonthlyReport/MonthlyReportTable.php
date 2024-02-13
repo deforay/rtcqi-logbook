@@ -2099,6 +2099,13 @@ class MonthlyReportTable extends Model
         $commonservice->eventLog('export-testkit-report', $user_name . ' has exported the testkit report', 'test-kit-report', $id = null);
     }
 
+    public function testKitSummaryReportTrackTable()
+    {
+        $user_name = session('name');
+        $commonservice = new CommonService();
+        $commonservice->eventLog('export-testkit-summary-report', $user_name . ' has exported the testkit Summary report', 'test-kit-summary-report', $id = null);
+    }
+
     public function invalidReportTrackTable()
     {
         $user_name = session('name');

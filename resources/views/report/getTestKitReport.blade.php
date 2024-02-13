@@ -106,13 +106,29 @@ for ($i = 0; $i < sizeof($glob); $i++) {
 <div>
 <h3 class="content-header-title mb-0 mt-5">Test Kit Summary Report</h3>
 <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+            <th class="th">Test Kit Name</th>
+            <th class="th">Total No. of times used </th>
+            @for($l = 1; $l <= $arr['no_of_test']; $l++) 
+                <?php $test_title = 'No. of times used for Test ' . $l; ?>
+                <th class="th">{{$test_title}}</th>
+                @endfor
+        </tr>
+        </thead>
         <tbody>
         @if(count($report['summary'])>0)
             @foreach ($report['summary'] as $testKitSummary)
+            @if($testKitSummary['test_kit_total'] > 0)
             <tr class="frezz">
                 <td>{{$testKitSummary['test_kit_name']}}</td>
                 <td>{{$testKitSummary['test_kit_total']}}</td>
+                @for($l = 1; $l <= $arr['no_of_test']; $l++) 
+                <?php $test_kit_value='test_kit_'.$l.'_total'; ?>
+                <td>{{$testKitSummary[$test_kit_value]}}</td>
+                @endfor
             </tr>
+            @endif
             @endforeach
             @else
             <tr>

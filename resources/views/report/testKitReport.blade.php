@@ -171,7 +171,8 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                         <a class="btn btn-danger btn-md" href='/testKitReport/'><span>Reset</span></a>&nbsp;&nbsp;
                                                         <?php $role = session('role');
                                                         if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['testkitexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['testkitexport'] == "allow")) {?>
-                                                        <button type="submit" class="btn btn-primary">Export</button>
+                                                        <button type="submit" name="exportReport" class="btn btn-primary">Export</button>
+                                                        <button type="submit" name="exportSummaryReport" class="btn btn-primary">Export Test Kit Summary</button>
                                                        <?php } ?>
                                                     </div>
                                                 </div>
@@ -319,9 +320,9 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 testSiteId: $("#testSiteId").val(),
                 reportFrequency: $("#reportFrequency").val(),
             },
-            // error:function(e){
-            //     console.log(e)
-            // },
+            error:function(e){
+                console.log(e)
+            },
             success: function(result) {
                 $("#testKitList").html(result);
             }
