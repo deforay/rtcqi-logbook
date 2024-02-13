@@ -12,6 +12,7 @@ use App\Service\SubDistrictService;
 use App\Service\ProvinceService;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TestKitExport;
+use App\Exports\TestKitSummaryExport;
 use App\Exports\TrendExport;
 use App\Exports\NotUploadExport;
 use App\Exports\LogBookExport;
@@ -231,12 +232,20 @@ class ReportController extends Controller
 
     public function testKitExport(Request $request)
     {
-        $commonservice = new CommonService();
+        if($request->submit == "exportReport"){
+            $commonservice = new CommonService();
         $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
         return Excel::download(new TestKitExport($data), 'Test-Kit-Report-' . $dateTime . '.xlsx');
+        }else{
+            $commonservice = new CommonService();
+        $dateTime = $commonservice->getDateAndTime();
+        $data = $request->all();
+        return Excel::download(new TestKitSummaryExport($data), 'Test-Kit-Summary-Report-' . $dateTime . '.xlsx');
+        }
+        
     }
-
+    
     public function trendExport(Request $request)
     {
         $commonservice = new CommonService();
