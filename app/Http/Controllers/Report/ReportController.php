@@ -128,7 +128,9 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.testKitReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
+            
+
+            return view('report.testKitReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province, ''));
         } else
             return Redirect::to('login')->with('status', 'Please Login');
     }
@@ -137,9 +139,11 @@ class ReportController extends Controller
     {
         $data = $request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getTestKitMonthlyReport($data);
+        $reportdata = $monthlyReportService->getTestKitMonthlyReport($data);
+        $testKitService = new TestKitService();
+        $reportdata['summary'] = $testKitService->getTestKitSummary($data);
         // dd($data);die;
-        $view = View::make('report.getTestKitReport', ['report' => $data]);
+        $view = View::make('report.getTestKitReport', array('report' => $reportdata));
         return $view;
     }
 
