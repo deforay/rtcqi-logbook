@@ -44,4 +44,11 @@ class MonitoringReportController extends Controller
         $view = View::make('monitoringreport.getSiteWiseReport', ['report' => $data]);
         return $view;
     }
+    
+    public function sendMail(Request $request){
+        $datas = $request->all();
+        $monthlyReportService = new MonthlyReportService();
+        $data = $monthlyReportService->sendSiteWiseReminderEmail($datas);
+        return response()->json(['code'=>200,'success' => 'Your inquire is successfully sent.']);
+    }
 }
