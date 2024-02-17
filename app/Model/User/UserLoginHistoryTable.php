@@ -246,7 +246,7 @@ class UserLoginHistoryTable extends Model
         $loginData = array(
             'user_id'=>session('userId'),
             'login_id'=>$data['username'],
-            'login_attempted_datetime'=>date('Y-m-d H:i:s'),
+            'login_attempted_datetime'=>$currentDateTime,
             'login_status'=>$status,
             'ip_address'=>request()->ip(),
             'browser'=>$browserAgent,

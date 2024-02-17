@@ -77,6 +77,7 @@
                                                 <th>Site ID</th>
                                                 <th>Province</th>
                                                 <th>District</th>
+                                                <th>Sub District</th>
                                                 <th>Facility Name</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
@@ -128,6 +129,7 @@
                     { data: 'site_id', name: 'site_id'},
                     { data: 'province_name', name: 'province_name'},
                     { data: 'district_name', name: 'district_name' },
+                    { data: 'sub_district_name', name: 'sub_district_name' },
                     { data: 'facility_name', name: 'facility_name' },
                     { data: 'test_site_status', name: 'test_site_status',className:'firstcaps' },
                     <?php $role = session('role');

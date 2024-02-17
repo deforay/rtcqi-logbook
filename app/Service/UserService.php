@@ -10,6 +10,7 @@ Last Modified Name : Prasath M
 namespace App\Service;
 use App\Model\User\UserTable;
 use App\Model\User\UserLoginHistoryTable;
+use App\Model\track\TrackTable;
 use DB;
 
 class UserService
@@ -32,6 +33,25 @@ class UserService
             $exc->getMessage();
         }
     }
+	//Register User
+	public function registerUser($request)
+    {
+        $data =  $request->all();
+        DB::beginTransaction();
+        try {
+            $model = new UserTable();
+            $add = $model->saveNewUser($request);
+            if ($add > 0) {
+                DB::commit();
+                $msg = 'New User Added Successfully!!!';
+                return $msg;
+            }
+        } catch (Exception $exc) {
+            DB::rollBack();
+            $exc->getMessage();
+        }
+    }
+
 
     //Get All User List
     public function getAllUser()
@@ -125,10 +145,18 @@ class UserService
 		}
 	}
 
-	public function getAllAudit($params)
+	public function getAllActivity($params)
     {
 		$model = new TrackTable();
-        $result = $model->fetchAllActivity($params);
+        $result = $model->fetchAllActivity($params);			
+        return $result;
+	}
+
+	//Get All ActivityById
+	public function getAllActivityById($id)
+    {
+		$model = new TrackTable();
+        $result = $model->fetchAllActivityById($id);
         return $result;
 	}
 

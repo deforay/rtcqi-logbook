@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Model\User\UserTable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,8 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login.index');
+
+    $model = new UserTable();
+    $activeUsers = $model->fetchAllActiveUser();
+    $activeUsersCount=$activeUsers->count();
+    if($activeUsersCount > 0){
+        return view('login.index');
+    }else{
+        return view('login.register');
+    }
+
+    
+    
 });
+
+
 
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index');
 
@@ -31,7 +44,9 @@ Route::get('/changePassword', 'Common\CommonController@changePassword');
 Route::post('/changePassword', 'Common\CommonController@changePassword');
 Route::post('/addNewBranchType', 'Common\CommonController@addNewBranchType');
 Route::post('/checkItemNameValidation', 'Common\CommonController@checkItemNameValidation');
-
+//setup module
+Route::get('/setup', 'User\UserController@register');
+Route::post('/setup', 'User\UserController@register');
 //user module
 Route::get('/user', 'User\UserController@index')->name('user.index')->middleware('access');
 Route::post('/user/add', 'User\UserController@add');
@@ -44,6 +59,7 @@ Route::get('/user/profile/{id}', 'User\UserController@profile')->middleware('acc
 Route::post('/user/profile/{id}', 'User\UserController@profile');
 Route::get('/user/userloginhistory', 'User\UserController@userloginhistory')->name('user.userloginhistory')->middleware('access');
 Route::get('/user/userActivityLog', 'User\UserController@userActivityLog')->name('user.userActivityLog')->middleware('access');
+Route::post('/getAllUserActivity', 'User\UserController@getAllUserActivity')->name('user.getAllUserActivity');
 
 
 //login module
@@ -118,6 +134,14 @@ Route::get('/district/edit/{id}', 'District\DistrictController@edit')->middlewar
 Route::post('/district/edit/{id}', 'District\DistrictController@edit');
 Route::post('/getAllDistrict', 'District\DistrictController@getAllDistrict');
 
+//SubDistrict module
+Route::get('/subdistrict', 'SubDistrict\SubDistrictController@index')->name('subdistrict.index')->middleware('access');
+Route::post('/subdistrict/add', 'SubDistrict\SubDistrictController@add');
+Route::get('/subdistrict/add', 'SubDistrict\SubDistrictController@add')->middleware('access');
+Route::get('/subdistrict/edit/{id}', 'SubDistrict\SubDistrictController@edit')->middleware('access');
+Route::post('/subdistrict/edit/{id}', 'SubDistrict\SubDistrictController@edit');
+Route::post('/getAllSubDistrict', 'SubDistrict\SubDistrictController@getAllSubDistrict');
+
 //monthlyreport module
 Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index')->middleware('access');
 Route::post('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
@@ -169,6 +193,7 @@ Route::get('/trendreport', 'Report\ReportController@trendReport')->name('trendre
 Route::post('/getTrendMonthlyReport', 'Report\ReportController@getTrendMonthlyReport');
 Route::post('/trendexcelexport', 'Report\ReportController@trendExport');
 Route::post('/getDistrictByProvinceId', 'Report\ReportController@getDistrictByProvinceId');
+Route::post('/getSubDistrictByDistrictId', 'Report\ReportController@getSubDistrictByDistrictId');
 
 
 Route::post('/getLogbookReport', 'Report\ReportController@getLogbookReport');
@@ -189,6 +214,11 @@ Route::get('/customreport', 'Report\ReportController@customReport')->name('custo
 Route::post('/getCustomMonthlyReport', 'Report\ReportController@getCustomMonthlyReport');
 Route::post('/customerexcelexport', 'Report\ReportController@customerExport');
 
+// Custom Report
+Route::get('/notreportedsites', 'Report\ReportController@notReportedSites')->name('notreportedsites.notReportedSites')->middleware('access');
+Route::post('/getNotReportedSites', 'Report\ReportController@getNotReportedSites');
+Route::post('/notreportedsitesexcelexport', 'Report\ReportController@notReportedSitesExport');
+
 // Invalid Results Report
 Route::get('/invalidresultreport', 'Report\ReportController@invalidresultReport')->name('invalidresultreport.invalidresultReport')->middleware('access');
 Route::post('/getInvalidResultReport', 'Report\ReportController@getInvalidResultReport');
@@ -196,6 +226,7 @@ Route::post('/invalidresultexcelexport', 'Report\ReportController@invalidResultE
 
 
 Route::get('/getDistrict/{id}', 'TestSite\TestSiteController@getDistrict');
+Route::get('/getSubDistrict/{id}', 'TestSite\TestSiteController@getSubDistrict');
 
 Route::post('/getDashboardData', 'Dashboard\DashboardController@getDashboardData');
 Route::get('/insertTrackTable', 'MonthlyReport\MonthlyReportController@insertTrackTable');

@@ -13,6 +13,7 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Hash;
 use App\Model\User\UserTable;
 use App\Model\Vendors\VendorsTable;
+use App\Service\GlobalConfigService;
 
 class CommonService
 {
@@ -244,13 +245,14 @@ class CommonService
     
     public function eventLog($event_type, $action, $resource,$id)
     {
+        $commonservice = new CommonService();
         $eventData = array(
             'event_type' => $event_type,
             'action' => $action,
             'resource' => $resource,
             'user_id' => session('userId'),
             'action_id' => $id,
-            'date_time' => date('Y-m-d H:i:s'),
+            'date_time' => $commonservice->getDateTime(),
             'ip_address' => request()->ip()
         );
         $eventResult = DB::table('track')->insert($eventData);
@@ -466,6 +468,22 @@ class CommonService
 	    	$exc->getMessage();
 	    }
     }
+
+    public function updateUserLanguage($params){
+        DB::beginTransaction();
+    	try {
+                $model = new UserTable();
+                $updateUserLanguage = $model->updateUserLanguage($params);
+                DB::commit();
+                if($updateUserLanguage>0){
+                    return $updateUserLanguage; 
+                }
+	    }
+	    catch (Exception $exc) {
+            DB::rollBack();
+	    	$exc->getMessage();
+	    }
+    }
     
 
     public function addNewBranchType($request)
@@ -547,5 +565,44 @@ class CommonService
             error_log($exc->getMessage());
         }
         return count($items);
+    }
+
+    public function getSiteLatLon($address)
+    {
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        $data=array();
+        $data['lat'] = '';
+        $data['lng'] = '';
+
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < sizeof($result); $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
+        
+        $apiKey=$arr["map_api_key"];
+        
+        $url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=".$apiKey;
+        
+        // send api request
+        try{
+                $geocode = file_get_contents($url);
+            
+                if($geocode){            
+                    $json = json_decode($geocode);        
+                    if(isset($json->results[0]->geometry) && isset($json->results[0]->geometry->location)){
+                        $data['lat'] = $json->results[0]->geometry->location->lat;
+                        $data['lng'] = $json->results[0]->geometry->location->lng;            
+                    }
+                }
+            }
+            catch(Exception $exc){
+                error_log($exc->getMessage());
+                //return $data;
+            }
+        
+        return $data;        
+        
     }
 }

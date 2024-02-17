@@ -13,6 +13,7 @@
 <?php
 $enddate = date('d-M-Y');
 $startdate = date('d-M-Y', strtotime('-29 days'));
+$messages=Lang::get('messages');
 ?>
 
 <div class="content-wrapper">
@@ -21,9 +22,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ $messages['manage']}}
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreport/">Monthly Reports</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreport/">{{ $messages['monthly_report']}}</a>
                         </li>
                     </ol>
                 </div>
@@ -35,13 +36,13 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) {?>
                 <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="la la-upload"></i> Bulk Upload Monthly Reports</b>
+                    <b><i class="la la-upload"></i> {{ $messages['bulk_upload_monthly_reports']}}</b>
                 <?php } ?>
                 </a>
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) {?>
                 <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-plus icon-left"></i> Add Monthly Report</b>
+                    <b><i class="ft-plus icon-left"></i> {{ $messages['add_monthly_report']}}</b>
                 <?php } ?>
                 </a>
             </div>
@@ -68,7 +69,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Monthly Report</h3>
+                            <h3 class="content-header-title mb-0">{{ $messages['monthly_report']}}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -81,23 +82,23 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                             <div id="show_alert" class="mt-1"></div>
-                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <h4 class="card-title">{{ $messages['filter_the_data']}}</h4><br>
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Date Range <span class="mandatory">*</span>
+                                                    <h5>{{ $messages['date_range']}} <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="{{ $messages['select_date_range']}}" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>Province Name
+                                                <h5>{{ $messages['province_name']}}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="{{ $messages['please_select_province_name']}}">
                                                             @foreach($province as $row)
                                                             <option value="{{$row->province_id}}">{{$row->province_name}}</option>
                                                             @endforeach
@@ -107,10 +108,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>District Name
+                                                    <h5>{{ $messages['district_name']}}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="{{ $messages['please_select_district_name']}}">
                                                             @foreach($district as $row)
                                                             <option value="{{$row->district_id}}">{{$row->district_name}}</option>
                                                             @endforeach
@@ -118,14 +119,28 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     </div>
                                                 </fieldset>
                                             </div>
+                                            
                                         </div>
                                         <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5> Site Name
+                                                    <h5>{{ $messages['sub_district_name']}}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="{{ $messages['please_select_sub_district_name']}}">
+                                                            @foreach($subdistrict as $row)
+                                                            <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5> {{ $messages['site_name']}}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="{{ $messages['please_select_test_site_name']}}">
                                                             @foreach($testSite as $row)
                                                             <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                             @endforeach
@@ -137,8 +152,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                 <div class="form-group row">
 
                                                     <div class="col-md-8">
-                                                        <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href="/monthlyreport"><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> {{ $messages['search']}}</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/monthlyreport"><span>{{ $messages['reset']}}</span></a>&nbsp;&nbsp;
                                                     </div>
                                                 </div></div>
                                         </div>
@@ -147,19 +162,19 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
                                         <thead>
                                             <tr>
-                                                <th>Site Name</th>
-                                                <th>Entry Point</th>
-                                                <th>Reporting Month</th>
-                                                <th>Date of Data Collection</th>
-                                                <th>Name of Data Collector</th>
-                                                <th>Book No</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Total Number of Pages</th>
-                                                <th>Last Modified On</th>
+                                                <th>{{ $messages['site_name']}}</th>
+                                                <th>{{ $messages['entry_point']}}</th>
+                                                <th>{{ $messages['reporting_month']}}</th>
+                                                <th>{{ $messages['date_of_data_collection']}}</th>
+                                                <th>{{ $messages['name_of_data_collector']}}</th>
+                                                <th>{{ $messages['book_number']}}</th>
+                                                <th>{{ $messages['start_date']}}</th>
+                                                <th>{{ $messages['end_date']}}</th>
+                                                <th>{{ $messages['total_number_of_pages']}}</th>
+                                                <th>{{ $messages['last_modified_on']}}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
-                                                <th>Action</th>
+                                                <th>{{ $messages['action']}}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
@@ -184,7 +199,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         $.unblockUI();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
-            placeholder: "Select Province Name",
+            placeholder: "{{ $messages['select_province_name']}}",
             allowClear: true,
         });
         $('#provinceId').on('select2:select', function(e) {
@@ -196,7 +211,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
         });
         $selectElement = $('#districtId').select2({
-            placeholder: "Select District Name",
+            placeholder: "{{ $messages['select_district_name']}}",
             allowClear: true,
         });
         $('#districtId').on('select2:select', function(e) {
@@ -207,8 +222,20 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             getAllMonthlyReport();
 
         });
+        $selectElement = $('#subDistrictId').select2({
+            placeholder: "{{ $messages['select_sub_district_name']}}",
+            allowClear: true,
+        });
+        $('#subDistrictId').on('select2:select', function(e) {
+            getAllMonthlyReport();
+        });
+
+        $('#subDistrictId').on('select2:unselect', function(e) {
+            getAllMonthlyReport();
+
+        });
         $selectElement = $('#testSiteId').select2({
-            placeholder: "Select Test Site Name",
+            placeholder: "{{ $messages['select_test_site_name']}}",
             allowClear: true
         });
         $('#testSiteId').on('select2:select', function(e) {
@@ -223,6 +250,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         let searchDate = $('#searchDate').val() || '';
         let provinceId = $('#provinceId').val() || '';
         let districtId = $('#districtId').val() || '';
+        let subDistrictId = $('#subDistrictId').val() || '';
         let testSiteId = $('#testSiteId').val() || '';
         $.ajaxSetup({
             headers: {
@@ -242,6 +270,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 searchDate: searchDate,
                 provinceId: provinceId,
                 districtId: districtId,
+                subDistrictId: subDistrictId,
                 testSiteId: testSiteId,
                 },
             },

@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllUser');        
+        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity', 'register', 'getUserLoginHistory');        
        
     }
     //View user main screen
@@ -46,6 +46,29 @@ class UserController extends Controller
             $testSite = $TestSiteService->getAllActiveTestSite();     
             $resourceResult = $RoleService->getAllRole();
             return view('user.add',array('test'=>$testSite,'roleId'=>$resourceResult));
+        }
+    }
+
+    //Register user one time when users table empty (display add screen and add the user values)
+    public function register(Request $request)
+    {
+        $addUser = new UserService();
+        if ($request->isMethod('post')) 
+        {
+            
+            $result = $addUser->registerUser($request);
+            return Redirect::to('login')->with('status', $result.' Please Login');
+        }
+        else
+        {
+            
+        $activeUsers = $addUser->getAllActiveUser();
+        $activeUsersCount=$activeUsers->count();
+        if($activeUsersCount > 0){
+             return Redirect::to('login');
+            }else{
+                return view('login.register');
+            }
         }
     }
 
@@ -100,8 +123,13 @@ class UserController extends Controller
     //edit profile
     public function profile(Request $request,$id)
     {
+        $availableLocales=config('app.available_locales');        
+
         if ($request->isMethod('post')) 
         {
+            $data=$request->All();
+            app()->setLocale($data['locale']);
+            session()->put('locale', $data['locale']);
             $UserService = new UserService();
             $edit = $UserService->updateProfile($request,$id);
             return Redirect::to('/dashboard')->with('status', $edit);
@@ -110,7 +138,7 @@ class UserController extends Controller
         {
             $UserService = new UserService();
             $result = $UserService->getUserById($id);
-            return view('user.profile',array('result'=>$result));
+            return view('user.profile',array('result'=>$result, 'available_locales'=>$availableLocales));
         }
     }
 
@@ -147,7 +175,7 @@ class UserController extends Controller
             return Redirect::to('login')->with('status', 'Please Login');
     }
 
-    public function getAllActivityData(Request $request)
+    public function getAllUserActivity(Request $request)
     {
         $datas = $request->all();
         $service = new UserService();

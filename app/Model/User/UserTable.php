@@ -62,6 +62,44 @@ class UserTable extends Model
         return $id;
     }
 
+    public function saveNewUser($data)
+    {
+        $id=0;
+        $commonservice = new CommonService();
+        if ($data['firstName']!= null && trim($data['firstName']) != '') {
+            $id = DB::table('users')->insertGetId(
+                [
+                    'first_name' => $data['firstName'],
+                    'last_name' => $data['lastName'],
+                    'password' => Hash::make($data['password']), // Hashing passwords
+                    'email' => $data['email'],                    
+                    'user_status' => 'active',
+                    'created_by' => null ,
+                    'created_on' => $commonservice->getDateTime(),
+                    'force_password_reset' => 1,
+                    'role_id' => 1
+                ]
+            );
+            $result=DB::table('test_sites')->take(1)->get();
+            if($result->count() > 0){
+                $ts_id=$result[0]->ts_id;
+                DB::table('users_testsite_map')->insert(
+                [
+                    'user_id' => $id,
+                    'ts_id' => $ts_id,
+                ]
+                );
+            }
+            
+
+            
+
+
+        }
+
+        return $id;
+    }
+
     // Fetch All User List
     public function fetchAllUser()
     {
@@ -100,6 +138,21 @@ class UserTable extends Model
             ->where('users.email', '=', $email)
             ->get();
         return $data;
+    }
+
+    public function updateUserLanguage($locale){
+        $userid=session('userId');
+        $user = array(
+            'language' => $locale,            
+            'updated_by' => session('userId')
+        );
+        //print_r($user); exit();
+        $response = DB::table('users')
+            ->where('user_id', '=', $userid)
+            ->update(
+                $user
+            );
+            return $response;
     }
 
     // Update particular User details
@@ -179,7 +232,7 @@ class UserTable extends Model
             ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
-            ->get(), true);
+            ->get(), true);            
 
 
         if (!empty($result)) {
@@ -212,6 +265,10 @@ class UserTable extends Model
                     session(['forcePasswordReset' => $result[0]['force_password_reset']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
+                    if($result[0]['language'] != NULL){
+                        app()->setLocale($result[0]['language']);
+                        session()->put('locale', $result[0]['language']);
+                    }                    
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
                     $userservice->loggedInHistory($data,'success');
                 } else {
@@ -243,6 +300,7 @@ class UserTable extends Model
                 'last_name' => $data['lastName'],
                 'email' => $data['email'],
                 'phone' => $data['mobileNo'],
+                'language' => $data['locale'],
                 'updated_by' => session('userId')
             );
 
@@ -269,9 +327,11 @@ class UserTable extends Model
     public function updatePassword($params)
     {
         $commonservice = new CommonService();
+        $userservice = new UserService();
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
+        $data['username']=$user_name;
         $id = session('userId');
         $newPassword = Hash::make($data['newPassword']);
         if (Hash::check($data['currentPassword'], $newPassword)) {
@@ -292,6 +352,7 @@ class UserTable extends Model
                             ]
                         );
                     $commonservice->eventLog('change-password-request', $user_name . ' has changed the password information', 'change-password', $userId);
+                    $userservice->loggedInHistory($data, $user_name . ' has changed the password information');
                     return $response;
                 }
             } else {
