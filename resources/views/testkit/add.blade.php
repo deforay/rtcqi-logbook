@@ -98,15 +98,6 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Installation ID <span class="mandatory">*</span>
-											</h5>
-											<div class="form-group">
-                                                <input type="text" id="installation_id" class="form-control  isRequired" autocomplete="off" placeholder="Enter Installation ID" name="installation_id" title="Please Enter Installation ID" >
-											</div>
-										</fieldset>
-									</div>
-                                    <div class="col-xl-4 col-lg-12">
-										<fieldset>
 											<h5>Kit Expiry Date <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">

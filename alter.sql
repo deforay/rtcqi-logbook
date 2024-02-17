@@ -1,4 +1,5 @@
 -- ---
+-- ---
 -- Globals
 -- ---
 
@@ -549,3 +550,131 @@ ADD `created_on` DATETIME NULL DEFAULT NULL AFTER `created_by`;
 
 -- Amit 16-May-2023
 ALTER TABLE `monthly_reports` ADD `updated_by` INT NULL DEFAULT NULL AFTER `added_on`;
+
+-- Sijulda 16-May-2023
+ALTER TABLE `monthly_reports`
+ADD `updated_by` VARCHAR(100) NOT NULL AFTER `added_on`;
+
+-- Sijulda 14-July-2023
+CREATE TABLE `sub_districts` (
+  `sub_district_id` int NOT NULL AUTO_INCREMENT,
+  `district_id` int NOT NULL,
+  `sub_district_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`sub_district_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Sijulda 14-July-2023
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'SubDistrict', 'active');
+
+-- Sijulda 14-July-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'add', 'Add');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'edit', 'Edit');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\SubDistrict\\SubDistrictController', 'index', 'Access');
+
+-- Sijulda 14-july-2023
+ALTER TABLE `test_sites` ADD `site_sub_district` INT NOT NULL AFTER `site_district`;
+ALTER TABLE `monthly_reports` ADD `sub_district_id` INT NULL DEFAULT NULL AFTER `district_id`;
+
+-- Sijulda 03-August-2023
+ALTER TABLE `users` ADD `language` VARCHAR(5) NULL DEFAULT NULL AFTER `role_id`;
+
+-- Sijulda 24-August-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUpload', 'Not Upload');
+
+-- Sijulda 24-August-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController', 'notUploadExport', 'Not Upload Export');
+
+-- Sijulda 11-September-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'userActivityLog', 'User Activity Log');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'userloginhistory', 'User Login History');
+
+-- Sijulda 14-September-2023
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Report\\ReportController', 'notreportedsites', 'Not Reported Sites ');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\Report\\ReportController', 'notreportedsitesexport', 'Not Reported Sites Export');
+
+-- Sijulda 11-December-2023
+CREATE TABLE `implementing_partners` (`implementing_partner_id` int NOT NULL AUTO_INCREMENT,`implementing_partner_name` varchar(100) NOT NULL,`implementing_partner_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'active' COMMENT '1 = Implementing Person is active, 0 deleted but present in database as som',PRIMARY KEY (`implementing_partner_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'ImplementingPartners', 'active')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'add', 'Add')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'edit', 'Edit')
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController', 'index', 'Access')
+
+-- Sijulda 14-December-2023
+ALTER TABLE `test_sites` ADD `external_site_id` VARCHAR(100) NOT NULL AFTER `site_id`;
+ALTER TABLE `test_sites` ADD `site_type` TEXT NOT NULL AFTER `site_country`;
+ALTER TABLE `test_sites` ADD `site_implementing_partner_id` INT NOT NULL AFTER `site_type`;
+
+-- ilahir 15-Dec-2023
+
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Testing Algorithm', 'testing_algorithm', '');
+-- Sijulda 18-December- 2023
+ALTER TABLE `provinces` ADD `province_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `province_id`;
+ALTER TABLE `sub_districts` ADD `sub_district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `sub_district_id`;
+ALTER TABLE `districts` ADD `district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `district_id`;
+
+--Sijulda 19-December-2023
+ALTER TABLE `districts` ADD `district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `district_name`;
+ALTER TABLE `sub_districts` ADD `sub_district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `sub_district_name`;
+
+--ilahir 20-Dec-2023
+INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'Monitoring Report', 'active');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'sitewisereport', 'Sitewise Report');
+
+--Sijulda 26-December-2023
+ALTER TABLE `test_kits` DROP COLUMN Installation_id;
+
+--Sijulda 02-January-2024
+ALTER TABLE `test_sites` ADD `site_primary_email` VARCHAR(255) NULL DEFAULT NULL AFTER `site_longitude`;
+ALTER TABLE `test_sites` ADD `site_secondary_email` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_email`;
+ALTER TABLE `test_sites` ADD `site_primary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_secondary_email`;
+ALTER TABLE `test_sites` ADD `site_secondary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_mobile_no`;
+
+--ilahir 03-Jan-2024
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User', 'disable_inactive_user', '');
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User No.of Months', 'disable_user_no_of_months', '6');
+ALTER TABLE `users` ADD `last_login_datetime` DATETIME NULL DEFAULT NULL AFTER `updated_by`;
+
+--Sijulda 05-January-2024
+DROP TABLE IF EXISTS `audit_monthly_reports`;
+
+CREATE TABLE `audit_monthly_reports` SELECT * from `monthly_reports` WHERE 1=0;
+
+ALTER TABLE `audit_monthly_reports`
+   MODIFY COLUMN `mr_id` int(11) NOT NULL,
+   ENGINE = MyISAM,
+   ADD `action` VARCHAR(8) DEFAULT 'insert' FIRST,
+   ADD `revision` INT(6) NOT NULL AUTO_INCREMENT AFTER `action`,
+   ADD `dt_datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `revision`,
+   ADD PRIMARY KEY (`mr_id`, `revision`);
+
+DROP TRIGGER IF EXISTS monthly_reports_data__ai;
+DROP TRIGGER IF EXISTS monthly_reports_data__au;
+DROP TRIGGER IF EXISTS monthly_reports_data__bd;
+
+CREATE TRIGGER monthly_reports_data__ai AFTER INSERT ON `monthly_reports` FOR EACH ROW
+    INSERT INTO `audit_monthly_reports` SELECT 'insert', NULL, NOW(), d.*
+    FROM `monthly_reports` AS d WHERE d.mr_id = NEW.mr_id;
+
+CREATE TRIGGER monthly_reports_data__au AFTER UPDATE ON `monthly_reports` FOR EACH ROW
+    INSERT INTO `audit_monthly_reports` SELECT 'update', NULL, NOW(), d.*
+    FROM `monthly_reports` AS d WHERE d.mr_id = NEW.mr_id;
+
+CREATE TRIGGER monthly_reports_data__bd BEFORE DELETE ON `monthly_reports` FOR EACH ROW
+    INSERT INTO `audit_monthly_reports` SELECT 'delete', NULL, NOW(), d.*
+    FROM `monthly_reports` AS d WHERE d.mr_id = OLD.mr_id;
+
+--ilahir 08-Jan-2024
+CREATE TABLE `temp_mail` (
+  `temp_id` int NOT NULL,
+  `message` mediumtext,
+  `from_mail` varchar(255) DEFAULT NULL,
+  `to_email` varchar(255) NOT NULL,
+  `subject` mediumtext,
+  `from_full_name` varchar(255) DEFAULT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `status` varchar(100) NOT NULL DEFAULT 'pending',
+  `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `temp_mail` ADD PRIMARY KEY (`temp_id`);
+ALTER TABLE `temp_mail` MODIFY `temp_id` int NOT NULL AUTO_INCREMENT;

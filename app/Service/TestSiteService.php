@@ -91,6 +91,12 @@ class TestSiteService
         return $result;
 	}
 	
+	public function getAllTestSiteList($params)
+	{
+		$model = new TestSiteTable();
+        $result = $model->fetchAllTestSiteList($params);
+        return $result;
+	}
 }
 
 ?>

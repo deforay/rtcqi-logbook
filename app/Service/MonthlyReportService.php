@@ -201,14 +201,6 @@ class MonthlyReportService
         $result = $model->insertTrackTable();
         return $result;
 	}
-
-	//Inserting Trend Track Data
-	public function insertTrendData()
-    {
-		$model = new MonthlyReportTable();
-        $result = $model->trendReportTrackTable();
-        return $result;
-	}
 	
 	//Inserting LogBook Track Data
 	public function insertLogBookData()
@@ -226,11 +218,27 @@ class MonthlyReportService
         return $result;
 	}
 
+	//Inserting TestKit Summary Track Data
+	public function insertTestKitSummaryData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->testKitSummaryReportTrackTable();
+        return $result;
+	}
+
 	//Inserting Invalid Results Track Data
 	public function invalidReportData()
     {
 		$model = new MonthlyReportTable();
         $result = $model->invalidReportTrackTable();
+        return $result;
+	}
+
+	//Inserting Trend Track Data
+	public function insertTrendData()
+    {
+		$model = new MonthlyReportTable();
+        $result = $model->trendReportTrackTable();
         return $result;
 	}
 	
@@ -279,5 +287,37 @@ class MonthlyReportService
 		$model = new NotUploadMonthlyReportTable();
 		$result = $model->fetchAllNotUploadActiveProvince();
         return $result;
+	}
+
+	public function getSiteWiseReport($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchSiteWiseReport($params);
+		return $result;
+	}
+
+	//Get Month Wise Report Count List
+	public function getMonthlyWiseReportCount()
+    {
+		$model = new MonthlyReportTable();
+        return $result = $model->fetchMonthlyWiseReportCount();
+	}
+
+	public function getSiteWiseMonthlyReportCount()
+    {
+		$model = new MonthlyReportTable();
+        return $result = $model->fetchSiteWiseMonthlyReportCount();
+	}
+
+	public function getTestWiseMonthlyReportCount()
+    {
+		$model = new MonthlyReportTable();
+        return $result = $model->fetchTestWiseMonthlyReportCount();
+	}
+
+	public function sendSiteWiseReminderEmail($params)
+    {
+		$model = new MonthlyReportTable();
+        return $result = $model->sendSiteWiseReminderEmail($params);
 	}
 }

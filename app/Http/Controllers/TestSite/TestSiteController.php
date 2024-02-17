@@ -4,11 +4,12 @@ namespace App\Http\Controllers\TestSite;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Service\FacilityService;
 use App\Service\ProvinceService;
 use App\Service\DistrictService;
 use App\Service\SubDistrictService;
 use App\Service\TestSiteService;
+use App\Service\SiteTypeService;
+use App\Service\ImplementingPartnersService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use Session;
@@ -17,7 +18,7 @@ class TestSiteController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict');        
+        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict','getAllTestSiteList');        
        
     }
     //View TestSite main screen
@@ -42,11 +43,13 @@ class TestSiteController extends Controller
         }
         else
         {
-            $FacilityService = new FacilityService();  
-            $facility = $FacilityService->getAllActiveFacility();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-            return view('testsite.add',array('facility'=>$facility,'province'=>$province));
+            $SiteTypeService = new SiteTypeService();
+            $sitetype = $SiteTypeService->getAllActiveSiteType();  
+            $ImplementingPartnersService = new ImplementingPartnersService();
+            $implementingpartners = $ImplementingPartnersService->getAllActiveImplementingPartners();  
+            return view('testsite.add',array('province'=>$province, 'sitetype'=>$sitetype, 'implementingpartners'=>$implementingpartners));
         }
     }
 
@@ -86,14 +89,19 @@ class TestSiteController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $DistrictService = new DistrictService();
             $SubDistrictService = new SubDistrictService();
-            $FacilityService = new FacilityService();  
-            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
+            $SiteTypeService = new SiteTypeService();
+            $sitetype = $SiteTypeService->getAllActiveSiteType();            
             $result = $TestSiteService->getTestSiteById($id);
+            $resultsitetype=explode(',', $result[0]->site_type);
+            
+            
             $district = $DistrictService->getDistictByData($result);
             $subDistrict = $SubDistrictService->getSubDistictByData($result);
-
-            return view('testsite.edit',array('result'=>$result,'id'=>$id,'facility'=>$facility,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict));
+            $ImplementingPartnersService = new ImplementingPartnersService();
+            $implementingpartners = $ImplementingPartnersService->getAllActiveImplementingPartners();  
+            
+            return view('testsite.edit',array('result'=>$result,'id'=>$id,'province'=>$province,'district'=>$district,'subdistrict'=>$subDistrict,'sitetype'=>$sitetype, 'resultsitetype'=>$resultsitetype, 'implementingpartners'=>$implementingpartners));
         }
     }
 
@@ -115,12 +123,18 @@ class TestSiteController extends Controller
     }
 
     public function getProvince($id){
-
         $testSiteService = new TestSiteService();
         $district = $testSiteService->getTestSiteData($id);
-  
         return response()->json($district);
-     
+    }
+
+    public function getAllTestSiteList(Request $request)
+    {
+        $params = $request->all();
+        $testSiteService = new TestSiteService();
+        return $testSiteService->getAllTestSiteList($params);
+        // log::info($district);
+        // return $subDistrict;
     }
 }
 

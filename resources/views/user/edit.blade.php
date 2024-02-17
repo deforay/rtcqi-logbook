@@ -151,10 +151,57 @@
                                             </div>
 										</fieldset>
 									</div>
+                                </div>
+                                
+                                <div class="form-actions left">
+                                    <input type="button" id="showBtn" class="btn btn-success" value="Show Filter"/>
+                                </div>
+                                <div class="row filterDiv" style="display:none;">
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                        <h5>Province Name
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                    @foreach($province as $row)
+                                                    <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>District Name
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Sub District Name
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <button type="button" onclick="getAllTestSiteList();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                                <div class="form-actions left filterDiv" style="display:none;">
                                     
                                 </div>
+
                                 <div class="row">
-                                <div class="col-xl-5 col-lg-12">
+                                    <div class="col-xl-5 col-lg-12">
 										<fieldset>
 											<h5>Test Site User Map Details
                                             </h5>
@@ -231,9 +278,39 @@ $(document).ready(function() {
         $('#confirmresult').html('')}
     })
     $('#password').change(function() {
-        
         $('#result').html(checkStrength($('#password').val()))
     })
+
+    $('#provinceId').select2({
+        placeholder: "Select Province Name",
+        allowClear: true,
+    });
+
+    $('#districtId').select2({
+        placeholder: "Select District Name",
+        allowClear: true,
+    });
+    $('#subDistrictId').select2({
+        placeholder: "Select Subdistrict Name",
+        allowClear: true,
+    });
+
+    $("#provinceId").change(function () {
+        var datas = $(this).val();
+        listDistrictForProvince();
+    });
+    $("#districtId").change(function () {
+        var datas = $(this).val();
+        listSubDistrictForDistrict();
+    });
+    
+    $("#showBtn").click(function(){
+        $(".filterDiv").toggle();
+    });
+
+    $('#showBtn').click(function() {
+       $(this).val() == "Show Filter" ? showFilter() : hideFilter();
+    });
 });
 
 function checkStrength(password) {
@@ -414,13 +491,96 @@ function isNumberKey(evt){
             });
         }
     }
-    $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-    $selectElement = $('#testSiteId').select2({
-    placeholder: "Select Test Site Name",
-    allowClear: true
-  });
-});
+    
+    function showFilter() {
+        $('#showBtn').val("Hide Filter");
+        $("#showBtn").removeClass("btn-success");
+        $("#showBtn").addClass("btn-secondary");
+    }
+
+    function hideFilter() {
+        $('#showBtn').val("Show Filter");
+        $("#showBtn").removeClass("btn-secondary");
+        $("#showBtn").addClass("btn-success");
+    }
+    function listDistrictForProvince() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getDistrictByProvinceId') }}",
+            method: 'post',
+            data: {
+                provinceId: $("#provinceId").val(),
+            },
+            success: function(result) {
+                var districtsOption = '';
+                result.forEach((res)=>{
+                    districtsOption += '<option value="'+res.district_id+'">'+res.district_name+'</option>';
+                });
+                $('#districtId').html(districtsOption);
+            }
+        });
+    }
+
+    function listSubDistrictForDistrict() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/getSubDistrictByDistrictId') }}",
+            method: 'post',
+            data: {
+                districtId: $("#districtId").val(),
+            },
+            success: function(result) {
+                
+                // console.log($('#districtId').html(''));
+                var subDistrictsOption = '';
+                result.forEach((res)=>{
+                    subDistrictsOption += '<option value="'+res.sub_district_id+'">'+res.sub_district_name+'</option>';
+                });
+                $('#subDistrictId').html(subDistrictsOption);
+            }
+        });
+    }
+
+    function getAllTestSiteList() {
+        $.blockUI();
+        var searchToVal = [];
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#search_to option').each(function(i, selected) {
+            searchToVal[i] = $(selected).val();
+        });
+        $.ajax({
+            url: "{{ url('/getAllTestSiteList') }}",
+            method: 'post',
+            data: {
+                provinceId: $("#provinceId").val(),
+                districtId: $("#districtId").val(),
+                subDistrictId: $("#subDistrictId").val(),
+                searchTo: searchToVal,
+            },
+            success: function(result) {
+                //console.log('data results', result);
+                //return;
+                var districtsOption = '';
+                result.forEach((res)=>{
+                    districtsOption += '<option value="'+res.ts_id+'">'+res.site_name+'</option>';
+                });
+                $('#search').html(districtsOption);
+                $.unblockUI();
+            }
+        });
+    }
 </script>
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />
 <script src="public/dist/js/select2.min.js"></script>

@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\ODKDataCron::class
+        Commands\ODKDataCron::class,
+        Commands\UserLoginExpireCron::class,
+        Commands\SendMailCron::class,
     ];
 
     /**
@@ -26,8 +28,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('odkdata:cron')
-                 ->everyMinute();
+        $schedule->command('odkdata:cron')->everyMinute();
+        $schedule->command('UserLoginExpire:cron')->dailyAt('00:03');
+        $schedule->command('sendmail:cron')->everyTenMinutes();
                  
     }
 

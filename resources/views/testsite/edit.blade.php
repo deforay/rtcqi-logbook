@@ -63,6 +63,15 @@
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>
+                                            <h5>External Site ID
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="externalSiteId" value="{{$result[0]->external_site_id}}" class="form-control" autocomplete="off" placeholder="Enter External Site ID" name="externalSiteID" title="Please enter External Site ID">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
                                             <h5>Site Name  <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
@@ -70,7 +79,34 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Entry Point / Site Type  <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off"
+                                                    style="width:100%;" id="sitetypeId" name="sitetypeId[]" title="Please select entry point / site ID">
+                                                    @foreach($sitetype as $row1)
+                                                    <option value="{{$row1->st_id}}" {{ in_array($row1->st_id, $resultsitetype) ?  'selected':''}}>{{$row1->site_type_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div> 
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>Implementing Partners  <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                            <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;"
+                                                id="implementingPartnerId" name="implementingPartnerId" title="Please select implementing partner">
+                                                @foreach($implementingpartners as $row1)
+                                                <option value="{{$row1->implementing_partner_id}}" {{ $result[0]->site_implementing_partner_id == $row1->implementing_partner_id ?  'selected':''}}>{{$row1->implementing_partner_name}}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>                                    
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Latitude 
@@ -89,6 +125,43 @@
 											</div>
 										</fieldset>
 									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Primary Email
+											</h5>
+											<div class="form-group">
+                                            <input type="text" id="primaryEmail" value="{{$result[0]->site_primary_email}}" class="form-control isEmail" autocomplete="off" placeholder="Enter Primary Email" name="primaryEmail" title="Please Enter Primary Email">
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Secondary Email 
+											</h5>
+											<div class="form-group">
+                                                <input type="text" id="secondaryEmail" value="{{$result[0]->site_secondary_email}}" class="form-control isEmail" autocomplete="off" placeholder="Enter Secondary Email" name="secondaryEmail" title="Please Enter Secodary Email">
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Primary Mobile Number 
+											</h5>
+											<div class="form-group">
+                                            <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="primaryMobileNo" value="{{$result[0]->site_primary_mobile_no}}" class="form-control" autocomplete="off" placeholder="Enter Primary Mobile Number" name="primaryMobileNo" title="Please Enter Primary Mobile Number">
+											</div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Secondary Mobile Number 
+											</h5>
+											<div class="form-group">
+                                                <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="secondaryMobileNo"  value="{{$result[0]->site_secondary_mobile_no}}" class="form-control" autocomplete="off" placeholder="Enter Secondary Mobile Number" name="secondaryMobileNo" title="Please Enter Secondary Mobile Number">
+											</div>
+										</fieldset>
+									</div>
+                                    
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Address1
@@ -188,20 +261,7 @@
                                             </div>
 										</fieldset>
 									</div>
-									<div class="col-xl-4 col-lg-12">
-										<fieldset>
-											<h5>Facility Name<span class="mandatory">*</span>
-                                            </h5>
-                                            <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="facilityId" name="facilityId" title="Please Select Facility Name">
-                                                <option>Select Facility Name</option>
-                                                    @foreach($facility as $row)
-                                                    <option value="{{$row->facility_id}}" {{ $result[0]->facility_id == $row->facility_id ?  'selected':''}}>{{$row->facility_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-										</fieldset>
-									</div>
+									
                                 </div>
 								<div class="form-actions right">
                                     <a href="/testsite" >
@@ -251,7 +311,13 @@
 <script type='text/javascript'>
 
     $(document).ready(function(){
-
+    
+        $('.js-example-basic-multiple').select2();
+        $selectElement = $('#sitetypeId').select2({
+            placeholder: "Select Entry Point / Site Type",
+            allowClear: true
+        });
+        
       // Province Change
       $('#provincesssId').change(function(){
 
@@ -304,7 +370,12 @@ $.each(response,function(key, value) {
 });
 
 });
-
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
    
     function checkNameValidation(tableName, fieldName, obj,fnct, msg)
     {
