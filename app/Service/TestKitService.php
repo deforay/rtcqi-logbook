@@ -48,10 +48,17 @@ class TestKitService
         $result = $model->fetchAllActiveTestKit();
         return $result;
 	}
+
+	//Get Test Kit Summary
+	public function getTestKitSummary($data){
+		$model = new TestKitTable();
+        $result = $model->fetchAllTestKitSummary($data);
+        return $result;
+	}
+
 	//Get Particular TestKit Details
 	public function getTestKitById($id)
 	{
-		
 		$model = new TestKitTable();
         $result = $model->fetchTestKitById($id);
         return $result;

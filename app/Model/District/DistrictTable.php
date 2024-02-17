@@ -23,6 +23,8 @@ class DistrictTable extends Model
             $id = DB::table('districts')->insertGetId(
                 [
                     'district_name' => $data['districtName'],
+                    'district_external_id' => $data['externalId'],
+                    'district_status' => $data['districtStatus'],
                     'province_id' => $data['provinceId'],
                 ]
             );
@@ -61,6 +63,8 @@ class DistrictTable extends Model
         $commonservice = new CommonService();
         $upData = array(
             'district_name' => $data['districtName'],
+            'district_external_id' => $data['externalId'],
+            'district_status' => $data['districtStatus'],
             'province_id' => $data['provinceId'],
         );
         $response = DB::table('districts')

@@ -17,7 +17,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/sitetype/">Entry Point</a>
+                        <li class="breadcrumb-item"><a href="/sitetype/">Entry Point/Site Type</a>
                         </li>
                         <li class="breadcrumb-item active">Add</li>
                     </ol>
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Add Entry Point</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> Add Entry Point/Site Type</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">

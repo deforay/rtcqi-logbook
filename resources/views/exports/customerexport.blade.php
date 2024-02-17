@@ -14,17 +14,16 @@ for ($i = 0; $i < sizeof($glob); $i++) {
     <thead style="border: 3px solid black">
         <tr>
             @if($arr['no_of_test'] == 1)
-            <td colspan="11" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
+            <td colspan="10" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
             @elseif($arr['no_of_test'] == 2)
-            <td colspan="14" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
+            <td colspan="13" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
             @elseif($arr['no_of_test'] == 3)
-            <td colspan="17" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
+            <td colspan="16" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
             @else
-            <td colspan="20" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
+            <td colspan="19" style="border: 3px solid black;font-weight:bold;">Custom Report</td>
             @endif
         </tr>
         <tr style="border: 3px solid black">
-            <th style="border: 3px solid black;font-weight:bold;">Facility</th>
             <th style="border: 3px solid black;font-weight:bold;">Site</th>
             <th style="border: 3px solid black;font-weight:bold;">Algothrim</th>
             <th style="border: 3px solid black;font-weight:bold;">Testing Period</th>
@@ -36,7 +35,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                 <th style="border: 3px solid black;font-weight:bold;">OverAll Agr</th>
         </tr>
         <tr>
-            <th></th>
+            
             <th></th>
             <th></th>
             <th></th>
@@ -72,7 +71,6 @@ for ($i = 0; $i < sizeof($glob); $i++) {
         }
         ?>
         <tr style="border: 3px solid black">
-            <td style="border: 3px solid black">{{ $trendrow->facility_name }}</td>
             <td style="border: 3px solid black">{{ $trendrow->site_name }}</td>
             <td style="border: 3px solid black">{{ $trendrow->algorithm_type }}</td>
             <td style="border: 3px solid black">{{ $testingDate }}</td>

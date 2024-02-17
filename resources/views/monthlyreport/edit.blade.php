@@ -239,20 +239,28 @@ $messages=Lang::get('messages');
 											</div>
 										</fieldset>
 									</div> --}}
-                                        <!--
+                                        
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Algorithm Type
-                                                </h5>
+                                                <h5>Algorithm Type <span class="mandatory">*</span></h5>
+                                                <?php
+                                                $testingAlgorithmType=explode(',',$testingAlgorithmType);
+                                                ?>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
-                                                        <option value="serial" {{ $result[0]->algorithm_type == 'serial' ?  'selected':''}}>Serial</option>
-                                                        <option value="parallel" {{ $result[0]->algorithm_type == 'parallel' ?  'selected':''}}>Parallel</option>
+                                                        <option value="">---Select---</option>
+                                                        @if(in_array("serial",$testingAlgorithmType))
+                                                            <option value="serial" {{ $result[0]->algorithm_type == 'serial' ?  'selected':''}}>Serial</option>
+                                                        @elseif(in_array("parallel",$testingAlgorithmType))
+                                                            <option value="parallel" {{ $result[0]->algorithm_type == 'parallel' ?  'selected':''}}>Parallel</option>
+                                                        @elseif(in_array("who3",$testingAlgorithmType))
+                                                            <option value="who3" {{ $result[0]->algorithm_type == 'who3' ?  'selected':''}}>WHO 3</option>
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        -->
+                                        
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>{{ $messages["name_of_data_collector"]}}
@@ -618,7 +626,9 @@ $messages=Lang::get('messages');
     });
 
     function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());   
+    var siteTypeId = $('#sitetypeId').val() == '' ? "":parseInt($('#sitetypeId').val());
+    var testSiteId = $('#testsiteId').val() == '' ? "" : parseInt($('#testsiteId').val());
+    
     //alert($('#testsiteId').val());
         $.ajaxSetup({
             headers: {
@@ -632,12 +642,13 @@ $messages=Lang::get('messages');
             serverSide: true,
             scrollX: false,
             autoWidth: false,
-            paging: false,
+            "aLengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
             ajax: {
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                    testSiteId: testSiteId,               
+                    testSiteId: testSiteId,
+                    siteTypeId: siteTypeId
                 },
                 
             },
@@ -1018,6 +1029,10 @@ $messages=Lang::get('messages');
             $("#monthlyReportListWrapper").show();
             getAllMonthlyReport();
         }
+        // Entry Point / Site Type Change
+        $('#sitetypeId').change(function() {
+            getAllMonthlyReport();
+        });
 // Site Name Change
 $('#testsiteId').change(function() {
     checkExistingReportingMonth();

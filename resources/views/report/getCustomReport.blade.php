@@ -53,7 +53,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         <thead>
 
             <tr class="frezz" style=" top: 37px; width:94.6%;">
-                <th class="th" style="width:10%;">Facility</th>
                 <th class="th" style="width:10%;">Site</th>
                 <th class="th" style="width:10%;">Algorithm</th>
                 <th class="th" style="width:10%;">Testing Period</th>
@@ -65,7 +64,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <th class="th" style="width:10%;">OverAll Agr</th>
             </tr>
             <tr>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -105,9 +103,8 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             // $testingMonth= date('F - Y', strtotime($date)); //June, 2017
             ?>
             <tr style="text-align: right">
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a onclick="logData('{{$trendrow->ts_id}}')" href="javascript:void(0);" name="data" class="" title="Site Name">{{$trendrow->site_name}}</a></td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
+                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{ ucwords($trendrow->algorithm_type) }}</td>
                 <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$total}}</td>
                 @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive';
@@ -130,7 +127,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 
             @else
             <tr>
-                <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
+                <td class="frezz" style="text-align:center;width:94.6%;" colspan="16">No Data Available</td>
             </tr>
             @endif
 

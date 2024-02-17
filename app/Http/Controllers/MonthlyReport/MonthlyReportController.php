@@ -71,12 +71,13 @@ class MonthlyReportController extends Controller
             $monthService = new MonthlyReportService();
             $latest = $monthService->getLatestValue();
             $glob = $GlobalConfigService->getAllGlobalConfig();
+            $testingAlgorithmType = $GlobalConfigService->getGlobalConfigValue('testing_algorithm');
             $arr = array();
             // now we create an associative array so that we can easily create view variables
             for ($i = 0; $i < sizeof($glob); $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.add', array('latest' => $latest, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'district' => $district,  'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo));
+            return view('monthlyreport.add', array('latest' => $latest, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'district' => $district,  'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo,'testingAlgorithmType'=>$testingAlgorithmType));
         }
     }
 
@@ -155,12 +156,13 @@ class MonthlyReportController extends Controller
             $auditData = $UserService->getAllActivityById($id);
             $allowedTestKitNo = $allowedTestKit->getAllKitNo($globalValue);
             $glob = $GlobalConfigService->getAllGlobalConfig();
+            $testingAlgorithmType = $GlobalConfigService->getGlobalConfigValue('testing_algorithm');
             $arr = array();
             // now we create an associative array so that we can easily create view variables
             for ($i = 0; $i < sizeof($glob); $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'district' => $district, 'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype,'auditData'=>$auditData));
+            return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'district' => $district, 'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype,'auditData'=>$auditData,'testingAlgorithmType'=>$testingAlgorithmType));
         }
     }
 

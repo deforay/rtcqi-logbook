@@ -62,6 +62,15 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>External ID
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="externalId" value="{{$result[0]->province_external_id}}" class="form-control" autocomplete="off" placeholder="Enter External ID" name="externalId" title="Please Enter External ID">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>Province Status<span class="mandatory">*</span>
                                             </h5>

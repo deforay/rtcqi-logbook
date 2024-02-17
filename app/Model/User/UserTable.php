@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Mail;
 use Illuminate\Support\Facades\File;
 use LDAP\Result;
+use App\Service\GlobalConfigService;
 
 class UserTable extends Model
 {
@@ -227,12 +228,16 @@ class UserTable extends Model
         $data = $params->all();
         $commonservice = new CommonService();
         $userservice = new UserService();
+        $globalConfigService = new GlobalConfigService();
+        $disableInactiveUser = $globalConfigService->getGlobalConfigValue('disable_inactive_user');
+        
+
         $result = json_decode(DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
-            ->get(), true);            
+            ->get(), true);
 
 
         if (!empty($result)) {
@@ -254,6 +259,25 @@ class UserTable extends Model
             // var_dump(Hash::check($data['password'], $hashedPassword));
             //var_dump($hashedPassword);die;
             if (Hash::check($data['password'], $hashedPassword)) {
+                if($disableInactiveUser=='yes'){
+                    $currentDate=Date("d-M-Y");
+                    $lastLoginDatetime=$result[0]['last_login_datetime'];
+                    //Calculate number of month
+                    $diff = abs(strtotime($currentDate)-strtotime($lastLoginDatetime));
+                    $years = floor($diff / (365*60*60*24));
+                    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+
+                    $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
+                    if(trim($noOfMonths)==""){
+                        $noOfMonths=6;
+                    }
+                    if($months>=$noOfMonths){
+                        $response = DB::table('users')
+                        ->where('user_id', '=',$result[0]['user_id'])
+                        ->update(array('user_status' => 'inactive'));
+                        return 2;
+                    }
+                }
                 $configFile =  "acl.config.json";
                 if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
                     $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
@@ -271,6 +295,9 @@ class UserTable extends Model
                     }                    
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
                     $userservice->loggedInHistory($data,'success');
+                    $response = DB::table('users')
+                        ->where('user_id', '=',$result[0]['user_id'])
+                        ->update(array('last_login_datetime' => $commonservice->getDateTime()));
                 } else {
                     return 2;
                 }
