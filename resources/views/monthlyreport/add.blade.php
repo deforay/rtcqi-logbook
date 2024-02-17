@@ -8,23 +8,25 @@
     }
 </style>
 <?php
+$todays_date = date('d-M-Y');
+$name_of_collector = session('name');
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 // print_r($latest->test_1_kit_id);die;
 $test = '';
-
+$messages=Lang::get('messages');
 ?>
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Monthly Report</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ $messages["monthly_report"]}}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ $messages["manage"]}}
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreport/">Monthly report</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreport/">{{ $messages["monthly_report"]}}</a>
                         </li>
-                        <li class="breadcrumb-item active">Add</li>
+                        <li class="breadcrumb-item active">{{ $messages["add"]}}</li>
                     </ol>
                 </div>
             </div>
@@ -36,24 +38,24 @@ $test = '';
         <section class="horizontal-grid" id="horizontal-grid">
             <div class="row">
                 <div class="col-12">
-                
+
                                 <div class="table-responsive" id="monthlyReportListWrapper">
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
                                         <thead>
                                             <tr>
-                                                <th>Site Name</th>
-                                                <th>Entry Point</th>
-                                                <th>Reporting Month</th>
-                                                <th>Date of Data Collection</th>
-                                                <th>Name of Data Collector</th>
-                                                <th>Book No</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Total Number of Pages</th>
-                                                <th>Last Modified On</th>
+                                                <th>{{ $messages['site_name']}}</th>
+                                                <th>{{ $messages['entry_point']}}</th>
+                                                <th>{{ $messages['reporting_month']}}</th>
+                                                <th>{{ $messages['date_of_data_collection']}}</th>
+                                                <th>{{ $messages['name_of_data_collector']}}</th>
+                                                <th>{{ $messages['book_number']}}</th>
+                                                <th>{{ $messages['start_date']}}</th>
+                                                <th>{{ $messages['end_date']}}</th>
+                                                <th>{{ $messages['total_number_of_pages']}}</th>
+                                                <th>{{ $messages['last_modified_on']}}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
-                                                <th>Action</th>
+                                                <th>{{ $messages["action"]}}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
@@ -64,7 +66,7 @@ $test = '';
                                 </div>
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Add New Report</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ $messages["add_new_report"]}}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -85,10 +87,10 @@ $test = '';
 
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Site Name<span class="mandatory">*</span>
+                                                <h5>{{ $messages["site_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
+                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="{{ $messages['please_select_test_site_name']}}">
                                                         @foreach($testsite as $row2)
                                                         <option value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
                                                         @endforeach
@@ -98,10 +100,10 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Entry Point<span class="mandatory">*</span>
+                                                <h5>{{ $messages["entry_point"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="Please Select Entry Point">
+                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId" title="{{ $messages['please_select_entry_point']}}">
                                                         @foreach($sitetype as $row1)
                                                         <option value="{{$row1->st_id}}">{{$row1->site_type_name}}</option>
                                                         @endforeach
@@ -111,19 +113,19 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Site ID
+                                                <h5>{{ $messages["site_id"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="siteUniqueId" class="form-control" autocomplete="off" placeholder="Enter Site Unique Id" name="siteUniqueId" title="Please Enter Site Unique Id">
+                                                    <input type="text" id="siteUniqueId" class="form-control" autocomplete="off" placeholder="{{$messages['enter_site_unique_id']}}" name="siteUniqueId" title="{{ $messages['please_enter_site_unique_id']}}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Province Name<span class="mandatory">*</span>
+                                                <h5>{{ $messages["province_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="{{ $messages['please_select_province_name']}}">
                                                         <option value="">---Select---</option>
                                                         @foreach($province as $row)
                                                         <option value="{{$row->province_id}}">{{$row->province_name}}</option>
@@ -134,19 +136,47 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Site Manager
+                                                <h5>{{ $messages["district_name"]}}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="siteManager" class="form-control" autocomplete="off" placeholder="Enter Site Manager" name="siteManager" title="Please Enter Site Manager">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="{{ $messages['please_select_district_name']}}">
+                                                        <option value="">---Select---</option>
+                                                        @foreach($district as $row)
+                                                        <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Is FLC?<span class="mandatory">*</span>
+                                                <h5>{{ $messages["sub_district_name"]}}<span class="mandatory"></span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="Please select Is FLC status">
+                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
+                                                        <option value="">---Select---</option>
+                                                        @foreach($subdistrict as $row)
+                                                        <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
+                                                <h5>{{ $messages["site_manager"]}}
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="siteManager" class="form-control" autocomplete="off" placeholder="{{$messages['enter_site_manager']}}" name="siteManager" title="{{ $messages['please_enter_site_manager']}}">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="form-group col-xl-3 col-lg-3">
+                                            <fieldset>
+                                                <h5>{{ $messages["is_flc"]}}<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isFlu" name="isFlu" title="{{ $messages['please_select_is_flc_status']}}">
                                                         <option value="">-- Select --</option>
                                                         <option value="yes">Yes</option>
                                                         <option value="no">No</option>
@@ -156,29 +186,29 @@ $test = '';
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>Lab Manager Name <span class="mandatory">*</span>
+											<h5>{{ $messages["lab_manager_name"]}} <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="testername" class="form-control isRequired " autocomplete="off" placeholder="Enter Lab Manager Name" name="testername" title="Please Enter Lab Manager Name" >
+                                                <input type="text" id="testername" class="form-control isRequired " autocomplete="off" placeholder="{{$messages['enter_lab_manager_name']}}" name="testername" title="{{ $messages['please_enter_lab_manager_name']}}" >
 											</div>
 										</fieldset>
 									</div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Lab Manager Contact Number
+                                                <h5>{{ $messages["lab_manager_contact_number"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                <input type="tel" id="contactNo" maxlength="10" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="Enter Tester Contact Phone" name="contactNo" title="Please Enter Tester Contact Phone" >
+                                                <input type="tel" id="contactNo" maxlength="10" onkeypress="return isNumberKey(event);" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_tester_contact_phone']}}" name="contactNo" title="{{ $messages['please_enter_tester_contact_phone']}}" >
                                                 </div>
                                             </fieldset>
                                         </div>
                                         @if($global['recency_test']=='enabled')
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Does site do Recency Tests?<span class="mandatory">*</span>
+                                                <h5>{{ $messages["does_site_do_recency_tests"]}} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="Please select Does site do Recency Tests?">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="isRecency" name="isRecency" title="{{ $messages['please_select_does_site_do_recency_tests']}}?">
                                                         <option value="yes">Yes</option>
                                                         <option value="no" selected>No</option>
                                                     </select>
@@ -188,19 +218,19 @@ $test = '';
                                         @endif
                                         {{-- <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>Latitude <span class="mandatory">*</span>
+											<h5>{{ $messages["latitude"]}} <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="latitude" class="form-control isRequired " autocomplete="off" placeholder="Enter latitude" name="latitude" title="Please Enter latitude" >
+                                                <input type="text" id="latitude" class="form-control isRequired " autocomplete="off" placeholder="{{$messages['enter_latitude']}}" name="latitude" title="{{ $messages['please_enter_latitude']}}" >
 											</div>
 										</fieldset>
 									</div>
                                     <div class="form-group col-xl-3 col-lg-3">
 										<fieldset>
-											<h5>Longitude <span class="mandatory">*</span>
+											<h5>{{ $messages["longitude"]}} <span class="mandatory">*</span>
 											</h5>
 											<div class="form-group">
-                                                <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="Enter longitude" name="longitude" title="Please Enter longitude" >
+                                                <input type="text" id="longitude" class="form-control isRequired " autocomplete="off" placeholder="{{$messages['enter_longitude']}}" name="longitude" title="{{ $messages['please_enter_longitude']}}" >
 											</div>
 										</fieldset>
 									</div> --}}
@@ -221,37 +251,37 @@ $test = '';
                                         -->
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Name of Data Collector
+                                                <h5>{{ $messages["name_of_data_collector"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="Enter Name of Data Collected" name="nameOfDataCollect" title="Please Enter Name of Data Collected">
+                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_name_of_data_collected']}}" name="nameOfDataCollect" title="{{ $messages['please_enter_name_of_data_collected']}}" value="{{$name_of_collector}}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Date of Data Collection
+                                                <h5>{{ $messages["date_of_data_collection"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="Enter Date Of Collection" name="DateOfCollect" title="Please Enter Date Of Collection">
+                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}" value="{{$todays_date}}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Reporting Month <span class="mandatory">*</span>
+                                                <h5>{{ $messages["reporting_month"]}} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="reportingMon" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+                                                    <input type="text" id="reportingMon" class="form-control isRequired" autocomplete="off" placeholder="{{$messages['enter_reporting_month']}}" name="reportingMon" title="{{ $messages['please_enter_reporting_month']}}" >
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Book Number
+                                                <h5>{{ $messages["book_number"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="bookNo" class="form-control" autocomplete="off" placeholder="Enter Book No" name="bookNo" title="Please Enter Book No">
+                                                    <input type="text" id="bookNo" class="form-control" autocomplete="off" placeholder="{{$messages['enter_book_no']}}." name="bookNo" title="{{ $messages['please_enter_book_no']}}">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -259,35 +289,35 @@ $test = '';
                                     <br />
                                     <div id="test_row">
 
-                                        <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">Test Details</h4>
+                                        <h4 style="font-weight: normal; text-transform:uppercase;" class="form-section">{{ $messages["test_details"]}}</h4>
 
                                         <div class="testDetailsRow" id="test_details0">
                                             <div class="row">
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>Page No.</h5>
+                                                        <h5>{{ $messages["page_no"]}}.</h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" id="pageNO1" class="form-control" autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos('1')">
+                                                            <input type="number" min="0" id="pageNO1" class="form-control" autocomplete="off" placeholder="{{$messages['enter_page_no']}}." name="pageNO[]" title="{{ $messages['please_enter_page_no']}}." onchange="checkExistPageNos('1')">
                                                         </div>
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>Start Date <span class="mandatory">*</span>
+                                                        <h5>{{ $messages["start_date"]}} <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="startDate0" class="form-control isRequired startDate" autocomplete="off" onchange="changeStartDate(0)" placeholder="Enter Start Date" name="startDate[]" title="Please Enter Start Date">
+                                                            <input type="text" id="startDate0" class="form-control isRequired startDate" autocomplete="off" onchange="changeStartDate(0)" placeholder="{{$messages['enter_start_date']}}" name="startDate[]" title="{{ $messages['please_enter_start_date']}}">
                                                             <div id="show_error_date0" class="error-date" ></div>
                                                         </div>
-                                                        
+
                                                     </fieldset>
                                                 </div>
                                                 <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
-                                                        <h5>End Date <span class="mandatory">*</span>
+                                                        <h5>{{ $messages["end_date"]}} <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" id="endDate0" class="form-control isRequired  endDate" autocomplete="off" onchange="changeEndDate(0);" placeholder="Enter End Date" name="endDate[]" title="Please Enter End Date">
+                                                            <input type="text" id="endDate0" class="form-control isRequired  endDate" autocomplete="off" onchange="changeEndDate(0);" placeholder="{{$messages['enter_end_date']}}" name="endDate[]" title="{{ $messages['please_enter_end_date']}}">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -301,17 +331,17 @@ $test = '';
                                                                                             ?> <td style="text-align:center;" colspan="3">
                                                         <fieldset>
                                                             @if($i == 1)
-                                                            <h5>Test Kit Name {{$i}}<span class="mandatory">*</span>
+                                                            <h5>{{ $messages["test_kit_name"]}} {{$i}}<span class="mandatory">*</span>
                                                             </h5>
                                                             @else 
-                                                            <h5>Test Kit Name {{$i}}
+                                                            <h5>{{ $messages["test_kit_name"]}} {{$i}}
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
                                                             @if($i == 1)
-                                                                <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
+                                                                <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="{{ $messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
                                                                 @else
-                                                                <select class="form-control selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
+                                                                <select class="form-control selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="{{ $messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
                                                                 @endif
                                                                     <option value="">--Select--</option>
                                                                     @if(isset($allowedTestKitNo[$i]))
@@ -342,11 +372,11 @@ $test = '';
                                                                                                 $test = '';
                                                                                                 ?> <td style=" text-align: center;" colspan="3">
                                                             <fieldset>
-                                                                <h5>Test Kit Name{{$i}}<span class="mandatory">*</span>
+                                                                <h5>{{ $messages["test_kit_name"]}}{{$i}}<span class="mandatory">*</span>
                                                                 </h5>
                                                                 <div class="form-group">
 
-                                                                    <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
+                                                                    <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_0" name="testkitId{{$i}}[]" title="{{ $messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','0',this)">
                                                                         <option value="">--Select--</option>
                                                                         @foreach($kittype as $row2)
                                                                         @if(isset($latest->$test_id) && $latest->$test_id !='')
@@ -365,33 +395,33 @@ $test = '';
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <td style=" text-align: center;">
                                                     @if($j == 1)    
-                                                       <h5>Lot No. {{$j}}<span class="mandatory">*</span>
+                                                       <h5>{{ $messages["lot_no"]}} {{$j}}<span class="mandatory">*</span>
                                                         </h5>
                                                         @else 
-                                                        <h5>Lot No. {{$j}}
+                                                        <h5>{{ $messages["lot_no"]}} {{$j}}
                                                         </h5>
                                                         @endif
                                                         <div class="form-group">
                                                         @if($j == 1)
-                                                            <input type="text" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}" oninput="checklotNo('0','{{$j}}')">
+                                                            <input type="text" id="lotNO0{{$j}}" class="form-control isRequired  " autocomplete="off" placeholder="{{$messages['enter_lot_no']}}." name="lotNO{{$j}}[]" title="{{ $messages['please_enter_lot_no']}}.{{$j}}" oninput="checklotNo('0','{{$j}}')">
                                                         @else
-                                                            <input type="text" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO{{$j}}[]" title="Please Enter Lot No.{{$j}}" oninput="checklotNo('0','{{$j}}')">
+                                                            <input type="text" id="lotNO0{{$j}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_lot_no']}}." name="lotNO{{$j}}[]" title="{{ $messages['please_enter_lot_no']}}.{{$j}}" oninput="checklotNo('0','{{$j}}')">
                                                         @endif
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" colspan="2">
                                                         @if($j == 1)
-                                                            <h5>Expiry Date {{$j}}<span class="mandatory">*</span>
+                                                            <h5>{{ $messages["expiry_date"]}} {{$j}}<span class="mandatory">*</span>
                                                             </h5>
                                                             @else 
-                                                            <h5>Expiry Date {{$j}}
+                                                            <h5>{{ $messages["expiry_date"]}} {{$j}}
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
                                                             @if($j == 1)
-                                                                <input type="text" id="expiryDate0{{$j}}" class="form-control isRequired dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="Enter Expiry Date" title="Please Enter Expiry Date{{$j}}" onchange="checklotNo('0','{{$j}}')">
-                                                                @else 
-                                                                <input type="text" id="expiryDate0{{$j}}" class="form-control dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="Enter Expiry Date" title="Please Enter Expiry Date{{$j}}" onchange="checklotNo('0','{{$j}}')">
+                                                                <input type="text" id="expiryDate0{{$j}}" class="form-control isRequired dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="{{$messages['enter_expiry_date']}}" title="{{ $messages['please_enter_expiry_date']}}{{$j}}" onchange="checklotNo('0','{{$j}}')">
+                                                                @else
+                                                                <input type="text" id="expiryDate0{{$j}}" class="form-control dates " autocomplete="off" name="expiryDate{{$j}}[]" placeholder="{{$messages['enter_expiry_date']}}" title="{{ $messages['please_enter_expiry_date']}}{{$j}}" onchange="checklotNo('0','{{$j}}')">
                                                                 @endif
                                                             </div>
                                                         </td>
@@ -399,30 +429,30 @@ $test = '';
                                                 </tr>
                                                 <tr>
                                                     @for($k = 1; $k <= $globalValue; $k++) <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
-                                                        <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">Test Kit {{$k}}</h4>
+                                                        <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">{{ $messages["test_kit"]}} {{$k}}</h4>
                                                         </td>
                                                         @endfor
                                                 </tr>
                                                 <tr>
                                                     @for($l = 1; $l <= $globalValue; $l++) <td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-                                                        <h5 style="color: white; font-weight: 500;"> R
+                                                        <h5 style="color: white; font-weight: 500;"> {{ $messages["reactive"]}}
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - {{$l}}" name="totalReactive{{$l}}[]" title="Please Enter Total Reactive - R - {{$l}}">
+                                                            <input type="number" min="0" id="totalReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_reactive_r']}} {{$l}}" name="totalReactive{{$l}}[]" title="{{ $messages['please_enter_total_reactive_r']}} {{$l}}">
                                                         </div>
                                                         </td>
                                                         <td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-                                                            <h5 style="color: white; font-weight: 500;">NR
+                                                            <h5 style="color: white; font-weight: 500;">{{ $messages["non_reactive"]}}
                                                             </h5>
                                                             <div class="form-group">
-                                                                <input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - {{$l}}" name="totalNonReactive{{$l}}[]" title="Please Enter Total Non-Reactive - R - {{$l}}">
+                                                                <input type="number" min="0" id="totalNonReactive{{$l}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_non_reactive_nr']}} {{$l}}" name="totalNonReactive{{$l}}[]" title="{{ $messages['please_enter_total_non_reactive_nr']}} {{$l}}">
                                                             </div>
                                                         </td>
                                                         <td style=" text-align: center;" bgcolor="{{$col[$l]}}">
-                                                            <h5 style="color: white; font-weight: 500;">INV
+                                                            <h5 style="color: white; font-weight: 500;">{{ $messages["invalid"]}}
                                                             </h5>
                                                             <div class="form-group">
-                                                                <input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - {{$l}}" name="totalInvalid{{$l}}[]" title="Please Enter Total Invalid - INV - {{$l}}">
+                                                                <input type="number" min="0" id="totalInvalid{{$l}}" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_invalid_inv']}} {{$l}}" name="totalInvalid{{$l}}[]" title="{{ $messages['please_enter_total_invalid_inv']}} {{$l}}">
                                                             </div>
                                                         </td>
 
@@ -435,27 +465,27 @@ $test = '';
                                                     <table class="table1" style="width:80%;margin-left: 10%;">
                                                         <tr>
                                                             <td style=" text-align: center;">
-                                                                <h4 style="font-weight: 600;"> Final Result </h4>
+                                                                <h4 style="font-weight: 600;"> {{ $messages["final_result"]}} </h4>
                                                             </td>
                                                             <td style=" text-align: center;">
-                                                                <h5> Positive
+                                                                <h5> {{ $messages["positive"]}}
                                                                 </h5>
                                                                 <div class="form-group">
-                                                                    <input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive">
+                                                                    <input type="number" min="0" id="totalPositive0" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_positive']}}" name="totalPositive[]" title="{{ $messages['please_enter_final_positive']}}">
                                                                 </div>
                                                             </td>
                                                             <td style=" text-align: center;">
-                                                                <h5> Negative
+                                                                <h5> {{ $messages["negative"]}}
                                                                 </h5>
                                                                 <div class="form-group">
-                                                                    <input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative">
+                                                                    <input type="number" min="0" id="totalNegative0" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_negative']}}" name="totalNegative[]" title="{{ $messages['please_enter_final_negative']}}">
                                                                 </div>
                                                             </td>
                                                             <td style=" text-align: center;">
-                                                                <h5> Indeterminate
+                                                                <h5> {{ $messages["indeterminate"]}}
                                                                 </h5>
                                                                 <div class="form-group">
-                                                                    <input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined">
+                                                                    <input type="number" min="0" id="finalUndetermined0" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_undetermined']}}" name="finalUndetermined[]" title="{{ $messages['please_enter_final_undetermined']}}">
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -475,18 +505,18 @@ $test = '';
                                     <div class="row" style="color:white;margin-left:40%;">
                                         <div>
                                             <a onclick="insert_row();" class="btn btn-info grey">
-                                                <i class="ft-plus icon-left"></i> Add Page
+                                                <i class="ft-plus icon-left"></i> {{ $messages["add_page"]}}
                                             </a>
                                         </div>
                                     </div>
                                     <div class="form-actions right">
                                         <a href="/monthlyreport">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ $messages["cancel"]}}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save
+                                            <i class="la la-check-square-o"></i> {{ $messages["save"]}}
                                         </button>
                                     </div>
                                 </form>
@@ -508,10 +538,10 @@ $test = '';
         $("#monthlyReportListWrapper").hide();
         $('.js-example-basic-single').select2();
         $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
-            placeholder: "Select Site Name"
+            placeholder: "{{$messages['select_site_name']}}"
         });
         $selectElement = $('#sitetypeId').prepend('<option selected></option>').select2({
-            placeholder: "Select Site Type"
+            placeholder: "{{$messages['select_site_type']}}"
         });
         $('.datepicker').datepicker({
             autoclose: true,
@@ -564,8 +594,11 @@ var id = $(this).val();
 getAllMonthlyReport();
 // Empty the dropdown
 $('#provinceId').find('option').not(':first').remove();
+$('#districtId').find('option').not(':first').remove();
+$('#subDistrictId').find('option').not(':first').remove();
+$('#bookNo').val('');
 
-// AJAX request 
+// AJAX request
 $.ajax({
     url: "{{url('/getProvince') }}/" + id,
     type: 'get',
@@ -576,14 +609,23 @@ $.ajax({
             $("#siteManager").val('');
             $("#testername").val('');
             $("#contactNo").val('');
+            $("#bookNo").val('');
         } else {
             $.each(response, function(key, value) {
+
                 $("#siteUniqueId").val(value.site_id);
                 $("#siteManager").val(value.site_manager);
                 $("#testername").val(value.tester_name);
                 $("#contactNo").val(value.contact_no);
+                $("#bookNo").val(value.book_no);
                 if(value.province_id!=null) {
                 $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
+                }
+                if(value.district_id!=null) {
+                $("#districtId").append('<option value="' + value.district_id + '"selected>' + value.district_name + '</option>');
+                }
+                if(value.sub_district_id!=null) {
+                $("#subDistrictId").append('<option value="' + value.sub_district_id + '"selected>' + value.sub_district_name + '</option>');
                 }
             });
         }
@@ -595,7 +637,7 @@ loadReplaceTestKitHeadings();
  });
 
  function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());   
+    var testSiteId = parseInt($('#testsiteId').val());
     //alert($('#testsiteId').val());
         $.ajaxSetup({
             headers: {
@@ -610,14 +652,14 @@ loadReplaceTestKitHeadings();
             scrollX: false,
             autoWidth: false,
             paging: false,
-            
+
             ajax: {
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                    testSiteId: testSiteId,               
+                    testSiteId: testSiteId,
                 },
-                
+
             },
 
             columns: [
@@ -713,7 +755,7 @@ loadReplaceTestKitHeadings();
     function changeEndDate(id) {
         
         if($('#startDate' + id).val() === ''){
-            var errorMessage='<span style="color:red">Please select start date!</span>'
+            var errorMessage='<span style="color:red">{{$messages["please_select_start_date"]}}</span>'
             $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
             $('#show_error_date'+id).css("display", "block"); 
             $("#endDate" + id).val('');           
@@ -729,7 +771,7 @@ loadReplaceTestKitHeadings();
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
         }
-        
+
         // var minDate = new Date(selected.date.valueOf());
         //        $('#startDate'+id).datepicker('setEndDate', minDate);
     }
@@ -739,13 +781,13 @@ loadReplaceTestKitHeadings();
         flag = deforayValidator.init({
             formId: 'addMonthlyReport'
         });
-        
+
         if (flag == true) {
             // var rowCount = $(".testDetailsRow").length;
             // if(rowCount > 0){
             //     alert('sss');
             //     for(var i=0; $i<rowCount; $i++){
-            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){           
+            //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){
             //             var errorMessage="please select start date first";
             //             $('#endDate' + i).val('');
             //             $('#show_error_date'+i).html(flag).delay(3000).fadeOut();
@@ -753,8 +795,8 @@ loadReplaceTestKitHeadings();
             //             $(".error-date").focus();
             //             return false;
             //         }
-            //     }                
-            
+            //     }
+
             // }
             if (duplicateName) {
                 document.getElementById('addMonthlyReport').submit();
@@ -780,28 +822,28 @@ loadReplaceTestKitHeadings();
 			<div class="row">\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>Page No.</h5>\
+						<h5>{{ $messages["page_no"]}}.</h5>\
 						<div class="form-group">\
-							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control" autocomplete="off" placeholder="Enter Page No." name="pageNO[]" title="Please Enter Page No" onchange="checkExistPageNos(\'' + rowCount + '\')" >\
+							<input type="number" min="0" id="pageNO' + rowCount + '" class="form-control" autocomplete="off" placeholder="{{$messages['enter_page_no']}}." name="pageNO[]" title="{{$messages['please_enter_page_no']}}." onchange="checkExistPageNos(\'' + rowCount + '\')" >\
 						</div>\
 					</fieldset>\
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>Start Date <span class="mandatory">*</span>\
+						<h5>{{ $messages["start_date"]}} <span class="mandatory">*</span>\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="startDate' + rowCount + '" class="form-control startDate" onchange="changeStartDate(' + rowCount + ')" placeholder="Enter Start Date" autocomplete="off" name="startDate[]" title="Please Enter Start Date" >\
+							<input type="text" id="startDate' + rowCount + '" class="form-control startDate" onchange="changeStartDate(' + rowCount + ')" placeholder="{{$messages['enter_start_date']}}" autocomplete="off" name="startDate[]" title="{{ $messages['please_enter_start_date']}}" >\
                             <div id="show_error_date' + rowCount + '" class="error-date" ></div>\
 						</div>\
 					</fieldset>\
 				</div>\
 				<div class="col-xl-4 col-lg-12">\
 					<fieldset>\
-						<h5>End Date <span class="mandatory">*</span>\
+						<h5>{{ $messages["end_date"]}} <span class="mandatory">*</span>\
 						</h5>\
 						<div class="form-group">\
-							<input type="text" id="endDate' + rowCount + '" class="form-control  endDate" onchange="changeEndDate(' + rowCount + ')" placeholder="Enter End Date" autocomplete="off" name="endDate[]" title="Please Enter End Date" >\
+							<input type="text" id="endDate' + rowCount + '" class="form-control  endDate" onchange="changeEndDate(' + rowCount + ')" placeholder="{{$messages['enter_end_date']}}" autocomplete="off" name="endDate[]" title="{{$messages['please_enter_end_date']}}" >\
 						</div>\
 					</fieldset>\
 				</div>\
@@ -813,10 +855,10 @@ loadReplaceTestKitHeadings();
 				@for($i = 1; $i <= $globalValue; $i++)\
 				<td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>Test Kit Name {{$i}}\
+							<h5>{{ $messages["test_kit_name"]}} {{$i}}\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
+									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="{{$messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings(\'{{$i}}\',\'' + rowCount + '\',this)">\
 									<option value="">--Select--</option>\
 										@if(isset($allowedTestKitNo[$i]))\
 											@foreach($allowedTestKitNo[$i] as $value=>$option)\
@@ -836,10 +878,10 @@ loadReplaceTestKitHeadings();
 						@for($i = 1; $i <= $globalValue; $i++)\
 				        <td  style=" text-align: center;" colspan="3" >\
 						<fieldset>\
-							<h5>Test Kit Name{{$i}}\
+							<h5>{{ $messages["test_kit_name"]}}{{$i}}\
 								</h5>\
 								<div class="form-group">\
-									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="Please select Test Kit Name{{$i}}" onchange="replaceTestKitHeadings(' {
+									<select class="form-control" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_' + rowCount + '" name="testkitId{{$i}}[]" title="{{$messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings(' {
             {
                 $i
             }
@@ -858,17 +900,17 @@ loadReplaceTestKitHeadings();
         div += '</tr><tr>'
         for (var j = 1; j <= gCnt; j++) {
             div += '<td style=" text-align: center;">\
-							<h5>Lot No. ' + j + ' \
+							<h5>{{ $messages["lot_no"]}}. ' + j + ' \
 							</h5>\
 							<div class="form-group">\
-								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="Enter Lot No." name="lotNO' + j + '[]" title="Please Enter Lot No.' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
+								<input type="text" id="lotNO' + rowCount + '' + j + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_lot_no']}}." name="lotNO' + j + '[]" title="{{$messages['please_enter_lot_no']}}.' + j + '" oninput=checklotNo(' + rowCount + ',' + j + ')>\
 							</div>\
 					</td>\
 					<td style=" text-align: center;" colspan="2">\
-							<h5>Expiry Date ' + j + '\
+							<h5>{{ $messages["expiry_date"]}} ' + j + '\
 							</h5>\
 							<div class="form-group">\
-								<input type="text" id="expiryDate' + rowCount + '' + j + '" class="form-control dates " autocomplete="off" placeholder="Enter Expiry Date" name="expiryDate' + j + '[]" title="Please Enter Expiry Date' + j + '" onchange=checklotNo(' + rowCount + ',' + j + ')>\
+								<input type="text" id="expiryDate' + rowCount + '' + j + '" class="form-control dates " autocomplete="off" placeholder="{{$messages['enter_expiry_date']}}" name="expiryDate' + j + '[]" title="{{$messages['please_enter_expiry_date']}}' + j + '" onchange=checklotNo(' + rowCount + ',' + j + ')>\
 							</div>\
 					</td>';
         }
@@ -881,23 +923,23 @@ loadReplaceTestKitHeadings();
         div += '</tr><tr>'
         for (var l = 1; l <= gCnt; l++) {
             div += '<td style=" text-align: center;" bgcolor="' + col[l] + '">\
-						<h5 style="color: white; font-weight: 500;"> R\
+						<h5 style="color: white; font-weight: 500;"> {{ $messages["reactive"]}}\
 						</h5>\
 						<div class="form-group">\
-							<input type="number" min="0" id="totalReactive' + l + '" class="form-control  " autocomplete="off" placeholder="Enter Total Reactive - R - ' + l + '" name="totalReactive' + l + '[]" title="Please Enter Total Reactive - R - ' + l + '" >\
+							<input type="number" min="0" id="totalReactive' + l + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_reactive_r']}} ' + l + '" name="totalReactive' + l + '[]" title="{{ $messages['please_enter_total_reactive_r']}} ' + l + '" >\
 						</div>\
 					</td>\
 					<td style=" text-align: center;" bgcolor="' + col[l] + '">\
-							<h5 style="color: white; font-weight: 500;">NR\
+							<h5 style="color: white; font-weight: 500;">{{ $messages["non_reactive"]}}\
 							</h5>\
 							<div class="form-group">\
-							<input type="number" min="0" id="totalNonReactive' + l + '" class="form-control  " autocomplete="off" placeholder="Enter Total Non-Reactive - R - ' + l + '" name="totalNonReactive' + l + '[]" title="Please Enter Total Non-Reactive - R - ' + l + '" >\
+							<input type="number" min="0" id="totalNonReactive' + l + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_non_reactive_nr']}} ' + l + '" name="totalNonReactive' + l + '[]" title="{{ $messages['please_enter_total_non_reactive_nr']}} ' + l + '" >\
 						</div>\
 					</td>\
 					<td style=" text-align: center;" bgcolor="' + col[l] + '">\
-						<h5 style="color: white; font-weight: 500;">INV </h5> ';
+						<h5 style="color: white; font-weight: 500;">{{ $messages["invalid"]}} </h5> ';
             div += '		<div class="form-group">\
-							<input type="number" min="0" id="totalInvalid' + l + '" class="form-control  " autocomplete="off" placeholder="Enter Total Invalid - INV - ' + l + '" name="totalInvalid' + l + '[]" title="Please Enter Total Invalid - INV - ' + l + '" >\
+							<input type="number" min="0" id="totalInvalid' + l + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_total_invalid_inv']}} ' + l + '" name="totalInvalid' + l + '[]" title="{{ $messages['please_enter_total_invalid_inv']}} ' + l + '" >\
 						</div>\
 					</td>'
         }
@@ -907,27 +949,27 @@ loadReplaceTestKitHeadings();
 								<table class="table1" style="width:80%;margin-left: 10%;">\
 									<tr>\
 										<td  style=" text-align: center;">\
-										<h4 style="font-weight: 600;"> Final Result </h4>\
+										<h4 style="font-weight: 600;"> {{ $messages["final_result"]}} </h4>\
 										</td>\
 										<td style=" text-align: center;" >\
-											<h5> Positive\
+											<h5> {{ $messages["positive"]}}\
 											</h5>\
 											<div class="form-group">\
-												<input type="number" min="0" id="totalPositive' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Final Positive" name="totalPositive[]" title="Please Enter Final Positive" >\
+												<input type="number" min="0" id="totalPositive' + rowCount + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_positive']}}" name="totalPositive[]" title="{{ $messages['please_enter_final_positive']}}" >\
 											</div>\
 										</td>\
 										<td style=" text-align: center;" >\
-											<h5> Negative\
+											<h5> {{ $messages["negative"]}}\
 											</h5>\
 											<div class="form-group">\
-												<input type="number" min="0" id="totalNegative' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Final Negative" name="totalNegative[]" title="Please Enter Final Negative" >\
+												<input type="number" min="0" id="totalNegative' + rowCount + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_negative']}}" name="totalNegative[]" title="{{ $messages['please_enter_final_negative']}}" >\
 											</div>\
 										</td>\
 										<td style=" text-align: center;" >\
-											<h5> Indeterminate\
+											<h5> {{ $messages["indeterminate"]}}\
 											</h5>\
 											<div class="form-group">\
-												<input type="number" min="0" id="finalUndetermined' + rowCount + '" class="form-control  " autocomplete="off" placeholder="Enter Final Undertermined" name="finalUndetermined[]" title="Please Enter Final Undertermined" >\
+												<input type="number" min="0" id="finalUndetermined' + rowCount + '" class="form-control  " autocomplete="off" placeholder="{{$messages['enter_final_undetermined']}}" name="finalUndetermined[]" title="{{ $messages['please_enter_final_undetermined']}}" >\
 											</div>\
 										</td>\
 									</tr>\
@@ -936,7 +978,7 @@ loadReplaceTestKitHeadings();
 						<div class="col-2 mt-5">\
 							<div style="color:white;margin-left:5%;">\
 								<a  onclick="delete_row(' + rowCount + ');" class="btn btn-danger grey">\
-								<i class="ft-minus icon-left"></i> Remove Page\
+								<i class="ft-minus icon-left"></i> {{ $messages["remove_page"]}}\
 								</a>\
 							</div>\
 						</div>\
@@ -1003,7 +1045,10 @@ loadReplaceTestKitHeadings();
                 success: function(result) {
                     console.log(result)
                     if (result['status'] == 0) {
-                        alert("The Expiry Date for the lot number " + lot + " was recorded as " + result['expiry'] + " previously")
+                        var error='{{$messages['expiry_date_for_the_lot_no_was_recorded_as_previously']}}';
+                        var errorMessageReplace=error.replace(':lotno', lot);
+                        var errorMessage=error.replace(':expiry', result['expiry']);
+                        alert(errorMessage);
                     }
                 }
             });
@@ -1021,7 +1066,10 @@ loadReplaceTestKitHeadings();
             }
         }
         if (k > 1) {
-            alert("Page No. "+ itemId +" has already been added for this audit");
+
+            var error='{{$messages['page_no_has_already_been_added_for_this_product']}}';
+            var errorMessage=error.replace(':pageno', itemId);
+            alert(errorMessage);
             $("#pageNO" + rowId).val('');
             $("#pageNO" + rowId).trigger('change');
         } else {
@@ -1053,10 +1101,11 @@ loadReplaceTestKitHeadings();
                     siteName: siteName,
                 },
                 success: function(result){
-                    console.log(result)
                     if (result > 0)
                     {
-                        alert("Reporting Period "+ reportingDate +" has already been added for this Site");
+                        var error='{{$messages['reporting_period_has_already_exist_for_this_site']}}';
+                        var errorMessage=error.replace(':date', reportingDate);
+                        alert(errorMessage);
                         $("#reportingMon").val('');
                     }
                 }

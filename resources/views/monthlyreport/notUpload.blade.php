@@ -23,7 +23,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreport/">Not Upload Monthly Reports</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreport/">Failed Imports - Excel Uploads</a>
                         </li>
                     </ol>
                 </div>
@@ -32,18 +32,18 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) {?>
-                <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="la la-upload"></i> Bulk Upload Monthly Reports</b>
-               
-                </a>
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) { ?>
+                    <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="la la-upload"></i> Bulk Upload Monthly Reports</b>
+
+                    </a>
                 <?php } ?>
                 <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) {?>
-                <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-plus icon-left"></i> Add Monthly Report</b>                
-                </a>
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) { ?>
+                    <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="ft-plus icon-left"></i> Add Monthly Report</b>
+                    </a>
                 <?php } ?>
             </div>
         </div>
@@ -69,7 +69,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Not Upload Monthly Report</h3>
+                            <h3 class="content-header-title mb-0">Failed Imports - Excel Upload</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -81,37 +81,37 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                         </div>
                         <div class="card-content collapse show">
                             <div class="text-right mr-2 mt-2">
-                           
+
                             </div>
                             <div class="card-body card-dashboard">
-                            <div id="show_alert" class="mt-1"></div>
-                            <h4 class="card-title">Filter the data</h4><br>
-                            <form name="trendReportFilter" id="trendReportFilter" method="post" action="/notuploadexcelexport">
-                                                            @csrf
-                                <div class="row">
-                                            <div class="col-xl-4 col-lg-12">
-                                                    <fieldset>
-                                                        <h5>Date Range <span class="mandatory">*</span>
-                                                        </h5>
-                                                        <div class="form-group">
-                                                        <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
-                                                        </div>
-                                                    </fieldset>
+                                <div id="show_alert" class="mt-1"></div>
+                                <h4 class="card-title">Filter the data</h4><br>
+                                <form name="trendReportFilter" id="trendReportFilter" method="post" action="/notuploadexcelexport">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Date Range <span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
                                                 </div>
-                                                <div class="col-xl-4 col-lg-12">
-                                                    <fieldset>
-                                                    <h5>Province Name
-                                                        </h5>
-                                                        <div class="form-group">
-                                                            <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceName" name="provinceName[]" title="Please select Province Name">
-                                                                @foreach($province as $row)
-                                                                <option value="{{$row->province_name}}">{{$row->province_name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </fieldset>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Province Name
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceName" name="provinceName[]" title="Please select Province Name">
+                                                        @foreach($province as $row)
+                                                        <option value="{{$row->province_name}}">{{$row->province_name}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
-                                                <!-- <div class="col-xl-4 col-lg-12">
+                                            </fieldset>
+                                        </div>
+                                        <!-- <div class="col-xl-4 col-lg-12">
                                                     <fieldset>
                                                         <h5>District Name
                                                         </h5>
@@ -125,51 +125,52 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                     </fieldset>
                                                 </div> -->
 
-                                                <div class="col-xl-4 col-lg-12">
-                                                    <fieldset>
-                                                        <h5> Site Name
-                                                        </h5>
-                                                        <div class="form-group">
-                                                            <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteName" name="testSiteName[]" title="Please select Test Site Name">
-                                                                @foreach($testSite as $row)
-                                                                <option value="{{$row->test_site_name}}">{{$row->test_site_name}}</option>
-                                                                @endforeach
-                                                            </select>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5> Site Name
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteName" name="testSiteName[]" title="Please select Test Site Name">
+                                                        @foreach($testSite as $row)
+                                                        <option value="{{$row->test_site_name}}">{{$row->test_site_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-md-7" style="color:#FFF;">
+                                            <div class="form-group row">
+
+                                                <div class="col-md-7">
+                                                    <div class="row" style="padding-left:15px;">
+                                                        <div class="display-inline">
+                                                            <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> Search</button>
                                                         </div>
-                                                    </fieldset>
+                                                        <div class="display-inline ml-2">
+                                                            <a class="btn btn-danger btn-md" href="/monthlyreport/notUpload"><span>Reset</span></a>
+                                                        </div>
+                                                        <div class="display-inline ml-2">
+
+                                                            <?php $role = session('role');
+                                                            if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['notUploadExport']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['notUploadExport'] == "allow")) { ?>
+                                                                <button type="submit" class="btn btn-primary">Export</button>
+                                                            <?php } ?>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                            
-                                                <div class="col-md-7" style="color:#FFF;">
-                                                    <div class="form-group row">
+                                        </div>
+                                    </div>
 
-                                                        <div class="col-md-7">
-                                                            <div class="row" style="padding-left:15px;">
-                                                            <div class="display-inline">
-                                                                <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> Search</button>
-                                                            </div>
-                                                            <div class="display-inline ml-2">
-                                                                <a class="btn btn-danger btn-md" href="/monthlyreport/notUpload"><span>Reset</span></a>
-                                                            </div>
-                                                            <div class="display-inline ml-2">
-                                                                
-                                                                    <?php $role = session('role');
-                                                                    if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['notuploadexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['notuploadexport'] == "allow")) {?>
-                                                                    <button type="submit" class="btn btn-primary">Export</button>
-                                                                    <?php } ?>
-                                                                
-                                                            </div>
-                                                                    </div>
-                                                        </div>
-                                                    </div></div>
-                                            </div>
-                                    
                                     <p class="card-text"></p>
                                     <div class="table-responsive">
                                         <table class="table table-striped table-bordered zero-configuration" id="monthlyreportList">
-                                            
-                                            <thead>                                            
+
+                                            <thead>
                                                 <tr>
                                                     <th>Site Name</th>
                                                     <th>Site Type</th>
@@ -193,8 +194,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                                                </form>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -205,7 +206,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 </div>
 <script>
     $(document).ready(function() {
-        
+
         $.blockUI();
         getAllMonthlyReport();
         $.unblockUI();
@@ -275,7 +276,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
                 });
             });
-       
+
     });
 
     function getAllMonthlyReport() {
@@ -298,14 +299,13 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 url: '{{ url("getAllNotUploadMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                searchDate: searchDate,
-                provinceName: provinceName,                
-                testSiteName: testSiteName,
+                    searchDate: searchDate,
+                    provinceName: provinceName,
+                    testSiteName: testSiteName,
                 },
-                
+
             },
-            columns: [
-                {
+            columns: [{
                     data: 'test_site_name',
                     name: 'test_site_name',
                     className: 'firstcaps'
@@ -341,8 +341,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 },
                 {
                     data: 'date_of_data_collection',
-                    name: 'date_of_data_collection',render: function(data, type, full) {
-                    return moment(new Date(data)).format('DD-MMM-YYYY');
+                    name: 'date_of_data_collection',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
                 {
@@ -355,14 +356,16 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 },
                 {
                     data: 'start_test_date',
-                    name: 'start_test_date',render: function(data, type, full) {
-                    return moment(new Date(data)).format('DD-MMM-YYYY');
+                    name: 'start_test_date',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
                 {
                     data: 'end_test_date',
-                    name: 'end_test_date',render: function(data, type, full) {
-                    return moment(new Date(data)).format('DD-MMM-YYYY');
+                    name: 'end_test_date',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
                 {
@@ -371,11 +374,12 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 },
                 {
                     data: 'added_on',
-                    name: 'added_on',render: function(data, type, full) {
+                    name: 'added_on',
+                    render: function(data, type, full) {
                         return moment(new Date(data)).format('DD-MMM-YYYY H:m:s');
                     }
                 },
-                
+
             ],
             order: [
                 [14, 'desc']
@@ -414,7 +418,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
                 });
             });
-           */ 
+           */
     });
 </script>
 @endsection

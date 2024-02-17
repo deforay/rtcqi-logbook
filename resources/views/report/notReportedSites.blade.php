@@ -1,9 +1,9 @@
 <!--
-    Author             : Sakthivel P
-    Date               : 16 June 2021
-    Description        : Test Kit Use Report screen
-    Last Modified Date : 16 June 2021
-    Last Modified Name : Sakthivel P
+    Author             : Sijulda M
+    Date               : 10 June 2021
+    Description        : Logbook report
+    Last Modified Date : 17 June 2021
+    Last Modified Name : Sakthivel M
 -->
 
 @extends('layouts.main')
@@ -13,8 +13,8 @@
 <?php
 $enddate = date('d-M-Y', strtotime('last day of previous month'));
 $startdate = date('01-M-Y', strtotime('-18 months'));
-
 ?>
+
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-6 col-12 mb-2">
@@ -23,17 +23,10 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/testKitReport/">Test Kit Use Report</a>
+                        <li class="breadcrumb-item"><a href="/notreportedsites/">Not Reported Sites</a>
                         </li>
                     </ol>
                 </div>
-            </div>
-
-        </div>
-        <div class="content-header-right col-md-6 col-12">
-            <div class="dropdown float-md-right">
-                <!-- <a href="/userfacilitymap/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-plus icon-left"></i> Add User Facility</b></a> -->
             </div>
         </div>
     </div>
@@ -57,7 +50,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Test Kit Use Report</h3>
+                            <h3 class="content-header-title mb-0">Not Reported Sites</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -72,10 +65,10 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                 <div class="card-body">
                                     <div id="show_alert" class="mt-1" style=""></div>
                                     <h4 class="card-title">Filter the data</h4><br>
-                                    <form class="form form-horizontal" role="form" name="testKitReportFilter" id="testKitReportFilter" method="post" action="/testkitexcelexport">
+                                    <form class="form form-horizontal" role="form" name="notReportedSitesFilter" id="notReportedSitesFilter" method="post" action="/notreportedsitesexcelexport">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-xl-4 col-lg-12">
+                                        <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5>Date Range <span class="mandatory">*</span>
                                                     </h5>
@@ -117,7 +110,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                     <h5>Sub District Name
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District Name">
                                                             @foreach($subdistrict as $row)
                                                             <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
                                                             @endforeach
@@ -125,64 +118,24 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                     </div>
                                                 </fieldset>
                                             </div>
-                                            <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>Testing Algothrim
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Algorithm Type">
-                                                            <option value="serial">Serial</option>
-                                                            <option value="parallel">Parallel</option>
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>Test Site Name
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
-                                                            @foreach($testSite as $row)
-                                                            <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>Report Frequency
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select class="form-control" autocomplete="off" style="width:100%;" id="reportFrequency" name="reportFrequency" title="Please select Report Frequency">
-                                                            <option selected value="monthly">Monthly</option>
-                                                            <option value="quaterly">Quarterly</option>
-                                                            <option value="yearly">Yearly</option>
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
                                             <div class="col-md-7" style="color:#FFF;">
                                                 <div class="form-group row">
-
                                                     <div class="col-md-8">
-                                                        <button type="submit" onclick="getTestKitReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href='/testKitReport/'><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" onclick="getNotReportedSites();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/notreportedsites"><span>Reset</span></a>&nbsp;&nbsp;
                                                         <?php $role = session('role');
-                                                        if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['testkitexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['testkitexport'] == "allow")) {?>
+                                                        if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsitesexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsitesexport'] == "allow")) {?>
                                                         <button type="submit" class="btn btn-primary">Export</button>
                                                        <?php } ?>
                                                     </div>
-                                                </div>
-                                            </div></div>
+                                                </div></div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="table-responsive p-t-10">
-                        <div id="testKitList"></div>
+                        <div id="notReportedSitesList"></div>
                     </div>
                 </div>
             </div>
@@ -196,44 +149,19 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
     }
 </style>
 <script>
-    //   function exportF(elem) {
-    //     startDate = $('#startDate').val();
-    //       endDate = $('#endDate').val();
-    //         $.ajaxSetup({
-    //           headers: {
-    //               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //           }
-    //       });
-    //       $.ajax({
-    //           url: "{{ url('/testpageexcel') }}",
-    //           method: 'post',
-    //           data : {
-    //                     startDate:startDate,
-    //                     endDate:endDate,
-    //                     facilityId: $("#facilityId").val(),
-    //                     algorithmType: $("#algorithmType").val(),
-    //                     testSiteId: $("#testSiteId").val(),
-    //                     reportFrequency: $("#reportFrequency").val(),
-    //           },
-    //           success: function(result){
-    //           }
-    //         });
-    // 	}
-
-
     $(document).ready(function() {
-        getTestKitReport();
+        getNotReportedSites();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
             placeholder: "Select Province Name",
             allowClear: true,
         });
         $('#provinceId').on('select2:select', function(e) {
-            getTestKitReport();
+            getNotReportedSites();
         });
 
         $('#provinceId').on('select2:unselect', function(e) {
-            getTestKitReport();
+            getNotReportedSites();
 
         });
         $selectElement = $('#districtId').select2({
@@ -241,11 +169,11 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             allowClear: true,
         });
         $('#districtId').on('select2:select', function(e) {
-            getTestKitReport();
+            getNotReportedSites();
         });
 
         $('#districtId').on('select2:unselect', function(e) {
-            getTestKitReport();
+            getNotReportedSites();
 
         });
         $selectElement = $('#subDistrictId').select2({
@@ -253,54 +181,17 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             allowClear: true,
         });
         $('#subDistrictId').on('select2:select', function(e) {
-            getTestKitReport();
+            getNotReportedSites();
         });
 
         $('#subDistrictId').on('select2:unselect', function(e) {
-            getTestKitReport();
+            getNotReportedSites();
 
         });
-        $selectElement = $('#algorithmType').select2({
-            placeholder: "Select Testing Algothrim",
-            allowClear: true
-        });
-        $('#algorithmType').on('select2:select', function(e) {
-            getTestKitReport();
-        });
-        $('#algorithmType').on('select2:unselect', function(e) {
-            getTestKitReport();
-        });
-        $selectElement = $('#testSiteId').select2({
-            placeholder: "Select Test Site Name",
-            allowClear: true
-        });
-        $('#testSiteId').on('select2:select', function(e) {
-            getTestKitReport();
-        });
-        $('#testSiteId').on('select2:unselect', function(e) {
-            getTestKitReport();
-        });
-        $('#reportFrequency').on('change', function() {
-            getTestKitReport();
-        });
+        
     });
-    //   duplicateName = true;
-    function getTestKitReport() {
-        // flag = deforayValidator.init({
-        //     formId: 'trendReportFilter'
-        // });
 
-        // if (flag == true) {
-        //     if (duplicateName) {
-        //         document.getElementById('trendReportFilter').submit();
-        //     }
-        // }
-        // else{
-        //     // Swal.fire('Any fool can use a computer');
-        //     $('#show_alert').html(flag).delay(3000).fadeOut();
-        //     $('#show_alert').css("display","block");
-        //     $(".infocus").focus();
-        // }
+    function getNotReportedSites() {
         let searchDate = $('#searchDate').val();
         $.ajaxSetup({
             headers: {
@@ -308,32 +199,23 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             }
         });
         $.ajax({
-            url: "{{ url('/getTestKitMonthlyReport') }}",
+            url: "{{ url('/getNotReportedSites') }}",
             method: 'post',
             data: {
                 searchDate: searchDate,
                 provinceId: $("#provinceId").val(),
                 districtId: $("#districtId").val(),
-                subDistrictId: $("#subDistrictId").val(),
-                algorithmType: $("#algorithmType").val(),
-                testSiteId: $("#testSiteId").val(),
-                reportFrequency: $("#reportFrequency").val(),
+                subDistrictId: $("#subDistrictId").val(),                
+            },
+            error:function(e){
+                alert('happened error');
+                console.log(e);
             },
             success: function(result) {
-                $("#testKitList").html(result);
+                console.log('not reported list', result);
+                $("#notReportedSitesList").html(result);
             }
         });
-    }
-
-    function clearStatus() {
-        $.blockUI();
-        getTestKitReport();
-        $.unblockUI();
-        $("#startDate").val("");
-        $("#endDate").val("");
-        $("#facilityId").val('').trigger('change');
-        $("#algorithmType").val('').trigger('change');
-        $("#testSiteId").val('').trigger('change');
     }
 
     $(document).ready(function() {
@@ -367,6 +249,22 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                     $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
                 });
             });
+    });
+
+    $(document).ready(function() {
+        var startDate = localStorage.getItem('date1');
+        var endDate = localStorage.getItem('date2');
+        var data = localStorage.getItem('site');
+        // alert(data);
+        if (startDate != null && endDate != null && data != null) {
+            $("#startDate").val(startDate);
+            $("#endDate").val(endDate);
+            $("#testSiteId").val(data).trigger('change');
+            window.localStorage.removeItem('date1');
+            window.localStorage.removeItem('date2');
+            window.localStorage.removeItem('site');
+        }
+
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

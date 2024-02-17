@@ -289,44 +289,47 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 searchDate: searchDate,
                 provinceId: provinceId,
             },
+            error:function(e){
+                console.log(JSON.stringify(e));
+            },
             success: function(result) {
-                var lat = '{{$latitude}}';
-                var log = '{{$longitude}}';
+                var lat = '{{$latitude}}';                
+                var log = '{{$longitude}}';                
                 var zoomLevel = '{{$mapZoomLevel}}';
+                
                 document.getElementById('monthly-report-map').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
                 var myIcon = L.icon({
                     iconUrl: "{{ asset('assets/images/dark-green.png')}}"
                 });
                 var map = L.map('map',{
                     zoomControl: false,
-        scrollWheelZoom: true,
-        inertia:false,
-        zoomAnimation:false,
-        minZoom:3,
-        maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
-      }).setView([lat, log], zoomLevel);
-      new L.Control.Zoom({position: 'topleft'}).addTo(map);
-map._onResize();
+                    scrollWheelZoom: true,
+                    inertia:false,
+                    zoomAnimation:false,
+                    minZoom:3,
+                    maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
+                }).setView([lat, log], zoomLevel);
+                new L.Control.Zoom({position: 'topleft'}).addTo(map);
+                map._onResize();
 
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png', {
-
-                        maxZoom: 17,
-                    }).addTo(map);
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
                 let coordinates = [];
 
-                //   // populate coordinates array with all the markers
+                 // populate coordinates array with all the markers
+                console.log(result.length);
                 for (let i = 0; i < result.length; i++) {
-                    //console.log(Object.values(result[i]));
                     coordinates.push(Object.values(result[i]));
                 };
-
-                //   // visualize the markers on the map
-                for (let i = 0; i < coordinates.length; i++) {
-                    L.marker(coordinates[i], {
-                            icon: myIcon
-                        }).bindPopup(coordinates[i][2])
-                        .addTo(map);
+                
+                // visualize the markers on the map
+                for (let i = 0; i < coordinates.length; i++) {                    
+                    L.marker([coordinates[i][0],coordinates[i][1]], {
+                        icon: myIcon
+                    }).bindPopup(coordinates[i][2])
+                    .addTo(map);                  
                 };
             }
         });

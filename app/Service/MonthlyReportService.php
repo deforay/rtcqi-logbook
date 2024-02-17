@@ -128,6 +128,13 @@ class MonthlyReportService
 		return $result;
 	}
 
+	public function getNotReportedSites($params)
+	{
+		$model = new MonthlyReportTable();
+		$result = $model->fetchNotReportedSites($params);
+		return $result;
+	}
+
 	public function getInvalidResultReport($params)
 	{
 		$model = new MonthlyReportTable();

@@ -1,7 +1,7 @@
 <!--
     Author             : Prasath M
     Date               : 31 May 2021
-    Description        : sitetype view screen
+    Description        : District view screen
     Last Modified Date : 31 May 2021
     Last Modified Name : Prasath M
 -->
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/sitetype/">Entry Points</a>
+                        <li class="breadcrumb-item"><a href="/subdistrict/">Sub District</a>
                         </li>
                     </ol>
                 </div>
@@ -28,10 +28,10 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-                <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['add']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['add'] == "allow")) { ?>
-                    <a href="/sitetype/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Add Entry Point</b></a>
+            <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add'] == "allow")) {?>
+                <a href="/subdistrict/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-plus icon-left"></i> Add Sub District</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -39,7 +39,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-                {{ session('status') }}</b></div>
+            {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -56,7 +56,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Entry Point</h3>
+                            <h3 class="content-header-title mb-0">Sub District</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -70,78 +70,66 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="sitetypeList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="subDistrictList">
                                         <thead>
                                             <tr>
-                                                <th>Entry Point Name</th>
-                                                <th>Status</th>
+                                                <th>Sub District Name</th>
+                                                <th>District Name</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")) { ?>
-                                                    <th>Action</th>
+                                                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
+                                                <th>Action</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
     </div>
-    </section>
 </div>
-</div>
-<script>
+  <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllSiteType();
+        getAllDistrict();
         $.unblockUI();
     });
-
-    function getAllSiteType() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('#sitetypeList').DataTable({
+    function getAllDistrict()
+    {
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $('#subDistrictList').DataTable({
             processing: true,
-            destroy: true,
+            destroy : true,
             serverSide: true,
             scrollX: false,
-            autoWidth: false,
+            autoWidth:false,
             ajax: {
-                url: '{{ url("getAllSiteType") }}',
+                url:'{{ url("getAllSubDistrict") }}',
                 type: 'POST',
             },
+
             columns: [
 
-                {
-                    data: 'site_type_name',
-                    name: 'site_type_name',
-                    className: 'firstcaps'
-                },
-                {
-                    data: 'site_type_status',
-                    name: 'site_type_status',
-                    className: 'firstcaps'
-                },
-                <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['edit'] == "allow")) { ?> {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
-                <?php } ?>
-            ],
-            order: [
-                [0, 'desc']
-            ]
+                    { data: 'sub_district_name', name: 'sub_district_name',className:'firstcaps' },
+                    { data: 'district_name', name: 'district_name',className:'firstcaps' },
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
+                    {data: 'action', name: 'action', orderable: false},
+                    <?php } ?>
+                ],
+            order: [[0, 'desc']]
         });
     }
-</script>
+  </script>
 @endsection

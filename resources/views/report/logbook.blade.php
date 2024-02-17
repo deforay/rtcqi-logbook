@@ -114,6 +114,19 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                         <div class ="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
+                                                    <h5>Sub District Name
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District Name">
+                                                            @foreach($subdistrict as $row)
+                                                            <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
                                                     <h5>Testing Algothrim
                                                     </h5>
                                                     <div class="form-group">
@@ -197,6 +210,18 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             getLogbookReport();
 
         });
+        $selectElement = $('#subDistrictId').select2({
+            placeholder: "Select Sub District Name",
+            allowClear: true,
+        });
+        $('#subDistrictId').on('select2:select', function(e) {
+            getLogbookReport();
+        });
+
+        $('#subDistrictId').on('select2:unselect', function(e) {
+            getLogbookReport();
+
+        });
         $selectElement = $('#algorithmType').select2({
             placeholder: "Select Testing Algothrim",
             allowClear: true
@@ -233,6 +258,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 searchDate: searchDate,
                 provinceId: $("#provinceId").val(),
                 districtId: $("#districtId").val(),
+                subDistrictId: $("#subDistrictId").val(),
                 algorithmType: $("#algorithmType").val(),
                 testSiteId: $("#testSiteId").val(),
             },

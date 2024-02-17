@@ -23,7 +23,8 @@ class MonthlyReportTable extends Model
         //to get all request values
         $data = $request->all();
         $model = new TestSiteTable();
-        $districtId = $model->fetchDistrictId($data['testsiteId']);
+        $districtId = $data['districtId'];
+        $subDistrictId = $data['subDistrictId'];
         $latitude = $model->fetchLatitudeValue($data['testsiteId']);
         $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $user_name = session('name');
@@ -51,12 +52,13 @@ class MonthlyReportTable extends Model
                     'date_of_data_collection' => $DateOfCollect,
                     'reporting_month' => $reportingMon,
                     'book_no' => $data['bookNo'],
-                    'name_of_data_collector' => $data['nameOfDataCollect']=="" ? $user_name : $data['nameOfDataCollect'],
+                    'name_of_data_collector' => $data['nameOfDataCollect'] == "" ? $user_name : $data['nameOfDataCollect'],
                     'source' => 'web-form',
                     'added_on' => date('Y-m-d'),
                     'added_by' => session('userId'),
                     'last_modified_on' => $commonservice->getDateTime(),
                     'district_id' => $districtId,
+                    'sub_district_id' => $subDistrictId,
                     'tester_name' => $data['testername'],
                     // 'signature' => $data['signature'],
                 ]
@@ -107,11 +109,10 @@ class MonthlyReportTable extends Model
                 $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId(
                     $insMonthlyArr
                 );
-                 
             }
             $commonservice->eventLog('add-monthly-report-request', $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report', $id);
         }
-        
+
         return $id;
     }
 
@@ -121,7 +122,7 @@ class MonthlyReportTable extends Model
         $commonservice = new CommonService();
         $start_date = '';
         $end_date = '';
-        
+
         if (isset($params['searchDate']) && $params['searchDate'] != '') {
             $sDate = explode("to", $params['searchDate']);
             if (isset($sDate[0]) && trim($sDate[0]) != "") {
@@ -140,14 +141,15 @@ class MonthlyReportTable extends Model
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->groupBy('monthly_reports.mr_id');
-        
-        if(Session::get('tsId')!='' && !isset($params['testSiteId'])) {
+
+        if (Session::get('tsId') != '' && !isset($params['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                    ->where('users_testsite_map.user_id', '=', $user_id);
+                ->where('users_testsite_map.user_id', '=', $user_id);
         }
-    
+
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
                 $query->where('monthly_reports_pages.start_test_date',  '>=', $start_date)
@@ -162,21 +164,25 @@ class MonthlyReportTable extends Model
             $query = $query->whereIn('districts.district_id', $params['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
         }
+        if (isset($params['subDistrictId']) && $params['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $params['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
+        }
         if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
             $query = $query->whereIn('test_sites.ts_id', $params['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
         // dd($query->toSql());
         $salesResult = $query->get();
-        
+
         return $salesResult;
     }
 
     //Fetch Selected Site Monthly Report
     public function fetchSelectedSiteMonthlyReport($params)
     {
-        $commonservice = new CommonService();     
-        
+        $commonservice = new CommonService();
+
         $user_id = session('userId');
         $query = DB::table('monthly_reports')
             ->select('monthly_reports.mr_id', DB::raw('count(monthly_reports_pages.page_no) as page_no'), 'monthly_reports.reporting_month', 'monthly_reports.date_of_data_collection', 'monthly_reports.name_of_data_collector', 'monthly_reports.book_no', 'monthly_reports.last_modified_on', 'site_types.site_type_name', 'test_sites.site_name', DB::raw('MIN(monthly_reports_pages.start_test_date) as start_test_date'), DB::raw('MAX(monthly_reports_pages.end_test_date) as end_test_date'))
@@ -186,21 +192,21 @@ class MonthlyReportTable extends Model
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->groupBy('monthly_reports.mr_id');
-        
-        if(Session::get('tsId')!='' && !isset($params['testSiteId'])) {
+
+        if (Session::get('tsId') != '' && !isset($params['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                    ->where('users_testsite_map.user_id', '=', $user_id);
-        }    
-        
+                ->where('users_testsite_map.user_id', '=', $user_id);
+        }
+
         if (isset($params['testSiteId']) && $params['testSiteId'] != '') {
             $query = $query->where('test_sites.ts_id', '=', $params['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
-        
+
         $query = $query->orderBy('monthly_reports.mr_id', 'DESC')->limit(5);
         // dd($query->toSql());
         $salesResult = $query->get();
-        
+
         return $salesResult;
     }
 
@@ -215,11 +221,11 @@ class MonthlyReportTable extends Model
     }
 
     // Fetch All Active MonthlyReport List
-    public function fetchUniqueActiveMonthlyReport($siteId,$reportingMon)
+    public function fetchUniqueActiveMonthlyReport($siteId, $reportingMon)
     {
         $data = DB::table('monthly_reports')
-             ->where('ts_id','=',$siteId)
-             ->where('reporting_month','=',$reportingMon)
+            ->where('ts_id', '=', $siteId)
+            ->where('reporting_month', '=', $reportingMon)
             ->get();
         return $data;
     }
@@ -246,9 +252,11 @@ class MonthlyReportTable extends Model
         //echo base64_decode($id); exit();
         $user_name = session('name');
         $data = $params->all();
-        
+
         $model = new TestSiteTable();
-        $districtId = $model->fetchDistrictId($data['testsiteId']);
+        $districtId = $data['districtId'];
+        $subDistrictId = $data['subDistrictId'];
+        //$districtId = $model->fetchDistrictId($data['testsiteId']);
         $latitude = $model->fetchLatitudeValue($data['testsiteId']);
         $longitude = $model->fetchLongitudeValue($data['testsiteId']);
         $commonservice = new CommonService();
@@ -259,6 +267,8 @@ class MonthlyReportTable extends Model
             $recency = $data['isRecency'];
         $upData = array(
             'province_id' => $data['provinceId'],
+            'district_id' => $districtId,
+            'sub_district_id' => $subDistrictId,
             'site_unique_id' => $data['siteUniqueId'],
             'ts_id' => $data['testsiteId'],
             'st_id' => $data['sitetypeId'],
@@ -376,12 +386,13 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
 
-        if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
+        if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                    ->where('users_testsite_map.user_id', '=', $user_id);
+                ->where('users_testsite_map.user_id', '=', $user_id);
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
@@ -391,21 +402,22 @@ class MonthlyReportTable extends Model
             });
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
-            $query = $query->
-            
-            
-            whereIn('provinces.province_id', $data['provinceId']);
+            $query = $query->whereIn('provinces.province_id', $data['provinceId']);
             $query = $query->groupBy(DB::raw('provinces.province_id'));
         }
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
         }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
+        }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
             $query = $query->groupBy(DB::raw('monthly_reports.mr_id'));
         }
-        if (isset($data['testSiteId']) && $data['testSiteId']!= '') {
+        if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
             $query = $query->whereIn('test_sites.ts_id', $data['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
@@ -420,7 +432,7 @@ class MonthlyReportTable extends Model
             $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
             //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date'),DB::raw('monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -432,7 +444,7 @@ class MonthlyReportTable extends Model
             $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -449,7 +461,7 @@ class MonthlyReportTable extends Model
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
 
             //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)'), DB::raw('monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
         // dd($query->toSql());
         // dd($user_id);
@@ -494,13 +506,14 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->groupBy('monthly_reports.mr_id');
 
-        if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
+        if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                    ->where('users_testsite_map.user_id', '=', $user_id);
+                ->where('users_testsite_map.user_id', '=', $user_id);
         }
 
         for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -523,6 +536,10 @@ class MonthlyReportTable extends Model
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
         }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
+        }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
             $query = $query->groupBy(DB::raw('monthly_reports.mr_id'));
@@ -533,7 +550,7 @@ class MonthlyReportTable extends Model
         }
         // dd($query->toSql());
         $salesResult = $query->get();
-        
+
         return $salesResult;
     }
     /// Page summary for log data
@@ -603,12 +620,13 @@ class MonthlyReportTable extends Model
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.district_id', '=', 'monthly_reports.sub_district_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id');
 
-        if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
+        if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                    ->where('users_testsite_map.user_id', '=', $user_id);
+                ->where('users_testsite_map.user_id', '=', $user_id);
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
@@ -624,6 +642,10 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
@@ -648,7 +670,7 @@ class MonthlyReportTable extends Model
             }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
             //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -665,7 +687,7 @@ class MonthlyReportTable extends Model
             }
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
             //$query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -686,14 +708,14 @@ class MonthlyReportTable extends Model
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
 
             //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
         $salesResult = $query->get();
 
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
         // dd(DB::getQueryLog($salesResult));die;
-        
+
         return $result;
     }
 
@@ -734,10 +756,10 @@ class MonthlyReportTable extends Model
             ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
             ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
-        
-        if(Session::get('tsId')!='') {
+
+        if (Session::get('tsId') != '') {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                    ->where('users_testsite_map.user_id', '=', $user_id);
+                ->where('users_testsite_map.user_id', '=', $user_id);
         }
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query = $query->where(function ($query) use ($start_date, $end_date) {
@@ -771,7 +793,7 @@ class MonthlyReportTable extends Model
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
             //$query = $query->groupBy(DB::raw('MONTH(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('MONTH(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -782,7 +804,7 @@ class MonthlyReportTable extends Model
             $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
             //$query = $query->groupBy(DB::raw('YEAR(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('YEAR(monthly_reports_pages.end_test_date)'));
         }
         if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
             for ($l = 1; $l <= $arr['no_of_test']; $l++) {
@@ -797,7 +819,7 @@ class MonthlyReportTable extends Model
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
 
             //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)', 'monthly_reports.ts_id'));
-            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'),DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
+            $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
         $salesResult = $query->get();
         // dd(DB::getQueryLog($salesResult));die;
@@ -806,6 +828,59 @@ class MonthlyReportTable extends Model
         return $result;
     }
 
+    //Not Reported Sites
+    public function fetchNotReportedSites($request)
+    {
+        $commonservice = new CommonService();
+        $start_date = '';
+        $end_date = '';
+        $data = $request;
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
+        
+        $query = DB::table('users_testsite_map')
+            ->select('test_sites.ts_id', 'test_sites.site_name', 'provinces.province_name', 'districts.district_name', 'sub_districts.sub_district_name', 'test_sites.updated_on')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'users_testsite_map.ts_id')
+            ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=','users_testsite_map.ts_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
+            ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
+            ->leftjoin('sub_districts', 'sub_districts.district_id', '=', 'test_sites.site_sub_district')            
+            ->whereIn('users_testsite_map.ts_id', Session::get('tsId'))
+            ->Where('monthly_reports.ts_id',NULL)
+            ->GroupBy('test_sites.ts_id');
+
+            if (trim($start_date) != "" && trim($end_date) != "") {
+                $query = $query->where(function ($query) use ($start_date, $end_date) {
+                    $query->where('test_sites.created_on',  '>=', $start_date)
+                        ->where('test_sites.created_on', '<=', $end_date)
+                        ->whereDate('test_sites.created_on', '>=', $start_date);
+                });
+            }
+            if (isset($data['provinceId']) && $data['provinceId'] != '') {
+                $query = $query->whereIn('provinces.province_id', $data['provinceId']);
+                $query = $query->groupBy(DB::raw('provinces.province_id'));
+            }
+            if (isset($data['districtId']) && $data['districtId'] != '') {
+                $query = $query->whereIn('districts.district_id', $data['districtId']);
+                $query = $query->groupBy(DB::raw('districts.district_id'));
+            }
+            if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+                $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+                $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
+            }
+            $data=$query->get();
+            return $data;
+    }
+    
     public function importMonthlyReportData($request)
     {
         $user_name = session('name');
@@ -836,7 +911,7 @@ class MonthlyReportTable extends Model
                 // $array =  Excel::toArray(new MonthlyReportDataUpload(), $savePath . $fileName);
                 $rowCnt = 1;
                 $cnt = 0;
-                $rslt="";
+                $rslt = "";
                 $GlobalConfigService = new GlobalConfigService();
                 $result = $GlobalConfigService->getAllGlobalConfig();
                 $arr = array();
@@ -844,14 +919,14 @@ class MonthlyReportTable extends Model
                 for ($i = 0; $i < sizeof($result); $i++) {
                     $arr[$result[$i]->global_name] = $result[$i]->global_value;
                 }
-                $notInsertRowArray=array();
-                $notInsertRow=0;
-                
+                $notInsertRowArray = array();
+                $notInsertRow = 0;
+
                 foreach ($array as $row) {
                     if ($rowCnt > 1) {
 
-                        $isDataValid=$this->isValidData($row);
-                        $comment = !$isDataValid ? $this->getErrorComment($row) : '';                       
+                        $isDataValid = $this->isValidData($row);
+                        $comment = !$isDataValid ? $this->getErrorComment($row) : '';
 
                         if ($isDataValid) {
                             $reporting_date = '';
@@ -873,7 +948,7 @@ class MonthlyReportTable extends Model
                                 $startDate = date('Y-m-d', strtotime($row[16]));
                             }
 
-                            
+
                             $endDate = '';
                             if (is_numeric($row[17])) {
                                 $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
@@ -901,7 +976,7 @@ class MonthlyReportTable extends Model
                             $report_months = $reporting_date;
                             $book_no = $row[13];
                             $name_of_collector = $row[14] == "" ? $user_name : $row[14];
-                            $page_no = $row[15]== "" ? 0 : $row[15];
+                            $page_no = $row[15] == "" ? 0 : $row[15];
                             $start_date = $startDate;
                             $end_date = $endDate;
                             if ($arr['no_of_test'] >= 1) {
@@ -1050,7 +1125,7 @@ class MonthlyReportTable extends Model
                                     ]
                                 );
                             }
-                            
+
                             $testsiteData = DB::table('test_sites')
                                 ->where('site_name', '=', trim($test_site_name))
                                 ->get();
@@ -1067,6 +1142,7 @@ class MonthlyReportTable extends Model
                             }
 
                             $districtId = $model->fetchDistrictId($testSiteId);
+                            $subDistrictId = $model->fetchSubDistrictId($testSiteId);
                             $latitude = $model->fetchLatitudeValue($testSiteId);
                             $longitude = $model->fetchLongitudeValue($testSiteId);
 
@@ -1090,15 +1166,15 @@ class MonthlyReportTable extends Model
                                 ->where('book_no', '=', $book_no)
                                 ->where('monthly_reports_pages.page_no', '=', $page_no)
                                 ->get();
-                               
-                            if (count($duplicateCheck) == 0) {                                
+
+                            if (count($duplicateCheck) == 0) {
                                 $monthyReportVal = DB::table('monthly_reports')
                                     ->where('ts_id', '=', $testSiteId)
                                     ->where('reporting_month', '=', $report_months)
                                     ->where('book_no', '=', $book_no)
                                     ->get();
                                 if (count($monthyReportVal) > 0) {
-                                    $mr_id = $monthyReportVal[0]->mr_id;                                    
+                                    $mr_id = $monthyReportVal[0]->mr_id;
                                 } else {
                                     $mr_id = DB::table('monthly_reports')->insertGetId(
                                         [
@@ -1119,6 +1195,7 @@ class MonthlyReportTable extends Model
                                             'added_on' => date('Y-m-d'),
                                             'added_by' => session('userId'),
                                             'district_id' => $districtId,
+                                            'sub_district_id' => $subDistrictId,
                                             'tester_name' => $tester_name,
                                             'latitude' => $latitude,
                                             'longitude' => $longitude,
@@ -1127,8 +1204,6 @@ class MonthlyReportTable extends Model
 
                                         ]
                                     );
-
-                                    
                                 }
                                 $insMonthlyArr = array(
                                     'mr_id' => $mr_id,
@@ -1139,7 +1214,7 @@ class MonthlyReportTable extends Model
                                     'final_negative' => $final_negative,
                                     'final_undetermined' => $final_indeterminate,
                                     'created_on' => $commonservice->getDateTime(),
-                                    'created_by' => session('userId'),                                    
+                                    'created_by' => session('userId'),
                                 );
                                 if ($arr['no_of_test'] >= 1) {
                                     $insMonthlyArr['test_1_kit_id'] = $test_kit1;
@@ -1185,13 +1260,13 @@ class MonthlyReportTable extends Model
                                 $insMonthlyArr['positive_percentage'] = $positivePercentage;
                                 $insMonthlyArr['positive_agreement'] = $posAgreement;
                                 $insMonthlyArr['overall_agreement'] = $OverallAgreement;
-                                
+
                                 $monthly_reports_pages = DB::table('monthly_reports_pages')->insertGetId($insMonthlyArr);
                                 if ($monthly_reports_pages) {
                                     $cnt++;
-                                }else{
-                                    
-                                    //Not Upload monthly reports
+                                } else {
+
+                                    //Failed Imports - Excel Uploads
                                     /*
                                     $test_site_name = $row[0];
                                     $site_type = $row[1];
@@ -1233,7 +1308,7 @@ class MonthlyReportTable extends Model
                                     } else if (is_string($row[11])) {
                                         $dateOfCollection = date('Y-m-d', strtotime($row[11]));
                                     }
-                            
+
                                     $date_of_collection = $dateOfCollection;
                                     $report_months = $reporting_date;
                                     $book_no = $row[13];
@@ -1241,7 +1316,7 @@ class MonthlyReportTable extends Model
                                     $page_no = $row[15] == "" ? 0 : $row[15];
                                     $start_date = $startDate;
                                     $end_date = $endDate;
-                                    $expiry_date1=$expiryDate1;
+                                    $expiry_date1 = $expiryDate1;
                                     // $start_date = $row[16];
                                     // $end_date = $row[17];
                                     /*
@@ -1249,7 +1324,7 @@ class MonthlyReportTable extends Model
                                         $final_positive = $row[24];
                                         $final_negative = $row[25];
                                         $final_indeterminate = $row[26];
-                                        
+
                                     } else if ($arr['no_of_test'] == 2) {
                                         $final_positive = $row[30];
                                         $final_negative = $row[31];
@@ -1264,8 +1339,8 @@ class MonthlyReportTable extends Model
                                         $final_indeterminate = $row[44];
                                     }
                                     */
-                                    
-                                    $unLoadData=array(
+
+                                    $unLoadData = array(
                                         'test_site_name' => $test_site_name,
                                         'site_type' => $site_type,
                                         'facility' => $facility,
@@ -1328,13 +1403,13 @@ class MonthlyReportTable extends Model
                                     }
 
                                     $nu_mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
-                            
+
                                     $notInsertRow++;
                                     //array_push($notInsertRowArray,$rowCnt);
                                 }
-                            }else{
-                                //Not Upload monthly reports
-                                    /*
+                            } else {
+                                //Failed Imports - Excel Uploads
+                                /*
                                     $test_site_name = $row[0];
                                     $site_type = $row[1];
                                     $facility = $row[2];
@@ -1347,51 +1422,51 @@ class MonthlyReportTable extends Model
                                     $contact_no = $row[9];
                                     $algo_type = $row[10];
                                     */
-                                    //$commentArray=array();
-                                    $startDate = '';
-                                    if (is_numeric($row[16])) {
-                                        $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                                    } else if (is_string($row[16])) {
-                                        $startDate = date('Y-m-d', strtotime($row[16]));
-                                    }
+                                //$commentArray=array();
+                                $startDate = '';
+                                if (is_numeric($row[16])) {
+                                    $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                                } else if (is_string($row[16])) {
+                                    $startDate = date('Y-m-d', strtotime($row[16]));
+                                }
 
-                                    $endDate = '';
-                                    if (is_numeric($row[17])) {
-                                        $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
-                                    } else if (is_string($row[17])) {
-                                        $endDate = date('Y-m-d', strtotime($row[17]));
-                                    }
+                                $endDate = '';
+                                if (is_numeric($row[17])) {
+                                    $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
+                                } else if (is_string($row[17])) {
+                                    $endDate = date('Y-m-d', strtotime($row[17]));
+                                }
 
-                                    $expiryDate1 = '';
-                                    if (is_numeric($row[20])) {
-                                        $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
-                                    } else if (is_string($row[20])) {
-                                        $expiryDate1 = date('Y-m-d', strtotime($row[20]));
-                                    }
+                                $expiryDate1 = '';
+                                if (is_numeric($row[20])) {
+                                    $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[20])->format('Y-m-d');
+                                } else if (is_string($row[20])) {
+                                    $expiryDate1 = date('Y-m-d', strtotime($row[20]));
+                                }
 
-                                    $dateOfCollection = '';
-                                    if (is_numeric($row[11])) {
-                                        $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
-                                    } else if (is_string($row[11])) {
-                                        $dateOfCollection = date('Y-m-d', strtotime($row[11]));
-                                    }
-                            
-                                    $date_of_collection = $dateOfCollection;
-                                    $report_months = $reporting_date;
-                                    $book_no = $row[13];
-                                    $name_of_collector = $row[14] == "" ? $user_name : $row[14];;
-                                    $page_no = $row[15] == "" ? 0 : $row[15];
-                                    $start_date = $startDate;
-                                    $end_date = $endDate;
-                                    $expiry_date1=$expiryDate1;
-                                    // $start_date = $row[16];
-                                    // $end_date = $row[17];
-                                    /*
+                                $dateOfCollection = '';
+                                if (is_numeric($row[11])) {
+                                    $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('Y-m-d');
+                                } else if (is_string($row[11])) {
+                                    $dateOfCollection = date('Y-m-d', strtotime($row[11]));
+                                }
+
+                                $date_of_collection = $dateOfCollection;
+                                $report_months = $reporting_date;
+                                $book_no = $row[13];
+                                $name_of_collector = $row[14] == "" ? $user_name : $row[14];;
+                                $page_no = $row[15] == "" ? 0 : $row[15];
+                                $start_date = $startDate;
+                                $end_date = $endDate;
+                                $expiry_date1 = $expiryDate1;
+                                // $start_date = $row[16];
+                                // $end_date = $row[17];
+                                /*
                                     if ($arr['no_of_test'] == 1) {
                                         $final_positive = $row[24];
                                         $final_negative = $row[25];
                                         $final_indeterminate = $row[26];
-                                        
+
                                     } else if ($arr['no_of_test'] == 2) {
                                         $final_positive = $row[30];
                                         $final_negative = $row[31];
@@ -1406,84 +1481,83 @@ class MonthlyReportTable extends Model
                                         $final_indeterminate = $row[44];
                                     }
                                     */
-                                    
-                                    $unLoadData=array(
-                                        'test_site_name' => $test_site_name,
-                                        'site_type' => $site_type,
-                                        'facility' => $facility,
-                                        'province_name' => $province,
-                                        'site_manager' => $site_manager,
-                                        'site_unique_id' => $site_unique_id,
-                                        'tester_name' => $tester_name,
-                                        'is_flc' => $if_flc,
-                                        'is_recency' => $is_recency,
-                                        'contact_no' => $contact_no,
-                                        //'algorithm_type' => $algo_type,
-                                        'date_of_data_collection' => $date_of_collection,
-                                        'reporting_month' => $report_months,
-                                        'book_no' => $book_no,
-                                        'name_of_data_collector' => $name_of_collector,
-                                        'source' => 'excel',
-                                        'page_no' => $page_no,
-                                        'start_test_date' => $start_date,
-                                        'end_test_date' => $end_date,
-                                        'final_positive' => $final_positive,
-                                        'final_negative' => $final_negative,
-                                        'final_undetermined' => $final_indeterminate,
-                                        'added_on' => $commonservice->getDateTime(),
-                                        'added_by' => session('userId'),
-                                        'file_name' => $fileName,
-                                        'comment' =>  'Duplicate Entry',
-                                    );
 
-                                    if ($arr['no_of_test'] >= 1) {
-                                        $unLoadData['test_kit_name1'] = trim($row[18]);
-                                        $unLoadData['lot_no_1'] = $row[19];
-                                        $unLoadData['expiry_date_1'] = $expiry_date1;
-                                        $unLoadData['test_1_reactive'] = $row[21];
-                                        $unLoadData['test_1_non_reactive'] = $row[22];
-                                        $unLoadData['test_1_invalid'] = $row[23];
-                                    }
-                                    if ($arr['no_of_test'] >= 2) {
-                                        $unLoadData['test_kit_name2'] = trim($row[24]);
-                                        $unLoadData['lot_no_2'] = $row[25];
-                                        $unLoadData['expiry_date_2'] = $row[26];
-                                        $unLoadData['test_2_reactive'] = $row[27];
-                                        $unLoadData['test_2_non_reactive'] = $row[28];
-                                        $unLoadData['test_2_invalid'] = $row[29];
-                                    }
-                                    if ($arr['no_of_test'] >= 3) {
-                                        $unLoadData['test_kit_name3'] = trim($row[30]);
-                                        $unLoadData['lot_no_3'] = $row[31];
-                                        $unLoadData['expiry_date_3'] = $row[32];
-                                        $unLoadData['test_3_reactive'] = $row[33];
-                                        $unLoadData['test_3_non_reactive'] = $row[34];
-                                        $unLoadData['test_3_invalid'] = $row[35];
-                                    }
-                                    if ($arr['no_of_test'] >= 4) {
-                                        $unLoadData['test_kit_name4'] = trim($row[36]);
-                                        $unLoadData['lot_no_4'] = $row[37];
-                                        $unLoadData['expiry_date_4'] = $row[38];
-                                        $unLoadData['test_4_reactive'] = $row[39];
-                                        $unLoadData['test_4_non_reactive'] = $row[40];
-                                        $unLoadData['test_4_invalid'] = $row[41];
-                                    }
+                                $unLoadData = array(
+                                    'test_site_name' => $test_site_name,
+                                    'site_type' => $site_type,
+                                    'facility' => $facility,
+                                    'province_name' => $province,
+                                    'site_manager' => $site_manager,
+                                    'site_unique_id' => $site_unique_id,
+                                    'tester_name' => $tester_name,
+                                    'is_flc' => $if_flc,
+                                    'is_recency' => $is_recency,
+                                    'contact_no' => $contact_no,
+                                    //'algorithm_type' => $algo_type,
+                                    'date_of_data_collection' => $date_of_collection,
+                                    'reporting_month' => $report_months,
+                                    'book_no' => $book_no,
+                                    'name_of_data_collector' => $name_of_collector,
+                                    'source' => 'excel',
+                                    'page_no' => $page_no,
+                                    'start_test_date' => $start_date,
+                                    'end_test_date' => $end_date,
+                                    'final_positive' => $final_positive,
+                                    'final_negative' => $final_negative,
+                                    'final_undetermined' => $final_indeterminate,
+                                    'added_on' => $commonservice->getDateTime(),
+                                    'added_by' => session('userId'),
+                                    'file_name' => $fileName,
+                                    'comment' =>  'Duplicate Entry',
+                                );
 
-                                    $nu_mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
-                            
-                                    $notInsertRow++;
-                                    //array_push($notInsertRowArray,$rowCnt);
+                                if ($arr['no_of_test'] >= 1) {
+                                    $unLoadData['test_kit_name1'] = trim($row[18]);
+                                    $unLoadData['lot_no_1'] = $row[19];
+                                    $unLoadData['expiry_date_1'] = $expiry_date1;
+                                    $unLoadData['test_1_reactive'] = $row[21];
+                                    $unLoadData['test_1_non_reactive'] = $row[22];
+                                    $unLoadData['test_1_invalid'] = $row[23];
+                                }
+                                if ($arr['no_of_test'] >= 2) {
+                                    $unLoadData['test_kit_name2'] = trim($row[24]);
+                                    $unLoadData['lot_no_2'] = $row[25];
+                                    $unLoadData['expiry_date_2'] = $row[26];
+                                    $unLoadData['test_2_reactive'] = $row[27];
+                                    $unLoadData['test_2_non_reactive'] = $row[28];
+                                    $unLoadData['test_2_invalid'] = $row[29];
+                                }
+                                if ($arr['no_of_test'] >= 3) {
+                                    $unLoadData['test_kit_name3'] = trim($row[30]);
+                                    $unLoadData['lot_no_3'] = $row[31];
+                                    $unLoadData['expiry_date_3'] = $row[32];
+                                    $unLoadData['test_3_reactive'] = $row[33];
+                                    $unLoadData['test_3_non_reactive'] = $row[34];
+                                    $unLoadData['test_3_invalid'] = $row[35];
+                                }
+                                if ($arr['no_of_test'] >= 4) {
+                                    $unLoadData['test_kit_name4'] = trim($row[36]);
+                                    $unLoadData['lot_no_4'] = $row[37];
+                                    $unLoadData['expiry_date_4'] = $row[38];
+                                    $unLoadData['test_4_reactive'] = $row[39];
+                                    $unLoadData['test_4_non_reactive'] = $row[40];
+                                    $unLoadData['test_4_invalid'] = $row[41];
+                                }
+
+                                $nu_mr_id = DB::table('not_uploaded_monthly_reports')->insertGetId($unLoadData);
+
+                                $notInsertRow++;
+                                //array_push($notInsertRowArray,$rowCnt);
                             }
-                        }
-                        else{
-                            //Not Upload monthly reports
+                        } else {
+                            //Failed Imports - Excel Uploads
                             $startDate = '';
                             if (is_numeric($row[16])) {
                                 $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
                             } else if (is_string($row[16])) {
                                 $startDate = date('Y-m-d', strtotime($row[16]));
                             }
-                            
+
                             $endDate = '';
                             if (is_numeric($row[17])) {
                                 $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[17])->format('Y-m-d');
@@ -1511,7 +1585,7 @@ class MonthlyReportTable extends Model
                             } else if (is_string($row[11])) {
                                 $dateOfCollection = date('Y-m-d', strtotime($row[11]));
                             }
-                            
+
                             $test_site_name = $row[0];
                             $site_type = $row[1];
                             $facility = $row[2];
@@ -1528,16 +1602,15 @@ class MonthlyReportTable extends Model
                             $book_no = $row[13];
                             $name_of_collector = $row[14] == "" ? $user_name : $row[14];
                             $page_no = $row[15] == "" ? 0 : $row[15];
-                            $start_date=$startDate;
-                            $end_date=$endDate;
-                            $expiry_date1=$expiryDate1;
+                            $start_date = $startDate;
+                            $end_date = $endDate;
+                            $expiry_date1 = $expiryDate1;
 
-                            
+
                             if ($arr['no_of_test'] == 1) {
                                 $final_positive = $row[24];
                                 $final_negative = $row[25];
                                 $final_indeterminate = $row[26];
-                                
                             } else if ($arr['no_of_test'] == 2) {
                                 $final_positive = $row[30];
                                 $final_negative = $row[31];
@@ -1551,9 +1624,9 @@ class MonthlyReportTable extends Model
                                 $final_negative = $row[43];
                                 $final_indeterminate = $row[44];
                             }
-                            
-                            
-                            $unLoadData=array(
+
+
+                            $unLoadData = array(
                                 'test_site_name' => $test_site_name,
                                 'site_type' => $site_type,
                                 'facility' => $facility,
@@ -1576,7 +1649,7 @@ class MonthlyReportTable extends Model
                                 'final_positive' => $final_positive,
                                 'final_negative' => $final_negative,
                                 'final_undetermined' => $final_indeterminate,
-                                'added_on' =>$commonservice->getDateTime(),
+                                'added_on' => $commonservice->getDateTime(),
                                 'added_by' => session('userId'),
                                 'file_name' => $fileName,
                                 'comment' =>  $comment,
@@ -1625,13 +1698,12 @@ class MonthlyReportTable extends Model
                 if ($cnt > 0) {
                     $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report', $mr_id);
                 }
-                $rslt.="File Name: ".$fileName."<br/>";
-                $rslt.="No.of Records: ".($cnt + $notInsertRow)."<br/>";
-                $rslt.="No.of Records Uploaded Successfully: ".($cnt)."<br/>";
-                $rslt.="No.of Records not Uploaded: ". $notInsertRow."<br/>";
-                
+                $rslt .= "File Name: " . $fileName . "<br/>";
+                $rslt .= "No.of Records: " . ($cnt + $notInsertRow) . "<br/>";
+                $rslt .= "No.of Records Uploaded Successfully: " . ($cnt) . "<br/>";
+                $rslt .= "No.of Records not Uploaded: " . $notInsertRow . "<br/>";
+
                 DB::commit();
-                
             } catch (Exception $exc) {
                 DB::rollBack();
                 $exc->getMessage();
@@ -1642,71 +1714,72 @@ class MonthlyReportTable extends Model
         return $rslt;
     }
 
-    public function isValidData($row){
-        
-        $validData=true;
+    public function isValidData($row)
+    {
 
-        if(trim($row[0])=='' || trim($row[1])=='' || trim($row[2])=='' || trim($row[3])=='' || trim($row[6])=='' || trim($row[7])=='' || trim($row[12])=='' || trim($row[16])=='' || trim($row[17])=='' || trim($row[18])=='' || trim($row[19])=='' || trim($row[20])==''){
-            $validData=false;
-        }        
+        $validData = true;
+
+        if (trim($row[0]) == '' || trim($row[1]) == '' || trim($row[2]) == '' || trim($row[3]) == '' || trim($row[6]) == '' || trim($row[7]) == '' || trim($row[12]) == '' || trim($row[16]) == '' || trim($row[17]) == '' || trim($row[18]) == '' || trim($row[19]) == '' || trim($row[20]) == '') {
+            $validData = false;
+        }
 
         return $validData;
     }
 
-    public function getErrorComment($row){
+    public function getErrorComment($row)
+    {
 
-        $commentArray=array();
+        $commentArray = array();
 
-        if(trim($row[0])==''){
+        if (trim($row[0]) == '') {
             array_push($commentArray, 'Test Site');
         }
 
-        if(trim($row[1])==''){
+        if (trim($row[1]) == '') {
             array_push($commentArray, 'Entry Point');
         }
 
-        if(trim($row[2])==''){
+        if (trim($row[2]) == '') {
             array_push($commentArray, 'Facility');
         }
 
-        if(trim($row[3])==''){
+        if (trim($row[3]) == '') {
             array_push($commentArray, 'Province');
         }
 
-        if(trim($row[6])==''){
+        if (trim($row[6]) == '') {
             array_push($commentArray, 'Lab Manager Name');
         }
 
-        if(trim($row[7])==''){
+        if (trim($row[7]) == '') {
             array_push($commentArray, 'Is FLC');
         }
 
-        if(trim($row[12])==''){
+        if (trim($row[12]) == '') {
             array_push($commentArray, 'Reporting Month');
         }
 
-        if(trim($row[16])==''){
+        if (trim($row[16]) == '') {
             array_push($commentArray, 'Start Date');
         }
 
-        if(trim($row[17])==''){
+        if (trim($row[17]) == '') {
             array_push($commentArray, 'End Date');
         }
 
-        if(trim($row[18])==''){
+        if (trim($row[18]) == '') {
             array_push($commentArray, 'Test Kit Name 1');
         }
 
-        if(trim($row[19])==''){
+        if (trim($row[19]) == '') {
             array_push($commentArray, 'Lot No.1');
         }
 
-        if(trim($row[20])==''){
+        if (trim($row[20]) == '') {
             array_push($commentArray, 'Expiry Date 1');
         }
 
-        return implode(", ", $commentArray).' field(s) are missing';
-        
+        return implode(", ", $commentArray) . ' field(s) are missing';
     }
 
     // Invalid Result Report
@@ -1746,12 +1819,13 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk1', 'tk1.tk_id', '=', 'monthly_reports_pages.test_1_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
-                if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
-                    $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                            ->where('users_testsite_map.user_id', '=', $user_id);
-                }
+            if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
+                $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                    ->where('users_testsite_map.user_id', '=', $user_id);
+            }
         } elseif ($arr['no_of_test'] == 2) {
             $query = DB::table('monthly_reports_pages')
                 ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name')
@@ -1762,12 +1836,13 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk2', 'tk2.tk_id', '=', 'monthly_reports_pages.test_2_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
-                if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
-                    $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                        ->where('users_testsite_map.user_id', '=', $user_id);
-                }
+            if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
+                $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                    ->where('users_testsite_map.user_id', '=', $user_id);
+            }
         } elseif ($arr['no_of_test'] == 3) {
             $query = DB::table('monthly_reports_pages')
                 ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name')
@@ -1779,13 +1854,13 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk3', 'tk3.tk_id', '=', 'monthly_reports_pages.test_3_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
-                if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
-                    $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                            ->where('users_testsite_map.user_id', '=', $user_id);
-                }
-
+            if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
+                $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                    ->where('users_testsite_map.user_id', '=', $user_id);
+            }
         } else {
             $query = DB::table('monthly_reports_pages')
                 ->select('monthly_reports.*', 'monthly_reports_pages.*', 'facilities.*', 'test_sites.*', 'site_types.*', 'tk1.test_kit_name as testKit_1_name', 'tk2.test_kit_name as testKit_2_name', 'tk3.test_kit_name as testKit_3_name', 'tk4.test_kit_name as testKit_4_name')
@@ -1798,12 +1873,13 @@ class MonthlyReportTable extends Model
                 ->join('test_kits as tk4', 'tk4.tk_id', '=', 'monthly_reports_pages.test_4_kit_id')
                 ->join('facilities', 'facilities.facility_id', '=', 'test_sites.facility_id')
                 ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+                ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
                 ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
 
-                if(Session::get('tsId')!='' && !isset($data['testSiteId'])) {
-                    $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
-                            ->where('users_testsite_map.user_id', '=', $user_id);
-                }
+            if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
+                $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                    ->where('users_testsite_map.user_id', '=', $user_id);
+            }
         }
 
         if (trim($start_date) != "" && trim($end_date) != "") {
@@ -1819,6 +1895,10 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->whereIn('districts.district_id', $data['districtId']);
             $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
         }
         if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
             $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
@@ -1885,13 +1965,15 @@ class MonthlyReportTable extends Model
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
             ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
-            ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.province_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+            ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
             ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
-            ->where('users_testsite_map.user_id', $user_id);
-
+            ->where('users_testsite_map.user_id', $user_id)
+            ->where('monthly_reports.latitude', '!=', null)->where('monthly_reports.longitude', '!=', null)
+            ->groupby('monthly_reports.mr_id');
         if (trim($start_date) != "" && trim($end_date) != "") {
-            $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
+            $query = $query->where('monthly_reports_pages.start_test_date', '>=', $start_date)->where('monthly_reports_pages.end_test_date', '<=', $end_date);
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
             $query = $query->where('monthly_reports.province_id', '=', $data['provinceId']);
@@ -1900,19 +1982,22 @@ class MonthlyReportTable extends Model
         if (count($salesResult) == 0) {
             $query = DB::table('monthly_reports')
                 ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
-                ->join('test_sites', 'test_sites.site_province', '=', 'monthly_reports.province_id')
-                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id');
+                ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
+                ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
+                ->join('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
+                ->where('monthly_reports.latitude', '!=', null)->where('monthly_reports.longitude', '!=', null)
+                ->groupby('monthly_reports.mr_id');
 
             if (trim($start_date) != "" && trim($end_date) != "") {
-                $query = $query->where('monthly_reports.reporting_month', '>=', $start_date)->where('monthly_reports.reporting_month', '<=', $end_date);
+                $query = $query->where('monthly_reports_pages.start_test_date', '>=', $start_date)->where('monthly_reports_pages.end_test_date', '<=', $end_date);
             }
             if (isset($data['provinceId']) && $data['provinceId'] != '') {
                 $query = $query->where('monthly_reports.province_id', '=', $data['provinceId']);
             }
+            //echo $query;
             $salesResult = $query->get();
         }
         //dd(DB::getQueryLog());die;
-
         return $salesResult;
     }
 
@@ -2000,7 +2085,7 @@ class MonthlyReportTable extends Model
                 ->groupBy('monthly_reports.mr_id')
                 ->get();
         }
-        // dd(DB::getQueryLog($data));die;    
+        // dd(DB::getQueryLog($data));die;
         return $data;
     }
 

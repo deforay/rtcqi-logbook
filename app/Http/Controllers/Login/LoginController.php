@@ -20,13 +20,23 @@ class LoginController extends Controller
     //View Login main screen
     public function index()
     {
-        return view('login.index');
+        $addUser = new UserService();
+        $activeUsers = $addUser->getAllActiveUser();
+        $activeUsersCount=$activeUsers->count();
+        if($activeUsersCount > 0){
+            return view('login.index');
+            }else{
+                return view('login.register');
+            }
     }
+         
+    
     //validate login
     public function validateEmployee(Request $request)
     {
         $service = new UserService();
         $login = $service->validateLogin($request);
+
         if (trim($login) == 1) {
             if (session('forcePasswordReset') == '1') {
                 return view('login.changepassword');
@@ -42,8 +52,12 @@ class LoginController extends Controller
     public function logout(Request $request, $name)
     {
         $commonservice = new CommonService();
+        //$data=new Array();
+        $data['username']=$name;
+        $userservice = new UserService();
         if ($request->isMethod('post') && session('login') == true) {
             $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user', $id = null);
+            $userservice->loggedInHistory($data, base64_decode($name) . ' logged out');
             $request->session()->flush();
             $request->session()->regenerate();
             Session::flush();
