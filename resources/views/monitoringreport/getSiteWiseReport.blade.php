@@ -13,10 +13,33 @@
         max-height: 500px;
     }
 
-    .tableFixHead thead th {
+    table{
+        border-collapse:separate;
+        border-spacing:0;
+    }
+    .tableFixHead thead {
         position: sticky;
         top: 0;
-        z-index: 99;
+        z-index: 150;
+        background-color:#e4eff8!important;
+    }
+
+    .tableFixHead thead th:first-child{
+        position: sticky;
+        left:0;
+        background-color:#e4eff8;
+        z-index: 150;
+        border-spacing:0;
+        border-collapse:separate;
+    }
+    .tableFixHead tbody td:first-child{
+        position: sticky;
+        top: 0;
+        left:0;
+        z-index: 100;      
+        background-color:#fff;
+        border-spacing:0;
+        border-collapse:separate;
     }
 
     #table-bordered {
