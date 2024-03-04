@@ -37,10 +37,9 @@ class DistrictTable extends Model
     // Fetch All District List
     public function fetchAllDistrict()
     {
-        $data = DB::table('districts')
+        return DB::table('districts')
             ->join('provinces', 'provinces.province_id', '=', 'districts.province_id')
             ->get();
-        return $data;
     }
 
     // fetch particular District details
@@ -48,10 +47,9 @@ class DistrictTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('districts')
+        return DB::table('districts')
             ->where('districts.district_id', '=', $id)
             ->get();
-        return $data;
     }
 
     // Update particular District details
@@ -79,35 +77,31 @@ class DistrictTable extends Model
     // fetch particular District Name
     public function fetchDistrictName($id)
     {
-        $data = DB::table('districts')
+        return DB::table('districts')
             ->where('districts.province_id', '=', $id)
             ->get();
-        return $data;
     }
 
     public function fetchDistrictNameByProvinceId($id)
     {
-        $data = DB::table('districts')
+        return DB::table('districts')
             ->whereIn('districts.province_id', $id)
             ->get();
-        return $data;
     }
 
     public function fetchDistrictId($id)
     {
         $result = $id[0]->facility_province;
-        $data = DB::table('districts')
+        return DB::table('districts')
             ->where('districts.province_id', '=', $result)
             ->get();
-        return $data;
     }
 
     public function fetchDistrictData($id)
     {
         $result = $id[0]->site_province;
-        $data = DB::table('districts')
+        return DB::table('districts')
             ->where('districts.province_id', '=', $result)
             ->get();
-        return $data;
     }
 }

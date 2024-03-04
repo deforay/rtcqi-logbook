@@ -37,11 +37,10 @@ class SubDistrictTable extends Model
     // Fetch All Sub District List
     public function fetchAllSubDistrict()
     {
-        $data = DB::table('sub_districts')
+        return DB::table('sub_districts')
             ->join('districts', 'districts.district_id', '=', 'sub_districts.district_id')
             ->join('provinces', 'provinces.province_id', '=', 'districts.province_id')
             ->get();
-        return $data;
     }
 
     // fetch particular Sub District details
@@ -49,10 +48,9 @@ class SubDistrictTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('sub_districts')
+        return DB::table('sub_districts')
             ->where('sub_districts.sub_district_id', '=', $id)
             ->get();
-        return $data;
     }
 
     // Update particular Sub District details
@@ -80,27 +78,24 @@ class SubDistrictTable extends Model
     // fetch particular Sub District Name
     public function fetchSubDistrictName($id)
     {
-        $data = DB::table('sub_districts')
+        return DB::table('sub_districts')
             ->where('sub_districts.district_id', '=', $id)
             ->get();
-        return $data;
     }
 
     public function fetchSubDistrictNameByDistrictId($id)
     {
-        $data = DB::table('sub_districts')
+        return DB::table('sub_districts')
             ->whereIn('sub_districts.district_id', $id)
             ->get();
-        return $data;
     }
 
     public function fetchSubDistrictData($id)
     {
         $result = $id[0]->site_district;
-        $data = DB::table('sub_districts')
+        return DB::table('sub_districts')
             ->where('sub_districts.district_id', '=', $result)
             ->get();
-        return $data;
     }
     
 }

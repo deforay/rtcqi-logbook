@@ -20,18 +20,16 @@ class UserLoginHistoryTable extends Model
     // Fetch All User List
     public function fetchAllUser()
     {
-        $data = DB::table('users')
+        return DB::table('users')
             ->get();
-        return $data;
     }
 
     // Fetch All Active User List
     public function fetchAllActiveUser()
     {
-        $data = DB::table('users')
+        return DB::table('users')
             ->where('user_status', '=', 'active')
             ->get();
-        return $data;
     }
 
     public function fetchUserLoginHistory($params)
@@ -63,9 +61,7 @@ class UserLoginHistoryTable extends Model
         if (isset($params['userId']) && $params['userId'] != '') {
             $query = $query->whereIn('users.user_id', $params['userId']);
         }
-
-        $salesResult = $query->get();
-        return $salesResult;
+        return $query->get();
     }
 
     // fetch particular User details
@@ -73,12 +69,11 @@ class UserLoginHistoryTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('users')
+        return DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.user_id', '=', $id)
             ->get();
-        return $data;
     }
 
     // Update particular User details
@@ -103,7 +98,7 @@ class UserLoginHistoryTable extends Model
             ->update(
                 $user
             );
-        if (trim($data['password'])) {
+        if (trim($data['password']) !== '' && trim($data['password']) !== '0') {
         $user['password'] = Hash::make($data['password']); // Hashing passwords
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
@@ -112,12 +107,7 @@ class UserLoginHistoryTable extends Model
             );
         }
         if ($response == 1) {
-            if($data['password'] == '') {
-                $forcePassword = 0;
-            }
-            else {
-                $forcePassword = 1;
-            }
+            $forcePassword = $data['password'] == '' ? 0 : 1;
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
                 ->update(
@@ -126,13 +116,14 @@ class UserLoginHistoryTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
-                $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
+            $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user',$userId);
         }
         $response=DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
-            for ($x = 0; $x < count($selectedSiteName); $x++) {
+            $counter = count($selectedSiteName);
+            for ($x = 0; $x < $counter; $x++) {
                 if (isset($uniqueSiteId[$x])) {
                     $response = DB::table('users_testsite_map')->insertGetId(
                     [
@@ -252,7 +243,6 @@ class UserLoginHistoryTable extends Model
             'browser'=>$browserAgent,
             'operating_system'=>$os,
         );
-        $historyResult = DB::table('user_login_history')->insert($loginData);
-        return $historyResult;
+        return DB::table('user_login_history')->insert($loginData);
     }
 }

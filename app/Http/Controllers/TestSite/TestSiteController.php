@@ -28,8 +28,9 @@ class TestSiteController extends Controller
         {
             return view('testsite.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add TestSite (display add screen and add the TestSite values)
@@ -67,8 +68,7 @@ class TestSiteController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

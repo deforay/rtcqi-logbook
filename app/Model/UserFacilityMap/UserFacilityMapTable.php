@@ -19,7 +19,8 @@ class UserFacilityMapTable extends Model
         $data = $request->all();
 
         if ($request->input('userId') != null && trim($request->input('userId')) != '') {
-            for ($x = 0; $x < count($data['facilityId']); $x++) {
+            $counter = count($data['facilityId']);
+            for ($x = 0; $x < $counter; $x++) {
                 // echo($data['facilityId'][$x]);
                 $id = DB::table('users_facility_map')->insertGetId(
                     [
@@ -66,10 +67,9 @@ class UserFacilityMapTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('users_facility_map')
+        return DB::table('users_facility_map')
             ->where('users_facility_map.ufm_id', '=', $id)
             ->get();
-        return $data;
     }
 
     // Update particular UserFacility details
@@ -81,19 +81,17 @@ class UserFacilityMapTable extends Model
             'user_id' => $data['userId'],
             'facility_id' => $facilityId,
         );
-        $response = DB::table('users_facility_map')
+        return DB::table('users_facility_map')
             ->where('ufm_id', '=', base64_decode($id))
             ->update(
                 $upData
             );
-        return $response;
     }
     public function fetchUserSiteById($id)
     {
-        $data = DB::table('users_testsite_map')
+        return DB::table('users_testsite_map')
             ->join('test_sites', 'test_sites.ts_id', '=', 'users_testsite_map.ts_id')
             ->where('users_testsite_map.user_id', '=', base64_decode($id))
             ->get();
-        return $data;
     }
 }

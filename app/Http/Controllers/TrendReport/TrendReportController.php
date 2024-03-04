@@ -24,8 +24,9 @@ class TrendReportController extends Controller
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
             return view('trendreport.index',array('testSite'=>$testSite,'monthlyReport'=>$monthlyReport));
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getTrendMonthlyReport(Request $request)

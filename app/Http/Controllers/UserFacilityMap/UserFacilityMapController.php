@@ -19,8 +19,9 @@ class UserFacilityMapController extends Controller
         {
             return view('userfacilitymap.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // //Add User Facility Map (display add screen and add the User Facility Map values)
@@ -50,8 +51,7 @@ class UserFacilityMapController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div>';
                         $button .= '<a href="/userfacilitymap/edit/'. base64_encode($data->ufm_id).'" name="edit" id="'.$data->ufm_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

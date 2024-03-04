@@ -27,8 +27,9 @@ class UserController extends Controller
         {
             return view('user.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add user (display add screen and add the user values)
@@ -89,8 +90,7 @@ class UserController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -119,7 +119,7 @@ class UserController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $testSiteId = array(); 
             foreach($selectedSiteId as $value) {
-                array_push($testSiteId,$value->ts_id);
+                $testSiteId[] = $value->ts_id;
             }
             return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult,'selectedSiteId'=>$selectedSiteId,'province' => $province));
         }
@@ -155,8 +155,9 @@ class UserController extends Controller
             $userData = $userService->getAllActiveUser();
             return view('user.userloginhistory',array('userName' => $userData));
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getUserLoginHistory(Request $request)
@@ -176,8 +177,9 @@ class UserController extends Controller
             $userData = $userService->getAllActiveUser();
             return view('user.activityLog',array('userName' => $userData));
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getAllUserActivity(Request $request)

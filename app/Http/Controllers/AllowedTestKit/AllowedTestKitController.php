@@ -24,8 +24,9 @@ class AllowedTestKitController extends Controller
         {
             return view('allowedtestkit.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // //Add User Allowed Test Kit (display add screen and add the Allowed Test Kit values)
@@ -59,8 +60,7 @@ class AllowedTestKitController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -85,7 +85,7 @@ class AllowedTestKitController extends Controller
 
             $testKitId = array(); 
             foreach($result as $value) {
-                array_push($testKitId,$value->testkit_id);
+                $testKitId[] = $value->testkit_id;
             }
             // dd($testKitId);die;
             return view('allowedtestkit.edit',array('result'=>$result,'test'=>$test,'id'=>$id,'testKitId'=>$testKitId));

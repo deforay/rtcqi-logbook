@@ -23,8 +23,7 @@ class ImplementingPartnersService
         	$add = $model->saveImplementingPartners($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'Implementing Partner Added Successfully';
-				return $msg;
+				return 'Implementing Partner Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,24 +36,21 @@ class ImplementingPartnersService
 	public function getAllImplementingPartners()
     {
 		$model = new ImplementingPartnersTable();
-        $result = $model->fetchAllImplementingPartners();
-        return $result;
+        return $model->fetchAllImplementingPartners();
 	}
 
 	//Get All Province List
 	public function getAllActiveImplementingPartners()
     {
 		$model = new ImplementingPartnersTable();
-        $result = $model->fetchAllActiveImplementingPartners();
-        return $result;
+        return $model->fetchAllActiveImplementingPartners();
 	}
 	//Get Particular Implementing Partners Details
 	public function getImplementingPartnersById($id)
 	{
 		
 		$model = new ImplementingPartnersTable();
-        $result = $model->fetchImplementingPartnersById($id);
-        return $result;
+        return $model->fetchImplementingPartnersById($id);
 	}
 	//Update Particular Implementing Partners Details
 	public function updateImplementingPartners($params,$id)
@@ -65,8 +61,7 @@ class ImplementingPartnersService
         	$add = $model->updateImplementingPartners($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'Implementing Partners Updated Successfully';
-				return $msg;
+				return 'Implementing Partners Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {

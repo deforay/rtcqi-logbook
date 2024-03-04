@@ -36,18 +36,16 @@ class ImplementingPartnersTable extends Model
     // Fetch All Implementing Partners List
     public function fetchAllImplementingPartners()
     {
-        $data = DB::table('implementing_partners')
+        return DB::table('implementing_partners')
                 ->get();
-        return $data;
     }
 
     // Fetch All Active Implementing Partners List
     public function fetchAllActiveImplementingPartners()
     {
-        $data = DB::table('implementing_partners')
+        return DB::table('implementing_partners')
                 ->where('implementing_partner_status','=','active')
                 ->get();
-        return $data;
     }
 
      // fetch particular Implementing Partner details
@@ -55,10 +53,9 @@ class ImplementingPartnersTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('implementing_partners')
+         return DB::table('implementing_partners')
                 ->where('implementing_partners.implementing_partner_id', '=',$id )
                 ->get();
-         return $data;
      }
 
      // Update particular Implementing Partner details

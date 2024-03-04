@@ -14,9 +14,8 @@ class GlobalConfigTable extends Model
     // Fetch All GlobalConfig List
     public function fetchAllGlobalConfig()
     {
-        $data = DB::table('global_config')
+        return DB::table('global_config')
             ->get();
-        return $data;
     }
 
     // Update particular GlobalConfig details
@@ -143,22 +142,20 @@ class GlobalConfigTable extends Model
             $response = DB::table('global_config')
                 ->where('global_name', '=', 'disable_user_no_of_months')
                 ->update($upData);
-        }else{
-            if($data['disable_inactive_user']=='yes' && trim($data['disable_user_no_of_months'])==""){
-                $upData = array(
-                    'global_value' => '6',
-                );
-                $response = DB::table('global_config')
-                ->where('global_name', '=', 'disable_user_no_of_months')
-                ->update($upData);
-            }else{
-                $upData = array(
-                    'global_value' => NULL,
-                );
-                $response = DB::table('global_config')
-                ->where('global_name', '=', 'disable_user_no_of_months')
-                ->update($upData);
-            }
+        } elseif ($data['disable_inactive_user']=='yes' && trim($data['disable_user_no_of_months'])=="") {
+            $upData = array(
+                'global_value' => '6',
+            );
+            $response = DB::table('global_config')
+            ->where('global_name', '=', 'disable_user_no_of_months')
+            ->update($upData);
+        } else{
+            $upData = array(
+                'global_value' => NULL,
+            );
+            $response = DB::table('global_config')
+            ->where('global_name', '=', 'disable_user_no_of_months')
+            ->update($upData);
         }
         
         if ($data['removed'] != null) {
@@ -169,45 +166,43 @@ class GlobalConfigTable extends Model
             DB::table('global_config')
                 ->where('global_name', '=', 'logo')
                 ->update($upData);
-        } else {
-            if (isset($data['uploadFile'])) {
-                $filePathName = '';
-                $fileName = '';
-                $extension = '';
-                if (isset($_FILES['uploadFile']['name']) && $_FILES['uploadFile']['name'] != '') {
-                    if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
-                        mkdir(public_path('uploads'), 0755, true);
-                        // chmod (getcwd() .public_path('uploads'), 0755 );
-                    }
-
-                    if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "logo") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "logo")) {
-                        mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "logo", 0755);
-                    }
-
-                    $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "logo";
-                    $pathnameDb = DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . "logo";
-
-                    if (!file_exists($pathname) && !is_dir($pathname)) {
-                        mkdir($pathname);
-                    }
-                    $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][0], PATHINFO_EXTENSION));
-                    $ext = '.' . $extension;
-                    $orgFileName = explode($ext, $_FILES['uploadFile']['name'][0]);
-                    $orgFileName = str_replace(' ', '-', $orgFileName);
-                    $fileName = $orgFileName[0] . '@@' . time() . "." . $extension;
-
-                    $filePath = $pathnameDb . DIRECTORY_SEPARATOR . $fileName;
-                    move_uploaded_file($_FILES["uploadFile"]["tmp_name"][0], $pathname . DIRECTORY_SEPARATOR . $fileName);
-                    $filePathName .= $filePath;
+        } elseif (isset($data['uploadFile'])) {
+            $filePathName = '';
+            $fileName = '';
+            $extension = '';
+            if (isset($_FILES['uploadFile']['name']) && $_FILES['uploadFile']['name'] != '') {
+                if (!file_exists(public_path('uploads')) && !is_dir(public_path('uploads'))) {
+                    mkdir(public_path('uploads'), 0755, true);
+                    // chmod (getcwd() .public_path('uploads'), 0755 );
                 }
-                if ($filePathName) {
-                    $upData = array(
-                        'global_value' => $filePathName,
-                    );
-                    DB::table('global_config')
-                        ->where('global_name', '=', 'logo')
-                        ->update($upData);
+
+                if (!file_exists(public_path('uploads') . DIRECTORY_SEPARATOR . "logo") && !is_dir(public_path('uploads') . DIRECTORY_SEPARATOR . "logo")) {
+                    mkdir(public_path('uploads') . DIRECTORY_SEPARATOR . "logo", 0755);
                 }
+
+                $pathname = public_path('uploads') . DIRECTORY_SEPARATOR . "logo";
+                $pathnameDb = DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . "logo";
+
+                if (!file_exists($pathname) && !is_dir($pathname)) {
+                    mkdir($pathname);
+                }
+                $extension = strtolower(pathinfo($pathname . DIRECTORY_SEPARATOR . $_FILES['uploadFile']['name'][0], PATHINFO_EXTENSION));
+                $ext = '.' . $extension;
+                $orgFileName = explode($ext, $_FILES['uploadFile']['name'][0]);
+                $orgFileName = str_replace(' ', '-', $orgFileName);
+                $fileName = $orgFileName[0] . '@@' . time() . "." . $extension;
+
+                $filePath = $pathnameDb . DIRECTORY_SEPARATOR . $fileName;
+                move_uploaded_file($_FILES["uploadFile"]["tmp_name"][0], $pathname . DIRECTORY_SEPARATOR . $fileName);
+                $filePathName .= $filePath;
+            }
+            if ($filePathName !== '' && $filePathName !== '0') {
+                $upData = array(
+                    'global_value' => $filePathName,
+                );
+                DB::table('global_config')
+                    ->where('global_name', '=', 'logo')
+                    ->update($upData);
             }
         }
         $commonservice->eventLog('update-global-config-request', $user_name . ' has updated the global config information', 'global-config',$userId);
@@ -216,46 +211,41 @@ class GlobalConfigTable extends Model
 
     public function fetchGlobalConfigValue($configName)
     {
-        $data = DB::table('global_config')
+        return DB::table('global_config')
             ->select('global_value')
             ->where('global_name', '=', $configName)
             ->value('global_value');
-        return $data;
     }
 
     public function fetchGlobalConfigData($configName)
     {
-        $data = DB::table('global_config')
+        return DB::table('global_config')
             ->select('global_value')
             ->where('global_name', '=', $configName)
             ->value('global_name');
-        return $data;
     }
 
     public function fetchGlobalConfigLatitide($latitute)
     {
-        $data = DB::table('global_config')
+        return DB::table('global_config')
             ->select('global_value')
             ->where('global_name', '=', $latitute)
             ->value('global_value');
-        return $data;
     }
 
     public function fetchGlobalConfigLongitude($longitude)
     {
-        $data = DB::table('global_config')
+        return DB::table('global_config')
             ->select('global_value')
             ->where('global_name', '=', $longitude)
             ->value('global_value');
-        return $data;
     }
 
     public function fetchGlobalConfigMapZoomLevel($mapZoomLevel)
     {
-        $data = DB::table('global_config')
+        return DB::table('global_config')
             ->select('global_value')
             ->where('global_name', '=', $mapZoomLevel)
             ->value('global_value');
-        return $data;
     }
 }

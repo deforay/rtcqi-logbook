@@ -37,8 +37,9 @@ class MonthlyReportTable extends Model
         $DateOfCollect = $data['DateOfCollect'] == "" ? date('Y-m-d') : $commonservice->dateFormat($data['DateOfCollect']);
         $reportingMon = ($data['reportingMon']);
         $recency = '';
-        if (isset($data['isRecency']))
+        if (isset($data['isRecency'])) {
             $recency = $data['isRecency'];
+        }
         if ($request->input('provinceId') != null && trim($request->input('provinceId')) != '') {
             $id = DB::table('monthly_reports')->insertGetId(
                 [
@@ -71,11 +72,15 @@ class MonthlyReportTable extends Model
             $result = $GlobalConfigService->getAllGlobalConfig();
             $arr = array();
             // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($result); $i++) {
+            $counter = count($result);
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < $counter; $i++) {
                 $arr[$result[$i]->global_name] = $result[$i]->global_value;
             }
             // print_r($data);die;
-            for ($p = 0; $p < count($data['pageNO']); $p++) {
+            $counter = count($data['pageNO']);
+            // print_r($data);die;
+            for ($p = 0; $p < $counter; $p++) {
                 $startDate = $commonservice->dateFormat($data['startDate'][$p]);
                 $endDate = $commonservice->dateFormat($data['endDate'][$p]);
 
@@ -103,8 +108,9 @@ class MonthlyReportTable extends Model
                 $totalTested = $data['totalReactive1'][$p] + $data['totalNonReactive1'][$p];
                 $positivePercentage = ($totalTested == 0) ? 'N.A' : number_format($totalPositive * 100 / $totalTested, 2);
                 $posAgreement = 0;
-                if ($data['totalReactive1'][$p] > 0)
+                if ($data['totalReactive1'][$p] > 0) {
                     $posAgreement = number_format(100 * ($data['totalReactive2'][$p]) / ($data['totalReactive1'][$p]), 2);
+                }
                 $OverallAgreement = number_format(100 * ($data['totalReactive2'][$p] + $data['totalNonReactive1'][$p]) / ($data['totalReactive1'][$p] + $data['totalNonReactive1'][$p]), 2);
                 $insMonthlyArr['positive_percentage'] = $positivePercentage;
                 $insMonthlyArr['positive_agreement'] = $posAgreement;
@@ -223,20 +229,18 @@ class MonthlyReportTable extends Model
     // Fetch All Active MonthlyReport List
     public function fetchAllActiveMonthlyReport()
     {
-        $data = DB::table('monthly_reports')
+        return DB::table('monthly_reports')
             // ->where('province_status','=','active')
             ->get();
-        return $data;
     }
 
     // Fetch All Active MonthlyReport List
     public function fetchUniqueActiveMonthlyReport($siteId, $reportingMon)
     {
-        $data = DB::table('monthly_reports')
+        return DB::table('monthly_reports')
             ->where('ts_id', '=', $siteId)
             ->where('reporting_month', '=', $reportingMon)
             ->get();
-        return $data;
     }
 
     // fetch particular MonthlyReport details
@@ -272,8 +276,9 @@ class MonthlyReportTable extends Model
         $DateOfCollect = ($data['DateOfCollect'] == "" ? date('Y-m-d') : $commonservice->dateFormat($data['DateOfCollect']));
         $reportingMon = ($data['reportingMon']);
         $recency = '';
-        if (isset($data['isRecency']))
+        if (isset($data['isRecency'])) {
             $recency = $data['isRecency'];
+        }
         $upData = array(
             'province_id' => $data['provinceId'],
             'district_id' => $districtId,
@@ -306,10 +311,13 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
-        for ($p = 0; $p < count($data['pageNO']); $p++) {
+        $counter = count($data['pageNO']);
+        for ($p = 0; $p < $counter; $p++) {
             //print_r($data['pageNO']); exit();
             $startDate = $commonservice->dateFormat($data['startDate'][$p]);
             $endDate = $commonservice->dateFormat($data['endDate'][$p]);
@@ -337,8 +345,9 @@ class MonthlyReportTable extends Model
             $totalTested = $data['totalReactive1'][$p] + $data['totalNonReactive1'][$p];
             $positivePercentage = ($totalTested == 0) ? 'N.A' : number_format($totalPositive * 100 / $totalTested, 2);
             $posAgreement = 0;
-            if ($data['totalReactive1'][$p] > 0)
+            if ($data['totalReactive1'][$p] > 0) {
                 $posAgreement = number_format(100 * ($data['totalReactive2'][$p]) / ($data['totalReactive1'][$p]), 2);
+            }
             $OverallAgreement = number_format(100 * ($data['totalReactive2'][$p] + $data['totalNonReactive1'][$p]) / ($data['totalReactive1'][$p] + $data['totalNonReactive1'][$p]), 2);
             $insMonthlyArr['positive_percentage'] = $positivePercentage;
             $insMonthlyArr['positive_agreement'] = $posAgreement;
@@ -368,7 +377,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $user_id = session('userId');
@@ -488,7 +499,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $user_id = session('userId');
@@ -566,7 +579,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $id = base64_decode($id);
@@ -586,9 +601,7 @@ class MonthlyReportTable extends Model
             $data = $data->selectRaw('mrp.lot_no_' . $l . '');
             $data = $data->selectRaw('mrp.expiry_date_' . $l . '');
         }
-
-        $result = $data->get();
-        return $result;
+        return $data->get();
     }
 
     // Test Kit Use Data
@@ -599,7 +612,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $user_id = session('userId');
@@ -732,7 +747,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $user_id = session('userId');
@@ -880,8 +897,7 @@ class MonthlyReportTable extends Model
                 $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
                 $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
             }
-            $data=$query->get();
-            return $data;
+            return $query->get();
     }
     
     public function importMonthlyReportData($request)
@@ -919,7 +935,9 @@ class MonthlyReportTable extends Model
                 $result = $GlobalConfigService->getAllGlobalConfig();
                 $arr = array();
                 // now we create an associative array so that we can easily create view variables
-                for ($i = 0; $i < sizeof($result); $i++) {
+                $counter = count($result);
+                // now we create an associative array so that we can easily create view variables
+                for ($i = 0; $i < $counter; $i++) {
                     $arr[$result[$i]->global_name] = $result[$i]->global_value;
                 }
                 $notInsertRowArray = array();
@@ -929,25 +947,25 @@ class MonthlyReportTable extends Model
                     if ($rowCnt > 1) {
 
                         $isDataValid = $this->isValidData($row);
-                        $comment = !$isDataValid ? $this->getErrorComment($row) : '';
+                        $comment = $isDataValid ? '' : $this->getErrorComment($row);
 
                         if ($isDataValid) {
                             $reporting_date = '';
                             if (is_numeric($row[11])) {
                                 $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('M-Y');
-                            } else if (is_string($row[11])) {
+                            } elseif (is_string($row[11])) {
                                 $reporting_date = date('M-Y', strtotime($row[11]));
                             }
                             $dateOfCollection = '';
                             if (is_numeric($row[10])) {
                                 $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
-                            } else if (is_string($row[10])) {
+                            } elseif (is_string($row[10])) {
                                 $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                             }
                             $startDate = '';
                             if (is_numeric($row[15])) {
                                 $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
-                            } else if (is_string($row[15])) {
+                            } elseif (is_string($row[15])) {
                                 $startDate = date('Y-m-d', strtotime($row[15]));
                             }
 
@@ -955,13 +973,13 @@ class MonthlyReportTable extends Model
                             $endDate = '';
                             if (is_numeric($row[16])) {
                                 $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                            } else if (is_string($row[16])) {
+                            } elseif (is_string($row[16])) {
                                 $endDate = date('Y-m-d', strtotime($row[16]));
                             }
                             $expiryDate1 = '';
                             if (is_numeric($row[19])) {
                                 $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
-                            } else if (is_string($row[19])) {
+                            } elseif (is_string($row[19])) {
                                 $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                             }
                             $test_site_name = $row[0];
@@ -1007,7 +1025,7 @@ class MonthlyReportTable extends Model
                                 $expiryDate2 = '';
                                 if (is_numeric($row[25])) {
                                     $expiryDate2 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[25])->format('Y-m-d');
-                                } else if (is_string($row[25])) {
+                                } elseif (is_string($row[25])) {
                                     $expiryDate2 = date('Y-m-d', strtotime($row[25]));
                                 }
                                 $testkitData = DB::table('test_kits')
@@ -1034,7 +1052,7 @@ class MonthlyReportTable extends Model
                                 $expiryDate3 = '';
                                 if (is_numeric($row[31])) {
                                     $expiryDate3 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[31])->format('Y-m-d');
-                                } else if (is_string($row[31])) {
+                                } elseif (is_string($row[31])) {
                                     $expiryDate3 = date('Y-m-d', strtotime($row[31]));
                                 }
                                 $testkitData = DB::table('test_kits')
@@ -1061,7 +1079,7 @@ class MonthlyReportTable extends Model
                                 $expiryDate4 = '';
                                 if (is_numeric($row[37])) {
                                     $expiryDate4 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[37])->format('Y-m-d');
-                                } else if (is_string($row[37])) {
+                                } elseif (is_string($row[37])) {
                                     $expiryDate4 = date('Y-m-d', strtotime($row[37]));
                                 }
                                 $testkitData = DB::table('test_kits')
@@ -1088,15 +1106,15 @@ class MonthlyReportTable extends Model
                                 $final_positive = $row[23];
                                 $final_negative = $row[24];
                                 $final_indeterminate = $row[25];
-                            } else if ($arr['no_of_test'] == 2) {
+                            } elseif ($arr['no_of_test'] == 2) {
                                 $final_positive = $row[29];
                                 $final_negative = $row[30];
                                 $final_indeterminate = $row[31];
-                            } else if ($arr['no_of_test'] == 3) {
+                            } elseif ($arr['no_of_test'] == 3) {
                                 $final_positive = $row[35];
                                 $final_negative = $row[36];
                                 $final_indeterminate = $row[37];
-                            } else if ($arr['no_of_test'] == 4) {
+                            } elseif ($arr['no_of_test'] == 4) {
                                 $final_positive = $row[41];
                                 $final_negative = $row[42];
                                 $final_indeterminate = $row[43];
@@ -1243,10 +1261,12 @@ class MonthlyReportTable extends Model
                                 $positivePercentage = ((int)$totalTested == 0) ? 'N.A' : number_format((int)$totalPositive * 100 / (int)$totalTested, 2);
                                 $posAgreement = 0;
                                 $OverallAgreement = 0;
-                                if ((int)$testkit1_reactive > 0)
+                                if ((int)$testkit1_reactive > 0) {
                                     $posAgreement = number_format(100 * ((int)$testkit2_reactive) / ((int)$testkit1_reactive), 2);
-                                if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
+                                }
+                                if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0) {
                                     $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
+                                }
                                 $insMonthlyArr['positive_percentage'] = $positivePercentage;
                                 $insMonthlyArr['positive_agreement'] = $posAgreement;
                                 $insMonthlyArr['overall_agreement'] = $OverallAgreement;
@@ -1274,28 +1294,28 @@ class MonthlyReportTable extends Model
                                     $startDate = '';
                                     if (is_numeric($row[15])) {
                                         $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
-                                    } else if (is_string($row[15])) {
+                                    } elseif (is_string($row[15])) {
                                         $startDate = date('Y-m-d', strtotime($row[15]));
                                     }
 
                                     $endDate = '';
                                     if (is_numeric($row[16])) {
                                         $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                                    } else if (is_string($row[16])) {
+                                    } elseif (is_string($row[16])) {
                                         $endDate = date('Y-m-d', strtotime($row[16]));
                                     }
 
                                     $expiryDate1 = '';
                                     if (is_numeric($row[19])) {
                                         $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
-                                    } else if (is_string($row[19])) {
+                                    } elseif (is_string($row[19])) {
                                         $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                                     }
 
                                     $dateOfCollection = '';
                                     if (is_numeric($row[10])) {
                                         $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
-                                    } else if (is_string($row[10])) {
+                                    } elseif (is_string($row[10])) {
                                         $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                                     }
 
@@ -1415,28 +1435,28 @@ class MonthlyReportTable extends Model
                                 $startDate = '';
                                 if (is_numeric($row[15])) {
                                     $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
-                                } else if (is_string($row[15])) {
+                                } elseif (is_string($row[15])) {
                                     $startDate = date('Y-m-d', strtotime($row[15]));
                                 }
 
                                 $endDate = '';
                                 if (is_numeric($row[16])) {
                                     $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                                } else if (is_string($row[16])) {
+                                } elseif (is_string($row[16])) {
                                     $endDate = date('Y-m-d', strtotime($row[16]));
                                 }
 
                                 $expiryDate1 = '';
                                 if (is_numeric($row[19])) {
                                     $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
-                                } else if (is_string($row[19])) {
+                                } elseif (is_string($row[19])) {
                                     $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                                 }
 
                                 $dateOfCollection = '';
                                 if (is_numeric($row[10])) {
                                     $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
-                                } else if (is_string($row[10])) {
+                                } elseif (is_string($row[10])) {
                                     $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                                 }
 
@@ -1542,35 +1562,35 @@ class MonthlyReportTable extends Model
                             $startDate = '';
                             if (is_numeric($row[15])) {
                                 $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
-                            } else if (is_string($row[15])) {
+                            } elseif (is_string($row[15])) {
                                 $startDate = date('Y-m-d', strtotime($row[15]));
                             }
 
                             $endDate = '';
                             if (is_numeric($row[16])) {
                                 $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
-                            } else if (is_string($row[16])) {
+                            } elseif (is_string($row[16])) {
                                 $endDate = date('Y-m-d', strtotime($row[16]));
                             }
 
                             $expiryDate1 = '';
                             if (is_numeric($row[19])) {
                                 $expiryDate1 = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[19])->format('Y-m-d');
-                            } else if (is_string($row[19])) {
+                            } elseif (is_string($row[19])) {
                                 $expiryDate1 = date('Y-m-d', strtotime($row[19]));
                             }
 
                             $reporting_date = '';
                             if (is_numeric($row[11])) {
                                 $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('M-Y');
-                            } else if (is_string($row[11])) {
+                            } elseif (is_string($row[11])) {
                                 $reporting_date = date('M-Y', strtotime($row[11]));
                             }
 
                             $dateOfCollection = '';
                             if (is_numeric($row[10])) {
                                 $dateOfCollection = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10])->format('Y-m-d');
-                            } else if (is_string($row[10])) {
+                            } elseif (is_string($row[10])) {
                                 $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                             }
 
@@ -1599,15 +1619,15 @@ class MonthlyReportTable extends Model
                                 $final_positive = $row[23];
                                 $final_negative = $row[24];
                                 $final_indeterminate = $row[25];
-                            } else if ($arr['no_of_test'] == 2) {
+                            } elseif ($arr['no_of_test'] == 2) {
                                 $final_positive = $row[29];
                                 $final_negative = $row[30];
                                 $final_indeterminate = $row[31];
-                            } else if ($arr['no_of_test'] == 3) {
+                            } elseif ($arr['no_of_test'] == 3) {
                                 $final_positive = $row[35];
                                 $final_negative = $row[36];
                                 $final_indeterminate = $row[37];
-                            } else if ($arr['no_of_test'] == 4) {
+                            } elseif ($arr['no_of_test'] == 4) {
                                 $final_positive = $row[41];
                                 $final_negative = $row[42];
                                 $final_indeterminate = $row[43];
@@ -1719,47 +1739,47 @@ class MonthlyReportTable extends Model
         $commentArray = array();
 
         if (trim($row[0]) == '') {
-            array_push($commentArray, 'Test Site');
+            $commentArray[] = 'Test Site';
         }
 
         if (trim($row[1]) == '') {
-            array_push($commentArray, 'Entry Point');
+            $commentArray[] = 'Entry Point';
         }
 
         if (trim($row[2]) == '') {
-            array_push($commentArray, 'Province');
+            $commentArray[] = 'Province';
         }
 
         if (trim($row[5]) == '') {
-            array_push($commentArray, 'Lab Manager Name');
+            $commentArray[] = 'Lab Manager Name';
         }
 
         if (trim($row[6]) == '') {
-            array_push($commentArray, 'Is FLC');
+            $commentArray[] = 'Is FLC';
         }
 
         if (trim($row[11]) == '') {
-            array_push($commentArray, 'Reporting Month');
+            $commentArray[] = 'Reporting Month';
         }
 
         if (trim($row[15]) == '') {
-            array_push($commentArray, 'Start Date');
+            $commentArray[] = 'Start Date';
         }
 
         if (trim($row[16]) == '') {
-            array_push($commentArray, 'End Date');
+            $commentArray[] = 'End Date';
         }
 
         if (trim($row[17]) == '') {
-            array_push($commentArray, 'Test Kit Name 1');
+            $commentArray[] = 'Test Kit Name 1';
         }
 
         if (trim($row[18]) == '') {
-            array_push($commentArray, 'Lot No.1');
+            $commentArray[] = 'Lot No.1';
         }
 
         if (trim($row[19]) == '') {
-            array_push($commentArray, 'Expiry Date 1');
+            $commentArray[] = 'Expiry Date 1';
         }
 
         return implode(", ", $commentArray) . ' field(s) are missing';
@@ -1774,7 +1794,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $user_id = session('userId');
@@ -1887,14 +1909,12 @@ class MonthlyReportTable extends Model
             $query = $query->whereIn('test_sites.ts_id', $data['testSiteId']);
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
-        $salesResult = $query->get();
-        return $salesResult;
+        return $query->get();
     }
     public function getLatestValue()
     {
-        $res = DB::table('monthly_reports_pages')->latest('mrp_id')->first();
         // dd($res);
-        return $res;
+        return DB::table('monthly_reports_pages')->latest('mrp_id')->first();
     }
 
     public function CheckPreLot($params)
@@ -2002,7 +2022,7 @@ class MonthlyReportTable extends Model
     // Fetch All Dashboard count value
     public function fetchCountOfMonthlyReport()
     {
-        $dateS = Carbon::now()->subMonth(12);
+        $dateS = Carbon::now()->subMonth();
         $dateE = Carbon::now();
         //DB::enableQueryLog();
         $user_id = session('userId');
@@ -2025,7 +2045,7 @@ class MonthlyReportTable extends Model
     // Fetch All Dashboard Site count value
     public function fetchSiteCountOfMonthlyReport()
     {
-        $dateS = Carbon::now()->subMonth(12);
+        $dateS = Carbon::now()->subMonth();
         $dateE = Carbon::now();
         //DB::enableQueryLog();
         $data = DB::table('monthly_reports')
@@ -2074,7 +2094,9 @@ class MonthlyReportTable extends Model
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         $user_name = session('name');
@@ -2212,7 +2234,7 @@ class MonthlyReportTable extends Model
         //dd($query->toSql());
         $siteResult = $query->get()->toArray();
         //print_r($siteResult);die;
-        if (sizeof($siteResult) > 0) {
+        if (count($siteResult) > 0) {
             foreach ($siteResult as $sRes) {
                 
                 if (!isset($result[$sRes->site_name]['site_id'])) {
@@ -2242,8 +2264,8 @@ class MonthlyReportTable extends Model
 
     public function fetchMonthlyWiseReportCount()
     {
-        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
-        $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
+        $dateS = Carbon::now()->subMonth()->format('Y-m-01');
+        $dateE = Carbon::now()->subMonth()->format('Y-m-01');
         //DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
             ->select(DB::raw('count(mr_id) as total'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
@@ -2258,7 +2280,7 @@ class MonthlyReportTable extends Model
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
-            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
+            $monthYear = Carbon::today()->subMonth()->format('M-Y');
             //$year = Carbon::today()->subMonth($i)->format('Y');
             $period[$monthYear]=$monthYear;
         }
@@ -2268,16 +2290,14 @@ class MonthlyReportTable extends Model
             $totalCount+=$sRes->total;
             $result[$sRes->reporting_month]=$sRes->total;
         }
-        
-        $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
         //print_r($fResult);die;
-        return $fResult;
+        return array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
     }
 
     public function fetchSiteWiseMonthlyReportCount()
     {
-        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
-        $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
+        $dateS = Carbon::now()->subMonth()->format('Y-m-01');
+        $dateE = Carbon::now()->subMonth()->format('Y-m-01');
         DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
             ->join('test_sites AS ts', 'mr.ts_id', '=', 'ts.ts_id')
@@ -2292,7 +2312,7 @@ class MonthlyReportTable extends Model
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
-            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
+            $monthYear = Carbon::today()->subMonth()->format('M-Y');
             $period[$monthYear]=$monthYear;
         }
         
@@ -2301,22 +2321,22 @@ class MonthlyReportTable extends Model
             $totalCount+=$sRes->reporting_sites;
             $result[$sRes->reporting_month] = $sRes->reporting_sites;
         }
-        
-        $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
         //print_r($fResult);die;
-        return $fResult;
+        return array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
     }
 
     public function fetchTestWiseMonthlyReportCount()
     {
-        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
-        $dateE = Carbon::now()->subMonth(1)->format('Y-m-01');
+        $dateS = Carbon::now()->subMonth()->format('Y-m-01');
+        $dateE = Carbon::now()->subMonth()->format('Y-m-01');
 
         $GlobalConfigService = new GlobalConfigService();
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         //DB::enableQueryLog();
@@ -2337,7 +2357,7 @@ class MonthlyReportTable extends Model
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
-            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
+            $monthYear = Carbon::today()->subMonth()->format('M-Y');
             $period[$monthYear]=$monthYear;
         }
         
@@ -2356,10 +2376,8 @@ class MonthlyReportTable extends Model
                 }
             }
         }
-        
-        $fResult = array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
         //print_r($fResult);die;
-        return $fResult;
+        return array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
     }
 
     public function sendSiteWiseReminderEmail($params){

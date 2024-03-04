@@ -23,8 +23,9 @@ class ImplementingPartnersController extends Controller
         {
             return view('implementingpartners.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add Implementing Partners (display add screen and add the Implementing Partners values)
@@ -57,8 +58,7 @@ class ImplementingPartnersController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

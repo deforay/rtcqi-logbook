@@ -45,19 +45,16 @@ class TestKitTable extends Model
     // Fetch All TestKit List
     public function fetchAllTestKit()
     {
-        $data = DB::table('test_kits')
-            ->get();
-    
-            return $data;
+        return DB::table('test_kits')
+                ->get();
     }
 
     // Fetch All Active TestKit List
     public function fetchAllActiveTestKit()
     {
-        $data = DB::table('test_kits')
+        return DB::table('test_kits')
             ->where('test_kit_status', '=', 'active')
             ->get();
-        return $data;
     }
 
     // Fetch All Active TestKit List
@@ -91,8 +88,9 @@ class TestKitTable extends Model
                 });
             }
             $records = $query->get();
+            $counter = count($data);
 
-            for ($i = 0; $i < sizeof($data); $i++) {
+            for ($i = 0; $i < $counter; $i++) {
                 //print_r($data);exit();
                 $summary[$i]['test_kit_id'] = $data[$i]->tk_id;
                 $summary[$i]['test_kit_name'] = $data[$i]->test_kit_name;
@@ -125,10 +123,9 @@ class TestKitTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('test_kits')
+        return DB::table('test_kits')
             ->where('test_kits.tk_id', '=', $id)
             ->get();
-        return $data;
     }
 
     // Update particular TestKit details

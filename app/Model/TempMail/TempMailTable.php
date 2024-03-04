@@ -13,7 +13,7 @@ class TempMailTable extends Model
     public function insertTempMailDetails($to,$subject,$message,$fromMail,$fromName) {
         $commonservice = new CommonService();
         if(trim($to)!=""){
-            $id = DB::table('temp_mail')->insertGetId(
+            return DB::table('temp_mail')->insertGetId(
                 [
                     'message' => $message,
                     'from_mail' => $fromMail,
@@ -23,7 +23,6 @@ class TempMailTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
-            return $id;
         }
     }
 

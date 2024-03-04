@@ -23,8 +23,7 @@ class TestSiteService
         	$add = $model->saveTestSite($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'TestSite Added Successfully';
-				return $msg;
+				return 'TestSite Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,24 +36,21 @@ class TestSiteService
 	public function getAllTestSite()
     {
 		$model = new TestSiteTable();
-        $result = $model->fetchAllTestSite();
-        return $result;
+        return $model->fetchAllTestSite();
 	}
 
 	//Get All TestSite List
 	public function getAllActiveTestSite()
     {
 		$model = new TestSiteTable();
-        $result = $model->fetchAllActiveTestSite();
-        return $result;
+        return $model->fetchAllActiveTestSite();
 	}
 	//Get Particular TestSite Details
 	public function getTestSiteById($id)
 	{
 		
 		$model = new TestSiteTable();
-        $result = $model->fetchTestSiteById($id);
-        return $result;
+        return $model->fetchTestSiteById($id);
 	}
 	//Update Particular TestSite Details
 	public function updateTestSite($params,$id)
@@ -65,8 +61,7 @@ class TestSiteService
         	$add = $model->updateTestSite($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'TestSite Updated Successfully';
-				return $msg;
+				return 'TestSite Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -79,23 +74,20 @@ class TestSiteService
 	public function getAllCurrentUserActiveTestSite()
     {
 		$model = new TestSiteTable();
-        $result = $model->fetchAllCurrentUserActiveTestSite();
-        return $result;
+        return $model->fetchAllCurrentUserActiveTestSite();
 	}
 
 	//Get Particular TestSite
 	public function getTestSiteData($id)
     {
 		$model = new TestSiteTable();
-        $result = $model->fetchTestSiteData($id);
-        return $result;
+        return $model->fetchTestSiteData($id);
 	}
 	
 	public function getAllTestSiteList($params)
 	{
 		$model = new TestSiteTable();
-        $result = $model->fetchAllTestSiteList($params);
-        return $result;
+        return $model->fetchAllTestSiteList($params);
 	}
 }
 

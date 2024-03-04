@@ -23,8 +23,7 @@ class ProvinceService
         	$add = $model->saveProvince($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'Province Added Successfully';
-				return $msg;
+				return 'Province Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,24 +36,21 @@ class ProvinceService
 	public function getAllProvince()
     {
 		$model = new ProvinceTable();
-        $result = $model->fetchAllProvince();
-        return $result;
+        return $model->fetchAllProvince();
 	}
 
 	//Get All Province List
 	public function getAllActiveProvince()
     {
 		$model = new ProvinceTable();
-        $result = $model->fetchAllActiveProvince();
-        return $result;
+        return $model->fetchAllActiveProvince();
 	}
 	//Get Particular Province Details
 	public function getProvinceById($id)
 	{
 		
 		$model = new ProvinceTable();
-        $result = $model->fetchProvinceById($id);
-        return $result;
+        return $model->fetchProvinceById($id);
 	}
 	//Update Particular Province Details
 	public function updateProvince($params,$id)
@@ -65,8 +61,7 @@ class ProvinceService
         	$add = $model->updateProvince($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'Province Updated Successfully';
-				return $msg;
+				return 'Province Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
