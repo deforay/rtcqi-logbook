@@ -23,8 +23,7 @@ class SubDistrictService
         	$add = $model->saveSubDistrict($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'Sub District Added Successfully';
-				return $msg;
+				return 'Sub District Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,15 +36,13 @@ class SubDistrictService
 	public function getAllSubDistrict()
     {
 		$model = new SubDistrictTable();
-        $result = $model->fetchAllSubDistrict();
-        return $result;
+        return $model->fetchAllSubDistrict();
 	}
 
 	public function getSubDistrictByDistrictId($id)
 	{
 		$model = new SubDistrictTable();
-        $result = $model->fetchSubDistrictNameByDistrictId($id);
-		return $result;
+		return $model->fetchSubDistrictNameByDistrictId($id);
 	}
 
 	//Get Particular Sub District Details
@@ -53,8 +50,7 @@ class SubDistrictService
 	{
 		
 		$model = new SubDistrictTable();
-        $result = $model->fetchSubDistrictById($id);
-        return $result;
+        return $model->fetchSubDistrictById($id);
 	}
 	//Update Particular Sub District Details
 	public function updateSubDistrict($params,$id)
@@ -65,8 +61,7 @@ class SubDistrictService
         	$add = $model->updateSubDistrict($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'Sub District Updated Successfully';
-				return $msg;
+				return 'Sub District Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -80,15 +75,13 @@ class SubDistrictService
 	public function getSubDistictName($id)
     {
 		$model = new SubDistrictTable();
-        $result = $model->fetchSubDistrictName($id);
-        return $result;
+        return $model->fetchSubDistrictName($id);
 	}
 	
 	public function getSubDistictByData($id)
     {
 		$model = new SubDistrictTable();
-        $result = $model->fetchSubDistrictData($id);
-        return $result;
+        return $model->fetchSubDistrictData($id);
 	}
 
 	

@@ -23,8 +23,9 @@ class TestKitController extends Controller
         {
             return view('testkit.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add TestKit (display add screen and add the TestKit values)
@@ -57,8 +58,7 @@ class TestKitController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

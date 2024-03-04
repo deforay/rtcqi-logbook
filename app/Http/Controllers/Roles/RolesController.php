@@ -27,8 +27,9 @@ class RolesController extends Controller
         // return view('roles.index');
         if (session('login') == true) {
             return view('role.index');
-        } else
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add roles (display add screen and add the roles values)
@@ -89,10 +90,11 @@ class RolesController extends Controller
             return Redirect::route('roles.index')->with('status', $editRoles);
         } else {
             $configFile =  "acl.config.json";
-            if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile))
+            if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
                 $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
-            else
+            } else {
                 $config = array();
+            }
             $RoleService = new RolesService();
             $resourceResult = $RoleService->getAllResource();
             $result = $RoleService->getRolesById($id);

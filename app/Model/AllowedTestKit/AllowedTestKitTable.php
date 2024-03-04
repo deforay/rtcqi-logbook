@@ -24,8 +24,8 @@ class AllowedTestKitTable extends Model
         $data = $request->all();
 
         if ($request->input('testKitNo') != null && trim($request->input('testKitNo')) != '') {
-
-            for ($x = 0; $x < count($data['testKitName']); $x++) {
+            $counter = count($data['testKitName']);
+            for ($x = 0; $x < $counter; $x++) {
                 $id = DB::table('allowed_testkits')->insert(
                     [
                         'test_kit_no' => $data['testKitNo'],
@@ -42,13 +42,12 @@ class AllowedTestKitTable extends Model
     public function fetchAllAllowedKitTest()
     {
         DB::enableQueryLog();
-        $data = DB::table('allowed_testkits')
+        // dd(DB::getQueryLog($data));die;
+        return DB::table('allowed_testkits')
             ->select(DB::raw("group_concat(test_kits.test_kit_name) as test_kit_name, allowed_testkits.test_kit_no"))
             ->join('test_kits', 'test_kits.tk_id', '=', 'allowed_testkits.testkit_id')
             ->groupBy('allowed_testkits.test_kit_no')
             ->get();
-        // dd(DB::getQueryLog($data));die;
-        return $data;
     }
 
     // fetch particular AllowedKitTest details
@@ -56,10 +55,9 @@ class AllowedTestKitTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('allowed_testkits')
+        return DB::table('allowed_testkits')
             ->where('allowed_testkits.test_kit_no', '=', $id)
             ->get();
-        return $data;
     }
 
     // Update particular AllowedKitTest details
@@ -70,7 +68,8 @@ class AllowedTestKitTable extends Model
         $user_name = session('name');
         $commonservice = new CommonService();
         DB::delete('delete from allowed_testkits where test_kit_no = ?', [base64_decode($id)]);
-        for ($x = 0; $x < count($data['testKitName']); $x++) {
+        $counter = count($data['testKitName']);
+        for ($x = 0; $x < $counter; $x++) {
             $id = DB::table('allowed_testkits')->insert(
                 [
                     'test_kit_no' => $data['testKitNo'],

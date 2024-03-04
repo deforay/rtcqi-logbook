@@ -41,19 +41,18 @@ class UserTable extends Model
                     'role_id' => $data['roleId']
                 ]
             );
-            if ($id > 0 && trim($data['testSiteName']) != '') {
-                if ($id > 0 && trim($data['testSiteName']) != '') {
-                    $selectedSiteName = explode(",", $data['testSiteName']);
-                    $uniqueSiteId = array_unique($selectedSiteName);
-                    for ($x = 0; $x < count($selectedSiteName); $x++) {
-                        if (isset($uniqueSiteId[$x])) {
-                            $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                [
-                                    'user_id' => $id,
-                                    'ts_id' => $selectedSiteName[$x],
-                                ]
-                            );
-                        }
+            if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
+                $selectedSiteName = explode(",", $data['testSiteName']);
+                $uniqueSiteId = array_unique($selectedSiteName);
+                $counter = count($selectedSiteName);
+                for ($x = 0; $x < $counter; $x++) {
+                    if (isset($uniqueSiteId[$x])) {
+                        $userFacility = DB::table('users_testsite_map')->insertGetId(
+                            [
+                                'user_id' => $id,
+                                'ts_id' => $selectedSiteName[$x],
+                            ]
+                        );
                     }
                 }
             }
@@ -104,18 +103,16 @@ class UserTable extends Model
     // Fetch All User List
     public function fetchAllUser()
     {
-        $data = DB::table('users')
+        return DB::table('users')
             ->get();
-        return $data;
     }
 
     // Fetch All Active User List
     public function fetchAllActiveUser()
     {
-        $data = DB::table('users')
+        return DB::table('users')
             ->where('user_status', '=', 'active')
             ->get();
-        return $data;
     }
 
     // fetch particular User details
@@ -123,22 +120,20 @@ class UserTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('users')
+        return DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.user_id', '=', $id)
             ->get();
-        return $data;
     }
 
     public function fetchUserByEmail($email)
     {
-        $data = DB::table('users')
+        return DB::table('users')
             // ->join('roles', 'roles.role_id', '=', 'users.role_id')
             // ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $email)
             ->get();
-        return $data;
     }
 
     public function updateUserLanguage($locale){
@@ -178,7 +173,7 @@ class UserTable extends Model
             ->update(
                 $user
             );
-        if (trim($data['password'])) {
+        if (trim($data['password']) !== '' && trim($data['password']) !== '0') {
             $user['password'] = Hash::make($data['password']); // Hashing passwords
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
@@ -187,11 +182,7 @@ class UserTable extends Model
                 );
         }
         if ($response == 1) {
-            if ($data['password'] == '') {
-                $forcePassword = 0;
-            } else {
-                $forcePassword = 1;
-            }
+            $forcePassword = $data['password'] == '' ? 0 : 1;
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
                 ->update(
@@ -206,7 +197,8 @@ class UserTable extends Model
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
-            for ($x = 0; $x < count($selectedSiteName); $x++) {
+            $counter = count($selectedSiteName);
+            for ($x = 0; $x < $counter; $x++) {
                 if (isset($uniqueSiteId[$x])) {
                     $response = DB::table('users_testsite_map')->insertGetId(
                         [
@@ -390,8 +382,7 @@ class UserTable extends Model
 
     public function resetForgotPassword($email, $newpassword)
     {
-        $changepassword = DB::table('users')->where('email', $email)
+        return DB::table('users')->where('email', $email)
         ->update(['password' => Hash::make($newpassword)]);
-        return $changepassword;
     }
 }

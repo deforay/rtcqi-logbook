@@ -26,8 +26,7 @@ class RolesService
 			if($addRoles>0){
 				$Rolesmodel->mapRolePrivilege($request,$addRoles);
 				DB::commit();
-				$msg = 'Roles Added Successfully';
-				return $msg;
+				return 'Roles Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -40,23 +39,20 @@ class RolesService
 	public function getAllRole()
     {
 		$RoleModel = new RolesTable();
-        $result = $RoleModel->fetchAllRole();
-        return $result;
+        return $RoleModel->fetchAllRole();
 	}
 
 	//Get All Role List
 	public function getAllActiveRole()
     {
 		$RoleModel = new RolesTable();
-        $result = $RoleModel->fetchAllActiveRole();
-        return $result;
+        return $RoleModel->fetchAllActiveRole();
 	}
 	//Get Particular Roles Details
 	public function getRolesById($id)
 	{
 		$RolesModel = new RolesTable();
-        $result = $RolesModel->fetchRolesById($id);
-        return $result;
+        return $RolesModel->fetchRolesById($id);
 	}
 	//Update Particular Roles Details
 	public function updateRoles($params,$id)
@@ -68,8 +64,7 @@ class RolesService
 			if($addRoles>0){
 				$RolesModel->mapRolePrivilege($params,base64_decode($id));
 				DB::commit();
-				$msg = 'Roles Updated Successfully';
-				return $msg;
+				return 'Roles Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -81,8 +76,7 @@ class RolesService
 	//Fetch All resource
 	public function getAllResource(){
 		$RolesModel = new RolesTable();
-		$result = $RolesModel->fetchAllResource();
-        return $result;
+        return $RolesModel->fetchAllResource();
 	}
 }
 

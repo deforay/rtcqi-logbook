@@ -49,11 +49,7 @@ class UserLoginExpireCron extends Command
             $host = request()->getHttpHost();
             $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
             $currentDate=Date("d-M-Y");
-            if(trim($noOfMonths)==""){
-                $noOfMonths=5;
-            }else{
-                $noOfMonths=$noOfMonths-1;
-            }
+            $noOfMonths = trim($noOfMonths)=="" ? 5 : $noOfMonths-1;
             $userData = DB::table('users')
                 ->select('user_id','first_name','last_name','email','phone','last_login_datetime')
                 ->where('user_status', '=', 'active')

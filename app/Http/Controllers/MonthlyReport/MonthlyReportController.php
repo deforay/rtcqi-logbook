@@ -38,8 +38,9 @@ class MonthlyReportController extends Controller
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
             return view('monthlyreport.index', array('testSite' => $testSite,'district' => $district, 'subdistrict' => $subDistrict,'province' => $province));
-        } else
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add MonthlyReport (display add screen and add the MonthlyReport values)
@@ -74,7 +75,9 @@ class MonthlyReportController extends Controller
             $testingAlgorithmType = $GlobalConfigService->getGlobalConfigValue('testing_algorithm');
             $arr = array();
             // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($glob); $i++) {
+            $counter = count($glob);
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < $counter; $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
             return view('monthlyreport.add', array('latest' => $latest, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'district' => $district,  'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo,'testingAlgorithmType'=>$testingAlgorithmType));
@@ -97,8 +100,7 @@ class MonthlyReportController extends Controller
             }else{
                 $button .= '';
             }
-                $button .= '</div>';
-                return $button;
+                return $button . '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -120,8 +122,7 @@ class MonthlyReportController extends Controller
             }else{
                 $button .= '';
             }
-                $button .= '</div>';
-                return $button;
+                return $button . '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -159,7 +160,9 @@ class MonthlyReportController extends Controller
             $testingAlgorithmType = $GlobalConfigService->getGlobalConfigValue('testing_algorithm');
             $arr = array();
             // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($glob); $i++) {
+            $counter = count($glob);
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < $counter; $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
             return view('monthlyreport.edit', array('allowedTestKitNo' => $allowedTestKitNo, 'global' => $arr, 'globalValue' => $globalValue, 'result' => $result, 'id' => $id, 'province' => $province, 'district' => $district, 'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'kittype' => $kittype,'auditData'=>$auditData,'testingAlgorithmType'=>$testingAlgorithmType));
@@ -173,7 +176,9 @@ class MonthlyReportController extends Controller
             $glob = $GlobalConfigService->getAllGlobalConfig();
             $arr = array();
             // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($glob); $i++) {
+            $counter = count($glob);
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < $counter; $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
             if ($request->isMethod('post')) {
@@ -183,35 +188,32 @@ class MonthlyReportController extends Controller
             } else {
                 return view('monthlyreport.upload', array('global' => $arr));
             }
-        } else
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function CheckPreLot(Request $request)
     {
         $service = new MonthlyReportService();
-        $data = $service->CheckPreLot($request);
-        return $data;
+        return $service->CheckPreLot($request);
     }
 
     public function insertTrackTable()
     {
         $service = new MonthlyReportService();
-        $data = $service->insertData();
-        return $data;
+        return $service->insertData();
     }
 
     public function getReportingMonth(Request $request)
     {
         $service = new MonthlyReportService();
-        $data = $service->getExistingReportingMonth($request);
-        return $data;
+        return $service->getExistingReportingMonth($request);
     }
     public function getIdReportingMonth(Request $request)
     {
         $service = new MonthlyReportService();
-        $data = $service->getIdExistingReportingMonth($request);
-        return $data;
+        return $service->getIdExistingReportingMonth($request);
     }
 
     public function notUpload()
@@ -224,8 +226,9 @@ class MonthlyReportController extends Controller
             //$ProvinceService = new MonthlyReportService();
             $province = $MonthlyReportService->getAllNotUploadActiveProvince();
             return view('monthlyreport.notUpload', array('testSite' => $testSite,'district' => $district,'province' => $province));
-        } else
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getAllNotUploadMonthlyReport(Request $request)
@@ -239,8 +242,7 @@ class MonthlyReportController extends Controller
                 $button = '<div>';
                 $role = session('role');
                 $button .= '';
-                $button .= '</div>';
-                return $button;
+                return $button . '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);

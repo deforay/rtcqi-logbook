@@ -34,9 +34,8 @@ class CommonService
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
-        $countVal = count($user);
 
-        return $countVal;
+        return count($user);
     }
     public function mobileDuplicateValidation($request)
     {
@@ -59,8 +58,7 @@ class CommonService
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
-        $countVal = count($user);
-        return $countVal;
+        return count($user);
     }
     public function checkMobileValidation($request)
     {
@@ -86,16 +84,14 @@ class CommonService
                             ->get();
                     }
                 }
-            } else {
-                if ($value != "") {
-                    $user = DB::table($tableName1)
+            } elseif ($value != "") {
+                $user = DB::table($tableName1)
+                    ->where($fieldName, '=', $value)
+                    ->get();
+                if (count($user) == 0) {
+                    $user = DB::table($tableName2)
                         ->where($fieldName, '=', $value)
                         ->get();
-                    if (count($user) == 0) {
-                        $user = DB::table($tableName2)
-                            ->where($fieldName, '=', $value)
-                            ->get();
-                    }
                 }
             }
             $countVal = count($user);
@@ -111,7 +107,7 @@ class CommonService
             return "0000-00-00";
         } else {
             $dateArray = explode('-', $date);
-            if (sizeof($dateArray) == 0) {
+            if (count($dateArray) == 0) {
                 return;
             }
             $newDate = $dateArray[2] . "-";
@@ -150,7 +146,8 @@ class CommonService
             $restunits = substr($num, 0, strlen($num) - 3); // extracts the last three digits
             $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
             $expunit = str_split($restunits, 2);
-            for ($i = 0; $i < sizeof($expunit); $i++) {
+            $counter = count($expunit);
+            for ($i = 0; $i < $counter; $i++) {
                 // creates each of the 2's group and adds a comma to the end
                 if ($i == 0) {
                     $explrestunits .= (int) $expunit[$i] . ","; // if is first value , convert into integer
@@ -183,12 +180,10 @@ class CommonService
                         ->where($fieldName, '=', $value)
                         ->get();
                 }
-            } else {
-                if ($value != "") {
-                    $user = DB::table($tableName)
-                        ->where($fieldName, '=', $value)
-                        ->get();
-                }
+            } elseif ($value != "") {
+                $user = DB::table($tableName)
+                    ->where($fieldName, '=', $value)
+                    ->get();
             }
             $countVal = count($user);
         } catch (Exception $exc) {
@@ -235,12 +230,7 @@ class CommonService
 
     public function allowDisplay($resource,$view){
         $role = session('role');
-        if ((isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) || (!isset($role[$resource][$view]))){
-              
-           return false;
-        }
-        
-        return true;
+        return !(isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) && isset($role[$resource][$view]);
         
     }
     
@@ -256,8 +246,7 @@ class CommonService
             'date_time' => $commonservice->getDateTime(),
             'ip_address' => request()->ip()
         );
-        $eventResult = DB::table('track')->insert($eventData);
-        return $eventResult;
+        return DB::table('track')->insert($eventData);
     }
     
     public function getDateTime($timezone = 'Asia/Kolkata')
@@ -294,7 +283,7 @@ class CommonService
                 $countVal = count($user);
             // if($countVal == 0){
 
-                if($tableName == 'item_categories'){
+                if ($tableName == 'item_categories') {
                     if($countVal == 0){
                         $id = DB::table($tableName)->insertGetId(
                             [$fieldName => $value,
@@ -309,7 +298,6 @@ class CommonService
                     $item = DB::table($tableName)
                             ->where($sts,'=','active')
                             ->get();
-
                     $opt = '';
                     foreach ($item as $items){
                         if($items->item_category_id == $id || $items->item_category==$value ){
@@ -319,8 +307,7 @@ class CommonService
                             $opt .= '<option value="'.$items->item_category_id.'">'.$items->item_category.'</option>';
                         }
                     }
-                }
-                else if($tableName == 'item_types'){
+                } elseif ($tableName == 'item_types') {
                     if($countVal == 0){
                         $id = DB::table($tableName)->insertGetId(
                             [$fieldName => $value,
@@ -336,8 +323,7 @@ class CommonService
                     $item = DB::table($tableName)
                     ->where($sts,'=','active')
                             ->get();
-
-                            $opt = '';
+                    $opt = '';
                     foreach ($item as $items){
                         if($items->item_type_id == $id || $items->item_type==$value ){
                             $opt .= '<option value="'.$items->item_type_id.'" selected>'.$items->item_type.'</option>';
@@ -346,8 +332,7 @@ class CommonService
                             $opt .= '<option value="'.$items->item_type_id.'">'.$items->item_type.'</option>';
                         } 
                     }
-                }
-                else{
+                } else{
                     if($countVal == 0){
                         $id = DB::table($tableName)->insertGetId(
                             [$fieldName => $value,
@@ -365,26 +350,25 @@ class CommonService
 
                             $opt = '';
 
-                            if($tableName == 'units_of_measure'){
-                        foreach ($item as $items){
-                            if($items->uom_id == $id || $items->unit_name==$value ){
-                                $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
+                            if ($tableName == 'units_of_measure') {
+                                foreach ($item as $items){
+                                    if($items->uom_id == $id || $items->unit_name==$value ){
+                                        $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
+                                    }
+                                    else{
+                                        $opt .= '<option value="'.$items->uom_id.'">'.$items->unit_name.'</option>';
+                                    }
+                                }
+                            } elseif ($tableName == 'brands') {
+                                foreach ($item as $items){
+                                    if($items->brand_id == $id || $items->brand_name==$value ){
+                                        $opt .= '<option value="'.$items->brand_id.'" selected>'.$items->brand_name.'</option>';
+                                    }
+                                    else{
+                                        $opt .= '<option value="'.$items->brand_id.'">'.$items->brand_name.'</option>';
+                                    }
+                                }
                             }
-                            else{
-                                $opt .= '<option value="'.$items->uom_id.'">'.$items->unit_name.'</option>';
-                            }
-                        }
-                    }
-                    else if($tableName == 'brands'){
-                        foreach ($item as $items){
-                            if($items->brand_id == $id || $items->brand_name==$value ){
-                                $opt .= '<option value="'.$items->brand_id.'" selected>'.$items->brand_name.'</option>';
-                            }
-                            else{
-                                $opt .= '<option value="'.$items->brand_id.'">'.$items->brand_name.'</option>';
-                            }
-                        }
-                    }
                 }
                 $data['option'] = $opt;
 
@@ -576,9 +560,11 @@ class CommonService
         $data=array();
         $data['lat'] = '';
         $data['lng'] = '';
+        // now we create an associative array so that we can easily create view variables
+        $counter = count($result);
 
         // now we create an associative array so that we can easily create view variables
-        for ($i = 0; $i < sizeof($result); $i++) {
+        for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
         

@@ -76,7 +76,8 @@ class ODKDataCron extends Command
         $response1 = curl_exec($ch);
         $submission = json_decode($response1,TRUE);
         curl_close($ch);
-        for($t=0;$t<count($submission['value']);$t++)
+        $counter = count($submission['value']);
+        for($t=0;$t<$counter;$t++)
         {
            $uid = $submission['value'][$t]['__id'];
             $ch = curl_init();
@@ -315,10 +316,12 @@ class ODKDataCron extends Command
                         $positivePercentage = ((int)$totalTested == 0) ? 'N.A' : number_format((int)$totalPositive * 100 / (int)$totalTested, 2);
                         $posAgreement = 0;
                         $OverallAgreement = 0;
-                        if ((int)$testkit1_reactive > 0)
+                        if ((int)$testkit1_reactive > 0) {
                             $posAgreement = number_format(100 * ((int)$testkit2_reactive) / ((int)$testkit1_reactive), 2);
-                        if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
+                        }
+                        if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0) {
                             $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
+                        }
                         $insMonthlyArr['positive_percentage'] = $positivePercentage;
                         $insMonthlyArr['positive_agreement'] = $posAgreement;
                         $insMonthlyArr['overall_agreement'] = $OverallAgreement;
@@ -465,10 +468,12 @@ class ODKDataCron extends Command
                     $positivePercentage = ((int)$totalTested == 0) ? 'N.A' : number_format((int)$totalPositive * 100 / (int)$totalTested, 2);
                     $posAgreement = 0;
                     $OverallAgreement = 0;
-                    if ((int)$testkit1_reactive > 0)
+                    if ((int)$testkit1_reactive > 0) {
                         $posAgreement = number_format(100 * ((int)$testkit2_reactive) / ((int)$testkit1_reactive), 2);
-                    if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0)
+                    }
+                    if (((int)$testkit1_reactive + (int)$testkit1_nonreactive) > 0) {
                         $OverallAgreement = number_format(100 * ((int)$testkit2_reactive + (int)$testkit1_nonreactive) / ((int)$testkit1_reactive + (int)$testkit1_nonreactive), 2);
+                    }
                     $insMonthlyArr['positive_percentage'] = $positivePercentage;
                     $insMonthlyArr['positive_agreement'] = $posAgreement;
                     $insMonthlyArr['overall_agreement'] = $OverallAgreement;

@@ -25,8 +25,7 @@ class UserService
             $add = $model->saveUser($request);
             if ($add > 0) {
                 DB::commit();
-                $msg = 'User Added Successfully';
-                return $msg;
+                return 'User Added Successfully';
             }
         } catch (Exception $exc) {
             DB::rollBack();
@@ -43,8 +42,7 @@ class UserService
             $add = $model->saveNewUser($request);
             if ($add > 0) {
                 DB::commit();
-                $msg = 'New User Added Successfully!!!';
-                return $msg;
+                return 'New User Added Successfully!!!';
             }
         } catch (Exception $exc) {
             DB::rollBack();
@@ -57,39 +55,34 @@ class UserService
     public function getAllUser()
     {
         $model = new UserTable();
-        $result = $model->fetchAllUser();
-        return $result;
+        return $model->fetchAllUser();
     }
 
     //Get All User List
     public function getAllActiveUser()
     {
         $model = new UserTable();
-        $result = $model->fetchAllActiveUser();
-        return $result;
+        return $model->fetchAllActiveUser();
 	}
 
 	public function getUserLoginHistory($params)
 	{
 		$model = new UserLoginHistoryTable();
-        $result = $model->fetchUserLoginHistory($params);
-        return $result;
+        return $model->fetchUserLoginHistory($params);
 	}
 	//Get Particular User Details
 	public function getUserById($id)
 	{
 		
 		$model = new UserTable();
-        $result = $model->fetchUserById($id);
-        return $result;
+        return $model->fetchUserById($id);
 	}
 
 	public function getUserByEmail($email)
 	{
 		
 		$model = new UserTable();
-        $result = $model->fetchUserByEmail($email);
-        return $result;
+        return $model->fetchUserByEmail($email);
 	}
 
 	//Update Particular User Details
@@ -101,8 +94,7 @@ class UserService
         	$add = $model->updateUser($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'User Updated Successfully';
-				return $msg;
+				return 'User Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -115,15 +107,13 @@ class UserService
 	public function validateLogin($params)
 	{
 		$model = new UserTable();
-        $result = $model->validateLogin($params);
-        return $result;
+        return $model->validateLogin($params);
 	}
 
 	public function loggedInHistory($data,$status)
 	{
 		$model = new UserLoginHistoryTable();
-        $result = $model->loggedInHistory($data,$status);
-        return $result;
+        return $model->loggedInHistory($data,$status);
 	}
 	
 	//Update Particular User Profile Details
@@ -135,8 +125,7 @@ class UserService
 			$add = $model->updateProfile($params,$id);
 			if($add>0){
 				DB::commit();
-				$msg = 'User Updated Successfully';
-				return $msg;
+				return 'User Updated Successfully';
 			}
 		}
 		catch (Exception $exc) {
@@ -147,17 +136,15 @@ class UserService
 
 	public function getAllActivity($params)
     {
-		$model = new TrackTable();
-        $result = $model->fetchAllActivity($params);			
-        return $result;
+		$model = new TrackTable();			
+        return $model->fetchAllActivity($params);
 	}
 
 	//Get All ActivityById
 	public function getAllActivityById($id)
     {
 		$model = new TrackTable();
-        $result = $model->fetchAllActivityById($id);
-        return $result;
+        return $model->fetchAllActivityById($id);
 	}
 
 	//Update Particular User Details

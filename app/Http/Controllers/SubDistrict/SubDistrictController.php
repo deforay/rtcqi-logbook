@@ -24,8 +24,9 @@ class SubDistrictController extends Controller
         {
             return view('subdistrict.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add Sub District (display add screen and add the Sub District values)
@@ -59,8 +60,7 @@ class SubDistrictController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
