@@ -43,7 +43,7 @@ class MonthlyReportDataUpload implements ToModel
             'vendor_name'    => $row[7], 
             'vendor_email'    => $row[8],
         ]);
-               
+
     }
 
     // public function collection(Collection $rows)

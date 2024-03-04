@@ -1260,7 +1260,7 @@ class MonthlyReportTable extends Model
                                     /*
                                     $test_site_name = $row[0];
                                     $site_type = $row[1];
-                                    
+
                                     $province = $row[2];
                                     $site_manager = $row[3];
                                     $site_unique_id = $row[4];
@@ -1401,7 +1401,7 @@ class MonthlyReportTable extends Model
                                 /*
                                     $test_site_name = $row[0];
                                     $site_type = $row[1];
-                                    
+
                                     $province = $row[2];
                                     $site_manager = $row[3];
                                     $site_unique_id = $row[4];
@@ -1576,7 +1576,7 @@ class MonthlyReportTable extends Model
 
                             $test_site_name = $row[0];
                             $site_type = $row[1];
-                            
+
                             $province = $row[2];
                             $site_manager = $row[3];
                             $site_unique_id = $row[4];
@@ -2167,9 +2167,9 @@ class MonthlyReportTable extends Model
             $end      = (new DateTime($end_date));
             $interval = DateInterval::createFromDateString('1 month');
             $period   = new DatePeriod($start, $interval, $end);
-            
+
             $months = array();
-            
+
             foreach ($period as $dt) {
                 $months[] = $dt->format("M-Y");
             }

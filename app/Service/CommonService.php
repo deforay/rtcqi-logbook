@@ -293,7 +293,7 @@ class CommonService
                 }
                 $countVal = count($user);
             // if($countVal == 0){
-                
+
                 if($tableName == 'item_categories'){
                     if($countVal == 0){
                         $id = DB::table($tableName)->insertGetId(
@@ -309,7 +309,7 @@ class CommonService
                     $item = DB::table($tableName)
                             ->where($sts,'=','active')
                             ->get();
-                            
+
                     $opt = '';
                     foreach ($item as $items){
                         if($items->item_category_id == $id || $items->item_category==$value ){
@@ -336,7 +336,7 @@ class CommonService
                     $item = DB::table($tableName)
                     ->where($sts,'=','active')
                             ->get();
-                            
+
                             $opt = '';
                     foreach ($item as $items){
                         if($items->item_type_id == $id || $items->item_type==$value ){
@@ -364,7 +364,7 @@ class CommonService
                             ->get();
 
                             $opt = '';
-                            
+
                             if($tableName == 'units_of_measure'){
                         foreach ($item as $items){
                             if($items->uom_id == $id || $items->unit_name==$value ){
@@ -431,9 +431,9 @@ class CommonService
                 $item = DB::table($tableName)
                 ->where($sts,'=','active')
                         ->get();
-                        
+
                 $opt = '';
-                
+
                 if($tableName == 'units_of_measure'){
                     foreach ($item as $items){
                         if($items->uom_id == $id ||$items->unit_name==$value ){
@@ -444,9 +444,9 @@ class CommonService
                         }
                     }
                 }
-                
+
             $data['option'] = $opt;
-            
+
             // dd($countVal);
         } catch (Exception $exc) {
             error_log($exc->getMessage());
