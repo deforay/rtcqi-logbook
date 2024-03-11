@@ -8,6 +8,8 @@
     }
 </style>
 <?php
+
+use Illuminate\Support\Facades\Lang;
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 // print_r($latest->test_1_kit_id);die;
 $test = '';
@@ -148,10 +150,10 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages["sub_district_name"]}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["sub_district_name"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
+                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
                                                         <option value="">---Select---</option>
                                                         @foreach($subdistrict as $row)
                                                         <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
@@ -331,7 +333,7 @@ $messages=Lang::get('messages');
                                                             @if($i == 1)
                                                             <h5>{{ $messages["test_kit_name"]}} {{$i}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else 
+                                                            @else
                                                             <h5>{{ $messages["test_kit_name"]}} {{$i}}
                                                             </h5>
                                                             @endif
@@ -392,10 +394,10 @@ $messages=Lang::get('messages');
                                                 </tr>
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <td style=" text-align: center;">
-                                                    @if($j == 1)    
+                                                    @if($j == 1)
                                                        <h5>{{ $messages["lot_no"]}} {{$j}}<span class="mandatory">*</span>
                                                         </h5>
-                                                        @else 
+                                                        @else
                                                         <h5>{{ $messages["lot_no"]}} {{$j}}
                                                         </h5>
                                                         @endif
@@ -411,7 +413,7 @@ $messages=Lang::get('messages');
                                                         @if($j == 1)
                                                             <h5>{{ $messages["expiry_date"]}} {{$j}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else 
+                                                            @else
                                                             <h5>{{ $messages["expiry_date"]}} {{$j}}
                                                             </h5>
                                                             @endif
@@ -748,12 +750,12 @@ loadReplaceTestKitHeadings();
     }
 
     function changeEndDate(id) {
-        
+
         if($('#startDate' + id).val() === ''){
             var errorMessage='<span style="color:red">{{$messages["please_select_start_date"]}}</span>'
             $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
-            $('#show_error_date'+id).css("display", "block"); 
-            $("#endDate" + id).val('');           
+            $('#show_error_date'+id).css("display", "block");
+            $("#endDate" + id).val('');
             $(".error-date").focus();
         }else{
             $("#endDate" + id).datepicker({

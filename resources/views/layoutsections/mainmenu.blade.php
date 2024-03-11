@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Request;
 
 $role = session('role');
@@ -34,7 +35,7 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 		$manage .= '<li id="li-province"><a class="dropdown-item" data-toggle="dropdown" href="/province/">'.Lang::get('messages.provinces').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['index']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['index'] == "allow"))
 		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/district/">'.Lang::get('messages.districts').'</a></li>';
-		
+
 	if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index'] == "allow"))
 		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/subdistrict/">'.Lang::get('messages.sub_districts').'</a></li>';
 	$manage .= '</ul></li>';
@@ -75,7 +76,7 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 		$report .= '<li id="li-customreport"><a class="dropdown-item" data-toggle="dropdown" href="/customreport/">'.Lang::get('messages.custom_report').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsites']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['notreportedsites'] == "allow"))
 		$report .= '<li id="li-notreportedsites"><a class="dropdown-item" data-toggle="dropdown" href="/notreportedsites/">'.Lang::get('messages.not_reported_sites_report').'</a></li>';
-	
+
 		$report .= '</ul></li>';
 }
 
@@ -94,5 +95,5 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 			@php echo $report; @endphp
 		</ul>
 	</div>
-	
+
 </div>
