@@ -37,27 +37,24 @@ class RolesTable extends Model
     // Fetch All Roles List
     public function fetchAllRole()
     {
-        $data = DB::table('roles')
+        return DB::table('roles')
             ->get();
-        return $data;
     }
 
     // Fetch All Active Roles List
     public function fetchAllActiveRole()
     {
-        $data = DB::table('roles')
+        return DB::table('roles')
             ->where('role_status', '=', 'active')
             ->get();
-        return $data;
     }
 
     // fetch particular roles details
     public function fetchRolesById($id)
     {
         $id = base64_decode($id);
-        $data = DB::table('roles')
+        return DB::table('roles')
             ->where('role_id', '=', $id)->get();
-        return $data;
     }
 
     // Update particular roles details
@@ -103,10 +100,11 @@ class RolesTable extends Model
         try {
             $configFile =  "acl.config.json";
             // dd(config_path() . DIRECTORY_SEPARATOR . $configFile);die;
-            if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile))
+            if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
                 $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
-            else
+            } else {
                 $config = array();
+            }
             $config[$id] = array();
 
             if (isset($params['resource']) && $params['resource'] != '' && $params['resource'] != null) {
@@ -114,8 +112,9 @@ class RolesTable extends Model
                     $config[$id][$resourceName] = $privilege;
                 }
             }
-            if (!is_writable(config_path() . DIRECTORY_SEPARATOR . $configFile))
+            if (!is_writable(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
                 chmod(config_path() . DIRECTORY_SEPARATOR . $configFile, 0755);
+            }
             File::put(config_path() . DIRECTORY_SEPARATOR . $configFile, json_encode($config));
         } catch (Exception $exc) {
 

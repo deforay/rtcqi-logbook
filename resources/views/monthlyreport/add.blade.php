@@ -8,7 +8,8 @@
     }
 </style>
 <?php
-
+$todays_date = date('d-M-Y');
+$name_of_collector = session('name');
 use Illuminate\Support\Facades\Lang;
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 // print_r($latest->test_1_kit_id);die;
@@ -234,27 +235,34 @@ $messages=Lang::get('messages');
 											</div>
 										</fieldset>
 									</div> --}}
-                                        <!--
+                                        
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>Algorithm Type <span class="mandatory">*</span>
-                                                </h5>
+                                                <?php
+                                                $testingAlgorithmType=explode(',',$testingAlgorithmType);
+                                                ?>
+                                                <h5>Algorithm Type <span class="mandatory">*</span></h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
                                                         <option value="">---Select---</option>
-                                                        <option value="serial">Serial</option>
-                                                        <option value="parallel">Parallel</option>
+                                                        @if(in_array("serial",$testingAlgorithmType))
+                                                            <option value="serial">Serial</option>
+                                                        @elseif(in_array("parallel",$testingAlgorithmType))
+                                                            <option value="parallel">Parallel</option>
+                                                        @elseif(in_array("who3",$testingAlgorithmType))
+                                                            <option value="who3">WHO 3</option>
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        -->
+                                        
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
                                                 <h5>{{ $messages["name_of_data_collector"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_name_of_data_collected']}}" name="nameOfDataCollect" title="{{ $messages['please_enter_name_of_data_collected']}}">
+                                                    <input type="text" id="nameOfDataCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_name_of_data_collected']}}" name="nameOfDataCollect" title="{{ $messages['please_enter_name_of_data_collected']}}" value="{{$name_of_collector}}">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -263,7 +271,7 @@ $messages=Lang::get('messages');
                                                 <h5>{{ $messages["date_of_data_collection"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}">
+                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}" value="{{$todays_date}}">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -534,6 +542,7 @@ $messages=Lang::get('messages');
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />
 <script src="public/dist/js/select2.min.js"></script>
 <script>
+    var selectedEndDate="";
     $(document).ready(function() {
         $("#monthlyReportListWrapper").hide();
         $('.js-example-basic-single').select2();
@@ -576,66 +585,83 @@ $messages=Lang::get('messages');
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
         $(".endDate").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
+        });
+
+        // Entry Point / Site Type Change
+        $('#sitetypeId').change(function() {
+            getAllMonthlyReport();
         });
 
          // Site Name Change
          $('#testsiteId').change(function() {
             checkExistingReportingMonth();
-// Site id
-var id = $(this).val();
-//get Site name last 5 records
-getAllMonthlyReport();
-// Empty the dropdown
-$('#provinceId').find('option').not(':first').remove();
-$('#districtId').find('option').not(':first').remove();
-$('#subDistrictId').find('option').not(':first').remove();
+            // Site id
+            var id = $(this).val();
+            //get Site name last 5 records
+            getAllMonthlyReport();
+            // Empty the dropdown
+            $('#provinceId').find('option').not(':first').remove();
+            $('#districtId').find('option').not(':first').remove();
+            $('#subDistrictId').find('option').not(':first').remove();
+            $('#bookNo').val('');
 
-// AJAX request
-$.ajax({
-    url: "{{url('/getProvince') }}/" + id,
-    type: 'get',
-    dataType: 'json',
-    success: function(response) {
-        if (response.length == 0) {
-            $("#siteUniqueId").val('');
-            $("#siteManager").val('');
-            $("#testername").val('');
-            $("#contactNo").val('');
-        } else {
-            $.each(response, function(key, value) {
+            // AJAX request
+            $.ajax({
+                url: "{{url('/getProvince') }}/" + id,
+                type: 'get',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.length == 0) {
+                        $("#siteUniqueId").val('');
+                        $("#siteManager").val('');
+                        $("#testername").val('');
+                        $("#contactNo").val('');
+                        $("#bookNo").val('');
+                    } else {
+                        $.each(response, function(key, value) {
 
-                $("#siteUniqueId").val(value.site_id);
-                $("#siteManager").val(value.site_manager);
-                $("#testername").val(value.tester_name);
-                $("#contactNo").val(value.contact_no);
-                if(value.province_id!=null) {
-                $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
-                }
-                if(value.district_id!=null) {
-                $("#districtId").append('<option value="' + value.district_id + '"selected>' + value.district_name + '</option>');
-                }
-                if(value.sub_district_id!=null) {
-                $("#subDistrictId").append('<option value="' + value.sub_district_id + '"selected>' + value.sub_district_name + '</option>');
-                }
-            });
-        }
+                            $("#siteUniqueId").val(value.site_id);
+                            $("#siteManager").val(value.site_manager);
+                            $("#testername").val(value.tester_name);
+                            $("#contactNo").val(value.contact_no);
+                            $("#bookNo").val(value.book_no);
+                            if(value.province_id!=null) {
+                            $("#provinceId").append('<option value="' + value.province_id + '"selected>' + value.province_name + '</option>');
+                            }
+                            if(value.district_id!=null) {
+                            $("#districtId").append('<option value="' + value.district_id + '"selected>' + value.district_name + '</option>');
+                            }
+                            if(value.sub_district_id!=null) {
+                            $("#subDistrictId").append('<option value="' + value.sub_district_id + '"selected>' + value.sub_district_name + '</option>');
+                            }
+                        });
+            }
 
     }
 });
 });
 loadReplaceTestKitHeadings();
+    $("#endDate0").on("changeDate", function() { 
+        endDate=$("#endDate0").val();
+        if(endDate!=""){
+            splitEndDate=endDate.split("-");
+            selectedEndDate=splitEndDate[1]+'-'+splitEndDate[2];
+            checkReportingMonth();
+        }        
+    });
  });
 
  function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());
-    //alert($('#testsiteId').val());
+    var siteTypeId = $('#sitetypeId').val() == '' ? "":parseInt($('#sitetypeId').val());
+    var testSiteId = $('#testsiteId').val() == '' ? "" : parseInt($('#testsiteId').val());
+    
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -648,13 +674,13 @@ loadReplaceTestKitHeadings();
             serverSide: true,
             scrollX: false,
             autoWidth: false,
-            paging: false,
-
+            "aLengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
             ajax: {
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
                     testSiteId: testSiteId,
+                    siteTypeId: siteTypeId
                 },
 
             },
@@ -767,6 +793,7 @@ loadReplaceTestKitHeadings();
             var minDate = new Date(selected.date.valueOf());
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
+        
         }
 
         // var minDate = new Date(selected.date.valueOf());
@@ -795,6 +822,7 @@ loadReplaceTestKitHeadings();
             //     }
 
             // }
+            checkReportingMonth();
             if (duplicateName) {
                 document.getElementById('addMonthlyReport').submit();
             }
@@ -990,13 +1018,13 @@ loadReplaceTestKitHeadings();
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
         $(".endDate").datepicker({
             format: 'dd-M-yyyy',
             autoclose: true,
             todayHighlight: true,
-     endDate: new Date()
+            endDate: new Date()
         });
         let defaultRow = 0;
         let defaultTestkit = $(".selectTestKits").length;
@@ -1010,6 +1038,16 @@ loadReplaceTestKitHeadings();
             let optionSelected = ($(`#testkitId${headingNo}_${defaultRow}`).val() && $(`#testkitId${headingNo}_${defaultRow}`).find(":selected").text()) || `Test Kit ${headingNo}`;
             $(`#testKitHeading${headingNo}_${rowCount}`).html(optionSelected);
         }
+        
+        $("#endDate"+rowCount).on("changeDate", function() { 
+            endDate=$("#endDate"+rowCount).val();
+            if(endDate!=""){
+                splitEndDate=endDate.split("-");
+                selectedEndDate=splitEndDate[1]+'-'+splitEndDate[2];
+                checkReportingMonth();
+            }
+            
+        });
     }
 
     function delete_row(val) {
@@ -1111,8 +1149,23 @@ loadReplaceTestKitHeadings();
     }
 
     function loadReplaceTestKitHeadings(){
-        let optionSelected = ($(`#testkitId1_0`).val() && $(`#testkitId1_0`).find(":selected").text()) || `Test Kit 1`;
-        $(`#testKitHeading1_0`).html(optionSelected);
+        let defaultTestkit = $(".selectTestKits").length;
+        for (var headingNo = 1; headingNo <= defaultTestkit; headingNo++) {
+        let optionSelected = ($(`#testkitId`+headingNo+`_0`).val() && $(`#testkitId`+headingNo+`_0`).find(":selected").text()) || `Test Kit 1`;
+        $(`#testKitHeading`+headingNo+`_0`).html(optionSelected);
+        }
     }
+
+    function checkReportingMonth(){
+        reportingMon=$("#reportingMon").val();
+        if(reportingMon!=selectedEndDate && selectedEndDate!="" && reportingMon!=""){
+            duplicateName=false;
+            alert("Please select the valid reporting month");
+        }else if(reportingMon==selectedEndDate){
+            duplicateName=true;
+        }
+    }
+
+    
 </script>
 @endsection

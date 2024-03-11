@@ -75,6 +75,10 @@
                                             <tr>
                                                 <th>Sub District Name</th>
                                                 <th>District Name</th>
+                                                <th>Province Name</th>
+                                                <th>Province ID</th>
+                                                <th>External ID</th>
+                                                <th>Status</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
@@ -123,6 +127,10 @@
 
                     { data: 'sub_district_name', name: 'sub_district_name',className:'firstcaps' },
                     { data: 'district_name', name: 'district_name',className:'firstcaps' },
+                    { data: 'province_name', name: 'province_name',className:'firstcaps' },
+                    { data: 'province_id', name: 'province_id',className:'firstcaps' },
+                    { data: 'sub_district_external_id', name: 'sub_district_external_id',className:'firstcaps' },
+                    { data: 'sub_district_status', name: 'sub_district_status',className:'firstcaps' },
                     <?php $role = session('role');
                     if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},

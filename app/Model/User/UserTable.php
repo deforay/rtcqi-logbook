@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Mail;
 use Illuminate\Support\Facades\File;
 use LDAP\Result;
+use App\Service\GlobalConfigService;
 
 class UserTable extends Model
 {
@@ -40,19 +41,18 @@ class UserTable extends Model
                     'role_id' => $data['roleId']
                 ]
             );
-            if ($id > 0 && trim($data['testSiteName']) != '') {
-                if ($id > 0 && trim($data['testSiteName']) != '') {
-                    $selectedSiteName = explode(",", $data['testSiteName']);
-                    $uniqueSiteId = array_unique($selectedSiteName);
-                    for ($x = 0; $x < count($selectedSiteName); $x++) {
-                        if (isset($uniqueSiteId[$x])) {
-                            $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                [
-                                    'user_id' => $id,
-                                    'ts_id' => $selectedSiteName[$x],
-                                ]
-                            );
-                        }
+            if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
+                $selectedSiteName = explode(",", $data['testSiteName']);
+                $uniqueSiteId = array_unique($selectedSiteName);
+                $counter = count($selectedSiteName);
+                for ($x = 0; $x < $counter; $x++) {
+                    if (isset($uniqueSiteId[$x])) {
+                        $userFacility = DB::table('users_testsite_map')->insertGetId(
+                            [
+                                'user_id' => $id,
+                                'ts_id' => $selectedSiteName[$x],
+                            ]
+                        );
                     }
                 }
             }
@@ -103,18 +103,16 @@ class UserTable extends Model
     // Fetch All User List
     public function fetchAllUser()
     {
-        $data = DB::table('users')
+        return DB::table('users')
             ->get();
-        return $data;
     }
 
     // Fetch All Active User List
     public function fetchAllActiveUser()
     {
-        $data = DB::table('users')
+        return DB::table('users')
             ->where('user_status', '=', 'active')
             ->get();
-        return $data;
     }
 
     // fetch particular User details
@@ -122,22 +120,20 @@ class UserTable extends Model
     {
 
         $id = base64_decode($id);
-        $data = DB::table('users')
+        return DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.user_id', '=', $id)
             ->get();
-        return $data;
     }
 
     public function fetchUserByEmail($email)
     {
-        $data = DB::table('users')
+        return DB::table('users')
             // ->join('roles', 'roles.role_id', '=', 'users.role_id')
             // ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $email)
             ->get();
-        return $data;
     }
 
     public function updateUserLanguage($locale){
@@ -177,7 +173,7 @@ class UserTable extends Model
             ->update(
                 $user
             );
-        if (trim($data['password'])) {
+        if (trim($data['password']) !== '' && trim($data['password']) !== '0') {
             $user['password'] = Hash::make($data['password']); // Hashing passwords
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
@@ -186,11 +182,7 @@ class UserTable extends Model
                 );
         }
         if ($response == 1) {
-            if ($data['password'] == '') {
-                $forcePassword = 0;
-            } else {
-                $forcePassword = 1;
-            }
+            $forcePassword = $data['password'] == '' ? 0 : 1;
             $response = DB::table('users')
                 ->where('user_id', '=', base64_decode($id))
                 ->update(
@@ -205,7 +197,8 @@ class UserTable extends Model
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
-            for ($x = 0; $x < count($selectedSiteName); $x++) {
+            $counter = count($selectedSiteName);
+            for ($x = 0; $x < $counter; $x++) {
                 if (isset($uniqueSiteId[$x])) {
                     $response = DB::table('users_testsite_map')->insertGetId(
                         [
@@ -227,12 +220,16 @@ class UserTable extends Model
         $data = $params->all();
         $commonservice = new CommonService();
         $userservice = new UserService();
+        $globalConfigService = new GlobalConfigService();
+        $disableInactiveUser = $globalConfigService->getGlobalConfigValue('disable_inactive_user');
+        
+
         $result = json_decode(DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
-            ->get(), true);            
+            ->get(), true);
 
 
         if (!empty($result)) {
@@ -254,6 +251,25 @@ class UserTable extends Model
             // var_dump(Hash::check($data['password'], $hashedPassword));
             //var_dump($hashedPassword);die;
             if (Hash::check($data['password'], $hashedPassword)) {
+                if($disableInactiveUser=='yes'){
+                    $currentDate=Date("d-M-Y");
+                    $lastLoginDatetime=$result[0]['last_login_datetime'];
+                    //Calculate number of month
+                    $diff = abs(strtotime($currentDate)-strtotime($lastLoginDatetime));
+                    $years = floor($diff / (365*60*60*24));
+                    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+
+                    $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
+                    if(trim($noOfMonths)==""){
+                        $noOfMonths=6;
+                    }
+                    if($months>=$noOfMonths){
+                        $response = DB::table('users')
+                        ->where('user_id', '=',$result[0]['user_id'])
+                        ->update(array('user_status' => 'inactive'));
+                        return 2;
+                    }
+                }
                 $configFile =  "acl.config.json";
                 if (file_exists(config_path() . DIRECTORY_SEPARATOR . $configFile)) {
                     $config = json_decode(File::get(config_path() . DIRECTORY_SEPARATOR . $configFile), true);
@@ -271,6 +287,9 @@ class UserTable extends Model
                     }                    
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
                     $userservice->loggedInHistory($data,'success');
+                    $response = DB::table('users')
+                        ->where('user_id', '=',$result[0]['user_id'])
+                        ->update(array('last_login_datetime' => $commonservice->getDateTime()));
                 } else {
                     return 2;
                 }
@@ -363,8 +382,7 @@ class UserTable extends Model
 
     public function resetForgotPassword($email, $newpassword)
     {
-        $changepassword = DB::table('users')->where('email', $email)
+        return DB::table('users')->where('email', $email)
         ->update(['password' => Hash::make($newpassword)]);
-        return $changepassword;
     }
 }

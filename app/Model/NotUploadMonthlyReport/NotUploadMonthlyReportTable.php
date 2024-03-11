@@ -62,7 +62,7 @@ class NotUploadMonthlyReportTable extends Model
 
         if(count($salesResult) > 0 && $isExport){
             foreach($salesResult as $row){
-                array_push($id, $row->nu_mr_id);
+                $id[] = $row->nu_mr_id;
             }
             //delete exported rows from not uploaded reports table
             $updateQuery = DB::table('not_uploaded_monthly_reports')

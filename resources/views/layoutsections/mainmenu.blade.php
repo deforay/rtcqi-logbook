@@ -39,18 +39,19 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 	if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['index'] == "allow"))
 		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/subdistrict/">'.Lang::get('messages.sub_districts').'</a></li>';
 	$manage .= '</ul></li>';
-	if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['index']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['index'] == "allow"))
-		$manage .= '<li id="li-facility"><a class="dropdown-item" data-toggle="dropdown" href="/facility/">'.Lang::get('messages.facilities').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow"))
 		$manage .= '<li id="li-globalconfig"><a class="dropdown-item" data-toggle="dropdown" href="/globalconfig/">'.Lang::get('messages.global_config').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index'] == "allow"))
-		$manage .= '<li id="li-sitetype"><a class="dropdown-item" data-toggle="dropdown" href="/sitetype/">'.Lang::get('messages.site_types').'</a></li>';
+		$manage .= '<li id="li-sitetype"><a class="dropdown-item" data-toggle="dropdown" href="/sitetype/">'.Lang::get('messages.entry_point').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index'] == "allow"))
 		$manage .= '<li id="li-testkit"><a class="dropdown-item" data-toggle="dropdown" href="/testkit/">'.Lang::get('messages.test_kits').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index']) && ($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index'] == "allow"))
 		$manage .= '<li id="li-allowedtestkit"><a class="dropdown-item" data-toggle="dropdown" href="/allowedtestkit/">'.Lang::get('messages.allowed_test_kits').'</a></li>';
 	if (isset($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index']) && ($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index'] == "allow"))
 		$manage .= '<li id="li-roles"><a class="dropdown-item" data-toggle="dropdown" href="/auditTrail/">'.Lang::get('messages.audit_trail').'</a></li>';
+	if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['index']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['index'] == "allow"))
+		$manage .= '<li id="li-district"><a class="dropdown-item" data-toggle="dropdown" href="/implementingpartners/">'.Lang::get('messages.implementing_partners').'</a></li>';
+	
 	$manage .= '</ul></li>';
 }
 $test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">'.Lang::get('messages.audits').'</span></a>
@@ -80,6 +81,11 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 		$report .= '</ul></li>';
 }
 
+$monitoringReport='';
+
+if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController']['sitewisereport']) && ($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController']['sitewisereport'] == "allow")){
+	$monitoringReport .= '<li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="'.url('sitewisereport').'">'.Lang::get('Site-Wise Report').'</a></li>';
+}
 // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
 //             <ul class="dropdown-menu">';
 // $import .= '<li id="li-monthlyreportdata"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreportdata/">Import Monthly Report</a></li>';
@@ -93,6 +99,14 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 			@php echo $manage; @endphp
 			@php echo $test; @endphp
 			@php echo $report; @endphp
+			
+			<?php if(trim($monitoringReport)!=""){ ?>
+				<li class="dropdown nav-item" data-menu="dropdown"><a id="monitoringReport" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title"><?php echo Lang::get('Monitoring Reports') ?> </span></a>
+					<ul class="dropdown-menu">
+						<?php echo $monitoringReport; ?>
+					</ul>
+				</li>		
+			<?php } ?>
 		</ul>
 	</div>
 

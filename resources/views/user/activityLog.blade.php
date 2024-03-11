@@ -94,7 +94,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
                                                     <div class="col-md-8">
                                                         <button type="submit" onclick="getAllAuditData();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href="/auditTrail"><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/user/userActivityLog"><span>Reset</span></a>&nbsp;&nbsp;
                                                     </div>
                                                 </div></div>
                                         </div>

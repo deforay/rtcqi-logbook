@@ -40,19 +40,16 @@ class TrackTable extends Model
         if (isset($params['userId']) && $params['userId'] != '') {
             $query = $query->whereIn('user_id', $params['userId']);
         }
-
-        $salesResult = $query->get();
         
-        return $salesResult;
+        return $query->get();
     }
 
     // Fetch All Activity By ID
     public function fetchAllActivityById($id)
     {
-        $data = DB::table('track')
+        return DB::table('track')
             ->where('action_id','=',base64_decode($id))
             ->get();
-        return $data;
     }
    
 }

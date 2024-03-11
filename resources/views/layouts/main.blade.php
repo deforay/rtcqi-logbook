@@ -227,5 +227,4 @@ ismob = true;
             });
         }
     }
-
   </script>

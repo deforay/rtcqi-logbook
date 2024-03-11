@@ -23,8 +23,9 @@ class ProvinceController extends Controller
         {
             return view('province.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add Province (display add screen and add the Province values)
@@ -57,8 +58,7 @@ class ProvinceController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

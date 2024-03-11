@@ -23,8 +23,7 @@ class AllowedTestKitService
         	$add = $model->saveAllowedTestKit($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'Allowed Test Kit Added Successfully';
-				return $msg;
+				return 'Allowed Test Kit Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,8 +36,7 @@ class AllowedTestKitService
 	public function getAllAllowedKitTest()
     {
 		$model = new AllowedTestKitTable();
-        $result = $model->fetchAllAllowedKitTest();
-        return $result;
+        return $model->fetchAllAllowedKitTest();
 	}
 
 	//Get Particular AllowedTestKit Details
@@ -46,8 +44,7 @@ class AllowedTestKitService
 	{
 		
 		$model = new AllowedTestKitTable();
-        $result = $model->fetchAllowedKitTestByValue($id);
-        return $result;
+        return $model->fetchAllowedKitTestByValue($id);
 	}
 	//Update Particular AllowedTestKit Details
 	public function updateAllowedTestKit($params,$id)
@@ -58,8 +55,7 @@ class AllowedTestKitService
         	$add = $model->updateAllowedTestKit($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'Allowed Test Kit Updated Successfully';
-				return $msg;
+				return 'Allowed Test Kit Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -73,8 +69,7 @@ class AllowedTestKitService
 	{
 		
 		$model = new AllowedTestKitTable();
-        $result = $model->fetchAllAllowedKitTestByNo($id);
-        return $result;
+        return $model->fetchAllAllowedKitTestByNo($id);
 	}
 	
 }

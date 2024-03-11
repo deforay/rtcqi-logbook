@@ -60,6 +60,15 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>External ID
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="externalId" class="form-control" autocomplete="off" placeholder="Enter External ID" name="externalId" title="Please Enter External ID">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
 										<fieldset>
 											<h5>District Name<span class="mandatory">*</span>
                                             </h5>
@@ -69,6 +78,18 @@
                                                 @foreach($district as $row)
                                                     <option value="{{$row->district_id}}">{{$row->district_name}}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+										</fieldset>
+									</div>
+                                    <div class="col-xl-4 col-lg-12">
+										<fieldset>
+											<h5>Sub District Status<span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictStatus" name="subDistrictStatus" title="Please Select Sub District Status">
+                                                    <option value="active" selected>Active</option>
+                                                    <option value="inactive">Inactive</option>
                                                 </select>
                                             </div>
 										</fieldset>

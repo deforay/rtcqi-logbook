@@ -35,18 +35,16 @@ class SiteTypeTable extends Model
     // Fetch All SiteType List
     public function fetchAllSiteType()
     {
-        $data = DB::table('site_types')
+        return DB::table('site_types')
                 ->get();
-        return $data;
     }
 
     // Fetch All Active SiteType List
     public function fetchAllActiveSiteType()
     {
-        $data = DB::table('site_types')
+        return DB::table('site_types')
                 ->where('site_type_status','=','active')
                 ->get();
-        return $data;
     }
 
      // fetch particular SiteType details
@@ -54,10 +52,9 @@ class SiteTypeTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('site_types')
+         return DB::table('site_types')
                 ->where('site_types.st_id', '=',$id )
                 ->get();
-         return $data;
      }
 
      // Update particular SiteType details

@@ -23,8 +23,9 @@ class SiteTypeController extends Controller
         {
             return view('sitetype.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add SiteType (display add screen and add the SiteType values)
@@ -57,8 +58,7 @@ class SiteTypeController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

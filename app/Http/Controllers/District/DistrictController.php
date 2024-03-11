@@ -24,8 +24,9 @@ class DistrictController extends Controller
         {
             return view('district.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     //Add District (display add screen and add the District values)
@@ -59,8 +60,7 @@ class DistrictController extends Controller
                     }else{
                         $button .= '';
                     }
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);

@@ -73,7 +73,7 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="allowedTestKitList">
                                         <thead>
                                             <tr>
-                                                <th>Test Kit No</th>
+                                                <th>Test Kit</th>
                                                 <th>Test Kit Name</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['edit']) && ($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['edit'] == "allow")) {?>

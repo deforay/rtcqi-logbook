@@ -5,7 +5,6 @@ namespace App\Http\Controllers\UserFacilityMap;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Service\UserService;
-use App\Service\FacilityService;
 use App\Service\UserFacilityMapService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
@@ -20,8 +19,9 @@ class UserFacilityMapController extends Controller
         {
             return view('userfacilitymap.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // //Add User Facility Map (display add screen and add the User Facility Map values)
@@ -36,10 +36,9 @@ class UserFacilityMapController extends Controller
         else
         {
             $UserService = new UserService();
-            $FacilityService = new FacilityService();
             $user = $UserService->getAllActiveUser();   
-            $facility = $FacilityService->getAllActiveFacility();   
-            return view('userfacilitymap.add',array('user'=>$user,'facility'=>$facility));
+             
+            return view('userfacilitymap.add',array('user'=>$user));
         }
     }
 
@@ -52,8 +51,7 @@ class UserFacilityMapController extends Controller
                     ->addColumn('action', function($data){
                         $button = '<div>';
                         $button .= '<a href="/userfacilitymap/edit/'. base64_encode($data->ufm_id).'" name="edit" id="'.$data->ufm_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                        $button .= '</div>';
-                        return $button;
+                        return $button . '</div>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -71,13 +69,13 @@ class UserFacilityMapController extends Controller
         else
         {
             $UserService = new UserService();
-            $FacilityService = new FacilityService();
+            //$FacilityService = new FacilityService();
             $user = $UserService->getAllActiveUser();   
-            $facility = $FacilityService->getAllActiveFacility(); 
+            //$facility = $FacilityService->getAllActiveFacility(); 
             $UserFacilityService = new UserFacilityMapService();
             $result = $UserFacilityService->getUserFacilityById($id);
-            dd($result);die;
-            return view('userfacilitymap.edit',array('result'=>$result,'user'=>$user,'facility'=>$facility,'id'=>$id));
+            //dd($result);die;
+            return view('userfacilitymap.edit',array('result'=>$result,'user'=>$user,'id'=>$id));
         }
     }
 }
