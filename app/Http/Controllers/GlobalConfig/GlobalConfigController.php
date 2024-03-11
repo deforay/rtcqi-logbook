@@ -18,8 +18,9 @@ class GlobalConfigController extends Controller
         {
             return view('globalconfig.index');
         }
-        else
+        else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // Get all the  GlobalConfig list
@@ -46,7 +47,9 @@ class GlobalConfigController extends Controller
             $result = $GlobalConfigService->getAllGlobalConfig();
             $arr = array();
             // now we create an associative array so that we can easily create view variables
-            for ($i = 0; $i < sizeof($result); $i++) {
+            $counter = count($result);
+            // now we create an associative array so that we can easily create view variables
+            for ($i = 0; $i < $counter; $i++) {
                 $arr[$result[$i]->global_name] = $result[$i]->global_value;
             }
             return view('globalconfig.edit',array('result'=>$arr));

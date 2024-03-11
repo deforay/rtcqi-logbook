@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use App\Service\TestSiteService;
 use App\Service\MonthlyReportService;
-use App\Service\FacilityService;
 use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use App\Service\DistrictService;
@@ -13,6 +12,7 @@ use App\Service\SubDistrictService;
 use App\Service\ProvinceService;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TestKitExport;
+use App\Exports\TestKitSummaryExport;
 use App\Exports\TrendExport;
 use App\Exports\NotUploadExport;
 use App\Exports\LogBookExport;
@@ -32,8 +32,6 @@ class ReportController extends Controller
     public function trendReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $SubDistrictService = new SubDistrictService();
@@ -44,9 +42,10 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.trendReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province));
-        } else
+            return view('report.trendReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province));
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // Trend Report 
@@ -55,17 +54,15 @@ class ReportController extends Controller
     {
         $input = $request->all();
         $districtService = new DistrictService();
-        $district = $districtService->getDistrictByProvinceId($input['provinceId']??[]);
         // log::info($district);
-        return $district;
+        return $districtService->getDistrictByProvinceId($input['provinceId']??[]);
     }
     public function getSubDistrictByDistrictId(Request $request)
     {
         $input = $request->all();
         $subDistrictService = new SubDistrictService();
-        $subDistrict = $subDistrictService->getSubDistrictByDistrictId($input['districtId']??[]);
         // log::info($district);
-        return $subDistrict;
+        return $subDistrictService->getSubDistrictByDistrictId($input['districtId']??[]);
     }
 
     public function getTrendMonthlyReport(Request $request)
@@ -81,8 +78,6 @@ class ReportController extends Controller
     public function logbook()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $SubDistrictService = new SubDistrictService();
@@ -93,9 +88,10 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.logbook', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province));
-        } else
+            return view('report.logbook', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province));
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     // Logbook Report 
@@ -105,8 +101,7 @@ class ReportController extends Controller
         $datas = $request->all();
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getLogbookReport($datas);
-        $view = View::make('report.getLogbookReport', ['report' => $data]);
-        return $view;
+        return View::make('report.getLogbookReport', ['report' => $data]);
     }
 
     public function overallagreement(Request $request, $id)
@@ -115,16 +110,13 @@ class ReportController extends Controller
         $data = $monthlyReportService->getPageSummary($id);
         $KitTypeService = new TestKitService();
         $kittype = $KitTypeService->getAllActiveTestKit();
-        $view = View::make('report.overallagreement', ['report' => $data, 'kittype' => $kittype]);
-        return $view;
+        return View::make('report.overallagreement', ['report' => $data, 'kittype' => $kittype]);
     }
 
     // testKitReport
     public function testKitReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $DistrictService = new DistrictService();
             $district = $DistrictService->getAllDistrict();
             $SubDistrictService = new SubDistrictService();
@@ -135,18 +127,23 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.testKitReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
-        } else
+            
+
+            return view('report.testKitReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province, ''));
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getTestKitMonthlyReport(Request $request)
     {
         $data = $request->all();
         $monthlyReportService = new MonthlyReportService();
-        $data = $monthlyReportService->getTestKitMonthlyReport($data);
+        $reportdata = $monthlyReportService->getTestKitMonthlyReport($data);
+        $testKitService = new TestKitService();
+        $reportdata['summary'] = $testKitService->getTestKitSummary($data);
         // dd($data);die;
-        $view = View::make('report.getTestKitReport', ['report' => $data]);
+        $view = View::make('report.getTestKitReport', array('report' => $reportdata));
         return $view;
     }
 
@@ -154,8 +151,6 @@ class ReportController extends Controller
     public function customReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
@@ -164,9 +159,10 @@ class ReportController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.customReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport, 'province' => $province, 'district' => $district));
-        } else
+            return view('report.customReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'province' => $province, 'district' => $district));
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
     
     //Not Reported Sites Report
@@ -180,8 +176,9 @@ class ReportController extends Controller
             $SubDistrictService = new SubDistrictService();
             $subdistrict = $SubDistrictService->getAllSubDistrict();
             return view('report.notReportedSites', array('province' => $province, 'district' => $district, 'province' => $province, 'subdistrict' => $subdistrict));
-        } else
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getNotReportedSites(Request $request)
@@ -209,8 +206,6 @@ class ReportController extends Controller
     public function invalidresultReport()
     {
         if (session('login') == true) {
-            $FacilityService = new FacilityService();
-            $facility = $FacilityService->getAllActiveFacility();
             $TestSiteService = new TestSiteService();
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $DistrictService = new DistrictService();
@@ -221,9 +216,10 @@ class ReportController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.invalidresultReport', array('testSite' => $testSite, 'facility' => $facility, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
-        } else
+            return view('report.invalidresultReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
+        } else {
             return Redirect::to('login')->with('status', 'Please Login');
+        }
     }
 
     public function getInvalidResultReport(Request $request)
@@ -238,12 +234,21 @@ class ReportController extends Controller
 
     public function testKitExport(Request $request)
     {
-        $commonservice = new CommonService();
+        
+        if(isset($_POST['exportReport'])){
+            $commonservice = new CommonService();
         $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
         return Excel::download(new TestKitExport($data), 'Test-Kit-Report-' . $dateTime . '.xlsx');
+        }else{
+            $commonservice = new CommonService();
+        $dateTime = $commonservice->getDateAndTime();
+        $data = $request->all();
+        return Excel::download(new TestKitSummaryExport($data), 'Test-Kit-Summary-Report-' . $dateTime . '.xlsx');
+        }
+        
     }
-
+    
     public function trendExport(Request $request)
     {
         $commonservice = new CommonService();

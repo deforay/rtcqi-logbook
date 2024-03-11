@@ -23,6 +23,7 @@ class ProvinceTable extends Model
             $id = DB::table('provinces')->insertGetId(
                 [
                 'province_name' => $data['provinceName'],
+                'province_external_id' => $data['externalId'],
                 'province_status' => $data['provinceStatus'],
                 ]
             );
@@ -36,18 +37,16 @@ class ProvinceTable extends Model
     // Fetch All Province List
     public function fetchAllProvince()
     {
-        $data = DB::table('provinces')
+        return DB::table('provinces')
                 ->get();
-        return $data;
     }
 
     // Fetch All Active Province List
     public function fetchAllActiveProvince()
     {
-        $data = DB::table('provinces')
+        return DB::table('provinces')
                 ->where('province_status','=','active')
                 ->get();
-        return $data;
     }
 
      // fetch particular Province details
@@ -55,10 +54,9 @@ class ProvinceTable extends Model
      {
 
          $id = base64_decode($id);
-         $data = DB::table('provinces')
+         return DB::table('provinces')
                 ->where('provinces.province_id', '=',$id )
                 ->get();
-         return $data;
      }
 
      // Update particular Province details
@@ -70,6 +68,7 @@ class ProvinceTable extends Model
         $commonservice = new CommonService();
             $upData = array(
                 'province_name' => $data['provinceName'],
+                'province_external_id' => $data['externalId'],
                 'province_status' => $data['provinceStatus'],
             );
             $response = DB::table('provinces')

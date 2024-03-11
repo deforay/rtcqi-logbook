@@ -23,8 +23,7 @@ class SiteTypeService
         	$add = $model->saveSiteType($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'SiteType Added Successfully';
-				return $msg;
+				return 'SiteType Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,24 +36,21 @@ class SiteTypeService
 	public function getAllSiteType()
     {
 		$model = new SiteTypeTable();
-        $result = $model->fetchAllSiteType();
-        return $result;
+        return $model->fetchAllSiteType();
 	}
 
 	//Get All SiteType List
 	public function getAllActiveSiteType()
     {
 		$model = new SiteTypeTable();
-        $result = $model->fetchAllActiveSiteType();
-        return $result;
+        return $model->fetchAllActiveSiteType();
 	}
 	//Get Particular SiteType Details
 	public function getSiteTypeById($id)
 	{
 		
 		$model = new SiteTypeTable();
-        $result = $model->fetchSiteTypeById($id);
-        return $result;
+        return $model->fetchSiteTypeById($id);
 	}
 	//Update Particular SiteType Details
 	public function updateSiteType($params,$id)
@@ -65,8 +61,7 @@ class SiteTypeService
         	$add = $model->updateSiteType($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'SiteType Updated Successfully';
-				return $msg;
+				return 'SiteType Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {

@@ -23,8 +23,7 @@ class UserFacilityMapService
         	$add = $model->saveUserFacility($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'User Facility Added Successfully';
-				return $msg;
+				return 'User Facility Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,8 +36,7 @@ class UserFacilityMapService
 	public function getAllUserFacility()
     {
 		$model = new UserFacilityMapTable();
-        $result = $model->fetchAllUserFacility();
-        return $result;
+        return $model->fetchAllUserFacility();
 	}
 
 	//Get Particular UserFacilityMap Details
@@ -46,8 +44,7 @@ class UserFacilityMapService
 	{
 		
 		$model = new UserFacilityMapTable();
-        $result = $model->fetchUserFacilityById($id);
-        return $result;
+        return $model->fetchUserFacilityById($id);
 	}
 	//Update Particular UserFacilityMap Details
 	public function updateUserFacility($params,$id)
@@ -58,8 +55,7 @@ class UserFacilityMapService
         	$add = $model->updateUserFacility($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'User Facility Updated Successfully';
-				return $msg;
+				return 'User Facility Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -72,8 +68,7 @@ class UserFacilityMapService
 	{
 		
 		$model = new UserFacilityMapTable();
-        $result = $model->fetchUserSiteById($id);
-        return $result;
+        return $model->fetchUserSiteById($id);
 	}
 	
 }

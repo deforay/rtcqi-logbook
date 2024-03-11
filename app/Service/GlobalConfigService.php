@@ -18,8 +18,7 @@ class GlobalConfigService
 	public function getAllGlobalConfig()
     {
 		$model = new GlobalConfigTable();
-        $result = $model->fetchAllGlobalConfig();
-        return $result;
+        return $model->fetchAllGlobalConfig();
 	}
 
 	//Update Particular GlobalConfig Details
@@ -31,8 +30,7 @@ class GlobalConfigService
         	$add = $model->updateGlobalConfig($params);
 			if($add>0){
                 DB::commit();
-				$msg = 'GlobalConfig Updated Successfully';
-				return $msg;
+				return 'GlobalConfig Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -45,37 +43,32 @@ class GlobalConfigService
 	public function getGlobalConfigValue($configName)
     {
 		$model = new GlobalConfigTable();
-        $result = $model->fetchGlobalConfigValue($configName);
-        return $result;
+        return $model->fetchGlobalConfigValue($configName);
 	}
 
 	//Fetch GlobalConfig 
 	public function getGlobalConfigData($configName)
     {
 		$model = new GlobalConfigTable();
-        $result = $model->fetchGlobalConfigData($configName);
-        return $result;
+        return $model->fetchGlobalConfigData($configName);
 	}
 
 	//Fetch GlobalConfig 
 	public function getGlobalConfigLatitude($latitute)
     {
 		$model = new GlobalConfigTable();
-        $result = $model->fetchGlobalConfigLatitide($latitute);
-        return $result;
+        return $model->fetchGlobalConfigLatitide($latitute);
 	}
 
 	public function getGlobalConfigLongitude($longitude)
     {
 		$model = new GlobalConfigTable();
-        $result = $model->fetchGlobalConfigLongitude($longitude);
-        return $result;
+        return $model->fetchGlobalConfigLongitude($longitude);
 	}
 
 	public function getGlobalConfigMapZoomLevel($mapZoomLevel)
     {
 		$model = new GlobalConfigTable();
-        $result = $model->fetchGlobalConfigMapZoomLevel($mapZoomLevel);
-        return $result;
+        return $model->fetchGlobalConfigMapZoomLevel($mapZoomLevel);
 	}
 }

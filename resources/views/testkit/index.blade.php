@@ -76,7 +76,6 @@
                                                 <th>Kit Name</th>
                                                 <th>Manufacturer</th>
                                                 <th>Kit Name ID 1</th>
-                                                <th>Installation ID</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit'] == "allow")) {?>
@@ -126,7 +125,6 @@
                     { data: 'test_kit_name', name: 'test_kit_name',className:'firstcaps' },
                     { data: 'test_kit_manufacturer', name: 'test_kit_manufacturer'},
                     { data: 'test_kit_name_id_1', name: 'test_kit_name_id_1'},
-                    { data: 'Installation_id', name: 'Installation_id' },
                     { data: 'test_kit_status', name: 'test_kit_status',className:'firstcaps' },
                     <?php $role = session('role');
                     if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit'] == "allow")) {?>

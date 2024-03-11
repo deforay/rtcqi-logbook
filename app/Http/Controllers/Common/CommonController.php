@@ -13,47 +13,40 @@ class CommonController extends Controller
     public function duplicateValidation(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->duplicateValidation($request);
-        return $data;
+        return $commonService->duplicateValidation($request);
     }
     public function mobileDuplicateValidation(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->mobileDuplicateValidation($request);
-        return $data;
+        return $commonService->mobileDuplicateValidation($request);
     }
 
     public function checkMobileValidation(Request $request){
         $commonService = new CommonService();
-        $data = $commonService->checkMobileValidation($request);
-        return $data; 
+        return $commonService->checkMobileValidation($request); 
     }
     public function checkNameValidation(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->checkNameValidation($request);
-        return $data;
+        return $commonService->checkNameValidation($request);
     }
     
     public function changeStatus(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->changeStatus($request);
-        return $data;
+        return $commonService->changeStatus($request);
     }
     
     public function addNewField(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->addNewField($request);
-        return $data;
+        return $commonService->addNewField($request);
     }
     
     public function addNewUnitField(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->addNewUnitField($request);
-        return $data;
+        return $commonService->addNewUnitField($request);
     }
     
     public function changePassword(Request $request)
@@ -83,14 +76,12 @@ class CommonController extends Controller
     public function addNewBranchType(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->addNewBranchType($request);
-        return $data;
+        return $commonService->addNewBranchType($request);
     }
     
     public function checkItemNameValidation(Request $request)
     {
         $commonService = new CommonService();
-        $data = $commonService->checkItemNameValidation($request);
-        return $data;
+        return $commonService->checkItemNameValidation($request);
     }
 }

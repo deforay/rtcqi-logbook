@@ -17,15 +17,13 @@ class AuditTrailService
 	public function getAllAudit($params)
     {
 		$model = new AuditTrailTable();
-        $result = $model->fetchAllAudit($params);
-        return $result;
+        return $model->fetchAllAudit($params);
 	}
 	//Get All MonthlyAuditReportById
 	public function getAllMonthlyAuditReportById($id)
     {
 		$model = new AuditTrailTable();
-        $result = $model->fetchMonthlyAuditReportById($id);
-        return $result;
+        return $model->fetchMonthlyAuditReportById($id);
 	}
 }
 

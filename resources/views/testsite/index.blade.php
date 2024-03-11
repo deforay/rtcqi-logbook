@@ -78,7 +78,6 @@
                                                 <th>Province</th>
                                                 <th>District</th>
                                                 <th>Sub District</th>
-                                                <th>Facility Name</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) { ?>
@@ -125,51 +124,24 @@
             },
             columns: [
 
-                {
-                    data: 'site_name',
-                    name: 'site_name',
-                    className: 'firstcaps'
-                },
-                {
-                    data: 'site_id',
-                    name: 'site_id'
-                },
-                {
-                    data: 'province_name',
-                    name: 'province_name'
-                },
-                {
-                    data: 'district_name',
-                    name: 'district_name'
-                },
-                {
-                    data: 'sub_district_name',
-                    name: 'sub_district_name'
-                },
-                {
-                    data: 'facility_name',
-                    name: 'facility_name'
-                },
-                {
-                    data: 'test_site_status',
-                    name: 'test_site_status',
-                    className: 'firstcaps'
-                },
-                <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) { ?> {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
+                    { data: 'site_name', name: 'site_name',className:'firstcaps' },
+                    { data: 'site_id', name: 'site_id'},
+                    { data: 'province_name', name: 'province_name'},
+                    { data: 'district_name', name: 'district_name' },
+                    { data: 'sub_district_name', name: 'sub_district_name' },
+                    { data: 'test_site_status', name: 'test_site_status',className:'firstcaps' },
+                    <?php $role = session('role');
+                     if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) {?>
+                    {data: 'action', name: 'action', orderable: false},
                 <?php } ?>
-            ],
-            columnDefs: [{
-                "targets": 2,
-                "className": "text-right",
-            }, ],
-            order: [
-                [0, 'asc']
-            ]
+                ],
+                columnDefs: [
+                {
+                        "targets": 2,
+                        "className": "text-right",
+                },
+                ], 
+            order: [[0, 'desc']]
         });
     }
 </script>

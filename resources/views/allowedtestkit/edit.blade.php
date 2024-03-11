@@ -54,16 +54,21 @@
                             <div class="row">
                             <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Test Kit No<span class="mandatory">*</span>
+											<h5>Test Kit<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitNo" name="testKitNo" title="Please Select Test Kit No">
-                                                <option value="">Select Test Kit No</option>
-                                                <option value="1" <?php if($result[0]->test_kit_no == '1') { ?> selected="selected"<?php } ?>>1</option>
-                                                <option value="2" <?php if($result[0]->test_kit_no == '2') { ?> selected="selected"<?php } ?>>2</option>
-                                                <option value="3" <?php if($result[0]->test_kit_no == '3') { ?> selected="selected"<?php } ?>>3</option>
-                                                <option value="4" <?php if($result[0]->test_kit_no == '4') { ?> selected="selected"<?php } ?>>4</option>
-                                                <option value="5" <?php if($result[0]->test_kit_no == '5') { ?> selected="selected"<?php } ?>>5</option>
+                                                <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitNo" name="testKitNo"
+                                                    title="Please Select Test Kit">
+                                                    <option value="">Select Test Kit</option>
+                                                    <option value="1" <?php if($result[0]->test_kit_no == '1') { ?> selected="selected"
+                                                        <?php } ?>>1
+                                                    </option>
+                                                    <option value="2" <?php if($result[0]->test_kit_no == '2') { ?> selected="selected"
+                                                        <?php } ?>>2
+                                                    </option>
+                                                    <option value="3" <?php if($result[0]->test_kit_no == '3') { ?> selected="selected"
+                                                        <?php } ?>>3
+                                                    </option>
                                                 </select>
                                             </div>
 										</fieldset>

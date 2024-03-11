@@ -142,6 +142,14 @@ Route::get('/subdistrict/edit/{id}', 'SubDistrict\SubDistrictController@edit')->
 Route::post('/subdistrict/edit/{id}', 'SubDistrict\SubDistrictController@edit');
 Route::post('/getAllSubDistrict', 'SubDistrict\SubDistrictController@getAllSubDistrict');
 
+//Implementing Partners module
+Route::get('/implementingpartners', 'ImplementingPartners\ImplementingPartnersController@index')->name('implementingpartners.index')->middleware('access');
+Route::post('/implementingpartners/add', 'ImplementingPartners\ImplementingPartnersController@add');
+Route::get('/implementingpartners/add', 'ImplementingPartners\ImplementingPartnersController@add')->middleware('access');
+Route::get('/implementingpartners/edit/{id}', 'ImplementingPartners\ImplementingPartnersController@edit')->middleware('access');
+Route::post('/implementingpartners/edit/{id}', 'ImplementingPartners\ImplementingPartnersController@edit');
+Route::post('/getAllImplementingPartners', 'ImplementingPartners\ImplementingPartnersController@getAllImplementingPartners');
+
 //monthlyreport module
 Route::get('/monthlyreport', 'MonthlyReport\MonthlyReportController@index')->name('monthlyreport.index')->middleware('access');
 Route::post('/monthlyreport/add', 'MonthlyReport\MonthlyReportController@add');
@@ -251,3 +259,10 @@ Route::post('/getAuditTrail', 'AuditTrail\AuditTrailController@getAuditTrail')->
 
 Route::post('/getReportingMonth', 'MonthlyReport\MonthlyReportController@getReportingMonth');
 Route::post('/getIdReportingMonth', 'MonthlyReport\MonthlyReportController@getIdReportingMonth');
+
+//Monitoring Report
+Route::get('/sitewisereport','MonitoringReport\MonitoringReportController@sitewiseReport')->name('sitewisereport.sitewiseReport');
+Route::post('/getSiteWiseReport', 'MonitoringReport\MonitoringReportController@getSiteWiseReport');
+Route::post('/sendMail', 'MonitoringReport\MonitoringReportController@sendMail');
+
+Route::post('/getAllTestSiteList', 'TestSite\TestSiteController@getAllTestSiteList');

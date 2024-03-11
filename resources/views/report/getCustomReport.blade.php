@@ -7,16 +7,55 @@
     .table-wrapper-scroll-y {
         display: block;
     }
-
     .tableFixHead {
         overflow-y: auto;
         max-height: 500px;
     }
+    table{
+        border-collapse:separate;
+        border-spacing:0;
+    }
 
-    .tableFixHead thead th {
+    .tableFixHead thead {
         position: sticky;
         top: 0;
-        z-index: 99;
+        z-index: 150;
+        background-color:#e4eff8!important;
+    }
+    .tableFixHead thead th:first-child {
+        position: sticky;
+        left:0;
+        background-color:#e4eff8;
+        z-index: 150;
+    }
+    .tableFixHead thead th:nth-child(2){
+        position: sticky;
+        left:100px;
+        background-color:#e4eff8;
+        z-index: 150;
+    }
+    .tableFixHead thead th:nth-child(3){
+        position: sticky;
+        left:180px;
+        background-color:#e4eff8;
+        z-index: 150;
+    }
+    .tableFixHead tbody td:first-child {
+        position: sticky;
+        top: 0;
+        left:0;
+        z-index: 100;      
+        background-color:#fff;
+    }
+    .tableFixHead tbody td:nth-child(2){
+        position: sticky;
+        left:100px;
+        background-color:#fff;
+    }
+    .tableFixHead tbody td:nth-child(3){
+        position: sticky;
+        left:180px;
+        background-color:#fff;
     }
 
     #table-bordered {
@@ -53,10 +92,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
         <thead>
 
             <tr class="frezz" style=" top: 37px; width:94.6%;">
-                <th class="th" style="width:10%;">Facility</th>
-                <th class="th" style="width:10%;">Site</th>
-                <th class="th" style="width:10%;">Algorithm</th>
-                <th class="th" style="width:10%;">Testing Period</th>
+                <th class="th" style="max-width:100px;">Site</th>
+                <th class="th" style="max-width:100px;">Algorithm</th>
+                <th class="th" style="max-width:120px;">Testing Period</th>
                 <th class="th" style="width:5%;">Total Tests</th>
                 @for($i = 1; $i <= $arr['no_of_test']; $i++) <th colspan="4" class="th" style="width:10%; text-align: center" bgcolor="{{$col[$i]}}">Test {{$i}}</th>
                     @endfor
@@ -65,7 +103,6 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                     <th class="th" style="width:10%;">OverAll Agr</th>
             </tr>
             <tr>
-                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -105,10 +142,9 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
             // $testingMonth= date('F - Y', strtotime($date)); //June, 2017
             ?>
             <tr style="text-align: right">
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->facility_name}}</td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;"><a onclick="logData('{{$trendrow->ts_id}}')" href="javascript:void(0);" name="data" class="" title="Site Name">{{$trendrow->site_name}}</a></td>
-                <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$trendrow->algorithm_type}}</td>
-                <td class="td" style=" width: 10%; text-align: left">{{$testingDate}}</td>
+                <td class="td" style=" max-width: 100px; text-align: left; color: black;font-weight: 500;"><a onclick="logData('{{$trendrow->ts_id}}')" href="javascript:void(0);" name="data" class="" title="Site Name">{{$trendrow->site_name}}</a></td>
+                <td class="td" style=" max-width: 100px text-align: left; color: black;font-weight: 500;">{{ ucwords($trendrow->algorithm_type) }}</td>
+                <td class="td" style=" max-width: 120px text-align: left">{{$testingDate}}</td>
                 <td class="td" style=" width: 10%; text-align: left; color: black;font-weight: 500;">{{$total}}</td>
                 @for($l = 1; $l <= $arr['no_of_test']; $l++) <?php $reactive = 'test_' . $l . '_reactive';
                                                                 $nonreactive = 'test_' . $l . '_nonreactive';
@@ -130,7 +166,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 
             @else
             <tr>
-                <td class="frezz" style="text-align:center;width:94.6%;" colspan="17">No Data Available</td>
+                <td class="frezz" style="text-align:center;width:94.6%;" colspan="16">No Data Available</td>
             </tr>
             @endif
 

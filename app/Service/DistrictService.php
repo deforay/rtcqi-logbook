@@ -23,8 +23,7 @@ class DistrictService
         	$add = $model->saveDistrict($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'District Added Successfully';
-				return $msg;
+				return 'District Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,15 +36,13 @@ class DistrictService
 	public function getAllDistrict()
     {
 		$model = new DistrictTable();
-        $result = $model->fetchAllDistrict();
-        return $result;
+        return $model->fetchAllDistrict();
 	}
 
 	public function getDistrictByProvinceId($id)
 	{
 		$model = new DistrictTable();
-        $result = $model->fetchDistrictNameByProvinceId($id);
-		return $result;
+		return $model->fetchDistrictNameByProvinceId($id);
 	}
 
 	//Get Particular District Details
@@ -53,8 +50,7 @@ class DistrictService
 	{
 		
 		$model = new DistrictTable();
-        $result = $model->fetchDistrictById($id);
-        return $result;
+        return $model->fetchDistrictById($id);
 	}
 	//Update Particular District Details
 	public function updateDistrict($params,$id)
@@ -65,8 +61,7 @@ class DistrictService
         	$add = $model->updateDistrict($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'District Updated Successfully';
-				return $msg;
+				return 'District Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -80,21 +75,18 @@ class DistrictService
 	public function getDistictName($id)
     {
 		$model = new DistrictTable();
-        $result = $model->fetchDistrictName($id);
-        return $result;
+        return $model->fetchDistrictName($id);
 	}
 	public function getDistictById($id)
     {
 		$model = new DistrictTable();
-        $result = $model->fetchDistrictId($id);
-        return $result;
+        return $model->fetchDistrictId($id);
 	}
 
 	public function getDistictByData($id)
     {
 		$model = new DistrictTable();
-        $result = $model->fetchDistrictData($id);
-        return $result;
+        return $model->fetchDistrictData($id);
 	}
 }
 

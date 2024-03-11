@@ -1,8 +1,8 @@
 <!--
     Author             : Prasath M
-    Date               : 28 May 2021
-    Description        : Facility view screen
-    Last Modified Date : 28 May 2021
+    Date               : 31 May 2021
+    Description        : Province view screen
+    Last Modified Date : 31 May 2021
     Last Modified Name : Prasath M
 -->
 
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active">Manage
                         </li>
-                        <li class="breadcrumb-item"><a href="/facility/">Facility</a>
+                        <li class="breadcrumb-item"><a href="/implementingpartners/">Implementing Partners</a>
                         </li>
                     </ol>
                 </div>
@@ -29,9 +29,9 @@
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
             <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['add']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['add'] == "allow")) {?>
-                <a href="/facility/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-plus icon-left"></i> Add Facility</b></a>
+                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add'] == "allow")) {?>
+                <a href="/implementingpartners/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                <b><i class="ft-plus icon-left"></i> Add Implementing Partners</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Facility</h3>
+                            <h3 class="content-header-title mb-0">Implementing Partners</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -70,19 +70,15 @@
                             <div class="card-body card-dashboard">
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration" id="facilityList">
+                                    <table class="table table-striped table-bordered zero-configuration" id="implementingPartnersList">
                                         <thead>
                                             <tr>
-                                                <th>Facility Name</th>
-                                                <th>Facility City</th>
-                                                <th>Facility Country</th>
-                                                <th>Contact Name</th>
-                                                <th>Contact Email</th>
+                                                <th>Implementing Partner Name</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit'] == "allow")) {?>
+                                                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) {?>
                                                 <th>Action</th>
-                                                <?php } ?>
+                                                 <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -102,45 +98,37 @@
   <script>
     $(document).ready(function() {
         $.blockUI();
-        getAllFacility();
+        getAllImplementingPartners();
         $.unblockUI();
     });
-    function getAllFacility()
+    function getAllImplementingPartners()
     {
       $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
       });
-      $('#facilityList').DataTable({
+      $('#implementingPartnersList').DataTable({
             processing: true,
             destroy : true,
             serverSide: true,
             scrollX: false,
             autoWidth:false,
             ajax: {
-                url:'{{ url("getAllFacility") }}',
+                url:'{{ url("getAllImplementingPartners") }}',
                 type: 'POST',
+            },error:function(e){
+                console.log(e);
             },
             columns: [
 
-                    { data: 'facility_name', name: 'facility_name',className:'firstcaps' },
-                    { data: 'facility_city', name: 'facility_city'},
-                    { data: 'facility_country', name: 'facility_country' },
-                    { data: 'contact_name', name: 'contact_name'},
-                    { data: 'contact_email', name: 'contact_email' },
-                    { data: 'facility_status', name: 'facility_status',className:'firstcaps' },
+                    { data: 'implementing_partner_name', name: 'implementing_partner_name',className:'firstcaps' },
+                    { data: 'implementing_partner_status', name: 'implementing_partner_status',className:'firstcaps' },
                     <?php $role = session('role');
-                    if (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['edit'] == "allow")) {?>
+                    if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) {?>
                     {data: 'action', name: 'action', orderable: false},
                     <?php } ?>
                 ],
-                columnDefs: [
-                {
-                        "targets": 2,
-                        "className": "text-right",
-                },
-                ], 
             order: [[0, 'desc']]
         });
     }

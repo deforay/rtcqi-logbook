@@ -23,8 +23,7 @@ class TestKitService
         	$add = $model->saveTestKit($request);
 			if($add>0){
                 DB::commit();
-				$msg = 'TestKit Added Successfully';
-				return $msg;
+				return 'TestKit Added Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
@@ -37,24 +36,27 @@ class TestKitService
 	public function getAllTestKit()
     {
 		$model = new TestKitTable();
-        $result = $model->fetchAllTestKit();
-        return $result;
+        return $model->fetchAllTestKit();
 	}
 
 	//Get All TestKit List
 	public function getAllActiveTestKit()
     {
 		$model = new TestKitTable();
-        $result = $model->fetchAllActiveTestKit();
-        return $result;
+        return $model->fetchAllActiveTestKit();
 	}
+
+	//Get Test Kit Summary
+	public function getTestKitSummary($data){
+		$model = new TestKitTable();
+        return $model->fetchAllTestKitSummary($data);
+	}
+
 	//Get Particular TestKit Details
 	public function getTestKitById($id)
 	{
-		
 		$model = new TestKitTable();
-        $result = $model->fetchTestKitById($id);
-        return $result;
+        return $model->fetchTestKitById($id);
 	}
 	//Update Particular TestKit Details
 	public function updateTestKit($params,$id)
@@ -65,8 +67,7 @@ class TestKitService
         	$add = $model->updateTestKit($params,$id);
 			if($add>0){
                 DB::commit();
-				$msg = 'TestKit Updated Successfully';
-				return $msg;
+				return 'TestKit Updated Successfully';
 			}
 	    }
 	    catch (Exception $exc) {
