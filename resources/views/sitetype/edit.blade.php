@@ -66,7 +66,7 @@
                                                 <h5>Entry Point Status<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="siteTypeStatus" name="siteTypeStatus" title="Please Select Site Type Status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="siteTypeStatus" name="siteTypeStatus" title="Please Select Entry Point Status">
                                                         <option value="active" {{ $result[0]->site_type_status == 'active' ?  'selected':''}}>Active</option>
                                                         <option value="inactive" {{ $result[0]->site_type_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                     </select>

@@ -155,10 +155,10 @@ $messages=Lang::get('messages');
                                         </div>
                                         <div class="form-group col-xl-3 col-lg-3">
                                             <fieldset>
-                                                <h5>{{ $messages["sub_district_name"]}}<span class="mandatory">*</span>
+                                                <h5>{{ $messages["sub_district_name"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
+                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="{{ $messages['please_select_sub_district_name']}}">
                                                         <option value="">---Select---</option>
                                                         @foreach($subdistrict as $row)
                                                         <option value="{{$row->sub_district_id}}" {{ $result[0]->sub_district_id == $row->sub_district_id ?  'selected':''}}>{{$row->sub_district_name}}</option>
@@ -338,15 +338,15 @@ $messages=Lang::get('messages');
                                                         @if($i == 1)
                                                             <h5>{{ $messages["test_kit_name"]}} {{$i}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else 
+                                                            @else
                                                             <h5>{{ $messages["test_kit_name"]}} {{$i}}
                                                             </h5>
                                                             @endif
                                                             <div class="form-group">
                                                             @if($i == 1)
                                                                 <select class="form-control isRequired selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="{{ $messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)">
-                                                                @else   
-                                                                <select class="form-control selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="{{ $messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)"> 
+                                                                @else
+                                                                <select class="form-control selectTestKits" autocomplete="off" style="width:100%;" id="testkitId{{$i}}_{{$z}}" data-id="{{$i}}_{{$z}}" name="testkitId{{$i}}[]" title="{{ $messages['please_select_test_kit_name']}}{{$i}}" onchange="replaceTestKitHeadings('{{$i}}','{{$z}}',this)">
                                                             @endif
                                                                    <option value="">--Select--</option>
                                                                     @if(isset($allowedTestKitNo[$i]))
@@ -383,12 +383,12 @@ $messages=Lang::get('messages');
                                                 </tr>
                                                 <tr>
                                                     @for($j = 1; $j <= $globalValue; $j++) <?php $lot_no = 'lot_no_' . $j;
-                                                                                            $expiry_date = 'expiry_date_' . $j; 
+                                                                                            $expiry_date = 'expiry_date_' . $j;
                                                                                             $expiryDate = $common->humanDateFormat($list->$expiry_date); ?> <td style=" text-align: center;">
-                                                    @if($j == 1)    
+                                                    @if($j == 1)
                                                         <h5>{{ $messages["lot_no"]}} {{$j}}<span class="mandatory">*</span>
                                                         </h5>
-                                                        @else 
+                                                        @else
                                                         <h5>{{ $messages["lot_no"]}} {{$j}}
                                                         </h5>
                                                         @endif
@@ -404,7 +404,7 @@ $messages=Lang::get('messages');
                                                         @if($j == 1)
                                                             <h5>{{ $messages["expiry_date"]}} {{$j}}<span class="mandatory">*</span>
                                                             </h5>
-                                                            @else 
+                                                            @else
                                                             <h5>{{ $messages["expiry_date"]}} {{$j}}
                                                             </h5>
                                                             @endif
@@ -529,7 +529,7 @@ $messages=Lang::get('messages');
         </thead>
         <tbody>
             @foreach ($auditData as $row)
-            <?php 
+            <?php
             $audit_date = date('d-M-Y h:i:s', strtotime($row->date_time));
             ?>
 
@@ -618,7 +618,7 @@ $messages=Lang::get('messages');
     });
 
     function getAllMonthlyReport() {
-    var testSiteId = parseInt($('#testsiteId').val());   
+    var testSiteId = parseInt($('#testsiteId').val());
     //alert($('#testsiteId').val());
         $.ajaxSetup({
             headers: {
@@ -637,9 +637,9 @@ $messages=Lang::get('messages');
                 url: '{{ url("getSelectedSiteMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                    testSiteId: testSiteId,               
+                    testSiteId: testSiteId,
                 },
-                
+
             },
 
             columns: [
@@ -736,8 +736,8 @@ $messages=Lang::get('messages');
         if($('#startDate' + id).val() === ''){
             var errorMessage="<span style='color:red'>{{$messages['please_select_start_date']}}</span>"
             $('#show_error_date'+id).html(errorMessage).delay(3000).fadeOut();
-            $('#show_error_date'+id).css("display", "block"); 
-            $("#endDate" + id).val('');           
+            $('#show_error_date'+id).css("display", "block");
+            $("#endDate" + id).val('');
             $(".error-date").focus();
         }else{
             $("#endDate" + id).datepicker({
@@ -751,7 +751,7 @@ $messages=Lang::get('messages');
         });
         }
     }
-        
+
     duplicateName = true;
 
     function validateNow() {
@@ -1029,7 +1029,7 @@ $('#testsiteId').change(function() {
     $('#districtId').find('option').not(':first').remove();
     $('#subDistrictId').find('option').not(':first').remove();
 
-    // AJAX request 
+    // AJAX request
     $.ajax({
         url: "{{url('/getProvince') }}/" + id,
         type: 'get',

@@ -107,7 +107,7 @@
     //Placeholder
     'select_date_range' => 'Select Date Range',
     'select_site_name' => 'Select Site Name',
-    'select_site_type' => 'Select Site Type',
+    'select_site_type' => 'Select Entry Point',
     'enter_site_unique_id' => 'Enter Site Unique Id',
     'select_province_name' => 'Select Province Name',
     'select_district_name' => 'Select District Name',
