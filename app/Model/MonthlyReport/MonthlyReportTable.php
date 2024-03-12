@@ -120,7 +120,8 @@ class MonthlyReportTable extends Model
                     $insMonthlyArr
                 );
             }
-            $commonservice->eventLog('add-monthly-report-request', $user_name . ' has added the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report', $id);
+            $result=$model->fetchTestSiteById(base64_encode($data['testsiteId']));
+            $commonservice->eventLog('add-monthly-report-request', $user_name . ' added Monthly Report Book No. ' . $data['bookNo'] . ' for '.$result[0]->site_name.' - '.$reportingMon, 'monthly-report', $id);
         }
 
         return $id;
@@ -366,7 +367,8 @@ class MonthlyReportTable extends Model
                 );
             }
         }
-        $commonservice->eventLog('update-monthly-report-request', $user_name . ' has updated the monthly report information for book no ' . $data['bookNo'] . '', 'monthly-report', base64_decode($id));
+        $result=$model->fetchTestSiteById(base64_encode($data['testsiteId']));
+        $commonservice->eventLog('update-monthly-report-request', $user_name . ' updated Monthly Report Book No. ' . $data['bookNo'] . ' for '.$result[0]->site_name.' - '.$reportingMon, 'monthly-report', base64_decode($id));
         return 1;
     }
 
@@ -931,6 +933,7 @@ class MonthlyReportTable extends Model
                 $rowCnt = 1;
                 $cnt = 0;
                 $rslt = "";
+                $siteName=array();
                 $GlobalConfigService = new GlobalConfigService();
                 $result = $GlobalConfigService->getAllGlobalConfig();
                 $arr = array();
@@ -950,6 +953,7 @@ class MonthlyReportTable extends Model
                         $comment = $isDataValid ? '' : $this->getErrorComment($row);
 
                         if ($isDataValid) {
+                            array_push($siteName, $row[0]);
                             $reporting_date = '';
                             if (is_numeric($row[11])) {
                                 $reporting_date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[11])->format('M-Y');
@@ -1703,7 +1707,14 @@ class MonthlyReportTable extends Model
                     $rowCnt++;
                 }
                 if ($cnt > 0) {
-                    $commonservice->eventLog('import-monthly-report', $user_name . ' has imported a new monthly report', 'monthly-report', $mr_id);
+                    if($rowCnt == 1){
+                        $siteNameString=$siteName[0];
+                    }else if($rowCnt == 2){
+                        $siteNameString=$siteName[0].', '.$siteName[1];
+                    }else if($rowCnt > 2){
+                        $siteNameString=$siteName[0].', '.$siteName[1].' etc.';
+                    }
+                    $commonservice->eventLog('import-monthly-report', $user_name . ' uploaded Bulk Monthly Report for '.$siteNameString, 'monthly-report', $mr_id);
                 }
                 $rslt .= "File Name: " . $fileName . "<br/>";
                 $rslt .= "No.of Records: " . ($cnt + $notInsertRow) . "<br/>";
