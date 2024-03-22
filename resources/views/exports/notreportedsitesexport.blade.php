@@ -31,7 +31,7 @@
             <td style="border: 3px solid black">{{ $notreportedsitesrow->province_name }}</td>
             <td style="border: 3px solid black">{{ $notreportedsitesrow->district_name }}</td>
             <td style="border: 3px solid black;;text-align: left;">{{ $notreportedsitesrow->sub_district_name }}</td>
-            <td style="border: 3px solid black">{{ $notreportedsitesrow->updated_on }}</td>
+            <td style="border: 3px solid black">{{ $notreportedsitesrow->added_on }}</td>
         </tr>
         @endforeach
     </tbody>

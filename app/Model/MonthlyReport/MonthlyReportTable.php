@@ -869,24 +869,30 @@ class MonthlyReportTable extends Model
             }
         }
         
-        $query = DB::table('users_testsite_map')
-            ->select('test_sites.ts_id', 'test_sites.site_name', 'provinces.province_name', 'districts.district_name', 'sub_districts.sub_district_name', 'test_sites.updated_on')
-            ->join('test_sites', 'test_sites.ts_id', '=', 'users_testsite_map.ts_id')
-            ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=','users_testsite_map.ts_id')
+        $query = DB::table('test_sites')
+            ->select('test_sites.ts_id', DB::raw('(SELECT monthly_reports.added_on FROM monthly_reports WHERE test_sites.ts_id = monthly_reports.ts_id order by monthly_reports.mr_id desc limit 1) AS added_on'), 'test_sites.site_name', 'provinces.province_name', 'districts.district_name', 'sub_districts.sub_district_name', 'test_sites.updated_on')
+            ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=','test_sites.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
             ->leftjoin('sub_districts', 'sub_districts.district_id', '=', 'test_sites.site_sub_district')            
-            ->whereIn('users_testsite_map.ts_id', Session::get('tsId'))
-            ->Where('monthly_reports.ts_id',NULL)
-            ->GroupBy('test_sites.ts_id');
-
+            ->whereIn('test_sites.ts_id', Session::get('tsId'))
+            ->groupBy('test_sites.ts_id');
+            
+            
+            // $result=$query->get();
+            // echo $count = count($result);
             if (trim($start_date) != "" && trim($end_date) != "") {
-                $query = $query->where(function ($query) use ($start_date, $end_date) {
-                    $query->where('test_sites.created_on',  '>=', $start_date)
-                        ->where('test_sites.created_on', '<=', $end_date)
-                        ->whereDate('test_sites.created_on', '>=', $start_date);
+                $test_sites=DB::table('monthly_reports')->select('monthly_reports.ts_id');
+                $test_sites=$test_sites->where(function ($test_sites) use ($start_date, $end_date) {
+                    $test_sites->where('monthly_reports.added_on',  '>=', $start_date)
+                        ->where('monthly_reports.added_on', '<=', $end_date)
+                        ->whereDate('monthly_reports.added_on', '>=', $start_date);
+
+                        
                 });
+                $query=$query->whereNotIn('test_sites.ts_id', $test_sites);
             }
+            
             if (isset($data['provinceId']) && $data['provinceId'] != '') {
                 $query = $query->whereIn('provinces.province_id', $data['provinceId']);
                 $query = $query->groupBy(DB::raw('provinces.province_id'));
