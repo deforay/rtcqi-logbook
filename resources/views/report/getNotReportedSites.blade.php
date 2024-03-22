@@ -106,7 +106,7 @@
                 <td class="td" style="max-width:120px; text-align:left">{{$notreportedsitesrow->province_name}}</td>
                 <td class="td" style="text-align:left">{{$notreportedsitesrow->district_name}}</td>
                 <td class="td" style="text-align:left">{{$notreportedsitesrow->sub_district_name}}</td>
-                <td class="td" style="text-align:left">{{$notreportedsitesrow->updated_on}}</td>
+                <td class="td" style="text-align:left">{{$notreportedsitesrow->added_on}}</td>
             </tr>
             @endforeach
 

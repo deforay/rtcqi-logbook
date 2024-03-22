@@ -208,11 +208,11 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 subDistrictId: $("#subDistrictId").val(),                
             },
             error:function(e){
-                alert('happened error');
+                //alert('happened error');
                 console.log(e);
             },
             success: function(result) {
-                console.log('not reported list', result);
+                //console.log('not reported list', result);
                 $("#notReportedSitesList").html(result);
             }
         });
