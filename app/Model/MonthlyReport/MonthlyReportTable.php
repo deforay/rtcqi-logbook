@@ -972,6 +972,9 @@ class MonthlyReportTable extends Model
                             } elseif (is_string($row[10])) {
                                 $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                             }
+                            if($dateOfCollection > date('Y-m-d')){
+                                $dateOfCollection = date('Y-m-d');
+                            }
                             $startDate = '';
                             if (is_numeric($row[15])) {
                                 $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');

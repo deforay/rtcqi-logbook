@@ -271,7 +271,7 @@ $messages=Lang::get('messages');
                                                 <h5>{{ $messages["date_of_data_collection"]}}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="DateOfCollect" class="form-control datepicker" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}" value="{{$todays_date}}">
+                                                    <input type="text" id="DateOfCollect" class="form-control" autocomplete="off" placeholder="{{$messages['enter_date_of_collection']}}" name="DateOfCollect" title="{{ $messages['please_enter_date_of_collection']}}" value="{{$todays_date}}">
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -559,6 +559,16 @@ $messages=Lang::get('messages');
             changeYear: true,
             maxDate: 0,
             // startDate:'today',
+            todayHighlight: true,
+            clearBtn: true,
+        });
+        $('#DateOfCollect').datepicker({
+            autoclose: true,
+            format: 'dd-M-yyyy',
+            changeMonth: true,
+            changeYear: true,
+            maxDate: 0,
+            endDate: new Date(),
             todayHighlight: true,
             clearBtn: true,
         });
