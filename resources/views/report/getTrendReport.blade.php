@@ -256,50 +256,38 @@ $negativeValue = json_encode(array_slice($negative, 0, 100));
         var siteResult=<?php echo $siteNameValue?>;
 
         var options = {
-          series: [{
-          name: 'Negative',
-          data: negativeResult,
-        }, {
-          name: 'Positive',
-          data: positiveResult
-        }, {
-          name: 'Indeterminate',
-          data: indeterminateResult
-        }],
-            chart: {
-          type: 'bar',
-          height: 350,
-          stacked: true,          
-          animations: {
-            enabled: false
+          colors:["#60D18F", "#FF1900", "#869EA7"],
+          chart: {
+            height: 350,
+            type: 'bar',
+            stacked: true,
+            toolbar: {
+              show: true
+            },
+            zoom: {
+              enabled: true
+            }
           },
-          scatter:true,
-          zoom: {
-            enabled: true
-          }
-        },
+          series: [{
+            name: 'Negative',
+            data: negativeResult,
+          }, {
+            name: 'Positive',
+            data: positiveResult
+          }, {
+            name: 'Indeterminate',
+            data: indeterminateResult
+          }],
+              
         
         plotOptions: {
           bar: {
             horizontal: false,
-            dataLabels: {
-              total: {
-                enabled: true,
-                offsetX: 0,
-                style: {
-                  fontSize: '13px',
-                  fontWeight: 900
-                }
-              }
-            }
           },
         },
-        stroke: {
-          width: 1,
-          colors: ['#fff']
-        },
+        
         title: {
-          text: 'Trent Report Chart'
+          text: 'Trend Report Chart'
         },
         xaxis: {
           categories: siteResult,
@@ -321,14 +309,17 @@ $negativeValue = json_encode(array_slice($negative, 0, 100));
             }
           }
         },
+        
         fill: {
+          
           opacity: 1
         },
         legend: {
           position: 'top',
           horizontalAlign: 'left',
           offsetX: 40
-        }
+        },
+        
         };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
