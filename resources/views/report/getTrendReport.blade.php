@@ -1,3 +1,4 @@
+
 <style>
     .my-custom-scrollbar {
         position: relative;
@@ -85,10 +86,14 @@ for ($i = 0; $i < sizeof($glob); $i++) {
 }
 
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
-
+$negative_array=array();
+$positive_array=array();
+$indeterminate_array=array();
 ?>
+
 <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead tableLeftRight">
-    <table class="table table-bordered " id="trendTable" style="width:100%;">
+    
+<table class="table table-bordered " id="trendTable" style="width:100%;">
         <thead>
 
             <tr class="frezz" style="top: 37px; width:94.6%;">
@@ -160,6 +165,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
                 $posAgreementTest2_3 = number_format(100 * ($trendrow->test_3_reactive) / ($trendrow->test_2_reactive), 2);
                 $OverallAgreement2_3 = number_format(100 * ($trendrow->test_3_reactive + $trendrow->test_2_nonreactive) / ($trendrow->test_2_reactive + $trendrow->test_2_nonreactive), 2);
             }
+            //$positive_array.push()
             // dd($trendrow->end_test_date);die;
             // $testingMonth= date('F - Y', strtotime($date)); //June, 2017
             ?>
@@ -204,4 +210,130 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 
 
     </table>
+    
 </div>
+<div id="chart" style="margin-top:20px;"></div>
+<?php $positive= array();
+      $negative= array();
+      $indeterminate= array();
+      $siteNames= array();
+      $count=1;
+      
+foreach ($report['res'] as $trendrow){
+  $index=array_search($trendrow->site_name,$siteNames);
+  
+    if($index != ""){
+      $positive[$index]+=$trendrow->final;
+      $negative[$index]+=$trendrow->final_negative;
+      $indeterminate[$index]+=$trendrow->final_undetermined;
+    }else{
+      array_push($positive,$trendrow->final);
+      array_push($negative,$trendrow->final_negative);
+      array_push($indeterminate,$trendrow->final_undetermined);
+      array_push($siteNames,$trendrow->site_name);
+    }
+
+
+
+
+}
+
+$positiveValue = json_encode(array_slice($positive, 0, 100));
+$negativeValue = json_encode(array_slice($negative, 0, 100)); 
+         $indeterminateValue=json_encode(array_slice($indeterminate, 0, 100)); 
+         $siteNameValue=json_encode(array_slice($siteNames, 0, 100)); 
+          ?>
+<script src="{{ asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js')}}"></script>
+<script>
+    $(document).ready(function(){
+        
+        var positive=<?php echo $positiveValue?>;
+        var positiveResult = positive.map(Number);
+        var negative=<?php echo $negativeValue?>;
+        var negativeResult = negative.map(Number);
+        var indeterminate=<?php echo $indeterminateValue?>;
+        var indeterminateResult = indeterminate.map(Number);
+        var siteResult=<?php echo $siteNameValue?>;
+
+        var options = {
+          series: [{
+          name: 'Negative',
+          data: negativeResult,
+        }, {
+          name: 'Positive',
+          data: positiveResult
+        }, {
+          name: 'Indeterminate',
+          data: indeterminateResult
+        }],
+            chart: {
+          type: 'bar',
+          height: 350,
+          stacked: true,          
+          animations: {
+            enabled: false
+          },
+          scatter:true,
+          zoom: {
+            enabled: true
+          }
+        },
+        
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            dataLabels: {
+              total: {
+                enabled: true,
+                offsetX: 0,
+                style: {
+                  fontSize: '13px',
+                  fontWeight: 900
+                }
+              }
+            }
+          },
+        },
+        stroke: {
+          width: 1,
+          colors: ['#fff']
+        },
+        title: {
+          text: 'Trent Report Chart'
+        },
+        xaxis: {
+          categories: siteResult,
+          labels: {
+            formatter: function (val) {
+              return val
+            }
+          }
+        },
+        yaxis: {
+          title: {
+            text: undefined
+          },
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val
+            }
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'left',
+          offsetX: 40
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    });
+    
+
+    </script>
