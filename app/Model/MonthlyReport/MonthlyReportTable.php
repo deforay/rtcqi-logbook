@@ -2318,7 +2318,7 @@ class MonthlyReportTable extends Model
 
     public function fetchSiteWiseMonthlyReportCount()
     {
-        $dateS = Carbon::now()->subMonth()->format('Y-m-01');
+        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
         $dateE = Carbon::now()->subMonth()->format('Y-m-01');
         DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
@@ -2334,7 +2334,7 @@ class MonthlyReportTable extends Model
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
-            $monthYear = Carbon::today()->subMonth()->format('M-Y');
+            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
             $period[$monthYear]=$monthYear;
         }
         
@@ -2349,7 +2349,7 @@ class MonthlyReportTable extends Model
 
     public function fetchTestWiseMonthlyReportCount()
     {
-        $dateS = Carbon::now()->subMonth()->format('Y-m-01');
+        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
         $dateE = Carbon::now()->subMonth()->format('Y-m-01');
 
         $GlobalConfigService = new GlobalConfigService();
@@ -2379,7 +2379,7 @@ class MonthlyReportTable extends Model
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
-            $monthYear = Carbon::today()->subMonth()->format('M-Y');
+            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
             $period[$monthYear]=$monthYear;
         }
         
