@@ -244,23 +244,23 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         </div>
         <div class="row">
             <div class="col-12" >
-                <h4 class="text-uppercase">Monthly Reports - Last 12 months (N = <?php echo $monthWiseCount['totalCount']; ?>)</h4>
+                <h4 class="text-uppercase">Monthly Reports - Last 12 months</h4>
                 <div id="lastTwelveMonthlyChart"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-12" >
-                <h4 class="text-uppercase">Site Wise Monthly Reports - Last 12 months (N = <?php echo $siteWiseMonthlyCount['totalCount']; ?>)</h4>
+                <h4 class="text-uppercase">Site Wise Monthly Reports - Last 12 months</h4>
                 <div id="sitewiseMonthlyChart"></div>
             </div>
         </div>
-
-        <div class="row">
+        <!-- todo uncommented -->
+        <!-- <div class="row">
             <div class="col-12" >
-                <h4 class="text-uppercase">Test Wise Monthly Reports - Last 12 months (N = <?php echo $testWiseMonthlyCount['totalCount']; ?>)</h4>
+                <h4 class="text-uppercase">Test Wise Monthly Reports - Last 12 months</h4>
                 <div id="testwiseMonthlyChart"></div>
             </div>
-        </div>
+        </div> -->
 
         <div class="row">
             <div id="recent-transactions" class="col-12">

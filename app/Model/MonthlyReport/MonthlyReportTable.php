@@ -2325,12 +2325,11 @@ class MonthlyReportTable extends Model
         $dateE = Carbon::now()->subMonth()->format('Y-m-01');
         DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
-            ->join('test_sites AS ts', 'mr.ts_id', '=', 'ts.ts_id')
-            ->select(DB::raw('COUNT(DISTINCT mr.ts_id) as reporting_sites'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
+            ->select('mr.reporting_month', DB::raw('COUNT(DISTINCT mr.ts_id) as total_unique_sites'))
             ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $dateS)
-            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE);
-
-        $sQuery->groupBy('reporting_month');
+            ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $dateE)
+            ->groupBy('reporting_month')
+            ->orderBy(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'));
         $sResult= $sQuery->get()->toArray();
         //dd($sQuery->toSql());
         $monthResult = array();
@@ -2343,8 +2342,8 @@ class MonthlyReportTable extends Model
         
         $totalCount=0;
         foreach ($sResult as $sRes) {
-            $totalCount+=$sRes->reporting_sites;
-            $result[$sRes->reporting_month] = $sRes->reporting_sites;
+            $totalCount+=$sRes->total_unique_sites;
+            $result[$sRes->reporting_month] = $sRes->total_unique_sites;
         }
         //print_r($fResult);die;
         return array('data' => $result,'period' => $period,'totalCount'=>$totalCount);
