@@ -37,11 +37,15 @@ class MonitoringReportController extends Controller
 
     public function getSiteWiseReport(Request $request)
     {
+        $comingFrom="";
         $datas = $request->all();
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getSiteWiseReport($datas);
         // dd($data);die;
-        $view = View::make('monitoringreport.getSiteWiseReport', ['report' => $data]);
+        if(isset($datas['comingFrom'])){
+            $comingFrom=$datas['comingFrom'];
+        }
+        $view = View::make('monitoringreport.getSiteWiseReport', ['report' => $data,'comingFrom'=>$comingFrom]);
         return $view;
     }
     
