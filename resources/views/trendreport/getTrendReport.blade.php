@@ -51,9 +51,9 @@ display: block;
         <tbody>
         @foreach ($report as $trendrow)
         <?php
-$date = $trendrow->end_test_date;
-$testingMonth= date('F - Y', strtotime($date)); //June, 2017
-?>
+            $date = $trendrow->end_test_date;
+            $testingMonth= date('F - Y', strtotime($date)); //June, 2017
+        ?>
         <tr style="text-align: right">
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->facility_name}}</td>
         <td class = "td"style=" width: 10%; text-align: left">{{$trendrow->site_type_name}}</td>
