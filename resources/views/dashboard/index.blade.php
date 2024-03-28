@@ -257,6 +257,12 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
     </div>
   </div>
+  <?php
+                  foreach($monthWiseCount['period'] as $date){
+                    $callCount=(isset($monthWiseCount['data'][$date]) && trim($monthWiseCount['data'][$date])!= '') ? $monthWiseCount['data'][$date] :0;
+                    echo $callCount.",";
+                  }
+              ?>
   
   <script src="{{ asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js')}}"></script>
   <script type="text/javascript">
