@@ -2284,8 +2284,10 @@ class MonthlyReportTable extends Model
 
     public function fetchMonthlyWiseReportCount()
     {
-        $dateS = Carbon::now()->subMonth()->format('Y-m-01');
+        $dateS = Carbon::now()->subMonth(12)->format('Y-m-01');
+        //echo $dateS;
         $dateE = Carbon::now()->subMonth()->format('Y-m-01');
+        //echo $dateE;
         //DB::enableQueryLog();
         $sQuery = DB::table('monthly_reports AS mr')
             ->select(DB::raw('count(mr_id) as total'),'mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'))
@@ -2300,7 +2302,7 @@ class MonthlyReportTable extends Model
         $result = array();
         $period = array();
         for ($i = 12; $i > 0; $i--) {
-            $monthYear = Carbon::today()->subMonth()->format('M-Y');
+            $monthYear = Carbon::today()->subMonth($i)->format('M-Y');
             //$year = Carbon::today()->subMonth($i)->format('Y');
             $period[$monthYear]=$monthYear;
         }
