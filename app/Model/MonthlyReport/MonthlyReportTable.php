@@ -2215,6 +2215,7 @@ class MonthlyReportTable extends Model
             foreach ($period as $dt) {
                 $months[] = $dt->format("M-Y");
             }
+            krsort($months);
             //print_r($months);die;
         }
         //DB::enableQueryLog();
