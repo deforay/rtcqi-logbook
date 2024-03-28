@@ -2194,7 +2194,9 @@ class MonthlyReportTable extends Model
         $data = $params;
         $start_date = '';
         $end_date = '';
-        
+        if(isset($data['provinceId']) && gettype($data['provinceId'])=='string'){
+            $data['provinceId']=explode(",",$data['provinceId']);  
+        }
         
         if (isset($data['searchDate']) && $data['searchDate'] != '') {
             $sDate = explode("to", $data['searchDate']);
@@ -2215,6 +2217,7 @@ class MonthlyReportTable extends Model
             foreach ($period as $dt) {
                 $months[] = $dt->format("M-Y");
             }
+            krsort($months);
             //print_r($months);die;
         }
         //DB::enableQueryLog();

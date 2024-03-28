@@ -1,3 +1,4 @@
+@if(count($report['sitewise'])>0)
 <style>
     .my-custom-scrollbar {
         position: relative;
@@ -57,13 +58,13 @@
     }
 </style>
 <div class="table-wrapper-scroll-y my-custom-scrollbar tableFixHead">
-    @if(count($report['sitewise'])>0)
+    
     <table class="table table-bordered " id="trendTable" style="width:100%;">
         <thead>
 
             <tr class="frezz" style=" ">
                 
-                <th class="th" style="width:15%;">Site Name</th>
+                <th class="th" style="width:15%;">Site Name {{ $comingFrom }}</th>
                 @foreach ($report['period'] as $period)
                 <th class="th" style="width:7% !important;">{{$period}}</th>
                 @endforeach
@@ -73,7 +74,14 @@
         <tbody>
             @foreach ($report['sitewise'] as $key => $val)
             <tr style="">
-                <td class="td"> <input type="checkbox" id="{{ $val['site_id'] }}" name="testId[]" value="{{ $key }}" onclick="handleSiteName(this)"> {{ $key }} </td>
+                <td class="td"> 
+                    <?php if(isset($comingFrom) && trim($comingFrom)!=""){ ?>
+                    {{ $key }}
+                    <?php }else{ ?>
+                    <input type="checkbox" id="{{ $val['site_id'] }}" name="testId[]" value="{{ $key }}" onclick="handleSiteName(this)"> 
+                    {{ $key }} 
+                    <?php } ?>
+                </td>
                 @foreach ($report['period'] as $period)
                 <td style="text-align:center;padding:0 !important;">
                 <?php
@@ -101,5 +109,8 @@
 
 
     </table>
-    @endif
+    
 </div>
+@else
+<br/><h4 style="text-align:center;">No data available</h4><br/>
+@endif
