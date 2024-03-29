@@ -1,82 +1,81 @@
 <?php
 /*
-Author             : Prasath M
+
 Date               : 02 Jun 2021
 Description        : MonthlyReport Service Page
 Last Modified Date : 02 Jun 2021
-Last Modified Name : Prasath M
+
 */
 
 namespace App\Service;
+
 use App\Model\MonthlyReport\MonthlyReportTable;
 use App\Model\NotUploadMonthlyReport\NotUploadMonthlyReportTable;
 use DB;
 
 class MonthlyReportService
 {
-   
-    public function saveMonthlyReport($request)
-    {
-    	$data =  $request->all();
-    	DB::beginTransaction();
-    	try {
+
+	public function saveMonthlyReport($request)
+	{
+		$data =  $request->all();
+		DB::beginTransaction();
+		try {
 			$model = new MonthlyReportTable();
-        	$add = $model->saveMonthlyReport($request);
-			
-			if($add>0){
-                DB::commit();
+			$add = $model->saveMonthlyReport($request);
+
+			if ($add > 0) {
+				DB::commit();
 				return 'Monthly Report Added Successfully';
 			}
-	    }
-	    catch (Exception $exc) {
-	    	DB::rollBack();
-	    	$exc->getMessage();
-	    }
+		} catch (Exception $exc) {
+			DB::rollBack();
+			$exc->getMessage();
+		}
 	}
-	
+
 	//Get All MonthlyReport List
 	public function getAllMonthlyReport($params)
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchAllMonthlyReport($params);
+		return $model->fetchAllMonthlyReport($params);
 	}
 
 	//Get Selected Site Monthly Report List
 	public function getSelectedSiteMonthlyReport($params)
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchSelectedSiteMonthlyReport($params);
+		return $model->fetchSelectedSiteMonthlyReport($params);
 	}
 
 	//Get All MonthlyReport List
 	public function getAllActiveMonthlyReport()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchAllActiveMonthlyReport();
+		return $model->fetchAllActiveMonthlyReport();
 	}
 	//Get Particular MonthlyReport Details
 	public function getMonthlyReportById($id)
 	{
-		
+
 		$model = new MonthlyReportTable();
-        return $model->fetchMonthlyReportById($id);
+		return $model->fetchMonthlyReportById($id);
 	}
 	//Update Particular MonthlyReport Details
-	public function updateMonthlyReport($params,$id)
-    {
-    	DB::beginTransaction();
-    	try {
+	public function updateMonthlyReport($params, $id)
+	{
+		DB::beginTransaction();
+		try {
 			$model = new MonthlyReportTable();
-        	$add = $model->updateMonthlyReport($params,$id);
-			if($add>0){
-                DB::commit();
+			$add = $model->updateMonthlyReport($params, $id);
+			if ($add > 0) {
+				DB::commit();
 				return 'Monthly Report Updated Successfully';
 			}
-	    }
-	    catch (Exception $exc) {
-	    	DB::rollBack();
-	    	$exc->getMessage();
-	    }
+		} catch (Exception $exc) {
+			DB::rollBack();
+			$exc->getMessage();
+		}
 	}
 
 	public function getTrendMonthlyReport($params)
@@ -104,7 +103,7 @@ class MonthlyReportService
 	}
 
 	public function importMonthlyReportData($request)
-    {
+	{
 		$data =  $request->all();
 		$model = new MonthlyReportTable();
 		return $model->importMonthlyReportData($request);
@@ -147,79 +146,79 @@ class MonthlyReportService
 
 	//Get All TotalCountMonthlyReport List
 	public function getTotalCountOfMonthlyReport()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchTotalCountOfMonthlyReport();
+		return $model->fetchTotalCountOfMonthlyReport();
 	}
 
 	//Get All CountMonthlyReport List
 	public function getCountOfMonthlyReport()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchCountOfMonthlyReport();
+		return $model->fetchCountOfMonthlyReport();
 	}
 
 	//Get All SiteCountMonthlyReport List
 	public function getSiteCountOfMonthlyReport()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchSiteCountOfMonthlyReport();
+		return $model->fetchSiteCountOfMonthlyReport();
 	}
 
 	//Get All MonthlyData List
 	public function getMonthlyData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->fetchMonthlyData();
+		return $model->fetchMonthlyData();
 	}
 
 	//Inserting Track Data
 	public function insertData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->insertTrackTable();
+		return $model->insertTrackTable();
 	}
-	
+
 	//Inserting LogBook Track Data
 	public function insertLogBookData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->logBookReportTrackTable();
+		return $model->logBookReportTrackTable();
 	}
 
 	//Inserting TestKit Track Data
 	public function insertTestKitData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->testKitReportTrackTable();
+		return $model->testKitReportTrackTable();
 	}
 
 	//Inserting TestKit Summary Track Data
 	public function insertTestKitSummaryData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->testKitSummaryReportTrackTable();
+		return $model->testKitSummaryReportTrackTable();
 	}
 
 	//Inserting Invalid Results Track Data
 	public function invalidReportData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->invalidReportTrackTable();
+		return $model->invalidReportTrackTable();
 	}
 
 	//Inserting Trend Track Data
 	public function insertTrendData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->trendReportTrackTable();
+		return $model->trendReportTrackTable();
 	}
-	
+
 	//Inserting Custom Track Data
 	public function customReportData()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $model->customReportTrackTable();
+		return $model->customReportTrackTable();
 	}
 
 	public function getExistingReportingMonth($params)
@@ -233,27 +232,27 @@ class MonthlyReportService
 		$model = new MonthlyReportTable();
 		return $model->fetchIdExistingReportingMonth($params);
 	}
-	
+
 	//Get All Not Upload MonthlyReport List
-	public function getAllNotUploadMonthlyReport($params, $isExport=false)
-    {
-		
+	public function getAllNotUploadMonthlyReport($params, $isExport = false)
+	{
+
 		$model = new NotUploadMonthlyReportTable();
-        return $model->fetchAllNotUploadMonthlyReport($params, $isExport);
+		return $model->fetchAllNotUploadMonthlyReport($params, $isExport);
 	}
-	
+
 	//Get All Not Upload Test Sites
 	public function getAllNotUploadActiveTestSite()
-    {
+	{
 		$model = new NotUploadMonthlyReportTable();
-        return $model->fetchAllNotUploadActiveTestSite();
+		return $model->fetchAllNotUploadActiveTestSite();
 	}
 
 	//Get All Not Upload Provinces
 	public function getAllNotUploadActiveProvince()
-    {
+	{
 		$model = new NotUploadMonthlyReportTable();
-        return $model->fetchAllNotUploadActiveProvince();
+		return $model->fetchAllNotUploadActiveProvince();
 	}
 
 	public function getSiteWiseReport($params)
@@ -264,26 +263,26 @@ class MonthlyReportService
 
 	//Get Month Wise Report Count List
 	public function getMonthlyWiseReportCount()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $result = $model->fetchMonthlyWiseReportCount();
+		return $result = $model->fetchMonthlyWiseReportCount();
 	}
 
 	public function getSiteWiseMonthlyReportCount()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $result = $model->fetchSiteWiseMonthlyReportCount();
+		return $result = $model->fetchSiteWiseMonthlyReportCount();
 	}
 
 	public function getTestWiseMonthlyReportCount()
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $result = $model->fetchTestWiseMonthlyReportCount();
+		return $result = $model->fetchTestWiseMonthlyReportCount();
 	}
 
 	public function sendSiteWiseReminderEmail($params)
-    {
+	{
 		$model = new MonthlyReportTable();
-        return $result = $model->sendSiteWiseReminderEmail($params);
+		return $result = $model->sendSiteWiseReminderEmail($params);
 	}
 }

@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath M
+
     Date               : 31 May 2021
     Description        : Province view screen
     Last Modified Date : 31 May 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
@@ -28,10 +28,10 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add'] == "allow")) {?>
-                <a href="/implementingpartners/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-plus icon-left"></i> Add Implementing Partners</b></a>
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['add'] == "allow")) { ?>
+                    <a href="/implementingpartners/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="ft-plus icon-left"></i> Add Implementing Partners</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -39,7 +39,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-            {{ session('status') }}</b></div>
+                {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -76,61 +76,75 @@
                                                 <th>Implementing Partner Name</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) {?>
-                                                <th>Action</th>
-                                                 <?php } ?>
+                                                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) { ?>
+                                                    <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
-                                        </table>
-                                    </div>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
+    </section>
 </div>
-  <script>
+</div>
+<script>
     $(document).ready(function() {
         $.blockUI();
         getAllImplementingPartners();
         $.unblockUI();
     });
-    function getAllImplementingPartners()
-    {
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-      $('#implementingPartnersList').DataTable({
+
+    function getAllImplementingPartners() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#implementingPartnersList').DataTable({
             processing: true,
-            destroy : true,
+            destroy: true,
             serverSide: true,
             scrollX: false,
-            autoWidth:false,
+            autoWidth: false,
             ajax: {
-                url:'{{ url("getAllImplementingPartners") }}',
+                url: '{{ url("getAllImplementingPartners") }}',
                 type: 'POST',
-            },error:function(e){
+            },
+            error: function(e) {
                 console.log(e);
             },
             columns: [
 
-                    { data: 'implementing_partner_name', name: 'implementing_partner_name',className:'firstcaps' },
-                    { data: 'implementing_partner_status', name: 'implementing_partner_status',className:'firstcaps' },
-                    <?php $role = session('role');
-                    if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) {?>
-                    {data: 'action', name: 'action', orderable: false},
-                    <?php } ?>
-                ],
-            order: [[0, 'desc']]
+                {
+                    data: 'implementing_partner_name',
+                    name: 'implementing_partner_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'implementing_partner_status',
+                    name: 'implementing_partner_status',
+                    className: 'firstcaps'
+                },
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit']) && ($role['App\\Http\\Controllers\\ImplementingPartners\\ImplementingPartnersController']['edit'] == "allow")) { ?> {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
+                    },
+                <?php } ?>
+            ],
+            order: [
+                [0, 'desc']
+            ]
         });
     }
-  </script>
+</script>
 @endsection
