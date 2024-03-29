@@ -135,9 +135,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     <div class="card box-shadow-0">
                         <div class="card-content">
                             <div class="row">
-                            <div class="col-xl-12 col-lg-12">
+                                <div class="col-xl-12 col-lg-12">
                                     <div class="card-body">
-                                        
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                                 <div class="media">
@@ -180,6 +179,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                     </div>
                                 </div>
                                 
+
+
                             </div>
                         </div>
                     </div>
@@ -187,6 +188,24 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             </div>
         </section>
         <!--  Charts section end -->
+
+        <div class="row">
+            <div id="recent-transactions" class="col-12">
+                <div class="card">
+                    <div class="card-headers">
+                        <h4 class="card-title">Sitewise Report</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        
+                    </div>
+                    <div class="card-content">
+                        <div class="table-responsive" id="trendList">
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="row">
             <div id="recent-transactions" class="col-12">
                 <div class="card">
@@ -261,25 +280,6 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div id="testwiseMonthlyChart"></div>
             </div>
         </div> -->
-
-        <div class="row">
-            <div id="recent-transactions" class="col-12">
-                <div class="card">
-                    <div class="card-headers">
-                        <h4 class="card-title">Sitewise Report</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                        
-                    </div>
-                    <div class="card-content">
-                        <div class="table-responsive" id="trendList">
-                        
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
     </div>
   </div>
   
