@@ -1,9 +1,9 @@
-<!-- 
-    Author             : Prasath M
+<!--
+
     Date               : 27 May 2021
     Description        : Login screen
     Last Modified Date : 27 May 2021
-    Last Modified Name : Prasath M
+
 -->
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -11,6 +11,7 @@
 <?php
 
 use App\Service\CommonService;
+
 $commonservice = new CommonService();
 
 ?>
@@ -46,23 +47,26 @@ $commonservice = new CommonService();
     #addresstable input {
         width: 250px;
     }
+
     td {
         padding-left: 0.50rem !important;
         padding-right: 0.50rem !important;
     }
+
     table {
         border-radius: 6px !important;
-        -webkit-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
-        -moz-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
+        -webkit-box-shadow: 0px 0px 8px 3px rgba(161, 161, 168, 1);
+        -moz-box-shadow: 0px 0px 8px 3px rgba(161, 161, 168, 1);
         box-shadow: 0px 0px 5px -1px rgb(197, 197, 197);
     }
 
-    table>thead{
+    table>thead {
         background-color: #d4e4f09e !important;
         /* color: #9d9da0;
         text-transform: uppercase !important; */
     }
 </style>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -98,9 +102,10 @@ $commonservice = new CommonService();
     <!-- END: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/select2.min.css')}}">
 </head>
-<style>.mandatory{
-    color:red;
-}
+<style>
+    .mandatory {
+        color: red;
+    }
 </style>
 <!-- END: Head-->
 
@@ -124,13 +129,16 @@ $commonservice = new CommonService();
                                     <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Vendor profile </span>
                                     </h6>
                                 </div>
-                                <div id="show_alert"  class="mt-1" style="font"></div>
+                                <div id="show_alert" class="mt-1" style="font"></div>
                                 @if (session('status'))
-                                    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index" ><div class="text-center" style="font-size: 18px;"><b>
-                                        {{ session('status') }}</b></div>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <script>$('#show_alert_index').delay(3000).fadeOut();</script>
+                                <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
+                                    <div class="text-center" style="font-size: 18px;"><b>
+                                            {{ session('status') }}</b></div>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <script>
+                                    $('#show_alert_index').delay(3000).fadeOut();
+                                </script>
                                 @endif
                                 <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -138,13 +146,13 @@ $commonservice = new CommonService();
                                 <div class="card-content">
                                     <div class="card-body">
                                         <div class="otpContent" style="text-align: center;">
-                                            <form class="form form-horizontal" role="form" name="otpValidation" id="otpValidation" method="post"  autocomplete="off" onsubmit="validateOtp();return false;">
+                                            <form class="form form-horizontal" role="form" name="otpValidation" id="otpValidation" method="post" autocomplete="off" onsubmit="validateOtp();return false;">
                                                 <div class="col-xl-4 col-lg-12" style="margin-left: 380px;">
                                                     <fieldset>
                                                         <h5>OTP <span class="mandatory">*</span>
                                                         </h5>
                                                         <div class="form-group">
-                                                            <input type="text" min=0 maxlength="6" onkeypress="return isNumberKey(event);"  value="" id="otpLogin" class="form-control isRequired" autocomplete="off" placeholder="Enter the OTP" name="otpLogin" title="Please enter Valid OTP">
+                                                            <input type="text" min=0 maxlength="6" onkeypress="return isNumberKey(event);" value="" id="otpLogin" class="form-control isRequired" autocomplete="off" placeholder="Enter the OTP" name="otpLogin" title="Please enter Valid OTP">
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -153,13 +161,13 @@ $commonservice = new CommonService();
                                                         <button type="submit" onclick="validateOtp();return false;" class="btn btn-primary">
                                                             <i class="la la-check-square-o"></i> Validate OTP
                                                         </button>
-                                                    
+
                                                     </fieldset>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="mainContent" style="display:none;">
-                                                <form class="form form-horizontal" role="form" name="editvendor" id="editvendor" method="post" action="/vendors/edit/{{($id)}}" autocomplete="off" onsubmit="validateNow();return false;">
+                                            <form class="form form-horizontal" role="form" name="editvendor" id="editvendor" method="post" action="/vendors/edit/{{($id)}}" autocomplete="off" onsubmit="validateNow();return false;">
                                                 @csrf
                                                 @php
                                                 $fnct = "vendor_id##".($vendors[0]->vendor_id);
@@ -177,7 +185,7 @@ $commonservice = new CommonService();
                                                     <div class="col-xl-6 col-lg-12">
                                                         <fieldset>
                                                             <h5>Vendor Code
-                                                            <!-- <span class="mandatory">*</span> -->
+                                                                <!-- <span class="mandatory">*</span> -->
                                                             </h5>
                                                             <div class="form-group">
                                                                 <input type="text" id="vendorCode" value="{{ $vendors[0]->vendor_code }}" class="form-control" autocomplete="off" placeholder="Enter Vendor Code" name="vendorCode" title="Please enter Vendor Code">
@@ -188,7 +196,7 @@ $commonservice = new CommonService();
 
                                                 <div class="row">
 
-                                                
+
                                                     <div class="col-xl-6 col-lg-12">
                                                         <fieldset>
                                                             <h5>Address Line 1
@@ -208,7 +216,7 @@ $commonservice = new CommonService();
                                                         </fieldset>
                                                     </div>
                                                 </div>
-                                            
+
                                                 <div class="row">
                                                     <div class="col-xl-6 col-lg-12">
                                                         <fieldset>
@@ -249,7 +257,7 @@ $commonservice = new CommonService();
                                                                 <option value="{{ $countrylist->country_id }}" {{ $vendors[0]->country == $countrylist->country_id ?  'selected':''}}>{{ $countrylist->country_name }}</option>
                                                                 @endforeach
                                                             </select>
-                                                            </fieldset>
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -288,7 +296,7 @@ $commonservice = new CommonService();
                                                             </h5>
                                                             <div class="form-group">
                                                                 <input maxlength="10" type="tel" id="vendorAltPhone" class="form-control isMobNo" value="{{ $vendors[0]->pincode }}" onkeypress="return isNumberKey(event);" autocomplete="off" placeholder="Enter Vendor Alternate Phone Number" name="vendorAltPhone" title="Please enter Alternate Phone Number">
-                                                            
+
                                                             </div>
                                                         </fieldset>
                                                     </div>
@@ -318,124 +326,124 @@ $commonservice = new CommonService();
                                                         </fieldset>
                                                     </div>
                                                 </div>
-                                            
+
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-bordered table-condensed table-responsive-lg" style="width:100%">
                                                         <thead>
                                                             <tr>
-                                                            <th>Bank Name<span class="mandatory">*</span></th>
-                                                            <th>Account No <span class="mandatory">*</span></th>
-                                                            <th>Account <br/>Holder Name <span class="mandatory">*</span></th>
-                                                            <th>Branch <br/>Name<span class="mandatory">*</span></th>
-                                                            <th>Address <span class="mandatory">*</span>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</th>
-                                                            <th>City<span class="mandatory">*</span></th>
-                                                            <th>Country<span class="mandatory">*</span></th>
-                                                            <th>SWIFT Code<span class="mandatory">*</span></th>
-                                                            <th>IBAN<span class="mandatory">*</span></th>
-                                                            <th>Intermediary<br>Bank<span class="mandatory">*</span></th>
-                                                            <th>Status</th>
-                                                            <th class="text-center">Action</th>
+                                                                <th>Bank Name<span class="mandatory">*</span></th>
+                                                                <th>Account No <span class="mandatory">*</span></th>
+                                                                <th>Account <br />Holder Name <span class="mandatory">*</span></th>
+                                                                <th>Branch <br />Name<span class="mandatory">*</span></th>
+                                                                <th>Address <span class="mandatory">*</span>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</th>
+                                                                <th>City<span class="mandatory">*</span></th>
+                                                                <th>Country<span class="mandatory">*</span></th>
+                                                                <th>SWIFT Code<span class="mandatory">*</span></th>
+                                                                <th>IBAN<span class="mandatory">*</span></th>
+                                                                <th>Intermediary<br>Bank<span class="mandatory">*</span></th>
+                                                                <th>Status</th>
+                                                                <th class="text-center">Action</th>
                                                             </tr>
                                                         </thead>
-                                                        <?php $z=0; ?>
+                                                        <?php $z = 0; ?>
                                                         <tbody id="bankDetails">
-                                                        @if(isset($vendors[0]->bank_id) && $vendors[0]->bank_id!='')
-                                                        @foreach($vendors as $vend)
+                                                            @if(isset($vendors[0]->bank_id) && $vendors[0]->bank_id!='')
+                                                            @foreach($vendors as $vend)
                                                             <tr>
-                                                                <input type="hidden" name="bankId[]" id="bankId{{$z}}" value="{{ $vend->bank_id }}"/>
-                                                            <td>
-                                                                <input type="text" id="bankName{{$z}}" value="{{ $vend->bank_name }}" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="accNo{{$z}}" value="{{ $vend->bank_account_no }}" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="accName{{$z}}" value="{{ $vend->account_holder_name }}" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" value="{{ $vend->bank_branch }}" class="form-control qty isRequired" id="branch{{$z}}" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>
-                                                            </td>
-                                                            <td>
-                                                                <textarea id="address{{$z}}" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address">{{ $vend->bank_address }}</textarea>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="city{{$z}}" value="{{ $vend->bank_city }}" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="country{{$z}}" value="{{ $vend->bank_country }}" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" value="{{ $vend->swift_code }}" class="form-control isRequired" id="swiftCode{{$z}}" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" value="{{ $vend->iban }}" id="iban{{$z}}" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" value="{{ $vend->intermediary_bank }}" id="intermediaryBank{{$z}}" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status" >
-                                                                    <option value="1" {{ $vend->bank_status == 1 ?  'selected':''}}>Active</option>
-                                                                    <option value="0" {{ $vend->bank_status == 0 ?  'selected':''}}>Inactive</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                {{-- <div class="col-md-12"> --}}
+                                                                <input type="hidden" name="bankId[]" id="bankId{{$z}}" value="{{ $vend->bank_id }}" />
+                                                                <td>
+                                                                    <input type="text" id="bankName{{$z}}" value="{{ $vend->bank_name }}" name="bankName[]" class="isRequired form-control" title="Please enter bank name" placeholder="Bank Name">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="accNo{{$z}}" value="{{ $vend->bank_account_no }}" name="accNo[]" class="isRequired form-control datas" title="Please enter account no" placeholder="Account No">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="accName{{$z}}" value="{{ $vend->account_holder_name }}" name="accName[]" class="isRequired form-control" title="Please enter account holder name" placeholder="Account Holder Name">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" value="{{ $vend->bank_branch }}" class="form-control qty isRequired" id="branch{{$z}}" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value="" />
+                                                                </td>
+                                                                <td>
+                                                                    <textarea id="address{{$z}}" name="address[]" class="isRequired form-control" title="Please enter address" placeholder="address">{{ $vend->bank_address }}</textarea>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="city{{$z}}" value="{{ $vend->bank_city }}" name="city[]" class="isRequired form-control" title="Please enter city" placeholder="city">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="country{{$z}}" value="{{ $vend->bank_country }}" name="country[]" class="isRequired form-control" title="Please enter country" placeholder="country">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" value="{{ $vend->swift_code }}" class="form-control isRequired" id="swiftCode{{$z}}" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value="" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" value="{{ $vend->iban }}" id="iban{{$z}}" name="iban[]" class="isRequired form-control" title="Please enter IBAN" placeholder="IBAN">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" value="{{ $vend->intermediary_bank }}" id="intermediaryBank{{$z}}" name="intermediaryBank[]" class="isRequired form-control" title="Please enter intermediary bank" placeholder="Intermediary Bank">
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status">
+                                                                        <option value="1" {{ $vend->bank_status == 1 ?  'selected':''}}>Active</option>
+                                                                        <option value="0" {{ $vend->bank_status == 0 ?  'selected':''}}>Inactive</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    {{-- <div class="col-md-12"> --}}
                                                                     <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
                                                                     &nbsp;&nbsp;
                                                                     <a class="btn btn-sm btn-warning" href="javascript:void(0);" id="{{$vend->bank_id}}" onclick="removeRow(this.parentNode);deleteBankDet(this.id,{{$z}})"><i class="ft-minus"></i></a>
-                                                                {{-- </div> --}}
-                                                            </td>
+                                                                    {{-- </div> --}}
+                                                                </td>
                                                             </tr>
-                                                        <?php $z++; ?>
-                                                        @endforeach
-                                                        @else
-                                                        <tr>
-                                                            <td>
-                                                                <input type="text" id="bankName{{$z}}" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="accNo{{$z}}" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="accName{{$z}}" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control qty isRequired" id="branch{{$z}}" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>
-                                                            </td>
-                                                            <td>
-                                                                <textarea id="address{{$z}}" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="city{{$z}}" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="country{{$z}}" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" class="form-control isRequired" id="swiftCode{{$z}}" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="iban{{$z}}" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" id="intermediaryBank{{$z}}" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status" >
-                                                                    <option value="1">Active</option>
-                                                                    <option value="0" selected>Inactive</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                {{-- <div class="col-md-12"> --}}
+                                                            <?php $z++; ?>
+                                                            @endforeach
+                                                            @else
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" id="bankName{{$z}}" name="bankName[]" class="isRequired form-control" title="Please enter bank name" placeholder="Bank Name">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="accNo{{$z}}" name="accNo[]" class="isRequired form-control datas" title="Please enter account no" placeholder="Account No">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="accName{{$z}}" name="accName[]" class="isRequired form-control" title="Please enter account holder name" placeholder="Account Holder Name">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control qty isRequired" id="branch{{$z}}" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value="" />
+                                                                </td>
+                                                                <td>
+                                                                    <textarea id="address{{$z}}" name="address[]" class="isRequired form-control" title="Please enter address" placeholder="address"></textarea>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="city{{$z}}" name="city[]" class="isRequired form-control" title="Please enter city" placeholder="city">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="country{{$z}}" name="country[]" class="isRequired form-control" title="Please enter country" placeholder="country">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" class="form-control isRequired" id="swiftCode{{$z}}" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value="" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="iban{{$z}}" name="iban[]" class="isRequired form-control" title="Please enter IBAN" placeholder="IBAN">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" id="intermediaryBank{{$z}}" name="intermediaryBank[]" class="isRequired form-control" title="Please enter intermediary bank" placeholder="Intermediary Bank">
+                                                                </td>
+                                                                <td>
+                                                                    <select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus{{$z}}" name="bankStatus[]" title="Please select status">
+                                                                        <option value="1">Active</option>
+                                                                        <option value="0" selected>Inactive</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    {{-- <div class="col-md-12"> --}}
                                                                     <a class="btn btn-sm btn-success" href="javascript:void(0);" onclick="insRow();"><i class="ft-plus"></i></a>
                                                                     &nbsp;&nbsp;
                                                                     <a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode.parentNode);"><i class="ft-minus"></i></a>
-                                                                {{-- </div> --}}
-                                                            </td>
-                                                        </tr>
-                                                        @endif
+                                                                    {{-- </div> --}}
+                                                                </td>
+                                                            </tr>
+                                                            @endif
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -452,7 +460,7 @@ $commonservice = new CommonService();
                                         </div>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -647,7 +655,7 @@ $commonservice = new CommonService();
     }
 
     function validateNow() {
-    
+
         flag = deforayValidator.init({
             formId: 'editvendor'
         });
@@ -665,35 +673,33 @@ $commonservice = new CommonService();
     }
 
     function validateOtp() {
-    
-    flag = deforayValidator.init({
-        formId: 'otpValidation'
-    });
 
-    if (flag == true) {
-        var otp = '<?php echo session("login_otp"); ?>';
-        console.log(otp);
-        if(otp == $("#otpLogin").val())
-        {
-            console.log("verified");
-            $(".otpContent").css("display", "none");
-            $(".mainContent").css("display", "block");
-            flag='<div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-2" role="alert" ><div class="text-center" style="font-size: 18px;"><b>Verified OTP</b></div>';
-            flag+='<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
+        flag = deforayValidator.init({
+            formId: 'otpValidation'
+        });
+
+        if (flag == true) {
+            var otp = '<?php echo session("login_otp"); ?>';
+            console.log(otp);
+            if (otp == $("#otpLogin").val()) {
+                console.log("verified");
+                $(".otpContent").css("display", "none");
+                $(".mainContent").css("display", "block");
+                flag = '<div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-2" role="alert" ><div class="text-center" style="font-size: 18px;"><b>Verified OTP</b></div>';
+                flag += '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
+            } else {
+                console.log("not verified");
+                flag = '<div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" role="alert" ><div class="text-center" style="font-size: 18px;"><b>Please enter valid OTP</b></div>';
+                flag += '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
+            }
+            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $('#show_alert').css("display", "block");
+        } else {
+            // Swal.fire('Any fool can use a computer');
+            $('#show_alert').html(flag).delay(3000).fadeOut();
+            $(".infocus").focus();
         }
-        else{
-            console.log("not verified");
-            flag='<div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-2" role="alert" ><div class="text-center" style="font-size: 18px;"><b>Please enter valid OTP</b></div>';
-            flag+='<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button></div>';
-        }
-        $('#show_alert').html(flag).delay(3000).fadeOut();
-        $('#show_alert').css("display", "block");
-    } else {
-        // Swal.fire('Any fool can use a computer');
-        $('#show_alert').html(flag).delay(3000).fadeOut();
-        $(".infocus").focus();
     }
-}
 
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode
@@ -702,7 +708,12 @@ $commonservice = new CommonService();
         return true;
     }
 
-    rowCount = {{$z}};
+    rowCount = {
+        {
+            $z
+        }
+    };
+
     function insRow() {
         rowCount++;
         rl = document.getElementById("bankDetails").rows.length;
@@ -711,7 +722,7 @@ $commonservice = new CommonService();
         a.setAttribute("class", "data");
         var b = a.insertCell(0);
         var c = a.insertCell(1);
-		var d = a.insertCell(2);
+        var d = a.insertCell(2);
         var e = a.insertCell(3);
         var m = a.insertCell(4);
         var f = a.insertCell(5);
@@ -723,28 +734,28 @@ $commonservice = new CommonService();
         var l = a.insertCell(11);
 
         rl = document.getElementById("bankDetails").rows.length - 1;
-        b.innerHTML = '<input type="text" id="bankName'+rowCount+'" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">';
-        c.innerHTML = '<input type="text" id="accNo'+rowCount+'" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">';
-        d.innerHTML = '<input type="text" id="accName'+rowCount+'" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">';
-        e.innerHTML = '<input type="text" class="form-control qty isRequired" id="branch'+rowCount+'" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>';
-        f.innerHTML = '<input type="text" id="city'+rowCount+'" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">'
-        m.innerHTML = '<textarea id="address'+rowCount+'" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>'
-        g.innerHTML = '<input type="text" id="country'+rowCount+'" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">'
-		h.innerHTML = '<input type="text" class="form-control isRequired" id="swiftCode'+rowCount+'" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>';
-        i.innerHTML = '<input type="text" id="iban'+rowCount+'" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">'
-        j.innerHTML = '<input type="text" id="intermediaryBank'+rowCount+'" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">';
-        k.innerHTML = '<select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus'+rowCount+'" name="bankStatus[]" title="Please select status">\
+        b.innerHTML = '<input type="text" id="bankName' + rowCount + '" name="bankName[]" class="isRequired form-control"  title="Please enter bank name" placeholder="Bank Name">';
+        c.innerHTML = '<input type="text" id="accNo' + rowCount + '" name="accNo[]" class="isRequired form-control datas"  title="Please enter account no" placeholder="Account No">';
+        d.innerHTML = '<input type="text" id="accName' + rowCount + '" name="accName[]" class="isRequired form-control"  title="Please enter account holder name" placeholder="Account Holder Name">';
+        e.innerHTML = '<input type="text" class="form-control qty isRequired" id="branch' + rowCount + '" name="branch[]" placeholder="Branch Name" title="Please enter branch name" value=""/>';
+        f.innerHTML = '<input type="text" id="city' + rowCount + '" name="city[]" class="isRequired form-control"  title="Please enter city" placeholder="city">'
+        m.innerHTML = '<textarea id="address' + rowCount + '" name="address[]" class="isRequired form-control"  title="Please enter address" placeholder="address"></textarea>'
+        g.innerHTML = '<input type="text" id="country' + rowCount + '" name="country[]" class="isRequired form-control"  title="Please enter country" placeholder="country">'
+        h.innerHTML = '<input type="text" class="form-control isRequired" id="swiftCode' + rowCount + '" name="swiftCode[]" placeholder="SWIFT Code" title="Please enter SWIFT code" value=""/>';
+        i.innerHTML = '<input type="text" id="iban' + rowCount + '" name="iban[]" class="isRequired form-control"  title="Please enter IBAN" placeholder="IBAN">'
+        j.innerHTML = '<input type="text" id="intermediaryBank' + rowCount + '" name="intermediaryBank[]" class="isRequired form-control"  title="Please enter intermediary bank" placeholder="Intermediary Bank">';
+        k.innerHTML = '<select class="form-control col-md-11 isRequired bankStatus" autocomplete="off" style="width:100%;" id="bankStatus' + rowCount + '" name="bankStatus[]" title="Please select status">\
                             <option value="1">Active</option>\
                             <option value="0" selected>Inactive</option>\
                         </select>';
-        l.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void('+rowCount+');" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
+        l.innerHTML = '<a class="btn btn-sm btn-success" href="javascript:void(' + rowCount + ');" onclick="insRow();"><i class="ft-plus"></i></a>&nbsp;&nbsp;<a class="btn btn-sm btn-warning" href="javascript:void(0);" onclick="removeRow(this.parentNode);"><i class="ft-minus"></i></a>';
         $(a).fadeIn(800);
     }
 
     function removeRow(el) {
-        $(el).parent().fadeOut("slow", function () {
+        $(el).parent().fadeOut("slow", function() {
             $(el).parent().remove();
-            rowCount = rowCount-1;
+            rowCount = rowCount - 1;
             rl = document.getElementById("bankDetails").rows.length;
             if (rl == 0) {
                 insRow();
@@ -753,9 +764,10 @@ $commonservice = new CommonService();
     }
 
     deleteBankDetail = [];
-    function deleteBankDet(bankId,rowId) {
+
+    function deleteBankDet(bankId, rowId) {
         deleteBankDetail.push(bankId);
-        document.getElementById("deleteBankDetail").value=deleteBankDetail;
+        document.getElementById("deleteBankDetail").value = deleteBankDetail;
         console.log(document.getElementById("deleteBankDetail").value)
     }
 </script>

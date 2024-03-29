@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath M
+
     Date               : 31 May 2021
     Description        : District view screen
     Last Modified Date : 31 May 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
@@ -28,10 +28,10 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add'] == "allow")) {?>
-                <a href="/subdistrict/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-plus icon-left"></i> Add Sub District</b></a>
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['add'] == "allow")) { ?>
+                    <a href="/subdistrict/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="ft-plus icon-left"></i> Add Sub District</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -39,7 +39,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-            {{ session('status') }}</b></div>
+                {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -80,64 +80,93 @@
                                                 <th>External ID</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
-                                                <th>Action</th>
+                                                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) { ?>
+                                                    <th>Action</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
-                                        </table>
-                                    </div>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
+    </section>
 </div>
-  <script>
+</div>
+<script>
     $(document).ready(function() {
         $.blockUI();
         getAllDistrict();
         $.unblockUI();
     });
-    function getAllDistrict()
-    {
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-      $('#subDistrictList').DataTable({
+
+    function getAllDistrict() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#subDistrictList').DataTable({
             processing: true,
-            destroy : true,
+            destroy: true,
             serverSide: true,
             scrollX: false,
-            autoWidth:false,
+            autoWidth: false,
             ajax: {
-                url:'{{ url("getAllSubDistrict") }}',
+                url: '{{ url("getAllSubDistrict") }}',
                 type: 'POST',
             },
 
             columns: [
 
-                    { data: 'sub_district_name', name: 'sub_district_name',className:'firstcaps' },
-                    { data: 'district_name', name: 'district_name',className:'firstcaps' },
-                    { data: 'province_name', name: 'province_name',className:'firstcaps' },
-                    { data: 'province_id', name: 'province_id',className:'firstcaps' },
-                    { data: 'sub_district_external_id', name: 'sub_district_external_id',className:'firstcaps' },
-                    { data: 'sub_district_status', name: 'sub_district_status',className:'firstcaps' },
-                    <?php $role = session('role');
-                    if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) {?>
-                    {data: 'action', name: 'action', orderable: false},
-                    <?php } ?>
-                ],
-            order: [[0, 'desc']]
+                {
+                    data: 'sub_district_name',
+                    name: 'sub_district_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'district_name',
+                    name: 'district_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'province_name',
+                    name: 'province_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'province_id',
+                    name: 'province_id',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'sub_district_external_id',
+                    name: 'sub_district_external_id',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'sub_district_status',
+                    name: 'sub_district_status',
+                    className: 'firstcaps'
+                },
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit']) && ($role['App\\Http\\Controllers\\SubDistrict\\SubDistrictController']['edit'] == "allow")) { ?> {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
+                    },
+                <?php } ?>
+            ],
+            order: [
+                [0, 'desc']
+            ]
         });
     }
-  </script>
+</script>
 @endsection

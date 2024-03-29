@@ -1,15 +1,15 @@
-<!-- 
-    Author             : Prasath M
+<!--
+
     Date               : 03 Jun 2021
     Description        : Global Config edit screen
     Last Modified Date : 03 Jun 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
 @section('content')
 <?php
-$result['testing_algorithm']=explode(',',$result['testing_algorithm']);
+$result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
 ?>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -262,6 +262,7 @@ $result['testing_algorithm']=explode(',',$result['testing_algorithm']);
     $(document).ready(function() {
         checkDisableInactiveUser();
     });
+
     function validateNow() {
         flag = deforayValidator.init({
             formId: 'editGlobalConfig'
@@ -283,14 +284,14 @@ $result['testing_algorithm']=explode(',',$result['testing_algorithm']);
         $('#removed').val(filePath);
     }
 
-    function checkDisableInactiveUser(){
-        inactiveUser=$("#disable_inactive_user").val();
-        if(inactiveUser=='yes'){
+    function checkDisableInactiveUser() {
+        inactiveUser = $("#disable_inactive_user").val();
+        if (inactiveUser == 'yes') {
             $("#noOfMonthDiv").show();
-        }else{
+        } else {
             $("#noOfMonthDiv").hide();
             $("#disable_user_no_of_months").val('');
-        }   
+        }
     }
 </script>
 @endsection
