@@ -19,14 +19,19 @@ class LoginController extends Controller
 {
     //View Login main screen
     public function index()
-    {
-        $addUser = new UserService();
-        $activeUsers = $addUser->getAllActiveUser();
-        $activeUsersCount = $activeUsers->count();
-        if ($activeUsersCount > 0) {
-            return view('login.index');
-        } else {
-            return view('login.register');
+    {   
+        if(session('login')!=true)
+        {
+            $addUser = new UserService();
+            $activeUsers = $addUser->getAllActiveUser();
+            $activeUsersCount = $activeUsers->count();
+            if ($activeUsersCount > 0) {
+                return view('login.index');
+            } else {
+                return view('login.register');
+            }
+        }else{
+            return Redirect::to('/dashboard');
         }
     }
 
