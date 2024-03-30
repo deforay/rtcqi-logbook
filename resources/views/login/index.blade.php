@@ -67,8 +67,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
   html body.bg-full-screen-image {
     /*background: #63bef9  !important;*/
     background:url({{ asset('assets/images/1.jpg')
-  }
-  }) !important;
+  }}) !important;
   background-size: cover !important;
   }
 

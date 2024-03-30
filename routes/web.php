@@ -14,14 +14,18 @@ use App\Model\User\UserTable;
 */
 
 Route::get('/', function () {
-
-    $model = new UserTable();
-    $activeUsers = $model->fetchAllActiveUser();
-    $activeUsersCount=$activeUsers->count();
-    if($activeUsersCount > 0){
-        return view('login.index');
+    if(session('login')!=true)
+    {
+        $model = new UserTable();
+        $activeUsers = $model->fetchAllActiveUser();
+        $activeUsersCount=$activeUsers->count();
+        if($activeUsersCount > 0){
+            return view('login.index');
+        }else{
+            return view('login.register');
+        }
     }else{
-        return view('login.register');
+        return Redirect::to('/dashboard');
     }
 
     
