@@ -1,5 +1,5 @@
 <!--
-    Author             : Prasath M
+
     Date               : 27 May 2021
     Description        : Dashboard screen
     Last Modified Date : 27 May 2021
@@ -132,10 +132,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
                         'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
                         'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'Last 6 Months': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'Last 9 Months': [moment().subtract(9, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'Last 12 Months': [moment().subtract(12, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    'Last 18 Months': [moment().subtract(18, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Last 6 Months': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Last 9 Months': [moment().subtract(9, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Last 12 Months': [moment().subtract(12, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Last 18 Months': [moment().subtract(18, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                     }
                 },
                 function(start, end) {
@@ -171,21 +171,26 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                     var myIcon = L.icon({
                         iconUrl: "{{ asset('assets/images/dark-green.png')}}"
                     });
-                    var map = L.map('map',{
+                    var map = L.map('map', {
                         zoomControl: false,
-            scrollWheelZoom: true,
-            inertia:false,
-            zoomAnimation:false,
-            minZoom:3,
-            maxBounds:[[-90.0,-180.0],[90.0, 180.0]]
-          }).setView([lat, log], 4);
-          new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
-map._onResize();
+                        scrollWheelZoom: true,
+                        inertia: false,
+                        zoomAnimation: false,
+                        minZoom: 3,
+                        maxBounds: [
+                            [-90.0, -180.0],
+                            [90.0, 180.0]
+                        ]
+                    }).setView([lat, log], 4);
+                    new L.Control.Zoom({
+                        position: 'bottomleft'
+                    }).addTo(map);
+                    map._onResize();
 
-                        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>',
-                            maxZoom: 17,
-                        }).addTo(map);
+                    L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+                        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>',
+                        maxZoom: 17,
+                    }).addTo(map);
 
                     let coordinates = [];
 

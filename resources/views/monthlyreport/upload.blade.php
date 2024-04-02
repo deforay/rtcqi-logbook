@@ -1,9 +1,9 @@
-<!-- 
-    Author             : Prasath M
+<!--
+
     Date               : 16 Jun 2021
     Description        : import Monthly report Form
     Last Modified Date : 16 Jun 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
@@ -125,7 +125,7 @@
         }
     }
 
-    function insertData(){
+    function insertData() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -134,8 +134,7 @@
         $.ajax({
             url: "{{ url('/insertTrackTable') }}",
             method: 'get',
-            success: function(result) {
-            }
+            success: function(result) {}
         });
     }
 </script>

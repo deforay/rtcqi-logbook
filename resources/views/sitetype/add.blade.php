@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath M
+
     Date               : 31 May 2021
     Description        : Site Type add screen
     Last Modified Date : 31 May 2021
-    Last Modified Name : Prasath M
+
 -->
 @extends('layouts.main')
 

@@ -1,5 +1,5 @@
 <!--
-    Author             : Prasath M
+
     Date               : 10 June 2021
     Description        : Logbook report
     Last Modified Date : 17 June 2021
@@ -75,18 +75,18 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                     <form class="form form-horizontal" role="form" name="logBookReportFilter" id="logBookReportFilter" method="post" action="/logbookexcelexport">
                                         @csrf
                                         <div class="row">
-                                        <div class="col-xl-4 col-lg-12">
+                                            <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5>Date Range <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                        <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>Province Name
+                                                    <h5>Province Name
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
@@ -111,7 +111,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                 </fieldset>
                                             </div>
                                         </div>
-                                        <div class ="row">
+                                        <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
                                                     <h5>Sub District Name
@@ -158,11 +158,12 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                         <button type="submit" onclick="getLogbookReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
                                                         <a class="btn btn-danger btn-md" href="/report/logbook"><span>Reset</span></a>&nbsp;&nbsp;
                                                         <?php $role = session('role');
-                                                        if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['logbookexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['logbookexport'] == "allow")) {?>
-                                                        <button type="submit" class="btn btn-primary">Export</button>
-                                                       <?php } ?>
+                                                        if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['logbookexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['logbookexport'] == "allow")) { ?>
+                                                            <button type="submit" class="btn btn-primary">Export</button>
+                                                        <?php } ?>
                                                     </div>
-                                                </div></div>
+                                                </div>
+                                            </div>
                                     </form>
                                 </div>
                             </div>

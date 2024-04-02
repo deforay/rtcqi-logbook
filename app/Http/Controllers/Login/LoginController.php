@@ -1,6 +1,6 @@
 <?php
 /*
-Author : Prasath M
+
 Date : 27 May 2021
 Desc : Controller for Login screen
 */
@@ -19,18 +19,23 @@ class LoginController extends Controller
 {
     //View Login main screen
     public function index()
-    {
-        $addUser = new UserService();
-        $activeUsers = $addUser->getAllActiveUser();
-        $activeUsersCount=$activeUsers->count();
-        if($activeUsersCount > 0){
-            return view('login.index');
-            }else{
+    {   
+        if(session('login')!=true)
+        {
+            $addUser = new UserService();
+            $activeUsers = $addUser->getAllActiveUser();
+            $activeUsersCount = $activeUsers->count();
+            if ($activeUsersCount > 0) {
+                return view('login.index');
+            } else {
                 return view('login.register');
             }
+        }else{
+            return Redirect::to('/dashboard');
+        }
     }
-         
-    
+
+
     //validate login
     public function validateEmployee(Request $request)
     {
@@ -53,7 +58,7 @@ class LoginController extends Controller
     {
         $commonservice = new CommonService();
         //$data=new Array();
-        $data['username']=$name;
+        $data['username'] = $name;
         $userservice = new UserService();
         if ($request->isMethod('post') && session('login') == true) {
             $commonservice->eventLog('log-out', base64_decode($name) . ' logged out', 'user', $id = null);

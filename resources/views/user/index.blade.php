@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath M
+
     Date               : 27 May 2021
     Description        : User view screen
     Last Modified Date : 27 May 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
@@ -28,10 +28,10 @@
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\User\\UserController']['add']) && ($role['App\\Http\\Controllers\\User\\UserController']['add'] == "allow")) {?>
-                <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\User\\UserController']['add']) && ($role['App\\Http\\Controllers\\User\\UserController']['add'] == "allow")) { ?>
+                    <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -39,7 +39,7 @@
     @if (session('status'))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
-            {{ session('status') }}</b></div>
+                {{ session('status') }}</b></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <script>
@@ -79,118 +79,141 @@
                                                 <th>Email</th>
                                                 <th>Status</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) {?>
-                                                <th>Action</th>
+                                                if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) { ?>
+                                                    <th>Action</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                         </tbody>
-                                        </table>
-                                    </div>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
     </div>
+    </section>
 </div>
-  <script>
+</div>
+<script>
     $(document).ready(function() {
         $.blockUI();
         getAllUser();
         $.unblockUI();
     });
-    function getAllUser()
-    {
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
-      $('#userList').DataTable({
+
+    function getAllUser() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#userList').DataTable({
             processing: true,
-            destroy : true,
+            destroy: true,
             serverSide: true,
             scrollX: false,
-            autoWidth:false,
+            autoWidth: false,
             ajax: {
-                url:'{{ url("getAllUser") }}',
+                url: '{{ url("getAllUser") }}',
                 type: 'POST',
             },
             columns: [
 
-                    { data: 'first_name', name: 'first_name',className:'firstcaps' },
-                    { data: 'last_name', name: 'last_name',className:'firstcaps' },
-                    { data: 'phone', name: 'phone'},
-                    { data: 'email', name: 'email'},
-                    { data: 'user_status', name: 'user_status',className:'firstcaps' },
-                    <?php $role = session('role');
-                    if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) {?>
-                    {data: 'action', name: 'action', orderable: false},
-                <?php } ?>
-                ],
-                columnDefs: [
                 {
-                        "targets": 2,
-                        "className": "text-right",
+                    data: 'first_name',
+                    name: 'first_name',
+                    className: 'firstcaps'
                 },
-                ], 
-            order: [[0, 'desc']]
+                {
+                    data: 'last_name',
+                    name: 'last_name',
+                    className: 'firstcaps'
+                },
+                {
+                    data: 'phone',
+                    name: 'phone'
+                },
+                {
+                    data: 'email',
+                    name: 'email'
+                },
+                {
+                    data: 'user_status',
+                    name: 'user_status',
+                    className: 'firstcaps'
+                },
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) { ?> {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
+                    },
+                <?php } ?>
+            ],
+            columnDefs: [{
+                "targets": 2,
+                "className": "text-right",
+            }, ],
+            order: [
+                [0, 'desc']
+            ]
         });
     }
 
-    function changeStatus(tableName, fieldIdName,fieldIdValue,fieldName, fieldVal,functionName)
-    {
+    function changeStatus(tableName, fieldIdName, fieldIdValue, fieldName, fieldVal, functionName) {
 
-        if(fieldIdValue!='')
-        {
+        if (fieldIdValue != '') {
 
-          swal("Are you sure you want to make "+fieldVal+" this?", {
-          buttons: {
-            cancel: {
-                text: "No",
-                value: null,
-                visible: true,
-                className: "btn-warning",
-                closeModal: true,
-            },
-            confirm: {
-                text: "Yes",
-                value: true,
-                visible: true,
-                className: "",
-                closeModal: true
-            }
-          }
-        })
-        .then(isConfirm => {
-          if (isConfirm) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-                $.ajax({
-                      url: "{{ url('/changeStatus') }}",
-                      method: 'post',
-                      data: {
-                          tableName: tableName, fieldIdName: fieldIdName, fieldIdValue: fieldIdValue, fieldName:fieldName, fieldValue:fieldVal
-                      },
-                      success: function(result){
-                        // getAllUser();
-                        $("#showAlertIndex").text('Status has been changed to '+fieldVal);
-                        $('#showAlertdiv').show();
-                        $('#showAlertdiv').delay(3000).fadeOut();
-                        $('#userList').DataTable().ajax.reload();
-                      }
-                  });
-              }
-          });
+            swal("Are you sure you want to make " + fieldVal + " this?", {
+                    buttons: {
+                        cancel: {
+                            text: "No",
+                            value: null,
+                            visible: true,
+                            className: "btn-warning",
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: "Yes",
+                            value: true,
+                            visible: true,
+                            className: "",
+                            closeModal: true
+                        }
+                    }
+                })
+                .then(isConfirm => {
+                    if (isConfirm) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "{{ url('/changeStatus') }}",
+                            method: 'post',
+                            data: {
+                                tableName: tableName,
+                                fieldIdName: fieldIdName,
+                                fieldIdValue: fieldIdValue,
+                                fieldName: fieldName,
+                                fieldValue: fieldVal
+                            },
+                            success: function(result) {
+                                // getAllUser();
+                                $("#showAlertIndex").text('Status has been changed to ' + fieldVal);
+                                $('#showAlertdiv').show();
+                                $('#showAlertdiv').delay(3000).fadeOut();
+                                $('#userList').DataTable().ajax.reload();
+                            }
+                        });
+                    }
+                });
         }
     }
-  </script>
+</script>
 @endsection

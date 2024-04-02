@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath M
+
     Date               : 28 May 2021
     Description        : Test site view screen
     Last Modified Date : 28 May 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
@@ -124,24 +124,47 @@
             },
             columns: [
 
-                    { data: 'site_name', name: 'site_name',className:'firstcaps' },
-                    { data: 'site_id', name: 'site_id'},
-                    { data: 'province_name', name: 'province_name'},
-                    { data: 'district_name', name: 'district_name' },
-                    { data: 'sub_district_name', name: 'sub_district_name' },
-                    { data: 'test_site_status', name: 'test_site_status',className:'firstcaps' },
-                    <?php $role = session('role');
-                     if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) {?>
-                    {data: 'action', name: 'action', orderable: false},
-                <?php } ?>
-                ],
-                columnDefs: [
                 {
-                        "targets": 2,
-                        "className": "text-right",
+                    data: 'site_name',
+                    name: 'site_name',
+                    className: 'firstcaps'
                 },
-                ], 
-            order: [[0, 'desc']]
+                {
+                    data: 'site_id',
+                    name: 'site_id'
+                },
+                {
+                    data: 'province_name',
+                    name: 'province_name'
+                },
+                {
+                    data: 'district_name',
+                    name: 'district_name'
+                },
+                {
+                    data: 'sub_district_name',
+                    name: 'sub_district_name'
+                },
+                {
+                    data: 'test_site_status',
+                    name: 'test_site_status',
+                    className: 'firstcaps'
+                },
+                <?php $role = session('role');
+                if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['edit'] == "allow")) { ?> {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
+                    },
+                <?php } ?>
+            ],
+            columnDefs: [{
+                "targets": 2,
+                "className": "text-right",
+            }, ],
+            order: [
+                [0, 'desc']
+            ]
         });
     }
 </script>

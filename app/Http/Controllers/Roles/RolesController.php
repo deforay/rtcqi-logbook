@@ -1,9 +1,4 @@
 <?php
-/*
-Author : Sakthi
-Date : 28 Feb 2022
-Desc : Controller for Roles screen
-*/
 
 namespace App\Http\Controllers\Roles;
 
