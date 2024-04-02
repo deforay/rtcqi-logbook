@@ -483,14 +483,130 @@ class MonthlyReportTable extends Model
             //$query = $query->groupBy(DB::raw('QUARTER(monthly_reports_pages.end_test_date)'), DB::raw('monthly_reports.ts_id'));
             $query = $query->groupBy(DB::raw('monthly_reports.ts_id'), DB::raw('QUARTER(monthly_reports_pages.end_test_date)'));
         }
-        // dd($query->toSql());
-        // dd($user_id);
+        //dd($query->toSql());
+        //dd($user_id);
         $salesResult = $query->get();
+        //echo $query->toSql();
         $result['reportFrequency'] = $data['reportFrequency'];
         $result['res'] = $salesResult;
         return $result;
     }
 
+    public function fetchTrendMonthlyReportChartData($params)
+    {
+        $commonservice = new CommonService();
+        $GlobalConfigService = new GlobalConfigService();
+        $result = $GlobalConfigService->getAllGlobalConfig();
+        $arr = array();
+        // now we create an associative array so that we can easily create view variables
+        $counter = count($result);
+        // now we create an associative array so that we can easily create view variables
+        for ($i = 0; $i < $counter; $i++) {
+            $arr[$result[$i]->global_name] = $result[$i]->global_value;
+        }
+        $user_id = session('userId');
+        $result = array();
+        $data = $params;
+        $start_date = '';
+        $end_date = '';
+        if (isset($data['searchDate']) && $data['searchDate'] != '') {
+            $sDate = explode("to", $data['searchDate']);
+            if (isset($sDate[0]) && trim($sDate[0]) != "") {
+                $monthYr = Date("d-M-Y", strtotime("$sDate[0]"));
+                $start_date = $commonservice->dateFormat(trim($monthYr));
+            }
+            if (isset($sDate[1]) && trim($sDate[1]) != "") {
+                $monthYr2 = Date("d-M-Y", strtotime("$sDate[1]"));
+                $end_date = $commonservice->dateFormat(trim($monthYr2));
+            }
+        }
+        //DB::enableQueryLog();
+        $query = DB::table('monthly_reports_pages')
+            ->select(DB::raw('sum(monthly_reports_pages.final_positive + monthly_reports_pages.final_negative+ monthly_reports_pages.final_undetermined)'), 'monthly_reports.*', 'test_sites.*', 'site_types.*')
+            ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
+            ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
+            ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
+            ->leftjoin('districts', 'districts.district_id', '=', 'monthly_reports.district_id')
+            ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'monthly_reports.sub_district_id')
+            ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id');
+
+        if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
+            $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')
+                ->where('users_testsite_map.user_id', '=', $user_id);
+        }
+        if (trim($start_date) != "" && trim($end_date) != "") {
+            $query = $query->where(function ($query) use ($start_date, $end_date) {
+                $query->whereDate('monthly_reports_pages.start_test_date',  '>=', $start_date)
+                    ->whereDate('monthly_reports_pages.end_test_date', '<=', $end_date);
+            });
+        }
+        if (isset($data['provinceId']) && $data['provinceId'] != '') {
+            $query = $query->whereIn('provinces.province_id', $data['provinceId']);
+            $query = $query->groupBy(DB::raw('provinces.province_id'));
+        }
+        if (isset($data['districtId']) && $data['districtId'] != '') {
+            $query = $query->whereIn('districts.district_id', $data['districtId']);
+            $query = $query->groupBy(DB::raw('districts.district_id'));
+        }
+        if (isset($data['subDistrictId']) && $data['subDistrictId'] != '') {
+            $query = $query->whereIn('sub_districts.sub_district_id', $data['subDistrictId']);
+            $query = $query->groupBy(DB::raw('sub_districts.sub_district_id'));
+        }
+        if (isset($data['algorithmType']) && $data['algorithmType'] != '') {
+            $query = $query->whereIn('monthly_reports.algorithm_type', $data['algorithmType']);
+            $query = $query->groupBy(DB::raw('monthly_reports.mr_id'));
+        }
+        if (isset($data['testSiteId']) && $data['testSiteId'] != '') {
+            $query = $query->whereIn('test_sites.ts_id', $data['testSiteId']);
+            $query = $query->groupBy(DB::raw('test_sites.ts_id'));
+        }
+
+        if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'monthly') {
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
+            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
+        }
+        if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'yearly') {
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
+            $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
+        }
+        if (isset($data['reportFrequency']) && $data['reportFrequency'] == 'quaterly') {
+            for ($l = 1; $l <= $arr['no_of_test']; $l++) {
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_reactive) as test_' . $l . '_reactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
+                $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
+            }
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
+            $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
+            $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
+            $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
+        
+        }
+        
+         
+        $query = $query->orderBy(DB::raw('sum(monthly_reports_pages.final_positive + monthly_reports_pages.final_negative+ monthly_reports_pages.final_undetermined)'),'desc');
+        $query = $query->groupBy(DB::raw('monthly_reports.ts_id'));
+        
+        $chartResult=$query->get();
+        $result = $chartResult;
+        
+        return $result;
+    }
 
     /// Logbook report display with filters
 
