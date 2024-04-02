@@ -1,9 +1,9 @@
 <!--
-    Author             : Prasath M
+
     Date               : 02 Jun 2021
     Description        : Monthly reports view screen
     Last Modified Date : 02 Jun 2021
-    Last Modified Name : Prasath M
+
 -->
 
 @extends('layouts.main')
@@ -13,7 +13,7 @@
 <?php
 $enddate = date('d-M-Y');
 $startdate = date('d-M-Y', strtotime('-29 days'));
-$messages=Lang::get('messages');
+$messages = Lang::get('messages');
 ?>
 
 <div class="content-wrapper">
@@ -33,18 +33,18 @@ $messages=Lang::get('messages');
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
-            <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) {?>
-                <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="la la-upload"></i> {{ $messages['bulk_upload_monthly_reports']}}</b>
-                <?php } ?>
-                </a>
                 <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) {?>
-                <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                    <b><i class="ft-plus icon-left"></i> {{ $messages['add_monthly_report']}}</b>
-                <?php } ?>
-                </a>
+                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) { ?>
+                    <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="la la-upload"></i> {{ $messages['bulk_upload_monthly_reports']}}</b>
+                    <?php } ?>
+                    </a>
+                    <?php $role = session('role');
+                    if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) { ?>
+                        <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                            <b><i class="ft-plus icon-left"></i> {{ $messages['add_monthly_report']}}</b>
+                        <?php } ?>
+                        </a>
             </div>
         </div>
     </div>
@@ -81,82 +81,83 @@ $messages=Lang::get('messages');
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
-                            <div id="show_alert" class="mt-1"></div>
-                                    <h4 class="card-title">{{ $messages['filter_the_data']}}</h4><br>
-                                    <div class="row">
-                                        <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>{{ $messages['date_range']}} <span class="mandatory">*</span>
-                                                    </h5>
-                                                    <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="{{ $messages['select_date_range']}}" value="{{$startdate}} to {{$enddate}}" />
-                                                    </div>
-                                                </fieldset>
+                                <div id="show_alert" class="mt-1"></div>
+                                <h4 class="card-title">{{ $messages['filter_the_data']}}</h4><br>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>{{ $messages['date_range']}} <span class="mandatory">*</span>
+                                            </h5>
+                                            <div class="form-group">
+                                                <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="{{ $messages['select_date_range']}}" value="{{$startdate}} to {{$enddate}}" />
                                             </div>
-                                            <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                <h5>{{ $messages['province_name']}}
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="{{ $messages['please_select_province_name']}}">
-                                                            @foreach($province as $row)
-                                                            <option value="{{$row->province_id}}">{{$row->province_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>{{ $messages['province_name']}}
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="{{ $messages['please_select_province_name']}}">
+                                                    @foreach($province as $row)
+                                                    <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>{{ $messages['district_name']}}
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="{{ $messages['please_select_district_name']}}">
-                                                            @foreach($district as $row)
-                                                            <option value="{{$row->district_id}}">{{$row->district_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>{{ $messages['district_name']}}
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="{{ $messages['please_select_district_name']}}">
+                                                    @foreach($district as $row)
+                                                    <option value="{{$row->district_id}}">{{$row->district_name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                            
-                                        </div>
-                                        <div class="row">
-                                        <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5>{{ $messages['sub_district_name']}}
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="{{ $messages['please_select_sub_district_name']}}">
-                                                            @foreach($subdistrict as $row)
-                                                            <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                        <div class="col-xl-4 col-lg-12">
-                                                <fieldset>
-                                                    <h5> {{ $messages['site_name']}}
-                                                    </h5>
-                                                    <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="{{ $messages['please_select_test_site_name']}}">
-                                                            @foreach($testSite as $row)
-                                                            <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </fieldset>
-                                            </div>
-                                            <div class="col-md-7" style="color:#FFF;">
-                                                <div class="form-group row">
+                                        </fieldset>
+                                    </div>
 
-                                                    <div class="col-md-8">
-                                                        <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> {{ $messages['search']}}</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href="/monthlyreport"><span>{{ $messages['reset']}}</span></a>&nbsp;&nbsp;
-                                                    </div>
-                                                </div></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5>{{ $messages['sub_district_name']}}
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="{{ $messages['please_select_sub_district_name']}}">
+                                                    @foreach($subdistrict as $row)
+                                                    <option value="{{$row->sub_district_id}}">{{$row->sub_district_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-12">
+                                        <fieldset>
+                                            <h5> {{ $messages['site_name']}}
+                                            </h5>
+                                            <div class="form-group">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="{{ $messages['please_select_test_site_name']}}">
+                                                    @foreach($testSite as $row)
+                                                    <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-7" style="color:#FFF;">
+                                        <div class="form-group row">
+
+                                            <div class="col-md-8">
+                                                <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> {{ $messages['search']}}</button>&nbsp;&nbsp;
+                                                <a class="btn btn-danger btn-md" href="/monthlyreport"><span>{{ $messages['reset']}}</span></a>&nbsp;&nbsp;
+                                            </div>
                                         </div>
+                                    </div>
+                                </div>
                                 <p class="card-text"></p>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration" id="mothlyreportList">
@@ -173,8 +174,8 @@ $messages=Lang::get('messages');
                                                 <th>{{ $messages['total_number_of_pages']}}</th>
                                                 <th>{{ $messages['last_modified_on']}}</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) {?>
-                                                <th>{{ $messages['action']}}</th>
+                                                if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['edit'] == "allow")) { ?>
+                                                    <th>{{ $messages['action']}}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
@@ -267,11 +268,11 @@ $messages=Lang::get('messages');
                 url: '{{ url("getAllMonthlyReport") }}',
                 type: 'POST',
                 data: {
-                searchDate: searchDate,
-                provinceId: provinceId,
-                districtId: districtId,
-                subDistrictId: subDistrictId,
-                testSiteId: testSiteId,
+                    searchDate: searchDate,
+                    provinceId: provinceId,
+                    districtId: districtId,
+                    subDistrictId: subDistrictId,
+                    testSiteId: testSiteId,
                 },
             },
             columns: [
@@ -295,8 +296,9 @@ $messages=Lang::get('messages');
 
                 {
                     data: 'date_of_data_collection',
-                    name: 'date_of_data_collection',render: function(data, type, full) {
-     return moment(new Date(data)).format('DD-MMM-YYYY');
+                    name: 'date_of_data_collection',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
                 {
@@ -311,15 +313,17 @@ $messages=Lang::get('messages');
 
                 {
                     data: 'start_test_date',
-                    name: 'start_test_date',render: function(data, type, full) {
-     return moment(new Date(data)).format('DD-MMM-YYYY');
+                    name: 'start_test_date',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
 
                 {
                     data: 'end_test_date',
-                    name: 'end_test_date',render: function(data, type, full) {
-     return moment(new Date(data)).format('DD-MMM-YYYY');
+                    name: 'end_test_date',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY');
                     }
                 },
 
@@ -329,8 +333,9 @@ $messages=Lang::get('messages');
                 },
                 {
                     data: 'last_modified_on',
-                    name: 'last_modified_on',render: function(data, type, full) {
-     return moment(new Date(data)).format('DD-MMM-YYYY HH:mm:ss');
+                    name: 'last_modified_on',
+                    render: function(data, type, full) {
+                        return moment(new Date(data)).format('DD-MMM-YYYY HH:mm:ss');
                     }
                 },
                 {

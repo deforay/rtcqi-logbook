@@ -1,7 +1,3 @@
-<!--Author : Prastah M
-    Date : 27 May 2021
-    Desc : head tag elements
--->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -65,38 +61,41 @@
 <style type="text/css">
     table {
         border-radius: 6px !important;
-        -webkit-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
-        -moz-box-shadow: 0px 0px 8px 3px rgba(161,161,168,1);
+        -webkit-box-shadow: 0px 0px 8px 3px rgba(161, 161, 168, 1);
+        -moz-box-shadow: 0px 0px 8px 3px rgba(161, 161, 168, 1);
         box-shadow: 0px 0px 5px -1px rgb(197, 197, 197);
     }
 
-    table>thead{
+    table>thead {
         background-color: #d4e4f09e !important;
         /* color: #9d9da0;
         text-transform: uppercase !important; */
     }
 
-    .row > button{
+    /* .row>button {
         vertical-align:
-    }
+    } */
 
-    .table tr td:last-child{
+    .table tr td:last-child {
         /* vertical-align: middle !important; */
     }
-    .table td{
+
+    .table td {
         vertical-align: middle !important;
     }
 
-    .main-menu.menu-light .navigation > li.active > a {
+    .main-menu.menu-light .navigation>li.active>a {
         font-weight: 700;
         background: #2f9ff221 !important;
         margin: 0 1rem 0 1rem;
         border-radius: 0.3rem;
     }
-    .main-menu.menu-light .navigation > li.open > ul > li:hover.active > a {
+
+    .main-menu.menu-light .navigation>li.open>ul>li:hover.active>a {
         padding: 9px 18px 9px 40px;
     }
-    .main-menu.menu-light .navigation > li .active > a {
+
+    .main-menu.menu-light .navigation>li .active>a {
         color: #85899b;
         font-weight: 700;
         background: #bcbec821;
@@ -123,17 +122,17 @@
         background-color: #ffffff;
     }
 
-    .card-headers .heading-elements, .card-headers .heading-elements-toggle {
+    .card-headers .heading-elements,
+    .card-headers .heading-elements-toggle {
         background-color: inherit;
         position: absolute;
         top: 14px;
         right: 20px;
     }
 
-    #blue-grey-box-shadow{
-        -webkit-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
-        -moz-box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
-        box-shadow: 0px 5px 7px 0px rgba(199,199,199,1) !important;
+    #blue-grey-box-shadow {
+        -webkit-box-shadow: 0px 5px 7px 0px rgba(199, 199, 199, 1) !important;
+        -moz-box-shadow: 0px 5px 7px 0px rgba(199, 199, 199, 1) !important;
+        box-shadow: 0px 5px 7px 0px rgba(199, 199, 199, 1) !important;
     }
-
 </style>

@@ -990,6 +990,15 @@ $messages=Lang::get('messages');
             let optionSelected = ($(`#testkitId${headingNo}_${defaultRow}`).val() && $(`#testkitId${headingNo}_${defaultRow}`).find(":selected").text()) || `Test Kit ${headingNo}`;
             $(`#testKitHeading${headingNo}_${rowCount}`).html(optionSelected);
         }
+
+        $("#endDate"+rowCount).on("changeDate", function() { 
+            endDate=$("#endDate"+rowCount).val();
+            if(endDate!=""){
+                splitEndDate=endDate.split("-");
+                selectedEndDate=splitEndDate[1]+'-'+splitEndDate[2];
+                checkReportingMonth();
+            }
+        });
     }
 
     function delete_row(val) {
@@ -1134,6 +1143,38 @@ function checkExistingReportingMonth() {
                 }
             });
         }
+    }
+
+    function checkReportingMonth(){
+        var mnths = {
+            "01" : "Jan",
+            "02" : "Feb",
+            "03" : "Mar",
+            "04" : "Apr",
+            "05" : "May",
+            "06" : "Jun",
+            "07" : "Jul",
+            "08" : "Aug",
+            "09" : "Sep",
+            "10" : "Oct",
+            "11" : "Nov",
+            "12" : "Dec"
+        };
+        maxEndDate=[];
+        $('.endDate').each(function() {
+            maxEndDate.push(new Date($(this).val()));
+        });
+        let maximumDate = new Date(Math.max.apply(null, maxEndDate));
+        
+        var t=new Date(maximumDate);
+        var year=t.getFullYear();
+        var mnth = ("0" + (t.getMonth()+1)).slice(-2);
+        
+        maxSelectedDate=[mnths[mnth],year].join("-");
+        $("#reportingMon").val(maxSelectedDate);
+
+        checkExistingReportingMonth();
+        
     }
 </script>
 @endsection
