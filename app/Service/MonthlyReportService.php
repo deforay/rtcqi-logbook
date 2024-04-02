@@ -85,6 +85,12 @@ class MonthlyReportService
 		return $model->fetchTrendMonthlyReport($params);
 	}
 
+	public function getTrendMonthlyReportChartData($params)
+	{
+		$model = new MonthlyReportTable();
+		return $model->fetchTrendMonthlyReportChartData($params);
+	}
+
 	public function getLogbookReport($params)
 	{
 		$model = new MonthlyReportTable();

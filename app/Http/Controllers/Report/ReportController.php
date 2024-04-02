@@ -70,7 +70,8 @@ class ReportController extends Controller
         $datas = $request->all();
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getTrendMonthlyReport($datas);
-        // dd($data);die;
+        $data['chart']=$monthlyReportService->getTrendMonthlyReportChartData($datas);
+        //dd($data);die;
         $view = View::make('report.getTrendReport', ['report' => $data]);
         return $view;
     }

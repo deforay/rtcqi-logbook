@@ -218,31 +218,19 @@ $indeterminate_array=array();
       $indeterminate= array();
       $siteNames= array();
       $count=1;
-      
-foreach ($report['res'] as $trendrow){
-  $index=array_search($trendrow->site_name,$siteNames);
-  
-    if($index != ""){
-      $positive[$index]+=$trendrow->final;
-      $negative[$index]+=$trendrow->final_negative;
-      $indeterminate[$index]+=$trendrow->final_undetermined;
-    }else{
-      array_push($positive,$trendrow->final);
-      array_push($negative,$trendrow->final_negative);
-      array_push($indeterminate,$trendrow->final_undetermined);
-      array_push($siteNames,$trendrow->site_name);
-    }
-
-
-
-
-}
-
-$positiveValue = json_encode(array_slice($positive, 0, 100));
-$negativeValue = json_encode(array_slice($negative, 0, 100)); 
-         $indeterminateValue=json_encode(array_slice($indeterminate, 0, 100)); 
-         $siteNameValue=json_encode(array_slice($siteNames, 0, 100)); 
-          ?>
+   
+      foreach ($report['chart'] as $trendrow){
+          //$index=array_search($trendrow->site_name,$siteNames);
+        array_push($positive, ($trendrow->final != null || $trendrow->final) != "" ?$trendrow->final : 0);
+        array_push($negative, ($trendrow->final_negative != null || $trendrow->final_negative != "") ? $trendrow->final_negative : 0);
+        array_push($indeterminate, ($trendrow->final_undetermined != null || $trendrow->final_undetermined != "") ? $trendrow->final_undetermined : 0);
+        array_push($siteNames, $trendrow->site_name);
+      }
+      $positiveValue = json_encode(array_slice($positive, 0, 100));
+      $negativeValue = json_encode(array_slice($negative, 0, 100));
+      $indeterminateValue = json_encode(array_slice($indeterminate, 0, 100));
+      $siteNameValue = json_encode(array_slice($siteNames, 0, 100)); 
+    ?>
 <script src="{{ asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js')}}"></script>
 <script>
     $(document).ready(function(){
@@ -271,10 +259,10 @@ $negativeValue = json_encode(array_slice($negative, 0, 100));
           series: [{
             name: 'Negative',
             data: negativeResult,
-          }, {
+          },{
             name: 'Positive',
             data: positiveResult
-          }, {
+          },{
             name: 'Indeterminate',
             data: indeterminateResult
           }],
@@ -289,13 +277,12 @@ $negativeValue = json_encode(array_slice($negative, 0, 100));
         title: {
           text: 'Trend Report Chart'
         },
+        dataLabels: {
+    enabled: false // <--- HERE
+  },
         xaxis: {
           categories: siteResult,
-          labels: {
-            formatter: function (val) {
-              return val
-            }
-          }
+          
         },
         yaxis: {
           title: {
@@ -311,9 +298,10 @@ $negativeValue = json_encode(array_slice($negative, 0, 100));
         },
         
         fill: {
-          
+          colors:["#60D18F", "#FF1900", "#869EA7"],
           opacity: 1
         },
+        
         legend: {
           position: 'top',
           horizontalAlign: 'left',
