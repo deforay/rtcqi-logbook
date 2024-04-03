@@ -295,6 +295,9 @@ $indeterminate_array=array();
   scrollbar: {
       enabled: true
   },
+  credits: {
+     enabled: false
+  },
   series: [{
               name: 'Indeterminate',
               data: indeterminateResult,
@@ -309,7 +312,22 @@ $indeterminate_array=array();
               name: 'Negative',
               data: negativeResult,
               color:"#60D18F"
-          }]
+          }],
+          exporting: {
+    buttons: {
+      contextButton: {
+        menuItems: ["printChart",
+                    "separator",
+                    "downloadPNG",
+                    "downloadJPEG",
+                    "downloadPDF",
+                    "downloadSVG",
+                    "separator",
+                    "downloadCSV",
+                    "downloadXLS"]
+      }
+    }
+  }
     });
   });
 </script>
