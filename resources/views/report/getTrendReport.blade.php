@@ -212,107 +212,107 @@ $indeterminate_array=array();
     </table>
     
 </div>
-<div id="chart" style="margin-top:20px;"></div>
-<?php $positive= array();
-      $negative= array();
-      $indeterminate= array();
-      $siteNames= array();
-      $count=1;
+<!-- Trend Chart Section -->
+<?php 
+  $positive= array();
+  $negative= array();
+  $indeterminate= array();
+  $siteNames= array();
+  $count=1;
    
-      foreach ($report['chart'] as $trendrow){
-          //$index=array_search($trendrow->site_name,$siteNames);
-        array_push($positive, ($trendrow->final != null || $trendrow->final) != "" ?$trendrow->final : 0);
-        array_push($negative, ($trendrow->final_negative != null || $trendrow->final_negative != "") ? $trendrow->final_negative : 0);
-        array_push($indeterminate, ($trendrow->final_undetermined != null || $trendrow->final_undetermined != "") ? $trendrow->final_undetermined : 0);
-        array_push($siteNames, $trendrow->site_name);
-      }
-      $positiveValue = json_encode(array_slice($positive, 0, 100));
-      $negativeValue = json_encode(array_slice($negative, 0, 100));
-      $indeterminateValue = json_encode(array_slice($indeterminate, 0, 100));
-      $siteNameValue = json_encode(array_slice($siteNames, 0, 100)); 
-    ?>
-<script src="{{ asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js')}}"></script>
+  foreach ($report['chart'] as $trendrow){
+      //$index=array_search($trendrow->site_name,$siteNames);
+    array_push($positive, ($trendrow->final_positive != null || $trendrow->final_positive) != "" ?$trendrow->final_positive : 0);
+    array_push($negative, ($trendrow->final_negative != null || $trendrow->final_negative != "") ? $trendrow->final_negative : 0);
+    array_push($indeterminate, ($trendrow->final_undetermined != null || $trendrow->final_undetermined != "") ? $trendrow->final_undetermined : 0);
+    array_push($siteNames, $trendrow->site_name);
+  }
+  $positiveValue = json_encode($positive);
+  $negativeValue = json_encode($negative);
+  $indeterminateValue = json_encode($indeterminate);
+  $siteNameValue = json_encode($siteNames); 
+?>
+      
 <script>
-    $(document).ready(function(){
-        
-        var positive=<?php echo $positiveValue?>;
-        var positiveResult = positive.map(Number);
-        var negative=<?php echo $negativeValue?>;
-        var negativeResult = negative.map(Number);
-        var indeterminate=<?php echo $indeterminateValue?>;
-        var indeterminateResult = indeterminate.map(Number);
-        var siteResult=<?php echo $siteNameValue?>;
+  $(document).ready(function() {  
+  var positive=<?php echo $positiveValue?>;
+  var positiveResult = positive.map(Number);
+  var negative=<?php echo $negativeValue?>;
+  var negativeResult = negative.map(Number);
+  var indeterminate=<?php echo $indeterminateValue?>;
+  var indeterminateResult = indeterminate.map(Number);
+  var siteResult=<?php echo $siteNameValue?>;
 
-        var options = {
-          colors:["#60D18F", "#FF1900", "#869EA7"],
-          chart: {
-            height: 350,
-            type: 'bar',
-            stacked: true,
-            toolbar: {
-              show: true
-            },
-            zoom: {
-              enabled: true
-            }
-          },
-          series: [{
-            name: 'Negative',
-            data: negativeResult,
-          },{
-            name: 'Positive',
-            data: positiveResult
-          },{
-            name: 'Indeterminate',
-            data: indeterminateResult
-          }],
-              
-        
-        plotOptions: {
-          bar: {
-            horizontal: false,
-          },
-        },
-        
-        title: {
-          text: 'Trend Report Chart'
-        },
-        dataLabels: {
-    enabled: false // <--- HERE
+
+  var chart = new Highcharts.Chart({
+
+  chart: {
+      renderTo: 'container',
+      type:'column',
+      
   },
-        xaxis: {
-          categories: siteResult,
-          
-        },
-        yaxis: {
-          title: {
-            text: undefined
+  title: {
+    text: 'Trend Report Chart'
+  },
+
+  xAxis: {
+    categories: siteResult,
+      min:0,
+      max:50,
+      
+  },
+  yAxis: {
+            title: {
+          text: 'Number of Tests'
+      },
+      min:0,
+      
+      
+  lineWidth: 2,
+  },
+  plotOptions: {
+    column: {
+              stacking: 'normal',
+              //  dataLabels: {
+              //     enabled: true,
+              //     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor)
+              //        || 'white',
+              //     style: {
+              //        textShadow: '0 0 3px black'
+              //     }
+              //  }
+            },
+    series: {
+        grouping: false,
+        stacking: 'normal'
+    }
+  },
+  legend: {
+      verticalAlign: 'top',
+      y: 100,
+      align: 'right'
+  },
+  scrollbar: {
+      enabled: true
+  },
+  series: [{
+              name: 'Indeterminate',
+              data: indeterminateResult,
+              color:"#869EA7"     
           },
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val
-            }
-          }
-        },
-        
-        fill: {
-          colors:["#60D18F", "#FF1900", "#869EA7"],
-          opacity: 1
-        },
-        
-        legend: {
-          position: 'top',
-          horizontalAlign: 'left',
-          offsetX: 40
-        },
-        
-        };
-
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+          {
+              name: 'Positive',
+              data: positiveResult,
+              color:"#FF1900"
+          }, 
+          {
+              name: 'Negative',
+              data: negativeResult,
+              color:"#60D18F"
+          }]
     });
+  });
+</script>
+     
+<div id="container" style="height:500px;"></div>
     
-
-    </script>

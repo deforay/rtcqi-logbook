@@ -42,14 +42,19 @@
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/toggle/bootstrap-switch.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/core/colors/palette-switch.min.css')}}">
 
+<!-- BEGIN: Vendor JS-->
+<script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
+<!-- BEGIN Vendor JS-->
 <!-- BEGIN: Custom CSS-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<!-- BEGIN: Vendor JS-->
-<script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
-<!-- BEGIN Vendor JS-->
+<script type="text/javascript" src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/js/datepicker/datepicker3.css')}}">
 <script src="{{ asset('app-assets/vendors/js/forms/extended/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/typeahead/bloodhound.min.js') }}" type="text/javascript"></script>
@@ -58,6 +63,7 @@
 <script src="{{ asset('app-assets/vendors/js/forms/extended/formatter/formatter.min.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/card/jquery.card.js')}}"></script>
+
 <style type="text/css">
     table {
         border-radius: 6px !important;
