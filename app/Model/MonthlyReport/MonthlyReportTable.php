@@ -522,7 +522,7 @@ class MonthlyReportTable extends Model
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
-            ->select(DB::raw('sum(monthly_reports_pages.final_positive + monthly_reports_pages.final_negative+ monthly_reports_pages.final_undetermined)'), 'monthly_reports.*', 'test_sites.*', 'site_types.*')
+            ->select(DB::raw('sum(monthly_reports_pages.final_positive) + sum(monthly_reports_pages.final_negative)+ sum(monthly_reports_pages.final_undetermined)'), 'monthly_reports.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
@@ -567,7 +567,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
-            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final_positive');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%b-%Y") as month');
@@ -578,7 +578,7 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
-            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final_positive');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('DATE_FORMAT(monthly_reports_pages.end_test_date,"%Y") as year');
@@ -589,17 +589,15 @@ class MonthlyReportTable extends Model
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_nonreactive) as test_' . $l . '_nonreactive');
                 $query = $query->selectRaw('sum(monthly_reports_pages.test_' . $l . '_invalid) as test_' . $l . '_invalid');
             }
-            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final');
+            $query = $query->selectRaw('sum(monthly_reports_pages.final_positive) as final_positive');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_negative) as final_negative');
             $query = $query->selectRaw('sum(monthly_reports_pages.final_undetermined) as final_undetermined');
             $query = $query->selectRaw('YEAR(monthly_reports_pages.end_test_date) as end_test_date');
             $query = $query->selectRaw("(CASE WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 1  AND 3  THEN 'Q4' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 4  AND 6  THEN 'Q1' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 7  AND 9  THEN 'Q2' WHEN MONTH(monthly_reports_pages.end_test_date) BETWEEN 10 AND 12 THEN 'Q3' END) AS quarterly");
             $query =  $query->selectRaw("DATE_FORMAT(monthly_reports_pages.end_test_date,'%Y') as quaYear");
-        
-        }
-        
+        }        
          
-        $query = $query->orderBy(DB::raw('sum(monthly_reports_pages.final_positive + monthly_reports_pages.final_negative+ monthly_reports_pages.final_undetermined)'),'desc');
+        $query = $query->orderBy(DB::raw('sum(monthly_reports_pages.final_positive) + sum(monthly_reports_pages.final_negative)+ sum(monthly_reports_pages.final_undetermined)'),'desc');
         $query = $query->groupBy(DB::raw('monthly_reports.ts_id'));
         
         $chartResult=$query->get();
