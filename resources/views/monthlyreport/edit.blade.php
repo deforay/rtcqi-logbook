@@ -12,6 +12,7 @@ $path_name = public_path('uploads');
 // {{--  dd($result);  --}}
 $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 $messages=Lang::get('messages');
+$sample_collection_limit=$global['sample_collection_past_months_limit'];
 ?>
 <style>
     .ml-1 {
@@ -598,7 +599,7 @@ $messages=Lang::get('messages');
             format: 'dd-M-yyyy',
             changeMonth: true,
             changeYear: true,
-            maxDate: 0,
+            startDate: new Date(new Date().setMonth(new Date().getMonth() - parseInt(<?php echo $sample_collection_limit?>))),
             endDate: new Date(),
             todayHighlight: true,
             clearBtn: true,

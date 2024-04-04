@@ -15,6 +15,7 @@ $col = ['yellow', '#b5d477', '#d08662', '#76cece', '#ea7786'];
 // print_r($latest->test_1_kit_id);die;
 $test = '';
 $messages=Lang::get('messages');
+$sample_collection_limit=$global['sample_collection_past_months_limit'];
 ?>
 <div class="content-wrapper">
     <div class="content-header row">
@@ -567,7 +568,7 @@ $messages=Lang::get('messages');
             format: 'dd-M-yyyy',
             changeMonth: true,
             changeYear: true,
-            maxDate: 0,
+            startDate:new Date(new Date().setMonth(new Date().getMonth() - parseInt(<?php echo $sample_collection_limit?>))),
             endDate: new Date(),
             todayHighlight: true,
             clearBtn: true,
