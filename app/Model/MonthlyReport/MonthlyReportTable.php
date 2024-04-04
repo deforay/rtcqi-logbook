@@ -1086,7 +1086,10 @@ class MonthlyReportTable extends Model
                             } elseif (is_string($row[10])) {
                                 $dateOfCollection = date('Y-m-d', strtotime($row[10]));
                             }
-                            if($dateOfCollection > date('Y-m-d')){
+                            
+                            $pastDate = date("Y-m-d", strtotime("-".$arr["sample_collection_past_months_limit"]."months"));
+
+                            if($dateOfCollection > date('Y-m-d') || $dateOfCollection < $pastDate){
                                 $dateOfCollection = date('Y-m-d');
                             }
                             $startDate = '';
