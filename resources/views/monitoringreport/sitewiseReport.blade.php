@@ -454,6 +454,9 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 success: function(result) {
                     alert(result.success);
                     location.reload();
+                },
+                error: function(e){
+                    console.log(e);
                 }
             });
         }
