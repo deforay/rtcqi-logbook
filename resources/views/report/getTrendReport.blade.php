@@ -218,6 +218,7 @@ $indeterminate_array=array();
   $negative= array();
   $indeterminate= array();
   $siteNames= array();
+  $overallAgreements= array();
   $count=1;
    
   foreach ($report['chart'] as $trendrow){
@@ -226,13 +227,30 @@ $indeterminate_array=array();
     array_push($negative, ($trendrow->final_negative != null || $trendrow->final_negative != "") ? $trendrow->final_negative : 0);
     array_push($indeterminate, ($trendrow->final_undetermined != null || $trendrow->final_undetermined != "") ? $trendrow->final_undetermined : 0);
     array_push($siteNames, $trendrow->site_name);
-  }
+    
+    
+    if (($trendrow->test_1_reactive && $trendrow->test_2_reactive && $trendrow->test_1_reactive && $trendrow->test_1_nonreactive) > 0) {
+                $OverallAgreementTotal = number_format(100 * ($trendrow->test_2_reactive + $trendrow->test_1_nonreactive) / ($trendrow->test_1_reactive + $trendrow->test_1_nonreactive), 2);
+            }
+            
+            if ($arr['no_of_test']==3 &&($trendrow->test_2_reactive && isset($trendrow->test_3_reactive) && $trendrow->test_2_reactive && $trendrow->test_2_nonreactive) > 0) {
+                $OverallAgreementTotal = number_format(100 * ($trendrow->test_3_reactive + $trendrow->test_2_nonreactive) / ($trendrow->test_2_reactive + $trendrow->test_2_nonreactive), 2);
+            }
+
+            array_push($overallAgreements, ($OverallAgreementTotal != null || $OverallAgreementTotal != "") ? $OverallAgreementTotal : 0);
+            
+    //echo $trendrow->overall_agreement;
+    //array_push($overallAgreements, ($trendrow->overall_agreement != null || $trendrow->overall_agreement != "") ? $trendrow->overall_agreement : 0);    
+    //array_push($overallAgreements, 100);
+}
   $positiveValue = json_encode($positive);
   $negativeValue = json_encode($negative);
   $indeterminateValue = json_encode($indeterminate);
   $siteNameValue = json_encode($siteNames); 
+  $overallAgreementValue = json_encode($overallAgreements); 
 ?>
-      
+  
+<div id="container" style="height:500px;"></div>    
 <script>
   $(document).ready(function() {  
   var positive=<?php echo $positiveValue?>;
@@ -241,96 +259,138 @@ $indeterminate_array=array();
   var negativeResult = negative.map(Number);
   var indeterminate=<?php echo $indeterminateValue?>;
   var indeterminateResult = indeterminate.map(Number);
+  var overallAgreement=<?php echo $overallAgreementValue?>;
+  var overallAgreementResult = overallAgreement.map(Number);
   var siteResult=<?php echo $siteNameValue?>;
 
+var chartData={
 
-  var chart = new Highcharts.Chart({
+chart: {
+    renderTo: 'container',
+    
+    
+},
+title: {
+  text: 'Trend Report Chart'
+},
 
-  chart: {
-      renderTo: 'container',
-      type:'column',
-      
-  },
-  title: {
-    text: 'Trend Report Chart'
-  },
-
-  xAxis: {
-    categories: siteResult,
-      min:0,
-      max:50,
-      
-  },
-  yAxis: {
-            title: {
-          text: 'Number of Tests'
-      },
-      min:0,
-      
-      
-  lineWidth: 2,
-  },
-  plotOptions: {
-    column: {
-              stacking: 'normal',
-              //  dataLabels: {
-              //     enabled: true,
-              //     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor)
-              //        || 'white',
-              //     style: {
-              //        textShadow: '0 0 3px black'
-              //     }
-              //  }
-            },
-    series: {
-        grouping: false,
-        stacking: 'normal'
-    }
-  },
-  legend: {
-      verticalAlign: 'top',
-      y: 100,
-      align: 'right'
-  },
-  scrollbar: {
-      enabled: true
-  },
-  credits: {
-     enabled: false
-  },
-  series: [{
-              name: 'Indeterminate',
-              data: indeterminateResult,
-              color:"#869EA7"     
-          },
-          {
-              name: 'Positive',
-              data: positiveResult,
-              color:"#FF1900"
-          }, 
-          {
-              name: 'Negative',
-              data: negativeResult,
-              color:"#60D18F"
-          }],
-          exporting: {
-    buttons: {
-      contextButton: {
-        menuItems: ["printChart",
-                    "separator",
-                    "downloadPNG",
-                    "downloadJPEG",
-                    "downloadPDF",
-                    "downloadSVG",
-                    "separator",
-                    "downloadCSV",
-                    "downloadXLS"]
+xAxis: {
+  categories: siteResult,
+    min:0,
+    max:50,
+    crosshair:true
+    
+},
+yAxis: [{ // Primary yAxis
+    
+      title: {
+          text: 'Number of Tests',
+          style: {              
+          }
       }
+  }, { // Secondary yAxis
+    allowDecimals: true,
+        min: 0,
+        max: 100,
+        title: {
+          text: "Overall Agreements",
+          style: {},
+        },
+        labels: {
+          format: "{value}%",
+          style: {},
+        },
+        opposite: true,
+  }],
+  
+plotOptions: {
+  column: {
+            stacking: 'normal',
+            //  dataLabels: {
+            //     enabled: true,
+            //     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor)
+            //        || 'white',
+            //     style: {
+            //        textShadow: '0 0 3px black'
+            //     }
+            //  }
+          },
+          spline: {
+            stacking: 'normal',
+            yAxis: 1,
+            //  dataLabels: {
+            //     enabled: true,
+            //     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor)
+            //        || 'white',
+            //     style: {
+            //        textShadow: '0 0 3px black'
+            //     }
+            //  }
+          },
+          
+  series: {
+      grouping: false,
+      stacking: 'normal'
+  }
+},
+legend: {
+    verticalAlign: 'top',
+    y: 100,
+    align: 'right'
+},
+scrollbar: {
+    enabled: true
+},
+credits: {
+   enabled: false
+},
+tooltip:{
+shared:true,
+},
+series: [{
+            name: 'Indeterminate',
+            data: indeterminateResult,
+            color:"#869EA7",
+            type:'column',            
+        },
+        {
+            name: 'Positive',
+            data: positiveResult,
+            color:"#FF1900",
+            type:'column',            
+        }, 
+        {
+            name: 'Negative',
+            data: negativeResult,
+            color:"#60D18F",
+            type:'column',            
+        },{
+            name: 'OverAll Agreement',
+            data: overallAgreementResult,
+            color:"blue",
+            type:"spline",
+        },
+        
+        ],
+        exporting: {
+  buttons: {
+    contextButton: {
+      menuItems: ["printChart",
+                  "separator",
+                  "downloadPNG",
+                  "downloadJPEG",
+                  "downloadPDF",
+                  "downloadSVG",
+                  "separator",
+                  "downloadCSV",
+                  "downloadXLS"]
     }
   }
-    });
+}
+  };
+  var chart = new Highcharts.Chart(chartData);
+    console.log(JSON.stringify(chartData));
   });
 </script>
      
-<div id="container" style="height:500px;"></div>
     

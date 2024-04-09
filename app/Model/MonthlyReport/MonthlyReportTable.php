@@ -522,7 +522,7 @@ class MonthlyReportTable extends Model
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages')
-            ->select(DB::raw('sum(monthly_reports_pages.final_positive) + sum(monthly_reports_pages.final_negative)+ sum(monthly_reports_pages.final_undetermined)'), 'monthly_reports.*', 'test_sites.*', 'site_types.*')
+            ->select(DB::raw('sum(monthly_reports_pages.final_positive) + sum(monthly_reports_pages.final_negative)+ sum(monthly_reports_pages.final_undetermined)'), 'monthly_reports.*',  'monthly_reports_pages.*', 'test_sites.*', 'site_types.*')
             ->join('monthly_reports', 'monthly_reports.mr_id', '=', 'monthly_reports_pages.mr_id')
             ->join('site_types', 'site_types.st_id', '=', 'monthly_reports.st_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'monthly_reports.province_id')
