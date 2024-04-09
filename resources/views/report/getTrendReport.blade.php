@@ -304,34 +304,18 @@ yAxis: [{ // Primary yAxis
   }],
   
 plotOptions: {
-  column: {
+    column: {
             stacking: 'normal',
-            //  dataLabels: {
-            //     enabled: true,
-            //     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor)
-            //        || 'white',
-            //     style: {
-            //        textShadow: '0 0 3px black'
-            //     }
-            //  }
-          },
-          spline: {
-            stacking: 'normal',
-            yAxis: 1,
-            //  dataLabels: {
-            //     enabled: true,
-            //     color: (Highcharts.theme && Highcharts.theme.dataLabelsColor)
-            //        || 'white',
-            //     style: {
-            //        textShadow: '0 0 3px black'
-            //     }
-            //  }
-          },
+            },
+    spline: {
+        stacking: 'normal',
+        yAxis: 1,
+    },
           
-  series: {
-      grouping: false,
-      stacking: 'normal'
-  }
+    series: {
+        grouping: false,
+        stacking: 'normal'
+    }
 },
 legend: {
     verticalAlign: 'top',
