@@ -68,11 +68,13 @@
                 @foreach ($report['period'] as $period)
                 <th class="th" style="width:7% !important;">{{$period}}</th>
                 @endforeach
+                
             </tr>
 
         </thead>
         <tbody>
             @foreach ($report['sitewise'] as $key => $val)
+            
             <tr style="">
                 <td class="td"> 
                     <?php if(isset($comingFrom) && trim($comingFrom)!=""){ ?>
@@ -81,6 +83,12 @@
                     <input type="checkbox" id="{{ $val['site_id'] }}" name="testId[]" value="{{ $key }}" onclick="handleSiteName(this)"> 
                     {{ $key }} 
                     <?php } ?>
+                    <?php if(isset($val['last_reminder_date']) && trim($val['last_reminder_date'])!=0){ ?>
+                    <i class="la la-envelope"></i>({{$val['reminder_count']}})
+                    <?php }?>
+                   <?php if(isset($val['last_reminder_date']) && trim($val['last_reminder_date'])!=""){ ?>
+                    <br>Date: <?php echo  $val['last_reminder_date']?>
+                    <?php }?>
                 </td>
                 @foreach ($report['period'] as $period)
                 <td style="text-align:center;padding:0 !important;">

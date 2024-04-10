@@ -261,6 +261,7 @@ $indeterminate_array=array();
   var indeterminateResult = indeterminate.map(Number);
   var overallAgreement=<?php echo $overallAgreementValue?>;
   var overallAgreementResult = overallAgreement.map(Number);
+  console.log("overallAgreement:",overallAgreementResult);
   var siteResult=<?php echo $siteNameValue?>;
 
 var chartData={

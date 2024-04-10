@@ -681,3 +681,7 @@ ALTER TABLE `temp_mail` MODIFY `temp_id` int NOT NULL AUTO_INCREMENT;
 
 --Sijulda 04-Apr-2024
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Sample Collection Past Months Limit', 'sample_collection_past_months_limit', '6');
+
+--Sijulda 09-Apr-2024
+CREATE TABLE `reminder_history` (`history_id` INT NOT NULL AUTO_INCREMENT , `site_id` INT NOT NULL , `reminder_datetime` DATETIME NOT NULL , `reminded_by` INT NOT NULL , PRIMARY KEY (`history_id`)) ENGINE = InnoDB;
+

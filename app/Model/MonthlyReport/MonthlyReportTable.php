@@ -2339,13 +2339,15 @@ class MonthlyReportTable extends Model
         }
         //DB::enableQueryLog();
         $query = DB::table('monthly_reports_pages as mrp')
-            ->select(DB::raw('count(mr.ts_id) as total'),'mr.ts_id','mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'),'ts.site_name','st.site_type_name')
+            ->select(DB::raw('count(mr.ts_id) as total'),  'mr.ts_id','mr.reporting_month',DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y") as monthyear'),'ts.site_name','st.site_type_name', DB::raw('COALESCE(rh.reminder_count,0) as reminder_count'),'rh.last_reminder_date')
             ->join('monthly_reports as mr', 'mr.mr_id', '=', 'mrp.mr_id')
             ->join('site_types as st', 'st.st_id', '=', 'mr.st_id')
             ->leftjoin('provinces as p', 'p.province_id', '=', 'mr.province_id')
             ->leftjoin('districts as d', 'd.district_id', '=', 'mr.district_id')
             ->leftjoin('sub_districts', 'sub_districts.sub_district_id', '=', 'mr.sub_district_id')
-            ->join('test_sites as ts', 'ts.ts_id', '=', 'mr.ts_id');
+            ->join('test_sites as ts', 'ts.ts_id', '=', 'mr.ts_id')
+            ->leftjoin(DB::raw('(select `site_id`, count(`history_id`) as `reminder_count`, MAX(`reminder_datetime`) as `last_reminder_date` FROM `reminder_history` WHERE `reminder_datetime` BETWEEN trim("'.$start_date.'") AND trim("'.$end_date.'") GROUP BY `site_id`) AS `rh`'), 'rh.site_id', '=', 'mr.ts_id');
+
         
         if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
             $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'mr.ts_id')
@@ -2354,7 +2356,9 @@ class MonthlyReportTable extends Model
         
         if (trim($start_date) != "" && trim($end_date) != "") {
             $query->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'),  '>=', $start_date)
-                ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $filter_end_date);    
+                ->where(DB::raw('STR_TO_DATE(CONCAT("01-",reporting_month),"%d-%b-%Y")'), '<=', $filter_end_date);  
+                // $query->where(DB::raw('STR_TO_DATE(CONCAT(rh.reminder_datetime),"%d-%b-%Y")'),  '>=', $start_date)
+                // ->where(DB::raw('STR_TO_DATE(CONCAT(rh.reminder_datetime),"%d-%b-%Y")'), '<=', $filter_end_date);      
         }
         if (isset($data['provinceId']) && $data['provinceId'] != '') {
             $query = $query->whereIn('p.province_id', $data['provinceId']);
@@ -2371,26 +2375,34 @@ class MonthlyReportTable extends Model
         
         $query->groupBy(DB::raw('monthyear'),'mr.ts_id');
         $query=$query->orderBy('site_name','asc');
-        //dd($query->toSql());
+        //echo $query->toSql();
         $siteResult = $query->get()->toArray();
-        //print_r($siteResult);die;
         if (count($siteResult) > 0) {
             foreach ($siteResult as $sRes) {
                 
                 if (!isset($result[$sRes->site_name]['site_id'])) {
                     $result[$sRes->site_name]['site_id'] = $sRes->ts_id;
                 }
+                $result[$sRes->site_name]['reminder_count'] = $sRes->reminder_count;
+                $result[$sRes->site_name]['last_reminder_date'] = $sRes->last_reminder_date;
                 if (!isset($result[$sRes->site_name]['count'][$sRes->reporting_month])) {
                     $result[$sRes->site_name]['count'][$sRes->reporting_month] = $sRes->total;
                 } else {
                     $result[$sRes->site_name]['count'][$sRes->reporting_month] += $sRes->total;
                 }
+                
             }
         }
         //$monthResult=$this->sortMonthYear($monthResult);
         $sResult = array('sitewise' => $result, 'period' => $months);
         //dd($sResult);
         return $sResult;
+    }
+    public function getEmail($site_id){
+        $first_day_this_month = date('m-01-Y'); // hard-coded '01' for first day
+$last_day_this_month  = date('m-t-Y');
+        $query = DB::table('monthly_reports_pages as mrp');
+        return 0;
     }
 
     public function sortMonthYear($monthYearArray){
@@ -2522,9 +2534,12 @@ class MonthlyReportTable extends Model
     }
 
     public function sendSiteWiseReminderEmail($params){
+        $user_id = session('userId');
         $toEmail="";
         $testSiteModel = new TestSiteTable();
         $tempModel = new TempMailTable();
+        $commonservice = new CommonService();
+
         if(isset($params['subject']) && trim($params['testSiteId'])!=""){
             $expTestSiteId=explode(",",$params['testSiteId']);
             foreach($expTestSiteId as $val){
@@ -2538,16 +2553,25 @@ class MonthlyReportTable extends Model
                     }
                 }else{
                     if(trim($testResult->site_primary_email)!=""){
-                        $toEmail=trim($testResult->site_primary_email);
+                        $toEmail.=trim($testResult->site_primary_email).",";
                     }
                     if(trim($testResult->site_secondary_email)!=""){
                         if($toEmail!=""){
                             $toEmail.=trim($testResult->site_secondary_email).",";
+                            $sent_email.=trim($testResult->site_secondary_email).",";
                         }else{
                             $toEmail.=trim($testResult->site_secondary_email);
+                            $sent_email.=trim($testResult->site_secondary_email);
                         }
                     }
                 }
+                DB::table('reminder_history')->insert(
+                    [
+                        'site_id' => $val,
+                        'reminded_by' => $user_id,
+                        'reminder_datetime' => $commonservice->getDateTime(),                        
+                    ]
+                ); 
             }
             $tempModel->insertTempMailDetails($toEmail,$params['subject'],$params['message'],$fromMail=NULL,$fromName=NULL);
         }
