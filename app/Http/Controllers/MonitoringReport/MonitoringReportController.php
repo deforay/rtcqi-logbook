@@ -41,6 +41,7 @@ class MonitoringReportController extends Controller
         $datas = $request->all();
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getSiteWiseReport($datas);
+        //print_r()
         // dd($data);die;
         if(isset($datas['comingFrom'])){
             $comingFrom=$datas['comingFrom'];

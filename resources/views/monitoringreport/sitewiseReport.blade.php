@@ -340,6 +340,9 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             success: function(result) {
                 $("#trendList").html(result);
                 $.unblockUI();
+            },
+            error:function(e){
+                console.log(e);
             }
         });
     }
