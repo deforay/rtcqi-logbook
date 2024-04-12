@@ -80,12 +80,16 @@
             <tr class="frezz" style=" top: 37px; width:94.6%;">
                 <th class="th" style="max-width:120px;">Site Name</th>
                 <th class="th" style="max-width:120px;">Site ID</th>
+                <th class="th" style="max-width:120px;">Email</th>
+                <th class="th" style="max-width:120px;">Phone</th>
                 <th class="th" style="max-width:120px;">Province</th>
                 <th class="th" style="width:10%;">District</th>
                 <th class="th" style="width:10%;">Sub-District</th>
                 <th class="th" style="width:10%;">Last Reported On</th>
             </tr>
             <tr>
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -103,6 +107,8 @@
             <tr style="text-align: right">
                 <td class="td" style="max-width:120px; text-align:left">{{$notreportedsitesrow->site_name}}</td>
                 <td class="td" style="max-width:120px; text-align:left">{{$notreportedsitesrow->ts_id}}</td>
+                <td class="td" style="max-width:120px; text-align:left">{{$notreportedsitesrow->site_primary_email}}</td>
+                <td class="td" style="max-width:120px; text-align:left">{{$notreportedsitesrow->site_primary_mobile_no}}</td>
                 <td class="td" style="max-width:120px; text-align:left">{{$notreportedsitesrow->province_name}}</td>
                 <td class="td" style="text-align:left">{{$notreportedsitesrow->district_name}}</td>
                 <td class="td" style="text-align:left">{{$notreportedsitesrow->sub_district_name}}</td>

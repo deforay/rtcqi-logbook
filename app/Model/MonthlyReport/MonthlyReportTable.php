@@ -984,7 +984,7 @@ class MonthlyReportTable extends Model
         }
         
         $query = DB::table('test_sites')
-            ->select('test_sites.ts_id', DB::raw('(SELECT monthly_reports.added_on FROM monthly_reports WHERE test_sites.ts_id = monthly_reports.ts_id order by monthly_reports.mr_id desc limit 1) AS added_on'), 'test_sites.site_name', 'provinces.province_name', 'districts.district_name', 'sub_districts.sub_district_name', 'test_sites.updated_on')
+            ->select('test_sites.ts_id', DB::raw('(SELECT monthly_reports.added_on FROM monthly_reports WHERE test_sites.ts_id = monthly_reports.ts_id order by monthly_reports.mr_id desc limit 1) AS added_on'), 'test_sites.site_name', 'test_sites.site_primary_email',  'test_sites.site_primary_mobile_no', 'provinces.province_name', 'districts.district_name', 'sub_districts.sub_district_name', 'test_sites.updated_on')
             ->leftjoin('monthly_reports', 'monthly_reports.ts_id', '=','test_sites.ts_id')
             ->leftjoin('provinces', 'provinces.province_id', '=', 'test_sites.site_province')
             ->leftjoin('districts', 'districts.district_id', '=', 'test_sites.site_district')
