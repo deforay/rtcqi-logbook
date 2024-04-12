@@ -185,7 +185,20 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
 </style>
 <script>
     $(document).ready(function() {
+        var startDate = localStorage.getItem('date1');
+        var endDate = localStorage.getItem('date2');
+        var data = localStorage.getItem('site');
+        // alert(data);
+        if (startDate != null && endDate != null && data != null) {
+            $("#startDate").val(startDate);
+            $("#endDate").val(endDate);
+            $("#testSiteId").val(data).trigger('change');
+            window.localStorage.removeItem('date1');
+            window.localStorage.removeItem('date2');
+            window.localStorage.removeItem('site');
+        }
         getLogbookReport();
+            
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
             placeholder: "Select Province Name",
@@ -303,18 +316,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
     });
 
     $(document).ready(function() {
-        var startDate = localStorage.getItem('date1');
-        var endDate = localStorage.getItem('date2');
-        var data = localStorage.getItem('site');
-        // alert(data);
-        if (startDate != null && endDate != null && data != null) {
-            $("#startDate").val(startDate);
-            $("#endDate").val(endDate);
-            $("#testSiteId").val(data).trigger('change');
-            window.localStorage.removeItem('date1');
-            window.localStorage.removeItem('date2');
-            window.localStorage.removeItem('site');
-        }
+        
 
     });
 </script>
