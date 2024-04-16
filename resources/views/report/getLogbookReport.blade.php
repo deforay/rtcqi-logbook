@@ -23,7 +23,7 @@
         z-index: 150;
         background-color:#e4eff8!important;
     }
-    .tableFixHead thead th:first-child {
+    /* .tableFixHead thead th:first-child {
         position: sticky;
         left:0;
         background-color:#e4eff8;
@@ -48,7 +48,7 @@
         left:100px;
         background-color:#fff;
     }
-    
+     */
     #table-bordered {
         border-collapse: collapse;
         width: 100%;
