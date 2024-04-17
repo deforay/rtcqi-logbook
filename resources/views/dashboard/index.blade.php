@@ -348,7 +348,7 @@ $startdate = date('d-M-Y', strtotime('-179 days'));
 
                 document.getElementById('monthly-report-map').innerHTML = "<div id='map' style='width: 100%; height: 100%;'></div>";
                 var myIcon = L.icon({
-                    iconUrl: "{{ asset('assets/images/dark-green.png')}}"
+                    iconUrl: "{{ asset('assets/images/location.svg')}}"
                 });
                 var map = L.map('map', {
                     zoomControl: false,
