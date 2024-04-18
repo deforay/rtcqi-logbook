@@ -2100,7 +2100,7 @@ class MonthlyReportTable extends Model
         }
         DB::enableQueryLog();
         $query = DB::table('monthly_reports')
-            ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name')
+            ->select('monthly_reports.latitude', 'monthly_reports.longitude', 'test_sites.site_name', 'test_sites.ts_id')
             ->join('test_sites', 'test_sites.ts_id', '=', 'monthly_reports.ts_id')
             ->join('monthly_reports_pages', 'monthly_reports_pages.mr_id', '=', 'monthly_reports.mr_id')
             ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'monthly_reports.ts_id')

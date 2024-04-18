@@ -380,10 +380,22 @@ $startdate = date('d-M-Y', strtotime('-179 days'));
 
                 // visualize the markers on the map
                 for (let i = 0; i < coordinates.length; i++) {
-                    L.marker([coordinates[i][0], coordinates[i][1]], {
+                   var marker= L.marker([coordinates[i][0], coordinates[i][1]], {
                             icon: myIcon
                         }).bindPopup(coordinates[i][2])
-                        .addTo(map);
+                        .addTo(map).on('mouseover', function(e) {
+        this.openPopup();
+    })
+    .on('mouseout', function(e) {
+        this.closePopup();
+    });
+    marker.on('click', function(e) {
+        localStorage.setItem('monthlyReportSearchDate', searchDate);
+        localStorage.setItem('site_id', coordinates[i][3]);
+        window.open('/monthlyreport');
+    });
+
+
                 };
             }
         });

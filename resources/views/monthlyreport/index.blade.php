@@ -196,6 +196,16 @@ $messages = Lang::get('messages');
 <script>
     $(document).ready(function() {
         $.blockUI();
+        var searchDate = localStorage.getItem('monthlyReportSearchDate');
+        var site_id = localStorage.getItem('site_id');
+
+        if (searchDate != null && site_id != null) {
+            $("#searchDate").val(searchDate);
+            $("#testSiteId").val(site_id).trigger('change');
+            window.localStorage.removeItem('monthlyReportSearchDate');
+            window.localStorage.removeItem('site_id');
+        }
+        
         getAllMonthlyReport();
         $.unblockUI();
         $('.js-example-basic-multiple').select2();
