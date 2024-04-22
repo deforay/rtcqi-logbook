@@ -382,15 +382,16 @@
                 }
             });
             $.ajax({
-                url: "{{ url('/checkNameValidation') }}",
+            url: "{{ url('/checkNameValidation') }}",
                 method: 'post',
                 data: {
                     tableName: tableName,
                     fieldName: fieldName,
                     value: checkValue,
+                    fnct:fnct,
                 },
                 success: function(result) {
-                    // console.log(result)
+                     console.log(result)
                     if (result > 0) {
                         $("#showAlertIndex").text(msg);
                         $('#showAlertdiv').show();

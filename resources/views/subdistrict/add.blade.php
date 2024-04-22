@@ -55,7 +55,7 @@
                                                 <h5>Sub District Name<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="subDistrictName" class="form-control isRequired" autocomplete="off" placeholder="Enter Sub District Name" name="subDistrictName" title="Please Enter Sub District Name" onblur="checkNameValidation('subdistricts','district_name', this.id,'','Entered Sub District Name is already exist.')">
+                                                    <input type="text" id="subDistrictName" class="form-control isRequired" autocomplete="off" placeholder="Enter Sub District Name" name="subDistrictName" title="Please Enter Sub District Name" onblur="checkNameValidation('sub_districts','sub_district_name', this.id,'','Entered Sub District Name is already exist.')">
                                                 </div>
                                             </fieldset>
                                         </div>
