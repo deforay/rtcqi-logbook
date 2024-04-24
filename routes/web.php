@@ -162,6 +162,8 @@ Route::get('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@ed
 Route::post('/monthlyreport/edit/{id}', 'MonthlyReport\MonthlyReportController@edit');
 Route::post('/getAllMonthlyReport', 'MonthlyReport\MonthlyReportController@getAllMonthlyReport');
 Route::post('/getSelectedSiteMonthlyReport', 'MonthlyReport\MonthlyReportController@getSelectedSiteMonthlyReport');
+Route::post('/getDuplicateMonthlyReport', 'MonthlyReport\MonthlyReportController@getDuplicateMonthlyReport');
+
 
 Route::post('/CheckPreLot', 'MonthlyReport\MonthlyReportController@CheckPreLot');
 

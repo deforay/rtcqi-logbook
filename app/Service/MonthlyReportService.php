@@ -291,4 +291,10 @@ class MonthlyReportService
 		$model = new MonthlyReportTable();
 		return $result = $model->sendSiteWiseReminderEmail($params);
 	}
+	
+	public function getDuplicateMonthlyReport($params)
+	{
+		$model = new MonthlyReportTable();
+		return $result = $model->fetchDuplicateMonthlyReport($params);
+	}
 }

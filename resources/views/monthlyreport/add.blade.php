@@ -773,6 +773,7 @@ loadReplaceTestKitHeadings();
     var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 
     function changeStartDate(id) {
+        
         $("#endDate" + id).val('');
         $("#startDate" + id).datepicker({
             format: 'dd-mm-yyyy',
@@ -783,7 +784,7 @@ loadReplaceTestKitHeadings();
             $('#endDate' + id).datepicker('setStartDate', minDate);
         });
         // var minDate = new Date(selected.date.valueOf());
-        // $('#endDate'+id).datepicker('setStartDate', minDate);
+        // $('#endDate'+id).datepicker('setStartDate', minDate);        
     }
 
     function changeEndDate(id) {
@@ -804,7 +805,7 @@ loadReplaceTestKitHeadings();
             var minDate = new Date(selected.date.valueOf());
             $('#startDate' + id).datepicker('setEndDate', minDate);
         });
-        
+        checkExistingSameSiteStartEndDate(id);
         }
 
         // var minDate = new Date(selected.date.valueOf());
@@ -1152,11 +1153,51 @@ loadReplaceTestKitHeadings();
                         var errorMessage=error.replace(':date', reportingDate);
                         alert(errorMessage);
                         $("#reportingMon").val('');
+                        return;
                     }
                 }
             });
         }
     }
+
+    function checkExistingSameSiteStartEndDate(id) {
+        var siteName= document.getElementById("testsiteId").value;
+        var startDate = document.getElementById("startDate"+id).value;        
+        var endDate = document.getElementById("endDate"+id).value;
+        
+        if(siteName != "" && startDate!='' &&  endDate!='')
+        {
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('/getDuplicateMonthlyReport') }}",
+                method: 'post',
+                data: {
+                    siteName: siteName,
+                    startDate: startDate, 
+                    endDate: endDate,
+                },
+                success: function(result){
+                    
+                    if (result.length > 0)
+                    {
+                        alert("Logbook data already recorded for "+result[0].site_name+" for the period "+startDate+" - "+endDate+" on "+result[0].date_of_data_collection);
+                        document.getElementById("startDate"+id).value="";
+                        document.getElementById("endDate"+id).value="";
+                        $("#reportingMon").val('');
+                        return;
+                    }
+                },
+                error:function(e){
+                    //console.log(e);
+                }
+            });
+        }
+    }
+       
 
     function loadReplaceTestKitHeadings(){
         let defaultTestkit = $(".selectTestKits").length;
