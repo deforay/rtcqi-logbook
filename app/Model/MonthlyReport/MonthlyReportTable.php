@@ -2576,4 +2576,19 @@ $last_day_this_month  = date('m-t-Y');
             $tempModel->insertTempMailDetails($toEmail,$params['subject'],$params['message'],$fromMail=NULL,$fromName=NULL);
         }
     }
+    public function fetchDuplicateMonthlyReport($params){
+        $commonservice = new CommonService();
+        $start_date = $commonservice->dateFormat($params['startDate']);
+        $end_date = $commonservice->dateFormat($params['endDate']);
+        $sQuery = DB::table('monthly_reports AS mr')
+        ->select('*')
+            ->join('monthly_reports_pages AS mrp', 'mrp.mr_id', '=', 'mr.mr_id')
+            ->leftjoin('test_sites AS ts', 'ts.ts_id', '=', 'mr.ts_id')
+            ->where('mr.ts_id', $params['siteName'])
+            ->where('mrp.start_test_date', $start_date)
+            ->where('mrp.end_test_date', $end_date);
+            $result=   $sQuery->get();
+            //echo $sQuery->toSql();
+            return $result;
+    }
 }

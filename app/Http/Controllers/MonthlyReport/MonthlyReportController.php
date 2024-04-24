@@ -22,7 +22,7 @@ class MonthlyReportController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','getSelectedSiteMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport');        
+        $this->middleware(['role-authorization'])->except('getAllMonthlyReport','getSelectedSiteMonthlyReport','monthlyreportdata','getReportingMonth','CheckPreLot','getIdReportingMonth','getAllNotUploadMonthlyReport', 'getDuplicateMonthlyReport');        
        
     }
     //View MonthlyReport main screen
@@ -246,6 +246,16 @@ class MonthlyReportController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function getDuplicateMonthlyReport(Request $request)
+    {
+        $datas = $request->all();
+        // dd($datas);die;
+        $service = new MonthlyReportService();
+        $result = $service->getDuplicateMonthlyReport($datas);
+        
+        return $result;
     }
     
 }
