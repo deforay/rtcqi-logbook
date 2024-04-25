@@ -1071,7 +1071,7 @@ class MonthlyReportTable extends Model
 
                         $isDataValid = $this->isValidData($row);
                         $comment = $isDataValid ? '' : $this->getErrorComment($row);
-
+                        //echo $isDataValid; exit();
                         if ($isDataValid) {
                             array_push($siteName, $row[0]);
                             $reporting_date = '';
@@ -1832,7 +1832,9 @@ class MonthlyReportTable extends Model
                     }
                     $rowCnt++;
                 }
+                //echo $rowCnt;exit;
                 if ($cnt > 0) {
+                    echo $rowCnt;
                     if($rowCnt == 1){
                         $siteNameString=$siteName[0];
                     }else if($rowCnt == 2){
@@ -1862,9 +1864,54 @@ class MonthlyReportTable extends Model
     {
 
         $validData = true;
+        $testSiteId=0;
 
         if (trim($row[0]) == '' || trim($row[1]) == '' || trim($row[2]) == '' || trim($row[5]) == '' || trim($row[6]) == '' || trim($row[11]) == '' || trim($row[15]) == '' || trim($row[16]) == '' || trim($row[17]) == '' || trim($row[18]) == '' || trim($row[19]) == '') {
             $validData = false;
+        }
+        if(trim($row[0]) != '' && trim($row[15])!='' && trim($row[16])!='' ){
+            $testsiteData = DB::table('test_sites')
+                ->where('site_name', '=', trim($row[0]))
+                ->get();
+            if (count($testsiteData) > 0) {
+                $testSiteId = $testsiteData[0]->ts_id;
+            }
+            if ($testSiteId > 0) {
+                echo $testSiteId;
+                $startDate = '';
+                if (is_numeric($row[15])) {
+                    $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
+                } elseif (is_string($row[15])) {
+                    $startDate = date('Y-m-d', strtotime($row[15]));
+                }
+                //echo $startDate;
+
+                $endDate = '';
+                if (is_numeric($row[16])) {
+                    $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                } elseif (is_string($row[16])) {
+                    $endDate = date('Y-m-d', strtotime($row[16]));
+                }
+                //echo $endDate;
+                if ($startDate != '' && $endDate != '') {
+                    $commonservice = new CommonService();
+                    //$start_date = $commonservice->dateFormat($startDate);
+                    //$end_date = $commonservice->dateFormat($endDate);
+                    //echo $start_date;
+                    $sQuery = DB::table('monthly_reports AS mr')
+                        ->select('*')
+                        ->join('monthly_reports_pages AS mrp', 'mrp.mr_id', '=', 'mr.mr_id')
+                        ->leftjoin('test_sites AS ts', 'ts.ts_id', '=', 'mr.ts_id')
+                        ->where('mr.ts_id', $testSiteId)
+                        ->where('mrp.start_test_date', $startDate)
+                        ->where('mrp.end_test_date', $endDate);
+                    $result = $sQuery->get();
+
+                    if (count($result) > 0) {
+                        $validData = false;
+                    }
+                }
+            }
         }
 
         return $validData;
@@ -1918,8 +1965,60 @@ class MonthlyReportTable extends Model
         if (trim($row[19]) == '') {
             $commentArray[] = 'Expiry Date 1';
         }
+        $duplicateMessage = '';
+        if(trim($row[0]) != '' && trim($row[15])!='' && trim($row[16])!='' ){
+            $testsiteData = DB::table('test_sites')
+                ->where('site_name', '=', trim($row[0]))
+                ->get();
+            if (count($testsiteData) > 0) {
+                $testSiteId = $testsiteData[0]->ts_id;
+            }
+            if ($testSiteId > 0) {
+                $startDate = '';
+                if (is_numeric($row[15])) {
+                    $startDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[15])->format('Y-m-d');
+                } elseif (is_string($row[15])) {
+                    $startDate = date('Y-m-d', strtotime($row[15]));
+                }
 
-        return implode(", ", $commentArray) . ' field(s) are missing';
+
+                $endDate = '';
+                if (is_numeric($row[16])) {
+                    $endDate = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[16])->format('Y-m-d');
+                } elseif (is_string($row[16])) {
+                    $endDate = date('Y-m-d', strtotime($row[16]));
+                }
+                if ($startDate != '' && $endDate != '') {
+                    //$commonservice = new CommonService();
+                    //$start_date = $commonservice->dateFormat($startDate);
+                    //$end_date = $commonservice->dateFormat($endDate);
+                    $sQuery = DB::table('monthly_reports AS mr')
+                        ->select('*')
+                        ->join('monthly_reports_pages AS mrp', 'mrp.mr_id', '=', 'mr.mr_id')
+                        ->leftjoin('test_sites AS ts', 'ts.ts_id', '=', 'mr.ts_id')
+                        ->where('mr.ts_id', $testSiteId)
+                        ->where('mrp.start_test_date', $startDate)
+                        ->where('mrp.end_test_date', $endDate);
+                    $result = $sQuery->get();
+                    if (count($result) > 0) {
+                        $duplicateMessage = "Logbook data already recorded for ".($result[0]->site_name)." for the period ".$startDate." - ".$endDate." on ".($result[0]->date_of_data_collection);
+                    }
+                }
+            }
+        }
+        $message='';
+        if(count($commentArray) > 0 && $duplicateMessage != ''){
+            $message=implode(", ", $commentArray) . ' field(s) are missing, '.$duplicateMessage;
+        }
+        else if(count($commentArray) > 0 && $duplicateMessage == ''){
+            $message=implode(", ", $commentArray) . ' field(s) are missing';
+        }
+        else if(count($commentArray) == 0 && $duplicateMessage != ''){
+            $message=$duplicateMessage;
+        }      
+        
+
+        return $message;
     }
 
     // Invalid Result Report
