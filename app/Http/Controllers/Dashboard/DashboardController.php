@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Service\GlobalConfigService;
 use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
+use App\Service\DistrictService;
 use App\Service\CommonService;
 use Illuminate\Http\Request;
 use Redirect;
@@ -20,7 +21,8 @@ class DashboardController extends Controller
             $data = $monthlyReportService->getMonthlyData();
             $ProvinceService = new ProvinceService();
             $province = $ProvinceService->getAllActiveProvince();
-
+            $DistrictService = new DistrictService();
+            $districts = $DistrictService->getAllDistrict();
             $GlobalConfigService = new GlobalConfigService();
             $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
             $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
@@ -36,6 +38,7 @@ class DashboardController extends Controller
             if($checkEdit){
             return view('dashboard.index', array(
                 'province' => $province,
+                'districts' => $districts,
                 'data' => $data,
                 'latitude' => $latitude,
                 'longitude' => $longitude,
