@@ -156,6 +156,19 @@ $startdate = date('d-M-Y', strtotime('-179 days'));
                                     <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                         <div class="media">
                                             <div class="media-body">
+                                                <span class="text-bold-500">District </span>
+                                                <select class="form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
+                                                    <option value="">Select District</option>
+                                                    @foreach($districts as $district)
+                                                    <option value="{{$row->province_id}}">{{$district->district_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
+                                        <div class="media">
+                                            <div class="media-body">
                                                 <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info mt-4"> Search</button>
                                             </div>
                                         </div>
@@ -325,6 +338,8 @@ $startdate = date('d-M-Y', strtotime('-179 days'));
         getSitewiseReport();
         let searchDate = $('#searchDate').val() || '';
         let provinceId = $('#provinceId').val() || '';
+        let districtId = $('#districtId').val() || '';
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -337,6 +352,7 @@ $startdate = date('d-M-Y', strtotime('-179 days'));
             data: {
                 searchDate: searchDate,
                 provinceId: provinceId,
+                districtId: districtId,
             },
             error: function(e) {
                 console.log(JSON.stringify(e));
