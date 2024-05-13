@@ -184,6 +184,11 @@ class MonthlyReportController extends Controller
             if ($request->isMethod('post')) {
                 $service = new MonthlyReportService();
                 $result = $service->importMonthlyReportData($request);
+
+                if($result =='error'){
+                    $validateError = "Please verify that the format of the uploaded file matches the downloaded template.";
+                    return view('monthlyreport.upload', array('error' => $validateError,'global' => $arr)); 
+                }
                 return view('monthlyreport.upload', array('status' => $result, 'global' => $arr));
             } else {
                 return view('monthlyreport.upload', array('global' => $arr));

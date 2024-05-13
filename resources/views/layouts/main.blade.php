@@ -30,6 +30,12 @@
     text-transform: capitalize;
   }
 
+  .profil {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-right: 1rem;
+}
   /* .select2-selection__clear{display:none;}
   #show_alert{display:none;}
   .spanFont{font-size:16px;}
@@ -44,11 +50,10 @@ background-color: #f2f3f5;
 } */
 </style>
 
-<body class="horizontal-layout horizontal-menu 2-columns   menu-expanded" data-open="hover" data-menu="horizontal-menu" data-col="2-columns">
+<body class="horizontal-layout horizontal-menu 2-columns  menu-expanded" data-open="hover" data-menu="horizontal-menu" data-col="2-columns">
 
   <!-- navbar starts-->
 
-  @include('layoutsections.headernav')
 
   <!-- navbar ends-->
 
@@ -59,7 +64,7 @@ background-color: #f2f3f5;
   <!-- Side ends -->
   <br>
   <div class="app-content container center-layout mt-2" style="min-height: 600px;">
-    <div class="content-overlay"></div>
+    <div class="content-overlay" ></div>
 
     @section('content')
 
