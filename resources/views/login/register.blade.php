@@ -67,8 +67,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
   html body.bg-full-screen-image {
     /*background: #63bef9  !important;*/
     background:url({{ asset('assets/images/1.jpg')
-  }
-  }) !important;
+  }}) !important;
   background-size: cover !important;
   }
 
@@ -103,8 +102,8 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                       <h3>{{$globData}}</h3>
                     </div>
                   </div>
-                  @if($arr["logo"])
-                  <img class="brand-logo" alt="rtcqui logbook logo" src="{{ url($arr["logo"])}}" style="height: 100px;width: 100px;">
+                  @if(!empty($arr["logo"]))
+                  <img class="brand-logo" alt="rtcqui logbook logo" src="" style="height: 100px;width: 100px;">
                   @else
                   <img class="brand-logo" alt="rtcqui logbook logo" src="{{ asset('assets/images/default-logo.png')}}" style="height: 100px;width: 100px;">
                   @endif
