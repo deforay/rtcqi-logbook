@@ -17,7 +17,6 @@ class UserFacilityMapTable extends Model
         //to get all request values
         $id = 0;
         $data = $request->all();
-
         if ($request->input('userId') != null && trim($request->input('userId')) != '') {
             $counter = count($data['facilityId']);
             for ($x = 0; $x < $counter; $x++) {
@@ -94,4 +93,13 @@ class UserFacilityMapTable extends Model
             ->where('users_testsite_map.user_id', '=', base64_decode($id))
             ->get();
     }
+    
+    public function fetchUserLocationById($id)
+    {
+        return DB::table('users_location_map')
+            ->where('users_location_map.user_id', '=', base64_decode($id))
+            ->get();
+    }
+
+    
 }

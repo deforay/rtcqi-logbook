@@ -685,3 +685,13 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 --Sijulda 09-Apr-2024
 CREATE TABLE `reminder_history` (`history_id` INT NOT NULL AUTO_INCREMENT , `site_id` INT NOT NULL , `reminder_datetime` DATETIME NOT NULL , `reminded_by` INT NOT NULL , PRIMARY KEY (`history_id`)) ENGINE = InnoDB;
 
+--Sijulda 06-May-2024
+CREATE TABLE `users_location_map` (
+  `user_id` int(11) NOT NULL,
+  `province_id` int(11) NOT NULL,
+  `district_id` int(11) NULL,
+  PRIMARY KEY (`user_id`,`province_id`,`district_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+--Sijulda 10-May-2024
+ALTER TABLE `users` ADD `user_mapping` INT NOT NULL DEFAULT '1' AFTER `role_id`;

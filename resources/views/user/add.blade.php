@@ -138,6 +138,21 @@
                                             </fieldset>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>User Mapping<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userMapping" name="userMapping" title="Please Select User Mapping">
+                                                        <option value="1" selected>Sitewise</option>
+                                                        <option value="2">LocationWise</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div id="sitewise">
                                     <div class="form-actions left">
                                         <input type="button" id="showBtn" class="btn btn-success" value="Show Filter" />
                                     </div>
@@ -212,6 +227,36 @@
                                             <select name="search_to[]" id="search_to" class="form-control" size="8" multiple="multiple"></select>
                                         </div>
                                     </div>
+                                </div>
+                                <div id="locationwise">
+                                    <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Province Name
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceMappingId" name="provinceMappingId[]" title="Please select Province Name">
+                                                        @foreach($province as $row)
+                                                        <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12" id="districtBlock">
+                                            <fieldset>
+                                                <h5>District Name
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtMappingId" name="districtMappingId[]" title="Please select District  Name">
+
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
                                     <div class="form-actions right">
                                         <a href="/user">
                                             <button type="button" class="btn btn-warning mr-1">
@@ -281,7 +326,7 @@
 
         $("#provinceId").change(function() {
             var datas = $(this).val();
-            listDistrictForProvince();
+            listDistrictForProvince(true);
         });
         $("#districtId").change(function() {
             var datas = $(this).val();
@@ -294,6 +339,30 @@
 
         $('#showBtn').click(function() {
             $(this).val() == "Show Filter" ? showFilter() : hideFilter();
+        });
+        $("#locationwise").hide();
+        $('#userMapping').change(function() {
+            if($('#userMapping').val()==1){
+                $("#sitewise").show();
+                $("#locationwise").hide();
+            }else{
+                $("#sitewise").hide();
+                $("#locationwise").show();
+            }            
+        });
+
+        $('#provinceMappingId').select2({
+            placeholder: "Select Province Name",
+            allowClear: true,
+        });
+
+        $('#districtMappingId').select2({
+            placeholder: "Select District Name",
+            allowClear: true,
+        });
+        $("#provinceMappingId").change(function() {
+            var datas = $(this).val();                        
+            listDistrictForProvince(false);                     
         });
 
     });
@@ -481,7 +550,7 @@
         $("#showBtn").addClass("btn-success");
     }
 
-    function listDistrictForProvince() {
+    function listDistrictForProvince(isFilter) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -491,14 +560,18 @@
             url: "{{ url('/getDistrictByProvinceId') }}",
             method: 'post',
             data: {
-                provinceId: $("#provinceId").val(),
+                provinceId: isFilter ? $("#provinceId").val() : $("#provinceMappingId").val(),
             },
             success: function(result) {
                 var districtsOption = '';
                 result.forEach((res) => {
                     districtsOption += '<option value="' + res.district_id + '">' + res.district_name + '</option>';
                 });
-                $('#districtId').html(districtsOption);
+                if(isFilter){
+                    $('#districtId').html(districtsOption);
+                }else{
+                    $('#districtMappingId').html(districtsOption); 
+                }                
             }
         });
     }

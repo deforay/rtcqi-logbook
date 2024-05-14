@@ -152,84 +152,129 @@
                                 </fieldset>
                             </div>
                         </div>
-
-                        <div class="form-actions left">
-                            <input type="button" id="showBtn" class="btn btn-success" value="Show Filter" />
-                        </div>
-                        <div class="row filterDiv" style="display:none;">
-                            <div class="col-xl-4 col-lg-12">
-                                <fieldset>
-                                    <h5>Province Name
-                                    </h5>
-                                    <div class="form-group">
-                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
-                                            @foreach($province as $row)
-                                            <option value="{{$row->province_id}}">{{$row->province_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <fieldset>
-                                    <h5>District Name
-                                    </h5>
-                                    <div class="form-group">
-                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
-
-                                        </select>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <fieldset>
-                                    <h5>Sub District Name
-                                    </h5>
-                                    <div class="form-group">
-                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
-
-                                        </select>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-xl-4 col-lg-12">
-                                <button type="button" onclick="getAllTestSiteList();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                            </div>
-                        </div>
-                        <div class="form-actions left filterDiv" style="display:none;">
-
-                        </div>
-
                         <div class="row">
-                            <div class="col-xl-5 col-lg-12">
-                                <fieldset>
-                                    <h5>Test Site User Map Details
-                                    </h5>
-                                    <div class="form-group">
-                                        <select name="siteMap[]" id="search" class="form-control" size="8" multiple="multiple">
-                                            @foreach($test as $row)
-                                            <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>User Mapping<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userMapping" name="userMapping" title="Please Select User Mapping">
+                                                        <option value="1" <?php echo  $result[0]->user_mapping == 1 ?  "selected":  ""?>>Sitewise</option>
+                                                        <option value="2" <?php echo $result[0]->user_mapping == 2 ? "selected":  ""?>>LocationWise</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
-                                </fieldset>
+                        <div id="sitewise">
+                            <div class="form-actions left">
+                                <input type="button" id="showBtn" class="btn btn-success" value="Show Filter" />
+                            </div>
+                            <div class="row filterDiv" style="display:none;">
+                                <div class="col-xl-4 col-lg-12">
+                                    <fieldset>
+                                        <h5>Province Name
+                                        </h5>
+                                        <div class="form-group">
+                                            <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                @foreach($province as $row)
+                                                <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-4 col-lg-12">
+                                    <fieldset>
+                                        <h5>District Name
+                                        </h5>
+                                        <div class="form-group">
+                                            <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-4 col-lg-12">
+                                    <fieldset>
+                                        <h5>Sub District Name
+                                        </h5>
+                                        <div class="form-group">
+                                            <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xl-4 col-lg-12">
+                                    <button type="button" onclick="getAllTestSiteList();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="form-actions left filterDiv" style="display:none;">
+
                             </div>
 
-                            <div class="col-xl-1 col-lg-12"><br>
-                                <button type="button" id="search_rightAll" class="btn btn-secondary"><i class="ft-fast-forward"></i></button><br><br>
-                                <button type="button" id="search_rightSelected" class="btn btn-secondary"><i class="ft-chevron-right"></i></button><br><br>
-                                <button type="button" id="search_leftSelected" class="btn btn-secondary"><i class="ft-chevron-left"></i></button><br><br>
-                                <button type="button" id="search_leftAll" class="btn btn-secondary"><i class="ft-rewind"></i></button><br><br>
-                            </div>
+                            <div class="row">
+                                <div class="col-xl-5 col-lg-12">
+                                    <fieldset>
+                                        <h5>Test Site User Map Details
+                                        </h5>
+                                        <div class="form-group">
+                                            <select name="siteMap[]" id="search" class="form-control" size="8" multiple="multiple">
+                                                @foreach($test as $row)
+                                                <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
 
-                            <div class="col-xl-5 col-lg-12"><br>
-                                <select name="search_to[]" id="search_to" class="form-control" size="8" multiple="multiple">
-                                    @foreach($selectedSiteId as $row)
-                                    <option value="{{$row->ts_id}}" {{ in_array($row->ts_id, $testSiteId) ?  'selected':''}}>{{$row->site_name}}</option>
-                                    @endforeach
-                                </select>
+                                <div class="col-xl-1 col-lg-12"><br>
+                                    <button type="button" id="search_rightAll" class="btn btn-secondary"><i class="ft-fast-forward"></i></button><br><br>
+                                    <button type="button" id="search_rightSelected" class="btn btn-secondary"><i class="ft-chevron-right"></i></button><br><br>
+                                    <button type="button" id="search_leftSelected" class="btn btn-secondary"><i class="ft-chevron-left"></i></button><br><br>
+                                    <button type="button" id="search_leftAll" class="btn btn-secondary"><i class="ft-rewind"></i></button><br><br>
+                                </div>
+
+                                <div class="col-xl-5 col-lg-12"><br>
+                                    <select name="search_to[]" id="search_to" class="form-control" size="8" multiple="multiple">
+                                        @foreach($selectedSiteId as $row)
+                                        <option value="{{$row->ts_id}}" {{ in_array($row->ts_id, $testSiteId) ?  'selected':''}}>{{$row->site_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div id="locationwise">
+                                    <div class="row">
+                                    <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>Province Name
+                                                </h5>
+                                                <div class="form-group">
+                                                    
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceMappingId" name="provinceMappingId[]" title="Please select Province Name">
+                                                        @foreach($province as $row)
+                                                        <option value="{{$row->province_id}}" {{ in_array($row->province_id, $selectedProvinceIds) ?  'selected':''}} >{{$row->province_name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-12" id="districtBlock">
+                                            <fieldset>
+                                                <h5>District Name
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtMappingId" name="districtMappingId[]" title="Please select District  Name">
+
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                        
                         <div class="form-actions right">
                             <a href="/user">
                                 <button type="button" class="btn btn-warning mr-1">
@@ -256,6 +301,7 @@
 <script src="{{ asset('assets/js/jasny-bootstrap.js') }}"></script>
 <script>
     $(document).ready(function() {
+        
         $('#search').multiselect({
             search: {
                 left: '<input type="text" name="q" class="form-control" placeholder="<?php echo _("Search"); ?>..." />',
@@ -298,7 +344,7 @@
 
         $("#provinceId").change(function() {
             var datas = $(this).val();
-            listDistrictForProvince();
+            listDistrictForProvince(true);
         });
         $("#districtId").change(function() {
             var datas = $(this).val();
@@ -312,6 +358,40 @@
         $('#showBtn').click(function() {
             $(this).val() == "Show Filter" ? showFilter() : hideFilter();
         });
+        var a=<?php echo $result[0]->user_mapping;?>;
+        if(a==2){
+            $("#locationwise").show();
+            $("#sitewise").hide();
+            listDistrictForProvinceOnLoad();
+        }else{
+            $("#locationwise").hide();
+            $("#sitewise").show();
+        }
+        
+        $('#userMapping').change(function() {
+            if($('#userMapping').val()==1){
+                $("#sitewise").show();
+                $("#locationwise").hide();
+            }else{
+                $("#sitewise").hide();
+                $("#locationwise").show();
+            }            
+        });
+
+        $('#provinceMappingId').select2({
+            placeholder: "Select Province Name",
+            allowClear: true,
+        });
+
+        $('#districtMappingId').select2({
+            placeholder: "Select District Name",
+            allowClear: true,
+        });
+        $("#provinceMappingId").change(function() {
+            var datas = $(this).val();                        
+            listDistrictForProvince(false);                     
+        });
+
     });
 
     function checkStrength(password) {
@@ -499,8 +579,7 @@
         $("#showBtn").removeClass("btn-secondary");
         $("#showBtn").addClass("btn-success");
     }
-
-    function listDistrictForProvince() {
+    function listDistrictForProvince(isFilter) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -510,17 +589,51 @@
             url: "{{ url('/getDistrictByProvinceId') }}",
             method: 'post',
             data: {
-                provinceId: $("#provinceId").val(),
+                provinceId: isFilter ? $("#provinceId").val() : $("#provinceMappingId").val(),
             },
             success: function(result) {
                 var districtsOption = '';
                 result.forEach((res) => {
                     districtsOption += '<option value="' + res.district_id + '">' + res.district_name + '</option>';
                 });
-                $('#districtId').html(districtsOption);
+                if(isFilter){
+                    $('#districtId').html(districtsOption);
+                }else{
+                    $('#districtMappingId').html(districtsOption); 
+                }                
             }
         });
     }
+    function listDistrictForProvinceOnLoad() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        $.ajax({
+            url: "{{ url('/getDistrictByProvinceId') }}",
+            method: 'post',
+            data: {
+                provinceId: $("#provinceMappingId").val(),
+            },
+            success: function(result) {
+                var districtsOption = '';
+                
+                result.forEach((res) => {
+                    
+                    districtsOption += '<option value="' + res.district_id + '" '+getSelected(res.district_id)+'>' + res.district_name + '</option>';
+                });
+                
+                    $('#districtMappingId').html(districtsOption); 
+                               
+            }
+        });
+    }
+    function getSelected(district_id){
+        $value=<?php echo json_encode($selectedDistrictIds)?>;
+        return $value.includes(district_id)? "selected" : "";
+    }    
 
     function listSubDistrictForDistrict() {
         $.ajaxSetup({
