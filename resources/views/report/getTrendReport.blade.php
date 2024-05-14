@@ -375,7 +375,12 @@ series: [{
   };
   var chart = new Highcharts.Chart(chartData);
     console.log(JSON.stringify(chartData));
+
+    $('#trendTable').DataTable( {
+        "order": [[ 3, "desc" ]],
+    });
   });
 </script>
+
      
     
