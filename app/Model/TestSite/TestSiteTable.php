@@ -55,6 +55,29 @@ class TestSiteTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                 ]
             );
+            
+            $list_users = DB::table('users_location_map')
+            ->select('users_location_map.user_id')
+            ->where('users_location_map.province_id', '=', $data['provincesssId'])
+            ->where('users_location_map.district_id', '=', $data['districtId'])            
+            ->get();
+            if(count($list_users)==0){
+                $list_users = DB::table('users_location_map')
+            ->select('user_id')
+            ->where('users_location_map.province_id', '=', $data['provincesssId']);
+            
+            }
+            if(count($list_users) > 0){
+                for($i=0; $i < count($list_users); $i++){
+                    DB::table('users_testsite_map')->insertGetId(
+                        [
+                            'user_id' => $list_users[$i]->user_id,
+                            'ts_id'=>$id
+                        ]
+                        );
+                }
+
+            }
             $commonservice->eventLog('add-test-site-request', $user_name . ' has added the test site information for ' . $data['siteName'] . ' Name', 'test-site',$userId);
         }
 
@@ -141,6 +164,7 @@ class TestSiteTable extends Model
     // Update particular TestSite details
     public function updateTestSite($params, $id)
     {
+        
         $userId = null;
         $user_name = session('name');
         $commonservice = new CommonService();
@@ -173,16 +197,14 @@ class TestSiteTable extends Model
             'site_district' => $data['districtId'],
             'site_sub_district' => $data['subDistrictId'],
             'site_type' => $site_type,
-            'site_implementing_partner_id' => $data['implementingPartnerId'],
-                    
+            'site_implementing_partner_id' => $data['implementingPartnerId'],                    
             'updated_by' => session('userId')
         );
         $response = DB::table('test_sites')
             ->where('ts_id', '=', base64_decode($id))
-            ->update(
-                $testData
-            );
+            ->update($testData);
         if ($response == 1) {
+            
             $response = DB::table('test_sites')
                 ->where('ts_id', '=', base64_decode($id))
                 ->update(
@@ -190,6 +212,29 @@ class TestSiteTable extends Model
                         'updated_on' => $commonservice->getDateTime()
                     )
                 );
+                $testSiteResponse = DB::delete('delete from users_testsite_map where ts_id = ?', [base64_decode($id)]);
+                $list_users = DB::table('users_location_map')
+            ->select('users_location_map.user_id')
+            ->where('users_location_map.province_id', '=', $data['provincesssId'])
+            ->where('users_location_map.district_id', '=', $data['districtId'])            
+            ->get();
+            if(count($list_users)==0){
+                $list_users = DB::table('users_location_map')
+            ->select('user_id')
+            ->where('users_location_map.province_id', '=', $data['provincesssId']);
+            
+            }
+            if(count($list_users) > 0){
+                for($i=0; $i < count($list_users); $i++){
+                    DB::table('users_testsite_map')->insertGetId(
+                        [
+                            'user_id' => $list_users[$i]->user_id,
+                            'ts_id'=>base64_decode($id)
+                        ]
+                        );
+                }
+
+            }
             $commonservice->eventLog('update-test-site-request', $user_name . ' has updated the test site information for ' . $data['siteName'] . ' Name', 'test-site',$userId);
         }
         return $response;

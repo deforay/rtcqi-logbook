@@ -115,13 +115,25 @@ class UserController extends Controller
             $testSite = $TestSiteService->getAllActiveTestSite();
             $result = $UserService->getUserById($id);
             $selectedSiteId = $UserFacilityMapService->getUserSiteById($id);
+            $selectedLocations = $UserFacilityMapService->getUserLocationById($id);
+            
             $resourceResult = $RoleService->getAllRole();
             $province = $ProvinceService->getAllActiveProvince();
             $testSiteId = array(); 
             foreach($selectedSiteId as $value) {
                 $testSiteId[] = $value->ts_id;
             }
-            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult,'selectedSiteId'=>$selectedSiteId,'province' => $province));
+
+            $selectedProvinceIds = array();
+            foreach ($selectedLocations as $value) {
+                $selectedProvinceIds[] = $value->province_id;
+            }
+
+            $selectedDistrictIds = array();
+            foreach ($selectedLocations as $value) {
+                $selectedDistrictIds[] = $value->district_id;
+            }
+            return view('user.edit',array('result'=>$result,'id'=>$id,'test'=>$testSite,'testSiteId' => $testSiteId,'roleId'=>$resourceResult,'selectedSiteId'=>$selectedSiteId,'selectedProvinceIds'=>$selectedProvinceIds,'selectedDistrictIds'=>$selectedDistrictIds,'province' => $province));
         }
     }
 

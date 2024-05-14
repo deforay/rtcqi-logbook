@@ -71,6 +71,14 @@ class UserFacilityMapService
         return $model->fetchUserSiteById($id);
 	}
 	
+	//Get Particular UserLocationMap Details
+	public function getUserLocationById($id)
+	{
+		
+		$model = new UserFacilityMapTable();
+        return $model->fetchUserLocationById($id);
+	}
+	
 }
 
 ?>

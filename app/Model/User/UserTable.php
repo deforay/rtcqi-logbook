@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
 use App\Service\UserService;
+use App\Service\DistrictService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Mail;
@@ -23,11 +24,13 @@ class UserTable extends Model
         //to get all request values
         $userId = null;
         $data = $request->all();
-        $user_name = session('name');
+        $user_name = session('name');     
+        
         //dd($data);die;
         $commonservice = new CommonService();
+        DB::beginTransaction();
         if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
-            $id = DB::table('users')->insertGetId(
+           $id = DB::table('users')->insertGetId(
                 [
                     'first_name' => $data['firstName'],
                     'last_name' => $data['lastName'],
@@ -38,25 +41,90 @@ class UserTable extends Model
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
                     'force_password_reset' => 1,
-                    'role_id' => $data['roleId']
+                    'role_id' => $data['roleId'],
+                    'user_mapping'=>$data['userMapping']
                 ]
             );
-            if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
-                $selectedSiteName = explode(",", $data['testSiteName']);
-                $uniqueSiteId = array_unique($selectedSiteName);
-                $counter = count($selectedSiteName);
-                for ($x = 0; $x < $counter; $x++) {
-                    if (isset($uniqueSiteId[$x])) {
-                        $userFacility = DB::table('users_testsite_map')->insertGetId(
+            if($data['userMapping'] == 1){
+                if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
+                    $selectedSiteName = explode(",", $data['testSiteName']);
+                    $uniqueSiteId = array_unique($selectedSiteName);
+                    $counter = count($selectedSiteName);
+                    for ($x = 0; $x < $counter; $x++) {
+                        if (isset($uniqueSiteId[$x])) {
+                            $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                [
+                                    'user_id' => $id,
+                                    'ts_id' => $selectedSiteName[$x],
+                                ]
+                            );
+                        }
+                    }
+                }
+
+            }else{
+                if(count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0){
+                    for ($i = 0; $i < count($data['provinceMappingId']); $i++) {
+                        $newLocationMappingId=DB::table('users_location_map')->insertGetId(
                             [
                                 'user_id' => $id,
-                                'ts_id' => $selectedSiteName[$x],
+                                'province_id' => $data['provinceMappingId'][$i],
+                                'district_id'=>null
                             ]
                         );
+                        
+                            $selectedSites = DB::table('test_sites')
+                                ->select('ts_id')
+                                ->where('site_province', '=', $data['provinceMappingId'][$i])
+                                ->get();
+                                if(count($selectedSites) > 0){
+                                    for ($i = 0; $i < count($selectedSites); $i++) {
+                                        $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                            [
+                                                'user_id' => $id,
+                                                'ts_id' => $selectedSites[$i]->ts_id,
+                                            ]
+                                        );
+                                    }
+                                }
+                        
+                    }
+                } else if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) > 0) {
+                    for ($i = 0; $i < count($data['districtMappingId']); $i++) {
+                        $districtservice = new DistrictService();
+                        $districtDetail=$districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
+                    $province_id=$districtDetail[0]->province_id;
+                    DB::table('users_location_map')->insertGetId(
+                            [
+                                'user_id' => $id,
+                                'province_id' => $province_id,
+                                'district_id' => $data['districtMappingId'][$i]
+                            ]
+                        );
+                        
+                            $selectedSites = DB::table('test_sites')
+                                ->select('ts_id')
+                                ->where('site_province', '=', $province_id)
+                                ->where('site_district', '=', $data['districtMappingId'][$i])
+                                ->get();
+                              //print_r();exit();
+                            if (count($selectedSites) > 0) {
+                                for ($i = 0; $i < count($selectedSites); $i++) {
+                                    $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                        [
+                                            'user_id' => $id,
+                                            'ts_id' => $selectedSites[$i]->ts_id,
+                                        ]
+                                    );
+                                }
+                            
+                        }
                     }
                 }
             }
+            DB::commit();
             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user', $userId);
+        
         }
 
         return $id;
@@ -166,7 +234,8 @@ class UserTable extends Model
             'phone' => $data['mobileNo'],
             'user_status' => $data['userStatus'],
             'role_id' => $data['roleId'],
-            'updated_by' => session('userId')
+            'updated_by' => session('userId'),
+            'user_mapping'=>$data['userMapping']
         );
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
@@ -193,7 +262,8 @@ class UserTable extends Model
                 );
             $commonservice->eventLog('update-user-request', $user_name . ' has updated the user information for - ' . $data['firstName'], 'user', $userId);
         }
-        $response = DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
+        $testSiteResponse = DB::delete('delete from users_testsite_map where user_id = ?', [base64_decode($id)]);
+        $locationResponse = DB::delete('delete from users_location_map where user_id = ?', [base64_decode($id)]);
         if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
             $selectedSiteName = explode(",", $data['testSiteName']);
             $uniqueSiteId = array_unique($selectedSiteName);
@@ -206,6 +276,84 @@ class UserTable extends Model
                             'ts_id' => $selectedSiteName[$x],
                         ]
                     );
+                }
+            }
+        }
+
+        if($data['userMapping'] == 1){
+            if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
+                $selectedSiteName = explode(",", $data['testSiteName']);
+                $uniqueSiteId = array_unique($selectedSiteName);
+                $counter = count($selectedSiteName);
+                for ($x = 0; $x < $counter; $x++) {
+                    if (isset($uniqueSiteId[$x])) {
+                        $userFacility = DB::table('users_testsite_map')->insertGetId(
+                            [
+                                'user_id' => base64_decode($id),
+                                'ts_id' => $selectedSiteName[$x],
+                            ]
+                        );
+                    }
+                }
+            }
+
+        }else{
+            if(count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0){
+                for ($i = 0; $i < count($data['provinceMappingId']); $i++) {
+                    $newLocationMappingId=DB::table('users_location_map')->insertGetId(
+                        [
+                            'user_id' => base64_decode($id),
+                            'province_id' => $data['provinceMappingId'][$i],
+                            'district_id'=>null
+                        ]
+                    );
+                    
+                        $selectedSites = DB::table('test_sites')
+                            ->select('ts_id')
+                            ->where('site_province', '=', $data['provinceMappingId'][$i])
+                            ->get();
+                            if(count($selectedSites) > 0){
+                                for ($i = 0; $i < count($selectedSites); $i++) {
+                                    $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                        [
+                                            'user_id' => base64_decode($id),
+                                            'ts_id' => $selectedSites[$i]->ts_id,
+                                        ]
+                                    );
+                                }
+                            }
+                    
+                }
+            } else if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) > 0) {
+                for ($i = 0; $i < count($data['districtMappingId']); $i++) {
+                    $districtservice = new DistrictService();
+                    $districtDetail=$districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
+                    $province_id=$districtDetail[0]->province_id;
+                    DB::table('users_location_map')->insertGetId(
+                        [
+                            'user_id' => base64_decode($id),
+                            'province_id' => $province_id,
+                            'district_id' => $data['districtMappingId'][$i]
+                        ]
+                    );
+                    
+                        $selectedSites = DB::table('test_sites')
+                            ->select('ts_id')
+                            ->where('site_province', '=', $province_id)
+                            ->where('site_district', '=', $data['districtMappingId'][$i])
+                            ->get();
+                          //print_r();exit();
+                        if (count($selectedSites) > 0) {
+                            for ($i = 0; $i < count($selectedSites); $i++) {
+                                $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                    [
+                                        'user_id' => base64_decode($id),
+                                        'ts_id' => $selectedSites[$i]->ts_id,
+                                    ]
+                                );
+                            }
+                        
+                    }
                 }
             }
         }
