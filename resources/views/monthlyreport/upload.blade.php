@@ -26,6 +26,8 @@
             </div>
 
         </div>
+
+     
         <div class="content-header-right col-md-6 col-12 ">
             <div class="dropdown float-md-right ml-1">
                 @if($global['no_of_test'] == 1)
@@ -42,6 +44,7 @@
 
         </div>
     </div>
+   
     @if (isset($status))
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">
         <div class="text-center" style=""><b>
@@ -55,6 +58,21 @@
         $('#show_alert_index').delay(7000).fadeOut();
     </script>
     @endif
+
+    @if(isset($error))
+    <div class="alert alert-danger alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index_error">
+        <div class="text-center" style=""><b>
+        {!! $error !!}</b></div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <script>
+        // ses = "{{ session('status') }}"
+        // $('#modalBody').html(ses)
+        $('#show_alert_index_error').delay(7000).fadeOut();
+    </script>
+    @endif
+    
     <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-2" id="showAlertdiv" role="alert" style="display:none"><span id="showAlertIndex"></span>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>

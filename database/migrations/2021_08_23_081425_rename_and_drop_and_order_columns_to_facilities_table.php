@@ -22,7 +22,7 @@ class RenameAndDropAndOrderColumnsToFacilitiesTable extends Migration
             $table->dropColumn('facility_region');
             $table->integer('facility_province')->nullable()->after('facility_address2');        
             $table->integer('facility_district')->nullable()->after('facility_province');
-            $table->foreign('facility_province')->references('province_id')->on('provinces');
+            $table->foreign('facility_province')->references('provincesss_id')->on('provinces');
             $table->foreign('facility_district')->references('district_id')->on('districts');
     
         });

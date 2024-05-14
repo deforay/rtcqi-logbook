@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Request;
+use App\Service\GlobalConfigService;
 
 $role = session('role');
 // dd($role);
@@ -11,6 +12,29 @@ $test = '';
 $report = '';
 $import = '';
 $accessControl = '';
+
+$profileURl="/user/profile/".base64_encode(session('userId'));
+$GlobalConfigService = new GlobalConfigService();
+$glob = $GlobalConfigService->getAllGlobalConfig();
+$messages=Lang::get('messages');
+
+// dd($globData);die;
+$arr = array();
+// now we create an associative array so that we can easily create view variables
+for ($i = 0; $i < sizeof($glob); $i++) {
+	$arr[$glob[$i]->global_name] = $glob[$i]->global_value;
+}
+
+
+if(($arr["logo"])){
+	$Logo = '<img class="brand-logo" alt="rtcqi logbook logo" src="{{ url($arr["logo"])}}" style="max-height: 70px;">';
+}
+else{
+	$Logo = '<img class="brand-logo" alt="rtcqi logbook logo" src="{{ asset("assets/images/default-logo.png")}}" style="max-height: 70px;">';
+}
+
+
+						
 if (isset($role['App\\Http\\Controllers\\Dashboard\\DashboardController']['index']) && ($role['App\\Http\\Controllers\\Dashboard\\DashboardController']['index'] == "allow"))
 	$dashboard = '<li class="dropdown nav-item"   ><a href="/dashboard" id="dashboard" class=" nav-link" ><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">'.Lang::get('messages.dashboard').'</span></a></li>';
 if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index']) && ($role['App\\Http\\Controllers\\AllowedTestKit\\AllowedTestKitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\District\\DistrictController']['index']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Facility\\FacilityController']['index']) && ($role['App\\Http\\Controllers\\Facility\\FacilityController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index']) && ($role['App\\Http\\Controllers\\GlobalConfig\\GlobalConfigController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\Province\\ProvinceController']['index']) && ($role['App\\Http\\Controllers\\Province\\ProvinceController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index']) && ($role['App\\Http\\Controllers\\SiteType\\SiteTypeController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\User\\UserController']['index']) && ($role['App\\Http\\Controllers\\User\\UserController']['index'] == "allow")) || (isset($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index']) && ($role['App\\Http\\Controllers\\AuditTrail\\AuditTrailController']['index'] == "allow"))) {
@@ -95,10 +119,12 @@ if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportContr
 <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-dark navbar-without-dd-arrow navbar-shadow" role="navigation" data-menu="menu-wrapper">
 	<div class="navbar-container main-menu-content" data-menu="menu-container">
 		<ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
+			@php echo $Logo; @endphp
 			@php echo $dashboard; @endphp
 			@php echo $manage; @endphp
 			@php echo $test; @endphp
 			@php echo $report; @endphp
+
 			
 			<?php if(trim($monitoringReport)!=""){ ?>
 				<li class="dropdown nav-item" data-menu="dropdown"><a id="monitoringReport" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title"><?php echo Lang::get('Monitoring Reports') ?> </span></a>
@@ -107,6 +133,20 @@ if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportContr
 					</ul>
 				</li>		
 			<?php } ?>
+
+			<li class="dropdown nav-item profil" data-menu="dropdown" style="float-align: right"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">@if (session('username')) {{ ucfirst(session('username')) }} @endif</span><span class="avatar avatar-online"><img src="{{ asset('assets/images/default-profile-picture.jpg')}}" alt="avatar"><i></i></span></a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" href="{{$profileURl}}"><i class="ft-user"></i> {{ $messages['edit_profile']}}</a>
+					<a class="dropdown-item" href="/changePassword"><i class="ft-user"></i> {{ $messages['change_password']}}</a>
+					<!-- <a class="dropdown-item" href="app-kanban.html"><i class="ft-clipboard"></i> Todo</a>
+					<a class="dropdown-item" href="user-cards.html"><i class="ft-check-square"></i> Task</a> -->
+					<div class="dropdown-divider"></div>
+					<form action="/logout/{{ base64_encode(session('name'))}}" name="logoutForm" id="logoutForm" method="POST">
+						@csrf
+						<button type="submit" class="dropdown-item"><i class="ft-power"></i> {{ $messages['logout']}}</button>
+					</form>
+				</div>
+			</li>
 		</ul>
 	</div>
 
