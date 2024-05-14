@@ -36,6 +36,9 @@
   top: 0;
   padding-right: 1rem;
 }
+#trendTable .sorting, .sorting_asc, .sorting_desc {
+    background : none;
+}
   /* .select2-selection__clear{display:none;}
   #show_alert{display:none;}
   .spanFont{font-size:16px;}
