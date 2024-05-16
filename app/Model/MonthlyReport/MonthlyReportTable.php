@@ -1860,14 +1860,12 @@ class MonthlyReportTable extends Model
                         }
                         $rowCnt++;
                     }
-                    //echo $rowCnt;exit;
                     if ($cnt > 0) {
-                        echo $rowCnt;
-                        if($rowCnt == 1){
+                        if($cnt == 1){
                             $siteNameString=$siteName[0];
-                        }else if($rowCnt == 2){
+                        }else if($cnt == 2){
                             $siteNameString=$siteName[0].', '.$siteName[1];
-                        }else if($rowCnt > 2){
+                        }else if($cnt > 2){
                             $siteNameString=$siteName[0].', '.$siteName[1].' etc.';
                         }
                         $commonservice->eventLog('import-monthly-report', $user_name . ' uploaded Bulk Monthly Report for '.$siteNameString, 'monthly-report', $mr_id);
