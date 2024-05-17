@@ -16,7 +16,7 @@
         "laravel/tinker": "^2.8",
         "maatwebsite/excel": "*",
         "milon/barcode": "^11.0",
-        "yajra/laravel-datatables-oracle": "*"
+        "yajra/laravel-datatables-oracle": "^10.11"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^1.0",
