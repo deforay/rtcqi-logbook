@@ -12,7 +12,7 @@
 
 <?php
 $enddate = date('d-M-Y');
-$startdate = date('d-M-Y', strtotime('-29 days'));
+$startdate = date('d-M-Y', strtotime('-179 days'));
 $messages = Lang::get('messages');
 ?>
 
@@ -205,7 +205,7 @@ $messages = Lang::get('messages');
             window.localStorage.removeItem('monthlyReportSearchDate');
             window.localStorage.removeItem('site_id');
         }
-        
+
         getAllMonthlyReport();
         $.unblockUI();
         $('.js-example-basic-multiple').select2();
@@ -364,7 +364,7 @@ $messages = Lang::get('messages');
                 format: 'DD-MMM-YYYY',
                 autoUpdateInput: false,
                 separator: ' to ',
-                startDate: moment().subtract('days', 29),
+                startDate: moment().subtract('days', 179),
                 endDate: moment(),
                 maxDate: moment(),
                 ranges: {
