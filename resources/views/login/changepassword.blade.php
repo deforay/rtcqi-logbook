@@ -179,7 +179,7 @@
 
 		function checkStrength(password) {
 			var strength = 0
-			if (password.length < 7) {
+			if (password.length < 8) {
 				$('#result').removeClass()
 				$('#result').addClass('short')
 				$('#passwordCheck').val('')
@@ -187,7 +187,7 @@
 				$(".invalid-feedback").show();
 				return 'Too short'
 			}
-			if (password.length > 7) strength += 1
+			if (password.length > 8) strength += 1
 			// If password contains both lower and uppercase characters, increase strength value.
 			if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
 			// If it has numbers and characters, increase strength value.
