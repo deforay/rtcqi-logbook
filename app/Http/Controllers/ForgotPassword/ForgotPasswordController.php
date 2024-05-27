@@ -40,7 +40,7 @@ class ForgotPasswordController extends Controller
 
         Mail::send('email.forgetPassword', ['token' => $token], function($message) use($email){
             $message->to($email);
-            $message->subject('Reset Password');
+            $message->subject('Reset Password On '.env('APP_URL'));
         });
 
         $response = array('status' => 'success', 'message' => 'We have sent you a mail to reset your password');
@@ -80,7 +80,7 @@ class ForgotPasswordController extends Controller
      public function submitResetPasswordForm(Request $request)
      {
          $request->validate([
-             'password' => 'required|string|min:6|confirmed',
+             'password' => 'required|string|min:8|confirmed',
              'password_confirmation' => 'required'
          ]);
  

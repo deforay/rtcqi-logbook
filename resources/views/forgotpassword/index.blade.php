@@ -66,9 +66,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
 <style>
   html body.bg-full-screen-image {
     /*background: #63bef9  !important;*/
-    background:url({{ asset('assets/images/1.jpg')
-  }
-  }) !important;
+    background:url({{ asset('assets/images/1.jpg')}}) !important;
   background-size: cover !important;
   }
 
@@ -147,7 +145,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                         </div>
                       </fieldset>
 
-                      <button type="submit" class="btn btn-outline-info btn-block"><i class="ft-unlock"></i> Reset Password</button>
+                      <button type="submit" onclick="validateNow();return false;" class="btn btn-outline-info btn-block"><i class="ft-unlock"></i> Reset Password</button>
                     </form>
 
 
@@ -177,18 +175,65 @@ for ($i = 0; $i < sizeof($glob); $i++) {
 </html>
 <script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
 <script>
+  function validateNow(){
+    $("#error-password").hide();
+    $("#error-confirm-password").hide(); 
+
+    if ($("#password").val()=="") {
+      $("#error-password").show();
+      $("#error-password").text("please enter new password");
+      return false;
+    } 
+      
+    var regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).+$/;
+    
+    if(!(regex.test($("#password").val()))) {
+      $("#error-password").show();
+      $("#error-password").text("must contain atleast 8 characters, 1 number , 1 alphabet and 1 special character characters required");
+      $("#password").val('');
+      return false;
+    }
+    if($("#password_confirmation").val()=="") {
+      $("#error-confirm-password").show();
+      $("#error-confirm-password").text("please enter confirm password");
+      return false;      
+    }
+    if ($("#password_confirmation").val() != $("#password").val()) {
+      $("#error-confirm-password").show();
+      $("#error-confirm-password").text("New Password and Confirm Password does not match");
+      return false;
+    } 
+      
+    $("#error-password").text("");
+    $("#error-confirm-password").text("");
+    $("#error-password").hide();
+    $("#error-confirm-password").hide();
+    $("#resetPassword").submit();
+    return true;
+  }
+  
   $(document).ready(function() {
-    $("#password").on('keyup', function() {
-      if ($(this).val().length <= 5) {
+    $("#password").on('change', function() {
+      var password = $(this).val();
+      if (password.length < 8) {
         $("#error-password").show();
-        $("#error-password").text("Atleast minimum 5 characters required");
-      } else {
-        $("#error-password").text("");
-        $("#error-password").hide();
+        $("#error-password").text("must contain atleast 8 characters, 1 number , 1 alphabet and 1 special character characters required");
+        $("#password").val('');
+        return false;
+      } 
+      var regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).+$/;
+      if(!(regex.test(password))) {      
+        $("#error-password").show();
+        $("#error-password").text("must contain atleast 8 characters, 1 number , 1 alphabet and 1 special character characters required");
+        $("#password").val('');
+        return false;
       }
+     
+      $("#error-password").text("");
+        $("#error-password").hide();
     });
 
-    $("#password_confirmation").on('keyup', function() {
+    $("#password_confirmation").on('change', function() {
       if ($(this).val() != $("#password").val()) {
         $("#error-confirm-password").show();
         $("#error-confirm-password").text("New Password and Confirm Password does not match");
