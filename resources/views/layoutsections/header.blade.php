@@ -7,7 +7,7 @@
 <meta name="csrf-token" content="{{csrf_token()}}">
 <title>RTCQI LOGBOOK</title>
 <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/googleapis-family-open-sans.css')}}">
 
 <!-- BEGIN: Vendor CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/vendors.min.css')}}">
@@ -20,7 +20,7 @@
 <!-- BEGIN: Theme CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/bootstrap-extended.css')}}">
-<link rel="stylesheet" type="text/css" href="{{     asset('app-assets/css/colors.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/colors.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/components.css')}}">
 <!-- END: Theme CSS-->
 
@@ -46,15 +46,15 @@
 <script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
 <!-- BEGIN Vendor JS-->
 <!-- BEGIN: Custom CSS-->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/moment.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/daterangepicker.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/daterangepicker.css')}}" />
+<script type="text/javascript" src="{{asset('assets/js/highcharts/highstock.js')}}"></script>
+<script src="{{asset('assets/js/highcharts/highcharts.js')}} "></script>
+<script src="{{asset('assets/js/highcharts/exporting.js')}}"></script>
+<script src="{{asset('assets/js/highcharts/export-data.js')}}"></script>
+<script src="{{asset('assets/js/highcharts/accessibility.js')}}"></script>
 
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/js/datepicker/datepicker3.css')}}">
 <script src="{{ asset('app-assets/vendors/js/forms/extended/typeahead/typeahead.bundle.min.js') }}" type="text/javascript"></script>
