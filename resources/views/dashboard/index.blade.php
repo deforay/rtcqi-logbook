@@ -177,7 +177,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
-                            <div id="monthly-report-map" class="height-500">
+                            <div id="monthly-report-map" class="height-550">
 
                                 <div id="map">
 
@@ -267,7 +267,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
         </div>
     </div>
 </div>
-<div class="card">
+<!-- <div class="card">
     <div class="card-content">
         <div class="row" style="padding:10px;">
             <div class="col-12">
@@ -276,7 +276,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="card">
     <div class="card-content">
         <div class="row" style="padding:10px;">
@@ -396,20 +396,20 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
 
                 // visualize the markers on the map
                 for (let i = 0; i < coordinates.length; i++) {
-                   var marker= L.marker([coordinates[i][0], coordinates[i][1]], {
+                    var marker = L.marker([coordinates[i][0], coordinates[i][1]], {
                             icon: myIcon
                         }).bindPopup(coordinates[i][2])
                         .addTo(map).on('mouseover', function(e) {
-        this.openPopup();
-    })
-    .on('mouseout', function(e) {
-        this.closePopup();
-    });
-    marker.on('click', function(e) {
-        localStorage.setItem('monthlyReportSearchDate', searchDate);
-        localStorage.setItem('site_id', coordinates[i][3]);
-        window.open('/monthlyreport');
-    });
+                            this.openPopup();
+                        })
+                        .on('mouseout', function(e) {
+                            this.closePopup();
+                        });
+                    marker.on('click', function(e) {
+                        localStorage.setItem('monthlyReportSearchDate', searchDate);
+                        localStorage.setItem('site_id', coordinates[i][3]);
+                        window.open('/monthlyreport');
+                    });
 
 
                 };
@@ -417,51 +417,52 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
         });
     }
 
-    var options = {
-        series: [{
-            name: 'Count',
-            data: [<?php
-                    foreach ($monthWiseCount['period'] as $date) {
-                        $callCount = (isset($monthWiseCount['data'][$date]) && trim($monthWiseCount['data'][$date]) != '') ? $monthWiseCount['data'][$date] : 0;
-                        echo $callCount . ",";
-                    }
-                    ?>]
-        }],
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '55%',
-            }
-        },
-        dataLabels: {
-            enabled: true
-        },
-        stroke: {
-            show: true,
-            width: 2,
-            colors: ['transparent']
-        },
-        xaxis: {
-            categories: [
-                <?php foreach ($monthWiseCount['period'] as $res) { ?> '<?php echo $res; ?>',
-                <?php } ?>
-            ]
-        },
-        yaxis: {
-            min: 0,
-            title: {
-                text: 'Total'
-            }
-        },
+    // var options = {
+    //     series: [{
+    //         name: 'Count',
+    //         data: [<?php
+                        //                 foreach ($monthWiseCount['period'] as $date) {
+                        //                     $callCount = (isset($monthWiseCount['data'][$date]) && trim($monthWiseCount['data'][$date]) != '') ? $monthWiseCount['data'][$date] : 0;
+                        //                     echo $callCount . ",";
+                        //                 }
+                        //
+                        ?>]
+    //     }],
+    //     chart: {
+    //         type: 'bar',
+    //         height: 350
+    //     },
+    //     plotOptions: {
+    //         bar: {
+    //             horizontal: false,
+    //             columnWidth: '55%',
+    //         }
+    //     },
+    //     dataLabels: {
+    //         enabled: true
+    //     },
+    //     stroke: {
+    //         show: true,
+    //         width: 2,
+    //         colors: ['transparent']
+    //     },
+    //     xaxis: {
+    //         categories: [
+    //             <?php foreach ($monthWiseCount['period'] as $res) { ?> '<?php echo $res; ?>',
+    //             <?php } ?>
+    //         ]
+    //     },
+    //     yaxis: {
+    //         min: 0,
+    //         title: {
+    //             text: 'Total'
+    //         }
+    //     },
 
-    };
+    // };
 
-    var chart = new ApexCharts(document.querySelector("#lastTwelveMonthlyChart"), options);
-    chart.render();
+    // var chart = new ApexCharts(document.querySelector("#lastTwelveMonthlyChart"), options);
+    // chart.render();
 
     var options = {
         series: [{

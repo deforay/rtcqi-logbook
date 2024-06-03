@@ -24,13 +24,13 @@ class UserTable extends Model
         //to get all request values
         $userId = null;
         $data = $request->all();
-        $user_name = session('name');     
-        
+        $user_name = session('name');
+
         //dd($data);die;
         $commonservice = new CommonService();
         DB::beginTransaction();
         if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
-           $id = DB::table('users')->insertGetId(
+            $id = DB::table('users')->insertGetId(
                 [
                     'first_name' => $data['firstName'],
                     'last_name' => $data['lastName'],
@@ -42,10 +42,10 @@ class UserTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                     'force_password_reset' => 1,
                     'role_id' => $data['roleId'],
-                    'user_mapping'=>$data['userMapping']
+                    'user_mapping' => $data['userMapping']
                 ]
             );
-            if($data['userMapping'] == 1){
+            if ($data['userMapping'] == 1) {
                 if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
                     $selectedSiteName = explode(",", $data['testSiteName']);
                     $uniqueSiteId = array_unique($selectedSiteName);
@@ -61,70 +61,66 @@ class UserTable extends Model
                         }
                     }
                 }
-
-            }else{
-                if(count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0){
+            } else {
+                if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0) {
                     for ($i = 0; $i < count($data['provinceMappingId']); $i++) {
-                        $newLocationMappingId=DB::table('users_location_map')->insertGetId(
+                        $newLocationMappingId = DB::table('users_location_map')->insertGetId(
                             [
                                 'user_id' => $id,
                                 'province_id' => $data['provinceMappingId'][$i],
-                                'district_id'=>null
+                                'district_id' => null
                             ]
                         );
-                        
-                            $selectedSites = DB::table('test_sites')
-                                ->select('ts_id')
-                                ->where('site_province', '=', $data['provinceMappingId'][$i])
-                                ->get();
-                                if(count($selectedSites) > 0){
-                                    for ($i = 0; $i < count($selectedSites); $i++) {
-                                        $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                            [
-                                                'user_id' => $id,
-                                                'ts_id' => $selectedSites[$i]->ts_id,
-                                            ]
-                                        );
-                                    }
-                                }
-                        
+
+                        $selectedSites = DB::table('test_sites')
+                            ->select('ts_id')
+                            ->where('site_province', '=', $data['provinceMappingId'][$i])
+                            ->get();
+                        if (count($selectedSites) > 0) {
+                            for ($i = 0; $i < count($selectedSites); $i++) {
+                                $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                    [
+                                        'user_id' => $id,
+                                        'ts_id' => $selectedSites[$i]->ts_id,
+                                    ]
+                                );
+                            }
+                        }
                     }
                 } else if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) > 0) {
                     for ($i = 0; $i < count($data['districtMappingId']); $i++) {
                         $districtservice = new DistrictService();
-                        $districtDetail=$districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
-                    $province_id=$districtDetail[0]->province_id;
-                    DB::table('users_location_map')->insertGetId(
+                        $districtDetail = $districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
+                        $province_id = $districtDetail[0]->province_id;
+                        DB::table('users_location_map')->insertGetId(
                             [
                                 'user_id' => $id,
                                 'province_id' => $province_id,
                                 'district_id' => $data['districtMappingId'][$i]
                             ]
                         );
-                        
-                            $selectedSites = DB::table('test_sites')
-                                ->select('ts_id')
-                                ->where('site_province', '=', $province_id)
-                                ->where('site_district', '=', $data['districtMappingId'][$i])
-                                ->get();
-                              //print_r();exit();
-                            if (count($selectedSites) > 0) {
-                                for ($i = 0; $i < count($selectedSites); $i++) {
-                                    $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                        [
-                                            'user_id' => $id,
-                                            'ts_id' => $selectedSites[$i]->ts_id,
-                                        ]
-                                    );
-                                }
-                            
+
+                        $selectedSites = DB::table('test_sites')
+                            ->select('ts_id')
+                            ->where('site_province', '=', $province_id)
+                            ->where('site_district', '=', $data['districtMappingId'][$i])
+                            ->get();
+                        //print_r();exit();
+                        if (count($selectedSites) > 0) {
+                            for ($i = 0; $i < count($selectedSites); $i++) {
+                                $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                    [
+                                        'user_id' => $id,
+                                        'ts_id' => $selectedSites[$i]->ts_id,
+                                    ]
+                                );
+                            }
                         }
                     }
                 }
             }
             DB::commit();
             $commonservice->eventLog('add-user-request', $user_name . ' added user ' . $data['firstName'] . ' User', 'user', $userId);
-        
         }
 
         return $id;
@@ -132,37 +128,32 @@ class UserTable extends Model
 
     public function saveNewUser($data)
     {
-        $id=0;
+        $id = 0;
         $commonservice = new CommonService();
-        if ($data['firstName']!= null && trim($data['firstName']) != '') {
+        if ($data['firstName'] != null && trim($data['firstName']) != '') {
             $id = DB::table('users')->insertGetId(
                 [
                     'first_name' => $data['firstName'],
                     'last_name' => $data['lastName'],
                     'password' => Hash::make($data['password']), // Hashing passwords
-                    'email' => $data['email'],                    
+                    'email' => $data['email'],
                     'user_status' => 'active',
-                    'created_by' => null ,
+                    'created_by' => null,
                     'created_on' => $commonservice->getDateTime(),
                     'force_password_reset' => 1,
                     'role_id' => 1
                 ]
             );
-            $result=DB::table('test_sites')->take(1)->get();
-            if($result->count() > 0){
-                $ts_id=$result[0]->ts_id;
+            $result = DB::table('test_sites')->take(1)->get();
+            if ($result->count() > 0) {
+                $ts_id = $result[0]->ts_id;
                 DB::table('users_testsite_map')->insert(
-                [
-                    'user_id' => $id,
-                    'ts_id' => $ts_id,
-                ]
+                    [
+                        'user_id' => $id,
+                        'ts_id' => $ts_id,
+                    ]
                 );
             }
-            
-
-            
-
-
         }
 
         return $id;
@@ -204,10 +195,11 @@ class UserTable extends Model
             ->get();
     }
 
-    public function updateUserLanguage($locale){
-        $userid=session('userId');
+    public function updateUserLanguage($locale)
+    {
+        $userid = session('userId');
         $user = array(
-            'language' => $locale,            
+            'language' => $locale,
             'updated_by' => session('userId')
         );
         //print_r($user); exit();
@@ -216,7 +208,7 @@ class UserTable extends Model
             ->update(
                 $user
             );
-            return $response;
+        return $response;
     }
 
     // Update particular User details
@@ -235,7 +227,7 @@ class UserTable extends Model
             'user_status' => $data['userStatus'],
             'role_id' => $data['roleId'],
             'updated_by' => session('userId'),
-            'user_mapping'=>$data['userMapping']
+            'user_mapping' => $data['userMapping']
         );
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
@@ -280,7 +272,7 @@ class UserTable extends Model
             }
         }
 
-        if($data['userMapping'] == 1){
+        if ($data['userMapping'] == 1) {
             if (base64_decode($id) != '' && trim($data['testSiteName']) != '') {
                 $selectedSiteName = explode(",", $data['testSiteName']);
                 $uniqueSiteId = array_unique($selectedSiteName);
@@ -296,39 +288,37 @@ class UserTable extends Model
                     }
                 }
             }
-
-        }else{
-            if(count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0){
+        } else {
+            if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0) {
                 for ($i = 0; $i < count($data['provinceMappingId']); $i++) {
-                    $newLocationMappingId=DB::table('users_location_map')->insertGetId(
+                    $newLocationMappingId = DB::table('users_location_map')->insertGetId(
                         [
                             'user_id' => base64_decode($id),
                             'province_id' => $data['provinceMappingId'][$i],
-                            'district_id'=>null
+                            'district_id' => null
                         ]
                     );
-                    
-                        $selectedSites = DB::table('test_sites')
-                            ->select('ts_id')
-                            ->where('site_province', '=', $data['provinceMappingId'][$i])
-                            ->get();
-                            if(count($selectedSites) > 0){
-                                for ($i = 0; $i < count($selectedSites); $i++) {
-                                    $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                        [
-                                            'user_id' => base64_decode($id),
-                                            'ts_id' => $selectedSites[$i]->ts_id,
-                                        ]
-                                    );
-                                }
-                            }
-                    
+
+                    $selectedSites = DB::table('test_sites')
+                        ->select('ts_id')
+                        ->where('site_province', '=', $data['provinceMappingId'][$i])
+                        ->get();
+                    if (count($selectedSites) > 0) {
+                        for ($i = 0; $i < count($selectedSites); $i++) {
+                            $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                [
+                                    'user_id' => base64_decode($id),
+                                    'ts_id' => $selectedSites[$i]->ts_id,
+                                ]
+                            );
+                        }
+                    }
                 }
             } else if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) > 0) {
                 for ($i = 0; $i < count($data['districtMappingId']); $i++) {
                     $districtservice = new DistrictService();
-                    $districtDetail=$districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
-                    $province_id=$districtDetail[0]->province_id;
+                    $districtDetail = $districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
+                    $province_id = $districtDetail[0]->province_id;
                     DB::table('users_location_map')->insertGetId(
                         [
                             'user_id' => base64_decode($id),
@@ -336,23 +326,22 @@ class UserTable extends Model
                             'district_id' => $data['districtMappingId'][$i]
                         ]
                     );
-                    
-                        $selectedSites = DB::table('test_sites')
-                            ->select('ts_id')
-                            ->where('site_province', '=', $province_id)
-                            ->where('site_district', '=', $data['districtMappingId'][$i])
-                            ->get();
-                          //print_r();exit();
-                        if (count($selectedSites) > 0) {
-                            for ($i = 0; $i < count($selectedSites); $i++) {
-                                $userFacility = DB::table('users_testsite_map')->insertGetId(
-                                    [
-                                        'user_id' => base64_decode($id),
-                                        'ts_id' => $selectedSites[$i]->ts_id,
-                                    ]
-                                );
-                            }
-                        
+
+                    $selectedSites = DB::table('test_sites')
+                        ->select('ts_id')
+                        ->where('site_province', '=', $province_id)
+                        ->where('site_district', '=', $data['districtMappingId'][$i])
+                        ->get();
+                    //print_r();exit();
+                    if (count($selectedSites) > 0) {
+                        for ($i = 0; $i < count($selectedSites); $i++) {
+                            $userFacility = DB::table('users_testsite_map')->insertGetId(
+                                [
+                                    'user_id' => base64_decode($id),
+                                    'ts_id' => $selectedSites[$i]->ts_id,
+                                ]
+                            );
+                        }
                     }
                 }
             }
@@ -370,11 +359,11 @@ class UserTable extends Model
         $userservice = new UserService();
         $globalConfigService = new GlobalConfigService();
         $disableInactiveUser = $globalConfigService->getGlobalConfigValue('disable_inactive_user');
-        
+
 
         $result = json_decode(DB::table('users')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
-            ->join('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
+            ->leftJoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.email', '=', $data['username'])
             ->where('user_status', '=', 'active')
             ->get(), true);
@@ -399,22 +388,22 @@ class UserTable extends Model
             // var_dump(Hash::check($data['password'], $hashedPassword));
             //var_dump($hashedPassword);die;
             if (Hash::check($data['password'], $hashedPassword)) {
-                if($disableInactiveUser=='yes'){
-                    $currentDate=Date("d-M-Y");
-                    $lastLoginDatetime=$result[0]['last_login_datetime'];
+                if ($disableInactiveUser == 'yes') {
+                    $currentDate = Date("d-M-Y");
+                    $lastLoginDatetime = $result[0]['last_login_datetime'];
                     //Calculate number of month
-                    $diff = abs(strtotime($currentDate)-strtotime($lastLoginDatetime));
-                    $years = floor($diff / (365*60*60*24));
-                    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                    $diff = abs(strtotime($currentDate) - strtotime($lastLoginDatetime));
+                    $years = floor($diff / (365 * 60 * 60 * 24));
+                    $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
 
                     $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
-                    if(trim($noOfMonths)==""){
-                        $noOfMonths=6;
+                    if (trim($noOfMonths) == "") {
+                        $noOfMonths = 6;
                     }
-                    if($months>=$noOfMonths){
+                    if ($months >= $noOfMonths) {
                         $response = DB::table('users')
-                        ->where('user_id', '=',$result[0]['user_id'])
-                        ->update(array('user_status' => 'inactive'));
+                            ->where('user_id', '=', $result[0]['user_id'])
+                            ->update(array('user_status' => 'inactive'));
                         return 2;
                     }
                 }
@@ -429,25 +418,25 @@ class UserTable extends Model
                     session(['forcePasswordReset' => $result[0]['force_password_reset']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
-                    if($result[0]['language'] != NULL){
+                    if ($result[0]['language'] != NULL) {
                         app()->setLocale($result[0]['language']);
                         session()->put('locale', $result[0]['language']);
-                    }                    
-                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user',$userId);
-                    $userservice->loggedInHistory($data,'success');
+                    }
+                    $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user', $userId);
+                    $userservice->loggedInHistory($data, 'success');
                     $response = DB::table('users')
-                        ->where('user_id', '=',$result[0]['user_id'])
+                        ->where('user_id', '=', $result[0]['user_id'])
                         ->update(array('last_login_datetime' => $commonservice->getDateTime()));
                 } else {
                     return 2;
                 }
                 return 1;
             } else {
-                $userservice->loggedInHistory($data,'failed');
+                $userservice->loggedInHistory($data, 'failed');
                 return 0;
             }
         } else {
-            $userservice->loggedInHistory($data,'failed');
+            $userservice->loggedInHistory($data, 'failed');
             return 0;
         }
     }
@@ -498,7 +487,7 @@ class UserTable extends Model
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
-        $data['username']=$user_name;
+        $data['username'] = $user_name;
         $id = session('userId');
         $newPassword = Hash::make($data['newPassword']);
         if (Hash::check($data['currentPassword'], $newPassword)) {
@@ -531,6 +520,6 @@ class UserTable extends Model
     public function resetForgotPassword($email, $newpassword)
     {
         return DB::table('users')->where('email', $email)
-        ->update(['password' => Hash::make($newpassword)]);
+            ->update(['password' => Hash::make($newpassword)]);
     }
 }
