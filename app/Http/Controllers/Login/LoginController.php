@@ -19,9 +19,8 @@ class LoginController extends Controller
 {
     //View Login main screen
     public function index()
-    {   
-        if(session('login')!=true)
-        {
+    {
+        if (session('login') != true) {
             $addUser = new UserService();
             $activeUsers = $addUser->getAllActiveUser();
             $activeUsersCount = $activeUsers->count();
@@ -30,7 +29,7 @@ class LoginController extends Controller
             } else {
                 return view('login.register');
             }
-        }else{
+        } else {
             return Redirect::to('/dashboard');
         }
     }
@@ -41,6 +40,9 @@ class LoginController extends Controller
     {
         $service = new UserService();
         $login = $service->validateLogin($request);
+
+        dump($login);
+        die;
 
         if (trim($login) == 1) {
             if (session('forcePasswordReset') == '1') {

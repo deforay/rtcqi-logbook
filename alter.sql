@@ -505,7 +505,7 @@ CREATE TABLE `not_uploaded_monthly_reports` (
   `file_name` varchar(255) DEFAULT NULL,
   `added_on` datetime DEFAULT NULL,
   `added_by` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -527,7 +527,7 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `password_resets`
   ADD KEY `email` (`email`);
@@ -612,29 +612,29 @@ ALTER TABLE `provinces` ADD `province_external_id` VARCHAR(100) NULL DEFAULT NUL
 ALTER TABLE `sub_districts` ADD `sub_district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `sub_district_id`;
 ALTER TABLE `districts` ADD `district_external_id` VARCHAR(100) NULL DEFAULT NULL AFTER `district_id`;
 
---Sijulda 19-December-2023
+-- Sijulda 19-December-2023
 ALTER TABLE `districts` ADD `district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `district_name`;
 ALTER TABLE `sub_districts` ADD `sub_district_status` VARCHAR(100) NOT NULL DEFAULT 'active' AFTER `sub_district_name`;
 
---ilahir 20-Dec-2023
+-- ilahir 20-Dec-2023
 INSERT INTO `resources` (`resource_id`, `display_name`, `status`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'Monitoring Report', 'active');
 INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController', 'sitewisereport', 'Sitewise Report');
 
---Sijulda 26-December-2023
+-- Sijulda 26-December-2023
 ALTER TABLE `test_kits` DROP COLUMN Installation_id;
 
---Sijulda 02-January-2024
+-- Sijulda 02-January-2024
 ALTER TABLE `test_sites` ADD `site_primary_email` VARCHAR(255) NULL DEFAULT NULL AFTER `site_longitude`;
 ALTER TABLE `test_sites` ADD `site_secondary_email` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_email`;
 ALTER TABLE `test_sites` ADD `site_primary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_secondary_email`;
 ALTER TABLE `test_sites` ADD `site_secondary_mobile_no` VARCHAR(255) NULL DEFAULT NULL AFTER `site_primary_mobile_no`;
 
---ilahir 03-Jan-2024
+-- ilahir 03-Jan-2024
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User', 'disable_inactive_user', '');
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Disable Inactive User No.of Months', 'disable_user_no_of_months', '6');
 ALTER TABLE `users` ADD `last_login_datetime` DATETIME NULL DEFAULT NULL AFTER `updated_by`;
 
---Sijulda 05-January-2024
+-- Sijulda 05-January-2024
 DROP TABLE IF EXISTS `audit_monthly_reports`;
 
 CREATE TABLE `audit_monthly_reports` SELECT * from `monthly_reports` WHERE 1=0;
@@ -663,7 +663,7 @@ CREATE TRIGGER monthly_reports_data__bd BEFORE DELETE ON `monthly_reports` FOR E
     INSERT INTO `audit_monthly_reports` SELECT 'delete', NULL, NOW(), d.*
     FROM `monthly_reports` AS d WHERE d.mr_id = OLD.mr_id;
 
---ilahir 08-Jan-2024
+-- ilahir 08-Jan-2024
 CREATE TABLE `temp_mail` (
   `temp_id` int NOT NULL,
   `message` mediumtext,
@@ -674,7 +674,7 @@ CREATE TABLE `temp_mail` (
   `attachment` varchar(255) DEFAULT NULL,
   `status` varchar(100) NOT NULL DEFAULT 'pending',
   `created_on` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `temp_mail` ADD PRIMARY KEY (`temp_id`);
 ALTER TABLE `temp_mail` MODIFY `temp_id` int NOT NULL AUTO_INCREMENT;
@@ -689,9 +689,10 @@ CREATE TABLE `reminder_history` (`history_id` INT NOT NULL AUTO_INCREMENT , `sit
 CREATE TABLE `users_location_map` (
   `user_id` int(11) NOT NULL,
   `province_id` int(11) NOT NULL,
-  `district_id` int(11) NULL,
-  PRIMARY KEY (`user_id`,`province_id`,`district_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `district_id` int(11) DEFAULT NULL,
+  UNIQUE KEY `unique_user_province_district` (`user_id`,`province_id`,`district_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- Sijulda 10-May-2024
 ALTER TABLE `users` ADD `user_mapping` INT NOT NULL DEFAULT '1' AFTER `role_id`;
