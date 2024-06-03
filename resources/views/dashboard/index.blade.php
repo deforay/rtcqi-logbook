@@ -1,6 +1,6 @@
 <?php
 $enddate = date('d-M-Y');
-$startdate = date('d-M-Y', strtotime('-179 days'));
+$startdate = date('d-M-Y', strtotime('-30 days'));
 ?>
 
 <style>
