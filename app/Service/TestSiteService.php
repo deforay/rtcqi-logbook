@@ -88,4 +88,10 @@ class TestSiteService
 		$model = new TestSiteTable();
 		return $model->fetchAllTestSiteList($params);
 	}
+
+	public function bulkUploadTestSite($params)
+	{
+		$model = new TestSiteTable();
+		return $model->bulkUploadTestSite($params);
+	}
 }

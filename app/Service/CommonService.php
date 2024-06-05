@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Model\Province\ProvinceTable;
 use DB;
 use Redirect;
 use Illuminate\Support\Carbon;
@@ -191,7 +192,7 @@ class CommonService
         }
         return count($user);
     }
-    
+
     public function monthYear($start_date, $end_date)
     {
         $start    = new DateTime($start_date);
@@ -219,8 +220,8 @@ class CommonService
             if ($fieldValue != "") {
                 $updateData = array($fieldName => $fieldValue);
                 DB::table($tableName)
-                ->where($fieldIdName, '=', $fieldIdValue)
-                ->update($updateData);
+                    ->where($fieldIdName, '=', $fieldIdValue)
+                    ->update($updateData);
             }
         } catch (Exception $exc) {
             error_log($exc->getMessage());
@@ -228,13 +229,13 @@ class CommonService
         return $fieldIdValue;
     }
 
-    public function allowDisplay($resource,$view){
+    public function allowDisplay($resource, $view)
+    {
         $role = session('role');
         return !(isset($role[$resource][$view]) && (trim($role[$resource][$view]) == "deny")) && isset($role[$resource][$view]);
-        
     }
-    
-    public function eventLog($event_type, $action, $resource,$id)
+
+    public function eventLog($event_type, $action, $resource, $id)
     {
         $commonservice = new CommonService();
         $eventData = array(
@@ -248,7 +249,7 @@ class CommonService
         );
         return DB::table('track')->insert($eventData);
     }
-    
+
     public function getDateTime($timezone = 'Asia/Kolkata')
     {
         $date = new \DateTime('now', new \DateTimeZone($timezone));
@@ -260,7 +261,7 @@ class CommonService
         $date = new \DateTime('now', new \DateTimeZone($timezone));
         return $date->format('d-M-Y-H-i-s');
     }
-    
+
     public function addNewField($request)
     {
         $tableName = $request['tableName'];
@@ -279,107 +280,106 @@ class CommonService
                 $user = DB::table($tableName)
                     ->where($fieldName, '=', $value)
                     ->get();
-                }
-                $countVal = count($user);
+            }
+            $countVal = count($user);
             // if($countVal == 0){
 
-                if ($tableName == 'item_categories') {
-                    if($countVal == 0){
-                        $id = DB::table($tableName)->insertGetId(
-                            [$fieldName => $value,
+            if ($tableName == 'item_categories') {
+                if ($countVal == 0) {
+                    $id = DB::table($tableName)->insertGetId(
+                        [
+                            $fieldName => $value,
                             $sts => 'active',
                             'created_on' => $commonservice->getDateTime(),
                             'created_by' => session('userId'),
-                            ]
-                        );
-                        $data['id'] = $id;
-                        $data['item'] = $value;
+                        ]
+                    );
+                    $data['id'] = $id;
+                    $data['item'] = $value;
+                }
+                $item = DB::table($tableName)
+                    ->where($sts, '=', 'active')
+                    ->get();
+                $opt = '';
+                foreach ($item as $items) {
+                    if ($items->item_category_id == $id || $items->item_category == $value) {
+                        $opt .= '<option value="' . $items->item_category_id . '" selected>' . $items->item_category . '</option>';
+                    } else {
+                        $opt .= '<option value="' . $items->item_category_id . '">' . $items->item_category . '</option>';
                     }
-                    $item = DB::table($tableName)
-                            ->where($sts,'=','active')
-                            ->get();
-                    $opt = '';
-                    foreach ($item as $items){
-                        if($items->item_category_id == $id || $items->item_category==$value ){
-                            $opt .= '<option value="'.$items->item_category_id.'" selected>'.$items->item_category.'</option>';
-                        }
-                        else{
-                            $opt .= '<option value="'.$items->item_category_id.'">'.$items->item_category.'</option>';
-                        }
-                    }
-                } elseif ($tableName == 'item_types') {
-                    if($countVal == 0){
-                        $id = DB::table($tableName)->insertGetId(
-                            [$fieldName => $value,
+                }
+            } elseif ($tableName == 'item_types') {
+                if ($countVal == 0) {
+                    $id = DB::table($tableName)->insertGetId(
+                        [
+                            $fieldName => $value,
                             'item_category' => $itemCat,
                             $sts => 'active',
                             'created_on' => $commonservice->getDateTime(),
                             'created_by' => session('userId'),
-                            ]
-                        );
-                        $data['id'] = $id;
-                        $data['item'] = $value;
+                        ]
+                    );
+                    $data['id'] = $id;
+                    $data['item'] = $value;
+                }
+                $item = DB::table($tableName)
+                    ->where($sts, '=', 'active')
+                    ->get();
+                $opt = '';
+                foreach ($item as $items) {
+                    if ($items->item_type_id == $id || $items->item_type == $value) {
+                        $opt .= '<option value="' . $items->item_type_id . '" selected>' . $items->item_type . '</option>';
+                    } else {
+                        $opt .= '<option value="' . $items->item_type_id . '">' . $items->item_type . '</option>';
                     }
-                    $item = DB::table($tableName)
-                    ->where($sts,'=','active')
-                            ->get();
-                    $opt = '';
-                    foreach ($item as $items){
-                        if($items->item_type_id == $id || $items->item_type==$value ){
-                            $opt .= '<option value="'.$items->item_type_id.'" selected>'.$items->item_type.'</option>';
-                        }
-                        else{
-                            $opt .= '<option value="'.$items->item_type_id.'">'.$items->item_type.'</option>';
-                        } 
-                    }
-                } else{
-                    if($countVal == 0){
-                        $id = DB::table($tableName)->insertGetId(
-                            [$fieldName => $value,
+                }
+            } else {
+                if ($countVal == 0) {
+                    $id = DB::table($tableName)->insertGetId(
+                        [
+                            $fieldName => $value,
                             $sts => 'active',
                             'created_on' => $commonservice->getDateTime(),
                             'created_by' => session('userId'),
-                            ]
-                        );
-                        $data['id'] = $id;
-                        $data['item'] = $value;
-                    }
-                    $item = DB::table($tableName)
-                            ->where($sts,'=','active')
-                            ->get();
-
-                            $opt = '';
-
-                            if ($tableName == 'units_of_measure') {
-                                foreach ($item as $items){
-                                    if($items->uom_id == $id || $items->unit_name==$value ){
-                                        $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
-                                    }
-                                    else{
-                                        $opt .= '<option value="'.$items->uom_id.'">'.$items->unit_name.'</option>';
-                                    }
-                                }
-                            } elseif ($tableName == 'brands') {
-                                foreach ($item as $items){
-                                    if($items->brand_id == $id || $items->brand_name==$value ){
-                                        $opt .= '<option value="'.$items->brand_id.'" selected>'.$items->brand_name.'</option>';
-                                    }
-                                    else{
-                                        $opt .= '<option value="'.$items->brand_id.'">'.$items->brand_name.'</option>';
-                                    }
-                                }
-                            }
+                        ]
+                    );
+                    $data['id'] = $id;
+                    $data['item'] = $value;
                 }
-                $data['option'] = $opt;
+                $item = DB::table($tableName)
+                    ->where($sts, '=', 'active')
+                    ->get();
 
-                // }
-                // dd($countVal);
-            } catch (Exception $exc) {
-                error_log($exc->getMessage());
+                $opt = '';
+
+                if ($tableName == 'units_of_measure') {
+                    foreach ($item as $items) {
+                        if ($items->uom_id == $id || $items->unit_name == $value) {
+                            $opt .= '<option value="' . $items->uom_id . '" selected>' . $items->unit_name . '</option>';
+                        } else {
+                            $opt .= '<option value="' . $items->uom_id . '">' . $items->unit_name . '</option>';
+                        }
+                    }
+                } elseif ($tableName == 'brands') {
+                    foreach ($item as $items) {
+                        if ($items->brand_id == $id || $items->brand_name == $value) {
+                            $opt .= '<option value="' . $items->brand_id . '" selected>' . $items->brand_name . '</option>';
+                        } else {
+                            $opt .= '<option value="' . $items->brand_id . '">' . $items->brand_name . '</option>';
+                        }
+                    }
+                }
             }
-            return $data;
+            $data['option'] = $opt;
+
+            // }
+            // dd($countVal);
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+        }
+        return $data;
     }
-    
+
     public function addNewUnitField($request)
     {
         $tableName = $request['tableName'];
@@ -396,38 +396,38 @@ class CommonService
         try {
             if ($value != "") {
                 $user = DB::table($tableName)
-                ->where($fieldName, '=', $value)
-                ->get();
+                    ->where($fieldName, '=', $value)
+                    ->get();
             }
             $countVal = count($user);
-            if($countVal == 0){
-                    $id = DB::table($tableName)->insertGetId(
-                        [$fieldName => $value,
+            if ($countVal == 0) {
+                $id = DB::table($tableName)->insertGetId(
+                    [
+                        $fieldName => $value,
                         $sts => 'active',
                         'item' => $item,
                         'created_on' => $commonservice->getDateTime(),
                         'created_by' => session('userId'),
-                        ]
-                    );
-                    $data['id'] = $id;
-                    $data['item'] = $value;
-                }
-                $item = DB::table($tableName)
-                ->where($sts,'=','active')
-                        ->get();
+                    ]
+                );
+                $data['id'] = $id;
+                $data['item'] = $value;
+            }
+            $item = DB::table($tableName)
+                ->where($sts, '=', 'active')
+                ->get();
 
-                $opt = '';
+            $opt = '';
 
-                if($tableName == 'units_of_measure'){
-                    foreach ($item as $items){
-                        if($items->uom_id == $id ||$items->unit_name==$value ){
-                            $opt .= '<option value="'.$items->uom_id.'" selected>'.$items->unit_name.'</option>';
-                        }
-                        else{
-                            $opt .= '<option value="'.$items->uom_id.'">'.$items->unit_name.'</option>';
-                        }
+            if ($tableName == 'units_of_measure') {
+                foreach ($item as $items) {
+                    if ($items->uom_id == $id || $items->unit_name == $value) {
+                        $opt .= '<option value="' . $items->uom_id . '" selected>' . $items->unit_name . '</option>';
+                    } else {
+                        $opt .= '<option value="' . $items->uom_id . '">' . $items->unit_name . '</option>';
                     }
                 }
+            }
 
             $data['option'] = $opt;
 
@@ -437,39 +437,39 @@ class CommonService
         }
         return $data;
     }
-    
-    public function updatePassword($params){
+
+    public function updatePassword($params)
+    {
         DB::beginTransaction();
-    	try {
-                $model = new UserTable();
-                $addUser = $model->updatePassword($params);
-                DB::commit();
-                if($addUser>0){
-                    return $addUser; 
-                }
-	    }
-	    catch (Exception $exc) {
+        try {
+            $model = new UserTable();
+            $addUser = $model->updatePassword($params);
+            DB::commit();
+            if ($addUser > 0) {
+                return $addUser;
+            }
+        } catch (Exception $exc) {
             DB::rollBack();
-	    	$exc->getMessage();
-	    }
+            $exc->getMessage();
+        }
     }
 
-    public function updateUserLanguage($params){
+    public function updateUserLanguage($params)
+    {
         DB::beginTransaction();
-    	try {
-                $model = new UserTable();
-                $updateUserLanguage = $model->updateUserLanguage($params);
-                DB::commit();
-                if($updateUserLanguage>0){
-                    return $updateUserLanguage; 
-                }
-	    }
-	    catch (Exception $exc) {
+        try {
+            $model = new UserTable();
+            $updateUserLanguage = $model->updateUserLanguage($params);
+            DB::commit();
+            if ($updateUserLanguage > 0) {
+                return $updateUserLanguage;
+            }
+        } catch (Exception $exc) {
             DB::rollBack();
-	    	$exc->getMessage();
-	    }
+            $exc->getMessage();
+        }
     }
-    
+
 
     public function addNewBranchType($request)
     {
@@ -486,33 +486,33 @@ class CommonService
         try {
             if ($value != "") {
                 $user = DB::table($tableName)
-                ->where($fieldName, '=', $value)
-                ->get();
+                    ->where($fieldName, '=', $value)
+                    ->get();
             }
             $countVal = count($user);
-            if($countVal == 0){
-                    $id = DB::table($tableName)->insertGetId(
-                        [$fieldName => $value,
+            if ($countVal == 0) {
+                $id = DB::table($tableName)->insertGetId(
+                    [
+                        $fieldName => $value,
                         $sts => 'active',
-                        ]
-                    );
-                    $data['id'] = $id;
-                    $data['item'] = $value;
-                }
-                $item = DB::table($tableName)
-                ->where($sts,'=','active')
+                    ]
+                );
+                $data['id'] = $id;
+                $data['item'] = $value;
+            }
+            $item = DB::table($tableName)
+                ->where($sts, '=', 'active')
                 ->get();
-                
-                $opt = '';
-                foreach ($item as $items){
-                    if($items->branch_type_id == $id ||$items->branch_type==$value ){
-                        $opt .= '<option value="'.$items->branch_type_id.'" selected>'.$items->branch_type.'</option>';
-                    }
-                        else{
-                            $opt .= '<option value="'.$items->branch_type_id.'">'.$items->branch_type.'</option>';
-                        }
-                    }
-                    $data['option'] = $opt;
+
+            $opt = '';
+            foreach ($item as $items) {
+                if ($items->branch_type_id == $id || $items->branch_type == $value) {
+                    $opt .= '<option value="' . $items->branch_type_id . '" selected>' . $items->branch_type . '</option>';
+                } else {
+                    $opt .= '<option value="' . $items->branch_type_id . '">' . $items->branch_type . '</option>';
+                }
+            }
+            $data['option'] = $opt;
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
@@ -529,23 +529,21 @@ class CommonService
         $items = array();
         try {
             if (isset($primaryValue) && trim($primaryValue) !== '') {
-                  $items = DB::table('items')
-                    ->where('item_name','=',$itemName)
-                    ->where('item_type','=',$itemTypeId)
-                    ->where('brand','=',$brandId)
-                    ->where('base_unit','=',$unitId)
-                    ->where('item_id','!=',$primaryValue)
+                $items = DB::table('items')
+                    ->where('item_name', '=', $itemName)
+                    ->where('item_type', '=', $itemTypeId)
+                    ->where('brand', '=', $brandId)
+                    ->where('base_unit', '=', $unitId)
+                    ->where('item_id', '!=', $primaryValue)
                     ->get();
-            
             } else {
                 $items = DB::table('items')
-                ->where('item_name','=',$itemName)
-                ->where('item_type','=',$itemTypeId)
-                ->where('brand','=',$brandId)
-                ->where('base_unit','=',$unitId)
-                ->get();
+                    ->where('item_name', '=', $itemName)
+                    ->where('item_type', '=', $itemTypeId)
+                    ->where('brand', '=', $brandId)
+                    ->where('base_unit', '=', $unitId)
+                    ->get();
             }
-            
         } catch (Exception $exc) {
             error_log($exc->getMessage());
         }
@@ -557,7 +555,7 @@ class CommonService
         $GlobalConfigService = new GlobalConfigService();
         $result = $GlobalConfigService->getAllGlobalConfig();
         $arr = array();
-        $data=array();
+        $data = array();
         $data['lat'] = '';
         $data['lng'] = '';
         // now we create an associative array so that we can easily create view variables
@@ -567,48 +565,55 @@ class CommonService
         for ($i = 0; $i < $counter; $i++) {
             $arr[$result[$i]->global_name] = $result[$i]->global_value;
         }
-        
-        $apiKey=$arr["map_api_key"];
-        
-        $url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=".$apiKey;
-        
+
+        $apiKey = $arr["map_api_key"];
+
+        $url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=" . $apiKey;
+
         // send api request
-        try{
-                $geocode = file_get_contents($url);
-            
-                if($geocode){            
-                    $json = json_decode($geocode);        
-                    if(isset($json->results[0]->geometry) && isset($json->results[0]->geometry->location)){
-                        $data['lat'] = $json->results[0]->geometry->location->lat;
-                        $data['lng'] = $json->results[0]->geometry->location->lng;            
-                    }
+        try {
+            $geocode = file_get_contents($url);
+
+            if ($geocode) {
+                $json = json_decode($geocode);
+                if (isset($json->results[0]->geometry) && isset($json->results[0]->geometry->location)) {
+                    $data['lat'] = $json->results[0]->geometry->location->lat;
+                    $data['lng'] = $json->results[0]->geometry->location->lng;
                 }
             }
-            catch(Exception $exc){
-                error_log($exc->getMessage());
-                //return $data;
-            }
-        
+        } catch (Exception $exc) {
+            error_log($exc->getMessage());
+            //return $data;
+        }
+
         return $data;
     }
 
-    public function insertTempMail($to,$subject,$msg,$fromMail,$fromName){
-    	try {
+    public function insertTempMail($to, $subject, $msg, $fromMail, $fromName)
+    {
+        try {
             $tempMailDb = new TempMailTable();
-            $tempMailDb->insertTempMailDetails($to,$subject,$msg,$fromMail,$fromName);  
-	    }
-	    catch (Exception $exc) {
-	    	$exc->getMessage();
-	    }
+            $tempMailDb->insertTempMailDetails($to, $subject, $msg, $fromMail, $fromName);
+        } catch (Exception $exc) {
+            $exc->getMessage();
+        }
     }
 
-    public function updateTempMailStatus($id,$status){
+    public function updateTempMailStatus($id, $status)
+    {
         $tempMailDb = new TempMailTable();
-        $tempMailDb->updateTempMailStatus($id,$status);
+        $tempMailDb->updateTempMailStatus($id, $status);
     }
 
-    public function deleteTempMail($id){
+    public function deleteTempMail($id)
+    {
         $tempMailDb = new TempMailTable();
         $tempMailDb->deleteTempMail($id);
+    }
+
+    public function checkProvince($provinceName)
+    {
+        $provinceDb = new ProvinceTable();
+        $provinceDb->checkProvince($provinceName);   
     }
 }

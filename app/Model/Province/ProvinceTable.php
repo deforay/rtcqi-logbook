@@ -19,16 +19,16 @@ class ProvinceTable extends Model
         $data = $request->all();
         $user_name = session('name');
         $commonservice = new CommonService();
-        if ($request->input('provinceName')!=null && trim($request->input('provinceName')) != '') {
+        if ($request->input('provinceName') != null && trim($request->input('provinceName')) != '') {
             $id = DB::table('provinces')->insertGetId(
                 [
-                'province_name' => $data['provinceName'],
-                'province_external_id' => $data['externalId'],
-                'province_status' => $data['provinceStatus'],
+                    'province_name' => $data['provinceName'],
+                    'province_external_id' => $data['externalId'],
+                    'province_status' => $data['provinceStatus'],
                 ]
             );
-        $userId = null;
-            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province',$userId);
+            $userId = null;
+            $commonservice->eventLog('add-province-request', $user_name . ' has added the province information for ' . $data['provinceName'] . ' Name', 'province', $userId);
         }
 
         return $id;
@@ -38,47 +38,61 @@ class ProvinceTable extends Model
     public function fetchAllProvince()
     {
         return DB::table('provinces')
-                ->get();
+            ->get();
     }
 
     // Fetch All Active Province List
     public function fetchAllActiveProvince()
     {
         return DB::table('provinces')
-                ->where('province_status','=','active')
-                ->get();
+            ->where('province_status', '=', 'active')
+            ->get();
     }
 
-     // fetch particular Province details
-     public function fetchProvinceById($id)
-     {
+    // fetch particular Province details
+    public function fetchProvinceById($id)
+    {
 
-         $id = base64_decode($id);
-         return DB::table('provinces')
-                ->where('provinces.province_id', '=',$id )
-                ->get();
-     }
+        $id = base64_decode($id);
+        return DB::table('provinces')
+            ->where('provinces.province_id', '=', $id)
+            ->get();
+    }
 
-     // Update particular Province details
-    public function updateProvince($params,$id)
+    // Update particular Province details
+    public function updateProvince($params, $id)
     {
         $userId = null;
         $data = $params->all();
         $user_name = session('name');
         $commonservice = new CommonService();
-            $upData = array(
-                'province_name' => $data['provinceName'],
-                'province_external_id' => $data['externalId'],
-                'province_status' => $data['provinceStatus'],
+        $upData = array(
+            'province_name' => $data['provinceName'],
+            'province_external_id' => $data['externalId'],
+            'province_status' => $data['provinceStatus'],
+        );
+        $response = DB::table('provinces')
+            ->where('province_id', '=', base64_decode($id))
+            ->update(
+                $upData
             );
-            $response = DB::table('provinces')
-                ->where('province_id', '=',base64_decode($id))
-                ->update(
-                        $upData
-                    );
-            $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province',$userId);
+        $commonservice->eventLog('update-province-request', $user_name . ' has updated the province information for ' . $data['provinceName'] . ' Name', 'province', $userId);
         return $response;
     }
 
-    
+    public function checkProvince($provinceName)
+    {
+        $province = DB::table('provinces')->where('province_name', $provinceName)->first();
+        if (isset($province->province_id)) {
+            $proviceId = $province->province_id;
+        } else {
+            $proviceId = DB::table('provinces')->insertGetId(
+                [
+                    'province_name' => $provinceName,
+                    'province_status' => "active",
+                ]
+            );
+        }
+        return $proviceId;
+    }
 }

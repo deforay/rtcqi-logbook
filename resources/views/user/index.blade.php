@@ -24,7 +24,6 @@
                     </ol>
                 </div>
             </div>
-
         </div>
         <div class="content-header-right col-md-6 col-12">
             <div class="dropdown float-md-right">
@@ -32,6 +31,8 @@
                 if (isset($role['App\\Http\\Controllers\\User\\UserController']['add']) && ($role['App\\Http\\Controllers\\User\\UserController']['add'] == "allow")) { ?>
                     <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                         <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
+                        <a href="/user/bulk-upload" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="ft-plus icon-left"></i> Bulk Upload User</b></a>
                 <?php } ?>
             </div>
         </div>

@@ -18,7 +18,7 @@ class TestSiteController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict','getAllTestSiteList');        
+        $this->middleware(['role-authorization'])->except('getAllTestSite','getProvince','getDistrict', 'getSubDistrict','getAllTestSiteList','bulkUpload');        
        
     }
     //View TestSite main screen
@@ -135,6 +135,18 @@ class TestSiteController extends Controller
         return $testSiteService->getAllTestSiteList($params);
         // log::info($district);
         // return $subDistrict;
+    }
+
+    public function bulkUpload(Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+        $params = $request->all();
+        $testSiteService = new TestSiteService();
+            $result = $testSiteService->bulkUploadTestSite($params);
+            if($result > 0) return Redirect::route('testsite.index')->with('status', "Test sites uploaded successfully");
+        }
+        return view('testsite.bulk-upload');
     }
 }
 

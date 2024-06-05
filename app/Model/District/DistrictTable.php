@@ -104,4 +104,21 @@ class DistrictTable extends Model
             ->where('districts.province_id', '=', $result)
             ->get();
     }
+
+    public function checkDistrict($districtName, $provinceId)
+    {
+        $district = DB::table('districts')->where('district_name', $districtName)->first();
+        if (isset($district->district_id)) {
+            $districtId = $district->district_id;
+        } else {
+            $districtId = DB::table('districts')->insertGetId(
+                [
+                    'province_id' => $provinceId,
+                    'district_name' => $districtName,
+                    'district_status' => "active",
+                ]
+            );
+        }
+        return $districtId;
+    }
 }

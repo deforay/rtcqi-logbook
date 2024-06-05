@@ -97,5 +97,21 @@ class SubDistrictTable extends Model
             ->where('sub_districts.district_id', '=', $result)
             ->get();
     }
-    
+
+    public function checkSubDistrict($subdistrictName, $districtId)
+    {
+        $subDistrict = DB::table('sub_districts')->where('sub_district_name', $subdistrictName)->first();
+        if (isset($subDistrict->sub_district_id)) {
+            $dsubDistrictId = $subDistrict->sub_district_id;
+        } else {
+            $dsubDistrictId = DB::table('sub_districts')->insertGetId(
+                [
+                    'province_id' => $districtId,
+                    'district_name' => $subdistrictName,
+                    'district_status' => "active",
+                ]
+            );
+        }
+        return $dsubDistrictId;
+    }    
 }

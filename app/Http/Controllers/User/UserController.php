@@ -17,7 +17,7 @@ class UserController extends Controller
 {
     public function __construct()
     {      
-        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity', 'register', 'getUserLoginHistory');        
+        $this->middleware(['role-authorization'])->except('getAllUser','getAllUserActivity', 'register', 'getUserLoginHistory', 'userBulkUpload');
        
     }
     //View user main screen
@@ -201,6 +201,18 @@ class UserController extends Controller
         $data = $service->getAllActivity($datas);
         return DataTables::of($data)
             ->make(true);
+    }
+
+    public function userBulkUpload(Request $request)
+    {
+        if ($request->isMethod('post')) 
+        {
+        $params = $request->all();
+        $userService = new UserService();
+            $result = $userService->bulkUploadUser($params);
+            if($result > 0) return Redirect::route('user.index')->with('status', "Users uploaded successfully");
+        }
+        return view('user.bulk-upload');
     }
 
 }

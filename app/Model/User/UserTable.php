@@ -2,11 +2,13 @@
 
 namespace App\Model\User;
 
+use App\Model\Roles\RolesTable;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
 use App\Service\UserService;
 use App\Service\DistrictService;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Mail;
@@ -532,5 +534,59 @@ class UserTable extends Model
     {
         return DB::table('users')->where('email', $email)
         ->update(['password' => Hash::make($newpassword)]);
+    }
+
+    public function bulkUploadUser($params)
+    {
+        $commonservice = new CommonService();
+        if (isset($params['user_excel']) && $params['user_excel']->isValid()) {
+            DB::beginTransaction();
+            try {
+                $dateTime = date('Ymd_His');
+                $file = $params['user_excel'];
+                $fileName = $dateTime . '-' . $file->getClientOriginalName();
+                $savePath = public_path('/uploads/');
+                $file->move($savePath, $fileName);
+    
+                $filePath = $savePath . $fileName;
+                $file_type = IOFactory::identify($filePath);
+                $reader = IOFactory::createReader($file_type);
+                $reader->setReadDataOnly(true);
+                $reader->setReadEmptyCells(false);
+                $spreadsheet = $reader->load($filePath);
+                unlink($filePath);
+    
+                $sheetDatas = $spreadsheet->getActiveSheet()->toArray();
+                unset($sheetDatas[0]);
+                // print_r($sheetDatas); die;
+                foreach($sheetDatas as $key=>$val)
+                {
+                    $role = new RolesTable();
+                    $roleId = $role->checkRole($val[6]);
+                    $id = DB::table('users')->insertGetId(
+                        [
+                            'first_name' => $val[0],
+                            'last_name' => $val[1],
+                            'password' => Hash::make('logbook#12345@'), // Hashing passwords
+                            'email' => $val[3],
+                            'phone' => $val[2],
+                            'created_by' => session('userId'),
+                            'created_on' => $commonservice->getDateTime(),
+                            'force_password_reset' => 1,
+                            'role_id' => $roleId
+                        ]
+                    );
+                }   
+                return $id;
+            } catch (Exception $exc) {
+                DB::rollBack();
+                $result = "Error: " . $exc->getMessage();
+                return $result;
+            }
+            DB::commit();
+            return "File uploaded and processed successfully";
+        } else {
+            return "No file uploaded or invalid file.";
+        }
     }
 }
