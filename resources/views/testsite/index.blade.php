@@ -32,6 +32,8 @@
                 if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['add']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['add'] == "allow")) { ?>
                     <a href="/testsite/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                         <b><i class="ft-plus icon-left"></i> Add Test Site</b></a>
+                        <a href="/testsite/bulk-upload" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
+                        <b><i class="ft-plus icon-left"></i> Bulk Upload Test site</b></a>
                 <?php } ?>
             </div>
         </div>

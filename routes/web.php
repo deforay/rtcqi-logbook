@@ -76,6 +76,12 @@ Route::post('/forgot/sendemailresetlink', 'ForgotPassword\ForgotPasswordControll
 Route::get('/reset-password/{token}', 'ForgotPassword\ForgotPasswordController@showResetPasswordForm')->name('reset.password');
 Route::post('/reset-new-password', 'ForgotPassword\ForgotPasswordController@submitResetPasswordForm');
 
+Route::post('/testsite/bulk-upload', 'TestSite\TestSiteController@bulkUpload');
+Route::get('/testsite/bulk-upload', 'TestSite\TestSiteController@bulkUpload');
+
+Route::post('/user/bulk-upload', 'User\UserController@userBulkUpload');
+Route::get('/user/bulk-upload', 'User\UserController@userBulkUpload');
+
 // Handle Error - Unathorized Access Page, Page Not Found , Incorrect Request
 Route::get('/unauthorized', function()
 {
@@ -102,6 +108,7 @@ Route::get('/dashboarderror', function()
 Route::get('/testsite', 'TestSite\TestSiteController@index')->name('testsite.index')->middleware('access');
 Route::post('/testsite/add', 'TestSite\TestSiteController@add');
 Route::get('/testsite/add', 'TestSite\TestSiteController@add')->middleware('access');
+
 Route::get('/testsite/edit/{id}', 'TestSite\TestSiteController@edit')->middleware('access');
 Route::post('/testsite/edit/{id}', 'TestSite\TestSiteController@edit');
 Route::post('/getAllTestSite', 'TestSite\TestSiteController@getAllTestSite');

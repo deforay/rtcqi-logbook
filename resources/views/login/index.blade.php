@@ -102,7 +102,7 @@ for ($i = 0; $i < sizeof($glob); $i++) {
                       <h3>{{$globData}}</h3>
                     </div>
                   </div>
-                  @if($arr["logo"])
+                  @if(isset($arr["logo"]))
                   <img class="brand-logo" alt="rtcqui logbook logo" src="{{ url($arr["logo"])}}" style="height: 100px;width: 100px;">
                   @else
                   <img class="brand-logo" alt="rtcqui logbook logo" src="{{ asset('assets/images/default-logo.png')}}" style="height: 100px;width: 100px;">

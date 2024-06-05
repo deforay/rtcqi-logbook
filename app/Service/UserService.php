@@ -162,4 +162,10 @@ class UserService
 			$exc->getMessage();
 		}
 	}
+
+	public function bulkUploadUser($params)
+	{
+		$model = new UserTable();
+		return $model->bulkUploadUser($params);
+	}
 }

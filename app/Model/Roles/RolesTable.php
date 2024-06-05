@@ -122,4 +122,20 @@ class RolesTable extends Model
             error_log($exc->getTraceAsString());
         }
     }
+
+
+    public function checkRole($roleName)
+    {
+        $role = DB::table('roles')->where('role_name', $roleName)->first();
+        if (isset($role->role_id)) {
+            $roleId = $role->role_id;
+        } else {
+            $roleId = DB::table('roles')->insertGetId(
+                [
+                    'role_name' => $roleName
+                ]
+            );
+        }
+        return $roleId;
+    }
 }
