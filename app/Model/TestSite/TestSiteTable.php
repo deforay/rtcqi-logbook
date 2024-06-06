@@ -364,7 +364,7 @@ class TestSiteTable extends Model
                 unlink($filePath);
     
                 $sheetDatas = $spreadsheet->getActiveSheet()->toArray();
-                unset($sheetDatas[0]);
+                // unset($sheetDatas[0]);
                 foreach($sheetDatas as $key=>$val)
                 {
                     $province = new ProvinceTable();

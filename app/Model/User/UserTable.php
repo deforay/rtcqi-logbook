@@ -546,8 +546,7 @@ class UserTable extends Model
                 unlink($filePath);
     
                 $sheetDatas = $spreadsheet->getActiveSheet()->toArray();
-                unset($sheetDatas[0]);
-                // print_r($sheetDatas); die;
+                // unset($sheetDatas[0]);
                 foreach($sheetDatas as $key=>$val)
                 {
                     $role = new RolesTable();
