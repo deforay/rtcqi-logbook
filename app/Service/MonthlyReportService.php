@@ -227,6 +227,12 @@ class MonthlyReportService
 		return $model->customReportTrackTable();
 	}
 
+	public function notReportedSitesData()
+	{
+		$model = new MonthlyReportTable();
+		return $model->notReportedSitesTrackTable();
+	}
+
 	public function getExistingReportingMonth($params)
 	{
 		$model = new MonthlyReportTable();

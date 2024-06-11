@@ -20,6 +20,7 @@ class NotReportedSitesExport implements FromView, ShouldAutoSize
     public function view(): View
     {
         $monthlyReportService = new MonthlyReportService();
+        $insertData = $monthlyReportService->notReportedSitesData();
         $data = $monthlyReportService->getNotReportedSites($this->requestdata);
         return view('exports.notreportedsitesexport', array('report'=>$data));
     }
