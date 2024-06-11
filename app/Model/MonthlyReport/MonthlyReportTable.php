@@ -185,8 +185,8 @@ class MonthlyReportTable extends Model
             $query = $query->groupBy(DB::raw('test_sites.ts_id'));
         }
         // dd($query->toSql());
-        $salesResult = $query->get();
-
+        $salesResult = $query->toSql();
+print_r($salesResult); die;
         return $salesResult;
     }
 
@@ -2450,6 +2450,13 @@ class MonthlyReportTable extends Model
         $user_name = session('name');
         $commonservice = new CommonService();
         $commonservice->eventLog('export-custom-report', $user_name . ' has exported the custom report', 'custom-report', $id = null);
+    }
+
+    public function notReportedSitesTrackTable()
+    {
+        $user_name = session('name');
+        $commonservice = new CommonService();
+        $commonservice->eventLog('export-not-reported-sites-report', $user_name . ' has exported the not reported sites report', 'not-reported-sites-report', $id = null);
     }
 
     public function fetchExistingReportingMonth($params)
