@@ -2533,8 +2533,10 @@ print_r($salesResult); die;
 
         
         if (Session::get('tsId') != '' && !isset($data['testSiteId'])) {
-            $query->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'mr.ts_id')
-                ->where('users_testsite_map.user_id', '=', $user_id);
+            $query->leftjoin('users_testsite_map', 'users_testsite_map.ts_id', '=', 'mr.ts_id');
+            if(trim(session('tsId')[0])!=""){
+                $query->where('users_testsite_map.user_id', '=', $user_id);
+            }
         }
         
         if (trim($start_date) != "" && trim($end_date) != "") {
