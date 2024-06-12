@@ -233,6 +233,12 @@ class MonthlyReportService
 		return $model->notReportedSitesTrackTable();
 	}
 
+	public function sitewiseReportData()
+	{
+		$model = new MonthlyReportTable();
+		return $model->sitewiseReportTrackTable();
+	}
+
 	public function getExistingReportingMonth($params)
 	{
 		$model = new MonthlyReportTable();
