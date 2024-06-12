@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\MonitoringReport;
 
+use App\Exports\SitewiseReportExport;
 use App\Http\Controllers\Controller;
+use App\Service\CommonService;
 use Illuminate\Http\Request;
 use App\Service\DistrictService;
 use App\Service\SubDistrictService;
 use App\Service\ProvinceService;
-use App\Service\TestSiteService;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Service\TestSiteService;    
 use App\Service\MonthlyReportService;
 use View;
 use Redirect;
@@ -41,7 +44,7 @@ class MonitoringReportController extends Controller
         $datas = $request->all();
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->getSiteWiseReport($datas);
-        //print_r()
+        // print_r($data); die;
         // dd($data);die;
         if(isset($datas['comingFrom'])){
             $comingFrom=$datas['comingFrom'];
@@ -55,5 +58,13 @@ class MonitoringReportController extends Controller
         $monthlyReportService = new MonthlyReportService();
         $data = $monthlyReportService->sendSiteWiseReminderEmail($datas);
         return response()->json(['code'=>200,'success' => 'Your inquire is successfully sent.']);
+    }
+
+    public function sitewiseReportExport(Request $request)
+    {
+        $commonservice = new CommonService();
+        $dateTime = $commonservice->getDateAndTime();
+        $data = $request->all();
+        return Excel::download(new SitewiseReportExport($data), 'Sitewise-Report-' . $dateTime . '.xlsx');
     }
 }

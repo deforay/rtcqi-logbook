@@ -2459,6 +2459,13 @@ print_r($salesResult); die;
         $commonservice->eventLog('export-not-reported-sites-report', $user_name . ' has exported the not reported sites report', 'not-reported-sites-report', $id = null);
     }
 
+    public function sitewiseReportTrackTable()
+    {
+        $user_name = session('name');
+        $commonservice = new CommonService();
+        $commonservice->eventLog('export-sitewise-report', $user_name . ' has exported the sitewise report', 'sitewise-report', $id = null);
+    }
+
     public function fetchExistingReportingMonth($params)
     {
         $data = DB::table('monthly_reports')

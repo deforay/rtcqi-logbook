@@ -66,7 +66,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                 <div class="card-body">
                                     <div id="show_alert" class="mt-1" style=""></div>
                                     <h4 class="card-title">Filter the data</h4><br>
-                                    <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="post">
+                                    <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="post" action="/sitewisereportexport">
                                         @csrf
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-12">
@@ -135,8 +135,8 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
 
                                                     <div class="col-md-8">
                                                         <button type="submit" onclick="getSitewiseReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href=''><span>Reset</span></a>&nbsp;&nbsp;
-                                                        
+                                                        <a class="btn btn-danger btn-md" href='/sitewisereport'><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" class="btn btn-primary">Export</button>
                                                     </div>
                                                 </div>
                                             </div>

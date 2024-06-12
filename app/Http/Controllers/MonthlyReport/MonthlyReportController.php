@@ -91,7 +91,6 @@ class MonthlyReportController extends Controller
         // dd($datas);die;
         $service = new MonthlyReportService();
         $data = $service->getAllMonthlyReport($datas);
-        print_r($data); die;
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
                 $button = '<div>';
