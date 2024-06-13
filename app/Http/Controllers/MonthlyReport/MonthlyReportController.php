@@ -88,7 +88,6 @@ class MonthlyReportController extends Controller
     public function getAllMonthlyReport(Request $request)
     {
         $datas = $request->all();
-        // dd($datas);die;
         $service = new MonthlyReportService();
         $data = $service->getAllMonthlyReport($datas);
         return DataTables::of($data)
