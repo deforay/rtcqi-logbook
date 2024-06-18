@@ -10,6 +10,8 @@
     'manage' => 'Manage',
     'audits' => 'Audits',
     'reports' => 'Reports',
+    'monitoring_reports' => 'Monitoring Reports',
+    'language' => 'Language',
 
     //sub menu
     'access_control' => 'Access Control',
@@ -37,6 +39,22 @@
     'invalid_result_report' => 'Invalid Result Report',
     'custom_report' => 'Custom Report',
     'not_reported_sites_report' => 'Not Reported Sites',
+    'site_wise_report' => 'Site wise Report',
+    'english' => 'English',
+    'french' => 'French',
+
+    //Dashboard
+    'overall_audits' => 'Overall Audits',
+    'no_of' => 'Nombre de',
+    'page_summaries' => 'Page Summaries',
+    'sites_audits' => 'Sites Audits',
+    'last_12_months' => 'Last 12 Months',
+    'view_more' => 'View More',
+    'recent_monthly_logbook Entries' => 'Recent Monthly Logbook Entries',
+    'month_year' => 'Month / year',
+    'site_type' => 'Site Type',
+    'date_of_collection' => 'Date Of Collection',
+    'sites_reporting' => 'SITES REPORTING',
 
     //Navigation
     'add' => 'Add',
@@ -44,6 +62,8 @@
     'search' => 'Search',
     'reset' => 'Reset',
     'action' => 'Action',
+    'province' => 'Province',
+    'district' => 'District',
 
 
     'add_new_report' => 'Add New Report',

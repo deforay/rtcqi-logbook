@@ -33,7 +33,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Dashboard</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.dashboard') }}</h3>
         </div>
         @if($errors->any())
         <div class="alert alert-success alert-dismissible fade show ml-5 mr-5 mt-4" role="alert" id="show_alert_index">

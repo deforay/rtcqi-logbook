@@ -33,7 +33,7 @@ Route::get('/', function () {
 });
 
 
-
+Route::get('/set-locale/{locale}', 'Locale\LocaleController@setLocale')->name('dashboard.index');
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard.index');
 
 //Common module
