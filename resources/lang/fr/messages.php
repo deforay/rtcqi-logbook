@@ -75,6 +75,13 @@
     'bulk_upload_user' => 'utilisateur de téléchargement groupé',
     'select_file_for_upload' => "Sélectionnez le fichier à télécharger",
 
+    // roles
+    'roles_details' => 'Détails des rôles',
+    'role_name' => 'Nom de rôle',
+    'role_code' => 'Code de rôle',
+    'add_roles' => 'Ajouter des rôles',
+    'description' => 'Description',
+
 
     'add_new_report' => 'Ajouter un nouveau rapport',
     'add_monthly_report' => 'Ajouter un rapport mensuel',
