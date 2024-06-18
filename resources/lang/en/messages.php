@@ -82,6 +82,7 @@
     'role_code' => 'Role Code',
     'add_roles' => 'Add Roles',
     'description' => 'Description',
+  
 
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',
