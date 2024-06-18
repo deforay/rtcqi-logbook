@@ -50,11 +50,12 @@
     'sites_audits' => 'Sites Audits',
     'last_12_months' => 'Last 12 Months',
     'view_more' => 'View More',
-    'recent_monthly_logbook Entries' => 'Recent Monthly Logbook Entries',
+    'recent_monthly_logbook_entries' => 'Recent Monthly Logbook Entries',
     'month_year' => 'Month / year',
     'site_type' => 'Site Type',
     'date_of_collection' => 'Date Of Collection',
     'sites_reporting' => 'SITES REPORTING',
+    'total_tests' => 'Total Tests',
 
     //Navigation
     'add' => 'Add',
