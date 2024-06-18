@@ -65,6 +65,16 @@
     'action' => 'Action',
     'province' => 'Province',
     'district' => 'District',
+    'manage' => 'Manage',
+    'upload' => 'Upload',
+
+
+    // user
+    'user' => 'User',
+    'bulk_upload_user' => 'Bulk Upload User',
+    'mobile_no' => 'Mobile No',
+    'status' => "Status",
+    'select_file_for_upload' => "Select File for Upload",
 
 
     'add_new_report' => 'Add New Report',
@@ -123,8 +133,21 @@
     'resource' => 'Resource',
     'ip_address' => 'Ip Address',
     'date_time' => 'Date Time',
+    'show_filter' => 'Show Filter',
+    'bulk_upload_user' => 'Bulk Upload User',
 
 
+    //Labels
+    'first_name' => 'First Name',
+    'last_name' => 'Last Name',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
+    'mobile_number' => 'Mobile Number',
+    'email' => 'Email',
+    'user_status' => 'User Status',
+    'role' => 'Role',
+    'user_mapping' => 'User Mapping',
+    'test_site_user_map_details' => 'Test Site User Map Details',
 
     //Placeholder
     'select_date_range' => 'Select Date Range',

@@ -11,7 +11,7 @@
     'audits' => 'Audits',
     'reports' => 'Rapports',
     'monitoring_reports' => 'Rapports de suivi',
-    'language' => 'Langue',
+    'language' => 'Langue',   
 
     //sub menu
     'access_control' => 'Contrôle d’accès',
@@ -67,6 +67,13 @@
     'action' => 'Action',
     'province' => 'Province',
     'district' => 'District',
+    'manage' => 'Gérer',
+    'upload' => 'Télécharger',
+
+    //user
+    'user' => 'Utilisateur',
+    'bulk_upload_user' => 'utilisateur de téléchargement groupé',
+    'select_file_for_upload' => "Sélectionnez le fichier à télécharger",
 
 
     'add_new_report' => 'Ajouter un nouveau rapport',
@@ -125,8 +132,24 @@
     'resource' => 'Ressource',
     'ip_address' => 'Adresse IP',
     'date_time' => 'Date Heure',
+    'show_filter' => 'Afficher le filtre',
+    'bulk_upload_user' => "utilisateur de téléchargement groupé",
+    'mobile_no' => "Numéro de portable",
+    'status' => "statut",
 
 
+
+    //Labels
+    'first_name' => 'Prénom',
+    'last_name' => 'Nom de famille',
+    'password' => 'Mot de passe',
+    'confirm_password' => 'Confirmez le mot de passe',
+    'mobile_number' => 'Numéro de portable',
+    'email' => 'E-mail',
+    'user_status' => "Statut de l'utilisateur",
+    "role" => "Rôle",
+    'user_mapping' => 'Cartographie des utilisateurs',
+    'test_site_user_map_details' => "Détails de la carte des utilisateurs du site de test",
 
     //Placeholder
     'select_date_range' => 'Sélectionnez une plage de dates',
