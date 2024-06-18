@@ -11,15 +11,15 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Test Site</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.test_site') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/testsite/">Test Site</a>
+                        <li class="breadcrumb-item"><a href="/testsite/">{{ __('messages.test_site') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Bulk upload</li>
+                        <li class="breadcrumb-item active">{{ __('messages.bulk_upload') }}</li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> BUlk Upload Test Site</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.bulk_upload_test_site') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -51,7 +51,7 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-md-12">
-                                            <label>Select File for Upload</label> <span class="mandatory">*</span>
+                                            <label>{{ __('messages.select_file_for_upload') }}</label> <span class="mandatory">*</span>
                                             <span class="text-muted">.xls, .xslx</span>
                                             <input class="form-control isRequired" accept=".xlsx, .xls" type="file" name="test_site_excel" title="Please Select File" />
                                         </div>
@@ -87,11 +87,11 @@
                                     <div class="form-actions right">
                                         <a href="/testsite">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ __('messages.cancel') }}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Upload
+                                            <i class="la la-check-square-o"></i> {{ __('messages.upload') }}
                                         </button>
                                     </div>
                                 </form>

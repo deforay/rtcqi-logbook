@@ -82,7 +82,24 @@
     'role_code' => 'Role Code',
     'add_roles' => 'Add Roles',
     'description' => 'Description',
-  
+ 
+    // test site 
+    'test_site' => 'Test Site', 
+    'external_site_id' => 'External Site ID',
+    'entry_point' => 'Entry Point',
+    'implementing_partners' => 'Implementing Partners',
+    'primary_email' => 'Primary Email',
+    'secondary_email' => 'Secondary Email',
+    'primary_mobile_number' => 'Primary Mobile Number',
+    'secondary_mobile_number' => 'Secondary Mobile Number',
+    'address' => 'Address',
+    'postal_code' => 'Postal Code',
+    'test_site_status' => 'Test Site Status',
+    'bulk_upload_test_site' => 'Bulk Upload Test Site',
+    'country' => 'Country',
+    'city' => 'City',
+    'longtitude' => 'longtitude',
+
 
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',
