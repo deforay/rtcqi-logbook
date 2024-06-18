@@ -82,6 +82,24 @@
     'add_roles' => 'Ajouter des rôles',
     'description' => 'Description',
 
+    // test site  
+    'test_site' => 'Site de test', 
+    'external_site_id' => 'ID de site externe',
+    'entry_point' => "Point d'accès",
+    'implementing_partners' => 'Partenaires de mise en œuvre',
+    'primary_email' => 'E-mail principal',
+    'secondary_email' => 'Email secondaire',
+    'primary_mobile_number' => 'Numéro de mobile principal',
+    'secondary_mobile_number' => 'Numéro de mobile secondaire',
+    'address' => 'Adresse',
+    'postal_code' => 'Code Postal',
+    'test_site_status' => 'Statut du site de test',
+    'bulk_upload_test_site' => 'Site de test de téléchargement en masse',
+    'country' => 'Pays',
+    'city' => 'ville',
+    'longtitude' => 'longitude',
+
+
 
     'add_new_report' => 'Ajouter un nouveau rapport',
     'add_monthly_report' => 'Ajouter un rapport mensuel',

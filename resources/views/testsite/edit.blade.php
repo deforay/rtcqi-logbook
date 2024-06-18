@@ -10,15 +10,15 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Test Site</h3>
+        <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.test_site') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/testsite/">Test Site</a>
+                        <li class="breadcrumb-item"><a href="/testsite/">{{ __('messages.test_site') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Edit Test Site</h4>
+                        <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.edit') }} {{ __('messages.test_site') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -54,7 +54,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Site ID
+                                            <h5>{{ __('messages.site_id') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="siteId" value="{{$result[0]->site_id}}" class="form-control" autocomplete="off" placeholder="Enter Site ID" name="siteId" title="Please enter Site ID" onblur="checkNameValidation('test_sites','site_ID', this.id,'{{$fnct}}','Entered Site Id is already exist.')">
@@ -63,8 +63,8 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>External Site ID
-                                                </h5>
+                                            <h5>{{ __('messages.external_site_id') }}
+                                               </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="externalSiteId" value="{{$result[0]->external_site_id}}" class="form-control" autocomplete="off" placeholder="Enter External Site ID" name="externalSiteID" title="Please enter External Site ID">
                                                 </div>
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Site Name <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.site_name') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="site_name" value="{{$result[0]->site_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Site Name" name="siteName" title="Please Enter Site Name" onblur="checkNameValidation('test_sites','site_name', this.id,'{{$fnct}}','Entered Site Name is already exist.')">
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Entry Point / Site Type <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.entry_point') }} / {{ __('messages.site_id') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="sitetypeId" name="sitetypeId[]" title="Please select entry point / site ID">
@@ -94,7 +94,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Implementing Partners <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.implementing_partners') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="implementingPartnerId" name="implementingPartnerId" title="Please select implementing partner">
@@ -107,7 +107,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Latitude
+                                            <h5>{{ __('messages.latitude') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="latitude" value="{{$result[0]->site_latitude}}" class="form-control " autocomplete="off" placeholder="Enter Latitude" name="latitude" title="Please Enter Latitude">
@@ -116,7 +116,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Longitude
+                                            <h5>{{ __('messages.longtitude') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="longitude" value="{{$result[0]->site_longitude}}" class="form-control " autocomplete="off" placeholder="Enter Longitude" name="longitude" title="Please Enter Longitude">
@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Primary Email
+                                            <h5>{{ __('messages.primary_email') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="primaryEmail" value="{{$result[0]->site_primary_email}}" class="form-control isEmail" autocomplete="off" placeholder="Enter Primary Email" name="primaryEmail" title="Please Enter Primary Email">
@@ -134,7 +134,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Secondary Email
+                                            <h5>{{ __('messages.secondary_email') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="secondaryEmail" value="{{$result[0]->site_secondary_email}}" class="form-control isEmail" autocomplete="off" placeholder="Enter Secondary Email" name="secondaryEmail" title="Please Enter Secodary Email">
@@ -143,8 +143,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Primary Mobile Number
-                                                </h5>
+                                            <h5>{{ __('messages.primary_mobile_number') }} </h5>
                                                 <div class="form-group">
                                                     <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="primaryMobileNo" value="{{$result[0]->site_primary_mobile_no}}" class="form-control" autocomplete="off" placeholder="Enter Primary Mobile Number" name="primaryMobileNo" title="Please Enter Primary Mobile Number">
                                                 </div>
@@ -152,8 +151,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Secondary Mobile Number
-                                                </h5>
+                                            <>{{ __('messages.secondary_mobile_number') }} </h5>
                                                 <div class="form-group">
                                                     <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="secondaryMobileNo" value="{{$result[0]->site_secondary_mobile_no}}" class="form-control" autocomplete="off" placeholder="Enter Secondary Mobile Number" name="secondaryMobileNo" title="Please Enter Secondary Mobile Number">
                                                 </div>
@@ -162,8 +160,7 @@
 
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Address1
-                                                </h5>
+                                            <h5>{{ __('messages.address') }} 1</h5>
                                                 <div class="form-group">
                                                     <input type="text" id="address1" value="{{$result[0]->site_address1}}" class="form-control  " autocomplete="off" placeholder="Enter Address1" name="address1" title="Please Enter Address1">
                                                 </div>
@@ -171,8 +168,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Address2
-                                                </h5>
+                                            <h5>{{ __('messages.address') }} 2</h5>
                                                 <div class="form-group">
                                                     <input type="text" id="address2" value="{{$result[0]->site_address2}}" class="form-control  " autocomplete="off" placeholder="Enter Address2" name="address2" title="Please Enter Address2">
                                                 </div>
@@ -180,8 +176,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Postal Code
-                                                </h5>
+                                            <h5>{{ __('messages.postal_code') }}</h5>
                                                 <div class="form-group">
                                                     <input type="tel" maxlength="6" value="{{$result[0]->site_postal_code}}" onkeypress="return isNumberKey(event);" id="postalCode" class="form-control" autocomplete="off" placeholder="Enter Postal Code" name="postalCode" title="Please Enter Postal Code">
                                                 </div>
@@ -189,8 +184,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Province Name<span class="mandatory">*</span>
-                                                </h5>
+                                            <h5>{{ __('messages.province_name') }}<span class="mandatory">*</span>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provincesssId" name="provincesssId" title="Please Select Province Name">
                                                         <option value="">Select Province Name</option>
@@ -203,8 +197,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>District Name<span class="mandatory">*</span>
-                                                </h5>
+                                            <h5>{{ __('messages.district_name') }}<span class="mandatory">*</span></h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
                                                         <option value="">Select District Name</option>
@@ -217,7 +210,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Sub District Name<span class="mandatory">*</span>
+                                            <h5>{{ __('messages.sub_district_name') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="Please Select Sub District Name">
@@ -231,7 +224,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Country <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.country') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="country" value="{{$result[0]->site_country}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter Country" name="country" title="Please Enter Country">
@@ -240,7 +233,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>City <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.city') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="city" value="{{$result[0]->site_city}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter City" name="city" title="Please Enter City">
@@ -249,7 +242,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Test Site Status<span class="mandatory">*</span>
+                                            <h5>{{ __('messages.test_site_status') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testSiteStatus" name="testSiteStatus" title="Please Select Test Site Status">
@@ -264,11 +257,11 @@
                                     <div class="form-actions right">
                                         <a href="/testsite">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
-                                            </button>
+                                            <i class="ft-x"></i> {{ __('messages.cancel') }}
+                                           </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Update
+                                            <i class="la la-check-square-o"></i> {{ __('messages.update') }}
                                         </button>
                                     </div>
                                 </form>

@@ -17,9 +17,9 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/testsite/">Test Site</a>
+                        <li class="breadcrumb-item"><a href="/testsite/">{{ __('messages.test_site') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -31,9 +31,9 @@
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['add']) && ($role['App\\Http\\Controllers\\TestSite\\TestSiteController']['add'] == "allow")) { ?>
                     <a href="/testsite/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Add Test Site</b></a>
+                        <b><i class="ft-plus icon-left"></i> {{ __('messages.add') }} {{ __('messages.test_site') }}</b></a>
                         <a href="/testsite/bulk-upload" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Bulk Upload Test site</b></a>
+                        <b><i class="ft-plus icon-left"></i> {{ __('messages.bulk_upload_test_site') }}</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Test Site</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.test_site') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
