@@ -108,7 +108,7 @@ if ((isset($role['App\\Http\\Controllers\\Report\\ReportController']['trendrepor
 $monitoringReport = '';
 
 if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController']['sitewisereport']) && ($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportController']['sitewisereport'] == "allow")) {
-    $monitoringReport .= '<li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="' . url('sitewisereport') . '">' . Lang::get('Site-Wise Report') . '</a></li>';
+    $monitoringReport .= '<li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="' . url('sitewisereport') . '">' . Lang::get('messages.site_wise_report') . '</a></li>';
 }
 // $import .= '<li class="dropdown nav-item" ><a id="import" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-upload"></i><span class="menu-title">Import</span></a>
 //             <ul class="dropdown-menu">';
@@ -127,12 +127,18 @@ if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportContr
 
 
             <?php if (trim($monitoringReport) != "") { ?>
-                <li class="dropdown nav-item" data-menu="dropdown"><a id="monitoringReport" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title"><?php echo Lang::get('Monitoring Reports') ?> </span></a>
+                <li class="dropdown nav-item" data-menu="dropdown"><a id="monitoringReport" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title">{{ Lang::get('messages.monitoring_reports') }} </span></a>
                     <ul class="dropdown-menu">
                         <?php echo $monitoringReport; ?>
                     </ul>
                 </li>
             <?php } ?>
+            <li class="dropdown nav-item" data-menu="dropdown"><a id="" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title">{{ Lang::get('messages.language') }} </span></a>
+                <ul class="dropdown-menu">
+                <li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="{{ url('set-locale/en') }}">{{ Lang::get('messages.english') }}</a></li>
+                <li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="{{ url('set-locale/fr') }}">{{ Lang::get('messages.french') }}</a></li>
+                </ul>
+            </li>
 
             <li class="dropdown nav-item profil" data-menu="dropdown" style="float-align: right"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">@if (session('username')) {{ ucfirst(session('username')) }} @endif</span><span class="avatar avatar-online"><img src="{{ asset('assets/images/default-profile-picture.jpg')}}" alt="avatar"><i></i></span></a>
                 <div class="dropdown-menu dropdown-menu-right">
