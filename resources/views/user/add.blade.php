@@ -11,15 +11,15 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">User</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.user') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/user/">User</a>
+                        <li class="breadcrumb-item"><a href="/user/">{{ __('messages.user') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Add</li>
+                        <li class="breadcrumb-item active">{{ __('messages.add') }}</li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Add User</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.add') }} {{ __('messages.user') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -53,7 +53,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>First Name <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.first_name') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="firstName" class="form-control isRequired" autocomplete="off" placeholder="Enter First Name" name="firstName" title="Please Enter First Name">
@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Last Name
+                                                <h5>{{ __('messages.last_name') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="lastName" class="form-control " autocomplete="off" placeholder="Enter Last Name" name="lastName" title="Please Enter Last Name">
@@ -72,7 +72,7 @@
 
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Password <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.password') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="password" id="password" class="form-control isRequired" autocomplete="off" placeholder="Enter Password" name="password" title="Please Enter Password">
@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Confirm Password <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.confirm_password') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="password" id="confirmPassword" onkeyup="checkPasswordMatch()" class="form-control isRequired" autocomplete="off" placeholder="Enter Confirm Pasword" name="confirmPassword" title="Please Enter Confirm Pasword">
@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Mobile Number
+                                                <h5>{{ __('messages.mobile_number') }}
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="tel" maxlength="10" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkNameValidation('users','phone', this.id,'','Entered mobile number is already exist.')">
@@ -104,7 +104,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Email <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.email') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="email" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkNameValidation('users','email', this.id,'','Entered mail id is already exist.')">
@@ -113,7 +113,7 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>User Status<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.user_status') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userStatus" name="userStatus" title="Please Select User Status">
@@ -126,7 +126,7 @@
 
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Role<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.role') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="select2 form-control isRequired" autocomplete="off" style="width:100%;" id="roleId" name="roleId" title="Please Select Role">
@@ -141,7 +141,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>User Mapping<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.user_mapping') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userMapping" name="userMapping" title="Please Select User Mapping">
@@ -153,119 +153,119 @@
                                         </div>
                                     </div>
                                     <div id="sitewise">
-                                    <div class="form-actions left">
-                                        <input type="button" id="showBtn" class="btn btn-success" value="Show Filter" />
-                                    </div>
-                                    <div class="row filterDiv" style="display:none;">
-                                        <div class="col-xl-4 col-lg-12">
-                                            <fieldset>
-                                                <h5>Province Name
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
-                                                        @foreach($province as $row)
-                                                        <option value="{{$row->province_id}}">{{$row->province_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
+                                        <div class="form-actions left">
+                                            <input type="button" id="showBtn" class="btn btn-success" value="{{ __('messages.show_filter') }}" />
                                         </div>
-                                        <div class="col-xl-4 col-lg-12">
-                                            <fieldset>
-                                                <h5>District Name
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
+                                        <div class="row filterDiv" style="display:none;">
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>{{ __('messages.province_name') }}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                            @foreach($province as $row)
+                                                            <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>{{ __('messages.district_name') }}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
 
-                                                    </select>
-                                                </div>
-                                            </fieldset>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>{{ __('messages.sub_district_name') }}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12">
+                                                <button type="button" onclick="getAllTestSiteList();return false;" class="btn btn-info"> {{ __('messages.search') }}</button>&nbsp;&nbsp;
+                                            </div>
                                         </div>
-                                        <div class="col-xl-4 col-lg-12">
-                                            <fieldset>
-                                                <h5>Sub District Name
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
+                                        <div class="form-actions left filterDiv" style="display:none;">
 
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-12">
-                                            <button type="button" onclick="getAllTestSiteList();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                        </div>
-                                    </div>
-                                    <div class="form-actions left filterDiv" style="display:none;">
-
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-xl-5 col-lg-12">
-                                            <fieldset>
-                                                <h5>Test Site User Map Details
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select name="siteMap[]" id="search" class="form-control" size="8" multiple="multiple">
-                                                        @foreach($test as $row)
-                                                        <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
                                         </div>
 
-                                        <div class="col-xl-1 col-lg-12"><br>
-                                            <button type="button" id="search_rightAll" class="btn btn-secondary"><i class="ft-fast-forward"></i></button><br><br>
-                                            <button type="button" id="search_rightSelected" class="btn btn-secondary"><i class="ft-chevron-right"></i></button><br><br>
-                                            <button type="button" id="search_leftSelected" class="btn btn-secondary"><i class="ft-chevron-left"></i></button><br><br>
-                                            <button type="button" id="search_leftAll" class="btn btn-secondary"><i class="ft-rewind"></i></button><br><br>
-                                        </div>
 
-                                        <div class="col-xl-5 col-lg-12"><br>
-                                            <select name="search_to[]" id="search_to" class="form-control" size="8" multiple="multiple"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="locationwise">
-                                    <div class="row">
-                                    <div class="col-xl-4 col-lg-12">
-                                            <fieldset>
-                                                <h5>Province Name
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceMappingId" name="provinceMappingId[]" title="Please select Province Name">
-                                                        @foreach($province as $row)
-                                                        <option value="{{$row->province_id}}">{{$row->province_name}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-4 col-lg-12" id="districtBlock">
-                                            <fieldset>
-                                                <h5>District Name
-                                                </h5>
-                                                <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtMappingId" name="districtMappingId[]" title="Please select District  Name">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-12">
+                                                <fieldset>
+                                                    <h5>{{ __('messages.test_site_user_map_details') }}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select name="siteMap[]" id="search" class="form-control" size="8" multiple="multiple">
+                                                            @foreach($test as $row)
+                                                            <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
 
-                                                    </select>
-                                                </div>
-                                            </fieldset>
+                                            <div class="col-xl-1 col-lg-12"><br>
+                                                <button type="button" id="search_rightAll" class="btn btn-secondary"><i class="ft-fast-forward"></i></button><br><br>
+                                                <button type="button" id="search_rightSelected" class="btn btn-secondary"><i class="ft-chevron-right"></i></button><br><br>
+                                                <button type="button" id="search_leftSelected" class="btn btn-secondary"><i class="ft-chevron-left"></i></button><br><br>
+                                                <button type="button" id="search_leftAll" class="btn btn-secondary"><i class="ft-rewind"></i></button><br><br>
+                                            </div>
+
+                                            <div class="col-xl-5 col-lg-12"><br>
+                                                <select name="search_to[]" id="search_to" class="form-control" size="8" multiple="multiple"></select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                    
+                                    <div id="locationwise">
+                                        <div class="row">
+                                            <div class="col-xl-4 col-lg-12">
+                                                <fieldset>
+                                                    <h5>{{ __('messages.province_name') }}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceMappingId" name="provinceMappingId[]" title="Please select Province Name">
+                                                            @foreach($province as $row)
+                                                            <option value="{{$row->province_id}}">{{$row->province_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-12" id="districtBlock">
+                                                <fieldset>
+                                                    <h5>{{ __('messages.district_name') }}
+                                                    </h5>
+                                                    <div class="form-group">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtMappingId" name="districtMappingId[]" title="Please select District  Name">
+
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-actions right">
                                         <a href="/user">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ __('messages.cancel') }}
                                             </button>
                                         </a>
                                         <input type="hidden" name="testSiteName" id="testSiteName" />
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save
+                                            <i class="la la-check-square-o"></i> {{ __('messages.save') }}
                                         </button>
                                     </div>
                                 </form>
@@ -342,13 +342,13 @@
         });
         $("#locationwise").hide();
         $('#userMapping').change(function() {
-            if($('#userMapping').val()==1){
+            if ($('#userMapping').val() == 1) {
                 $("#sitewise").show();
                 $("#locationwise").hide();
-            }else{
+            } else {
                 $("#sitewise").hide();
                 $("#locationwise").show();
-            }            
+            }
         });
 
         $('#provinceMappingId').select2({
@@ -361,8 +361,8 @@
             allowClear: true,
         });
         $("#provinceMappingId").change(function() {
-            var datas = $(this).val();                        
-            listDistrictForProvince(false);                     
+            var datas = $(this).val();
+            listDistrictForProvince(false);
         });
 
     });
@@ -567,11 +567,11 @@
                 result.forEach((res) => {
                     districtsOption += '<option value="' + res.district_id + '">' + res.district_name + '</option>';
                 });
-                if(isFilter){
+                if (isFilter) {
                     $('#districtId').html(districtsOption);
-                }else{
-                    $('#districtMappingId').html(districtsOption); 
-                }                
+                } else {
+                    $('#districtMappingId').html(districtsOption);
+                }
             }
         });
     }

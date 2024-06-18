@@ -15,11 +15,11 @@ User
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/testsite/">User</a>
+                        <li class="breadcrumb-item"><a href="/testsite/">{{ __('messages.user') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Bulk upload</li>
+                        <li class="breadcrumb-item active">{{ __('messages.bulk_upload') }}</li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@ User
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> BUlk Upload User</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.bulk_upload_user') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -51,7 +51,7 @@ User
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-md-12">
-                                            <label>Select File for Upload</label> <span class="mandatory">*</span>
+                                            <label>{{ __('messages.select_file_for_upload') }}</label> <span class="mandatory">*</span>
                                             <span class="text-muted">.xls, .xslx</span>
                                             <input class="form-control isRequired" accept=".xlsx, .xls" type="file" name="user_excel" title="Please Select File" />
                                         </div>
@@ -60,12 +60,12 @@ User
                                         <div class="col-md-12">
                                             <table class="table table-bordered pt-2">
                                                 <tr>
-                                                    <td>First Name</td>
-                                                    <td>Last Name</td>
-                                                    <td>Mobile Number</td>
-                                                    <td>Email</td>
-                                                    <td>Role</td>
-                                                    <td>User Mapping</td>
+                                                    <td>{{ __('messages.first_name') }}</td>
+                                                    <td>{{ __('messages.last_name') }}</td>
+                                                    <td>{{ __('messages.mobile_number') }}</td>
+                                                    <td>{{ __('messages.email') }}</td>
+                                                    <td>{{ __('messages.role') }}</td>
+                                                    <td>{{ __('messages.user_mapping') }}</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -73,11 +73,11 @@ User
                                     <div class="form-actions right">
                                         <a href="/testsite">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ __('messages.cancel') }}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Upload
+                                            <i class="la la-check-square-o"></i> {{ __('messages.upload') }}
                                         </button>
                                     </div>
                                 </form>

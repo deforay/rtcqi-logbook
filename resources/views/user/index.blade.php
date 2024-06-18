@@ -17,9 +17,9 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/user/">User</a>
+                        <li class="breadcrumb-item"><a href="/user/">{{ __('messages.user') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -30,9 +30,9 @@
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\User\\UserController']['add']) && ($role['App\\Http\\Controllers\\User\\UserController']['add'] == "allow")) { ?>
                     <a href="/user/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-user-plus icon-left"></i> Add User</b></a>
+                        <b><i class="ft-user-plus icon-left"></i> {{ __('messages.add') }} {{ __('messages.user') }}</b></a>
                         <a href="/user/bulk-upload" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Bulk Upload User</b></a>
+                        <b><i class="ft-plus icon-left"></i> {{ __('messages.bulk_upload_user') }}</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -57,7 +57,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">User</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.user') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -74,14 +74,14 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="userList">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Mobile No</th>
-                                                <th>Email</th>
-                                                <th>Status</th>
+                                                <th>{{ __('messages.first_name') }}</th>
+                                                <th>{{ __('messages.last_name') }}</th>
+                                                <th>{{ __('messages.mobile_no') }}</th>
+                                                <th>{{ __('messages.email') }}</th>
+                                                <th>{{ __('messages.status') }}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) { ?>
-                                                    <th>Action</th>
+                                                    <th>{{ __('messages.action') }}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
