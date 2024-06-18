@@ -12,13 +12,13 @@
 <div class="content-wrapper">
       <div class="content-header row">
         <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-              <h3 class="content-header-title mb-0 d-inline-block">Roles Details</h3>
+              <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.roles_details') }}</h3>
               <div class="row breadcrumbs-top d-inline-block">
               <div class="breadcrumb-wrapper col-12">
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item">Manage
+                <li class="breadcrumb-item">{{ __('messages.manage') }}
                 </li>
-                <li class="breadcrumb-item"><a href="/roles/">Roles</a></li>
+                <li class="breadcrumb-item"><a href="/roles/">{{ __('messages.roles') }}</a></li>
                 </ol>
               </div>
               </div>
@@ -28,7 +28,7 @@
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\Roles\\RolesController']['add']) && ($role['App\\Http\\Controllers\\Roles\\RolesController']['add'] == "allow")) {?>
                  <a href="/role/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1" >
-                    <b><i class="ft-user-plus icon-left"></i> ADD</b></a>
+                    <b><i class="ft-user-plus icon-left"></i> {{ __('messages.add') }}</b></a>
                 <?php } ?>
                    
                 </div>
@@ -63,10 +63,10 @@
                       <table class="table table-striped table-bordered custom-toolbar-elements" id="rolesList">
                           <thead>
                             <tr>
-                                <th>Role Name</th>
-                                <th>Role Code</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>{{ __('messages.role_name') }}</th>
+                                <th>{{ __('messages.role_code') }}</th>
+                                <th>{{ __('messages.status') }}</th>
+                                <th>{{ __('messages.action') }}</th>
                             </tr>
                           </thead>
                           <tbody>

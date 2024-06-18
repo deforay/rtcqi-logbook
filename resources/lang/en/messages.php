@@ -76,6 +76,12 @@
     'status' => "Status",
     'select_file_for_upload' => "Select File for Upload",
 
+    // roles
+    'roles_details' => 'Roles Details',
+    'role_name' => 'Role Name',
+    'role_code' => 'Role Code',
+    'add_roles' => 'Add Roles',
+    'description' => 'Description',
 
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',

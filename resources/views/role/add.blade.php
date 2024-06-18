@@ -11,15 +11,15 @@
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-		<h3 class="content-header-title mb-0 d-inline-block">Roles</h3>
+		<h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.roles') }}</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
-			<li class="breadcrumb-item">Manage
+			<li class="breadcrumb-item">{{ __('messages.manage') }}
 			</li>
-			<li class="breadcrumb-item"><a href="/roles/">Roles</a>
+			<li class="breadcrumb-item"><a href="/roles/">{{ __('messages.roles') }}</a>
 			</li>
-			<li class="breadcrumb-item active">Add</li>
+			<li class="breadcrumb-item active">{{ __('messages.add') }}</li>
 			</ol>
 		</div>
 		</div>
@@ -32,7 +32,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Add Roles</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.add') }} {{ __('messages.roles') }}</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -54,7 +54,7 @@
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
-                                            <h5>Role Name <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.role_name') }} <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <input type="text" id="roleName" onblur="duplicateValidation('roles','role_name', this.id, 'Entered role name is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter a role name" name="roleName" title="Please enter role name">
@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
-                                            <h5>Role Code <span class="mandatory">*</span>
+                                            <h5>{{ __('messages.role_code') }} <span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <input type="text" id="roleCode" onblur="duplicateValidation('roles','role_code', this.id, 'Entered role code is already exist.')" class="form-control isRequired" autocomplete="off" placeholder="Enter a role code" name="roleCode" title="Please enter role code">
@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-12">
                                         <fieldset>
-                                            <h5>Status<span class="mandatory">*</span>
+                                            <h5>{{ __('messages.dashboard') }}status<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                             <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="rolesStatus" name="rolesStatus" title="Please select status">
@@ -168,11 +168,11 @@
                                 <div class="form-actions right">
                                     <a href="/roles" >
                                     <button type="button" class="btn btn-warning mr-1">
-                                    <i class="ft-x"></i> Cancel
+                                    <i class="ft-x"></i> {{ __('messages.cancel') }}
                                     </button>
                                     </a>
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Save
+                                    <i class="la la-check-square-o"></i> {{ __('messages.save') }}
                                     </button>
                                 </div>
 							</form>
