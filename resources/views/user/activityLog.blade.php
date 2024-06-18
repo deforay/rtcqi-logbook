@@ -21,9 +21,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="userActivityLog/">User Activity Log</a>
+                        <li class="breadcrumb-item"><a href="userActivityLog/">{{ __('messages.user_activity_log') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -52,7 +52,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">User Activity Log</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.user_activity_log') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -65,11 +65,11 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                             <div id="show_alert" class="mt-1"></div>
-                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <h4 class="card-title">{{ __('messages.filter_the_data') }}</h4><br>
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Date Range <span class="mandatory">*</span>
+                                                    <h5>{{ __('messages.date_range') }} <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
                                                     <input type="text" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
@@ -78,7 +78,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>User Name
+                                                <h5>{{ __('messages.user_name') }}
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="userId" name="userId[]" title="Please select User Name">
@@ -93,8 +93,8 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                 <div class="form-group row">
 
                                                     <div class="col-md-8">
-                                                        <button type="submit" onclick="getAllAuditData();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href="/user/userActivityLog"><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" onclick="getAllAuditData();return false;" class="btn btn-info"> {{ __('messages.search') }}</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/user/userActivityLog"><span>{{ __('messages.reset') }}</span></a>&nbsp;&nbsp;
                                                     </div>
                                                 </div></div>
                                         </div>
