@@ -44,7 +44,6 @@
     'english' => 'Anglais',
     'french' => 'Français',
 
-
     //Dashboard
     'overall_audits' => 'Vérifications Globales',
     'no_of' => 'Nombre de',
@@ -52,11 +51,13 @@
     'sites_audits' => 'Audits de sites',
     'last_12_months' => '12 derniers mois',
     'view_more' => 'Voir plus',
-    'recent_monthly_logbook Entries' => 'Entrées récentes du journal de bord mensuel',
+    'recent_monthly_logbook_entries' => 'Entrées récentes du journal de bord mensuel',
     'month_year' => 'Mois année',
     'site_type' => 'Type de site',
     'date_of_collection' => 'Date de collecte',
     'sites_reporting' => 'RAPPORTS SUR LES SITES',
+    'total_tests' => 'tests totaux',
+    
 
     //Navigation
     'add' => 'Ajouter',

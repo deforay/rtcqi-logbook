@@ -57,7 +57,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                             <div class="media d-flex">
                                 <div class="media-body text-left">
                                     <h3 class="info">{{$total}}</h3>
-                                    <h6>Overall Audits</h6>
+                                    <h6>{{ __('messages.overall_audits') }}</h6>
                                 </div>
                                 <div>
                                     <i class="icon-list info font-large-2 float-right"></i>
@@ -77,7 +77,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                             <div class="media d-flex">
                                 <div class="media-body text-left">
                                     <h3 class="warning">{{$monthly}}</h3>
-                                    <h6>No. of Page Summaries (Last 12 Months)</h6>
+                                    <h6>{{ __('messages.no_of') }} {{ __('messages.page_summaries') }} ({{ __('messages.last_12_months') }})</h6>
                                 </div>
                                 <div>
                                     <i class="icon-list warning font-large-2 float-right"></i>
@@ -98,7 +98,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                             <div class="media d-flex">
                                 <div class="media-body text-left">
                                     <h3 class="success">{{$siteMonthly}}</h3>
-                                    <h6>No. of Sites Audits (Last 12 Months)</h6>
+                                    <h6>{{ __('messages.no_of') }} {{ __('messages.sites_audits') }} ({{ __('messages.last_12_months') }})</h6>
                                 </div>
                                 <div>
                                     <i class="icon-map success font-large-2 float-right"></i>
@@ -116,13 +116,6 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
     </div>
 </div>
 <section id="vector-maps">
-    <!-- <div class="row">
-        <div class="col-12 mt-3 mb-1">
-            <h4 class="text-uppercase">Monthly Reports</h4>
-
-        </div>
-    </div> -->
-
     <div class="row">
         <div class="col-12">
             <div class="card box-shadow-0">
@@ -134,7 +127,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                     <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                         <div class="media">
                                             <div class="media-body">
-                                                <span class="text-bold-500">Date Range </span>
+                                                <span class="text-bold-500">{{ __('messages.date_range') }} </span>
                                                 <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
                                             </div>
                                         </div>
@@ -142,9 +135,9 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                     <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                         <div class="media">
                                             <div class="media-body">
-                                                <span class="text-bold-500">Province </span>
+                                                <span class="text-bold-500">{{ __('messages.province') }} </span>
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
-                                                    <option value="">Select Province</option>
+                                                    <option value="">{{ __('messages.select') }} {{ __('messages.province') }}</option>
                                                     @foreach($province as $row)
                                                     <option value="{{$row->province_id}}">{{$row->province_name}}</option>
                                                     @endforeach
@@ -156,9 +149,9 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                     <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                         <div class="media">
                                             <div class="media-body">
-                                                <span class="text-bold-500">District </span>
+                                                <span class="text-bold-500">{{ __('messages.district') }} </span>
                                                 <select class="form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
-                                                    <option value="">Select District</option>
+                                                    <option value="">{{ __('messages.select') }} {{ __('messages.district') }}</option>
                                                     @foreach($districts as $district)
                                                     <option value="{{$row->province_id}}">{{$district->district_name}}</option>
                                                     @endforeach
@@ -169,7 +162,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                     <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                         <div class="media">
                                             <div class="media-body">
-                                                <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info mt-4"> Search</button>
+                                                <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info mt-4"> {{ __('messages.search') }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -216,11 +209,11 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
     <div id="recent-transactions" class="col-12">
         <div class="card">
             <div class="card-headers">
-                <h4 class="card-title">Recent Monthly Logbook Entries</h4>
+                <h4 class="card-title">{{ __('messages.recent_monthly_logbook_entries') }}</h4>
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">
-                        <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="/monthlyreport" target="_blank">View More</a></li>
+                        <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="/monthlyreport" target="_blank">{{ __('messages.view_more') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -229,13 +222,13 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                     <table id="recent-orders" class="table table-hover table-xl mb-0">
                         <thead>
                             <tr>
-                                <th class="border-top-0">Month/Year</th>
-                                <th class="border-top-0">Site Name</th>
-                                <th class="border-top-0">Site Type</th>
-                                <th class="border-top-0">Date Of Collection</th>
-                                <th class="border-top-0">Start Date</th>
-                                <th class="border-top-0">End Date</th>
-                                <th class="border-top-0">Total Tests</th>
+                                <th class="border-top-0">{{ __('messages.month_year') }}</th>
+                                <th class="border-top-0">{{ __('messages.site_name') }}</th>
+                                <th class="border-top-0">{{ __('messages.site_type') }}</th>
+                                <th class="border-top-0">{{ __('messages.date_of_collection') }}</th>
+                                <th class="border-top-0">{{ __('messages.start_date') }}</th>
+                                <th class="border-top-0">{{ __('messages.end_date') }}</th>
+                                <th class="border-top-0">{{ __('messages.total_tests') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -281,7 +274,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
     <div class="card-content">
         <div class="row" style="padding:10px;">
             <div class="col-12">
-                <h4 class="text-uppercase">Sites Reporting - Last 12 months</h4>
+                <h4 class="text-uppercase">{{ __('messages.sites_reporting') }} - {{ __('messages.last_12_months') }}</h4>
                 <div id="sitewiseMonthlyChart"></div>
             </div>
         </div>
