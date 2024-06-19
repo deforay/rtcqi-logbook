@@ -31,6 +31,7 @@
     'site_types' => 'Types de sites',
     'test_kits' => 'Test Kits',
     'allowed_test_kits' => 'Kits de test autorisés',
+    'allowed_test_kit' => 'Kit de test autorisés',
     'audit_trail' => 'Piste d’audit',
     'monthly_report' => 'Rapport mensuel (saisie de données)',
     'failed_imports_excel_upload' => 'Échec des importations - Téléchargement Excel',
@@ -135,6 +136,8 @@
     "Kit Expiry Date" => "Date d'expiration du kit",
     "comments" => "Commentaires",
     "test_kit_status" => "Statut du kit de test",
+    "test_kit" => "Kit de test",
+    "test_kit_name" => "Nom du kit de test",
 
 
     'add_new_report' => 'Ajouter un nouveau rapport',
