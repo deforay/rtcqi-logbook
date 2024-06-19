@@ -17,9 +17,9 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/district/">District</a>
+                        <li class="breadcrumb-item"><a href="/district/">{{ __('messages.district') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -31,7 +31,7 @@
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['add']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['add'] == "allow")) { ?>
                     <a href="/district/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Add District</b></a>
+                        <b><i class="ft-plus icon-left"></i> {{ __('messages.add') }} {{ __('messages.district') }}</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">District</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.district') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -73,14 +73,14 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="districtList">
                                         <thead>
                                             <tr>
-                                                <th>District Name</th>
-                                                <th>Province Name</th>
+                                                <th>{{ __('messages.district_name') }}</th>
+                                                <th>{{ __('messages.province_name') }}</th>
                                                 <th>Province ID</th>
-                                                <th>External ID</th>
-                                                <th>Status</th>
+                                                <th>{{ __('messages.external_id') }}</th>
+                                                <th>{{ __('messages.status') }}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\District\\DistrictController']['edit']) && ($role['App\\Http\\Controllers\\District\\DistrictController']['edit'] == "allow")) { ?>
-                                                    <th>Action</th>
+                                                    <th>{{ __('messages.action') }}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>
