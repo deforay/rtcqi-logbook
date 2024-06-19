@@ -1,7 +1,7 @@
 <!--
     Author             : ilahir
     Date               : 18 Dec 2023
-    Description        : Sitewise Report
+    Description        : {{ __('messages.site_wise_report') }}
     Last Modified Date : 18 Dec 2023
     Last Modified Name : ilahir
 -->
@@ -20,9 +20,9 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ url('sitewisereport') }}">Sitewise Report</a>
+                        <li class="breadcrumb-item"><a href="{{ url('sitewisereport') }}">{{ __('messages.site_wise_report') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -51,7 +51,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Sitewise Report</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.site_wise_report') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -65,25 +65,25 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                             <div class="card-content collapse show">
                                 <div class="card-body">
                                     <div id="show_alert" class="mt-1" style=""></div>
-                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <h4 class="card-title">{{ __('messages.filter_the_data') }}</h4><br>
                                     <form class="form form-horizontal" role="form" name="trendReportFilter" id="trendReportFilter" method="post" action="/sitewisereportexport">
                                         @csrf
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Date Range <span class="mandatory">*</span>
+                                                    <h5>{{ __('messages.date_range') }} <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select {{ __('messages.date_range') }}" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>Province Name
+                                                <h5>{{ __('messages.province_name') }}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select {{ __('messages.province_name') }}">
                                                             @foreach($province as $row)
                                                             <option value="{{$row->province_id}}">{{$row->province_name}}</option>
                                                             @endforeach
@@ -93,7 +93,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>District Name
+                                                    <h5>{{ __('messages.district_name') }}
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
@@ -106,7 +106,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                         <div class ="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Sub District Name
+                                                    <h5>{{ __('messages.sub_district_name') }}
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
@@ -118,10 +118,10 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                             
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Test Site Name
+                                                    <h5>{{ __('messages.test_site_name') }}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select {{ __('messages.test_site_name') }}">
                                                             @foreach($testSite as $row)
                                                             <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                             @endforeach
@@ -163,7 +163,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                         <div class="col-lg-12" id="siteNameList">
                                             
                                                 <fieldset>
-                                                    <h5>Selected Test Site Name</h5>
+                                                    <h5>{{ __('messages.selected_test_site_name') }}</h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="selectedTestSiteId" name="selectedTestSiteId[]" title="Please select Test Site Name">
                                                             
@@ -174,7 +174,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                         </div>
                                         <div class="col-md-12">
                                             <input type="hidden" id="checkedTestSiteId" class="isRequired" title="Please select the test site name"/>
-                                            <a class="btn btn-warning btn-md" href='javascript:void(0);' onclick="sendMail()"><span>Send Mail</span></a>
+                                            <a class="btn btn-warning btn-md" href='javascript:void(0);' onclick="sendMail()"><span>{{ __('messages.send_mail') }}</span></a>
                                         </div>
                                     </div>
                                     
@@ -214,7 +214,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
         getSitewiseReport();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
-            placeholder: "Select Province Name",
+            placeholder: "Select {{ __('messages.province_name') }}",
             allowClear: true,
         });
         $('#provinceId').on('select2:select', function(e) {
@@ -226,7 +226,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
 
         });
         $selectElement = $('#districtId').select2({
-            placeholder: "Select District Name",
+            placeholder: "Select {{ __('messages.district_name') }}",
             allowClear: true,
         });
         $('#districtId').on('select2:select', function(e) {
@@ -239,7 +239,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
         });
 
         $selectElement = $('#subDistrictId').select2({
-            placeholder: "Select Sub District Name",
+            placeholder: "Select {{ __('messages.sub_district_name') }}",
             allowClear: true,
         });
         $('#subDistrictId').on('select2:select', function(e) {

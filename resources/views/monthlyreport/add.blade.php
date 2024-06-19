@@ -242,9 +242,9 @@ $sample_collection_limit=$global['sample_collection_past_months_limit'];
                                                 <?php
                                                 $testingAlgorithmType=explode(',',$testingAlgorithmType);
                                                 ?>
-                                                <h5>Algorithm Type <span class="mandatory">*</span></h5>
+                                                <h5>{{ __('messages.algorithm_type') }} <span class="mandatory">*</span></h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="Please select Algorithm Type">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="algoType" name="algoType" title="{{ __('messages.select') }} {{ __('messages.algorithm_type') }}">
                                                         <option value="">---Select---</option>
                                                         @if(in_array("serial",$testingAlgorithmType))
                                                             <option value="serial">Serial</option>
@@ -824,7 +824,7 @@ loadReplaceTestKitHeadings();
             //     alert('sss');
             //     for(var i=0; $i<rowCount; $i++){
             //         if($('#startDate' + i).val() === '' && $('#endDate' + i).val() !== ''){
-            //             var errorMessage="please select start date first";
+            //             var errorMessage="{{ __('messages.select') }} start date first";
             //             $('#endDate' + i).val('');
             //             $('#show_error_date'+i).html(flag).delay(3000).fadeOut();
             //             $('#show_error_date'+i).css("display", "block");
@@ -1240,7 +1240,7 @@ loadReplaceTestKitHeadings();
         reportingMon=$("#reportingMon").val();
         if(reportingMon!=selectedEndDate && selectedEndDate!="" && reportingMon!=""){
             duplicateName=false;
-            alert("Please select the valid reporting month");
+            alert("{{ __('messages.select') }} the valid reporting month");
         }else if(reportingMon==selectedEndDate){
             duplicateName=true;
         }

@@ -82,7 +82,7 @@ $messages = Lang::get('messages');
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                                 <div id="show_alert" class="mt-1"></div>
-                                <h4 class="card-title">{{ $messages['filter_the_data']}}</h4><br>
+                                <h4 class="card-title">{{ __('messages.filter_the_data') }}</h4><br>
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-12">
                                         <fieldset>

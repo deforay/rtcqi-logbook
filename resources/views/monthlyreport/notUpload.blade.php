@@ -1,7 +1,7 @@
 <!--
 
     Date               : 02 Jun 2021
-    Description        : Monthly reports view screen
+    Description        : {{ __('messages.monthly_report') }}s view screen
     Last Modified Date : 02 Jun 2021
 
 -->
@@ -21,9 +21,9 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreport/">Failed Imports - Excel Uploads</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreport/">{{ __('messages.failed_imports_excel_upload') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -35,14 +35,14 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['bulk'] == "allow")) { ?>
                     <a href="/monthlyreportdata" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="la la-upload"></i> Bulk Upload Monthly Reports</b>
+                        <b><i class="la la-upload"></i> {{ __('messages.bulk_upload_monthly_reports') }}</b>
 
                     </a>
                 <?php } ?>
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['add'] == "allow")) { ?>
                     <a href="/monthlyreport/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Add Monthly Report</b>
+                        <b><i class="ft-plus icon-left"></i> {{ __('messages.add') }} {{ __('messages.monthly_report') }}</b>
                     </a>
                 <?php } ?>
             </div>
@@ -69,7 +69,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Failed Imports - Excel Upload</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.failed_imports_excel_upload') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -85,25 +85,25 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                             </div>
                             <div class="card-body card-dashboard">
                                 <div id="show_alert" class="mt-1"></div>
-                                <h4 class="card-title">Filter the data</h4><br>
+                                <h4 class="card-title">{{ __('messages.filter_the_data') }}</h4><br>
                                 <form name="trendReportFilter" id="trendReportFilter" method="post" action="/notuploadexcelexport">
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Date Range <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.date_range') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    <input type="text" id="searchDate" name="searchDate" style="padding-top: 1.47rem;padding-right: 0.75rem;padding-bottom: 1.47rem;padding-left: 0.75rem;" class="form-control" placeholder="Select {{ __('messages.date_range') }}" value="{{$startdate}} to {{$enddate}}" />
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Province Name
+                                                <h5>{{ __('messages.province_name') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceName" name="provinceName[]" title="Please select Province Name">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceName" name="provinceName[]" title="Please select {{ __('messages.province_name') }}">
                                                         @foreach($province as $row)
                                                         <option value="{{$row->province_name}}">{{$row->province_name}}</option>
                                                         @endforeach
@@ -127,10 +127,10 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5> Site Name
+                                                <h5> {{ __('messages.site_name') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteName" name="testSiteName[]" title="Please select Test Site Name">
+                                                    <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteName" name="testSiteName[]" title="Please select Test {{ __('messages.site_name') }}">
                                                         @foreach($testSite as $row)
                                                         <option value="{{$row->test_site_name}}">{{$row->test_site_name}}</option>
                                                         @endforeach
@@ -147,16 +147,16 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
                                                 <div class="col-md-7">
                                                     <div class="row" style="padding-left:15px;">
                                                         <div class="display-inline">
-                                                            <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> Search</button>
+                                                            <button type="submit" onclick="getAllMonthlyReport();return false;" class="btn btn-info"> {{ __('messages.search') }}</button>
                                                         </div>
                                                         <div class="display-inline ml-2">
-                                                            <a class="btn btn-danger btn-md" href="/monthlyreport/notUpload"><span>Reset</span></a>
+                                                            <a class="btn btn-danger btn-md" href="/monthlyreport/notUpload"><span>{{ __('messages.reset') }}</span></a>
                                                         </div>
                                                         <div class="display-inline ml-2">
 
                                                             <?php $role = session('role');
                                                             if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['notUploadExport']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['notUploadExport'] == "allow")) { ?>
-                                                                <button type="submit" class="btn btn-primary">Export</button>
+                                                                <button type="submit" class="btn btn-primary">{{ __('messages.export') }}</button>
                                                             <?php } ?>
 
                                                         </div>
@@ -172,21 +172,21 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
                                             <thead>
                                                 <tr>
-                                                    <th>Site Name</th>
-                                                    <th>Site Type</th>
-                                                    <th>Facility</th>
-                                                    <th>Province Name</th>
-                                                    <th>Site Manager</th>
-                                                    <th>Site Unique Id</th>
-                                                    <th>Tester Name</th>
-                                                    <th>Reporting Month</th>
-                                                    <th>Date of Data Collection</th>
-                                                    <th>Name of Data Collector</th>
-                                                    <th>Book No</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Comment</th>
-                                                    <th>Uploaded On</th>
+                                                    <th>{{ __('messages.site_name') }}</th>
+                                                    <th>{{ __('messages.site_type') }}</th>
+                                                    <th>{{ __('messages.facility') }}</th>
+                                                    <th>{{ __('messages.province_name') }}</th>
+                                                    <th>{{ __('messages.site_manager') }}</th>
+                                                    <th>{{ __('messages.site_unique_id') }}</th>
+                                                    <th>{{ __('messages.tester_name') }}</th>
+                                                    <th>{{ __('messages.reporting_month') }}</th>
+                                                    <th>{{ __('messages.date_of_data_collection') }}</th>
+                                                    <th>{{ __('messages.name_of_data_collector') }}</th>
+                                                    <th>{{ __('messages.book_no') }}</th>
+                                                    <th>{{ __('messages.start_date') }}</th>
+                                                    <th>{{ __('messages.end_date') }}</th>
+                                                    <th>{{ __('messages.comment') }}</th>
+                                                    <th>{{ __('messages.uploaded_on') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -212,7 +212,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
         $.unblockUI();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceName').select2({
-            placeholder: "Select Province Name",
+            placeholder: "Select {{ __('messages.province_name') }}",
             allowClear: true,
         });
         $('#provinceName').on('select2:select', function(e) {
@@ -236,7 +236,7 @@ $startdate = date('d-M-Y', strtotime('-29 days'));
 
         });
         $selectElement = $('#testSiteName').select2({
-            placeholder: "Select Test Site Name",
+            placeholder: "Select Test {{ __('messages.site_name') }}",
             allowClear: true
         });
         $('#testSiteName').on('select2:select', function(e) {
