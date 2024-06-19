@@ -10,15 +10,15 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Entry Point</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.entry_point') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/sitetype/">Entry Point</a>
+                        <li class="breadcrumb-item"><a href="/sitetype/">{{ __('messages.entry_point') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
                     </ol>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Edit Site Type</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.edit') }} {{ __('messages.entry_point') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -54,7 +54,7 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Entry Point Name<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.entry_point_name') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <input type="text" id="siteTypeName" value="{{$result[0]->site_type_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Site Type Name" name="siteTypeName" title="Please Enter Entry Point" onblur="checkNameValidation('site_types','site_type_name', this.id,'{{$fnct}}','Entered Site Type Name is already exist.')">
@@ -63,10 +63,10 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Entry Point Status<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.entry_point_status') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="siteTypeStatus" name="siteTypeStatus" title="Please Select Entry Point Status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="siteTypeStatus" name="siteTypeStatus" title="{{ __('messages.select') }} {{ __('messages.entry_point_status') }}">
                                                         <option value="active" {{ $result[0]->site_type_status == 'active' ?  'selected':''}}>Active</option>
                                                         <option value="inactive" {{ $result[0]->site_type_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                     </select>
