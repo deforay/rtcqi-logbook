@@ -140,7 +140,9 @@
     "test_kit_status" => "Test Kit Status",
     "test_kit" => "Test Kit",
     "test_kit_name" => "Test Kit Name",
-
+    "site_name" => "Site Name",
+    "reporting_month" => "Reporting Month",
+    "implementing_partner_name" => "Implementing Partner Name",
 
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',

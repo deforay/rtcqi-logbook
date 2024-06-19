@@ -10,13 +10,13 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Implementing Partners</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.implementing_partners') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/implementingpartners/">Implementing Partners</a>
+                        <li class="breadcrumb-item"><a href="/implementingpartners/">{{ __('messages.implementing_partners') }}</a>
                         </li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
@@ -31,7 +31,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Edit Implementing Partners</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> Edit {{ __('messages.implementing_partners') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -54,19 +54,19 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Implementing Parter Name<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.implementing_partner_name') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="implementingPartnerName" value="{{$result[0]->implementing_partner_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Implementing Partner Name" name="implementingPartnerName" title="Please enter Implementing Partner Name" onblur="checkNameValidation('implementing_partners','implementing_partner_name', this.id,'{{$fnct}}','Entered Implementing Partner Name is already exist.')">
+                                                    <input type="text" id="implementingPartnerName" value="{{$result[0]->implementing_partner_name}}" class="form-control isRequired" autocomplete="off" placeholder="{{ __('messages.enter') }} {{ __('messages.implementing_partner_name') }}" name="implementingPartnerName" title="Please {{ __('messages.enter') }} {{ __('messages.implementing_partner_name') }}" onblur="checkNameValidation('implementing_partners','implementing_partner_name', this.id,'{{$fnct}}','Entered {{ __('messages.implementing_partner_name') }} is already exist.')">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Implementing Partner Status<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.implementing_partner') }} {{ __('messages.status') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="implementingPartnerStatus" name="implementingPartnerStatus" title="Please select Implementing Partner status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="implementingPartnerStatus" name="implementingPartnerStatus" title="{{ __('messages.select') }} {{ __('messages.implementing_partner') }} {{ __('messages.status') }}">
                                                         <option value="active" {{ $result[0]->implementing_partner_status == 'active' ?  'selected':''}}>Active</option>
                                                         <option value="inactive" {{ $result[0]->implementing_partner_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                     </select>
