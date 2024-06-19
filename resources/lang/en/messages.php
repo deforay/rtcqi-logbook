@@ -127,8 +127,9 @@
     "display_name" => "Display Name",
     "global_name" => "Global Name",
     "global_value" => "Global Value",
-    
-    
+    "entry_point_name" => "Entry Point Name",
+    "entry_point_status" => "Entry Point Status",
+
     
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',

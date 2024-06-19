@@ -125,6 +125,8 @@
     "display_name" => "Afficher un nom",
     "global_name" => "Nom global",
     "global_value" => "Valeur globale",
+    "entry_point_name" => "Nom du point d'entrée",
+    "entry_point_status" => "Statut du point d'entrée",
 
 
     'add_new_report' => 'Ajouter un nouveau rapport',
