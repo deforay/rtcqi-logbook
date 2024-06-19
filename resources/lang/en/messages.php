@@ -110,6 +110,26 @@
     'sub_district_status' => 'Sub district Status',
     'sub_district' => 'Sub district',
 
+    //global config
+    'instance_name' => 'Instance Name',
+    'institute_name' => 'Institute Name',
+    'admin_name' => 'Admin Name',
+    'admin_email' => 'Admin Email',
+    'admin_phone' => 'Admin Phone',
+    'recency_test' => 'Recency Test',
+    'number_of_test' => "Number of Test",
+    'title_name' => 'Title Name',
+    "map_zoom_level" => "Map Zoom Level",
+    "testing_algorithm" => "Testing Algorithm",
+    "disable_inactive_users" => "Disable Inactive Users",
+    "no_of_months" => "No. of months",
+    "logo" => "Logo",
+    "display_name" => "Display Name",
+    "global_name" => "Global Name",
+    "global_value" => "Global Value",
+    
+    
+    
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',
     'edit_monthly_report' => 'Edit Monthly Report',
