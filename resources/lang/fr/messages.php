@@ -45,6 +45,14 @@
     'site_wise_report' => 'Rapport par site',
     'english' => 'Anglais',
     'french' => 'Français',
+    "logbook_data_raw" => "Données brutes du journal de bord",
+    "test_kit_use_report" => "Rapport d'utilisation du kit de test",
+    "export_test_kit_summary" => "Résumé du kit de test d’exportation",
+    "invalid_results_report" => "Rapport de résultats invalides",
+    "select_report" => "Sélectionnez le rapport",
+    "selected_test_site_name" => "Nom du site de test sélectionné",
+    "send_mail" => "envoyer un mail",
+
 
     //Dashboard
     'overall_audits' => 'Vérifications Globales',
@@ -141,6 +149,18 @@
     "site_name" => "Nom du site",
     "reporting_month" => "Mois de déclaration",
     "implementing_partner_name" => "Nom du partenaire de mise en œuvre",
+    "algorithm_type" => "Type d'algorithme",
+    "download_sample_monthly_report" => "Télécharger un exemple de feuille Excel de rapport mensuel",
+    "import_monthly_report" => "Importer le rapport mensuel",
+    "export" => "Exporter",
+    "site_unique_id" => "identifiant unique du site",
+    "tester_name" => "Nom du testeur",
+    "book_no" => "Livre non",
+    "comment" => "Commentaire",
+    "uploaded_on" => "Téléchargé sur",
+    "import" => "Importer",
+    "test_site_name" => "Nom du site de test",    
+    "report_frequency" => "Fréquence des rapports",
 
 
     'add_new_report' => 'Ajouter un nouveau rapport',

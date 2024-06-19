@@ -1,7 +1,7 @@
 <!--
     Author             : Sakthivel P
     Date               : 21 June 2021
-    Description        : Invalid Results report
+    Description        : {{ __('messages.invalid_results_report') }}
     Last Modified Date : 17 June 2021
     Last Modified Name : Sakthivel M
 -->
@@ -23,9 +23,9 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/invalidresultreport/">Invalid Results Report</a>
+                        <li class="breadcrumb-item"><a href="/invalidresultreport/">{{ __('messages.invalid_results_report') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -59,7 +59,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Invalid Results Report</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.invalid_results_report') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -73,25 +73,25 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                             <div class="card-content collapse show">
                                 <div class="card-body">
                                     <div id="show_alert" class="mt-1" style=""></div>
-                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <h4 class="card-title">{{ __('messages.filter_the_data') }}</h4><br>
                                     <form class="form form-horizontal" role="form" name="invalidResultReportFilter" id="invalidResultReportFilter" method="post" action="/invalidresultexcelexport">
                                         @csrf
                                         <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Date Range <span class="mandatory">*</span>
+                                                    <h5>{{ __('messages.date_range') }} <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select Date Range" value="{{$startdate}} to {{$enddate}}" />
+                                                    <input type="text" id="searchDate" name="searchDate" class="form-control" placeholder="Select {{ __('messages.date_range') }}" value="{{$startdate}} to {{$enddate}}" />
                                                     </div>
                                                 </fieldset>
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>Province Name
+                                                <h5>{{ __('messages.province_name') }}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select Province Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId[]" title="Please select {{ __('messages.province_name') }}">
                                                             @foreach($province as $row)
                                                             <option value="{{$row->province_id}}">{{$row->province_name}}</option>
                                                             @endforeach
@@ -101,7 +101,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>District Name
+                                                    <h5>{{ __('messages.district_name') }}
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId[]" title="Please select District  Name">
@@ -116,7 +116,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                         <div class="row">
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Sub District Name
+                                                    <h5>{{ __('messages.sub_district_name') }}
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId[]" title="Please select Sub District  Name">
@@ -129,7 +129,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Testing Algothrim
+                                                    <h5>{{ __('messages.testing_algorithm') }}
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Alogrithm Type">
@@ -141,10 +141,10 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5> Site Name
+                                                    <h5> {{ __('messages.site_name') }}
                                                     </h5>
                                                     <div class="form-group">
-                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select Test Site Name">
+                                                        <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="testSiteId" name="testSiteId[]" title="Please select {{ __('messages.test_site_name') }}">
                                                             @foreach($testSite as $row)
                                                             <option value="{{$row->ts_id}}">{{$row->site_name}}</option>
                                                             @endforeach
@@ -158,11 +158,11 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                 <div class="form-group row">
 
                                                     <div class="col-md-8">
-                                                        <button type="submit" onclick="getInvalidResultReport();return false;" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href="/invalidresultreport/"><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" onclick="getInvalidResultReport();return false;" class="btn btn-info"> {{ __('messages.search') }}</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/invalidresultreport/"><span>{{ __('messages.reset') }}</span></a>&nbsp;&nbsp;
                                                         <?php $role = session('role');
                                                         if (isset($role['App\\Http\\Controllers\\Report\\ReportController']['invalidresultexport']) && ($role['App\\Http\\Controllers\\Report\\ReportController']['invalidresultexport'] == "allow")) {?>
-                                                        <button type="submit" class="btn btn-primary">Export</button>
+                                                        <button type="submit" class="btn btn-primary">{{ __('messages.export') }}</button>
                                                        <?php } ?>
                                                     </div>
                                                 </div>
@@ -191,7 +191,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
         getInvalidResultReport();
         $('.js-example-basic-multiple').select2();
         $selectElement = $('#provinceId').select2({
-            placeholder: "Select Province Name",
+            placeholder: "Select {{ __('messages.province_name') }}",
             allowClear: true,
         });
         $('#provinceId').on('select2:select', function(e) {
@@ -215,7 +215,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
 
         });
         $selectElement = $('#subDistrictId').select2({
-            placeholder: "Select Sub District Name",
+            placeholder: "Select {{ __('messages.sub_district_name') }}",
             allowClear: true,
         });
         $('#subDistrictId').on('select2:select', function(e) {
@@ -227,7 +227,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
 
         });
         $selectElement = $('#algorithmType').select2({
-            placeholder: "Select Testing Algothrim",
+            placeholder: "Select {{ __('messages.testing_algorithm') }}",
             allowClear: true
         });
         $('#algorithmType').on('select2:select', function(e) {
@@ -237,7 +237,7 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
             getInvalidResultReport();
         });
         $selectElement = $('#testSiteId').select2({
-            placeholder: "Select Test Site Name",
+            placeholder: "Select {{ __('messages.test_site_name') }}",
             allowClear: true
         });
         $('#testSiteId').on('select2:select', function(e) {

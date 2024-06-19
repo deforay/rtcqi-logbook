@@ -44,6 +44,8 @@
     'site_wise_report' => 'Site wise Report',
     'english' => 'English',
     'french' => 'French',
+    "selected_test_site_name" => "Selected Test Site name",
+    "send_mail" => "send mail",
 
     //Dashboard
     'overall_audits' => 'Overall Audits',
@@ -144,6 +146,7 @@
     "reporting_month" => "Reporting Month",
     "implementing_partner_name" => "Implementing Partner Name",
 
+// monthly report
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',
     'edit_monthly_report' => 'Edit Monthly Report',
@@ -187,7 +190,23 @@
     'save' => 'Save',
     'total_number_of_pages' => 'Total Number Of Pages',
     'last_modified_on' => 'Last Modified On',
-
+    "algorithm_type" => "Algorithm Type",
+    "download_sample_monthly_report" => "Download Sample Monthly Report Excel Sheet",
+    "import_monthly_report" =>"Import Monthly Report",
+    "export" => "Export",
+    "site_unique_id" => "Site unique ID",
+    "tester_name" => "Tester name",
+    "book_no" => "Book No",
+    "comment" => "Comment",
+    "uploaded_on" => "Uploaded on",
+    "import" => "Import",
+    "test_site_name" => "Test Site Name",    
+    "report_frequency" => "Report Frequency",
+    "logbook_data_raw" => "Logbook Data Raw",
+    "test_kit_use_report" => "Test Kit Use Report",
+    "export_test_kit_summary" => "Export Test Kit Summary",
+    "invalid_results_report" => "Invalid Results Report",
+    "select_report" => "Select Report",
 
     'does_site_do_recency_tests' => 'Does Site Do Recency Tests?',
     'latitude' => 'Latitude',

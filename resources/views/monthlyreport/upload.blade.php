@@ -17,9 +17,9 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Import
+                        <li class="breadcrumb-item active">{{ __('messages.import') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/monthlyreportdata/">Import Monthly report</a>
+                        <li class="breadcrumb-item"><a href="/monthlyreportdata/">{{ __('messages.import_monthly_report') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -39,7 +39,7 @@
                             @elseif($global['no_of_test'] == 4)
                             <a href="{{ asset('assets/MonthlyReportSample4test.xlsx') }}" onclick="insertData()" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
                                 @endif
-                                <b><i class="ft-download icon-left"></i> Download Sample Monthly Report Excel Sheet</b></a>
+                                <b><i class="ft-download icon-left"></i> {{ __('messages.download_sample_monthly_report') }}</b></a>
             </div>
 
         </div>
@@ -84,7 +84,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"></h4>
-                            <h3 class="content-header-title mb-0">Import Monthly Report</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.import_monthly_report') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -102,15 +102,15 @@
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
-                                            <label>Select File for Upload</label> <span class="mandatory">*</span>
+                                            <label>{{ __('messages.select_file_for_upload') }}</label> <span class="mandatory">*</span>
                                             <span class="text-muted">.xls, .xslx</span>
                                             <input class="form-control isRequired" accept=".xlsx, .xls" type="file" name="grade_excel" title="Please Select File" />
                                         </div>
                                         <div class="col-xl-3 mt-4 col-lg-12">
                                             <div class="form-group">
-                                                <input type="submit" name="upload" onclick="validateNow();return false;" class="btn btn-primary  mt-2" value="Upload">&nbsp;&nbsp;
+                                                <input type="submit" name="upload" onclick="validateNow();return false;" class="btn btn-primary  mt-2" value="{{ __('messages.upload') }}">&nbsp;&nbsp;
                                                 <a href="/monthlyreport">
-                                                    <input type="button" name="cancel" class="btn btn-warning  mt-2" value="Cancel"></a>
+                                                    <input type="button" name="cancel" class="btn btn-warning  mt-2" value="{{ __('messages.cancel') }}"></a>
                                             </div>
                                         </div>
                                     </div>
