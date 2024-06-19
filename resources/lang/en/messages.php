@@ -24,6 +24,7 @@
     'provinces' => 'Provinces',
     'districts' => 'Districts',
     'sub_districts' => 'Sub Districts',
+    'sub_district' => 'Sub District',
     'implementing_partners' => 'Implementing Partners',
     'facilities' => 'Facilities',
     'global_config' => 'Global Config',
@@ -100,6 +101,14 @@
     'city' => 'City',
     'longtitude' => 'longtitude',
 
+    // district
+    'external_id' => "External ID",
+    'district_status' => 'District Status',
+    'enter' => "Enter the",
+    'select' => 'Select the',
+    'province_id' => 'Province ID',
+    'sub_district_status' => 'Sub district Status',
+    'sub_district' => 'Sub district',
 
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',

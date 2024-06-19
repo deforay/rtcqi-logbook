@@ -11,15 +11,15 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">District</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.district') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/district/">District</a>
+                        <li class="breadcrumb-item"><a href="/district/">{{ __('messages.district') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Add</li>
+                        <li class="breadcrumb-item active">{{ __('messages.add') }}</li>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Add District</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.add') }} {{ __('messages.district') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -52,29 +52,29 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>District Name<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.district_name') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="districtName" class="form-control isRequired" autocomplete="off" placeholder="Enter District Name" name="districtName" title="Please Enter District Name" onblur="checkNameValidation('districts','district_name', this.id,'','Entered District Name is already exist.')">
+                                                    <input type="text" id="districtName" class="form-control isRequired" autocomplete="off" placeholder="{{ __('messages.enter') }} {{ __('messages.district_name') }}" name="districtName" title="Please Enter District Name" onblur="checkNameValidation('districts','district_name', this.id,'','Entered District Name is already exist.')">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>External ID
+                                                <h5>{{ __('messages.external_id') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="externalId" class="form-control" autocomplete="off" placeholder="Enter External Id" name="externalId" title="Please Enter External ID">
+                                                    <input type="text" id="externalId" class="form-control" autocomplete="off" placeholder="{{ __('messages.enter') }} {{ __('messages.external_id') }}" name="externalId" title="Please Enter External ID">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Province Name<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.province_name') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
                                                     <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please Select Province Name">
-                                                        <option value="">Select Province Name</option>
+                                                        <option value="">{{ __('messages.select') }} {{ __('messages.province_name') }}</option>
                                                         @foreach($province as $row)
                                                         <option value="{{$row->province_id}}">{{$row->province_name}}</option>
                                                         @endforeach
@@ -84,10 +84,10 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>District Status<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.district_status') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtStatus" name="districtStatus" title="Please Select District Status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="districtStatus" name="districtStatus" title="{{ __('messages.select') }}{{ __('messages.district_status') }}">
                                                         <option value="active" selected>Active</option>
                                                         <option value="inactive">Inactive</option>
                                                     </select>
@@ -98,11 +98,11 @@
                                     <div class="form-actions right">
                                         <a href="/district">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ __('messages.cancel') }}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save
+                                            <i class="la la-check-square-o"></i> {{ __('messages.save') }}
                                         </button>
                                     </div>
                                 </form>
