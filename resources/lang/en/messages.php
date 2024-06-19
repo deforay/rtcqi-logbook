@@ -31,6 +31,7 @@
     'site_types' => 'Entry Points',
     'test_kits' => 'Test Kits',
     'allowed_test_kits' => 'Allowed Test Kits',
+    'allowed_test_kit' => 'Allowed Test Kit',
     'audit_trail' => 'Audit Trail',
     'monthly_report' => 'Monthly Reporting (Data Entry)',
     'failed_imports_excel_upload' => 'Failed Imports - Excel Upload',
@@ -137,6 +138,9 @@
     "Kit Expiry Date" => "Kit Expiry Date",
     "comments" => "Comments",
     "test_kit_status" => "Test Kit Status",
+    "test_kit" => "Test Kit",
+    "test_kit_name" => "Test Kit Name",
+
 
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',

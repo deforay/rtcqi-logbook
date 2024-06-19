@@ -1,7 +1,7 @@
 <!-- 
     Author             : Sakthivel P
     Date               : 3 June 2021
-    Description        : Allowed Test Kit edit screen
+    Description        : {{ __('messages.allowed_test_kit') }} edit screen
     Last Modified Date : 3 June 2021
     Last Modified Name : Sakthivel P
 -->
@@ -10,15 +10,15 @@
 <div class="content-wrapper">
 <div class="content-header row">
 	<div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-		<h3 class="content-header-title mb-0 d-inline-block">Allowed Test Kit</h3>
+		<h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.allowed_test_kit') }}</h3>
 		<div class="row breadcrumbs-top d-inline-block">
 		<div class="breadcrumb-wrapper col-12">
 			<ol class="breadcrumb">
-			<li class="breadcrumb-item">Manage
+			<li class="breadcrumb-item">{{ __('messages.manage') }}
 			</li>
-			<li class="breadcrumb-item"><a href="/allowedtestkit/">Allowed Test Kit</a>
+			<li class="breadcrumb-item"><a href="/allowedtestkit/">{{ __('messages.allowed_test_kit') }}</a>
 			</li>
-			<li class="breadcrumb-item active">Edit</li>
+			<li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
 			</ol>
 		</div>
 		</div>
@@ -31,7 +31,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h4 class="form-section"><i class="la la-plus-square"></i> Edit Allowed Test Kit</h4>
+						<h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.edit') }} {{ __('messages.allowed_test_kit') }}</h4>
 						<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 						<div class="heading-elements">
 							<ul class="list-inline mb-0">
@@ -54,12 +54,12 @@
                             <div class="row">
                             <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Test Kit<span class="mandatory">*</span>
+											<h5>{{ __('messages.test_kit') }}<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
                                                 <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitNo" name="testKitNo"
-                                                    title="Please Select Test Kit">
-                                                    <option value="">Select Test Kit</option>
+                                                    title="Please Select {{ __('messages.test_kit') }}">
+                                                    <option value="">Select {{ __('messages.test_kit') }}</option>
                                                     <option value="1" <?php if($result[0]->test_kit_no == '1') { ?> selected="selected"
                                                         <?php } ?>>1
                                                     </option>
@@ -75,10 +75,10 @@
 									</div>
                                     <div class="col-xl-4 col-lg-12">
 										<fieldset>
-											<h5>Test Kit Name<span class="mandatory">*</span>
+											<h5>{{ __('messages.test_kit_name') }}<span class="mandatory">*</span>
                                             </h5>
                                             <div class="form-group">
-                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testKitName" name="testKitName[]" title="Please Select Test Kit Name">
+                                                <select multiple="multiple" class="js-example-basic-multiple form-control isRequired" autocomplete="off" style="width:100%;" id="testKitName" name="testKitName[]" title="Please Select {{ __('messages.test_kit_name') }}">
                                                 @foreach($test as $row)
                                                     <option value="{{$row->tk_id}}" {{ in_array($row->tk_id, $testKitId) ?  'selected':''}}>{{$row->test_kit_name}}</option>
                                                     @endforeach
@@ -90,11 +90,11 @@
 								<div class="form-actions right">
                                     <a href="/allowedtestkit" >
                                     <button type="button" class="btn btn-warning mr-1">
-                                    <i class="ft-x"></i> Cancel
+                                    <i class="ft-x"></i> {{ __('messages.cancel') }}
                                     </button>
                                     </a>
                                     <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                    <i class="la la-check-square-o"></i> Update
+                                    <i class="la la-check-square-o"></i> {{ __('messages.update') }}
                                     </button>
 								</div>
 							</form>
@@ -131,7 +131,7 @@
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2();
     $selectElement = $('#testKitName').select2({
-    placeholder: "Select Test Kit Name",
+    placeholder: "Select {{ __('messages.test_kit_name') }}",
     allowClear: true
   });
 });
