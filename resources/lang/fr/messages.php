@@ -110,6 +110,23 @@
     'sub_district' => 'Sous-district',
 
 
+    'instance_name' => "Nom de l'instance",
+    'admin_name' => "Nom de l'administrateur",
+    'admin_email' => "E-mail de l'administrateur",
+    'admin_phone' => "Téléphone administrateur",
+    'recency_test' => "Test de récence",
+    'number_of_test' => "Nombre d'essais",
+    'title_name' => 'Title Name',
+    "map_zoom_level" => "Niveau de zoom de la carte ",
+    "testing_algorithm" => "Algorithme de test",
+    "disable_inactive_users" => "Désactiver les utilisateurs inactifs",
+    "no_of_months" => "Nombre de mois",
+    "logo" => "Logo",
+    "display_name" => "Afficher un nom",
+    "global_name" => "Nom global",
+    "global_value" => "Valeur globale",
+
+
     'add_new_report' => 'Ajouter un nouveau rapport',
     'add_monthly_report' => 'Ajouter un rapport mensuel',
     'edit_monthly_report' => 'Modifier le rapport mensuel',
