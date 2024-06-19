@@ -4,6 +4,7 @@
     Description        : Test Kit edit screen
     Last Modified Date : 28 May 2021
 
+
 -->
 @extends('layouts.main')
 @section('content')
@@ -17,15 +18,15 @@ $expiry = $common->humanDateFormat($result[0]->test_kit_expiry_date);
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Test Kit</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.test_kit') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.dashboard') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/testkit/">Test Kit</a>
+                        <li class="breadcrumb-item"><a href="/testkit/">{{ __('messages.test_kit') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
                     </ol>
                 </div>
             </div>
@@ -38,7 +39,7 @@ $expiry = $common->humanDateFormat($result[0]->test_kit_expiry_date);
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> Edit Test Kit</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.edit') }} {{ __('messages.test_kit') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -61,74 +62,74 @@ $expiry = $common->humanDateFormat($result[0]->test_kit_expiry_date);
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Kit Name ID
+                                                <h5>{{ __('messages.kit_name_id') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="kit_name_id" value="{{$result[0]->test_kit_name_id}}" class="form-control" autocomplete="off" placeholder="Enter Kit Name ID" name="kit_name_id" title="Please Enter Kit Name ID">
+                                                    <input type="text" id="kit_name_id" value="{{$result[0]->test_kit_name_id}}" class="form-control" autocomplete="off" placeholder="{{ __('messages.dashboard') }} {{ __('messages.kit_name_id') }}" name="kit_name_id" title="Please Enter {{ __('messages.kit_name_id') }}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Kit Name ID 1 <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.kit_name_id') }} 1 <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="kit_name_id1" value="{{$result[0]->test_kit_name_id_1}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Kit Name ID 1" name="kit_name_id1" title="Please Enter Kit Name ID 1">
+                                                    <input type="text" id="kit_name_id1" value="{{$result[0]->test_kit_name_id_1}}" class="form-control isRequired" autocomplete="off" placeholder="{{ __('messages.dashboard') }} {{ __('messages.kit_name_id') }} 1" name="kit_name_id1" title="Please Enter {{ __('messages.kit_name_id') }} 1">
                                                 </div>
                                             </fieldset>
                                         </div>
 
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Kit Name Short
+                                                <h5>{{ __('messages.kit_name_short') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="kit_name_short" value="{{$result[0]->test_kit_name_short}}" class="form-control " autocomplete="off" placeholder="Enter Kit Name Short" name="kit_name_short" title="Please Enter Kit Name Short">
+                                                    <input type="text" id="kit_name_short" value="{{$result[0]->test_kit_name_short}}" class="form-control " autocomplete="off" placeholder="{{ __('messages.dashboard') }} {{ __('messages.kit_name_short') }}" name="kit_name_short" title="Please Enter {{ __('messages.kit_name_short') }}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Kit Name <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.kit_name') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="kit_name" value="{{$result[0]->test_kit_name}}" class="form-control isRequired" autocomplete="off" placeholder="Enter Kit Name" name="kit_name" title="Please Enter Kit Name" onblur="checkNameValidation('test_kits','test_kit_name', this.id,'{{$fnct}}','Entered Kit Name is already exist.')">
+                                                    <input type="text" id="kit_name" value="{{$result[0]->test_kit_name}}" class="form-control isRequired" autocomplete="off" placeholder="{{ __('messages.dashboard') }} {{ __('messages.kit_name') }}" name="kit_name" title="Please Enter {{ __('messages.kit_name') }}" onblur="checkNameValidation('test_kits','test_kit_name', this.id,'{{$fnct}}','Entered Kit Name is already exist.')">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Kit Manufacturer <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.kit_manufacturer') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="kit_manufacturer" value="{{$result[0]->test_kit_manufacturer}}" class="form-control  isRequired" autocomplete="off" placeholder="Enter Kit Manufacturer" name="kit_manufacturer" title="Please Enter Kit Manufacturer">
+                                                    <input type="text" id="kit_manufacturer" value="{{$result[0]->test_kit_manufacturer}}" class="form-control  isRequired" autocomplete="off" placeholder="{{ __('messages.dashboard') }} {{ __('messages.kit_manufacturer') }}" name="kit_manufacturer" title="Please Enter {{ __('messages.kit_manufacturer') }}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Kit Expiry Date <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.kit_expiry_date') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="kit_expiry_date" value="{{$expiry}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="Enter Kit Expiry Date" name="kit_expiry_date" title="Please Enter Kit Expiry Date">
+                                                    <input type="text" id="kit_expiry_date" value="{{$expiry}}" class="form-control datepicker isRequired" autocomplete="off" placeholder="{{ __('messages.dashboard') }} {{ __('messages.kit_expiry_date') }}" name="kit_expiry_date" title="Please Enter {{ __('messages.kit_expiry_date') }}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Comments
+                                                <h5>{{ __('messages.comments') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <textarea id="kit_name_comments" name="kit_name_comments" class="form-control" placeholder="Enter Comments" title="Please Enter the Comments">{{$result[0]->test_kit_comments}}</textarea>
+                                                    <textarea id="kit_name_comments" name="kit_name_comments" class="form-control" placeholder="{{ __('messages.dashboard') }} {{ __('messages.comments') }}" title="Please Enter the {{ __('messages.comments') }}">{{$result[0]->test_kit_comments}}</textarea>
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>Test Kit Status<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.test_kit_status') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitStatus" name="testKitStatus" title="Please Select Test Kit Status">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="testKitStatus" name="testKitStatus" title="Please Select {{ __('messages.test_kit_status') }}">
                                                         <option value="active" {{ $result[0]->test_kit_status == 'active' ?  'selected':''}}>Active</option>
                                                         <option value="inactive" {{ $result[0]->test_kit_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                     </select>
@@ -139,11 +140,11 @@ $expiry = $common->humanDateFormat($result[0]->test_kit_expiry_date);
                                     <div class="form-actions right">
                                         <a href="/testkit">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ __('messages.cancel') }}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Update
+                                            <i class="la la-check-square-o"></i> {{ __('messages.update') }}
                                         </button>
                                     </div>
                                 </form>

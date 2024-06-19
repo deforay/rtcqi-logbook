@@ -1,7 +1,7 @@
 <!--
 
     Date               : 28 May 2021
-    Description        : Test kit view screen
+    Description        : {{ __('messages.test_kit') }} view screen
     Last Modified Date : 28 May 2021
 
 -->
@@ -17,9 +17,9 @@
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/testkit/">Test Kit</a>
+                        <li class="breadcrumb-item"><a href="/testkit/">{{ __('messages.test_kit') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -31,7 +31,7 @@
                 <?php $role = session('role');
                 if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['add']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['add'] == "allow")) { ?>
                     <a href="/testkit/add" class="btn btn-outline-info round box-shadow-1 px-2" id="btnGroupDrop1">
-                        <b><i class="ft-plus icon-left"></i> Add Test Kit</b></a>
+                        <b><i class="ft-plus icon-left"></i> {{ __('messages.add') }} {{ __('messages.test_kit') }}</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -56,7 +56,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Test Kit</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.test_kit') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -73,13 +73,13 @@
                                     <table class="table table-striped table-bordered zero-configuration" id="testKitList">
                                         <thead>
                                             <tr>
-                                                <th>Kit Name</th>
-                                                <th>Manufacturer</th>
-                                                <th>Kit Name ID 1</th>
-                                                <th>Status</th>
+                                                <th>{{ __('messages.kit_name') }}</th>
+                                                <th>{{ __('messages.manufacturer') }}</th>
+                                                <th>{{ __('messages.kit_name_id') }} 1</th>
+                                                <th>{{ __('messages.status') }}</th>
                                                 <?php $role = session('role');
                                                 if (isset($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit']) && ($role['App\\Http\\Controllers\\TestKit\\TestKitController']['edit'] == "allow")) { ?>
-                                                    <th>Action</th>
+                                                    <th>{{ __('messages.action') }}</th>
                                                 <?php } ?>
                                             </tr>
                                         </thead>

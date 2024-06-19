@@ -129,8 +129,15 @@
     "global_value" => "Global Value",
     "entry_point_name" => "Entry Point Name",
     "entry_point_status" => "Entry Point Status",
+    "kit_name" => "Kit Name",
+    "kit_manufacturer" => "Kit Manufacturer",
+    "manufacturer" => "Manufacturer",
+    "kit_name_id" => "Kit Name ID",
+    "kit_name_short" => "Kit Name Short",
+    "Kit Expiry Date" => "Kit Expiry Date",
+    "comments" => "Comments",
+    "test_kit_status" => "Test Kit Status",
 
-    
     'add_new_report' => 'Add New Report',
     'add_monthly_report' => 'Add Monthly Report',
     'edit_monthly_report' => 'Edit Monthly Report',

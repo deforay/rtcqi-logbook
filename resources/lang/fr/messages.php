@@ -127,6 +127,14 @@
     "global_value" => "Valeur globale",
     "entry_point_name" => "Nom du point d'entrée",
     "entry_point_status" => "Statut du point d'entrée",
+    "kit_name" => "Kit Name",
+    "kit_manufacturer" => "Fabricant de kits",
+    "manufacturer" => "Fabricant",
+    "kit_name_id" => "Nom du kit",
+    "kit_name_short" => "Nom du kit court",
+    "Kit Expiry Date" => "Date d'expiration du kit",
+    "comments" => "Commentaires",
+    "test_kit_status" => "Statut du kit de test",
 
 
     'add_new_report' => 'Ajouter un nouveau rapport',
