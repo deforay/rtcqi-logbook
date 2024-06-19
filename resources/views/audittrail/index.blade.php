@@ -1,7 +1,7 @@
 <!--
     Author             : Sakthi
     Date               : 10 Mar 2022
-    Description        : Audit Trail view screen
+    Description        : {{ __('messages.audit_trail') }} view screen
     Last Modified Date : 10 Mar 2022
     Last Modified Name : Sakthi
 -->
@@ -38,9 +38,9 @@ $currentRecord = json_decode(json_encode($result['currentRecord']), true);
             <div class="row breadcrumbs-top d-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">Manage
+                        <li class="breadcrumb-item active">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/auditTrail/">Audit Trail</a>
+                        <li class="breadcrumb-item"><a href="/auditTrail/">{{ __('messages.audit_trail') }}</a>
                         </li>
                     </ol>
                 </div>
@@ -69,7 +69,7 @@ $currentRecord = json_decode(json_encode($result['currentRecord']), true);
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="content-header-title mb-0">Audit Trail</h3>
+                            <h3 class="content-header-title mb-0">{{ __('messages.audit_trail') }}</h3>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -82,16 +82,16 @@ $currentRecord = json_decode(json_encode($result['currentRecord']), true);
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
                             <div id="show_alert" class="mt-1"></div>
-                                    <h4 class="card-title">Filter the data</h4><br>
+                                    <h4 class="card-title">{{ __('messages.filter_the_data') }}</h4><br>
                                     <form class="form" role="form" name="auditFilter" id="auditFilter" method="post" action="/auditTrail" autocomplete="off" onsubmit="validateNow();return false;">
                                     @csrf
                                     <div class="row">
                                         <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                    <h5>Site Name <span class="mandatory">*</span>
+                                                    <h5>{{ __('messages.site_name') }} <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
-                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="Please select Test Site Name">
+                                                    <select class="js-example-basic-single form-control isRequired" autocomplete="off" style="width:100%;" id="testsiteId" name="testsiteId" title="{{ __('messages.select') }} {{ __('messages.site_name') }}">
                                                         @foreach($testSite ?? '' as $row2)
                                                         <option <?php if(isset($siteId) && $siteId==$row2->ts_id) echo "selected='selected'"; ?> value="{{$row2->ts_id}}">{{$row2->site_name}}</option>
                                                         @endforeach
@@ -101,10 +101,10 @@ $currentRecord = json_decode(json_encode($result['currentRecord']), true);
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>Reporting Month
+                                                <h5>{{ __('messages.reporting_month') }}
                                                     </h5>
                                                     <div class="form-group">
-                                                    <input type="text" id="reportingMon" value="<?php if(isset($month)) echo $month; ?>" class="form-control isRequired" autocomplete="off" placeholder="Enter Reporting Month" name="reportingMon" title="Please Enter Reporting Month" >
+                                                    <input type="text" id="reportingMon" value="<?php if(isset($month)) echo $month; ?>" class="form-control isRequired" autocomplete="off" placeholder="{{ __('messages.enter') }} {{ __('messages.reporting_month') }}" name="reportingMon" title="Please {{ __('messages.enter') }} {{ __('messages.reporting_month') }}" >
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -112,8 +112,8 @@ $currentRecord = json_decode(json_encode($result['currentRecord']), true);
                                                 <div class="form-group row">
 
                                                     <div class="col-md-8">
-                                                        <button type="submit" class="btn btn-info"> Search</button>&nbsp;&nbsp;
-                                                        <a class="btn btn-danger btn-md" href="/auditTrail"><span>Reset</span></a>&nbsp;&nbsp;
+                                                        <button type="submit" class="btn btn-info"> {{ __('messages.search') }}</button>&nbsp;&nbsp;
+                                                        <a class="btn btn-danger btn-md" href="/auditTrail"><span>{{ __('messages.reset') }}</span></a>&nbsp;&nbsp;
                                                     </div>
                                                 </div></div>
                                         </div>
@@ -304,7 +304,7 @@ $(document).ready(function() {
     });
 
     $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
-            placeholder: "Select Site Name"
+            placeholder: "{{ __('messages.select') }} {{ __('messages.site_name') }}"
         });
         $("#testsiteId").val(<?php if(isset($siteId)) echo $siteId; ?>).trigger('change');
 

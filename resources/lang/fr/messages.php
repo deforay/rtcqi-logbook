@@ -138,6 +138,9 @@
     "test_kit_status" => "Statut du kit de test",
     "test_kit" => "Kit de test",
     "test_kit_name" => "Nom du kit de test",
+    "site_name" => "Nom du site",
+    "reporting_month" => "Mois de déclaration",
+    "implementing_partner_name" => "Nom du partenaire de mise en œuvre",
 
 
     'add_new_report' => 'Ajouter un nouveau rapport',
