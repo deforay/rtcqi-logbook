@@ -149,6 +149,7 @@ class UserController extends Controller
             session()->put('locale', $data['locale']);
             $UserService = new UserService();
             $edit = $UserService->updateProfile($request,$id);
+            print_r($edit); die;
             return Redirect::to('/dashboard')->with('status', $edit);
         }
         else

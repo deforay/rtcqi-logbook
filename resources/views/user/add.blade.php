@@ -151,6 +151,18 @@
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>{{ __('messages.prefered_language') }}<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;"  name="prefered_language" title="{{ __('messages.select') }} {{ __('messages.prefered_language') }}">
+                                                        <option value="en" selected>English</option>
+                                                        <option value="fr">French</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
                                     <div id="sitewise">
                                         <div class="form-actions left">

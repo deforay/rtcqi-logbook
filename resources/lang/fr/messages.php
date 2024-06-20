@@ -52,6 +52,7 @@
     "select_report" => "Sélectionnez le rapport",
     "selected_test_site_name" => "Nom du site de test sélectionné",
     "send_mail" => "envoyer un mail",
+    "prefered_language" => "Langue Préférée",
 
 
     //Dashboard
