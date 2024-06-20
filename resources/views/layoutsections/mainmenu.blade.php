@@ -133,13 +133,6 @@ if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportContr
                     </ul>
                 </li>
             <?php } ?>
-            <li class="dropdown nav-item" data-menu="dropdown"><a id="" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-columns"></i><span class="menu-title">{{ Lang::get('messages.language') }} </span></a>
-                <ul class="dropdown-menu">
-                <li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="{{ url('set-locale/en') }}">{{ Lang::get('messages.english') }}</a></li>
-                <li id="li-sitewisereport"><a class="dropdown-item" data-toggle="dropdown" href="{{ url('set-locale/fr') }}">{{ Lang::get('messages.french') }}</a></li>
-                </ul>
-            </li>
-
             <li class="dropdown nav-item profil" data-menu="dropdown" style="float-align: right"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">@if (session('username')) {{ ucfirst(session('username')) }} @endif</span><span class="avatar avatar-online"><img src="{{ asset('assets/images/default-profile-picture.jpg')}}" alt="avatar"><i></i></span></a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{$profileURl}}"><i class="ft-user"></i> {{ $messages['edit_profile']}}</a>
