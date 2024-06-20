@@ -3,6 +3,7 @@
 namespace App\Model\User;
 
 use App\Model\Roles\RolesTable;
+use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\Service\CommonService;
@@ -28,6 +29,9 @@ class UserTable extends Model
         $data = $request->all();
         $user_name = session('name');
 
+        // update session by user giving language
+        App::setLocale($data['prefered_language']);
+        session(['locale' => $data['prefered_language']]);
         //dd($data);die;
         $commonservice = new CommonService();
         DB::beginTransaction();
@@ -44,6 +48,7 @@ class UserTable extends Model
                     'created_on' => $commonservice->getDateTime(),
                     'force_password_reset' => 1,
                     'role_id' => $data['roleId'],
+                    'prefered_language' => $data['prefered_language'],
                     'user_mapping' => $data['userMapping']
                 ]
             );
@@ -229,8 +234,11 @@ class UserTable extends Model
             'user_status' => $data['userStatus'],
             'role_id' => $data['roleId'],
             'updated_by' => session('userId'),
+            'prefered_language' => $data['prefered_language'],
             'user_mapping' => $data['userMapping']
         );
+        // refresh user updated language
+        App::setLocale($data['prefered_language']);
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
             ->update(
@@ -458,7 +466,7 @@ class UserTable extends Model
                 'last_name' => $data['lastName'],
                 'email' => $data['email'],
                 'phone' => $data['mobileNo'],
-                'language' => $data['locale'],
+                'prefered_language' => $data['locale'],
                 'updated_by' => session('userId')
             );
 

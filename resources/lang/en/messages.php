@@ -46,10 +46,11 @@
     'french' => 'French',
     "selected_test_site_name" => "Selected Test Site name",
     "send_mail" => "send mail",
+    "prefered_language" => "Prefered Language",
 
     //Dashboard
     'overall_audits' => 'Overall Audits',
-    'no_of' => 'Nombre de',
+    'no_of' => 'No of',
     'page_summaries' => 'Page Summaries',
     'sites_audits' => 'Sites Audits',
     'last_12_months' => 'Last 12 Months',

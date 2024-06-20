@@ -99,7 +99,7 @@
                                                         <option value="">Select Language</option>
                                                         @foreach($available_locales as $locale_name => $available_locale)
 
-                                                        <option value="{{$available_locale}}" {{ $available_locale === $result[0]->language  ?  'selected':''}}>{{ $locale_name }}</option>
+                                                        <option value="{{$available_locale}}" {{ $available_locale === $result[0]->prefered_language  ?  'selected':''}}>{{ $locale_name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
