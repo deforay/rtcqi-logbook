@@ -186,7 +186,7 @@ class UserTable extends Model
     {
 
         $id = base64_decode($id);
-        return DB::table('users')
+        return DB::table('users')->select('users.*', 'roles.*')
             ->join('roles', 'roles.role_id', '=', 'users.role_id')
             ->leftjoin('users_testsite_map', 'users_testsite_map.user_id', '=', 'users.user_id')
             ->where('users.user_id', '=', $id)
