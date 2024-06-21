@@ -12,15 +12,15 @@
 <div class="content-wrapper">
     <div class="content-header row">
         <div class="content-header-left col-md-10 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">User</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">{{ __('messages.user') }}</h3>
             <div class="row breadcrumbs-top d-inline-block">
                 <div class="breadcrumb-wrapper col-12">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Manage
+                        <li class="breadcrumb-item">{{ __('messages.manage') }}
                         </li>
-                        <li class="breadcrumb-item"><a href="/user/">User</a>
+                        <li class="breadcrumb-item"><a href="/user/">{{ __('messages.user') }}</a>
                         </li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
                     </ol>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="form-section"><i class="la la-plus-square"></i> User Profile</h4>
+                            <h4 class="form-section"><i class="la la-plus-square"></i> {{ __('messages.user_profile') }}</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -56,47 +56,47 @@
                                     <div class="row">
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>First Name <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.first_name') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="firstName" class="form-control isRequired" value="{{$result[0]->first_name}}" autocomplete="off" placeholder="Enter first name" name="firstName" title="Please enter first name">
+                                                    <input type="text" id="firstName" class="form-control isRequired" value="{{$result[0]->first_name}}" autocomplete="off" placeholder="Enter {{ __('messages.first_name') }}" name="firstName" title="Please enter {{ __('messages.first_name') }}">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Last Name <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.last_name') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="lastName" class="form-control isRequired" value="{{$result[0]->last_name}}" autocomplete="off" placeholder="Enter last name" name="lastName" title="Please enter last name">
+                                                    <input type="text" id="lastName" class="form-control isRequired" value="{{$result[0]->last_name}}" autocomplete="off" placeholder="Enter {{ __('messages.last_name') }}" name="lastName" title="Please enter {{ __('messages.last_name') }}">
                                                 </div>
                                             </fieldset>
                                         </div>
 
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Mobile Number<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.mobile_number') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter Mobile Number" name="mobileNo" title="Please Enter Mobile Number" onblur="checkMobileValidation('users','vendors','phone', this.id,'{{$fnct}}','Entered mobile number is already exist.')">
+                                                    <input type="tel" maxlength="10" value="{{$result[0]->phone}}" onkeypress="return isNumberKey(event);" id="mobileNo" class="form-control isMobNo isRequired" autocomplete="off" placeholder="Enter {{ __('messages.mobile_number') }}" name="mobileNo" title="Please Enter {{ __('messages.mobile_number') }}" onblur="checkMobileValidation('users','vendors','phone', this.id,'{{$fnct}}','Entered {{ __('messages.mobile_number') }} is already exist.')">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Email <span class="mandatory">*</span>
+                                                <h5>{{ __('messages.email') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter Email" name="email" title="Please Enter Email" onblur="checkMobileValidation('vendors','users','email', this.id,'{{$fnct}}','Entered mail id is already exist.')">
+                                                    <input type="text" id="email" value="{{$result[0]->email}}" class="form-control isEmail isRequired" autocomplete="off" placeholder="Enter {{ __('messages.email') }}" name="email" title="Please Enter Email" onblur="checkMobileValidation('vendors','users','email', this.id,'{{$fnct}}','Entered mail id is already exist.')">
                                                 </div>
                                             </fieldset>
                                         </div>
                                         <div class="col-xl-6 col-lg-12">
                                             <fieldset>
-                                                <h5>Choose Language</h5>
+                                                <h5>{{ __('messages.select') }} {{ __('messages.language') }}</h5>
                                                 <div class="form-group">
-                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="locale" name="locale" title="Please Select Language">
-                                                        <option value="">Select Language</option>
+                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="locale" name="locale" title="{{ __('messages.select') }} {{ __('messages.language') }}">
+                                                        <option value="">{{ __('messages.select') }} {{ __('messages.language') }}</option>
                                                         @foreach($available_locales as $locale_name => $available_locale)
 
                                                         <option value="{{$available_locale}}" {{ $available_locale === $result[0]->prefered_language  ?  'selected':''}}>{{ $locale_name }}</option>
@@ -109,11 +109,11 @@
                                     <div class="form-actions right">
                                         <a href="/dashboard">
                                             <button type="button" class="btn btn-warning mr-1">
-                                                <i class="ft-x"></i> Cancel
+                                                <i class="ft-x"></i> {{ __('messages.cancel') }}
                                             </button>
                                         </a>
                                         <button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save
+                                            <i class="la la-check-square-o"></i> {{ __('messages.save') }}
                                         </button>
                                     </div>
                                 </form>

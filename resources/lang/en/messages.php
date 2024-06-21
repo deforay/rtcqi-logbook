@@ -222,6 +222,7 @@
     'date_time' => 'Date Time',
     'show_filter' => 'Show Filter',
     'bulk_upload_user' => 'Bulk Upload User',
+    "user_profile" => "User Profile",
 
 
     //Labels

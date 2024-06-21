@@ -53,7 +53,7 @@
     "selected_test_site_name" => "Nom du site de test sélectionné",
     "send_mail" => "envoyer un mail",
     "prefered_language" => "Langue Préférée",
-
+    "user_profile" => "Profil de l'utilisateur",
 
     //Dashboard
     'overall_audits' => 'Vérifications Globales',
