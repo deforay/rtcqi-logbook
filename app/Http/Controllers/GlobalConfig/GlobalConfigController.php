@@ -36,7 +36,7 @@ class GlobalConfigController extends Controller
     public function edit(Request $request)
     {
         if ($request->isMethod('post')) 
-        {
+       {
             $GlobalConfigService = new GlobalConfigService();
             $edit = $GlobalConfigService->updateGlobalConfig($request);
             return Redirect::route('globalconfig.index')->with('status', $edit);
@@ -52,6 +52,7 @@ class GlobalConfigController extends Controller
             for ($i = 0; $i < $counter; $i++) {
                 $arr[$result[$i]->global_name] = $result[$i]->global_value;
             }
+            // print_r($arr); die
             return view('globalconfig.edit',array('result'=>$arr));
         }
     }

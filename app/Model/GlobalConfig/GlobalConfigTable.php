@@ -125,6 +125,23 @@ class GlobalConfigTable extends Model
                 ->where('global_name', '=', 'testing_algorithm')
                 ->update($upData);
         }
+
+        if ($data['prefered_language']) {
+            $upData = array(
+                'global_value' => $data['prefered_language'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'prefered_language')
+                ->update($upData);
+            
+                // update to users table
+                 DB::table('users')
+                ->where('user_id', '=', session('userId'))
+                ->update(['prefered_language' => $data['prefered_language']]);
+
+                app()->setLocale($data['prefered_language']);
+                session()->put('locale', $data['prefered_language']);
+        }
         
         if ($data['disable_inactive_user']) {
             $upData = array(

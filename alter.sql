@@ -699,3 +699,6 @@ ALTER TABLE `users` ADD `user_mapping` INT NOT NULL DEFAULT '1' AFTER `role_id`;
 
 -- Sakthi 20-june-2024
 ALTER TABLE `users` ADD `prefered_language` ENUM('en','fr') NOT NULL DEFAULT 'en' AFTER `user_status`;
+
+--sakhti 21-june-2024
+INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Prefered Language', 'en', 'English\r\n');

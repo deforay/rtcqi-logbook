@@ -232,6 +232,19 @@ $result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
                                                 @endif
                                             </fieldset>
                                         </div>
+
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>{{ __('messages.prefered_language') }}<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="prefered_language" name="prefered_language" title="Please Select Recency Test">
+                                                        <option value="en" {{ $result['prefered_language'] == 'en' ?  'selected':''}}>English</option>
+                                                        <option value="fr" {{ $result['prefered_language'] == 'fr' ?  'selected':''}}>French</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
                                     </div>
                                     <div class="form-actions right">
                                         <a href="/globalconfig">
