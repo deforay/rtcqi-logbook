@@ -166,8 +166,8 @@
                                     </h5>
                                     <div class="form-group">
                                         <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="prefered_language" name="prefered_language" title="{{ __('messages.select') }} {{ __('messages.prefered_language') }}">
-                                            <option value="1" <?php echo  $result[0]->prefered_language == "en" ?  "selected" :  "" ?>>English</option>
-                                            <option value="2" <?php echo $result[0]->prefered_language == "fr" ? "selected" :  "" ?>>French</option>
+                                            <option value="en" <?php echo  $result[0]->prefered_language == "en" ?  "selected" :  "" ?>>English</option>
+                                            <option value="fr" <?php echo $result[0]->prefered_language == "fr" ? "selected" :  "" ?>>French</option>
                                         </select>
                                     </div>
                                 </fieldset>
