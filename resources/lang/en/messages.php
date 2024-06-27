@@ -47,6 +47,8 @@
     "selected_test_site_name" => "Selected Test Site name",
     "send_mail" => "send mail",
     "prefered_language" => "Prefered Language",
+    "training_mode" => "Training Mode",
+    "training_message" => "Training Message",
 
     //Dashboard
     'overall_audits' => 'Overall Audits',

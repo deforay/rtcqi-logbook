@@ -52,7 +52,7 @@ class GlobalConfigController extends Controller
             for ($i = 0; $i < $counter; $i++) {
                 $arr[$result[$i]->global_name] = $result[$i]->global_value;
             }
-            // print_r($arr); die
+            // print_r($arr); die;
             return view('globalconfig.edit',array('result'=>$arr));
         }
     }

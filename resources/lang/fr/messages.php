@@ -54,6 +54,8 @@
     "send_mail" => "envoyer un mail",
     "prefered_language" => "Langue Préférée",
     "user_profile" => "Profil de l'utilisateur",
+    "training_mode" => "Mode entraînement",
+    "training_message" => "Message de formation",
 
     //Dashboard
     'overall_audits' => 'Vérifications Globales',

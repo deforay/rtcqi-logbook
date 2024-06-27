@@ -126,6 +126,27 @@ class GlobalConfigTable extends Model
                 ->update($upData);
         }
 
+        if ($data['training_mode']) {
+            $upData = array(
+                'global_value' => $data['training_mode'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'training_mode')
+                ->update($upData);
+                session()->put('training_mode', $data['training_mode']);
+            }
+
+        if (isset($data['training_message'])) {
+            $upData = array(
+                'global_value' => $data['training_message'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'training_message')
+                ->update($upData);
+            
+            session()->put('training_message', $data['training_message']);
+        }
+
         if ($data['prefered_language']) {
             $upData = array(
                 'global_value' => $data['prefered_language'],
