@@ -150,3 +150,11 @@ if (isset($role['App\\Http\\Controllers\\MonitoringReport\\MonitoringReportContr
     </div>
 
 </div>
+@php
+$training_mode = session()->get('training_mode') ?? "off";
+@endphp
+@if($training_mode == "on")
+<div class="marquee-container">
+    <div class="marquee">{{ session()->get('training_message') }}</div>
+</div>
+@endif

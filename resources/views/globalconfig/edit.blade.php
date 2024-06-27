@@ -105,7 +105,7 @@ $result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
                                                 <h5>{{ __('messages.recency_test') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="recency_test" name="recency_test" title="Please Select Recency Test">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="recency_test" name="recency_test" title="{{ __('messages.select') }} { __('messages.recency_test') }}">
                                                         <option value="enabled" {{ $result['recency_test'] == 'enabled' ?  'selected':''}}>Enabled</option>
                                                         <option value="disabled" {{ $result['recency_test'] == 'disabled' ?  'selected':''}}>Disabled</option>
                                                     </select>
@@ -238,13 +238,37 @@ $result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
                                                 <h5>{{ __('messages.prefered_language') }}<span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="prefered_language" name="prefered_language" title="Please Select Recency Test">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="prefered_language" name="prefered_language" title="{{ __('messages.select') }} { __('messages.prefered_language') }}">
                                                         <option value="en" {{ $result['prefered_language'] == 'en' ?  'selected':''}}>English</option>
                                                         <option value="fr" {{ $result['prefered_language'] == 'fr' ?  'selected':''}}>French</option>
                                                     </select>
                                                 </div>
                                             </fieldset>
                                         </div>
+
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>{{ __('messages.training_mode') }}<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" onchange="displayTrainingName()" autocomplete="off" style="width:100%;" id="training_mode" name="training_mode" title="{{ __('messages.select') }} {{ __('messages.training_mode') }}">
+                                                        <option value="on" {{ $result['training_mode'] == 'on' ?  'selected':''}}>On</option>
+                                                        <option value="off" {{ $result['training_mode'] == 'off' ?  'selected':''}}>Off</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-xl-12 col-lg-12 d-none training_message_div">
+                                            <fieldset>
+                                                <h5>{{ __('messages.training_message') }}<span class="mandatory">*</span>
+                                                </h5>
+                                                <div class="form-group">
+                                                    <input type="textarea" id="training_message" value="{{$result['training_message']}}" class="form-control isRequired" autocomplete="off" title="Enter Instance Name" name="training_message" placeholder="{{ __('messages.enter') }} {{ __('messages.training_message') }}">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
                                     </div>
                                     <div class="form-actions right">
                                         <a href="/globalconfig">
@@ -274,6 +298,7 @@ $result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
     duplicateName = true;
     $(document).ready(function() {
         checkDisableInactiveUser();
+        displayTrainingName();
     });
 
     function validateNow() {
@@ -305,6 +330,16 @@ $result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
             $("#noOfMonthDiv").hide();
             $("#disable_user_no_of_months").val('');
         }
+    }
+
+    function displayTrainingName() {
+        var selectedValue = document.getElementById('training_mode').value;
+       if(selectedValue == "on") {
+        $('.training_message_div').removeClass('d-none');
+        return;
+       }
+       $('.training_message_div').addClass('d-none');
+
     }
 </script>
 @endsection
