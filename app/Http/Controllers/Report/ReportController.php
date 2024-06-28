@@ -252,50 +252,52 @@ class ReportController extends Controller
     
     public function trendExport(Request $request)
     {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
-        $data = $request->all();
-        
-        
-        return Excel::download(new TrendExport($data), 'Trend-Report-' . $dateTime . '.xlsx');
+        $data = $request->all();        
+        $downloadName = $this->excelName('Trend-Report');
+        return Excel::download(new TrendExport($data), $downloadName);
     }
 
     public function logBookExport(Request $request)
     {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
-        return Excel::download(new LogBookExport($data), 'Logbook-Report-' . $dateTime . '.xlsx');
+        $downloadName = $this->excelName('Logbook-Report');        
+        return Excel::download(new LogBookExport($data), $downloadName);
     }
 
     public function notUploadExport(Request $request)
     {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
-        $data = $request->all();     
-        return Excel::download(new NotUploadExport($data), 'Not-Upload-Report-' . $dateTime . '.xlsx');
+        $data = $request->all();
+        $downloadName = $this->excelName('Not-Upload-Report');
+        return Excel::download(new NotUploadExport($data), $downloadName);
     }
 
     public function invalidResultExport(Request $request)
     {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
-        return Excel::download(new InvalidResultExport($data), 'Invalid-Result-Report-' . $dateTime . '.xlsx');
+        $downloadName = $this->excelName('Invalid-Result-Report');
+        return Excel::download(new InvalidResultExport($data), $downloadName);
     }
 
     public function customerExport(Request $request)
     {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
-        return Excel::download(new CustomerExport($data), 'Custom-Report-' . $dateTime . '.xlsx');
+        $downloadName = $this->excelName('Custom-Report');
+        return Excel::download(new CustomerExport($data), $downloadName);
     }
     public function notReportedSitesExport(Request $request)
     {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
-        return Excel::download(new NotReportedSitesExport($data), 'Not-Reported-Sites-Report-' . $dateTime . '.xlsx');
+        $downloadName = $this->excelName('Not-Reported-Sites-Report');
+        return Excel::download(new NotReportedSitesExport($data), $downloadName);
+    }
+
+    public function excelName($name)
+    {
+        $commonservice = new CommonService();
+        $dateTime = $commonservice->getDateAndTime();       
+        $training_mode = session()->get('training_mode');
+        $excelName = $name . "-" . $dateTime . ".xlsx";
+        if($training_mode == "on") $excelName = $name . "-" . $dateTime . "-Training" . ".xlsx";
+        return $excelName;
     }
 }
