@@ -28,6 +28,13 @@ use Log;
 
 class ReportController extends Controller
 {
+    protected $commonService;
+
+    public function __construct(CommonService $commonService)
+    {
+        $this->commonService = $commonService;
+    }
+
     //View Trend Report main screen
     public function trendReport()
     {
@@ -253,51 +260,41 @@ class ReportController extends Controller
     public function trendExport(Request $request)
     {
         $data = $request->all();        
-        $downloadName = $this->excelName('Trend-Report');
+        $downloadName = $this->commonService->excelName('Trend-Report');
         return Excel::download(new TrendExport($data), $downloadName);
     }
 
     public function logBookExport(Request $request)
     {
         $data = $request->all();
-        $downloadName = $this->excelName('Logbook-Report');        
+        $downloadName = $this->commonService->excelName('Logbook-Report');        
         return Excel::download(new LogBookExport($data), $downloadName);
     }
 
     public function notUploadExport(Request $request)
     {
         $data = $request->all();
-        $downloadName = $this->excelName('Not-Upload-Report');
+        $downloadName = $this->commonService->excelName('Not-Upload-Report');
         return Excel::download(new NotUploadExport($data), $downloadName);
     }
 
     public function invalidResultExport(Request $request)
     {
         $data = $request->all();
-        $downloadName = $this->excelName('Invalid-Result-Report');
+        $downloadName = $this->commonService->excelName('Invalid-Result-Report');
         return Excel::download(new InvalidResultExport($data), $downloadName);
     }
 
     public function customerExport(Request $request)
     {
         $data = $request->all();
-        $downloadName = $this->excelName('Custom-Report');
+        $downloadName = $this->commonService->excelName('Custom-Report');
         return Excel::download(new CustomerExport($data), $downloadName);
     }
     public function notReportedSitesExport(Request $request)
     {
         $data = $request->all();
-        $downloadName = $this->excelName('Not-Reported-Sites-Report');
+        $downloadName = $this->commonService->excelName('Not-Reported-Sites-Report');
         return Excel::download(new NotReportedSitesExport($data), $downloadName);
-    }
-
-    public function excelName($name)
-    {
-        $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();       
-        $training_mode = session()->get('training_mode');
-        $excelName = $name . "-" . $dateTime . ".xlsx";
-        if($training_mode == "on") $excelName = $name . "-" . $dateTime . "-Training" . ".xlsx";
-        return $excelName;
-    }
+    }    
 }
