@@ -24,6 +24,7 @@ class SetLocale
             return $next($request);
         }
         App::setLocale("en");
+        session()->put('training_mode', "off");
         return $next($request);
     }
 }
