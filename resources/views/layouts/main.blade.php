@@ -42,7 +42,7 @@
     }
 
     .marquee-container {
-        background-color: #111;
+        background-color: #dc3545;
         color: white;
         overflow: hidden;
         white-space: nowrap;

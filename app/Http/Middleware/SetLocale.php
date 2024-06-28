@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -10,12 +11,16 @@ class SetLocale
 {
     public function handle($request, Closure $next)
     {
-        $user_id = session('userId');
-        if($user_id != '' && $user_id != null) {
-            $user = DB::table('users')->where('user_id', $user_id)->first();
-            $locale = session('locale', $user->prefered_language);
+        $config = DB::table('global_config')->where('global_name', "prefered_language")->first();
+        if ($config) {
+            $locale = $config->global_value;
             App::setLocale($locale);
-
+            $training_mode = DB::table('global_config')->where('global_name', "training_mode")->first();
+            session()->put('training_mode', $training_mode->global_value);
+            if ($training_mode) {
+                $training_message = DB::table('global_config')->where('global_name', "training_message")->first();
+                session()->put('training_message', $training_message->global_value);
+            }
             return $next($request);
         }
         App::setLocale("en");
