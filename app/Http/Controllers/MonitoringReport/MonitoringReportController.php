@@ -63,8 +63,8 @@ class MonitoringReportController extends Controller
     public function sitewiseReportExport(Request $request)
     {
         $commonservice = new CommonService();
-        $dateTime = $commonservice->getDateAndTime();
         $data = $request->all();
-        return Excel::download(new SitewiseReportExport($data), 'Sitewise-Report-' . $dateTime . '.xlsx');
+        $downloadName = $commonservice->excelName('Sitewise-Report');
+        return Excel::download(new SitewiseReportExport($data), $downloadName);
     }
 }

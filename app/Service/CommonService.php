@@ -616,4 +616,13 @@ class CommonService
         $provinceDb = new ProvinceTable();
         $provinceDb->checkProvince($provinceName);   
     }
+
+    public function excelName($name)
+    {
+        $dateTime = $this->getDateAndTime();       
+        $training_mode = session()->get('training_mode');
+        $excelName = $name . "-" . $dateTime . ".xlsx";
+        if($training_mode == "on") $excelName = $name . "-" . $dateTime . "-Training" . ".xlsx";
+        return $excelName;
+    }
 }
