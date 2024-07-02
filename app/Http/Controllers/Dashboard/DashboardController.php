@@ -8,6 +8,7 @@ use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
 use App\Service\DistrictService;
 use App\Service\CommonService;
+use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -23,6 +24,8 @@ class DashboardController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $DistrictService = new DistrictService();
             $districts = $DistrictService->getAllDistrict();
+            $TestKitService = new TestKitService();
+            $testKits = $TestKitService->getAllActiveTestKit();
             $GlobalConfigService = new GlobalConfigService();
             $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
             $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
@@ -30,30 +33,30 @@ class DashboardController extends Controller
             $total = $monthlyReportService->getTotalCountOfMonthlyReport();
             $monthly = $monthlyReportService->getCountOfMonthlyReport();
             $siteMonthly = $monthlyReportService->getSiteCountOfMonthlyReport();
-            $common=new CommonService();
-            $checkEdit = $common->allowDisplay('App\Http\Controllers\Dashboard\DashboardController','index');
-            $reportCount=$monthlyReportService->getMonthlyWiseReportCount();
-            $sitewiseReportCount=$monthlyReportService->getSiteWiseMonthlyReportCount();
-            $testWiseReportCount=$monthlyReportService->getTestWiseMonthlyReportCount();
-            if($checkEdit){
-            return view('dashboard.index', array(
-                'province' => $province,
-                'districts' => $districts,
-                'data' => $data,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-                'total' => $total,
-                'monthly' => $monthly,
-                'siteMonthly' => $siteMonthly,
-                'mapZoomLevel' => $mapZoomLevel,
-                'monthWiseCount' => $reportCount,
-                'siteWiseMonthlyCount' => $sitewiseReportCount,
-                'testWiseMonthlyCount' => $testWiseReportCount,
-            ));
-        } else {
-           return redirect('/dashboarderror');
-
-        }
+            $common = new CommonService();
+            $checkEdit = $common->allowDisplay('App\Http\Controllers\Dashboard\DashboardController', 'index');
+            $reportCount = $monthlyReportService->getMonthlyWiseReportCount();
+            $sitewiseReportCount = $monthlyReportService->getSiteWiseMonthlyReportCount();
+            $testWiseReportCount = $monthlyReportService->getTestWiseMonthlyReportCount();
+            if ($checkEdit) {
+                return view('dashboard.index', array(
+                    'province' => $province,
+                    'districts' => $districts,
+                    'testKits' => $testKits,
+                    'data' => $data,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'total' => $total,
+                    'monthly' => $monthly,
+                    'siteMonthly' => $siteMonthly,
+                    'mapZoomLevel' => $mapZoomLevel,
+                    'monthWiseCount' => $reportCount,
+                    'siteWiseMonthlyCount' => $sitewiseReportCount,
+                    'testWiseMonthlyCount' => $testWiseReportCount,
+                ));
+            } else {
+                return redirect('/dashboarderror');
+            }
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }

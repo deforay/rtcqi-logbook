@@ -136,7 +136,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                         <div class="media">
                                             <div class="media-body">
                                                 <span class="text-bold-500">{{ __('messages.province') }} </span>
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="Please select Province Name">
+                                                <select class="form-control" autocomplete="off" style="width:100%;" id="provinceId" name="provinceId" title="{{ __('messages.select') }} Province Name">
                                                     <option value="">{{ __('messages.select') }} {{ __('messages.province') }}</option>
                                                     @foreach($province as $row)
                                                     <option value="{{$row->province_id}}">{{$row->province_name}}</option>
@@ -150,10 +150,23 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                         <div class="media">
                                             <div class="media-body">
                                                 <span class="text-bold-500">{{ __('messages.district') }} </span>
-                                                <select class="form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="Please Select District Name">
+                                                <select class="form-control" autocomplete="off" style="width:100%;" id="districtId" name="districtId" title="{{ __('messages.select') }} {{ __('messages.district') }}">
                                                     <option value="">{{ __('messages.select') }} {{ __('messages.district') }}</option>
                                                     @foreach($districts as $district)
                                                     <option value="{{$row->province_id}}">{{$district->district_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <span class="text-bold-500">{{ __('messages.test_kit') }} </span>
+                                                <select class="form-control" autocomplete="off" style="width:100%;" id="test_kit" name="test_kit" title="{{ __('messages.select') }} {{ __('messages.test_kit') }}">
+                                                    <option value="">{{ __('messages.select') }} {{ __('messages.test_kit') }}</option>
+                                                    @foreach($testKits as $testKit)
+                                                    <option value="{{$testKit->tk_id}}">{{$testKit->test_kit_name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -332,6 +345,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
         let searchDate = $('#searchDate').val() || '';
         let provinceId = $('#provinceId').val() || '';
         let districtId = $('#districtId').val() || '';
+        let test_kit = $('#test_kit').val() || '';
 
         $.ajaxSetup({
             headers: {
@@ -346,6 +360,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                 searchDate: searchDate,
                 provinceId: provinceId,
                 districtId: districtId,
+                testKitId: test_kit,
             },
             error: function(e) {
                 console.log(JSON.stringify(e));

@@ -2278,6 +2278,9 @@ class MonthlyReportTable extends Model
         if (isset($data['districtId']) && $data['districtId'] != '') {
             $query = $query->where('monthly_reports.district_id', '=', $data['districtId']);
         }
+        if (isset($data['testKitId']) && $data['testKitId'] != '') {
+            $query = $query->where('monthly_reports_pages.test_1_kit_id', '=', $data['testKitId']);
+        }
         $salesResult = $query->get();
         if (count($salesResult) == 0) {
             $query = DB::table('monthly_reports')
@@ -2300,7 +2303,8 @@ class MonthlyReportTable extends Model
             //echo $query;
             $salesResult = $query->get();
         }
-        //dd(DB::getQueryLog());die;
+        // dd(DB::getQueryLog());die;
+        // print_r($salesResult); die;
         return $salesResult;
     }
 
