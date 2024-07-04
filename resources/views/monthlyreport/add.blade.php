@@ -248,9 +248,11 @@ $sample_collection_limit=$global['sample_collection_past_months_limit'];
                                                         <option value="">---Select---</option>
                                                         @if(in_array("serial",$testingAlgorithmType))
                                                             <option value="serial">Serial</option>
-                                                        @elseif(in_array("parallel",$testingAlgorithmType))
+                                                        @endif
+                                                        @if(in_array("parallel",$testingAlgorithmType))
                                                             <option value="parallel">Parallel</option>
-                                                        @elseif(in_array("who3",$testingAlgorithmType))
+                                                        @endif
+                                                        @if(in_array("who3",$testingAlgorithmType))
                                                             <option value="who3">WHO 3</option>
                                                         @endif
                                                     </select>

@@ -20,6 +20,7 @@ use App\Exports\InvalidResultExport;
 use App\Service\CommonService;
 use App\Exports\CustomerExport;
 use App\Exports\NotReportedSitesExport;
+use App\Service\GlobalConfigService;
 use Yajra\DataTables\Facades\DataTables;
 use Redirect;
 use View;
@@ -49,7 +50,9 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.trendReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province));
+            $globalConfigService = new GlobalConfigService();
+            $testingAlgorithm = explode(',', $globalConfigService->getGlobalConfigValue('testing_algorithm'));
+            return view('report.trendReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict, 'province' => $province, 'testingAlgorithm' => $testingAlgorithm));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
@@ -96,7 +99,9 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.logbook', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province));
+            $globalConfigService = new GlobalConfigService();
+            $testingAlgorithm = explode(',', $globalConfigService->getGlobalConfigValue('testing_algorithm'));
+            return view('report.logbook', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district,'subdistrict' => $subDistrict,'province' => $province, 'testingAlgorithm' => $testingAlgorithm));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
@@ -135,9 +140,10 @@ class ReportController extends Controller
             $testSite = $TestSiteService->getAllCurrentUserActiveTestSite();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            
+            $globalConfigService = new GlobalConfigService();
+            $testingAlgorithm = explode(',', $globalConfigService->getGlobalConfigValue('testing_algorithm'));
 
-            return view('report.testKitReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province, ''));
+            return view('report.testKitReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province, 'testingAlgorithm' => $testingAlgorithm));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
@@ -167,7 +173,9 @@ class ReportController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.customReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'province' => $province, 'district' => $district));
+            $globalConfigService = new GlobalConfigService();
+            $testingAlgorithm = explode(',', $globalConfigService->getGlobalConfigValue('testing_algorithm'));
+            return view('report.customReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport, 'province' => $province, 'district' => $district, 'testingAlgorithm' => $testingAlgorithm));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }
@@ -224,7 +232,9 @@ class ReportController extends Controller
             $province = $ProvinceService->getAllActiveProvince();
             $monthlyReportService = new MonthlyReportService();
             $monthlyReport = $monthlyReportService->getAllActiveMonthlyReport();
-            return view('report.invalidresultReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province));
+            $globalConfigService = new GlobalConfigService();
+            $testingAlgorithm = explode(',', $globalConfigService->getGlobalConfigValue('testing_algorithm'));
+            return view('report.invalidresultReport', array('testSite' => $testSite, 'monthlyReport' => $monthlyReport,'district' => $district, 'subdistrict' => $subDistrict, 'province' => $province, 'testingAlgorithm' => $testingAlgorithm));
         } else {
             return Redirect::to('login')->with('status', 'Please Login');
         }

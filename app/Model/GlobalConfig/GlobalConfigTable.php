@@ -147,6 +147,15 @@ class GlobalConfigTable extends Model
             session()->put('training_message', $data['training_message']);
         }
 
+        if (isset($data['default_testing_algorithm'])) {
+            $upData = array(
+                'global_value' => $data['default_testing_algorithm'],
+            );
+            $response = DB::table('global_config')
+                ->where('global_name', '=', 'default_testing_algorithm')
+                ->update($upData);
+        }
+
         if ($data['prefered_language']) {
             $upData = array(
                 'global_value' => $data['prefered_language'],
@@ -285,5 +294,13 @@ class GlobalConfigTable extends Model
             ->select('global_value')
             ->where('global_name', '=', $mapZoomLevel)
             ->value('global_value');
+    }
+
+    public function getTestingAlgorithms()
+    {
+        return DB::table('global_config')
+        ->select('global_value')
+        ->where('global_name', 'testing_algorithm')
+        ->value('global_value');
     }
 }

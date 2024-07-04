@@ -42,6 +42,15 @@ class MonthlyReportTable extends Model
             $recency = $data['isRecency'];
         }
         if ($request->input('provinceId') != null && trim($request->input('provinceId')) != '') {
+            $algoType = $data['algoType'];
+            if(empty($data['algoType'])) 
+            {
+                $defaultTestingAlgorithm = DB::table('global_config')
+                ->select('global_value')
+                ->where('global_name', 'default_testing_algorithm')
+                ->value('global_value');
+                $algoType = $defaultTestingAlgorithm;
+            } 
             $id = DB::table('monthly_reports')->insertGetId(
                 [
                     'province_id' => $data['provinceId'],
@@ -54,7 +63,7 @@ class MonthlyReportTable extends Model
                     'contact_no' => $data['contactNo'],
                     'latitude' => $latitude,
                     'longitude' => $longitude,
-                    'algorithm_type' => $data['algoType'],
+                    'algorithm_type' => $algoType,
                     'date_of_data_collection' => $DateOfCollect,
                     'reporting_month' => $reportingMon,
                     'book_no' => $data['bookNo'],
@@ -1148,7 +1157,16 @@ class MonthlyReportTable extends Model
                                 $if_flc = $row[6];
                                 $is_recency = $row[7];
                                 $contact_no = $row[8];
-                                $algo_type = $row[9];
+                                $algoType =  $row[9];
+                                if(empty($row[9]))
+                                {
+                                    $defaultTestingAlgorithm = DB::table('global_config')
+                                    ->select('global_value')
+                                    ->where('global_name', 'default_testing_algorithm')
+                                    ->value('global_value');
+                                    $algoType = $defaultTestingAlgorithm;
+                                }
+                                $algo_type = $algoType;
                                 $date_of_collection = $dateOfCollection;
                                 $report_months = $reporting_date;
                                 $book_no = $row[12];

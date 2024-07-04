@@ -174,6 +174,25 @@ $result['testing_algorithm'] = explode(',', $result['testing_algorithm']);
                                                 </div>
                                             </fieldset>
                                         </div>
+                                        <div class="col-xl-4 col-lg-12">
+                                            <fieldset>
+                                                <h5>{{ __('messages.default_testing_algorithm') }} <span class="mandatory">*</span></h5>
+                                                <div class="form-group">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="default_testing_algorithm" name="default_testing_algorithm" title="{{ __('messages.select') }} {{ __('messages.default_testing_algorithm') }}">
+                                                        <option value="">{{ __('messages.select') }} {{ __('messages.default_testing_algorithm') }}</option>
+                                                        @if(in_array("serial",$result['testing_algorithm']))
+                                                        <option value="serial" {{ $result['default_testing_algorithm'] == 'serial' ?  'selected':''}}>Serial</option>
+                                                        @endif
+                                                        @if(in_array("parallel",$result['testing_algorithm']))
+                                                        <option value="parallel" {{ $result['default_testing_algorithm'] == 'parallel' ?  'selected':''}}>Parallel</option>
+                                                        @endif
+                                                        @if(in_array("who3",$result['testing_algorithm']))
+                                                        <option value="who3" {{ $result['default_testing_algorithm'] == 'who3' ?  'selected':''}}>WHO 3</option>
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </div>
 
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
