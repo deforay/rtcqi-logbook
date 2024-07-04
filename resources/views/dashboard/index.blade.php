@@ -175,6 +175,19 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                                     <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
                                         <div class="media">
                                             <div class="media-body">
+                                                <span class="text-bold-500">{{ __('messages.sub_district') }} </span>
+                                                <select class="form-control" autocomplete="off" style="width:100%;" id="sub_district" name="sub_district" title="{{ __('messages.select') }} {{ __('messages.sub_district') }}">
+                                                    <option value="">{{ __('messages.select') }} {{ __('messages.sub_district') }}</option>
+                                                    @foreach($subDistricts as $subDistrict)
+                                                    <option value="{{$subDistrict->sub_district_id}}">{{$subDistrict->sub_district_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-sm-12 mb-4 pl-1">
+                                        <div class="media">
+                                            <div class="media-body">
                                                 <button type="submit" onclick="getDashboardData();return false;" class="btn btn-info mt-4"> {{ __('messages.search') }}</button>
                                             </div>
                                         </div>
@@ -346,7 +359,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
         let provinceId = $('#provinceId').val() || '';
         let districtId = $('#districtId').val() || '';
         let test_kit = $('#test_kit').val() || '';
-
+        let subDistrictId = $('#sub_district').val() || '';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -361,6 +374,7 @@ $startdate = date('d-M-Y', strtotime('-30 days'));
                 provinceId: provinceId,
                 districtId: districtId,
                 testKitId: test_kit,
+                subDistrictId: subDistrictId,
             },
             error: function(e) {
                 console.log(JSON.stringify(e));
