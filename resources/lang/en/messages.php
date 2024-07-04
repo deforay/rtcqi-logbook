@@ -49,6 +49,7 @@
     "prefered_language" => "Prefered Language",
     "training_mode" => "Training Mode",
     "training_message" => "Training Message",
+    "default_testing_algorithm" => "Default Testing Algorithm",
 
     //Dashboard
     'overall_audits' => 'Overall Audits',

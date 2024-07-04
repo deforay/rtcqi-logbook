@@ -56,6 +56,7 @@
     "user_profile" => "Profil de l'utilisateur",
     "training_mode" => "Mode entraînement",
     "training_message" => "Message de formation",
+    "default_testing_algorithm" => "Default Testing Algorithm",
 
     //Dashboard
     'overall_audits' => 'Vérifications Globales',

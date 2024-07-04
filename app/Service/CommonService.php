@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Model\GlobalConfig\GlobalConfigTable;
 use App\Model\Province\ProvinceTable;
 use DB;
 use Redirect;
@@ -624,5 +625,5 @@ class CommonService
         $excelName = $name . "-" . $dateTime . ".xlsx";
         if($training_mode == "on") $excelName = $name . "-" . $dateTime . "-Training" . ".xlsx";
         return $excelName;
-    }
+    }    
 }

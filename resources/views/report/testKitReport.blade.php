@@ -131,8 +131,15 @@ $startdate = date('01-M-Y', strtotime('-18 months'));
                                                     </h5>
                                                     <div class="form-group">
                                                         <select multiple="multiple" class="js-example-basic-multiple form-control" autocomplete="off" style="width:100%;" id="algorithmType" name="algorithmType[]" title="Please select Algorithm Type">
-                                                            <option value="serial">Serial</option>
-                                                            <option value="parallel">Parallel</option>
+                                                        @if(in_array("serial",$testingAlgorithm))
+                                                        <option value="serial">Serial</option>
+                                                        @endif
+                                                        @if(in_array("parallel",$testingAlgorithm))
+                                                        <option value="parallel">Parallel</option>
+                                                        @endif
+                                                        @if(in_array("who3",$testingAlgorithm))
+                                                        <option value="who3">WHO 3</option>
+                                                        @endif
                                                         </select>
                                                     </div>
                                                 </fieldset>
