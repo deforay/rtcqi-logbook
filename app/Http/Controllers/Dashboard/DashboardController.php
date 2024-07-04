@@ -8,6 +8,7 @@ use App\Service\MonthlyReportService;
 use App\Service\ProvinceService;
 use App\Service\DistrictService;
 use App\Service\CommonService;
+use App\Service\SubDistrictService;
 use App\Service\TestKitService;
 use Illuminate\Http\Request;
 use Redirect;
@@ -26,6 +27,8 @@ class DashboardController extends Controller
             $districts = $DistrictService->getAllDistrict();
             $TestKitService = new TestKitService();
             $testKits = $TestKitService->getAllActiveTestKit();
+            $subDistrictService = new SubDistrictService();
+            $subDistricts = $subDistrictService->getAllSubDistrict();
             $GlobalConfigService = new GlobalConfigService();
             $latitude = $GlobalConfigService->getGlobalConfigLatitude('latitude');
             $longitude = $GlobalConfigService->getGlobalConfigLongitude('longitude');
@@ -43,6 +46,7 @@ class DashboardController extends Controller
                     'province' => $province,
                     'districts' => $districts,
                     'testKits' => $testKits,
+                    'subDistricts' => $subDistricts,
                     'data' => $data,
                     'latitude' => $latitude,
                     'longitude' => $longitude,
