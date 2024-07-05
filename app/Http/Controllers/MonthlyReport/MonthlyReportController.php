@@ -73,6 +73,7 @@ class MonthlyReportController extends Controller
             $latest = $monthService->getLatestValue();
             $glob = $GlobalConfigService->getAllGlobalConfig();
             $testingAlgorithmType = $GlobalConfigService->getGlobalConfigValue('testing_algorithm');
+            $defaulttestingAlgorithm = $GlobalConfigService->getGlobalConfigValue('default_testing_algorithm');
             $arr = array();
             // now we create an associative array so that we can easily create view variables
             $counter = count($glob);
@@ -80,7 +81,7 @@ class MonthlyReportController extends Controller
             for ($i = 0; $i < $counter; $i++) {
                 $arr[$glob[$i]->global_name] = $glob[$i]->global_value;
             }
-            return view('monthlyreport.add', array('latest' => $latest, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'district' => $district,  'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo,'testingAlgorithmType'=>$testingAlgorithmType));
+            return view('monthlyreport.add', array('latest' => $latest, 'defaulttestingAlgorithm' => $defaulttestingAlgorithm, 'kittype' => $kittype, 'global' => $arr, 'globalValue' => $globalValue, 'province' => $province, 'district' => $district,  'subdistrict' => $subDistrict, 'testsite' => $testsite, 'sitetype' => $sitetype, 'allowedTestKitNo' => $allowedTestKitNo,'testingAlgorithmType'=>$testingAlgorithmType));
         }
     }
 
