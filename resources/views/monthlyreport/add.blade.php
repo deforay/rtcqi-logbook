@@ -547,6 +547,8 @@ $sample_collection_limit=$global['sample_collection_past_months_limit'];
 <script>
     var selectedEndDate="";
     $(document).ready(function() {
+        var rr = "{{$defaulttestingAlgorithm}}";
+        $('#algoType').val(rr);
         $("#monthlyReportListWrapper").hide();
         $('.js-example-basic-single').select2();
         $selectElement = $('#testsiteId').prepend('<option selected></option>').select2({
