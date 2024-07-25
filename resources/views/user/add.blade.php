@@ -70,6 +70,7 @@
                                             </fieldset>
                                         </div>
 
+                                        
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
                                                 <h5>{{ __('messages.password') }} <span class="mandatory">*</span>

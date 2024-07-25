@@ -210,10 +210,10 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>{{ __('messages.sub_district_name') }}<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.sub_district_name') }}
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="Please Select Sub District Name">
+                                                    <select class="form-control" autocomplete="off" style="width:100%;" id="subDistrictId" name="subDistrictId" title="Please Select Sub District Name">
                                                         <option value="">{{ __('messages.select_sub_district_name') }}</option>
                                                     </select>
                                                 </div>
