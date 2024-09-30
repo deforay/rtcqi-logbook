@@ -27,6 +27,7 @@ class UserTable extends Model
         //to get all request values
         $userId = null;
         $data = $request->all();
+        // print_r($data); die;
         $user_name = session('name');
 
         // update session by user giving language
@@ -57,7 +58,7 @@ class UserTable extends Model
             $upData = array(
                 'global_value' => $data['prefered_language'],
             );
-            $response = DB::table('global_config')
+            DB::table('global_config')
                 ->where('global_name', '=', 'prefered_language')
                 ->update($upData);
             if ($data['userMapping'] == 1) {
@@ -77,19 +78,19 @@ class UserTable extends Model
                     }
                 }
             } else {
-                if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0) {
-                    for ($i = 0; $i < count($data['provinceMappingId']); $i++) {
+                if (isset($data['provinceMappingId']) && count($data['provinceMappingId']) > 0) {
+                    foreach($data['provinceMappingId'] as $key => $val) {
                         $newLocationMappingId = DB::table('users_location_map')->insertGetId(
                             [
                                 'user_id' => $id,
-                                'province_id' => $data['provinceMappingId'][$i],
+                                'province_id' => $val,
                                 'district_id' => null
                             ]
                         );
 
                         $selectedSites = DB::table('test_sites')
                             ->select('ts_id')
-                            ->where('site_province', '=', $data['provinceMappingId'][$i])
+                            ->where('site_province', '=', $val)
                             ->get();
                         if (count($selectedSites) > 0) {
                             for ($i = 0; $i < count($selectedSites); $i++) {
@@ -102,25 +103,26 @@ class UserTable extends Model
                             }
                         }
                     }
-                } else if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) > 0) {
-                    for ($i = 0; $i < count($data['districtMappingId']); $i++) {
+                }
+                if (isset($data['districtMappingId']) && count($data['districtMappingId']) > 0) {
+                   
+                    foreach($data['districtMappingId'] as $key => $val) {
                         $districtservice = new DistrictService();
-                        $districtDetail = $districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
+                        $districtDetail = $districtservice->getDistrictById(base64_encode($val));
                         $province_id = $districtDetail[0]->province_id;
                         DB::table('users_location_map')->insertGetId(
                             [
                                 'user_id' => $id,
                                 'province_id' => $province_id,
-                                'district_id' => $data['districtMappingId'][$i]
+                                'district_id' => $val
                             ]
                         );
 
                         $selectedSites = DB::table('test_sites')
                             ->select('ts_id')
                             ->where('site_province', '=', $province_id)
-                            ->where('site_district', '=', $data['districtMappingId'][$i])
+                            ->where('site_district', '=', $val)
                             ->get();
-                        //print_r();exit();
                         if (count($selectedSites) > 0) {
                             for ($i = 0; $i < count($selectedSites); $i++) {
                                 $userFacility = DB::table('users_testsite_map')->insertGetId(
@@ -233,7 +235,6 @@ class UserTable extends Model
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
-        // print_r($data);die;
         $user = array(
             'first_name' => $data['firstName'],
             'last_name' => $data['lastName'],
@@ -258,7 +259,7 @@ class UserTable extends Model
         $upData = array(
             'global_value' => $data['prefered_language'],
         );
-        $response = DB::table('global_config')
+        DB::table('global_config')
             ->where('global_name', '=', 'prefered_language')
             ->update($upData);
 
@@ -317,19 +318,19 @@ class UserTable extends Model
                 }
             }
         } else {
-            if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) == 0) {
-                for ($i = 0; $i < count($data['provinceMappingId']); $i++) {
-                    $newLocationMappingId = DB::table('users_location_map')->insertGetId(
+            if (isset($data['provinceMappingId']) && count($data['provinceMappingId']) > 0) {
+                foreach($data['provinceMappingId'] as $key => $val) {
+                   $newLocationMappingId = DB::table('users_location_map')->insertGetId(
                         [
                             'user_id' => base64_decode($id),
-                            'province_id' => $data['provinceMappingId'][$i],
+                            'province_id' => $val,
                             'district_id' => null
                         ]
                     );
 
                     $selectedSites = DB::table('test_sites')
                         ->select('ts_id')
-                        ->where('site_province', '=', $data['provinceMappingId'][$i])
+                        ->where('site_province', '=', $val)
                         ->get();
                     if (count($selectedSites) > 0) {
                         for ($i = 0; $i < count($selectedSites); $i++) {
@@ -342,23 +343,25 @@ class UserTable extends Model
                         }
                     }
                 }
-            } else if (count($data['provinceMappingId']) > 0 && count($data['districtMappingId']) > 0) {
-                for ($i = 0; $i < count($data['districtMappingId']); $i++) {
+            }
+            if (isset($data['districtMappingId']) && count($data['districtMappingId']) > 0) {
+                foreach($data['districtMappingId'] as $key => $val) {
                     $districtservice = new DistrictService();
-                    $districtDetail = $districtservice->getDistrictById(base64_encode($data['districtMappingId'][$i]));
+                    $districtDetail = $districtservice->getDistrictById(base64_encode($val));
                     $province_id = $districtDetail[0]->province_id;
+                    // print_r($province_id); die;
                     DB::table('users_location_map')->insertGetId(
                         [
                             'user_id' => base64_decode($id),
                             'province_id' => $province_id,
-                            'district_id' => $data['districtMappingId'][$i]
+                            'district_id' => $val
                         ]
                     );
 
                     $selectedSites = DB::table('test_sites')
                         ->select('ts_id')
                         ->where('site_province', '=', $province_id)
-                        ->where('site_district', '=', $data['districtMappingId'][$i])
+                        ->where('site_district', '=', $val)
                         ->get();
                     //print_r();exit();
                     if (count($selectedSites) > 0) {
@@ -498,7 +501,7 @@ class UserTable extends Model
             $upData = array(
                 'global_value' => $data['locale'],
             );
-            $response = DB::table('global_config')
+            DB::table('global_config')
                 ->where('global_name', '=', 'prefered_language')
                 ->update($upData);
 
