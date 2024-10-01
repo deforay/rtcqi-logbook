@@ -47,6 +47,7 @@ class UserTable extends Model
                     'user_status' => $data['userStatus'],
                     'created_by' => session('userId'),
                     'created_on' => $commonservice->getDateTime(),
+                    'last_login_datetime' => $commonservice->getDateTime(),  
                     'force_password_reset' => 1,
                     'role_id' => $data['roleId'],
                     'prefered_language' => $data['prefered_language'],
@@ -235,6 +236,7 @@ class UserTable extends Model
         $userId = null;
         $user_name = session('name');
         $data = $params->all();
+        $loggedInUser = session('userId');
         $user = array(
             'first_name' => $data['firstName'],
             'last_name' => $data['lastName'],
@@ -246,6 +248,9 @@ class UserTable extends Model
             'prefered_language' => $data['prefered_language'],
             'user_mapping' => $data['userMapping']
         );
+        if ($loggedInUser == 1) { // admin
+            $user['last_login_datetime'] = $commonservice->getDateTime(); // Current date and time
+        }
         // refresh user updated language
         App::setLocale($data['prefered_language']);
         session(['locale' => $data['prefered_language']]);
@@ -426,7 +431,6 @@ class UserTable extends Model
                     $diff = abs(strtotime($currentDate) - strtotime($lastLoginDatetime));
                     $years = floor($diff / (365 * 60 * 60 * 24));
                     $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-
                     $noOfMonths = $globalConfigService->getGlobalConfigValue('disable_user_no_of_months');
                     if (trim($noOfMonths) == "") {
                         $noOfMonths = 6;
