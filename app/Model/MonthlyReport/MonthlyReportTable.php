@@ -1047,11 +1047,27 @@ class MonthlyReportTable extends Model
             DB::beginTransaction();
             try {
                 $dateTime = date('Ymd_His');
-                $file = $request->file('grade_excel');
-                $fileName = $dateTime . '-' . $file->getClientOriginalName();
-                $savePath = public_path('/uploads/');
+                $reqFile = $request->file('grade_excel');
 
-                move_uploaded_file($_FILES['grade_excel']['tmp_name'], $savePath . $fileName);
+                // Get the original file name
+                $originalName = $reqFile->getClientOriginalName();
+                
+                // Sanitize the filename by removing unwanted characters
+                $comment = preg_replace('/[^a-zA-Z0-9_-]/', '', pathinfo($originalName, PATHINFO_FILENAME));
+                // print_r($comment); die;
+                // Append the file extension back to the sanitized filename
+                $extension = $reqFile->getClientOriginalExtension();
+                $file = $comment . '.' . $extension;
+                // Prepend the current dateTime to the sanitized file name
+                $fileName = $dateTime . '-' . $file;
+                $savePath = public_path('/uploads/');
+				$pathComponents = [];
+
+                $cleanSavePath = $commonservice->buildSafePath($savePath, $pathComponents);
+
+                $cleanFileName = $commonservice->cleanFileName($fileName);
+              
+                move_uploaded_file($_FILES['grade_excel']['tmp_name'], $cleanSavePath . $cleanFileName);               
 
                 $globalValue = DB::table('global_config')->where('global_name','no_of_test')->value('global_value');
 
@@ -1072,19 +1088,19 @@ class MonthlyReportTable extends Model
                     $tempFile = 'MonthlyReportSample4test.xlsx';
                 }
 
-                $excelValidate = self::validateUploadedFile($savePath . $fileName,public_path('assets/'.$tempFile));
+                $excelValidate = self::validateUploadedFile($cleanSavePath . $cleanFileName,public_path('assets/'.$tempFile));
 
                 if($excelValidate == true){
                    
 
-                    $file_type = \PhpOffice\PhpSpreadsheet\IOFactory::identify($savePath . $fileName);
+                    $file_type = \PhpOffice\PhpSpreadsheet\IOFactory::identify($cleanSavePath . $cleanFileName);
                     $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($file_type);
                     $reader->setReadDataOnly(TRUE);
                     $reader->setReadEmptyCells(FALSE);
-                    $spreadsheet = $reader->load($savePath . $fileName);
-                    unlink($savePath . $fileName);
+                    $spreadsheet = $reader->load($cleanSavePath . $cleanFileName);
+                    unlink($cleanSavePath . $cleanFileName);
                     $array = $spreadsheet->getActiveSheet()->toArray();
-                    // $array =  Excel::toArray(new MonthlyReportDataUpload(), $savePath . $fileName);
+                    // $array =  Excel::toArray(new MonthlyReportDataUpload(), $cleanSavePath . $cleanFileName);
                     $rowCnt = 1;
                     $cnt = 0;
                     $rslt = "";
@@ -1381,7 +1397,7 @@ class MonthlyReportTable extends Model
                                                 'tester_name' => $tester_name,
                                                 'latitude' => $latitude,
                                                 'longitude' => $longitude,
-                                                'file_name' => $fileName,
+                                                'file_name' => $cleanFileName,
                                                 'last_modified_on' => $commonservice->getDateTime(),
 
                                             ]
@@ -1548,7 +1564,7 @@ class MonthlyReportTable extends Model
                                             'final_undetermined' => $final_indeterminate,
                                             'added_on' => $commonservice->getDateTime(),
                                             'added_by' => session('userId'),
-                                            'file_name' => $fileName,
+                                            'file_name' => $cleanFileName,
                                             'comment' =>  $comment,
                                         );
 
@@ -1689,7 +1705,7 @@ class MonthlyReportTable extends Model
                                         'final_undetermined' => $final_indeterminate,
                                         'added_on' => $commonservice->getDateTime(),
                                         'added_by' => session('userId'),
-                                        'file_name' => $fileName,
+                                        'file_name' => $cleanFileName,
                                         'comment' =>  'Duplicate Entry',
                                     );
 
@@ -1832,7 +1848,7 @@ class MonthlyReportTable extends Model
                                     'final_undetermined' => $final_indeterminate,
                                     'added_on' => $commonservice->getDateTime(),
                                     'added_by' => session('userId'),
-                                    'file_name' => $fileName,
+                                    'file_name' => $cleanFileName,
                                     'comment' =>  $comment,
                                 );
 
@@ -1886,7 +1902,7 @@ class MonthlyReportTable extends Model
                         }
                         $commonservice->eventLog('import-monthly-report', $user_name . ' uploaded Bulk Monthly Report for '.$siteNameString, 'monthly-report', $mr_id);
                     }
-                    $rslt .= "File Name: " . $fileName . "<br/>";
+                    $rslt .= "File Name: " . $cleanFileName . "<br/>";
                     $rslt .= "No.of Records: " . ($cnt + $notInsertRow) . "<br/>";
                     $rslt .= "No.of Records Uploaded Successfully: " . ($cnt) . "<br/>";
                     $rslt .= "No.of Records not Uploaded: " . $notInsertRow . "<br/>";
@@ -1908,7 +1924,7 @@ class MonthlyReportTable extends Model
 
     public static function validateUploadedFile($uploadedFilePath, $templateFilePath)
 {
-    // dd($uploadedFilePath, $templateFilePath);
+        // dd($uploadedFilePath, $templateFilePath);
         // Load the uploaded Excel file
         $uploadedSpreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($uploadedFilePath);
         // Load the template Excel file
