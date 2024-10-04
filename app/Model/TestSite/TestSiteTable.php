@@ -221,10 +221,12 @@ class TestSiteTable extends Model
                 ->where('users_location_map.province_id', '=', $data['provincesssId'])
                 ->where('users_location_map.district_id', '=', $data['districtId'])
                 ->get();
+                // print_r($list_users); die;
             if (count($list_users) == 0) {
                 $list_users = DB::table('users_location_map')
                     ->select('user_id')
-                    ->where('users_location_map.province_id', '=', $data['provincesssId']);
+                    ->where('users_location_map.province_id', '=', $data['provincesssId'])
+                    ->get();
             }
             if (count($list_users) > 0) {
                 for ($i = 0; $i < count($list_users); $i++) {
