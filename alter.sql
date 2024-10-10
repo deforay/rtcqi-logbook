@@ -702,3 +702,6 @@ ALTER TABLE `users` ADD `prefered_language` ENUM('en','fr') NOT NULL DEFAULT 'en
 
 -- Sakhti 21-june-2024
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Prefered Language', 'en', 'English\r\n');
+
+-- sakthi oct-10-2024
+ALTER TABLE `test_sites` CHANGE `site_sub_district` `site_sub_district` INT NULL;
