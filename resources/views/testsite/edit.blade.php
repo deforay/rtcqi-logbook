@@ -63,10 +63,10 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                            <h5>{{ __('messages.external_site_id') }}
+                                            <h5>{{ __('messages.external_site_id') }} <span class="mandatory">*</span>
                                                </h5>
                                                 <div class="form-group">
-                                                    <input type="text" id="externalSiteId" value="{{$result[0]->external_site_id}}" class="form-control" autocomplete="off" placeholder="Enter External Site ID" name="externalSiteID" title="Please enter External Site ID">
+                                                    <input type="text" id="externalSiteId" value="{{$result[0]->external_site_id}}" class="form-control isRequired" autocomplete="off" placeholder="Enter External Site ID" name="externalSiteID" title="Please enter External Site ID">
                                                 </div>
                                             </fieldset>
                                         </div>
