@@ -149,6 +149,7 @@
     "site_name" => "Site Name",
     "reporting_month" => "Reporting Month",
     "implementing_partner_name" => "Implementing Partner Name",
+    "implementing_partner_status" => "Implementing Partner Status",
 
 // monthly report
     'add_new_report' => 'Add New Report',

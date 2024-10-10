@@ -22,16 +22,14 @@ class AllowedTestKitTable extends Model
         $user_name = session('name');
         $commonservice = new CommonService();
         $data = $request->all();
-
-        if ($request->input('testKitNo') != null && trim($request->input('testKitNo')) != '') {
-            $counter = count($data['testKitName']);
-            for ($x = 0; $x < $counter; $x++) {
-                $id = DB::table('allowed_testkits')->insert(
+        if ($data['testKitNo'] != null && trim($data['testKitNo']) != '') {
+            foreach ($data['testKitName'] as $key => $val) {
+                $id = DB::table('allowed_testkits')->insertOrIgnore(
                     [
                         'test_kit_no' => $data['testKitNo'],
-                        'testkit_id' => $data['testKitName'][$x],
+                        'testkit_id' => $val,
                     ]
-                );
+                ); 
             }
             $commonservice->eventLog('add-allowed-testkits-request', $user_name . ' has added the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$userId);
         }
@@ -68,14 +66,13 @@ class AllowedTestKitTable extends Model
         $user_name = session('name');
         $commonservice = new CommonService();
         DB::delete('delete from allowed_testkits where test_kit_no = ?', [base64_decode($id)]);
-        $counter = count($data['testKitName']);
-        for ($x = 0; $x < $counter; $x++) {
-            $id = DB::table('allowed_testkits')->insert(
+        foreach ($data['testKitName'] as $key => $val) {
+            $id = DB::table('allowed_testkits')->insertOrIgnore(
                 [
                     'test_kit_no' => $data['testKitNo'],
-                    'testkit_id' => $data['testKitName'][$x],
+                    'testkit_id' => $val,
                 ]
-            );
+            ); 
         }
         $commonservice->eventLog('update-allowed-testkits-request', $user_name . ' has updated the allowed testkits information for ' . $data['testKitNo'] . ' No', 'allowed-testkits',$userId);
         return $id;

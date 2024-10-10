@@ -101,7 +101,7 @@ $currentRecord = json_decode(json_encode($result['currentRecord']), true);
                                             </div>
                                             <div class="col-xl-4 col-lg-12">
                                                 <fieldset>
-                                                <h5>{{ __('messages.reporting_month') }}
+                                                <h5>{{ __('messages.reporting_month') }} <span class="mandatory">*</span>
                                                     </h5>
                                                     <div class="form-group">
                                                     <input type="text" id="reportingMon" value="<?php if(isset($month)) echo $month; ?>" class="form-control isRequired" autocomplete="off" placeholder="{{ __('messages.enter') }} {{ __('messages.reporting_month') }}" name="reportingMon" title="Please {{ __('messages.enter') }} {{ __('messages.reporting_month') }}" >
