@@ -63,10 +63,10 @@
                                         </div>
                                         <div class="col-xl-4 col-lg-12">
                                             <fieldset>
-                                                <h5>{{ __('messages.implementing_partner') }} {{ __('messages.status') }}<span class="mandatory">*</span>
+                                                <h5>{{ __('messages.implementing_partner_status') }} <span class="mandatory">*</span>
                                                 </h5>
                                                 <div class="form-group">
-                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="implementingPartnerStatus" name="implementingPartnerStatus" title="{{ __('messages.select') }} {{ __('messages.implementing_partner') }} {{ __('messages.status') }}">
+                                                    <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="implementingPartnerStatus" name="implementingPartnerStatus" title="{{ __('messages.select') }} {{ __('messages.implementing_partner_status') }}">
                                                         <option value="active" {{ $result[0]->implementing_partner_status == 'active' ?  'selected':''}}>Active</option>
                                                         <option value="inactive" {{ $result[0]->implementing_partner_status == 'inactive' ?  'selected':''}}>Inactive</option>
                                                     </select>

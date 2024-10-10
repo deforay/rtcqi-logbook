@@ -153,6 +153,8 @@
     "site_name" => "Nom du site",
     "reporting_month" => "Mois de déclaration",
     "implementing_partner_name" => "Nom du partenaire de mise en œuvre",
+    "implementing_partner_status" => "Statut de partenaire de mise en œuvre",
+    
     "algorithm_type" => "Type d'algorithme",
     "download_sample_monthly_report" => "Télécharger un exemple de feuille Excel de rapport mensuel",
     "import_monthly_report" => "Importer le rapport mensuel",
