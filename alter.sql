@@ -708,3 +708,4 @@ ALTER TABLE `test_sites` CHANGE `site_sub_district` `site_sub_district` INT NULL
 UPDATE `global_config` SET `global_name` = 'prefered_language' WHERE `global_config`.`display_name` = "Prefered Language";
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Training Mode', 'training_mode', 'off'), (NULL, 'Training Message', 'training_message', 'Sample marquee text');
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Default Testing Algorithm', 'default_testing_algorithm', 'serial');
+ALTER TABLE global_config ADD CONSTRAINT unique_global_name UNIQUE (global_name);
