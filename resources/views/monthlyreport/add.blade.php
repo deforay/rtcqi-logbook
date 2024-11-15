@@ -440,7 +440,7 @@ $sample_collection_limit=$global['sample_collection_past_months_limit'];
                                                 </tr>
                                                 <tr>
                                                     @for($k = 1; $k <= $globalValue; $k++) <td colspan="3" style=" text-align: center;" bgcolor="{{$col[$k]}}">
-                                                        <h4 id="testKitHeading{{$k}}_0" style="font-weight: 600;color: white;">{{ $messages["test_kit"]}} {{$k}}</h4>
+                                                        <h4 id="testKitHeading_{{$k}}" style="font-weight: 600;color: white;">{{ $messages["test_kit"]}} {{$k}}</h4>
                                                         </td>
                                                         @endfor
                                                 </tr>
