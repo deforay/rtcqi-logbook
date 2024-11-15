@@ -9,6 +9,7 @@
     'dashboard' => 'Dashboard',
     'manage' => 'Manage',
     'audits' => 'Audits',
+    'data_reporting' => 'Data Reporting',
     'reports' => 'Reports',
     'monitoring_reports' => 'Monitoring Reports',
     'language' => 'Language',

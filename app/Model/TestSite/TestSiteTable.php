@@ -247,7 +247,7 @@ class TestSiteTable extends Model
     // Fetch Current User Active TestSite List
     public function fetchAllCurrentUserActiveTestSite()
     {
-        if (Session::get('tsId') != '') {
+        if (Session::has('tsId') && isset(Session::get('tsId')[0])) {
             $data = DB::table('test_sites')
                 ->join('users_testsite_map', 'users_testsite_map.ts_id', '=', 'test_sites.ts_id')
                 ->whereIn('users_testsite_map.ts_id', Session::get('tsId'))

@@ -9,6 +9,7 @@
     'dashboard' => 'Tableau de bord',
     'manage' => 'Gérer',
     'audits' => 'Audits',
+    'data_reporting' => 'Rapport de données',
     'reports' => 'Rapports',
     'monitoring_reports' => 'Rapports de suivi',
     'language' => 'Langue',   

@@ -78,7 +78,7 @@ if ((isset($role['App\\Http\\Controllers\\Roles\\RolesController']['index']) && 
 
     $manage .= '</ul></li>';
 }
-$test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">' . Lang::get('messages.audits') . '</span></a>
+$test .= '<li class="dropdown nav-item" data-menu="dropdown"><a id="tests" href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown"><i class="la la-file"></i><span class="menu-title">' . Lang::get('messages.data_reporting') . '</span></a>
                 <ul class="dropdown-menu">';
 if (isset($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['index']) && ($role['App\\Http\\Controllers\\MonthlyReport\\MonthlyReportController']['index'] == "allow"))
     $test .= '<li id="li-monthlyreport"><a class="dropdown-item" data-toggle="dropdown" href="/monthlyreport/">' . Lang::get('messages.monthly_report') . '</a></li>';
