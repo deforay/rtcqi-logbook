@@ -11,7 +11,18 @@ class SetLocale
 {
     public function handle($request, Closure $next)
     {
-        $config = DB::table('global_config')->where('global_name', "prefered_language")->first();
+        $sessionLocale = session()->get('locale');
+        if(isset($sessionLocale) && !empty($sessionLocale)) {
+            App::setLocale($sessionLocale);
+            $training_mode = DB::table('global_config')->where('global_name', "training_mode")->first();
+            session()->put('training_mode', $training_mode->global_value);
+            if ($training_mode) {
+                $training_message = DB::table('global_config')->where('global_name', "training_message")->first();
+                session()->put('training_message', $training_message->global_value);
+            }
+            return $next($request);
+        }
+        /*$config = DB::table('global_config')->where('global_name', "prefered_language")->first();
         if ($config) {
             $locale = $config->global_value;
             App::setLocale($locale);
@@ -22,7 +33,7 @@ class SetLocale
                 session()->put('training_message', $training_message->global_value);
             }
             return $next($request);
-        }
+        }*/
         App::setLocale("en");
         session()->put('training_mode', "off");
         return $next($request);

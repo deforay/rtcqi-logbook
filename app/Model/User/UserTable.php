@@ -27,13 +27,12 @@ class UserTable extends Model
         //to get all request values
         $userId = null;
         $data = $request->all();
-        // print_r($data); die;
         $user_name = session('name');
 
         // update session by user giving language
-        App::setLocale($data['prefered_language']);
-        session(['locale' => $data['prefered_language']]);
-        //dd($data);die;
+        /*App::setLocale($data['prefered_language']);
+        session(['locale' => $data['prefered_language']]);*/
+
         $commonservice = new CommonService();
         DB::beginTransaction();
         if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
@@ -56,12 +55,12 @@ class UserTable extends Model
             );
 
             // update global config
-            $upData = array(
+            /*$upData = array(
                 'global_value' => $data['prefered_language'],
             );
             DB::table('global_config')
                 ->where('global_name', '=', 'prefered_language')
-                ->update($upData);
+                ->update($upData);*/
             if ($data['userMapping'] == 1) {
                 if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
                     $selectedSiteName = explode(",", $data['testSiteName']);
@@ -252,8 +251,9 @@ class UserTable extends Model
             $user['last_login_datetime'] = $commonservice->getDateTime(); // Current date and time
         }
         // refresh user updated language
-        App::setLocale($data['prefered_language']);
-        session(['locale' => $data['prefered_language']]);
+        /*App::setLocale($data['prefered_language']);
+        session(['locale' => $data['prefered_language']]);*/
+
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
             ->update(
@@ -261,12 +261,12 @@ class UserTable extends Model
             );
 
         // update global config
-        $upData = array(
+        /*$upData = array(
             'global_value' => $data['prefered_language'],
         );
         DB::table('global_config')
             ->where('global_name', '=', 'prefered_language')
-            ->update($upData);
+            ->update($upData);*/
 
         if (trim($data['password']) !== '' && trim($data['password']) !== '0') {
             $user['password'] = Hash::make($data['password']); // Hashing passwords
@@ -453,9 +453,17 @@ class UserTable extends Model
                     session(['forcePasswordReset' => $result[0]['force_password_reset']]);
                     session(['role' => $config[$result[0]['role_id']]]);
                     session(['login' => true]);
+                    $preferedLanguage = $globalConfigService->getGlobalConfigValue('prefered_language');
                     if ($result[0]['language'] != NULL) {
                         app()->setLocale($result[0]['language']);
                         session()->put('locale', $result[0]['language']);
+                    } elseif (!empty($preferedLanguage)) {
+                        app()->setLocale($preferedLanguage);
+                        session()->put('locale', $preferedLanguage);
+                    } else {
+                        $defaultLanguage = 'en';
+                        app()->setLocale($defaultLanguage);
+                        session()->put('locale', $defaultLanguage);
                     }
                     $commonservice->eventLog('login', $result[0]['first_name'] . ' logged in', 'user', $userId);
                     $userservice->loggedInHistory($data, 'success');
@@ -501,13 +509,17 @@ class UserTable extends Model
                     $user
                 );
             
+            // refresh user updated language
+            App::setLocale($data['locale']);
+            session(['locale' => $data['locale']]);
+
             // update global config
-            $upData = array(
-                'global_value' => $data['locale'],
+            /*$upData = array(
+                'global_value' => $data['locale'],s
             );
             DB::table('global_config')
                 ->where('global_name', '=', 'prefered_language')
-                ->update($upData);
+                ->update($upData);*/
 
             if ($response == 1) {
                 $response = DB::table('users')
