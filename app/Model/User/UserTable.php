@@ -29,10 +29,6 @@ class UserTable extends Model
         $data = $request->all();
         $user_name = session('name');
 
-        // update session by user giving language
-        /*App::setLocale($data['prefered_language']);
-        session(['locale' => $data['prefered_language']]);*/
-
         $commonservice = new CommonService();
         DB::beginTransaction();
         if ($request->input('firstName') != null && trim($request->input('firstName')) != '') {
@@ -54,13 +50,6 @@ class UserTable extends Model
                 ]
             );
 
-            // update global config
-            /*$upData = array(
-                'global_value' => $data['prefered_language'],
-            );
-            DB::table('global_config')
-                ->where('global_name', '=', 'prefered_language')
-                ->update($upData);*/
             if ($data['userMapping'] == 1) {
                 if ($id > 0 && trim($data['testSiteName']) != '' && ($id > 0 && trim($data['testSiteName']) != '')) {
                     $selectedSiteName = explode(",", $data['testSiteName']);
@@ -219,7 +208,6 @@ class UserTable extends Model
             'language' => $locale,
             'updated_by' => session('userId')
         );
-        //print_r($user); exit();
         $response = DB::table('users')
             ->where('user_id', '=', $userid)
             ->update(
@@ -250,23 +238,12 @@ class UserTable extends Model
         if ($loggedInUser == 1) { // admin
             $user['last_login_datetime'] = $commonservice->getDateTime(); // Current date and time
         }
-        // refresh user updated language
-        /*App::setLocale($data['prefered_language']);
-        session(['locale' => $data['prefered_language']]);*/
 
         $response = DB::table('users')
             ->where('user_id', '=', base64_decode($id))
             ->update(
                 $user
             );
-
-        // update global config
-        /*$upData = array(
-            'global_value' => $data['prefered_language'],
-        );
-        DB::table('global_config')
-            ->where('global_name', '=', 'prefered_language')
-            ->update($upData);*/
 
         if (trim($data['password']) !== '' && trim($data['password']) !== '0') {
             $user['password'] = Hash::make($data['password']); // Hashing passwords
@@ -354,7 +331,6 @@ class UserTable extends Model
                     $districtservice = new DistrictService();
                     $districtDetail = $districtservice->getDistrictById(base64_encode($val));
                     $province_id = $districtDetail[0]->province_id;
-                    // print_r($province_id); die;
                     DB::table('users_location_map')->insertGetId(
                         [
                             'user_id' => base64_decode($id),
@@ -368,7 +344,6 @@ class UserTable extends Model
                         ->where('site_province', '=', $province_id)
                         ->where('site_district', '=', $val)
                         ->get();
-                    //print_r();exit();
                     if (count($selectedSites) > 0) {
                         for ($i = 0; $i < count($selectedSites); $i++) {
                             $userFacility = DB::table('users_testsite_map')->insertGetId(
@@ -513,14 +488,6 @@ class UserTable extends Model
             App::setLocale($data['locale']);
             session(['locale' => $data['locale']]);
 
-            // update global config
-            /*$upData = array(
-                'global_value' => $data['locale'],s
-            );
-            DB::table('global_config')
-                ->where('global_name', '=', 'prefered_language')
-                ->update($upData);*/
-
             if ($response == 1) {
                 $response = DB::table('users')
                     ->where('user_id', '=', base64_decode($id))
@@ -550,7 +517,6 @@ class UserTable extends Model
             return 0;
         } else {
             $result = json_decode(DB::table('users')->where('user_id', '=', $id)->get(), true);
-            //dd($result);
             if (count($result) > 0) {
                 $hashedPassword = $result[0]['password'];
                 //dd($hashedPassword,Hash::make($data['currentPassword']));
