@@ -597,4 +597,16 @@ class UserTable extends Model
             return "No file uploaded or invalid file.";
         }
     }
+
+    public function submitResetPassword($params)
+    {
+        $data = $params->all();
+        if (trim($data['newPassword']) !== '' && trim($data['newPassword']) !== '0') {
+            $user['password'] = Hash::make($data['newPassword']); // Hashing passwords
+            $response = DB::table('users')
+                ->where('user_id', '=', base64_decode($data['userId']))
+                ->update($user);
+        }
+        return $response;
+    }
 }

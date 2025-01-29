@@ -120,7 +120,7 @@
     }, 1000);
   });
 
-  function showAjaxModal(url) {
+  function showAjaxModal(url, w, h) {
     jQuery('#modal_ajax .modal-content').html('');
     jQuery('#modal_ajax').modal('show', { backdrop: 'true' });
     $.ajaxSetup({
@@ -133,6 +133,8 @@
       method: 'post',
       success: function (response) {
         jQuery('#modal_ajax .modal-content').html(response);
+        document.getElementById('modal-content').style.height = h + 'px';
+			  document.getElementById('modal-content').style.width = w + 'px';
       }
     });
   }

@@ -84,4 +84,11 @@ class CommonController extends Controller
         $commonService = new CommonService();
         return $commonService->checkItemNameValidation($request);
     }
+
+    public function generatePassword()
+    {
+        $CommonService = new CommonService();
+        $result = $CommonService->generatePassword();
+        return response()->json($result);
+    }   
 }

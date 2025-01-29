@@ -17,6 +17,7 @@ use App\Model\User\UserTable;
 use App\Model\Vendors\VendorsTable;
 use App\Service\GlobalConfigService;
 use App\Model\TempMail\TempMailTable;
+use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
 
 class CommonService
 {
@@ -678,5 +679,21 @@ class CommonService
         }
 
         return mkdir($path, $mode, $recursive);
+    }
+
+    public static function generatePassword()
+    {
+        $generator = new RequirementPasswordGenerator();
+        $generator
+            ->setLength(12)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_UPPER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_LOWER_CASE, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_NUMBERS, true)
+            ->setOptionValue(RequirementPasswordGenerator::OPTION_SYMBOLS, false)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_UPPER_CASE, 2)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_LOWER_CASE, 2)
+            ->setMinimumCount(RequirementPasswordGenerator::OPTION_NUMBERS, 2);
+
+        return $generator->generatePassword();
     }
 }

@@ -86,10 +86,12 @@ class UserController extends Controller
                         $button = '<div>';
                         $role = session('role');
                         if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")){
-                        $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
-                    }else{
-                        $button .= '';
-                    }
+                            $button .= '<a href="/user/edit/'. base64_encode($data->user_id).'" name="edit" id="'.$data->user_id.'" class="btn btn-outline-primary btn-sm" title="Edit"><i class="ft-edit"></i></a>';
+                        }
+
+                        if (isset($role['App\\Http\\Controllers\\User\\UserController']['resetPassword']) && ($role['App\\Http\\Controllers\\User\\UserController']['resetPassword'] == "allow")){
+                            $button .= '&nbsp;<a href="javascript:void(0);" onclick="showAjaxModal(\'/user/reset-password/' . base64_encode($data->user_id) . '\',\'800\',\'430\');" class="btn btn-outline-warning btn-sm" title="Reset Password"><i class="ft-rotate-cw"></i></a>';
+                        }
                         return $button . '</div>';
                     })
                     ->rawColumns(['action'])
@@ -215,4 +217,17 @@ class UserController extends Controller
         return view('user.bulk-upload');
     }
 
+    public function resetPassword(Request $request, $id)
+    {
+        $UserService = new UserService();
+        $result = $UserService->getUserById($id); // Fetch user details
+        return view('user.reset-password',array('result'=>$result)); // Return only modal content
+    
+    }
+    public function submitResetPassword(Request $request)
+    {
+        $userService = new UserService();
+        $status = $userService->submitResetPassword($request);
+        return response()->json(['status' => $status]);
+    }
 }

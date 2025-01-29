@@ -48,6 +48,7 @@ Route::get('/changePassword', 'Common\CommonController@changePassword');
 Route::post('/changePassword', 'Common\CommonController@changePassword');
 Route::post('/addNewBranchType', 'Common\CommonController@addNewBranchType');
 Route::post('/checkItemNameValidation', 'Common\CommonController@checkItemNameValidation');
+Route::post('/generatePassword', 'Common\CommonController@generatePassword');
 //setup module
 Route::get('/setup', 'User\UserController@register');
 Route::post('/setup', 'User\UserController@register');
@@ -64,7 +65,8 @@ Route::post('/user/profile/{id}', 'User\UserController@profile');
 Route::get('/user/userloginhistory', 'User\UserController@userloginhistory')->name('user.userloginhistory')->middleware('access');
 Route::get('/user/userActivityLog', 'User\UserController@userActivityLog')->name('user.userActivityLog')->middleware('access');
 Route::post('/getAllUserActivity', 'User\UserController@getAllUserActivity')->name('user.getAllUserActivity');
-
+Route::post('/user/reset-password/{id}', 'User\UserController@resetPassword')->name('user.reset-password')->middleware('access');
+Route::post('/user/submit-reset-password', 'User\UserController@submitResetPassword')->name('user.submit-reset-password');
 
 //login module
 Route::get('/login', 'Login\LoginController@index')->name('login.index');

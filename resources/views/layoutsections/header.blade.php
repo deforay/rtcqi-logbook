@@ -41,6 +41,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/toggle/bootstrap-switch.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/core/colors/palette-switch.min.css')}}">
+<link rel="stylesheet" type="text/css" href=" {{asset('assets/css/toastify.min.css')}}">
 
 <!-- BEGIN: Vendor JS-->
 <script src="{{ asset('app-assets/vendors/js/vendors.min.js')}}"></script>
@@ -63,7 +64,7 @@
 <script src="{{ asset('app-assets/vendors/js/forms/extended/formatter/formatter.min.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/maxlength/bootstrap-maxlength.js')}}"></script>
 <script src="{{ asset('app-assets/vendors/js/forms/extended/card/jquery.card.js')}}"></script>
-
+<script src="{{ asset('assets/js/toastify-js.js') }}"></script>
 <style type="text/css">
     table {
         border-radius: 6px !important;

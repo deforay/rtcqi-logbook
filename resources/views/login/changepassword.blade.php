@@ -119,6 +119,11 @@
 											</fieldset>
 										</div>
 									</div>
+									<div class="right">
+										<button type="button" onclick="passwordType()" class="btn btn-primary">
+											Generate Password
+										</button>
+									</div>
 									<div class="form-actions right">
 										<button type="submit" onclick="validateNow();return false;" class="btn btn-primary">
 											<i class="la la-check-square-o"></i> Save
@@ -177,49 +182,130 @@
 			$('#result').html(checkStrength($('#newPassword').val()))
 		})
 
-		function checkStrength(password) {
-			var strength = 0
-			if (password.length < 8) {
-				$('#result').removeClass()
-				$('#result').addClass('short')
-				$('#passwordCheck').val('')
-				$("#newPassword").val("");
-				$(".invalid-feedback").show();
-				return 'Too short'
-			}
-			if (password.length > 8) strength += 1
-			// If password contains both lower and uppercase characters, increase strength value.
-			if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
-			// If it has numbers and characters, increase strength value.
-			if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
-			// If it has one special character, increase strength value.
-			if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-			// If it has two special characters, increase strength value.
-			if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
-			// Calculated strength value, we can return messages
-			// If value is less than 2
-			if (strength < 2) {
-				$('#result').removeClass()
-				$('#result').addClass('weak')
-				$('#passwordCheck').val('')
-				$("#newPassword").val("");
-				$(".invalid-feedback").show();
-				return 'Weak'
-			} else if (strength == 2) {
-				$('#result').removeClass()
-				$('#result').addClass('good')
-				$('#passwordCheck').val('good')
-				$(".invalid-feedback").hide();
-				return 'Good'
-			} else {
-				$('#result').removeClass()
-				$('#result').addClass('strong')
-				$('#passwordCheck').val('strong')
-				$(".invalid-feedback").hide();
-				return 'Strong'
-			}
-		}
-
 	});
+
+	function checkStrength(password) {
+		var strength = 0
+		if (password.length < 8) {
+			$('#result').removeClass()
+			$('#result').addClass('short')
+			$('#passwordCheck').val('')
+			$("#newPassword").val("");
+			$(".invalid-feedback").show();
+			return 'Too short'
+		}
+		if (password.length > 8) strength += 1
+		// If password contains both lower and uppercase characters, increase strength value.
+		if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+		// If it has numbers and characters, increase strength value.
+		if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+		// If it has one special character, increase strength value.
+		if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+		// If it has two special characters, increase strength value.
+		if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+		// Calculated strength value, we can return messages
+		// If value is less than 2
+		if (strength < 2) {
+			$('#result').removeClass()
+			$('#result').addClass('weak')
+			$('#passwordCheck').val('')
+			$("#newPassword").val("");
+			$(".invalid-feedback").show();
+			return 'Weak'
+		} else if (strength == 2) {
+			$('#result').removeClass()
+			$('#result').addClass('good')
+			$('#passwordCheck').val('good')
+			$(".invalid-feedback").hide();
+			return 'Good'
+		} else {
+			$('#result').removeClass()
+			$('#result').addClass('strong')
+			$('#passwordCheck').val('strong')
+			$(".invalid-feedback").hide();
+			return 'Strong'
+		}
+	}
+
+	function passwordType() {
+        document.getElementById('newPassword').type = "text";
+        document.getElementById('confirmPassword').type = "text";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/generatePassword') }}",
+            method: 'post',
+            data: {},
+            success: function(result) {
+                console.log(result);
+                $("#newPassword").val(result);
+                $("#confirmPassword").val(result);
+                var cpy = copyToClipboard(document.getElementById("confirmPassword"));
+                if (cpy == true) {
+                    Toastify({
+                        text: "Random password generated and copied to clipboard",
+                        duration: 3000,
+                    }).showToast();
+                }
+				checkStrength($('#newPassword').val());
+            }
+        });
+    }
+
+    function copyToClipboard(elem) {
+        // Check if the element is an input/textarea
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+        var target, origSelectionStart, origSelectionEnd;
+
+        if (isInput) {
+            // Use the element's value for selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // Create a temporary textarea for non-input elements
+            var targetId = "_hiddenCopyText_";
+            target = document.getElementById(targetId);
+            if (!target) {
+                target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.value = elem.textContent; // Use textContent for non-input elements
+        }
+
+        // Select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // Copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            succeed = false;
+        }
+
+        // Restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // Restore the original selection for input elements
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // Clear the temporary textarea
+            target.value = "";
+        }
+
+        return succeed;
+    }
 </script>
 @endsection

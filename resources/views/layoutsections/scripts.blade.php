@@ -36,3 +36,6 @@
 <script src="{{ asset('assets/js/deforayValidation.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.blockUI.js') }}"></script>
 <!-- END DEFORAY VALIDATOR JS-->
+
+<!-- Bootstrap JS -->
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>

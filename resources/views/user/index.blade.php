@@ -80,7 +80,7 @@
                                                 <th>{{ __('messages.email') }}</th>
                                                 <th>{{ __('messages.status') }}</th>
                                                 <?php $role = session('role');
-                                                if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) { ?>
+                                                if ((isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) || (isset($role['App\\Http\\Controllers\\User\\UserController']['resetPassword']) && ($role['App\\Http\\Controllers\\User\\UserController']['resetPassword'] == "allow"))) { ?>
                                                     <th>{{ __('messages.action') }}</th>
                                                 <?php } ?>
                                             </tr>
@@ -148,7 +148,7 @@
                     className: 'firstcaps'
                 },
                 <?php $role = session('role');
-                if (isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) { ?> {
+                if ((isset($role['App\\Http\\Controllers\\User\\UserController']['edit']) && ($role['App\\Http\\Controllers\\User\\UserController']['edit'] == "allow")) || (isset($role['App\\Http\\Controllers\\User\\UserController']['resetPassword']) && ($role['App\\Http\\Controllers\\User\\UserController']['resetPassword'] == "allow"))) { ?> {
                         data: 'action',
                         name: 'action',
                         orderable: false

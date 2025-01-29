@@ -168,4 +168,20 @@ class UserService
 		$model = new UserTable();
 		return $model->bulkUploadUser($params);
 	}
+
+	public function submitResetPassword($params)
+	{
+		DB::beginTransaction();
+		try {
+			$model = new UserTable();
+			$add = $model->submitResetPassword($params);
+			if ($add > 0) {
+				DB::commit();
+				return 'success';
+			}
+		} catch (Exception $exc) {
+			DB::rollBack();
+			$exc->getMessage();
+		}
+	}
 }

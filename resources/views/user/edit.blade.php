@@ -150,7 +150,7 @@
                         <div class="row">
                             <div class="col-xl-4 col-lg-12">
                                 <fieldset>
-                                    <h5>{{ __('messages.user_mapping') }}g<span class="mandatory">*</span>
+                                    <h5>{{ __('messages.user_mapping') }}<span class="mandatory">*</span>
                                     </h5>
                                     <div class="form-group">
                                         <select class="form-control isRequired" autocomplete="off" style="width:100%;" id="userMapping" name="userMapping" title="Please Select User Mapping">
@@ -280,6 +280,11 @@
                                     </fieldset>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-actions right">
+                            <button type="button" onclick="passwordType()" class="btn btn-primary">
+                                Generate Password
+                            </button>
                         </div>
 
                         <div class="form-actions right">
@@ -700,6 +705,86 @@
                 $.unblockUI();
             }
         });
+    }
+
+    function passwordType() {
+        document.getElementById('password').type = "text";
+        document.getElementById('confirmPassword').type = "text";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{ url('/generatePassword') }}",
+            method: 'post',
+            data: {},
+            success: function(result) {
+                console.log(result);
+                $("#password").val(result);
+                $("#confirmPassword").val(result);
+                var cpy = copyToClipboard(document.getElementById("confirmPassword"));
+                if (cpy == true) {
+                    Toastify({
+                        text: "Random password generated and copied to clipboard",
+                        duration: 3000,
+                    }).showToast();
+                }
+            }
+        });
+    }
+
+    function copyToClipboard(elem) {
+        // Check if the element is an input/textarea
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+        var target, origSelectionStart, origSelectionEnd;
+
+        if (isInput) {
+            // Use the element's value for selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // Create a temporary textarea for non-input elements
+            var targetId = "_hiddenCopyText_";
+            target = document.getElementById(targetId);
+            if (!target) {
+                target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.value = elem.textContent; // Use textContent for non-input elements
+        }
+
+        // Select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // Copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            succeed = false;
+        }
+
+        // Restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // Restore the original selection for input elements
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // Clear the temporary textarea
+            target.value = "";
+        }
+
+        return succeed;
     }
 </script>
 <link href="public/dist/css/select2.min.css" rel="stylesheet" />

@@ -710,3 +710,8 @@ INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Default Testing Algorithm', 'default_testing_algorithm', 'serial');
 ALTER TABLE global_config ADD CONSTRAINT unique_global_name UNIQUE (global_name);
 INSERT INTO `global_config` (`config_id`, `display_name`, `global_name`, `global_value`) VALUES (NULL, 'Prefered Language', 'prefered_language', 'en');
+
+-- Brindha jan-23-2025
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'resetPassword', 'Reset Password');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'generatePassword', 'Generate Password');
+INSERT INTO `privileges` (`resource_id`, `privilege_name`, `display_name`) VALUES ('App\\Http\\Controllers\\User\\UserController', 'submitResetPassword', 'Submit Reset Password');
