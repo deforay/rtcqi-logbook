@@ -69,10 +69,17 @@ return [
 
     'timezone' => 'UTC',
 
-    /*  
-     ODK URL and Credentials
-     */
-    'url' => 'https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report',
+    /*
+    |--------------------------------------------------------------------------
+    | ODK URL and Credentials
+    |--------------------------------------------------------------------------
+    |
+    | These must not use the 'url' key: that is Laravel's own application URL,
+    | and reusing it here silently overrode env('APP_URL') for the whole app.
+    |
+    */
+
+    'odk_url' => 'https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report',
     'email' => 'support@deforay.com',
     'password' => '***REMOVED***',
 

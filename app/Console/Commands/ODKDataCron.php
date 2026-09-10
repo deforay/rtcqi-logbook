@@ -38,7 +38,7 @@ class ODKDataCron extends Command
      */
     public function handle()
     {
-        $spirrtURL = config('app.url');
+        $spirrtURL = config('app.odk_url');
         $sessionUrl = config('app.authurl');
         $email = config('app.email');
         $password = config('app.password');
