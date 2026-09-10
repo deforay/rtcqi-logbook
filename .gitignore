@@ -1,0 +1,59 @@
+# Dependencies
+/vendor/
+/node_modules/
+/public/build
+/public/hot
+/public/storage
+
+# Environment
+.env
+.env.backup
+.env.production
+.env.*.local
+/storage/*.key
+/storage/pail
+secretKey.txt
+
+# Laravel runtime
+/bootstrap/cache/*.php
+/storage/app/*
+!/storage/app/.gitignore
+!/storage/app/public/
+/storage/app/public/*
+!/storage/app/public/.gitignore
+/storage/debugbar/
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*.php
+/storage/logs/*.log
+/public/uploads/*
+!/public/uploads/index.php
+/public/temporary/*
+!/public/temporary/index.php
+
+# Tooling
+.phpunit.result.cache
+.phpunit.cache
+/.php-cs-fixer.cache
+/.pint.cache
+auth.json
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+temp.ini
+
+# Editors / OS
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+*.orig
+.DS_Store
+.DS_Store.orig
+Thumbs.db
+Thumbs.db.orig
+error_log
+*error_log
