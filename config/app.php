@@ -79,11 +79,11 @@ return [
     |
     */
 
-    'odk_url' => 'https://odk-central.labsinformatics.com/v1/projects/5/forms/Monthly_Report',
-    'email' => 'support@deforay.com',
-    'password' => '***REMOVED***',
+    'odk_url' => env('ODK_URL'),
+    'email' => env('ODK_EMAIL'),
+    'password' => env('ODK_PASSWORD'),
 
-    'authurl' => 'https://odk-central.labsinformatics.com/v1/sessions',
+    'authurl' => env('ODK_AUTH_URL'),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
