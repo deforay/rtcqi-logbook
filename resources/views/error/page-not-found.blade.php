@@ -11,9 +11,9 @@
 
 <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara:400,500,600" rel="stylesheet">
 <!--Material Icons-->
-<link rel="stylesheet" type="text/css" href="{{ asset('error/fonts/materialdesignicons/materialdesignicons.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/materialdesignicons.min.css') }}">
 <!--Bootstrap + atmos Admin CSS-->
-<link rel="stylesheet" type="text/css" href="{{ asset('error/css/atmos.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/atmos.min.css') }}">
 <!-- Additional library for page -->
 
 </head>
@@ -33,7 +33,7 @@
                     <div class="card-body text-center">
                             
                         
-                        <img width="200" alt="image" src="{{ asset('error/img/404.svg') }}">
+                        <img width="200" alt="image" src="{{ asset('assets/images/404.svg') }}">
                         <h1 class="display-1 fw-600 font-secondary" style="color: #812720">404</h1>
                         <h5>Oops, the page you are looking for does not exist.</h5>
                         <p class="opacity-75">
