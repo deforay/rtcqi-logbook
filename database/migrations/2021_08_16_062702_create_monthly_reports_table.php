@@ -13,6 +13,15 @@ class CreateMonthlyReportsTable extends Migration
      */
     public function up()
     {
+        // This migration was renamed from 2021_08_16_062713 so that it runs
+        // before the 062704 migrations that add foreign keys to and from this
+        // table. Installations migrated under the old name have the old name
+        // recorded in the migrations table and will see this as a new
+        // migration, so skip it if the table is already there.
+        if (Schema::hasTable('monthly_reports')) {
+            return;
+        }
+
         Schema::create('monthly_reports', function (Blueprint $table) {
             $table->integer('mr_id', true);
             $table->integer('ts_id')->index('ts_id')->comment('Site Name');
