@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use DB;
 
 class ODKDataCron extends Command
@@ -51,46 +52,59 @@ class ODKDataCron extends Command
         {
             $date = $monthyData->date_of_data_collection;
         }
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $sessionUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "{
-        \"email\": \"$email\",
-        \"password\": \"$password\"
-        }");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-        ));
-        $response = curl_exec($ch);
-        curl_close($ch);
+        if ($spirrtURL === null || $sessionUrl === null || $email === null || $password === null) {
+            Log::warning('odkdata:cron skipped: ODK_URL, ODK_AUTH_URL, ODK_EMAIL or ODK_PASSWORD is not set.');
+
+            return self::SUCCESS;
+        }
+
         $token = base64_encode($email . ':' . $password);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$spirrtURL.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20".$date);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Authorization: Basic $token",
-        ));
-        $response1 = curl_exec($ch);
-        $submission = json_decode($response1,TRUE);
-        curl_close($ch);
+
+        $session = $this->send($sessionUrl, ['Content-Type: application/json'], json_encode([
+            'email' => $email,
+            'password' => $password,
+        ]));
+
+        if ($session === null) {
+            return self::SUCCESS;
+        }
+
+        $listUrl = "$spirrtURL.svc/Submissions?%24filter=__system%2FsubmissionDate%20gt%20" . $date;
+        $response1 = $this->send($listUrl, ["Authorization: Basic $token"]);
+
+        if ($response1 === null) {
+            return self::SUCCESS;
+        }
+
+        $submission = json_decode($response1, true);
+
+        if (!is_array($submission) || !isset($submission['value']) || !is_array($submission['value'])) {
+            Log::warning('odkdata:cron: ODK did not return a submission list; skipping this run.');
+
+            return self::SUCCESS;
+        }
+
         $counter = count($submission['value']);
         for($t=0;$t<$counter;$t++)
         {
            $uid = $submission['value'][$t]['__id'];
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "$spirrtURL/submissions/".$uid.".xml");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            $response2 = $this->send("$spirrtURL/submissions/" . $uid . ".xml", [
                 "Authorization: Basic $token",
-                "Content-Type: application/xml"
-            ));
-            $response2 = curl_exec($ch);
-            curl_close($ch);
-            $xml = simplexml_load_string($response2);
+                'Content-Type: application/xml',
+            ]);
+
+            if ($response2 === null) {
+                continue;
+            }
+
+            $xml = @simplexml_load_string($response2);
+
+            if ($xml === false) {
+                Log::warning("odkdata:cron: submission $uid did not contain valid XML; skipping it.");
+
+                continue;
+            }
+
             $json = json_encode($xml);
             $array = json_decode($json, TRUE);
             // print_r($json);
@@ -490,5 +504,54 @@ class ODKDataCron extends Command
         //         \Log::info("Test cron");
         // DB::commit();
 
+    }
+
+    /**
+     * Perform an HTTP request against ODK Central.
+     *
+     * Returns the response body, or null when the request could not be
+     * completed. ODK Central is reached over the network, so a failure here
+     * is expected rather than exceptional: the host may be unreachable or
+     * returning an error page, and this command runs every minute.
+     *
+     * @param  array<int, string>  $headers
+     */
+    private function send(string $url, array $headers = [], ?string $body = null): ?string
+    {
+        $ch = curl_init();
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => false,
+            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTPHEADER => $headers,
+        ]);
+
+        if ($body !== null) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+        }
+
+        $response = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+
+        curl_close($ch);
+
+        if ($response === false) {
+            Log::warning("odkdata:cron: request to $url failed: $error");
+
+            return null;
+        }
+
+        if ($status < 200 || $status >= 300) {
+            Log::warning("odkdata:cron: request to $url returned HTTP $status.");
+
+            return null;
+        }
+
+        return $response;
     }
 }
