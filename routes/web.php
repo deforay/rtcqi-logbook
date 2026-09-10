@@ -124,12 +124,15 @@ Route::post('/testkit/edit/{id}', 'TestKit\TestKitController@edit');
 Route::post('/getAllTestKit', 'TestKit\TestKitController@getAllTestKit');
 
 //Facility module
-Route::get('/facility', 'Facility\FacilityController@index')->name('facility.index')->middleware('access');
-Route::post('/facility/add', 'Facility\FacilityController@add');
-Route::get('/facility/add', 'Facility\FacilityController@add')->middleware('access');
-Route::get('/facility/edit/{id}', 'Facility\FacilityController@edit')->middleware('access');
-Route::post('/facility/edit/{id}', 'Facility\FacilityController@edit');
-Route::post('/getAllFacility', 'Facility\FacilityController@getAllFacility');
+// Removed: app/Http/Controllers/Facility/FacilityController was deleted in 759e6c41
+// ("Remove Facility from entire app"), but these routes were left behind. They
+// returned 500 and broke `artisan route:list`, which reflects over every controller.
+// Route::get('/facility', 'Facility\FacilityController@index')->name('facility.index')->middleware('access');
+// Route::post('/facility/add', 'Facility\FacilityController@add');
+// Route::get('/facility/add', 'Facility\FacilityController@add')->middleware('access');
+// Route::get('/facility/edit/{id}', 'Facility\FacilityController@edit')->middleware('access');
+// Route::post('/facility/edit/{id}', 'Facility\FacilityController@edit');
+// Route::post('/getAllFacility', 'Facility\FacilityController@getAllFacility');
 
 //Province module
 Route::get('/province', 'Province\ProvinceController@index')->name('province.index')->middleware('access');
